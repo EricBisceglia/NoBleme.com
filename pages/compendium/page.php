@@ -92,8 +92,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <<?=$compendium_page_data['title_size']?>>
     <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow')?>
     <?php if($is_admin) { ?>
+    <?=__icon('edit', class: 'valign_middle pointer', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_page_data['id'])?>
     <?php if($compendium_page_data['draft']) { ?>
     <?=__icon('done', alt: 'D', title: __('compendium_page_draft_icon'), href: 'pages/compendium/page_publish?id='.$compendium_page_data['id'])?>
+    <?php } if($compendium_page_data['deleted']) { ?>
+    <?=__icon('refresh', alt: 'X', title: __('restore'), title_case: 'initials', href: 'pages/compendium/page_restore?id='.$compendium_page_data['id'])?>
     <?php } ?>
     <?=__icon('delete', class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/page_delete?id='.$compendium_page_data['id'])?>
     <?php } ?>

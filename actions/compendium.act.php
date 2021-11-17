@@ -15,6 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_pages_add                    Creates a new compendium page.                                           */
 /*  compendium_pages_publish                Publishes an existing compendium page.                                   */
 /*  compendium_pages_delete                 Deletes an existing compendium page.                                     */
+/*  compendium_pages_restore                Restores a deleted compendium page.                                      */
 /*  compendium_pages_autocomplete           Autocompletes a page url.                                                */
 /*                                                                                                                   */
 /*  compendium_images_get                   Returns data related to an image used in the compendium.                 */
@@ -965,6 +966,38 @@ function compendium_pages_delete( int   $page_id                ,
     query(" DELETE FROM compendium_pages_history
             WHERE       compendium_pages_history.fk_compendium_pages = '$page_id' ");
   }
+}
+
+
+
+
+/**
+ * Restores a deleted compendium page.
+ *
+ * @param   int   $page_id  The ID of the compendium page to restore.
+ *
+ * @return  void
+ */
+
+function compendium_pages_restore( int $page_id ) : void
+{
+  // Sanitize the page's id
+  $page_id = sanitize($page_id, 'int', 0);
+
+  // Stop here if the page does not exist
+  if(!database_row_exists('compendium_pages', $page_id))
+    return;
+
+  // Restore the page
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.is_deleted = 0
+          WHERE   compendium_pages.id         = '$page_id' ");
+
+  // Retore any linked recent activity
+  log_activity_delete(  'compendium_'               ,
+                        activity_id:      $page_id  ,
+                        global_type_wipe: true      ,
+                        restore:          true      );
 }
 
 

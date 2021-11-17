@@ -1211,6 +1211,7 @@ function log_activity_purge_orphan_diffs() : void
  * @param   string  $username             (OPTIONAL)  username of the user implicated in the activity log.
  * @param   int     $activity_id          (OPTIONAL)  ID of the item linked to the activity log.
  * @param   bool    $global_type_wipe     (OPTOINAL)  Deletes all logs of type beginning like $activity_type.
+ * @param   bool    $restore              (OPTIONAL)  Restores deleted logs instead of deleting them.
  *
  * @return  void
  */
@@ -1220,7 +1221,8 @@ function log_activity_delete( string  $activity_type              ,
                               int     $fk_users           = 0     ,
                               string  $username           = ''    ,
                               int     $activity_id        = 0     ,
-                              bool    $global_type_wipe   = false ) : void
+                              bool    $global_type_wipe   = false ,
+                              bool    $restore            = false ) : void
 {
   // Begin by sanitizing the data
   $activity_type      = sanitize($activity_type, 'string');
@@ -1230,9 +1232,12 @@ function log_activity_delete( string  $activity_type              ,
   $activity_id        = sanitize($activity_id, 'int', 0);
   $global_type_wipe   = sanitize($global_type_wipe, 'int', 0, 1);
 
+  // Determine whether it is a log deletion or restoration
+  $log_action = ($restore) ? 0 : 1;
+
   // Begin building the query
   $qactivity    = " UPDATE      logs_activity
-                    SET         logs_activity.is_deleted = 1 ";
+                    SET         logs_activity.is_deleted = '$log_action' ";
 
   // Depending on whether this is a global type wipe or not, do a different kind of string matching
   if(!$global_type_wipe)

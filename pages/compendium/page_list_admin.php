@@ -347,7 +347,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center">
           <?php if($compendium_pages_list[$i]['deleted']) { ?>
-          <?=__icon('x', is_small: true, alt: 'X', title: __('compendium_list_admin_deleted'), title_case: 'initials')?>
+          <?=__icon('refresh', is_small: true, alt: 'X', title: __('restore'), title_case: 'initials', href: 'pages/compendium/page_restore?id='.$compendium_pages_list[$i]['id'])?>
           <?php } else if($compendium_pages_list[$i]['draft']) { ?>
           <?=__icon('copy', is_small: true, alt: 'C', title: __('compendium_list_admin_draft'), title_case: 'initials', href: 'pages/compendium/page_publish?id='.$compendium_pages_list[$i]['id'])?>
           <?php } else { ?>
@@ -356,7 +356,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
 
         <td class="align_center nowrap">
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials')?>
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_pages_list[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/page_delete?id='.$compendium_pages_list[$i]['id'])?>
         </td>
 

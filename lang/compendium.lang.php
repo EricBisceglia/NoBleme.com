@@ -215,6 +215,13 @@ ___('compendium_page_delete_submit',  'EN', "Delete the page");
 ___('compendium_page_delete_submit',  'FR', "Supprimer la page");
 
 
+// Restore a deleted page
+___('compendium_page_restore_title',  'EN', "Restore a deleted page");
+___('compendium_page_restore_title',  'FR', "Restaurer une page supprimée");
+___('compendium_page_restore_submit', 'EN', "Restore the page");
+___('compendium_page_restore_submit', 'FR', "Restaurer la page");
+
+
 
 
 /*********************************************************************************************************************/
