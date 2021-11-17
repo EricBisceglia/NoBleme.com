@@ -2,7 +2,10 @@
 /*                                                                                                                   */
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
-// File inclusions /**************************************************************************************************/
+// Block illegal page URLs by removing any stray slashes /************************************************************/
+if(str_contains(mb_substr($_SERVER['REQUEST_URI'], (mb_stripos($_SERVER['REQUEST_URI'], 'pages/compendium/') + mb_strlen('pages/compendium/'))), '/')) { exit(header("Location: ..")); die(); }
+
+// File inclusions
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
@@ -92,6 +95,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if($compendium_page_data['draft']) { ?>
     <?=__icon('done', alt: 'D', title: __('compendium_page_draft_icon'), href: 'pages/compendium/page_publish?id='.$compendium_page_data['id'])?>
     <?php } ?>
+    <?=__icon('delete', class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/page_delete?id='.$compendium_page_data['id'])?>
     <?php } ?>
   </<?=$compendium_page_data['title_size']?>>
 

@@ -14,6 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_pages_list_urls              Fetches a list of all public compendium page urls.                       */
 /*  compendium_pages_add                    Creates a new compendium page.                                           */
 /*  compendium_pages_publish                Publishes an existing compendium page.                                   */
+/*  compendium_pages_delete                 Deletes an existing compendium page.                                     */
 /*  compendium_pages_autocomplete           Autocompletes a page url.                                                */
 /*                                                                                                                   */
 /*  compendium_images_get                   Returns data related to an image used in the compendium.                 */
@@ -910,6 +911,62 @@ function compendium_pages_publish(  int   $page_id                  ,
       discord_send_message($message, 'main');
   }
 }
+
+
+
+
+/**
+ * Deletes an existing compendium page.
+ *
+ * @param   int   $page_id                    The ID of the compendium page to delete.
+ * @param   bool  $hard_deletion  (OPTIONAL)  Performs a hard deletion instead of a soft one.
+ *
+ * @return  void
+ */
+
+function compendium_pages_delete( int   $page_id                ,
+                                  bool  $hard_deletion  = false ) : void
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the page's id
+  $page_id = sanitize($page_id, 'int', 0);
+
+  // Stop here if the page does not exist
+  if(!database_row_exists('compendium_pages', $page_id))
+    return;
+
+  // Fetch the page's data
+  $page_data = compendium_pages_get($page_id);
+
+  // Soft deletion
+  if(!$hard_deletion)
+    query(" UPDATE  compendium_pages
+            SET     compendium_pages.is_deleted = 1
+            WHERE   compendium_pages.id         = '$page_id' ");
+
+  // Delete any linked recent activity
+  log_activity_delete(  'compendium_'               ,
+                        activity_id:      $page_id  ,
+                        global_type_wipe: true      );
+
+  // Hard deletion
+  if($hard_deletion)
+  {
+    query(" DELETE FROM compendium_pages
+            WHERE       compendium_pages.id = '$page_id' ");
+    query(" DELETE FROM compendium_pages_categories
+            WHERE       compendium_pages_categories.fk_compendium_pages = '$page_id' ");
+    query(" DELETE FROM compendium_pages_history
+            WHERE       compendium_pages_history.fk_compendium_pages = '$page_id' ");
+  }
+}
+
 
 
 

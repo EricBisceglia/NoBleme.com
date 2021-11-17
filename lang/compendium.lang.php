@@ -181,7 +181,7 @@ ___('compendium_page_new_preview',      'EN', "Preview");
 ___('compendium_page_new_preview',      'FR', "Prévisualisation");
 
 
-// Publish draft
+// Publish a draft
 ___('compendium_page_draft_icon',     'EN', "Publish draft");
 ___('compendium_page_draft_icon',     'FR', "Publier le brouillon");
 ___('compendium_page_draft_title',    'EN', "Publish page");
@@ -202,6 +202,17 @@ ___('compendium_page_draft_discord',  'EN', "Send a message on Discord");
 ___('compendium_page_draft_discord',  'FR', "Envoyer un message sur Discord");
 ___('compendium_page_draft_submit',   'EN', "Publish the page");
 ___('compendium_page_draft_submit',   'FR', "Publier la page");
+
+
+// Delete a page
+___('compendium_page_delete_title',   'EN', "Delete page");
+___('compendium_page_delete_title',   'FR', "Supprimer la page");
+___('compendium_page_delete_soft',    'EN', "This will perform a soft deletion: the page will still exist, but only admins will be able to view it.");
+___('compendium_page_delete_soft',    'FR', "Une suppression douce va être effectuée : la page existera toujours, mais ne sera visible que de l'administration.");
+___('compendium_page_delete_hard',    'EN', "The page will be hard deleted: it will disappear forever, and will not be recoverable in any way.");
+___('compendium_page_delete_hard',    'FR', "Une suppression dure va être effectuée : la page disparaitra à jamais, elle ne sera pas récupérable.");
+___('compendium_page_delete_submit',  'EN', "Delete the page");
+___('compendium_page_delete_submit',  'FR', "Supprimer la page");
 
 
 

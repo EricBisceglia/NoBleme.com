@@ -17,9 +17,9 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/page_publish";
-$page_title_en    = "Compendium: Publish draft";
-$page_title_fr    = "Compendium : Publier un brouillon";
+$page_url         = "pages/compendium/page_delete";
+$page_title_en    = "Compendium: Delete page";
+$page_title_fr    = "Compendium : Supprimer une page";
 
 
 
@@ -40,31 +40,27 @@ $compendium_page_id = (string)form_fetch_element('id', request_type: 'GET');
 $compendium_page_data = compendium_pages_get( page_id:  $compendium_page_id ,
                                               no_loops: false               );
 
-// Redirect if the page doesn't exist, shouldn't be accessed, or isn't a draft
-if(!$compendium_page_data || !$compendium_page_data['draft'])
+// Redirect if the page doesn't exist or shouldn't be accessed
+if(!$compendium_page_data)
   exit(header('Location: '.$path.'pages/compendium/page_list_admin'));
+
+// Determine if the deletion is soft or hard
+$compendium_hard_delete = ($compendium_page_data['deleted'] || $compendium_page_data['draft']) ? true : false;
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Publish the page
+// Delete the page
 
-// Attempt to publish the page if requested
-if(isset($_POST['compendium_publish_submit']))
+// Attempt to delete the page if requested
+if(isset($_POST['compendium_delete_submit']))
 {
-  // Gather the postdata
-  $compendium_publish_activity  = form_fetch_element('compendium_publish_activity', element_exists: true);
-  $compendium_publish_irc       = form_fetch_element('compendium_publish_irc', element_exists: true);
-  $compendium_publish_discord   = form_fetch_element('compendium_publish_discord', element_exists: true);
+  // Delete the page
+  compendium_pages_delete(  $compendium_page_id     ,
+                            $compendium_hard_delete );
 
-  // Publish the page
-  compendium_pages_publish( $compendium_page_id           ,
-                            $compendium_publish_activity  ,
-                            $compendium_publish_irc       ,
-                            $compendium_publish_discord   );
-
-  // Redirect to the page
+  // Redirect to the page (if hard deleted, redirection will go to the page list instead)
   exit(header("Location: ".$path."pages/compendium/".$compendium_page_data['url']));
 }
 
@@ -80,10 +76,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__link('pages/compendium/page_list_admin', __('compendium_page_draft_title'), 'noglow')?>
+    <?=__link('pages/compendium/page_list_admin', __('compendium_page_delete_title'), 'noglow')?>
   </h1>
 
-  <p class="padding_bot">
+  <p>
     <span class="bold"><?=__('compendium_list_admin_url').__(':')?></span> <?=__link('pages/compendium/'.$compendium_page_data['url'], $compendium_page_data['url'])?><br>
     <?php if($compendium_page_data['title_en']) { ?>
     <span class="bold"><?=__('compendium_page_draft_name_en')?></span> <?=__link('pages/compendium/'.$compendium_page_data['url'], $compendium_page_data['title_en'])?><br>
@@ -96,24 +92,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
   </p>
 
+  <p class="bold smallpadding_bot">
+    <?php if(!$compendium_hard_delete) { ?>
+    <span class="text_orange big"><?=__('compendium_page_delete_soft')?></span>
+    <?php } else { ?>
+    <span class="red text_white big"><?=__('compendium_page_delete_hard')?></span>
+    <?php } ?>
+  </p>
+
+
   <form method="POST">
     <fieldset>
 
-      <?php if(!$compendium_page_data['redir_en'] && !$compendium_page_data['redir_fr']) { ?>
-
-      <input type="checkbox" id="compendium_publish_activity" name="compendium_publish_activity" checked>
-      <label class="label_inline" for="compendium_publish_activity"><?=__('compendium_page_draft_activity')?></label><br>
-
-      <input type="checkbox" id="compendium_publish_irc" name="compendium_publish_irc" checked>
-      <label class="label_inline" for="compendium_publish_irc"><?=__('compendium_page_draft_irc')?></label><br>
-
-      <input type="checkbox" id="compendium_publish_discord" name="compendium_publish_discord" checked>
-      <label class="label_inline" for="compendium_publish_discord"><?=__('compendium_page_draft_discord')?></label>
-
-      <?php } ?>
-
       <div class="smallpadding_top">
-        <input type="submit" name="compendium_publish_submit" value="<?=__('compendium_page_draft_submit')?>">
+        <input type="submit" name="compendium_delete_submit" value="<?=__('compendium_page_delete_submit')?>">
       </div>
 
     </fieldset>
