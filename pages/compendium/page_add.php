@@ -175,7 +175,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/compendium/page_list_admin', __('compendium_page_new_title'), 'noglow')?>
   </h1>
 
-  <form method="POST">
+  <form method="POST" action="#compendium_add_buttons">
     <fieldset>
 
       <label for="compendium_new_url"><?=__('compendium_page_new_url')?></label>
@@ -348,7 +348,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
       <?php } ?>
 
-      <div class="smallpadding_top">
+      <div class="smallpadding_top" id="compendium_add_buttons">
         <span class="spaced_right">
           <input type="submit" name="compendium_new_preview" value="<?=__('preview')?>">
         </span>

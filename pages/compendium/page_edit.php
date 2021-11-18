@@ -58,6 +58,26 @@ $compendium_edit_summary_en   = $compendium_page_data['summary_en'];
 $compendium_edit_summary_fr   = $compendium_page_data['summary_fr'];
 $compendium_edit_body_en      = $compendium_page_data['body_en'];
 $compendium_edit_body_fr      = $compendium_page_data['body_fr'];
+$compendium_edit_type         = $compendium_page_data['type_id'];
+$compendium_edit_era          = $compendium_page_data['era_id'];
+$compendium_edit_appear_month = $compendium_page_data['app_month'];
+$compendium_edit_appear_year  = ($compendium_page_data['app_year']) ? $compendium_page_data['app_year'] : '';
+$compendium_edit_peak_month   = $compendium_page_data['peak_month'];
+$compendium_edit_peak_year    = ($compendium_page_data['peak_year']) ? $compendium_page_data['peak_year'] : '';
+$compendium_edit_nsfw_title   = $compendium_page_data['nsfw_title'];
+$compendium_edit_nsfw         = $compendium_page_data['nsfw'];
+$compendium_edit_gross        = $compendium_page_data['gross'];
+$compendium_edit_offensive    = $compendium_page_data['offensive'];
+$compendium_edit_admin_notes  = $compendium_page_data['admin_note'];
+$compendium_edit_admin_urls   = $compendium_page_data['admin_urls'];
+
+// Fetch the categories list
+$compendium_categories_list = compendium_categories_list();
+
+// Prepare the page categories
+$compendium_page_categories = ($compendium_page_data['categories']) ? $compendium_page_data['category_id'] : array();
+for($i = 0; $i < $compendium_categories_list['rows']; $i++)
+  $compendium_edit_category[$compendium_categories_list[$i]['id']] = in_array($compendium_categories_list[$i]['id'], $compendium_page_categories);
 
 // Update the form values if submitted
 if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_submit']))
@@ -71,6 +91,22 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_summary_fr   = form_fetch_element('compendium_edit_summary_fr');
   $compendium_edit_body_en      = form_fetch_element('compendium_edit_body_en');
   $compendium_edit_body_fr      = form_fetch_element('compendium_edit_body_fr');
+  $compendium_edit_type         = form_fetch_element('compendium_edit_type');
+  $compendium_edit_era          = form_fetch_element('compendium_edit_era');
+  $compendium_edit_appear_month = form_fetch_element('compendium_edit_appear_month');
+  $compendium_edit_appear_year  = form_fetch_element('compendium_edit_appear_year');
+  $compendium_edit_peak_month   = form_fetch_element('compendium_edit_peak_month');
+  $compendium_edit_peak_year    = form_fetch_element('compendium_edit_peak_year');
+  $compendium_edit_nsfw_title   = form_fetch_element('compendium_edit_nsfw_title', element_exists: true);
+  $compendium_edit_nsfw         = form_fetch_element('compendium_edit_nsfw', element_exists: true);
+  $compendium_edit_gross        = form_fetch_element('compendium_edit_gross', element_exists: true);
+  $compendium_edit_offensive    = form_fetch_element('compendium_edit_offensive', element_exists: true);
+  $compendium_edit_admin_notes  = form_fetch_element('compendium_edit_admin_notes');
+  $compendium_edit_admin_urls   = form_fetch_element('compendium_edit_admin_urls');
+
+  // Update the selected categories aswell
+  for($i = 0; $i < $compendium_categories_list['rows']; $i++)
+  $compendium_edit_category[$compendium_categories_list[$i]['id']] = form_fetch_element('compendium_edit_category_'.$compendium_categories_list[$i]['id'], element_exists: true);
 }
 
 
@@ -83,16 +119,31 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
 if(isset($_POST['compendium_edit_submit']))
 {
   // Assemble the page data
-  $compendium_edit_data = array(  'url'         => $compendium_edit_url         ,
-                                  'title_en'    => $compendium_edit_title_en    ,
-                                  'title_fr'    => $compendium_edit_title_en    ,
-                                  'redirect_en' => $compendium_edit_redirect_en ,
-                                  'redirect_fr' => $compendium_edit_redirect_fr ,
-                                  'summary_en'  => $compendium_edit_summary_en  ,
-                                  'summary_fr'  => $compendium_edit_summary_fr  ,
-                                  'body_en'     => $compendium_edit_body_en     ,
-                                  'body_fr'     => $compendium_edit_body_fr     ,
-                                  'type'        => 1                            );
+  $compendium_edit_data = array(  'url'           => $compendium_edit_url           ,
+                                  'title_en'      => $compendium_edit_title_en      ,
+                                  'title_fr'      => $compendium_edit_title_en      ,
+                                  'redirect_en'   => $compendium_edit_redirect_en   ,
+                                  'redirect_fr'   => $compendium_edit_redirect_fr   ,
+                                  'summary_en'    => $compendium_edit_summary_en    ,
+                                  'summary_fr'    => $compendium_edit_summary_fr    ,
+                                  'body_en'       => $compendium_edit_body_en       ,
+                                  'body_fr'       => $compendium_edit_body_fr       ,
+                                  'type'          => $compendium_edit_type          ,
+                                  'era'           => $compendium_edit_era           ,
+                                  'appear_month'  => $compendium_edit_appear_month  ,
+                                  'appear_year'   => $compendium_edit_appear_year   ,
+                                  'peak_month'    => $compendium_edit_peak_month    ,
+                                  'peak_year'     => $compendium_edit_peak_year     ,
+                                  'nsfw_title'    => $compendium_edit_nsfw_title    ,
+                                  'nsfw'          => $compendium_edit_nsfw          ,
+                                  'gross'         => $compendium_edit_gross         ,
+                                  'offensive'     => $compendium_edit_offensive     ,
+                                  'admin_notes'   => $compendium_edit_admin_notes   ,
+                                  'admin_urls'    => $compendium_edit_admin_urls    );
+
+  // Add category data to the page data
+  for($i = 0; $i < $compendium_categories_list['rows']; $i++)
+    $compendium_edit_data['category_'.$compendium_categories_list[$i]['id']] = $compendium_edit_category[$compendium_categories_list[$i]['id']];
 
   // Edit the page
   $compendium_pages_edit = compendium_pages_edit( $compendium_page_id   ,
@@ -130,12 +181,42 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_summary_fr   = sanitize_output($compendium_edit_summary_fr);
   $compendium_edit_body_en      = sanitize_output($compendium_edit_body_en);
   $compendium_edit_body_fr      = sanitize_output($compendium_edit_body_fr);
+  $compendium_edit_era          = sanitize_output($compendium_edit_era);
+  $compendium_edit_appear_year  = sanitize_output($compendium_edit_appear_year);
+  $compendium_edit_peak_year    = sanitize_output($compendium_edit_peak_year);
+  $compendium_edit_admin_notes  = sanitize_output($compendium_edit_admin_notes);
+  $compendium_edit_admin_urls   = sanitize_output($compendium_edit_admin_urls);
 }
 
-// Temporarily disable NSFW previews
-$compendium_edit_nsfw       = true;
-$compendium_edit_offensive  = true;
-$compendium_edit_gross      = true;
+// Fetch the page types list
+$compendium_types_list = compendium_types_list();
+
+// Keep the proper page type selected
+for($i = 0; $i < $compendium_types_list['rows']; $i++)
+  $compendium_edit_type_select[$i] = ($compendium_edit_type == $compendium_types_list[$i]['id']) ? ' selected' : '';
+
+// Fetch the era list
+$compendium_eras_list = compendium_eras_list();
+
+// Keep the proper era selected
+for($i = 0; $i < $compendium_eras_list['rows']; $i++)
+  $compendium_edit_era_select[$i] = ($compendium_edit_era == $compendium_eras_list[$i]['id']) ? ' selected' : '';
+
+// Keep the proper appearance and peak entries selected
+for($i = 1; $i <= 12; $i++)
+  $compendium_edit_appear_month_select[$i] = ($compendium_edit_appear_month == $i)  ? ' selected' : '';
+for($i = 1; $i <= 12; $i++)
+  $compendium_edit_peak_month_select[$i]   = ($compendium_edit_peak_month == $i)    ? ' selected' : '';
+
+// Keep the proper categories checked
+for($i = 0; $i < $compendium_categories_list['rows']; $i++)
+$compendium_edit_category_checkbox[$i] = ($compendium_edit_category[$compendium_categories_list[$i]['id']] == $compendium_categories_list[$i]['id']) ? ' checked' : '';
+
+// Keep the proper checkboxes checked
+$compendium_edit_nsfw_title_checkbox  = ($compendium_edit_nsfw_title) ? ' checked' : '';
+$compendium_edit_nsfw_checkbox        = ($compendium_edit_nsfw)       ? ' checked' : '';
+$compendium_edit_gross_checkbox       = ($compendium_edit_gross)      ? ' checked' : '';
+$compendium_edit_offensive_checkbox   = ($compendium_edit_offensive)  ? ' checked' : '';
 
 
 
@@ -148,11 +229,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 bigpadding_bot">
 
-  <h1 class="padding_bot">
+  <h1 class="align_center bigpadding_bot">
     <?=__link('pages/compendium/'.$compendium_page_data['url'], __('compendium_page_edit_title'), 'noglow')?>
   </h1>
 
-  <form method="POST">
+  <form method="POST" action="#compendium_edit_buttons">
     <fieldset>
 
       <label for="compendium_edit_url"><?=__('compendium_page_new_url')?></label>
@@ -218,6 +299,98 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </div>
       </div>
 
+      <div class="smallpadding_top">
+        <label for="compendium_edit_type"><?=__('compendium_page_new_type')?></label>
+        <select class="indiv align_left" id="compendium_edit_type" name="compendium_edit_type">
+          <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
+          <option value="<?=$compendium_types_list[$i]['id']?>"<?=$compendium_edit_type_select[$i]?>>
+            <?=$compendium_types_list[$i]['name']?>
+          </option>
+          <?php } ?>
+        </select>
+      </div>
+
+      <div class="smallpadding_top">
+        <label for="compendium_edit_era"><?=__('compendium_page_new_era')?></label>
+        <select class="indiv align_left" id="compendium_edit_era" name="compendium_edit_era">
+          <option value="0" selected>&nbsp;</option>
+          <?php for($i = 0; $i < $compendium_eras_list['rows']; $i++) { ?>
+          <option value="<?=$compendium_eras_list[$i]['id']?>"<?=$compendium_edit_era_select[$i]?>>
+            [<?=$compendium_eras_list[$i]['startx']?> - <?=$compendium_eras_list[$i]['endx']?>] <?=$compendium_eras_list[$i]['name']?>
+          </option>
+          <?php } ?>
+        </select>
+      </div>
+
+      <div class="flexcontainer smallpadding_top tinypadding_bot">
+        <div class="flex spaced_right">
+
+          <label for="compendium_edit_appear_month"><?=__('compendium_page_new_appear_month')?></label>
+          <select class="indiv align_left" id="compendium_edit_appear_month" name="compendium_edit_appear_month">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 1; $i <= 12; $i++) { ?>
+            <option value="<?=$i?>"<?=$compendium_edit_appear_month_select[$i]?>><?=__('month_'.$i)?></option>
+            <?php } ?>
+          </select>
+
+          <div class="smallpadding_top">
+            <label for="compendium_edit_appear_year"><?=__('compendium_page_new_appear_year')?></label>
+            <input type="text" class="indiv" id="compendium_edit_appear_year" name="compendium_edit_appear_year" value="<?=$compendium_edit_appear_year?>">
+          </div>
+
+        </div>
+        <div class="flex spaced_left">
+
+          <label for="compendium_edit_peak_month"><?=__('compendium_page_new_peak_month')?></label>
+          <select class="indiv align_left" id="compendium_edit_peak_month" name="compendium_edit_peak_month">
+            <option value="0" selected>&nbsp;</option>
+            <?php for($i = 1; $i <= 12; $i++) { ?>
+            <option value="<?=$i?>"<?=$compendium_edit_peak_month_select[$i]?>><?=__('month_'.$i)?></option>
+            <?php } ?>
+          </select>
+
+          <div class="smallpadding_top">
+            <label for="compendium_edit_peak_year"><?=__('compendium_page_new_peak_year')?></label>
+            <input type="text" class="indiv" id="compendium_edit_peak_year" name="compendium_edit_peak_year" value="<?=$compendium_edit_peak_year?>">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="smallpadding_top">
+        <label><?=__('compendium_page_new_categories')?></label>
+      </div>
+
+      <?php for($i = 0; $i < $compendium_categories_list['rows']; $i++) { ?>
+      <input type="checkbox" id="compendium_edit_category_<?=$compendium_categories_list[$i]['id']?>" name="compendium_edit_category_<?=$compendium_categories_list[$i]['id']?>"<?=$compendium_edit_category_checkbox[$i]?>>
+      <label class="label_inline" for="compendium_edit_category_<?=$compendium_categories_list[$i]['id']?>"><?=__link('pages/compendium/category?id='.$compendium_categories_list[$i]['id'], $compendium_categories_list[$i]['name'], popup: true)?></label><br>
+      <?php } ?>
+
+      <div class="smallpadding_top">
+        <label><?=__('compendium_page_new_nsfw_section')?></label>
+      </div>
+
+      <input type="checkbox" id="compendium_edit_nsfw_title" name="compendium_edit_nsfw_title"<?=$compendium_edit_nsfw_title_checkbox?>>
+      <label class="label_inline" for="compendium_edit_nsfw_title"><?=__('compendium_page_new_nsfw_title')?></label><br>
+
+      <input type="checkbox" id="compendium_edit_nsfw" name="compendium_edit_nsfw"<?=$compendium_edit_nsfw_checkbox?>>
+      <label class="label_inline" for="compendium_edit_nsfw"><?=__('compendium_page_new_nsfw')?></label><br>
+
+      <input type="checkbox" id="compendium_edit_offensive" name="compendium_edit_offensive"<?=$compendium_edit_offensive_checkbox?>>
+      <label class="label_inline" for="compendium_edit_offensive"><?=__('compendium_page_new_offensive')?></label><br>
+
+      <input type="checkbox" id="compendium_edit_gross" name="compendium_edit_gross"<?=$compendium_edit_gross_checkbox?>>
+      <label class="label_inline" for="compendium_edit_gross"><?=__('compendium_page_new_gross')?></label>
+
+      <div class="smallpadding_top">
+        <label for="compendium_edit_admin_notes"><?=__('compendium_pages_new_admin_notes')?></label>
+        <textarea class="indiv compendium_admin_summary" id="compendium_edit_admin_notes" name="compendium_edit_admin_notes"><?=$compendium_edit_admin_notes?></textarea>
+      </div>
+
+      <div class="smallpadding_top padding_bot">
+        <label for="compendium_edit_admin_urls"><?=__('compendium_pages_new_admin_urls')?></label>
+        <textarea class="indiv compendium_admin_urls" id="compendium_edit_admin_urls" name="compendium_edit_admin_urls"><?=$compendium_edit_admin_urls?></textarea>
+      </div>
 
       <?php if(isset($compendium_pages_edit)) { ?>
       <div class="smallpadding_bot">
@@ -227,7 +400,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
       <?php } ?>
 
-      <div class="smallpadding_top">
+      <div class="smallpadding_top" id="compendium_edit_buttons">
         <span class="spaced_right">
           <input type="submit" name="compendium_edit_preview" value="<?=__('preview')?>">
         </span>
