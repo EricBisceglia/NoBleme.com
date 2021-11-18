@@ -325,7 +325,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <input type="checkbox" id="compendium_new_gross" name="compendium_new_gross"<?=$compendium_new_gross_checkbox?>>
       <label class="label_inline" for="compendium_new_gross"><?=__('compendium_page_new_gross')?></label>
 
-
       <div class="smallpadding_top">
         <label for="compendium_new_admin_notes"><?=__('compendium_pages_new_admin_notes')?></label>
         <textarea class="indiv compendium_admin_summary" id="compendium_new_admin_notes" name="compendium_new_admin_notes"><?=$compendium_new_admin_notes?></textarea>

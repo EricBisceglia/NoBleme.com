@@ -52,6 +52,9 @@ $compendium_pages_list_search = array(  'url'             => form_fetch_element(
                                         'type'            => form_fetch_element('compendium_search_type')         ,
                                         'category'        => form_fetch_element('compendium_search_category')     ,
                                         'era'             => form_fetch_element('compendium_search_era')          ,
+                                        'appeared'        => form_fetch_element('compendium_search_appeared')     ,
+                                        'peaked'          => form_fetch_element('compendium_search_peak')         ,
+                                        'created'         => form_fetch_element('compendium_search_created')      ,
                                         'language'        => form_fetch_element('compendium_search_language')     ,
                                         'nsfw_admin'      => form_fetch_element('compendium_search_nsfw')         ,
                                         'wip'             => form_fetch_element('compendium_search_wip')          ,
@@ -70,6 +73,11 @@ $compendium_categories_list = compendium_categories_list();
 // Fetch the eras
 $compendium_eras_list = compendium_eras_list();
 
+// Fetch the appearance, peak, and page creation years
+$compendium_page_list_years       = compendium_pages_list_years();
+$compendium_appearance_list_years = compendium_appearance_list_years();
+$compendium_peak_list_years       = compendium_peak_list_years();
+
 
 
 
@@ -79,7 +87,7 @@ $compendium_eras_list = compendium_eras_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_80">
+<div class="width_100">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__link('pages/compendium/page_list', __('compendium_list_admin_title'), 'noglow')?>
@@ -113,6 +121,18 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <?=__('compendium_page_era')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('era');")?>
+        </th>
+        <th>
+          <?=__('compendium_list_admin_appeared')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('appeared');")?>
+        </th>
+        <th>
+          <?=__('compendium_list_admin_peak')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('peak');")?>
+        </th>
+        <th>
+          <?=__('compendium_list_admin_created')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('created');")?>
         </th>
         <th>
           <?=__('compendium_list_admin_language')?>
@@ -191,6 +211,37 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </select>
         </th>
 
+        <th>
+          <select class="table_search" name="compendium_search_appeared" id="compendium_search_appeared" onchange="compendium_admin_list_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $compendium_appearance_list_years['rows']; $i++) { ?>
+            <?php if($compendium_appearance_list_years[$i]['year'] > 0) { ?>
+            <option value="<?=$compendium_appearance_list_years[$i]['year']?>"><?=$compendium_appearance_list_years[$i]['year']?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_search_peak" id="compendium_search_peak" onchange="compendium_admin_list_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $compendium_peak_list_years['rows']; $i++) { ?>
+            <?php if($compendium_peak_list_years[$i]['year'] > 0) { ?>
+            <option value="<?=$compendium_peak_list_years[$i]['year']?>"><?=$compendium_peak_list_years[$i]['year']?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_search_created" id="compendium_search_created" onchange="compendium_admin_list_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $compendium_page_list_years['rows']; $i++) { ?>
+            <option value="<?=$compendium_page_list_years[$i]['year']?>"><?=$compendium_page_list_years[$i]['year']?></option>
+            <?php } ?>
+          </select>
+        </th>
+
         <th class="compendium_admin_search_small">
           <select class="table_search" name="compendium_search_language" id="compendium_search_language" onchange="compendium_admin_list_search();">
             <option value="">&nbsp;</option>
@@ -235,7 +286,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php } ?>
 
       <tr>
-        <td colspan="12" class="uppercase text_light dark bold align_center">
+        <td colspan="15" class="uppercase text_light dark bold align_center">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>
@@ -304,16 +355,33 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], string_change_case($compendium_pages_list[$i]['type'], 'initials'))?>
         </td>
 
-        <td class="align_center">
-          <?php if($compendium_pages_list[$i]['categories']) { ?>
+        <?php if($compendium_pages_list[$i]['categories']) { ?>
+        <td class="align_center tooltip_container">
           <?=__icon('done', is_small: true, alt: 'C', title: __('compendium_list_admin_category_count', amount: $compendium_pages_list[$i]['categories'], preset_values: array($compendium_pages_list[$i]['categories'])))?>
-          <?php } else { ?>
-          &nbsp;
-          <?php } ?>
+          <div class="tooltip">
+            <?=__('compendium_list_admin_category_count', amount: $compendium_pages_list[$i]['categories'], preset_values: array($compendium_pages_list[$i]['categories']))?>
+          </div>
         </td>
+        <?php } else { ?>
+        <td class="align_center">
+          &nbsp;
+        </td>
+        <?php } ?>
 
         <td class="align_center">
           <?=__link('pages/compendium/cultural_era?era='.$compendium_pages_list[$i]['era_id'], $compendium_pages_list[$i]['era'])?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['app_short']?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['peak_short']?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['created']?>
         </td>
 
         <td class="align_center">

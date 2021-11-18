@@ -59,6 +59,9 @@ function compendium_admin_list_search( sort_data = null )
   postdata += '&compendium_search_type='        + fetch_sanitize_id('compendium_search_type');
   postdata += '&compendium_search_category='    + fetch_sanitize_id('compendium_search_category');
   postdata += '&compendium_search_era='         + fetch_sanitize_id('compendium_search_era');
+  postdata += '&compendium_search_appeared='    + fetch_sanitize_id('compendium_search_appeared');
+  postdata += '&compendium_search_peak='        + fetch_sanitize_id('compendium_search_peak');
+  postdata += '&compendium_search_created='     + fetch_sanitize_id('compendium_search_created');
   postdata += '&compendium_search_language='    + fetch_sanitize_id('compendium_search_language');
   postdata += '&compendium_search_nsfw='        + fetch_sanitize_id('compendium_search_nsfw');
   postdata += '&compendium_search_wip='         + fetch_sanitize_id('compendium_search_wip');

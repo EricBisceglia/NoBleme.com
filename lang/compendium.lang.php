@@ -204,6 +204,15 @@ ___('compendium_page_draft_submit',   'EN', "Publish the page");
 ___('compendium_page_draft_submit',   'FR', "Publier la page");
 
 
+// Edit a page
+___('compendium_page_edit_title',   'EN', "Edit page");
+___('compendium_page_edit_title',   'FR', "Modifier la page");
+___('compendium_page_edit_submit',  'EN', "Edit the page");
+___('compendium_page_edit_submit',  'FR', "Modifier la page");
+___('compendium_page_edit_missing', 'EN', "This page does not exist or has been deleted");
+___('compendium_page_edit_missing', 'FR', "Cette page n'existe pas ou a été supprimée");
+
+
 // Delete a page
 ___('compendium_page_delete_title',   'EN', "Delete page");
 ___('compendium_page_delete_title',   'FR', "Supprimer la page");
@@ -338,6 +347,12 @@ ___('compendium_list_admin_category_count',   'EN', "Page has {{1}} category");
 ___('compendium_list_admin_category_count',   'FR', "La page a {{1}} catégorie");
 ___('compendium_list_admin_category_count+',  'EN', "Page has {{1}} categories");
 ___('compendium_list_admin_category_count+',  'FR', "La page a {{1}} catégories");
+___('compendium_list_admin_appeared',         'EN', "App.");
+___('compendium_list_admin_appeared',         'FR', "App.");
+___('compendium_list_admin_peak',             'EN', "Peak");
+___('compendium_list_admin_peak',             'FR', "Pic");
+___('compendium_list_admin_created',          'EN', "Created");
+___('compendium_list_admin_created',          'FR', "Crée");
 ___('compendium_list_admin_language',         'EN', "Lang.");
 ___('compendium_list_admin_language',         'FR', "Lang.");
 ___('compendium_list_admin_monolingual',      'EN', "Monolingual");
@@ -358,8 +373,8 @@ ___('compendium_list_admin_gross',            'EN', "Gross");
 ___('compendium_list_admin_gross',            'FR', "Dégueu");
 ___('compendium_list_admin_offensive',        'EN', "Offensive");
 ___('compendium_list_admin_offensive',        'FR', "Offensant");
-___('compendium_list_admin_wip',              'EN', "WIP");
-___('compendium_list_admin_wip',              'FR', "WIP");
+___('compendium_list_admin_wip',              'EN', "DEL.");
+___('compendium_list_admin_wip',              'FR', "SUP.");
 ___('compendium_list_admin_finished',         'EN', "Finished");
 ___('compendium_list_admin_finished',         'FR', "Complet");
 ___('compendium_list_admin_draft',            'EN', "Draft");
