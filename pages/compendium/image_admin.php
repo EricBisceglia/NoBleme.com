@@ -7,6 +7,7 @@ include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
 include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
 
 // Limit page access rights
 user_restrict_to_administrators();
@@ -203,10 +204,20 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('image', is_small: true, class: 'valign_middle pointer', alt: 'P', title: __('image'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].", 1);")?>
         </td>
 
-        <td class="align_left tooltip_container" id="compendium_image_list_preview_cell_<?=$compendium_images_list[$i]['id']?>" onmouseover="compendium_image_list_preview('<?=$compendium_images_list[$i]['id']?>');">
+        <td class="align_left tooltip_container"  id="compendium_image_list_preview_cell_<?=$compendium_images_list[$i]['id']?>" onmouseover="compendium_image_list_preview('<?=$compendium_images_list[$i]['id']?>', '<?=$compendium_images_list[$i]['fullname']?>', '<?=$path?>');">
           <?=__link('pages/compendium/image?name='.$compendium_images_list[$i]['fullname'], $compendium_images_list[$i]['name'])?>
-          <div class="tooltip compendium_image_preview" id="compendium_image_list_preview_<?=$compendium_images_list[$i]['id']?>">
-            &nbsp;
+          <div class="tooltip compendium_image_preview">
+            <h2 class="align_center padding_bot">
+              <?=$compendium_images_list[$i]['fullname']?>
+            </h2>
+            <div class="padding_top padding_bot align_center" id="compendium_image_list_container_<?=$compendium_images_list[$i]['id']?>">
+              &nbsp;
+            </div>
+            <?php if($compendium_images_list[$i]['body']) { ?>
+            <div class="padding_top padding_bot align_center">
+              <?=$compendium_images_list[$i]['body']?>
+            </div>
+            <?php } ?>
           </div>
         </td>
 

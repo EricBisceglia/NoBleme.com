@@ -136,18 +136,23 @@ function compendium_image_list_clipboard( image_name          ,
 /**
  * Fetches the preview of a compendium image.
  *
- * @param   {int}   image_id  The compendium image's id.
+ * @param   {int}   image_id    The compendium image's id.
+ * @param   {int}   image_name  The compendium image's name.
+ * @param   {int}   root_path   The path to the root of the website.
  *
  * @returns {void}
  */
 
-function compendium_image_list_preview(image_id)
+function compendium_image_list_preview( image_id        ,
+                                        image_name      ,
+                                        root_path       )
 {
-  // Assemble the postdata
-  postdata = 'compendium_image_id=' + fetch_sanitize(image_id);
+  // Prepare the image
+  image = document.createElement("img");
+  image.setAttribute("src", root_path + "img/compendium/" + image_name);
 
-  // Fetch the compendium image preview
-  fetch_page('image_preview', 'compendium_image_list_preview_' + image_id, postdata, null, null, null, 1);
+  // Add the image in the element
+  document.getElementById('compendium_image_list_container_' + image_id).appendChild(image);
 
   // Prevent the fetch from happening more than once
   document.getElementById('compendium_image_list_preview_cell_' + image_id).onmouseover = null;

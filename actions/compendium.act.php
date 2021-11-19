@@ -1458,9 +1458,17 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
+
+  // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
 
   // Sanitize the search parameters
   $search_name    = isset($search['name'])    ? sanitize($search['name'], 'string')     : '';
@@ -1481,6 +1489,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                             compendium_images.is_offensive      AS 'ci_offensive'   ,
                             compendium_images.used_in_pages_en  AS 'ci_used_en'     ,
                             compendium_images.used_in_pages_fr  AS 'ci_used_fr'     ,
+                            compendium_images.caption_$lang     AS 'ci_caption'     ,
                             compendium_images.caption_en        AS 'ci_caption_en'  ,
                             compendium_images.caption_fr        AS 'ci_caption_fr'
                   FROM      compendium_images
@@ -1586,6 +1595,8 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
     $data[$i]['tags_full']  = ($row['ci_tags']) ? $tags['list'] : '';
     $data[$i]['caption_en'] = ($row['ci_caption_en']) ? 1 : 0;
     $data[$i]['caption_fr'] = ($row['ci_caption_fr']) ? 1 : 0;
+    $temp                   = bbcodes(sanitize_output($row['ci_caption'], preserve_line_breaks: true));
+    $data[$i]['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   }
 
   // Add the number of rows to the data
