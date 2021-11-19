@@ -299,7 +299,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'meetups_new' && !$admins_only)
   {
-    $return['css']  = ($mode == 'dark') ? 'green bold' : 'green bold text_black';
+    $return['css']  = ($mode == 'dark') ? 'green bold' : 'green bold text_white';
     $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = 'New real life meetup planned on '.date_to_text($title_en, 1);
     $return['FR']   = 'Nouvelle rencontre IRL planifiée le '.date_to_text($title_fr, 1);
@@ -314,7 +314,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'meetups_edit' && !$admins_only)
   {
-    $return['css']  = 'yellow text_dark bold';
+    $return['css']  = ($mode == 'dark') ? 'text_dark bold yellow' : 'bold yellow';
     $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = "The ".date_to_text($title_en, 1)." meetup has been moved to a new date";
     $return['FR']   = "La rencontre IRL du ".date_to_text($title_fr, 1)." a changé de date";
@@ -343,7 +343,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'meetups_restore' && !$admins_only)
   {
-    $return['css']  = 'yellow text_dark bold';
+    $return['css']  = ($mode == 'dark') ? 'text_dark bold yellow' : 'bold yellow';
     $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = 'The '.date_to_text($title_en, 1).' real life meetup is back on the menu!';
     $return['FR']   = 'La rencontre IRL du '.date_to_text($title_fr, 1).' est de retour !';
@@ -397,7 +397,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'compendium_new')
   {
-    $return['css']  = 'brown bold';
+    $return['css']  = ($mode == 'dark') ? 'bold blue' : 'bold blue text_white';
     $return['href'] = $path.'pages/compendium/'.$username;
     $return['EN']   = ($title_en) ? 'New compendium entry: '.$title_en : '';
     $return['FR']   = ($title_fr) ? "Nouvelle page du compendium : ".$title_fr : '';
@@ -406,7 +406,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'compendium_edit')
   {
     $return['href'] = $path.'pages/compendium/'.$username;
-    $return['EN']   = ($title_en) ? "Edited compendium entry: ".$title_en : '';
+    $return['EN']   = ($title_en) ? "Compendium entry modified: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Page du compendium modifiée : ".$title_fr : '';
   }
 
@@ -419,13 +419,13 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'quotes_new_fr')
   {
-    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'text_brown bold';
+    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'brown bold text_white';
     $return['href'] = $path.'pages/quotes/'.$id;
     $return['FR']   = 'Citation #'.$id.' ajoutée à la collection';
   }
   else if($type === 'quotes_new_en')
   {
-    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'text_brown bold';
+    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'brown bold text_white';
     $return['href'] = $path.'pages/quotes/'.$id;
     $return['EN']   = 'Quote #'.$id.' added to the collection';
     $return['FR']   = 'Citation anglophone #'.$id.' ajoutée à la collection';
@@ -440,7 +440,6 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'irc_channels_new')
   {
-    $return['css']  = '';
     $return['href'] = $path.'pages/social/irc?channels';
     $return['EN']   = 'IRC channel '.$title_en.' added to the list by '.$mod_username;
     $return['FR']   = 'Canal IRC '.$title_en.' ajouté à la liste par '.$mod_username;
@@ -448,7 +447,6 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'irc_channels_edit')
   {
-    $return['css']  = '';
     $return['href'] = $path.'pages/social/irc?channels';
     $return['EN']   = 'IRC channel '.$title_en.' updated by '.$mod_username;
     $return['FR']   = 'Canal IRC '.$title_en.' mis à jour par '.$mod_username;
@@ -456,7 +454,6 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'irc_channels_delete')
   {
-    $return['css']  = '';
     $return['href'] = $path.'pages/social/irc?channels';
     $return['EN']   = 'IRC channel '.$title_en.' deleted by '.$mod_username;
     $return['FR']   = 'Canal IRC '.$title_en.' supprimé par '.$mod_username;
@@ -472,8 +469,6 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else
   {
-    $return['css']  = '';
-    $return['href'] = '';
     $return['EN']   = "This should not appear here, oops (".$type.")";
     $return['FR']   = "Ceci ne devrait pas apparaitre ici, oups (".$type.")";
   }

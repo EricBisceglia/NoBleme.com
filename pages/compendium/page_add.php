@@ -175,7 +175,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/compendium/page_list_admin', __('compendium_page_new_title'), 'noglow')?>
   </h1>
 
-  <form method="POST" action="#compendium_add_buttons">
+  <?php if(isset($compendium_pages_add)) { ?>
+  <div class="padding_bot">
+    <div class="red text_white uppercase bold bigger spaced">
+      <?=__('error').__(':', spaces_after: 1).$compendium_pages_add?>
+    </div>
+  </div>
+  <?php } ?>
+
+  <form method="POST">
     <fieldset>
 
       <label for="compendium_new_url"><?=__('compendium_page_new_url')?></label>
@@ -340,15 +348,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?=__('compendium_page_new_draft_redir')?>
       </p>
 
-      <?php if(isset($compendium_pages_add)) { ?>
-      <div class="smallpadding_bot">
-        <div class="red text_white uppercase bold bigger spaced">
-          <?=__('error').__(':', spaces_after: 1).$compendium_pages_add?>
-        </div>
-      </div>
-      <?php } ?>
-
-      <div class="smallpadding_top" id="compendium_add_buttons">
+      <div class="smallpadding_top">
         <span class="spaced_right">
           <input type="submit" name="compendium_new_preview" value="<?=__('preview')?>">
         </span>

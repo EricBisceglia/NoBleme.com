@@ -205,12 +205,18 @@ ___('compendium_page_draft_submit',   'FR', "Publier la page");
 
 
 // Edit a page
-___('compendium_page_edit_title',   'EN', "Edit page");
-___('compendium_page_edit_title',   'FR', "Modifier la page");
-___('compendium_page_edit_submit',  'EN', "Edit the page");
-___('compendium_page_edit_submit',  'FR', "Modifier la page");
-___('compendium_page_edit_missing', 'EN', "This page does not exist or has been deleted");
-___('compendium_page_edit_missing', 'FR', "Cette page n'existe pas ou a été supprimée");
+___('compendium_page_edit_title',       'EN', "Edit page");
+___('compendium_page_edit_title',       'FR', "Modifier la page");
+___('compendium_page_edit_history_en',  'EN', "Reason for the modification (optional, english)");
+___('compendium_page_edit_history_en',  'FR', "Raison de la modification (optional, english)");
+___('compendium_page_edit_history_fr',  'EN', "Reason for the modification (optional, french)");
+___('compendium_page_edit_history_fr',  'FR', "Raison de la modification (optional, french)");
+___('compendium_page_edit_major',       'EN', "This edit is a major modification");
+___('compendium_page_edit_major',       'FR', "Cette modification est une modification majeure");
+___('compendium_page_edit_submit',      'EN', "Edit the page");
+___('compendium_page_edit_submit',      'FR', "Modifier la page");
+___('compendium_page_edit_missing',     'EN', "This page does not exist or has been deleted");
+___('compendium_page_edit_missing',     'FR', "Cette page n'existe pas ou a été supprimée");
 
 
 // Delete a page
@@ -752,12 +758,12 @@ ___('compendium_type_add_no_name',  'FR', "Les thématiques doivent avoir un nom
 
 
 // Edit a page type
-___('compendium_type_edit_title',   'EN', "Edit a page type");
-___('compendium_type_edit_title',   'FR', "Modifier la thématique");
-___('compendium_type_edit_submit',  'EN', "Edit page type");
-___('compendium_type_edit_submit',  'FR', "Modifier la thématique");
-___('compendium_type_edit_error',   'EN', "The page type doesn't exist or has been deleted");
-___('compendium_type_edit_error',   'FR', "La thématique n'existe pas ou a été supprimée");
+___('compendium_type_edit_title',     'EN', "Edit a page type");
+___('compendium_type_edit_title',     'FR', "Modifier la thématique");
+___('compendium_type_edit_submit',    'EN', "Edit page type");
+___('compendium_type_edit_submit',    'FR', "Modifier la thématique");
+___('compendium_type_edit_error',     'EN', "The page type doesn't exist or has been deleted");
+___('compendium_type_edit_error',     'FR', "La thématique n'existe pas ou a été supprimée");
 
 
 // Delete a page type

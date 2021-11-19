@@ -856,7 +856,8 @@ function compendium_pages_edit( int   $page_id  ,
     return __('compendium_page_edit_missing');
 
   // Fetch the page data
-  $page_data = compendium_pages_get($page_id);
+  $page_data = compendium_pages_get(  $page_id        ,
+                                      no_loops: false );
 
   // Stop here if the page data is missing
   if(!isset($page_data) || !$page_data)
@@ -870,6 +871,8 @@ function compendium_pages_edit( int   $page_id  ,
   // Sanitize and prepare the data
   $timestamp          = sanitize(time(), 'int', 0);
   $page_url_raw       = $page_url;
+  $page_title_en_raw  = $page_title_en;
+  $page_title_fr_raw  = $page_title_fr;
   $page_url           = sanitize($page_url, 'string');
   $page_title_en      = sanitize($page_title_en, 'string');
   $page_title_fr      = sanitize($page_title_fr, 'string');
@@ -891,6 +894,9 @@ function compendium_pages_edit( int   $page_id  ,
   $page_era           = isset($contents['era'])           ? sanitize($contents['era'], 'int', 0)              : 0;
   $page_admin_notes   = isset($contents['admin_notes'])   ? sanitize($contents['admin_notes'], 'string')      : '';
   $page_admin_urls    = isset($contents['admin_urls'])    ? sanitize($contents['admin_urls'], 'string')       : '';
+  $page_history_en    = isset($contents['history_en'])    ? sanitize($contents['history_en'], 'string')       : '';
+  $page_history_fr    = isset($contents['history_fr'])    ? sanitize($contents['history_fr'], 'string')       : '';
+  $page_history_major = isset($contents['major'])         ? sanitize($contents['major'], 'int', 0, 1)         : 0;
 
   // Error: No URL
   if(!$page_url)
@@ -985,6 +991,78 @@ function compendium_pages_edit( int   $page_id  ,
                           global_type_wipe: true      ,
                           restore:          true      );
 
+  // Do not handle history, activity or integrations for redirections, deleted pages, or drafts
+  if(!$page_redirect_en && !$page_redirect_fr && !$page_data['draft'] && !$page_data['deleted'])
+  {
+    // Page history
+    query(" INSERT INTO compendium_pages_history
+            SET         compendium_pages_history.fk_compendium_pages  = '$page_id'            ,
+                        compendium_pages_history.edited_at            = '$timestamp'          ,
+                        compendium_pages_history.is_major_edit        = '$page_history_major' ,
+                        compendium_pages_history.summary_en           = '$page_history_en'    ,
+                        compendium_pages_history.summary_fr           = '$page_history_fr'    ");
+
+    // Update the page edition data in case of a major modification
+    if($page_history_major)
+      query(" UPDATE  compendium_pages
+              SET     compendium_pages.last_edited_at = '$timestamp'
+              WHERE   compendium_pages.id             = '$page_id' ");
+
+    // Recent activity
+    if(isset($contents['activity']) && $contents['activity'])
+    {
+      // Determine the language to use
+      $lang   = ($page_title_en_raw) ? 'EN' : '';
+      $lang  .= ($page_title_fr_raw) ? 'FR' : '';
+
+      // Create the activity entry
+      if($lang)
+        log_activity( 'compendium_edit',
+                      language:             'ENFR'              ,
+                      activity_id:          $page_id            ,
+                      activity_summary_en:  $page_title_en_raw  ,
+                      activity_summary_fr:  $page_title_fr_raw  ,
+                      username:             $page_url_raw       );
+    }
+
+    // IRC bot message
+    if(isset($contents['irc']) && $contents['irc'])
+    {
+      if($page_data['titleenraw'])
+        irc_bot_send_message("21st century compendium entry edited: ".$page_title_en_raw." - ".$GLOBALS['website_url']."pages/compendium/".$page_url_raw, 'english');
+      if($page_data['titlefrraw'])
+        irc_bot_send_message("Page modifée dans le compendium du 21ème siècle : ".$page_title_fr_raw." - ".$GLOBALS['website_url']."pages/compendium/".$page_url_raw, 'french');
+    }
+
+    // Discord message
+    if(isset($contents['discord']) && $contents['discord'])
+    {
+      // Prepare the correct message
+      if($page_title_en_raw && $page_title_fr_raw)
+      {
+        $message  = "21st century compendium entry edited: ".$page_title_en_raw;
+        $message .= PHP_EOL."Page modifiée dans le compendium : ".$page_title_fr_raw;
+        $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_url_raw.">";
+      }
+      else if($page_title_en_raw)
+      {
+        $message  = "21st century compendium entry edited: ".$page_title_en_raw;
+        $message .= PHP_EOL."Page modifiée dans le compendium - n'est pas disponible en français";
+        $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_url_raw.">";
+      }
+      else if($page_title_fr_raw)
+      {
+        $message  = "21st century compendium entry edited - not available in englsih";
+        $message .= PHP_EOL."Page modifiée dans le compendium : ".$page_title_fr_raw;
+        $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_url_raw.">";
+      }
+
+      // Send the message
+      if(isset($message))
+        discord_send_message($message, 'main');
+    }
+  }
+
   // Return the compendium page's id
   return NULL;
 }
@@ -1065,9 +1143,9 @@ function compendium_pages_publish(  int   $page_id                  ,
   if($irc_message)
   {
     if($page_data['titleenraw'])
-      irc_bot_send_message("New entry in the 21st century compendium: ".$page_data['titleenraw']." - ".$GLOBALS['website_url']."pages/compendium/".$page_data['url'], 'english');
+      irc_bot_send_message("New entry in the 21st century compendium: ".$page_data['titleenraw']." - ".$GLOBALS['website_url']."pages/compendium/".$page_data['url_raw'], 'english');
     if($page_data['titlefrraw'])
-      irc_bot_send_message("Nouvelle page dans le compendium du 21ème siècle : ".$page_data['titlefrraw']." - ".$GLOBALS['website_url']."pages/compendium/".$page_data['url'], 'french');
+      irc_bot_send_message("Nouvelle page dans le compendium du 21ème siècle : ".$page_data['titlefrraw']." - ".$GLOBALS['website_url']."pages/compendium/".$page_data['url_raw'], 'french');
   }
 
   // Discord message
@@ -1078,19 +1156,19 @@ function compendium_pages_publish(  int   $page_id                  ,
     {
       $message  = "New 21st century compendium page: ".$page_data['titleenraw'];
       $message .= PHP_EOL."Nouvelle page dans le compendium : ".$page_data['titlefrraw'];
-      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url'].">";
+      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url_raw'].">";
     }
     else if($page_data['titleenraw'])
     {
       $message  = "New 21st century compendium page: ".$page_data['titleenraw'];
       $message .= PHP_EOL."Nouvelle page dans le compendium - n'est pas disponible en français";
-      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url'].">";
+      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url_raw'].">";
     }
     else if($page_data['titlefrraw'])
     {
       $message  = "New 21st century compendium page - not available in englsih";
       $message .= PHP_EOL."Nouvelle page dans le compendium : ".$page_data['titlefrraw'];
-      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url'].">";
+      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url_raw'].">";
     }
 
     // Send the message

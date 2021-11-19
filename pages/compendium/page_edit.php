@@ -70,6 +70,12 @@ $compendium_edit_gross        = $compendium_page_data['gross'];
 $compendium_edit_offensive    = $compendium_page_data['offensive'];
 $compendium_edit_admin_notes  = $compendium_page_data['admin_note'];
 $compendium_edit_admin_urls   = $compendium_page_data['admin_urls'];
+$compendium_edit_history_en   = "";
+$compendium_edit_history_fr   = "";
+$compendium_edit_major        = false;
+$compendium_edit_activity     = false;
+$compendium_edit_irc          = false;
+$compendium_edit_discord      = false;
 
 // Fetch the categories list
 $compendium_categories_list = compendium_categories_list();
@@ -103,6 +109,12 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_offensive    = form_fetch_element('compendium_edit_offensive', element_exists: true);
   $compendium_edit_admin_notes  = form_fetch_element('compendium_edit_admin_notes');
   $compendium_edit_admin_urls   = form_fetch_element('compendium_edit_admin_urls');
+  $compendium_edit_history_en   = form_fetch_element('compendium_edit_history_en');
+  $compendium_edit_history_fr   = form_fetch_element('compendium_edit_history_fr');
+  $compendium_edit_major        = form_fetch_element('compendium_edit_major', element_exists: true);
+  $compendium_edit_activity     = form_fetch_element('compendium_edit_activity', element_exists: true);
+  $compendium_edit_irc          = form_fetch_element('compendium_edit_irc', element_exists: true);
+  $compendium_edit_discord      = form_fetch_element('compendium_edit_discord', element_exists: true);
 
   // Update the selected categories aswell
   for($i = 0; $i < $compendium_categories_list['rows']; $i++)
@@ -121,7 +133,7 @@ if(isset($_POST['compendium_edit_submit']))
   // Assemble the page data
   $compendium_edit_data = array(  'url'           => $compendium_edit_url           ,
                                   'title_en'      => $compendium_edit_title_en      ,
-                                  'title_fr'      => $compendium_edit_title_en      ,
+                                  'title_fr'      => $compendium_edit_title_fr      ,
                                   'redirect_en'   => $compendium_edit_redirect_en   ,
                                   'redirect_fr'   => $compendium_edit_redirect_fr   ,
                                   'summary_en'    => $compendium_edit_summary_en    ,
@@ -139,7 +151,13 @@ if(isset($_POST['compendium_edit_submit']))
                                   'gross'         => $compendium_edit_gross         ,
                                   'offensive'     => $compendium_edit_offensive     ,
                                   'admin_notes'   => $compendium_edit_admin_notes   ,
-                                  'admin_urls'    => $compendium_edit_admin_urls    );
+                                  'admin_urls'    => $compendium_edit_admin_urls    ,
+                                  'history_en'    => $compendium_edit_history_en    ,
+                                  'history_fr'    => $compendium_edit_history_fr    ,
+                                  'major'         => $compendium_edit_major         ,
+                                  'activity'      => $compendium_edit_activity      ,
+                                  'irc'           => $compendium_edit_irc           ,
+                                  'discord'       => $compendium_edit_activity      );
 
   // Add category data to the page data
   for($i = 0; $i < $compendium_categories_list['rows']; $i++)
@@ -186,6 +204,8 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_peak_year    = sanitize_output($compendium_edit_peak_year);
   $compendium_edit_admin_notes  = sanitize_output($compendium_edit_admin_notes);
   $compendium_edit_admin_urls   = sanitize_output($compendium_edit_admin_urls);
+  $compendium_edit_history_en   = sanitize_output($compendium_edit_history_en);
+  $compendium_edit_history_fr   = sanitize_output($compendium_edit_history_fr);
 }
 
 // Fetch the page types list
@@ -217,6 +237,10 @@ $compendium_edit_nsfw_title_checkbox  = ($compendium_edit_nsfw_title) ? ' checke
 $compendium_edit_nsfw_checkbox        = ($compendium_edit_nsfw)       ? ' checked' : '';
 $compendium_edit_gross_checkbox       = ($compendium_edit_gross)      ? ' checked' : '';
 $compendium_edit_offensive_checkbox   = ($compendium_edit_offensive)  ? ' checked' : '';
+$compendium_edit_major_checkbox       = ($compendium_edit_major)      ? ' checked' : '';
+$compendium_edit_activity_checkbox    = ($compendium_edit_activity)   ? ' checked' : '';
+$compendium_edit_irc_checkbox         = ($compendium_edit_irc)        ? ' checked' : '';
+$compendium_edit_discord_checkbox     = ($compendium_edit_discord)    ? ' checked' : '';
 
 
 
@@ -233,7 +257,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/compendium/'.$compendium_page_data['url'], __('compendium_page_edit_title'), 'noglow')?>
   </h1>
 
-  <form method="POST" action="#compendium_edit_buttons">
+  <?php if(isset($compendium_pages_edit)) { ?>
+  <div class="padding_bot">
+    <div class="red text_white uppercase bold bigger spaced">
+      <?=__('error').__(':', spaces_after: 1).$compendium_pages_edit?>
+    </div>
+  </div>
+  <?php } ?>
+
+  <form method="POST">
     <fieldset>
 
       <label for="compendium_edit_url"><?=__('compendium_page_new_url')?></label>
@@ -387,20 +419,38 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <textarea class="indiv compendium_admin_summary" id="compendium_edit_admin_notes" name="compendium_edit_admin_notes"><?=$compendium_edit_admin_notes?></textarea>
       </div>
 
-      <div class="smallpadding_top padding_bot">
+      <div class="smallpadding_top smallpadding_bot">
         <label for="compendium_edit_admin_urls"><?=__('compendium_pages_new_admin_urls')?></label>
         <textarea class="indiv compendium_admin_urls" id="compendium_edit_admin_urls" name="compendium_edit_admin_urls"><?=$compendium_edit_admin_urls?></textarea>
       </div>
 
-      <?php if(isset($compendium_pages_edit)) { ?>
+      <?php if(!$compendium_edit_redirect_en && !$compendium_edit_redirect_fr && !$compendium_page_data['deleted'] && !$compendium_page_data['draft']) { ?>
+
       <div class="smallpadding_bot">
-        <div class="red text_white uppercase bold bigger spaced">
-          <?=__('error').__(':', spaces_after: 1).$compendium_pages_edit?>
-        </div>
+        <label for="compendium_edit_history_en"><?=__('compendium_page_edit_history_en')?></label>
+        <input type="text" class="indiv" id="compendium_edit_history_en" name="compendium_edit_history_en" value="<?=$compendium_edit_history_en?>">
       </div>
+
+      <div class="smallpadding_bot">
+        <label for="compendium_edit_history_fr"><?=__('compendium_page_edit_history_fr')?></label>
+        <input type="text" class="indiv" id="compendium_edit_history_fr" name="compendium_edit_history_fr" value="<?=$compendium_edit_history_fr?>">
+      </div>
+
+      <input type="checkbox" id="compendium_edit_major" name="compendium_edit_major"<?=$compendium_edit_major_checkbox?>>
+      <label class="label_inline" for="compendium_edit_major"><?=__('compendium_page_edit_major')?></label><br>
+
+      <input type="checkbox" id="compendium_edit_activity" name="compendium_edit_activity"<?=$compendium_edit_activity_checkbox?>>
+      <label class="label_inline" for="compendium_edit_activity"><?=__('compendium_page_draft_activity')?></label><br>
+
+      <input type="checkbox" id="compendium_edit_irc" name="compendium_edit_irc"<?=$compendium_edit_irc_checkbox?>>
+      <label class="label_inline" for="compendium_edit_irc"><?=__('compendium_page_draft_irc')?></label><br>
+
+      <input type="checkbox" id="compendium_edit_discord" name="compendium_edit_discord"<?=$compendium_edit_discord_checkbox?>>
+      <label class="label_inline" for="compendium_edit_discord"><?=__('compendium_page_draft_discord')?></label>
+
       <?php } ?>
 
-      <div class="smallpadding_top" id="compendium_edit_buttons">
+      <div class="smallpadding_top">
         <span class="spaced_right">
           <input type="submit" name="compendium_edit_preview" value="<?=__('preview')?>">
         </span>
