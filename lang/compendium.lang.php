@@ -444,6 +444,29 @@ ___('compendium_image_random',      'EN', "Another random image");
 ___('compendium_image_random',      'FR', "Autre image au hasard");
 
 
+// Image list
+___('compendium_image_list_title',      'EN', "Image list");
+___('compendium_image_list_title',      'FR', "Images");
+___('compendium_image_list_copy',       'EN', "Copy");
+___('compendium_image_list_copy',       'FR', "Copier");
+___('compendium_image_list_name',       'EN', "File name");
+___('compendium_image_list_name',       'FR', "Nom du fichier");
+___('compendium_image_list_tags',       'EN', "Tags");
+___('compendium_image_list_tags',       'FR', "Mots clés");
+___('compendium_image_list_used_en',    'EN', "Usage (english)");
+___('compendium_image_list_used_en',    'FR', "Utilisation (anglais)");
+___('compendium_image_list_used_fr',    'EN', "Usage (french)");
+___('compendium_image_list_used_fr',    'FR', "Utilisation (français)");
+___('compendium_image_list_uploaded',   'EN', "Uploaded");
+___('compendium_image_list_uploaded',   'FR', "Date");
+___('compendium_image_list_caption',    'EN', "Text");
+___('compendium_image_list_caption',    'FR', "Texte");
+___('compendium_image_list_nsfw',       'EN', "NSFW image");
+___('compendium_image_list_nsfw',       'FR', "Image NSFW");
+___('compendium_image_list_count',      'EN', "{{1}} compendium images");
+___('compendium_image_list_count',      'FR', "{{1}} images dans le compendium");
+
+
 
 
 /*********************************************************************************************************************/

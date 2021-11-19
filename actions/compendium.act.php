@@ -21,8 +21,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_images_get                   Returns data related to an image used in the compendium.                 */
 /*  compendium_images_get_random            Returns data related to a random image used in the compendium.           */
+/*  compendium_images_list                  Fetches a list of images used in the compendium.                         */
 /*  compendium_images_recalculate_links     Recalculates the compendium pages on which an image is being used.       */
 /*  compendium_images_assemble_links        Lists all compendium pages containing an image in a usable format.       */
+/*  compendium_images_assemble_tags         Transforms compendium image tags into a usable format.                   */
 /*                                                                                                                   */
 /*  compendium_types_get                    Returns data related to a compendium page type.                          */
 /*  compendium_types_list                   Fetches a list of compendium page types.                                 */
@@ -51,6 +53,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_admin_notes_edit             Modifies the admin notes.                                                */
 /*                                                                                                                   */
 /*  compendium_pages_list_years             Fetches the years at which compendium pages have been created.           */
+/*  compendium_images_list_years            Fetches the years in which compendium images have been uploaded.         */
 /*  compendium_appearance_list_years        Fetches the years at which compendium content has appeared.              */
 /*  compendium_peak_list_years              Fetches the years at which compendium content has peaked.                */
 /*                                                                                                                   */
@@ -1377,6 +1380,7 @@ function compendium_images_get( int     $image_id   = 0 ,
   // Assemble an array with the data
   $data['id']         = sanitize_output($dimage['ci_id']);
   $data['deleted']    = sanitize_output($dimage['ci_deleted']);
+  $data['name']       = sanitize_output($dimage['ci_filename']);
   $data['nsfw']       = sanitize_output($dimage['ci_nsfw']);
   $data['gross']      = sanitize_output($dimage['ci_gross']);
   $data['offensive']  = sanitize_output($dimage['ci_offensive']);
@@ -1440,6 +1444,160 @@ function compendium_images_get_random( int $exclude_id = 0 ) : string
 
 
 /**
+ * Fetches a list of images used in the compendium.
+ *
+ * @param   string  $sort_by    (OPTIONAL)  How the returned data should be sorted.
+ * @param   array   $search     (OPTIONAL)  Search for specific field values.
+ *
+ * @return  array                           An array containing images used in the compendium.
+ */
+
+function compendium_images_list(  string  $sort_by  = 'date'  ,
+                                  array   $search   = array() ) : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the search parameters
+  $search_name    = isset($search['name'])    ? sanitize($search['name'], 'string')     : '';
+  $search_date    = isset($search['date'])    ? sanitize($search['date'], 0)            : 0;
+  $search_nsfw    = isset($search['nsfw'])    ? sanitize($search['nsfw'], 'string')     : '';
+  $search_used_en = isset($search['used_en']) ? sanitize($search['used_en'], 'string')  : '';
+  $search_used_fr = isset($search['used_fr']) ? sanitize($search['used_fr'], 'string')  : '';
+  $search_tags    = isset($search['tags'])    ? sanitize($search['tags'], 'string')     : '';
+  $search_caption = isset($search['caption']) ? sanitize($search['caption'], 'string')  : '';
+
+  // Fetch the images
+  $qimages = "     SELECT   compendium_images.id                AS 'ci_id'          ,
+                            compendium_images.uploaded_at       AS 'ci_date'        ,
+                            compendium_images.file_name         AS 'ci_name'        ,
+                            compendium_images.tags              AS 'ci_tags'        ,
+                            compendium_images.is_nsfw           AS 'ci_nsfw'        ,
+                            compendium_images.is_gross          AS 'ci_gross'       ,
+                            compendium_images.is_offensive      AS 'ci_offensive'   ,
+                            compendium_images.used_in_pages_en  AS 'ci_used_en'     ,
+                            compendium_images.used_in_pages_fr  AS 'ci_used_fr'     ,
+                            compendium_images.caption_en        AS 'ci_caption_en'  ,
+                            compendium_images.caption_fr        AS 'ci_caption_fr'
+                  FROM      compendium_images
+                  WHERE     1 = 1 ";
+
+  // Search the data
+  if($search_name)
+    $qimages .= " AND       compendium_images.file_name                         LIKE  '%$search_name%'    ";
+  if($search_date)
+    $qimages .= " AND       YEAR(FROM_UNIXTIME(compendium_images.uploaded_at))  =     '$search_date'      ";
+  if($search_nsfw == 'safe')
+    $qimages .= " AND       compendium_images.is_nsfw                           =     0
+                  AND       compendium_images.is_gross                          =     0
+                  AND       compendium_images.is_offensive                      =     0                   ";
+  else if($search_nsfw == 'nsfw')
+    $qimages .= " AND     ( compendium_images.is_nsfw                           =     1
+                  OR        compendium_images.is_gross                          =     1
+                  OR        compendium_images.is_offensive                      =     1 )                 ";
+  else if($search_nsfw == 'image')
+    $qimages .= " AND       compendium_images.is_nsfw                           =     1                   ";
+  else if($search_nsfw == 'gross')
+    $qimages .= " AND       compendium_images.is_gross                          =     1                   ";
+  else if($search_nsfw == 'offensive')
+    $qimages .= " AND       compendium_images.is_offensive                      =     1                   ";
+  if($search_used_en)
+    $qimages .= " AND       compendium_images.used_in_pages_en                  LIKE  '%$search_used_en%' ";
+  if($search_used_fr)
+    $qimages .= " AND       compendium_images.used_in_pages_fr                  LIKE  '%$search_used_fr%' ";
+  if($search_tags)
+    $qimages .= " AND       compendium_images.tags                              LIKE  '%$search_tags%'    ";
+  if($search_caption == 'none')
+    $qimages .= " AND       compendium_images.caption_en                        =     ''
+                  AND       compendium_images.caption_fr                        =     ''                  ";
+  else if($search_caption == 'monolingual')
+    $qimages .= " AND     ( compendium_images.caption_en                        =     ''
+                  AND       compendium_images.caption_fr                        !=    '' )
+                  OR      ( compendium_images.caption_en                        !=    ''
+                  AND       compendium_images.caption_fr                        =     '' )                ";
+  else if($search_caption == 'bilingual')
+    $qimages .= " AND       compendium_images.caption_en                        !=    ''
+                  AND       compendium_images.caption_fr                        !=    ''                  ";
+  else if($search_caption == 'english')
+    $qimages .= " AND       compendium_images.caption_en                        !=    ''                  ";
+  else if($search_caption == 'french')
+    $qimages .= " AND       compendium_images.caption_fr                        !=    ''                  ";
+
+  // Sort the data
+  if($sort_by == 'name')
+    $qimages .= " ORDER BY    compendium_images.file_name         ASC     ,
+                              compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'nsfw')
+    $qimages .= " ORDER BY    compendium_images.is_nsfw           = ''    ,
+                              compendium_images.is_gross          = ''    ,
+                              compendium_images.is_offensive      = ''    ,
+                              compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'used_en')
+    $qimages .= " ORDER BY    compendium_images.used_in_pages_en  != ''   ,
+                              compendium_images.used_in_pages_fr  != ''   ,
+                              compendium_images.used_in_pages_en  ASC     ,
+                              compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'used_fr')
+    $qimages .= " ORDER BY    compendium_images.used_in_pages_fr  != ''   ,
+                              compendium_images.used_in_pages_en  != ''   ,
+                              compendium_images.used_in_pages_fr  ASC     ,
+                              compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'tags')
+    $qimages .= " ORDER BY    compendium_images.tags              ASC     ,
+                              compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'caption')
+    $qimages .= " ORDER BY  ( compendium_images.caption_en        != ''
+                  AND         compendium_images.caption_fr        != '' ) ,
+                              compendium_images.caption_fr        != ''   ,
+                              compendium_images.caption_en        != ''   ,
+                              compendium_images.uploaded_at       DESC    ";
+  else
+    $qimages .= " ORDER BY    compendium_images.uploaded_at       DESC    ";
+
+  // Run the query
+  $qimages = query($qimages);
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qimages); $i++)
+  {
+    $data[$i]['id']         = sanitize_output($row['ci_id']);
+    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 30, '...'));
+    $data[$i]['fullname']   = sanitize_output($row['ci_name']);
+    $data[$i]['date']       = sanitize_output(time_since($row['ci_date']));
+    $data[$i]['blur']       = ($row['ci_nsfw'] || $row['ci_gross'] || $row['ci_offensive']) ? 1 : 0;
+    $data[$i]['nsfw']       = $row['ci_nsfw'];
+    $data[$i]['gross']      = $row['ci_gross'];
+    $data[$i]['offensive']  = $row['ci_offensive'];
+    $page_links             = ($row['ci_used_en']) ? compendium_images_assemble_links($row['ci_used_en'], true) : '';
+    $data[$i]['used_en']    = ($row['ci_used_en']) ? $page_links['list'] : '';
+    $page_links             = ($row['ci_used_en']) ? compendium_images_assemble_links($row['ci_used_en']) : '';
+    $data[$i]['used_en_f']  = ($row['ci_used_en']) ? $page_links['list'] : '';
+    $page_links             = ($row['ci_used_fr']) ? compendium_images_assemble_links($row['ci_used_fr'], true) : '';
+    $data[$i]['used_fr']    = ($row['ci_used_fr']) ? $page_links['list'] : '';
+    $page_links             = ($row['ci_used_fr']) ? compendium_images_assemble_links($row['ci_used_fr']) : '';
+    $data[$i]['used_fr_f']  = ($row['ci_used_fr']) ? $page_links['list'] : '';
+    $tags                   = ($row['ci_tags']) ? compendium_images_assemble_tags($row['ci_tags'], true) : '';
+    $data[$i]['tags']       = ($row['ci_tags']) ? $tags['list'] : '';
+    $tags                   = ($row['ci_tags']) ? compendium_images_assemble_tags($row['ci_tags']) : '';
+    $data[$i]['tags_full']  = ($row['ci_tags']) ? $tags['list'] : '';
+    $data[$i]['caption_en'] = ($row['ci_caption_en']) ? 1 : 0;
+    $data[$i]['caption_fr'] = ($row['ci_caption_fr']) ? 1 : 0;
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
  * Recalculates the compendium pages on which an image is being used.
  *
  * @param   int   $image_id   The image's id.
@@ -1454,9 +1612,6 @@ function compendium_images_recalculate_links( int $image_id ) : void
   // Stop here if the image doesn't exist
   if(!database_row_exists('compendium_images', $image_id))
     return;
-
-  // Get the user's current language
-  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the image's name
   $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.file_name AS 'ci_name'
@@ -1527,12 +1682,14 @@ function compendium_images_recalculate_links( int $image_id ) : void
 /**
  * Lists all compendium pages containing an image in a usable format.
  *
- * @param   string  $page_list  A list of compendium pages.
+ * @param   string  $page_list              A list of compendium pages.
+ * @param   bool    $shorten    (OPTIONAL)  Shorten long page names.
  *
  * @return  array               The formatted list and the page count.
  */
 
-function compendium_images_assemble_links( string $page_list ) : array
+function compendium_images_assemble_links(  string  $page_list          ,
+                                            bool    $shorten    = false ) : array
 {
   // Split the page list
   $page_list_array = explode("|||", $page_list);
@@ -1542,12 +1699,49 @@ function compendium_images_assemble_links( string $page_list ) : array
   for($i = 0; $i < count($page_list_array); $i++)
   {
     if(!($i % 2) && isset($page_list_array[$i + 1]))
-      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], $page_list_array[$i + 1]).'<br>';
+    {
+      $temp = ($shorten) ? string_truncate($page_list_array[$i + 1], 20, '...') : $page_list_array[$i + 1];
+      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], $temp).'<br>';
+    }
   }
 
   // Add the formatted page list and the page count to the returned data
   $data['list']   = $formatted_page_list;
   $data['count']  = ($i) ? floor($i / 2) : 0;
+
+  // Return the formatted page list
+  return $data;
+}
+
+
+
+
+/**
+ * Transforms compendium image tags into a usable format.
+ *
+ * @param   string  $tags                 A list of compendium tags.
+ * @param   bool    $shorten  (OPTIONAL)  Shorten long tags.
+ *
+ * @return  array                         The formatted tag list and the tag count.
+ */
+
+function compendium_images_assemble_tags( string  $tags             ,
+                                          bool    $shorten  = false ) : array
+{
+  // Split the tags
+  $tags_array = explode(";", $tags);
+
+  // Format the tags
+  $formatted_tags = '';
+  for($i = 0; $i < count($tags_array); $i++)
+  {
+    $temp = ($shorten) ? string_truncate($tags_array[$i], 20, '...') : $tags_array[$i];
+    $formatted_tags .= $temp.'<br>';
+  }
+
+  // Add the formatted tag list and the tag count to the returned data
+  $data['list']   = $formatted_tags;
+  $data['count']  = $i;
 
   // Return the formatted page list
   return $data;
@@ -2563,6 +2757,35 @@ function compendium_pages_list_years() : array
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
     $data[$i]['year'] = sanitize_output($row['c_year']);
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches the years in which compendium images have been uploaded.
+ *
+ * @return  array   An array containing years.
+ */
+
+function compendium_images_list_years() : array
+{
+  // Fetch the compendium image years
+  $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_images.uploaded_at)) AS 'ci_year'
+                    FROM      compendium_images
+                    WHERE     compendium_images.uploaded_at != '0000-00-00'
+                    GROUP BY  YEAR(FROM_UNIXTIME(compendium_images.uploaded_at))
+                    ORDER BY  YEAR(FROM_UNIXTIME(compendium_images.uploaded_at)) DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+    $data[$i]['year'] = sanitize_output($row['ci_year']);
 
   // Add the number of rows to the data
   $data['rows'] = $i;

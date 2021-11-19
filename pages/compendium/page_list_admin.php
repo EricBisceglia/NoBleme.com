@@ -19,7 +19,7 @@ $hidden_activity = 1;
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/page_list_admin";
 $page_title_en    = "Compendium page list";
-$page_title_fr    = "Compendium : list des pages";
+$page_title_fr    = "Compendium : liste des pages";
 
 // Compendium admin menu selection
 $compendium_admin_menu['page_list'] = 1;

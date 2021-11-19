@@ -15,6 +15,8 @@
 .compendium_admin_search_small  { width: 7.0rem;  }
 .compendium_admin_search_big    { width: 10.0rem; }
 
+.compendium_image_preview { max-width: 100% !important; max-height: 100% !important; }
+
 @media (min-width: 1081px) {
 .compendium_admin_menu { margin-top: -40px; } }
 @media (max-width: 1080px) {

@@ -173,6 +173,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1 class="align_center bigpadding_bot">
     <?=__link('pages/compendium/page_list_admin', __('compendium_page_new_title'), 'noglow')?>
+    <?=__icon('image', alt: 'P', title: __('image'), title_case: 'initials', href: 'pages/compendium/image_admin', popup: true)?>
   </h1>
 
   <?php if(isset($compendium_pages_add)) { ?>

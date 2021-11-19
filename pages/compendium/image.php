@@ -67,6 +67,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h2 class="align_center padding_bot">
     <?=__link('pages/compendium/page_list', $compendium_image_file_name, 'noglow')?>
+    <?php if($is_admin) { ?>
+    <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/image_admin')?>
+    <?php } ?>
   </h2>
 
   <?php if($compendium_image_data['nsfw']) { ?>
