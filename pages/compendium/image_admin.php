@@ -37,6 +37,14 @@ $js   = array('compendium/list', 'compendium/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Recalculate compendium image links
+
+if(isset($_POST['compendium_images_recalculate_links']))
+  compendium_images_recalculate_all_links();
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the compendium images
 
 // Fetch the sorting order
@@ -71,6 +79,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_image_list_title')?>
+    <?=__icon('refresh', alt: 'R', title: __('compendium_image_list_refresh'), class: 'valign_middle pointer spaced_left', onclick: "compendium_recalculate_image_links('".__('compendium_image_list_warning')."');")?>
   </h2>
 
   <table>

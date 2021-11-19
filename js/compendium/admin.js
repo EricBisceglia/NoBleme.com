@@ -1,14 +1,16 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  compendium_admin_menu             Navigates between compendium administration pages.                             */
+/*  compendium_admin_menu                 Navigates between compendium administration pages.                         */
 /*                                                                                                                   */
-/*  compendium_autocomplete_url       Updates the datalist used to autocomplete compendium page urls.                */
+/*  compendium_autocomplete_url           Updates the datalist used to autocomplete compendium page urls.            */
 /*                                                                                                                   */
-/*  compendium_type_delete            Triggers the deletion of a compendium page type.                               */
+/*  compendium_recalculate_image_links    Triggers the recalculation of all compendium image links.                  */
 /*                                                                                                                   */
-/*  compendium_category_delete        Triggers the deletion of a compendium category.                                */
+/*  compendium_type_delete                Triggers the deletion of a compendium page type.                           */
 /*                                                                                                                   */
-/*  compendium_era_delete             Triggers the deletion of a compendium era.                                     */
+/*  compendium_category_delete            Triggers the deletion of a compendium category.                            */
+/*                                                                                                                   */
+/*  compendium_era_delete                 Triggers the deletion of a compendium era.                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -55,6 +57,30 @@ function compendium_autocomplete_url( url_input_id            ,
 
   // Submit the fetch request
   fetch_page('page_autocomplete_url', target_element, postdata);
+}
+
+
+
+
+/**
+ * Triggers the recalculation of all compendium image links.
+ *
+ * @param   {string}  message   The message which will be displayed.
+ *
+ * @returns {void}
+*/
+
+function compendium_recalculate_image_links( message )
+{
+  // Make sure the user knows what they're doing
+  if(confirm(message))
+  {
+    // Assemble the postdata
+    postdata = 'compendium_images_recalculate_links=1';
+
+    // Submit the recalculation
+    fetch_page('image_admin', 'compendium_image_list_tbody', postdata);
+  }
 }
 
 

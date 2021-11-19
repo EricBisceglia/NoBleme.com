@@ -8,58 +8,59 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  compendium_pages_get                    Returns data related to a compendium page.                               */
-/*  compendium_pages_get_random             Returns data related to a random compendium page.                        */
-/*  compendium_pages_list                   Fetches a list of compendium pages.                                      */
-/*  compendium_pages_list_urls              Fetches a list of all public compendium page urls.                       */
-/*  compendium_pages_add                    Creates a new compendium page.                                           */
-/*  compendium_pages_edit                   Modifies an existing compendium page.                                    */
-/*  compendium_pages_publish                Publishes an existing compendium page.                                   */
-/*  compendium_pages_delete                 Deletes an existing compendium page.                                     */
-/*  compendium_pages_restore                Restores a deleted compendium page.                                      */
-/*  compendium_pages_autocomplete           Autocompletes a page url.                                                */
+/*  compendium_pages_get                      Returns data related to a compendium page.                             */
+/*  compendium_pages_get_random               Returns data related to a random compendium page.                      */
+/*  compendium_pages_list                     Fetches a list of compendium pages.                                    */
+/*  compendium_pages_list_urls                Fetches a list of all public compendium page urls.                     */
+/*  compendium_pages_add                      Creates a new compendium page.                                         */
+/*  compendium_pages_edit                     Modifies an existing compendium page.                                  */
+/*  compendium_pages_publish                  Publishes an existing compendium page.                                 */
+/*  compendium_pages_delete                   Deletes an existing compendium page.                                   */
+/*  compendium_pages_restore                  Restores a deleted compendium page.                                    */
+/*  compendium_pages_autocomplete             Autocompletes a page url.                                              */
 /*                                                                                                                   */
-/*  compendium_images_get                   Returns data related to an image used in the compendium.                 */
-/*  compendium_images_get_random            Returns data related to a random image used in the compendium.           */
-/*  compendium_images_list                  Fetches a list of images used in the compendium.                         */
-/*  compendium_images_recalculate_links     Recalculates the compendium pages on which an image is being used.       */
-/*  compendium_images_assemble_links        Lists all compendium pages containing an image in a usable format.       */
-/*  compendium_images_assemble_tags         Transforms compendium image tags into a usable format.                   */
+/*  compendium_images_get                     Returns data related to an image used in the compendium.               */
+/*  compendium_images_get_random              Returns data related to a random image used in the compendium.         */
+/*  compendium_images_list                    Fetches a list of images used in the compendium.                       */
+/*  compendium_images_recalculate_links       Recalculates the compendium pages on which an image is being used.     */
+/*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
+/*  compendium_images_assemble_links          Lists all compendium pages containing an image in a usable format.     */
+/*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
 /*                                                                                                                   */
-/*  compendium_types_get                    Returns data related to a compendium page type.                          */
-/*  compendium_types_list                   Fetches a list of compendium page types.                                 */
-/*  compendium_types_add                    Creates a new compendium page type.                                      */
-/*  compendium_types_edit                   Modifies an existing compendium page type.                               */
-/*  compendium_types_delete                 Deletes an existing compendium page type.                                */
+/*  compendium_types_get                      Returns data related to a compendium page type.                        */
+/*  compendium_types_list                     Fetches a list of compendium page types.                               */
+/*  compendium_types_add                      Creates a new compendium page type.                                    */
+/*  compendium_types_edit                     Modifies an existing compendium page type.                             */
+/*  compendium_types_delete                   Deletes an existing compendium page type.                              */
 /*                                                                                                                   */
-/*  compendium_categories_get               Returns data related to a compendium category.                           */
-/*  compendium_categories_list              Fetches a list of compendium categories.                                 */
-/*  compendium_categories_add               Creates a new compendium category.                                       */
-/*  compendium_categories_edit              Modifies an existing compendium category.                                */
-/*  compendium_categories_delete            Deletes an existing compendium category.                                 */
+/*  compendium_categories_get                 Returns data related to a compendium category.                         */
+/*  compendium_categories_list                Fetches a list of compendium categories.                               */
+/*  compendium_categories_add                 Creates a new compendium category.                                     */
+/*  compendium_categories_edit                Modifies an existing compendium category.                              */
+/*  compendium_categories_delete              Deletes an existing compendium category.                               */
 /*                                                                                                                   */
-/*  compendium_eras_get                     Returns data related to a compendium era.                                */
-/*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
-/*  compendium_eras_add                     Creates a new compendium era.                                            */
-/*  compendium_eras_edit                    Modifies an existing compendium era.                                     */
-/*  compendium_eras_delete                  Deletes an existing compendium era.                                      */
+/*  compendium_eras_get                       Returns data related to a compendium era.                              */
+/*  compendium_eras_list                      Fetches a list of compendium eras.                                     */
+/*  compendium_eras_add                       Creates a new compendium era.                                          */
+/*  compendium_eras_edit                      Modifies an existing compendium era.                                   */
+/*  compendium_eras_delete                    Deletes an existing compendium era.                                    */
 /*                                                                                                                   */
-/*  compendium_page_history_get             Returns data related to an entry in a compendium page's history.         */
-/*  compendium_page_history_list            Returns data related to a compendium page's history entry.               */
-/*  compendium_page_history_edit            Modifies an existing compendium page's history entry.                    */
-/*  compendium_page_history_delete          Hard deletes an existing compendium page's history entry.                */
+/*  compendium_page_history_get               Returns data related to an entry in a compendium page's history.       */
+/*  compendium_page_history_list              Returns data related to a compendium page's history entry.             */
+/*  compendium_page_history_edit              Modifies an existing compendium page's history entry.                  */
+/*  compendium_page_history_delete            Hard deletes an existing compendium page's history entry.              */
 /*                                                                                                                   */
-/*  compendium_admin_notes_get              Fetches the admin notes.                                                 */
-/*  compendium_admin_notes_edit             Modifies the admin notes.                                                */
+/*  compendium_admin_notes_get                Fetches the admin notes.                                               */
+/*  compendium_admin_notes_edit               Modifies the admin notes.                                              */
 /*                                                                                                                   */
-/*  compendium_pages_list_years             Fetches the years at which compendium pages have been created.           */
-/*  compendium_images_list_years            Fetches the years in which compendium images have been uploaded.         */
-/*  compendium_appearance_list_years        Fetches the years at which compendium content has appeared.              */
-/*  compendium_peak_list_years              Fetches the years at which compendium content has peaked.                */
+/*  compendium_pages_list_years               Fetches the years at which compendium pages have been created.         */
+/*  compendium_images_list_years              Fetches the years in which compendium images have been uploaded.       */
+/*  compendium_appearance_list_years          Fetches the years at which compendium content has appeared.            */
+/*  compendium_peak_list_years                Fetches the years at which compendium content has peaked.              */
 /*                                                                                                                   */
-/*  compendium_format_url                   Formats a compendium page url.                                           */
-/*  compendium_format_title                 Formats a compendium page title.                                         */
-/*  compendium_nbcodes_apply                Applies NBCodes to a string.                                             */
+/*  compendium_format_url                     Formats a compendium page url.                                         */
+/*  compendium_format_title                   Formats a compendium page title.                                       */
+/*  compendium_nbcodes_apply                  Applies NBCodes to a string.                                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -1604,6 +1605,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
  *
  * @return  void
  */
+
 function compendium_images_recalculate_links( int $image_id ) : void
 {
   // Sanitize the image's id
@@ -1674,6 +1676,30 @@ function compendium_images_recalculate_links( int $image_id ) : void
           SET     compendium_images.used_in_pages_en  = '$usage_list_en'  ,
                   compendium_images.used_in_pages_fr  = '$usage_list_fr'
           WHERE   compendium_images.id                = '$image_id'       ");
+}
+
+
+
+
+/**
+ * Recalculates all compendium image links.
+ *
+ * @return  void
+ */
+
+function compendium_images_recalculate_all_links()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Fetch all compendium images
+  $qimages = query("  SELECT    compendium_images.id AS 'ci_id'
+                      FROM      compendium_images
+                      ORDER BY  compendium_images.uploaded_at DESC ");
+
+  // Loop through the images and recalculate the links
+  while($dimages = mysqli_fetch_array($qimages))
+    compendium_images_recalculate_links($dimages['ci_id']);
 }
 
 

@@ -447,6 +447,10 @@ ___('compendium_image_random',      'FR', "Autre image au hasard");
 // Image list
 ___('compendium_image_list_title',      'EN', "Image list");
 ___('compendium_image_list_title',      'FR', "Images");
+___('compendium_image_list_refresh',    'EN', "Recalculate all image usage data");
+___('compendium_image_list_refresh',    'FR', "Recalculer les données d'utilisation de toutes les images");
+___('compendium_image_list_warning',    'EN', "Recalculating all image usage data could be a long and intensive process, are you sure you want to do this?");
+___('compendium_image_list_warning',    'FR', "Recalculer toutes les données d\'utilisation des images peut être un processus long et intensif, tenez-vous réellement à le faire ?");
 ___('compendium_image_list_copy',       'EN', "Copy");
 ___('compendium_image_list_copy',       'FR', "Copier");
 ___('compendium_image_list_name',       'EN', "File name");
