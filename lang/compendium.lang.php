@@ -485,7 +485,7 @@ ___('compendium_image_list_no_delete',  'FR', "Impossible de supprimer une image
 ___('compendium_image_upload_label',      'EN', "Upload a new image");
 ___('compendium_image_upload_label',      'FR', "Mettre une nouvelle image en ligne");
 ___('compendium_image_upload_name',       'EN', "File name - lowercase, no spaces");
-___('compenidum_image_upload_name',       'FR', "Nom du fichier - minuscules, pas d'espaces");
+___('compendium_image_upload_name',       'FR', "Nom du fichier - minuscules, pas d'espaces");
 ___('compendium_image_upload_tags',       'EN', "Image tags separated by ; semicolons");
 ___('compendium_image_upload_tags',       'FR', "Mots clés séparés par des ; point-virgules");
 ___('compendium_image_upload_caption_en', 'EN', "English caption ({{link_popup|pages/doc/bbcodes|NBCodes}})");
@@ -514,6 +514,19 @@ ___('compendium_image_upload_failed',     'EN', "Image upload failed");
 ___('compendium_image_upload_failed',     'FR', "La mise en ligne de l'image a échoué");
 ___('compendium_image_upload_ok',         'EN', "The image was successfully uploaded");
 ___('compendium_image_upload_ok',         'FR', "L'image a bien été mise en ligne");
+
+
+// Edit image
+___('compendium_image_edit_title',      'EN', "Edit {{1}}");
+___('compendium_image_edit_title',      'FR', "Modifier {{1}}");
+___('compendium_image_edit_submit',     'EN', "Edit image");
+___('compendium_image_edit_submit',     'FR', "Modifier l'image");
+___('compendium_image_edit_missing',    'EN', "This image does not exist or has been deleted");
+___('compendium_image_edit_missing',    'FR', "L'image n'existe pas ou a été supprimée");
+___('compendium_image_edit_not_found',  'EN', "The image file can not be found");
+___('compendium_image_edit_not_found',  'FR', "Le fichier de l'image n'existe pas");
+___('compendium_image_edit_no_rename',  'EN', "The image file could not be renamed");
+___('compendium_image_edit_no_rename',  'FR', "Impossible de renommer le fichier de l'image");
 
 
 

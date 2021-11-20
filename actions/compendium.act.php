@@ -23,6 +23,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_get_random              Returns data related to a random image used in the compendium.         */
 /*  compendium_images_list                    Fetches a list of images used in the compendium.                       */
 /*  compendium_images_upload                  Uploads a new compendium image.                                        */
+/*  compendium_images_edit                    Modifies an existing compendium image.                                 */
 /*  compendium_images_delete                  Deletes, restores, or hard deletes an existing compendium image.       */
 /*  compendium_images_recalculate_links       Recalculates the compendium pages on which an image is being used.     */
 /*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
@@ -1071,7 +1072,7 @@ function compendium_pages_edit( int   $page_id  ,
     }
   }
 
-  // Return the compendium page's id
+  // All went well, return null
   return NULL;
 }
 
@@ -1329,7 +1330,7 @@ function compendium_pages_autocomplete( string  $input                ,
  * @return  array|null              An array containing page image data, or NULL if it does not exist.
  */
 
-function compendium_images_get( int     $image_id   = 0 ,
+function compendium_images_get( ?int    $image_id   = 0 ,
                                 string  $file_name  = '') : mixed
 {
   // Check if the required files have been included
@@ -1367,16 +1368,19 @@ function compendium_images_get( int     $image_id   = 0 ,
   compendium_images_recalculate_links($image_id);
 
   // Fetch the data
-  $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id                  AS 'ci_id'        ,
-                                                compendium_images.is_deleted          AS 'ci_deleted'   ,
-                                                compendium_images.file_name           AS 'ci_filename'  ,
-                                                compendium_images.is_nsfw             AS 'ci_nsfw'      ,
-                                                compendium_images.is_gross            AS 'ci_gross'     ,
-                                                compendium_images.is_offensive        AS 'ci_offensive' ,
-                                                compendium_images.used_in_pages_$lang AS 'ci_used'      ,
-                                                compendium_images.used_in_pages_en    AS 'ci_used_en'   ,
-                                                compendium_images.used_in_pages_fr    AS 'ci_used_fr'   ,
-                                                compendium_images.caption_$lang       AS 'ci_body'
+  $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id                  AS 'ci_id'          ,
+                                                compendium_images.is_deleted          AS 'ci_deleted'     ,
+                                                compendium_images.file_name           AS 'ci_filename'    ,
+                                                compendium_images.tags                AS 'ci_tags'        ,
+                                                compendium_images.is_nsfw             AS 'ci_nsfw'        ,
+                                                compendium_images.is_gross            AS 'ci_gross'       ,
+                                                compendium_images.is_offensive        AS 'ci_offensive'   ,
+                                                compendium_images.used_in_pages_$lang AS 'ci_used'        ,
+                                                compendium_images.used_in_pages_en    AS 'ci_used_en'     ,
+                                                compendium_images.used_in_pages_fr    AS 'ci_used_fr'     ,
+                                                compendium_images.caption_$lang       AS 'ci_body'        ,
+                                                compendium_images.caption_en          AS 'ci_caption_en'  ,
+                                                compendium_images.caption_fr          AS 'ci_caption_fr'
                                         FROM    compendium_images
                                         WHERE   compendium_images.id = '$image_id' "));
 
@@ -1389,6 +1393,7 @@ function compendium_images_get( int     $image_id   = 0 ,
   $data['deleted']    = sanitize_output($dimage['ci_deleted']);
   $data['name']       = sanitize_output($dimage['ci_filename']);
   $data['name_raw']   = $dimage['ci_filename'];
+  $data['tags']       = sanitize_output($dimage['ci_tags']);
   $data['nsfw']       = sanitize_output($dimage['ci_nsfw']);
   $data['gross']      = sanitize_output($dimage['ci_gross']);
   $data['offensive']  = sanitize_output($dimage['ci_offensive']);
@@ -1403,6 +1408,8 @@ function compendium_images_get( int     $image_id   = 0 ,
   $data['used_count'] = ($dimage['ci_used']) ? $page_links['count'] : 0;
   $data['used_en']    = sanitize_output($dimage['ci_used_en']);
   $data['used_fr']    = sanitize_output($dimage['ci_used_fr']);
+  $data['caption_en'] = sanitize_output($dimage['ci_caption_en']);
+  $data['caption_fr'] = sanitize_output($dimage['ci_caption_fr']);
 
   // Return the data
   return $data;
@@ -1670,7 +1677,7 @@ function compendium_images_upload(  array   $file     ,
     return __('compendium_image_upload_misnamed');
 
   // Error: File already exists
-  while(file_exists($file_path))
+  if(file_exists($file_path))
     return __('compendium_image_upload_duplicate');
 
   // Error: File name already used
@@ -1710,6 +1717,97 @@ function compendium_images_upload(  array   $file     ,
 
   // Return the compendium page type's id
   return $image_id;
+}
+
+
+
+
+/**
+ * Modifies an existing compendium image.
+ *
+ * @param   int           $image_id   The id of the image to edit.
+ * @param   array         $contents   The contents of the image.
+ *
+ * @return  string|null               A string if an error happened, or null if all went well.
+ */
+
+function compendium_images_edit(  int   $image_id  ,
+                                  array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the page's id
+  $image_id = sanitize($image_id, 'int', 0);
+
+  // Stop here if the page doesn't exist
+  if(!database_row_exists('compendium_images', $image_id))
+    return __('compendium_image_edit_missing');
+
+  // Fetch the image data
+  $image_data = compendium_images_get(image_id: $image_id);
+
+  // Stop here if the image data is missing
+  if(!isset($image_data) || !$image_data)
+    return __('compendium_image_edit_missing');
+
+  // Sanitize and prepare the data
+  $timestamp        = sanitize(time(), 'int', 0);
+  $image_name_raw   = isset($contents['name']) ? $contents['name'] : '';
+  $image_name       = sanitize(compendium_format_image_name($contents['name']), 'string');
+  $image_tags       = isset($contents['tags'])        ? sanitize($contents['tags'], 'string')         : '';
+  $image_caption_en = isset($contents['caption_en'])  ? sanitize($contents['caption_en'], 'string')   : '';
+  $image_caption_fr = isset($contents['caption_fr'])  ? sanitize($contents['caption_fr'], 'string')   : '';
+  $image_nsfw       = isset($contents['nsfw'])        ? sanitize($contents['nsfw'], 'int', 0, 1)      : 0;
+  $image_gross      = isset($contents['gross'])       ? sanitize($contents['gross'], 'int', 0, 1)     : 0;
+  $image_offensive  = isset($contents['offensive'])   ? sanitize($contents['offensive'], 'int', 0, 1) : 0;
+
+  // Error: No image name
+  if(!$image_name)
+    return __('compendium_image_upload_misnamed');
+
+  // Move the image file if necessary
+  if($image_name_raw != $image_data['name_raw'])
+  {
+    // Determine the previous and new file paths
+    $old_file_path  = root_path().'img/compendium/'.$image_data['name_raw'];
+    $new_file_path  = root_path().'img/compendium/'.$image_name_raw;
+
+    // Error: Old file name does not exist
+    if(!file_exists($old_file_path))
+      return __('compendium_image_edit_not_found');
+
+    // Error: New file name already exists
+    if(file_exists($new_file_path))
+      return __('compendium_image_upload_duplicate');
+
+    // Error: File name already used
+    if(database_entry_exists('compendium_images', 'file_name', $new_file_path))
+      return __('compendium_image_upload_filename');
+
+    // Move the file
+    if(!rename($old_file_path, $new_file_path))
+      return __('compendium_image_edit_no_rename');
+  }
+
+  // Update the image page
+  query(" UPDATE  compendium_images
+          SET     compendium_images.file_name     = '$image_name'       ,
+                  compendium_images.tags          = '$image_tags'       ,
+                  compendium_images.is_nsfw       = '$image_nsfw'       ,
+                  compendium_images.is_gross      = '$image_gross'      ,
+                  compendium_images.is_offensive  = '$image_offensive'  ,
+                  compendium_images.caption_en    = '$image_caption_en' ,
+                  compendium_images.caption_fr    = '$image_caption_fr'
+          WHERE   compendium_images.id            = '$image_id' " );
+
+  // All went well, return null
+  return NULL;
 }
 
 
