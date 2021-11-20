@@ -474,8 +474,20 @@ ___('compendium_image_list_count',      'FR', "{{1}} images dans le compendium")
 // Image upload
 ___('compendium_image_upload_label',      'EN', "Upload a new image");
 ___('compendium_image_upload_label',      'FR', "Mettre une nouvelle image en ligne");
-___('compendium_image_upload_name',       'EN', "File name");
-___('compenidum_image_upload_name',       'FR', "Nom du fichier");
+___('compendium_image_upload_name',       'EN', "File name - lowercase, no spaces");
+___('compenidum_image_upload_name',       'FR', "Nom du fichier - minuscules, pas d'espaces");
+___('compendium_image_upload_tags',       'EN', "Image tags separated by ; semicolons");
+___('compendium_image_upload_tags',       'FR', "Mots clés séparés par des ; point-virgules");
+___('compendium_image_upload_caption_en', 'EN', "English caption ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_image_upload_caption_en', 'FR', "Légende en anglais ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_image_upload_caption_fr', 'EN', "French caption ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_image_upload_caption_fr', 'FR', "Légende en français ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_image_upload_nsfw',       'EN', "Image is NSFW");
+___('compendium_image_upload_nsfw',       'FR', "L'image est NSFW");
+___('compendium_image_upload_gross',      'EN', "Image contents are gross");
+___('compendium_image_upload_gross',      'FR', "L'image est dégueulasse");
+___('compendium_image_upload_offensive',  'EN', "Image contents are offensive");
+___('compendium_image_upload_offensive',  'FR', "L'image est offensante");
 ___('compendium_image_upload_submit',     'EN', "Add image to compendium");
 ___('compendium_image_upload_submit',     'FR', "Ajouter l'image au compendium");
 ___('compendium_image_upload_missing',    'EN', "This image can't be uploaded");

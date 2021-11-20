@@ -42,12 +42,30 @@ $js   = array('common/toggle', 'compendium/list', 'compendium/admin');
 
 if(isset($_POST['compendium_image_upload_submit']))
 {
-  // Fetch the image
+  // Fetch the image file data
   $compendium_image_upload_file = form_fetch_element('compendium_image_upload_file', request_type: 'FILES');
 
+  // Fetch the elements
+  $compendium_image_upload_name       = form_fetch_element('compendium_image_upload_name');
+  $compendium_image_upload_tags       = form_fetch_element('compendium_image_upload_tags');
+  $compendium_image_upload_caption_en = form_fetch_element('compendium_image_upload_caption_en');
+  $compendium_image_upload_caption_fr = form_fetch_element('compendium_image_upload_caption_fr');
+  $compendium_image_upload_nsfw       = form_fetch_element('compendium_image_upload_nsfw', element_exists: true);
+  $compendium_image_upload_gross      = form_fetch_element('compendium_image_upload_gross', element_exists: true);
+  $compendium_image_upload_offensive  = form_fetch_element('compendium_image_upload_offensive', element_exists: true);
+
+  // Assemble the image data
+  $compendium_image_upload_data = array(  'name'        => $compendium_image_upload_name        ,
+                                          'tags'        => $compendium_image_upload_tags        ,
+                                          'caption_en'  => $compendium_image_upload_caption_en  ,
+                                          'caption_fr'  => $compendium_image_upload_caption_fr  ,
+                                          'nsfw'        => $compendium_image_upload_nsfw        ,
+                                          'gross'       => $compendium_image_upload_gross       ,
+                                          'offensive'   => $compendium_image_upload_offensive   );
+
   // Attempt to upload the image
-  $compendium_image_upload = compendium_images_upload(  $compendium_image_upload_file                       ,
-                                                        form_fetch_element('compendium_image_upload_name')  );
+  $compendium_image_upload = compendium_images_upload(  $compendium_image_upload_file ,
+                                                        $compendium_image_upload_data );
 }
 
 
@@ -92,7 +110,7 @@ $compendium_image_list_years = compendium_images_list_years();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_30 smallpadding_bot">
+<div class="width_40 smallpadding_bot">
 
   <form method="POST" enctype="multipart/form-data" action="image_admin">
     <fieldset>
@@ -117,7 +135,36 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </datalist>
         </div>
 
-        <div class="padding_bot">
+        <div class="smallpadding_bot">
+          <label for="compendium_image_upload_tags"><?=__('compendium_image_upload_tags')?></label>
+          <input type="text" class="indiv" id="compendium_image_upload_tags" name="compendium_image_upload_tags" value="">
+        </div>
+
+        <div class="flexcontainer smallpadding_bot">
+          <div class="flex spaced_right">
+
+            <label for="compendium_image_upload_caption_en"><?=__('compendium_image_upload_caption_en')?></label>
+            <textarea id="compendium_image_upload_caption_en" class="compendium_admin_summary" name="compendium_image_upload_caption_en"></textarea>
+
+          </div>
+          <div class="flex spaced_left">
+
+            <label for="compendium_image_upload_caption_fr"><?=__('compendium_image_upload_caption_fr')?></label>
+            <textarea id="compendium_image_upload_caption_fr" class="compendium_admin_summary" name="compendium_image_upload_caption_fr"></textarea>
+
+          </div>
+        </div>
+
+        <input type="checkbox" id="compendium_image_upload_nsfw" name="compendium_image_upload_nsfw">
+        <label class="label_inline" for="compendium_image_upload_nsfw"><?=__('compendium_image_upload_nsfw')?></label><br>
+
+        <input type="checkbox" id="compendium_image_upload_gross" name="compendium_image_upload_gross">
+        <label class="label_inline" for="compendium_image_upload_gross"><?=__('compendium_image_upload_gross')?></label><br>
+
+        <input type="checkbox" id="compendium_image_upload_offensive" name="compendium_image_upload_offensive">
+        <label class="label_inline" for="compendium_image_upload_offensive"><?=__('compendium_image_upload_offensive')?></label>
+
+        <div class="smallpadding_top padding_bot">
           <input type="submit" id="compendium_image_upload_submit" name="compendium_image_upload_submit" value="<?=__('compendium_image_upload_submit')?>">
         </div>
 

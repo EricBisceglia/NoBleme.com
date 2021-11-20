@@ -1577,7 +1577,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   for($i = 0; $row = mysqli_fetch_array($qimages); $i++)
   {
     $data[$i]['id']         = sanitize_output($row['ci_id']);
-    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 30, '...'));
+    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 25, '...'));
     $data[$i]['fullname']   = sanitize_output($row['ci_name']);
     $data[$i]['date']       = sanitize_output(time_since($row['ci_date']));
     $data[$i]['blur']       = ($row['ci_nsfw'] || $row['ci_gross'] || $row['ci_offensive']) ? 1 : 0;
@@ -1615,14 +1615,14 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
 /**
  * Uploads a new compendium image.
  *
- * @param   array       $file   The image being uploaded.
- * @param   string      $name   The name to give to the image.
+ * @param   array       $file       The image being uploaded.
+ * @param   string      $contents   The contents of the image data.
  *
- * @return  string|int            A string if an error happened, or the new compendium image's ID if all went well.
+ * @return  string|int              A string if an error happened, or the new compendium image's ID if all went well.
  */
 
-function compendium_images_upload(  array   $file ,
-                                    string  $name ) : mixed
+function compendium_images_upload(  array   $file     ,
+                                    array   $contents ) : mixed
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
@@ -1638,9 +1638,13 @@ function compendium_images_upload(  array   $file ,
   if(!isset($file['error']) || $file['error'])
     return __('compendium_image_upload_error');
 
+  // Error: File name is missing
+  if(!isset($contents['name']) || !$contents['name'])
+    return __('compendium_image_upload_misnamed');
+
   // Sanitize and prepare the data
   $timestamp  = sanitize(time(), 'int', 0);
-  $name_raw   = compendium_format_image_name($name);
+  $name_raw   = compendium_format_image_name($contents['name']);
   $name       = sanitize($name_raw, 'string');
   $file_path  = root_path().'img/compendium/'.$name_raw;
   $temp_name  = $file['tmp_name'];
@@ -1657,13 +1661,28 @@ function compendium_images_upload(  array   $file ,
   if(database_entry_exists('compendium_images', 'file_name', $name))
     return __('compendium_image_upload_filename');
 
+  // Sanitize and prepare the rest of the contents
+  $tags       = isset($contents['tags'])        ? string_change_case($contents['tags'], 'lowercase')  : '';
+  $tags       = sanitize($tags, 'string');
+  $caption_en = isset($contents['caption_en'])  ? sanitize($contents['caption_en'], 'string')         : '';
+  $caption_fr = isset($contents['caption_fr'])  ? sanitize($contents['caption_fr'], 'string')         : '';
+  $nsfw       = isset($contents['nsfw'])        ? sanitize($contents['nsfw'], 'int', 0, 1)            : 0;
+  $gross      = isset($contents['gross'])       ? sanitize($contents['gross'], 'int', 0, 1)           : 0;
+  $offensive  = isset($contents['offensive'])   ? sanitize($contents['offensive'], 'int', 0, 1)       : 0;
+
   // Upload the image
   if(move_uploaded_file($temp_name, $file_path))
   {
     // Create the image entry
     query(" INSERT INTO compendium_images
-            SET         compendium_images.uploaded_at = '$timestamp'  ,
-                        compendium_images.file_name   = '$name'       ");
+            SET         compendium_images.uploaded_at   = '$timestamp'  ,
+                        compendium_images.file_name     = '$name'       ,
+                        compendium_images.tags          = '$tags'       ,
+                        compendium_images.is_nsfw       = '$nsfw'       ,
+                        compendium_images.is_gross      = '$gross'      ,
+                        compendium_images.is_offensive  = '$offensive'  ,
+                        compendium_images.caption_en    = '$caption_en' ,
+                        compendium_images.caption_fr    = '$caption_fr' ");
 
     // Fetch the newly created compendium page type's id
     $image_id = query_id();
@@ -1809,7 +1828,7 @@ function compendium_images_assemble_links(  string  $page_list          ,
     if(!($i % 2) && isset($page_list_array[$i + 1]))
     {
       $temp = ($shorten) ? string_truncate($page_list_array[$i + 1], 20, '...') : $page_list_array[$i + 1];
-      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], $temp).'<br>';
+      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], sanitize_output($temp)).'<br>';
     }
   }
 
@@ -1844,7 +1863,7 @@ function compendium_images_assemble_tags( string  $tags             ,
   for($i = 0; $i < count($tags_array); $i++)
   {
     $temp = ($shorten) ? string_truncate($tags_array[$i], 20, '...') : $tags_array[$i];
-    $formatted_tags .= $temp.'<br>';
+    $formatted_tags .= sanitize_output($temp).'<br>';
   }
 
   // Add the formatted tag list and the tag count to the returned data
