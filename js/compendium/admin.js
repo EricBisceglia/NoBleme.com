@@ -7,7 +7,7 @@
 /*                                                                                                                   */
 /*  compendium_recalculate_image_links    Triggers the recalculation of all compendium image links.                  */
 /*                                                                                                                   */
-/*  compendium_image_delete               Triggers the deletion of a compendium image.                               */
+/*  compendium_image_delete               Triggers the deletion or undeletion of a compendium image.                 */
 /*                                                                                                                   */
 /*  compendium_type_delete                Triggers the deletion of a compendium page type.                           */
 /*                                                                                                                   */
@@ -108,6 +108,41 @@ function compendium_recalculate_image_links( message )
 
     // Submit the recalculation
     fetch_page('image_admin', 'compendium_image_list_tbody', postdata);
+  }
+}
+
+
+
+
+/**
+ * Triggers the deletion or undeletion of a compendium image.
+ *
+ * @param   {string}  image_name  The image's name.
+ * @param   {int}     image_id    The image's id.
+ * @param   {string}  action      Whether to delete or restore the image.
+ * @param   {string}  message     Message to show before an action is performed.
+ *
+ * @returns {void}
+*/
+
+function compendium_image_delete( image_name  ,
+                                  image_id    ,
+                                  action      ,
+                                  message     )
+{
+  // Make sure the user knows what they're doing
+  if(confirm(message))
+  {
+    // Assemble the postdata
+    postdata  = 'compendium_image_action='  + fetch_sanitize(action);
+    postdata += '&compendium_image_id='     + fetch_sanitize(image_id);
+
+    // Remove the deleted message if it exists
+    if(document.getElementById('compendium_image_delete_message'))
+      toggle_element_oneway('compendium_image_delete_message', false);
+
+    // Submit the deletion
+    fetch_page('image?name=' + image_name, 'compendium_image_delete_icon', postdata);
   }
 }
 

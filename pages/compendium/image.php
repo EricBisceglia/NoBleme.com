@@ -15,8 +15,9 @@ $page_title_en    = "Image";
 $page_title_fr    = "Image";
 $page_description = "An image used to illustrate NoBleme's 21st century culture compendium.";
 
-// Extra CSS
-$css = array('compendium');
+// Extra CSS & JS
+$css  = array('compendium');
+$js   = array('common/toggle', 'compendium/admin');
 
 
 
@@ -26,6 +27,22 @@ $css = array('compendium');
 /*                                                     BACK END                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete or restore an image
+
+if(isset($_POST['compendium_image_action']))
+{
+  // Delete or restore the image
+  compendium_images_delete( form_fetch_element('compendium_image_id')     ,
+                            form_fetch_element('compendium_image_action') );
+
+  // Stop the script here
+  exit();
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the image data
@@ -58,7 +75,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <?php if($compendium_image_data['deleted']) { ?>
-  <div class="padding_bot">
+  <div class="padding_bot" id="compendium_image_delete_message">
     <h5 class="uppercase red text_white bold spaced align_center">
       <?=__('compendium_image_deleted')?>
     </h5>
@@ -69,6 +86,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/compendium/page_list', $compendium_image_file_name, 'noglow')?>
     <?php if($is_admin) { ?>
     <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/image_edit?id='.$compendium_image_data['id'])?>
+    <?php if(!$compendium_image_data['used_en'] && !$compendium_image_data['used_fr']) { ?>
+    <span id="compendium_image_delete_icon">
+      <?php if(!$compendium_image_data['deleted']) { ?>
+      <?=__icon('delete', class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_image_delete('".$compendium_image_file_name."', '".$compendium_image_data['id']."','delete', '".__('compendium_image_list_delete')."');")?>
+      <?php } else { ?>
+      <?=__icon('refresh', class: 'valign_middle pointer', alt: 'R', title: __('restore'), title_case: 'initials', onclick: "compendium_image_delete('".$compendium_image_file_name."', '".$compendium_image_data['id']."','restore', '".__('compendium_image_list_restore')."');")?>
+      <?=__icon('delete', class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_image_delete('".$compendium_image_file_name."', '".$compendium_image_data['id']."','hard_delete', '".__('compendium_image_list_hard')."');")?>
+      <?php } ?>
+    </span>
+    <?php } ?>
     <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/image_admin')?>
     <?php } ?>
   </h2>

@@ -431,7 +431,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center">
           <?php if($compendium_images_list[$i]['deleted']) { ?>
-          <?=__icon('refresh', is_small: true, alt: 'X', title: __('restore'), title_case: 'initials', onclick: "compendium_image_list_search(null, 'restore', '".$compendium_images_list[$i]['id']."', '".__('compendium_image_list_restore')."');")?>
+          <?=__icon('refresh', is_small: true, alt: 'R', title: __('restore'), title_case: 'initials', onclick: "compendium_image_list_search(null, 'restore', '".$compendium_images_list[$i]['id']."', '".__('compendium_image_list_restore')."');")?>
           <?php } else { ?>
           &nbsp;
           <?php } ?>
