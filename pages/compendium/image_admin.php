@@ -72,6 +72,16 @@ if(isset($_POST['compendium_image_upload_submit']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete or restore an image
+
+if(isset($_POST['compendium_images_search_action']))
+  compendium_images_delete( form_fetch_element('compendium_images_search_action_id')  ,
+                            form_fetch_element('compendium_images_search_action')     );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Recalculate compendium image links
 
 if(isset($_POST['compendium_images_recalculate_links']))
@@ -92,7 +102,8 @@ $compendium_images_list_search = array( 'name'    => form_fetch_element('compend
                                         'used_en' => form_fetch_element('compendium_images_search_used_en') ,
                                         'used_fr' => form_fetch_element('compendium_images_search_used_fr') ,
                                         'tags'    => form_fetch_element('compendium_images_search_tags')    ,
-                                        'caption' => form_fetch_element('compendium_images_search_caption') );
+                                        'caption' => form_fetch_element('compendium_images_search_caption') ,
+                                        'deleted' => form_fetch_element('compendium_images_search_deleted') ,);
 
 // Fetch the images
 $compendium_images_list = compendium_images_list( sort_by:  $compendium_images_sort_order   ,
@@ -234,6 +245,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('nsfw');")?>
         </th>
         <th>
+          <?=__('compendium_list_admin_wip')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('deleted');")?>
+        </th>
+        <th>
           <?=__('act')?>
         </th>
       </tr>
@@ -292,6 +307,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </select>
         </th>
 
+        <th class="compendium_admin_search_small">
+          <select class="table_search" name="compendium_images_search_deleted" id="compendium_images_search_deleted" onchange="compendium_image_list_search();">
+            <option value="0">&nbsp;</option>
+            <option value="1"><?=__('compendium_image_list_notdeleted')?></option>
+            <option value="2"><?=__('compendium_list_admin_deleted')?></option>
+          </select>
+        </th>
+
         <th>
           &nbsp;
         </th>
@@ -305,14 +328,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php } ?>
 
       <tr>
-        <td colspan="9" class="uppercase text_light dark bold align_center">
+        <td colspan="10" class="uppercase text_light dark bold align_center">
           <?=__('compendium_image_list_count', preset_values: array($compendium_images_list['rows']))?>
         </td>
       </tr>
 
       <?php for($i = 0; $i < $compendium_images_list['rows']; $i++) { ?>
 
-      <tr>
+      <tr id="compendium_image_admin_row_<?=$compendium_images_list[$i]['id']?>">
 
         <td class="align_center nowrap">
           <?=__icon('copy', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'C', title: __('copy'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].");")?>
@@ -406,9 +429,23 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
         <?php } ?>
 
+        <td class="align_center">
+          <?php if($compendium_images_list[$i]['deleted']) { ?>
+          <?=__icon('refresh', is_small: true, alt: 'X', title: __('restore'), title_case: 'initials', onclick: "compendium_image_list_search(null, 'restore', '".$compendium_images_list[$i]['id']."', '".__('compendium_image_list_restore')."');")?>
+          <?php } else { ?>
+          &nbsp;
+          <?php } ?>
+        </td>
+
         <td class="align_center nowrap">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/image_edit?id='.$compendium_images_list[$i]['id'])?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/image_delete?id='.$compendium_images_list[$i]['id'])?>
+          <?php if($compendium_images_list[$i]['used_en'] || $compendium_images_list[$i]['used_fr']) { ?>
+          <?=__icon('x', is_small: true, alt: 'X', title: __('compendium_image_list_no_delete'), onclick: "alert('".__('compendium_image_list_no_delete')."')")?>
+          <?php } else if(!$compendium_images_list[$i]['deleted']) { ?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_image_list_search(null, 'delete', '".$compendium_images_list[$i]['id']."', '".__('compendium_image_list_delete')."');")?>
+          <?php } else { ?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_image_list_search(null, 'hard_delete', '".$compendium_images_list[$i]['id']."', '".__('compendium_image_list_hard')."');")?>
+          <?php } ?>
         </td>
 
       </tr>

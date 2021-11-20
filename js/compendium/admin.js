@@ -7,6 +7,8 @@
 /*                                                                                                                   */
 /*  compendium_recalculate_image_links    Triggers the recalculation of all compendium image links.                  */
 /*                                                                                                                   */
+/*  compendium_image_delete               Triggers the deletion of a compendium image.                               */
+/*                                                                                                                   */
 /*  compendium_type_delete                Triggers the deletion of a compendium page type.                           */
 /*                                                                                                                   */
 /*  compendium_category_delete            Triggers the deletion of a compendium category.                            */

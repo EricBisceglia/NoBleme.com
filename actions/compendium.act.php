@@ -23,6 +23,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_get_random              Returns data related to a random image used in the compendium.         */
 /*  compendium_images_list                    Fetches a list of images used in the compendium.                       */
 /*  compendium_images_upload                  Uploads a new compendium image.                                        */
+/*  compendium_images_delete                  Deletes, restores, or hard deletes an existing compendium image.       */
 /*  compendium_images_recalculate_links       Recalculates the compendium pages on which an image is being used.     */
 /*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
 /*  compendium_images_assemble_links          Lists all compendium pages containing an image in a usable format.     */
@@ -1373,6 +1374,8 @@ function compendium_images_get( int     $image_id   = 0 ,
                                                 compendium_images.is_gross            AS 'ci_gross'     ,
                                                 compendium_images.is_offensive        AS 'ci_offensive' ,
                                                 compendium_images.used_in_pages_$lang AS 'ci_used'      ,
+                                                compendium_images.used_in_pages_en    AS 'ci_used_en'   ,
+                                                compendium_images.used_in_pages_fr    AS 'ci_used_fr'   ,
                                                 compendium_images.caption_$lang       AS 'ci_body'
                                         FROM    compendium_images
                                         WHERE   compendium_images.id = '$image_id' "));
@@ -1385,6 +1388,7 @@ function compendium_images_get( int     $image_id   = 0 ,
   $data['id']         = sanitize_output($dimage['ci_id']);
   $data['deleted']    = sanitize_output($dimage['ci_deleted']);
   $data['name']       = sanitize_output($dimage['ci_filename']);
+  $data['name_raw']   = $dimage['ci_filename'];
   $data['nsfw']       = sanitize_output($dimage['ci_nsfw']);
   $data['gross']      = sanitize_output($dimage['ci_gross']);
   $data['offensive']  = sanitize_output($dimage['ci_offensive']);
@@ -1397,6 +1401,8 @@ function compendium_images_get( int     $image_id   = 0 ,
   $page_links         = ($dimage['ci_used']) ? compendium_images_assemble_links($dimage['ci_used']) : '';
   $data['used']       = ($dimage['ci_used']) ? $page_links['list'] : '';
   $data['used_count'] = ($dimage['ci_used']) ? $page_links['count'] : 0;
+  $data['used_en']    = sanitize_output($dimage['ci_used_en']);
+  $data['used_fr']    = sanitize_output($dimage['ci_used_fr']);
 
   // Return the data
   return $data;
@@ -1474,16 +1480,18 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   $pages    = compendium_pages_list_urls();
 
   // Sanitize the search parameters
-  $search_name    = isset($search['name'])    ? sanitize($search['name'], 'string')     : '';
-  $search_date    = isset($search['date'])    ? sanitize($search['date'], 0)            : 0;
-  $search_nsfw    = isset($search['nsfw'])    ? sanitize($search['nsfw'], 'string')     : '';
-  $search_used_en = isset($search['used_en']) ? sanitize($search['used_en'], 'string')  : '';
-  $search_used_fr = isset($search['used_fr']) ? sanitize($search['used_fr'], 'string')  : '';
-  $search_tags    = isset($search['tags'])    ? sanitize($search['tags'], 'string')     : '';
-  $search_caption = isset($search['caption']) ? sanitize($search['caption'], 'string')  : '';
+  $search_name    = isset($search['name'])    ? sanitize($search['name'], 'string')       : '';
+  $search_date    = isset($search['date'])    ? sanitize($search['date'], 0)              : 0;
+  $search_nsfw    = isset($search['nsfw'])    ? sanitize($search['nsfw'], 'string')       : '';
+  $search_used_en = isset($search['used_en']) ? sanitize($search['used_en'], 'string')    : '';
+  $search_used_fr = isset($search['used_fr']) ? sanitize($search['used_fr'], 'string')    : '';
+  $search_tags    = isset($search['tags'])    ? sanitize($search['tags'], 'string')       : '';
+  $search_caption = isset($search['caption']) ? sanitize($search['caption'], 'string')    : '';
+  $search_deleted = isset($search['deleted']) ? sanitize($search['deleted'], 'int', 0, 2) : 0;
 
   // Fetch the images
   $qimages = "     SELECT   compendium_images.id                AS 'ci_id'          ,
+                            compendium_images.is_deleted        AS 'ci_del'         ,
                             compendium_images.uploaded_at       AS 'ci_date'        ,
                             compendium_images.file_name         AS 'ci_name'        ,
                             compendium_images.tags              AS 'ci_tags'        ,
@@ -1538,6 +1546,10 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
     $qimages .= " AND       compendium_images.caption_en                        !=    ''                  ";
   else if($search_caption == 'french')
     $qimages .= " AND       compendium_images.caption_fr                        !=    ''                  ";
+  if($search_deleted == 1)
+    $qimages .= " AND       compendium_images.is_deleted                        =     0                   ";
+  if($search_deleted == 2)
+    $qimages .= " AND       compendium_images.is_deleted                        =     1                   ";
 
   // Sort the data
   if($sort_by == 'name')
@@ -1567,6 +1579,9 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                               compendium_images.caption_fr        != ''   ,
                               compendium_images.caption_en        != ''   ,
                               compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'deleted')
+    $qimages .= " ORDER BY    compendium_images.is_deleted        DESC    ,
+                              compendium_images.uploaded_at       DESC    ";
   else
     $qimages .= " ORDER BY    compendium_images.uploaded_at       DESC    ";
 
@@ -1577,7 +1592,8 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   for($i = 0; $row = mysqli_fetch_array($qimages); $i++)
   {
     $data[$i]['id']         = sanitize_output($row['ci_id']);
-    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 25, '...'));
+    $data[$i]['deleted']    = ($row['ci_del']) ? 1 : 0;
+    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 22, '...'));
     $data[$i]['fullname']   = sanitize_output($row['ci_name']);
     $data[$i]['date']       = sanitize_output(time_since($row['ci_date']));
     $data[$i]['blur']       = ($row['ci_nsfw'] || $row['ci_gross'] || $row['ci_offensive']) ? 1 : 0;
@@ -1694,6 +1710,69 @@ function compendium_images_upload(  array   $file     ,
 
   // Return the compendium page type's id
   return $image_id;
+}
+
+
+
+
+/**
+ * Deletes an existing compendium image.
+ *
+ * @param   int     $image_id   The ID of the compendium image to delete.
+ * @param   string  $action     The action to perform ('delete', 'restore', 'hard_delete').
+ *
+ * @return  void
+ */
+
+function compendium_images_delete(  int     $image_id ,
+                                    string  $action   ) : void
+{
+  // Check if the required files have been included
+  require_included_file('bbcodes.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the image's id
+  $image_id = sanitize($image_id, 'int', 0);
+
+  // Stop here if the image does not exist
+  if(!database_row_exists('compendium_images', $image_id))
+    return;
+
+  // Fetch the image's data
+  $image_data = compendium_images_get($image_id);
+
+  // Stop here if the image is used on any page
+  if($action != 'restore' && $image_data['used_en'] || $image_data['used_fr'])
+    return;
+
+  // Soft deletion
+  if($action == 'delete')
+    query(" UPDATE  compendium_images
+            SET     compendium_images.is_deleted  = 1
+            WHERE   compendium_images.id          = '$image_id' ");
+
+  // Restoration
+  if($action == 'restore')
+    query(" UPDATE  compendium_images
+            SET     compendium_images.is_deleted  = 0
+            WHERE   compendium_images.id          = '$image_id' ");
+
+  // Hard deletion
+  if($action == 'hard_delete')
+  {
+    // Delete the database entry
+    query(" DELETE FROM compendium_images
+            WHERE       compendium_images.id = '$image_id' ");
+
+    // Assemble the file name
+    $file_name = root_path().'img/compendium/'.$image_data['name_raw'];
+
+    // Delete the file
+    if(file_exists($file_name))
+      unlink($file_name);
+  }
 }
 
 
@@ -1862,7 +1941,7 @@ function compendium_images_assemble_tags( string  $tags             ,
   $formatted_tags = '';
   for($i = 0; $i < count($tags_array); $i++)
   {
-    $temp = ($shorten) ? string_truncate($tags_array[$i], 20, '...') : $tags_array[$i];
+    $temp = ($shorten) ? string_truncate($tags_array[$i], 18, '...') : $tags_array[$i];
     $formatted_tags .= sanitize_output($temp).'<br>';
   }
 

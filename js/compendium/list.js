@@ -81,12 +81,18 @@ function compendium_admin_list_search( sort_data = null )
 /**
  * Performs a search through the compendium image list.
  *
- * @param   {string}  [sort_data]   Change the order in which the data will be sorted.
+ * @param   {string}  [sort_data]       Change the order in which the data will be sorted.
+ * @param   {string}  [deletion_type]   Delete or restore an image from the table.
+ * @param   {string}  [delete_id]       The id of the image to delete or restore.
+ * @param   {string}  [message]         Message to show before a deletion is performed.
  *
  * @returns {void}
 */
 
-function compendium_image_list_search( sort_data = null )
+function compendium_image_list_search(  sort_data     = null  ,
+                                        deletion_type = null  ,
+                                        delete_id     = null  ,
+                                        message       = null  )
 {
   // Update the data sort input if requested
   if(sort_data)
@@ -101,6 +107,18 @@ function compendium_image_list_search( sort_data = null )
   postdata += '&compendium_images_search_date='     + fetch_sanitize_id('compendium_images_search_date');
   postdata += '&compendium_images_search_caption='  + fetch_sanitize_id('compendium_images_search_caption');
   postdata += '&compendium_images_search_nsfw='     + fetch_sanitize_id('compendium_images_search_nsfw');
+  postdata += '&compendium_images_search_deleted='  + fetch_sanitize_id('compendium_images_search_deleted');
+
+  // In case of deletion, make sure the user knows what they're doing
+  if(message && !confirm(message))
+    return;
+
+  // Assemble the deletion postdata
+  if(deletion_type)
+  {
+    postdata += '&compendium_images_search_action='     + fetch_sanitize(deletion_type);
+    postdata += '&compendium_images_search_action_id='  + fetch_sanitize(delete_id);
+  }
 
   // Submit the search
   fetch_page('image_admin', 'compendium_image_list_tbody', postdata);

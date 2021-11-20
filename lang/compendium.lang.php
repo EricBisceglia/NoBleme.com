@@ -467,8 +467,18 @@ ___('compendium_image_list_caption',    'EN', "Text");
 ___('compendium_image_list_caption',    'FR', "Texte");
 ___('compendium_image_list_nsfw',       'EN', "NSFW image");
 ___('compendium_image_list_nsfw',       'FR', "Image NSFW");
+___('compendium_image_list_notdeleted', 'EN', "Not deleted");
+___('compendium_image_list_notdeleted', 'FR', "Visible");
 ___('compendium_image_list_count',      'EN', "{{1}} compendium images");
 ___('compendium_image_list_count',      'FR', "{{1}} images dans le compendium");
+___('compendium_image_list_delete',     'EN', "Confirm the soft deletion of this image");
+___('compendium_image_list_delete',     'FR', "Confirmer la suppression douce de cette image");
+___('compendium_image_list_restore',    'EN', "Confirm the undeletion of this image");
+___('compendium_image_list_restore',    'FR', "Confirmer la restoration de cette image");
+___('compendium_image_list_hard',       'EN', "Confirm the irreversible deletion of this image");
+___('compendium_image_list_hard',       'FR', "Confirmer la suppression irréversible de cette image");
+___('compendium_image_list_no_delete',  'EN', "Can\'t delete an image if it is currently in use on a compendium page");
+___('compendium_image_list_no_delete',  'FR', "Impossible de supprimer une image tant qu\'elle est utilisée sur une page du compendium");
 
 
 // Image upload
