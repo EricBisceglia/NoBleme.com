@@ -26,7 +26,7 @@ $compendium_admin_menu['images'] = 1;
 
 // Extra CSS & JS
 $css  = array('compendium');
-$js   = array('compendium/list', 'compendium/admin');
+$js   = array('common/toggle', 'compendium/list', 'compendium/admin');
 
 
 
@@ -36,6 +36,22 @@ $js   = array('compendium/list', 'compendium/admin');
 /*                                                     BACK END                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Upload a new image
+
+if(isset($_POST['compendium_image_upload_submit']))
+{
+  // Fetch the image
+  $compendium_image_upload_file = form_fetch_element('compendium_image_upload_file', request_type: 'FILES');
+
+  // Attempt to upload the image
+  $compendium_image_upload = compendium_images_upload(  $compendium_image_upload_file                       ,
+                                                        form_fetch_element('compendium_image_upload_name')  );
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Recalculate compendium image links
@@ -75,6 +91,58 @@ $compendium_image_list_years = compendium_images_list_years();
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
+
+<div class="width_30 smallpadding_bot">
+
+  <form method="POST" enctype="multipart/form-data" action="image_admin">
+    <fieldset>
+
+      <h5 class="align_center padding_top padding_bot">
+        <?=__('compendium_image_upload_label')?>
+      </h5>
+
+      <div class="tinyadding_top smallpadding_bot">
+        <input type="file" class="indiv align_center" name="compendium_image_upload_file" id="compendium_image_upload_file" onchange="compendium_image_list_upload();">
+      </div>
+
+      <div class="hidden" id="compendium_image_upload_form">
+
+        <div class="smallpadding_bot">
+          <label for="compendium_image_upload_name"><?=__('compendium_image_upload_name')?></label>
+          <input type="text" class="indiv" id="compendium_image_upload_name" name="compendium_image_upload_name" value="" autocomplete="off" list="compendium_image_name_list" onkeyup="compendium_autocomplete_image('compendium_image_upload_name', 'compendium_image_name_list_parent', 'compendium_image_name_list');">
+        </div>
+        <div id="compendium_image_name_list_parent">
+          <datalist id="compendium_image_name_list">
+            <option value=" ">&nbsp;</option>
+          </datalist>
+        </div>
+
+        <div class="padding_bot">
+          <input type="submit" id="compendium_image_upload_submit" name="compendium_image_upload_submit" value="<?=__('compendium_image_upload_submit')?>">
+        </div>
+
+      </div>
+
+      <?php if(isset($compendium_image_upload) && $compendium_image_upload) { ?>
+      <div class="smallpadding_top padding_bot" id="compendium_image_upload_error">
+        <?php if(!is_int($compendium_image_upload)) { ?>
+        <div class="red text_white spaced uppercase big bold">
+          <?=__('error').__(':', spaces_after: 1).$compendium_image_upload?>
+        </div>
+        <?php } else { ?>
+        <div class="green text_white spaced uppercase big bold">
+          <?=__('compendium_image_upload_ok')?>
+        </div>
+        <?php } ?>
+      </div>
+      <?php } ?>
+
+    </fieldset>
+  </form>
+
+</div>
+
+<hr>
 
 <div class="width_80">
 

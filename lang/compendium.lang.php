@@ -471,6 +471,29 @@ ___('compendium_image_list_count',      'EN', "{{1}} compendium images");
 ___('compendium_image_list_count',      'FR', "{{1}} images dans le compendium");
 
 
+// Image upload
+___('compendium_image_upload_label',      'EN', "Upload a new image");
+___('compendium_image_upload_label',      'FR', "Mettre une nouvelle image en ligne");
+___('compendium_image_upload_name',       'EN', "File name");
+___('compenidum_image_upload_name',       'FR', "Nom du fichier");
+___('compendium_image_upload_submit',     'EN', "Add image to compendium");
+___('compendium_image_upload_submit',     'FR', "Ajouter l'image au compendium");
+___('compendium_image_upload_missing',    'EN', "This image can't be uploaded");
+___('compendium_image_upload_missing',    'FR', "Cette image ne peut pas être mise en ligne");
+___('compendium_image_upload_error',      'EN', "An error happened during the upload");
+___('compendium_image_upload_error',      'FR', "Une erreur a eu lieu lors de la mise en ligne");
+___('compendium_image_upload_misnamed',   'EN', "Incorrect image name");
+___('compendium_image_upload_misnamed',   'FR', "Nom d'image incorrect");
+___('compendium_image_upload_duplicate',  'EN', "An image with this file name already exists");
+___('compendium_image_upload_duplicate',  'FR', "Une image avec ce nom de fichier existe déjà");
+___('compendium_image_upload_filename',   'EN', "This file name is already being used by another image");
+___('compendium_image_upload_filename',   'FR', "Ce nom de fichier est déjà utilisé par une autre image");
+___('compendium_image_upload_failed',     'EN', "Image upload failed");
+___('compendium_image_upload_failed',     'FR', "La mise en ligne de l'image a échoué");
+___('compendium_image_upload_ok',         'EN', "The image was successfully uploaded");
+___('compendium_image_upload_ok',         'FR', "L'image a bien été mise en ligne");
+
+
 
 
 /*********************************************************************************************************************/

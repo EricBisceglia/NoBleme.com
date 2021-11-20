@@ -22,10 +22,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_get                     Returns data related to an image used in the compendium.               */
 /*  compendium_images_get_random              Returns data related to a random image used in the compendium.         */
 /*  compendium_images_list                    Fetches a list of images used in the compendium.                       */
+/*  compendium_images_upload                  Uploads a new compendium image.                                        */
 /*  compendium_images_recalculate_links       Recalculates the compendium pages on which an image is being used.     */
 /*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
 /*  compendium_images_assemble_links          Lists all compendium pages containing an image in a usable format.     */
 /*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
+/*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
 /*  compendium_types_get                      Returns data related to a compendium page type.                        */
 /*  compendium_types_list                     Fetches a list of compendium page types.                               */
@@ -60,6 +62,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_format_url                     Formats a compendium page url.                                         */
 /*  compendium_format_title                   Formats a compendium page title.                                       */
+/*  compendium_format_image_name              Formats a compendium image name.                                       */
 /*  compendium_nbcodes_apply                  Applies NBCodes to a string.                                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -1610,6 +1613,74 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
 
 
 /**
+ * Uploads a new compendium image.
+ *
+ * @param   array       $file   The image being uploaded.
+ * @param   string      $name   The name to give to the image.
+ *
+ * @return  string|int            A string if an error happened, or the new compendium image's ID if all went well.
+ */
+
+function compendium_images_upload(  array   $file ,
+                                    string  $name ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Error: File data is missing
+  if(!isset($file['name']) || !$file['name'] || !isset($file['type']) || !$file['type'] || !isset($file['tmp_name']) || !$file['tmp_name'])
+    return __('compendium_image_upload_missing');
+
+  // Error: Upload went wrong
+  if(!isset($file['error']) || $file['error'])
+    return __('compendium_image_upload_error');
+
+  // Sanitize and prepare the data
+  $timestamp  = sanitize(time(), 'int', 0);
+  $name_raw   = compendium_format_image_name($name);
+  $name       = sanitize($name_raw, 'string');
+  $file_path  = root_path().'img/compendium/'.$name_raw;
+  $temp_name  = $file['tmp_name'];
+
+  // Error: Incorrect file name
+  if(!$name)
+    return __('compendium_image_upload_misnamed');
+
+  // Error: File already exists
+  while(file_exists($file_path))
+    return __('compendium_image_upload_duplicate');
+
+  // Error: File name already used
+  if(database_entry_exists('compendium_images', 'file_name', $name))
+    return __('compendium_image_upload_filename');
+
+  // Upload the image
+  if(move_uploaded_file($temp_name, $file_path))
+  {
+    // Create the image entry
+    query(" INSERT INTO compendium_images
+            SET         compendium_images.uploaded_at = '$timestamp'  ,
+                        compendium_images.file_name   = '$name'       ");
+
+    // Fetch the newly created compendium page type's id
+    $image_id = query_id();
+  }
+
+  // Upload failed
+  else
+    return __('compendium_image_upload_failed');
+
+  // Return the compendium page type's id
+  return $image_id;
+}
+
+
+
+
+/**
  * Recalculates the compendium pages on which an image is being used.
  *
  * @param   int   $image_id   The image's id.
@@ -1781,6 +1852,44 @@ function compendium_images_assemble_tags( string  $tags             ,
   $data['count']  = $i;
 
   // Return the formatted page list
+  return $data;
+}
+
+
+
+
+/**
+ * Autocompletes an image file name.
+ *
+ * @param   string      $input  The input that needs to be autocompleted.
+ *
+ * @return  array|null          An array containing autocomplete data, or NULL if something failed.
+ */
+
+function compendium_images_autocomplete( string $input ) : mixed
+{
+  // Sanitize the input
+  $input  = sanitize($input, 'string');
+
+  // Only work when more than 1 character has been submitted
+  if(mb_strlen($input) < 1)
+    return NULL;
+
+  // Look for image file names to add to autocompletion
+  $qimages = query("  SELECT    compendium_images.file_name AS 'ci_name'
+                      FROM      compendium_images
+                      WHERE     compendium_images.file_name LIKE '$input%'
+                      ORDER BY  compendium_images.file_name ASC
+                      LIMIT     10 ");
+
+  // Prepare the returned data
+  for($i = 0; $dimages = mysqli_fetch_array($qimages); $i++)
+    $data[$i]['url'] = sanitize_output($dimages['ci_name']);
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
   return $data;
 }
 
@@ -2952,6 +3061,43 @@ function compendium_format_title( ?string $title ) : string
 
   // Return the formatted url
   return $title;
+}
+
+
+
+
+/**
+ * Formats a compendium image name.
+ *
+ * @param   string  $name   The compendium image file name.
+ *
+ * @return  string          The formatted image file name.
+ */
+
+function compendium_format_image_name( ?string $name ) : string
+{
+  // Change the name to lowercase
+  $name = string_change_case($name, 'lowercase');
+
+  // Replace spaces with underscores
+  $name = str_replace(' ', '_', $name);
+
+  // Remove forbidden characters
+  $name = str_replace('%', '', $name);
+  $name = str_replace('/', '', $name);
+  $name = str_replace('\\', '', $name);
+  $name = str_replace('|', '', $name);
+  $name = str_replace('"', '', $name);
+  $name = str_replace('<', '', $name);
+  $name = str_replace('>', '', $name);
+  $name = str_replace('*', '', $name);
+  $name = str_replace('+', '', $name);
+  $name = str_replace('#', '', $name);
+  $name = str_replace('&', '', $name);
+  $name = str_replace('?', '', $name);
+
+  // Return the formatted name
+  return $name;
 }
 
 

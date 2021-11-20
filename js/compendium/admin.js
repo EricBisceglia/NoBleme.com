@@ -3,6 +3,7 @@
 /*  compendium_admin_menu                 Navigates between compendium administration pages.                         */
 /*                                                                                                                   */
 /*  compendium_autocomplete_url           Updates the datalist used to autocomplete compendium page urls.            */
+/*  compendium_autocomplete_image         Updates the datalist used to autocomplete image file names.                */
 /*                                                                                                                   */
 /*  compendium_recalculate_image_links    Triggers the recalculation of all compendium image links.                  */
 /*                                                                                                                   */
@@ -44,10 +45,10 @@ function compendium_admin_menu()
  * @returns {void}
  */
 
-function compendium_autocomplete_url( url_input_id            ,
-                                      target_element          ,
-                                      list_id                 ,
-                                      no_redirects    = null  )
+ function compendium_autocomplete_url(  url_input_id            ,
+                                        target_element          ,
+                                        list_id                 ,
+                                        no_redirects    = null  )
 {
   // Assemble the postdata
   postdata  = 'compendium_autocomplete_url='  + fetch_sanitize_id(url_input_id);
@@ -57,6 +58,31 @@ function compendium_autocomplete_url( url_input_id            ,
 
   // Submit the fetch request
   fetch_page('page_autocomplete_url', target_element, postdata);
+}
+
+
+
+
+/**
+ * Updates the datalist used to autocomplete compendium image file names.
+ *
+ * @param   {string}  image_input_id      ID of the input containing the image name.
+ * @param   {string}  parent_element_id   ID of the element containing the datalist of the image being autocompleted.
+ * @param   {string}  list_id             ID of the datalist used for autocompletion.
+ *
+ * @returns {void}
+ */
+
+function compendium_autocomplete_image( image_input_id  ,
+                                        target_element  ,
+                                        list_id         )
+{
+  // Assemble the postdata
+  postdata  = 'compendium_autocomplete_image='  + fetch_sanitize_id(image_input_id);
+  postdata += '&compendium_autocomplete_id='    + fetch_sanitize(list_id);
+
+  // Submit the fetch request
+  fetch_page('image_autocomplete', target_element, postdata);
 }
 
 

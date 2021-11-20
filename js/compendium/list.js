@@ -6,6 +6,7 @@
 /*                                                                                                                   */
 /*  compendium_image_list_clipboard     Copies an image to the clipoard, ready for use in the compendium.            */
 /*  compendium_image_list_preview       Fetches the preview of a compendium image.                                   */
+/*  compendium_image_list_upload        Fills out the image upload form when an image is submitted.                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -156,4 +157,40 @@ function compendium_image_list_preview( image_id        ,
 
   // Prevent the fetch from happening more than once
   document.getElementById('compendium_image_list_preview_cell_' + image_id).onmouseover = null;
+}
+
+
+
+
+/**
+ * Fills out the image upload form when an image is submitted.
+ *
+ * @returns {void}
+ */
+
+function compendium_image_list_upload()
+{
+  // Reveal the hidden image upload form
+  toggle_element_oneway('compendium_image_upload_form', true);
+
+  // Hide the error or upload success message in case it was previously displayed
+  if(document.getElementById('compendium_image_upload_error'))
+    toggle_element_oneway('compendium_image_upload_error', false);
+
+  // Move the image upload button to the left
+  document.getElementById('compendium_image_upload_file').style.textAlign = "left";
+
+  // Fetch the submitted image's name
+  image = document.getElementById('compendium_image_upload_file').value;
+
+  // Get rid of the path in the image's name
+  position = image.lastIndexOf('\\');
+  if(position >= 0)
+    image = image.substring(position + 1);
+
+  // Clean up the image's name by removing spaces and caps
+  image = image.replace(" ", "_").toLowerCase();
+
+  // Display the suggested file name
+  document.getElementById('compendium_image_upload_name').value = image;
 }

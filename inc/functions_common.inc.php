@@ -405,7 +405,7 @@ function require_included_file( string $file_name ) : void
  * @param   string  $element_name               The name of the element.
  * @param   mixed   $default_value  (OPTIONAL)  Value to return if the element does not exist.
  * @param   bool    $element_exists (OPTIONAL)  Only returns whether the element exists (eg. checkbox).
- * @param   string  $request_type   (OPTIONAL)  The type of request ('POST', 'GET').
+ * @param   string  $request_type   (OPTIONAL)  The type of request ('POST', 'GET', 'FILES').
  *
  * @return  mixed                               The unsanitized value of the element (or default).
  */
@@ -420,9 +420,10 @@ function form_fetch_element(  string  $element_name             ,
   {
     if($request_type == 'GET')
       return (isset($_GET[$element_name]));
+    else if($request_type == 'FILES')
+      return (isset($_FILES[$element_name]));
     else
       return (isset($_POST[$element_name]));
-
   }
 
   // Otherwise return the unsanitized value of the element if it exists
@@ -430,6 +431,8 @@ function form_fetch_element(  string  $element_name             ,
   {
     if($request_type == 'GET')
       return (isset($_GET[$element_name])) ? $_GET[$element_name] : $default_value;
+    else if($request_type == 'FILES')
+      return (isset($_FILES[$element_name])) ? $_FILES[$element_name] : $default_value;
     else
       return (isset($_POST[$element_name])) ? $_POST[$element_name] : $default_value;
   }
