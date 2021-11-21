@@ -533,6 +533,23 @@ ___('compendium_image_edit_no_rename',  'FR', "Impossible de renommer le fichier
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   MISSING PAGES                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Missing pages list
+___('compendium_missing_admin_menu',  'EN', "Missing");
+___('compendium_missing_admin_menu',  'FR', "Manquant");
+___('compendium_missing_title',       'EN', "Missing pages");
+___('compendium_missing_title',       'FR', "Pages manquantes");
+___('compendium_missing_count',       'EN', "{{1}} pages to create");
+___('compendium_missing_count',       'FR', "{{1}} pages à créer");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       ERAS                                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

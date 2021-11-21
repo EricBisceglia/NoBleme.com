@@ -31,6 +31,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
 /*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
+/*  compendium_missing_list                   Fetches a list of all missing compendium pages.                        */
+/*                                                                                                                   */
 /*  compendium_types_get                      Returns data related to a compendium page type.                        */
 /*  compendium_types_list                     Fetches a list of compendium page types.                               */
 /*  compendium_types_add                      Creates a new compendium page type.                                    */
@@ -2081,6 +2083,173 @@ function compendium_images_autocomplete( string $input ) : mixed
   // Prepare the returned data
   for($i = 0; $dimages = mysqli_fetch_array($qimages); $i++)
     $data[$i]['url'] = sanitize_output($dimages['ci_name']);
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches a list of all missing compendium pages.
+ *
+ * @param   string  $sort_by    (OPTIONAL)  How the returned data should be sorted.
+ * @param   array   $search     (OPTIONAL)  Search for specific field values.
+ *
+ * @return  array                           An array containing wanted missing pages from the compendium.
+ */
+
+function compendium_missing_list( string  $sort_by  = 'date'  ,
+                                  array   $search   = array() ) : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Sanitize and prepare the data
+  $missing    = array();
+  $urls       = array();
+  $search_url = isset($search['url']) ? sanitize($search['url'], 'string')  : '';
+
+  // Fetch a list of all urls
+  $qurls = query("  SELECT    compendium_pages.page_url AS 'c_url'
+                    FROM      compendium_pages
+                    ORDER BY  compendium_pages.id ASC ");
+
+  // Turn the url list into an array
+  while($durls = mysqli_fetch_array($qurls))
+    array_push($urls, $durls['c_url']);
+
+  // Fetch a list of all pages
+  $qpages = query(" SELECT    compendium_pages.summary_en     AS 'c_summary_en' ,
+                              compendium_pages.summary_fr     AS 'c_summary_fr' ,
+                              compendium_pages.definition_en  AS 'c_body_en'    ,
+                              compendium_pages.definition_fr  AS 'c_body_fr'
+                    FROM      compendium_pages
+                    ORDER BY  compendium_pages.id ASC ");
+
+  // Loop through the pages
+  while($dpages = mysqli_fetch_array($qpages))
+  {
+    // Look for missing pages in the english definitions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_body_en'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the french definitions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_body_fr'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the english summaries
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_summary_en'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the french summaries
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_summary_fr'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+  }
+
+  // Fetch a list of all images
+  $qimages = query("  SELECT    compendium_images.caption_en     AS 'c_caption_en' ,
+                                compendium_images.caption_fr     AS 'c_caption_fr'
+                      FROM      compendium_images
+                      ORDER BY  compendium_images.id ASC ");
+
+  // Loop through the images
+  while($dimages = mysqli_fetch_array($qimages))
+  {
+    // Look for missing pages in the english captions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['c_caption_en'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the french captions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['c_caption_fr'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+  }
+
+  // Remove non matching array elements in case a search is being performed
+  if($search_url)
+  {
+    foreach($missing as $missing_page)
+    {
+      if(!str_contains($missing_page, $search_url))
+        array_splice($missing, array_search($missing_page, $missing), 1);
+    }
+  }
+
+  // Fetch the missing pages in the database
+  $qmissing = "     SELECT    compendium_missing.id       AS 'cm_id'  ,
+                              compendium_missing.page_url AS 'cm_url'
+                    FROM      compendium_missing
+                    WHERE     1 = 1 ";
+
+  // Search the data
+  if($search_url)
+    $qmissing .= "  AND       compendium_missing.page_url   LIKE  '%$search_url%' ";
+
+  // Run the query
+  $qmissing = query($qmissing);
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qmissing); $i++)
+  {
+    // Format the data
+    $data[$i]['id']   = sanitize_output($row['cm_id']);
+    $data[$i]['url']  = sanitize_output($row['cm_url']);
+
+    // Remove matching missing pages
+    if(in_array($row['cm_url'], $missing))
+      array_splice($missing, array_search($row['cm_url'], $missing), 1);
+  }
+
+  // Sort the missing pages array
+  sort($missing);
+
+  // Add the missing pages to the data
+  $data['missing'] = $missing;
 
   // Add the number of rows to the data
   $data['rows'] = $i;

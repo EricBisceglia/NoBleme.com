@@ -82,6 +82,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
+</div>
+
+<div class="width_90">
+
   <h2 class="align_center padding_bot">
     <?=__link('pages/compendium/page_list', $compendium_image_file_name, 'noglow')?>
     <?php if($is_admin) { ?>
@@ -99,6 +103,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/image_admin')?>
     <?php } ?>
   </h2>
+
+</div>
+
+<div class="width_50">
 
   <?php if($compendium_image_data['nsfw']) { ?>
   <div class="flexcontainer align_center padding_top bigpadding_bot">

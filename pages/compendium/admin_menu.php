@@ -20,6 +20,7 @@ user_restrict_to_administrators();
 $compendium_admin_menu['notes']       = isset($compendium_admin_menu['notes']) ? ' selected' : '';
 $compendium_admin_menu['page_list']   = isset($compendium_admin_menu['page_list']) ? ' selected' : '';
 $compendium_admin_menu['images']      = isset($compendium_admin_menu['images']) ? ' selected' : '';
+$compendium_admin_menu['missing']     = isset($compendium_admin_menu['missing']) ? ' selected' : '';
 $compendium_admin_menu['page_types']  = isset($compendium_admin_menu['page_types']) ? ' selected' : '';
 $compendium_admin_menu['categories']  = isset($compendium_admin_menu['categories']) ? ' selected' : '';
 $compendium_admin_menu['eras']        = isset($compendium_admin_menu['eras']) ? ' selected' : '';
@@ -41,6 +42,9 @@ $compendium_admin_menu['eras']        = isset($compendium_admin_menu['eras']) ? 
         </option>
         <option value="image_admin"<?=$compendium_admin_menu['images']?>>
           <?=__('compendium_image_list_title')?>
+        </option>
+        <option value="page_missing"<?=$compendium_admin_menu['missing']?>>
+          <?=__('compendium_missing_admin_menu')?>
         </option>
         <option value="page_type_admin"<?=$compendium_admin_menu['page_types']?>>
           <?=__('compendium_types_title')?>

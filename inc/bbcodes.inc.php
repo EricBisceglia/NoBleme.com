@@ -321,10 +321,10 @@ function nbcodes( string  $message                                              
   foreach($results[0] as $pattern)
   {
     // Prepare a different style depending on whether the page exists or not in the compendium
-    $temp = (in_array(string_change_case(html_entity_decode($results[1][$i], ENT_QUOTES), 'lowercase'), $page_list)) ? '' : 'nbcode_dead_link noglow';
+    $temp = (in_array(string_change_case(html_entity_decode(str_replace(' ', '_', $results[1][$i]), ENT_QUOTES), 'lowercase'), $page_list)) ? '' : 'nbcode_dead_link noglow';
 
     // Replace the NBcode with its HTML counterpart
-    $message = str_replace($pattern, '<a class="'.$temp.'" href="'.$path.'pages/compendium/'.rawurlencode($results[1][$i]).'">'.$results[2][$i].'</a>', $message);
+    $message = str_replace($pattern, '<a class="'.$temp.'" href="'.$path.'pages/compendium/'.rawurlencode(str_replace(' ', '_', $results[1][$i])).'">'.$results[2][$i].'</a>', $message);
 
     // Don't forget to increment the result being treated between each iteration of the loop
     $i++;

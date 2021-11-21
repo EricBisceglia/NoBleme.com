@@ -3,6 +3,7 @@
 /*  compendium_page_list_search         Performs a search through the compendium page list.                          */
 /*  compendium_admin_list_search        Performs a search through the compendium admin page list.                    */
 /*  compendium_image_list_search        Performs a search through the compendium image list.                         */
+/*  compendium_missing_list_search      Performs a search through the compendium missing pages list.                 */
 /*                                                                                                                   */
 /*  compendium_image_list_clipboard     Copies an image to the clipoard, ready for use in the compendium.            */
 /*  compendium_image_list_preview       Fetches the preview of a compendium image.                                   */
@@ -122,6 +123,31 @@ function compendium_image_list_search(  sort_data     = null  ,
 
   // Submit the search
   fetch_page('image_admin', 'compendium_image_list_tbody', postdata);
+}
+
+
+
+
+/**
+ * Performs a search through the compendium missing pages list.
+ *
+ * @param   {string}  [sort_data]   Change the order in which the data will be sorted.
+ *
+ * @returns {void}
+*/
+
+function compendium_missing_list_search( sort_data = null )
+{
+  // Update the data sort input if requested
+  if(sort_data)
+    document.getElementById('compendium_missing_sort_order').value = sort_data;
+
+  // Assemble the postdata
+  postdata  = 'compendium_missing_sort_order='  + fetch_sanitize_id('compendium_missing_sort_order');
+  postdata += '&compendium_missing_url='        + fetch_sanitize_id('compendium_missing_url');
+
+  // Submit the search
+  fetch_page('page_missing', 'compendium_missing_list_tbody', postdata);
 }
 
 
