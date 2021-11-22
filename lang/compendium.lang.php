@@ -538,12 +538,24 @@ ___('compendium_image_edit_no_rename',  'FR', "Impossible de renommer le fichier
 /*********************************************************************************************************************/
 
 // Missing pages list
-___('compendium_missing_admin_menu',  'EN', "Missing");
-___('compendium_missing_admin_menu',  'FR', "Manquant");
-___('compendium_missing_title',       'EN', "Missing pages");
-___('compendium_missing_title',       'FR', "Pages manquantes");
-___('compendium_missing_count',       'EN', "{{1}} pages to create");
-___('compendium_missing_count',       'FR', "{{1}} pages à créer");
+___('compendium_missing_admin_menu',    'EN', "Missing");
+___('compendium_missing_admin_menu',    'FR', "Manquant");
+___('compendium_missing_title',         'EN', "Missing pages");
+___('compendium_missing_title',         'FR', "Pages manquantes");
+___('compendium_missing_page',          'EN', "Title");
+___('compendium_missing_page',          'FR', "Titre");
+___('compendium_missing_notes',         'EN', "Notes");
+___('compendium_missing_notes',         'FR', "Notes");
+___('compendium_missing_no_notes',      'EN', "No notes");
+___('compendium_missing_no_notes',      'FR', "Pas de notes");
+___('compendium_missing_documented',    'EN', "Documented");
+___('compendium_missing_documented',    'FR', "Documenté");
+___('compendium_missing_undocumented',  'EN', "Undocumented");
+___('compendium_missing_undocumented',  'FR', "Non documenté");
+___('compendium_missing_count',         'EN', "{{1}} documented missing pages");
+___('compendium_missing_count',         'FR', "{{1}} pages à créer documentées");
+___('compendium_missing_uncount',       'EN', "{{1}} undocumented missing pages");
+___('compendium_missing_uncount',       'FR', "{{1}} pages à créer non documentées");
 
 
 

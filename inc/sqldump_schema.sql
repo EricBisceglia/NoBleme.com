@@ -58,10 +58,8 @@ CREATE TABLE IF NOT EXISTS `compendium_images` (
 DROP TABLE IF EXISTS `compendium_missing`;
 CREATE TABLE IF NOT EXISTS `compendium_missing` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_compendium_types` int UNSIGNED NOT NULL DEFAULT '0',
   `page_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notes` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_url` (`page_url`(250))

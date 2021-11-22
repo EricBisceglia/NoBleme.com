@@ -2036,22 +2036,18 @@ $random = mt_rand(25,75);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $temp     = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');
-  $temp     = (mt_rand(0,1)) ? 2 : $temp;
-  $type     = (mt_rand(0,1)) ? 1 : $temp;
-  $url      = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
-  $title_en = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
-  $title_fr = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
-  $notes    = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
+  $temp   = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');
+  $temp   = (mt_rand(0,1)) ? 2 : $temp;
+  $url    = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
+  $title  = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
+  $notes  = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
 
   // Generate the missing pages
   if(!fixtures_check_entry('compendium_pages', 'page_url', $url))
     query(" INSERT INTO compendium_missing
-            SET         compendium_missing.fk_compendium_types  = '$type'     ,
-                        compendium_missing.page_url             = '$url'      ,
-                        compendium_missing.title_en             = '$title_en' ,
-                        compendium_missing.title_fr             = '$title_fr' ,
-                        compendium_missing.notes                = '$notes'    ");
+            SET         compendium_missing.page_url = '$url'    ,
+                        compendium_missing.title    = '$title'  ,
+                        compendium_missing.notes    = '$notes'  ");
 
 }
 

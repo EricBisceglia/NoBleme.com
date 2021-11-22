@@ -1572,11 +1572,9 @@ if($last_query < 30)
   sql_create_index('compendium_images', 'index_file_name', 'file_name', 1);
 
   sql_create_table('compendium_missing');
-  sql_create_field('compendium_missing', 'fk_compendium_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('compendium_missing', 'page_url', 'VARCHAR(510) NOT NULL', 'fk_compendium_types');
-  sql_create_field('compendium_missing', 'title_en', 'VARCHAR(510) NOT NULL', 'page_url');
-  sql_create_field('compendium_missing', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
-  sql_create_field('compendium_missing', 'notes', 'MEDIUMTEXT NOT NULL', 'title_fr');
+  sql_create_field('compendium_missing', 'page_url', 'VARCHAR(510) NOT NULL', 'id');
+  sql_create_field('compendium_missing', 'title', 'VARCHAR(510) NOT NULL', 'page_url');
+  sql_create_field('compendium_missing', 'notes', 'MEDIUMTEXT NOT NULL', 'title');
   sql_create_index('compendium_missing', 'index_url', 'page_url(255)');
 
   sql_change_field_type('compendium_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');

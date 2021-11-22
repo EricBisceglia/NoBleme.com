@@ -36,6 +36,9 @@ $GLOBALS['full_debug_mode'] = isset($GLOBALS['full_debug_mode'])  ? $GLOBALS['fu
 // Enforce a global timezone on the server side
 date_default_timezone_set('Europe/Paris');
 
+// Use french as the locale for everything
+setlocale(LC_ALL, "fr_FR@euro", "fr_FR", "fra_fra");
+
 // Make var_dumps unlimited in size
 ini_set('xdebug.var_display_max_depth', '-1');
 ini_set('xdebug.var_display_max_children', '-1');

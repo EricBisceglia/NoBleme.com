@@ -44,7 +44,10 @@ $js   = array('compendium/list', 'compendium/admin');
 $compendium_missing_sort_order = form_fetch_element('compendium_missing_sort_order', 'url');
 
 // Assemble the search query
-$compendium_missing_search = array( 'url' => form_fetch_element('compendium_missing_url') );
+$compendium_missing_search = array( 'url'     => form_fetch_element('compendium_missing_url')     ,
+                                    'title'   => form_fetch_element('compendium_missing_title')   ,
+                                    'notes'   => form_fetch_element('compendium_missing_notes')   ,
+                                    'status'  => form_fetch_element('compendium_missing_status')  );
 
 // Fetch the missing pages
 $compendium_missing_list = compendium_missing_list( sort_by:  $compendium_missing_sort_order  ,
@@ -59,7 +62,7 @@ $compendium_missing_list = compendium_missing_list( sort_by:  $compendium_missin
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_30">
+<div class="width_40">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_missing_title')?>
@@ -71,7 +74,15 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <tr class="uppercase">
         <th>
           <?=__('compendium_list_admin_url')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('url');")?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('url');")?>
+        </th>
+        <th>
+          <?=__('compendium_missing_page')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('title');")?>
+        </th>
+        <th>
+          <?=__('compendium_missing_notes')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('notes');")?>
         </th>
         <th>
           <?=__('act')?>
@@ -86,7 +97,23 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </th>
 
         <th>
-          &nbsp;
+          <input type="text" class="table_search" name="compendium_missing_title" id="compendium_missing_title" value="" onkeyup="compendium_missing_list_search();">
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_missing_notes" id="compendium_missing_notes" onchange="compendium_missing_list_search();">
+            <option value="-1">&nbsp;</option>
+            <option value="1"><?=__('compendium_missing_notes')?></option>
+            <option value="0"><?=__('compendium_missing_no_notes')?></option>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_missing_status" id="compendium_missing_status" onchange="compendium_missing_list_search();">
+            <option value="-1">&nbsp;</option>
+            <option value="1"><?=__('compendium_missing_documented')?></option>
+            <option value="0"><?=__('compendium_missing_undocumented')?></option>
+          </select>
         </th>
 
       </tr>
@@ -97,40 +124,92 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
       <?php } ?>
 
+      <?php if($compendium_missing_list['rows']) { ?>
+
       <tr>
-        <td colspan="2" class="uppercase text_light dark bold align_center">
-          <?=__('compendium_missing_count', preset_values: array(($compendium_missing_list['rows'] + count($compendium_missing_list['missing']))))?>
+        <td colspan="4" class="uppercase text_light dark bold align_center">
+          <?=__('compendium_missing_count', preset_values: array($compendium_missing_list['rows']))?>
         </td>
       </tr>
 
-      <?php for($i = 0; $i < $compendium_missing_list['rows']; $i++) { ?>
+      <?php } for($i = 0; $i < $compendium_missing_list['rows']; $i++) { ?>
 
       <tr>
 
+        <?php if(!$compendium_missing_list[$i]['fullurl']) { ?>
         <td class="align_left nbcode_dead_link noglow">
           <?=$compendium_missing_list[$i]['url']?>
         </td>
+        <?php } else { ?>
+        <td class="align_left nbcode_dead_link noglow tooltip_container">
+          <?=$compendium_missing_list[$i]['urldisplay']?>
+          <div class="tooltip">
+            <?=$compendium_missing_list[$i]['fullurl']?>
+          </div>
+        </td>
+        <?php } ?>
+
+        <?php if(!$compendium_missing_list[$i]['t_full']) { ?>
+        <td class="align_center">
+          <?=$compendium_missing_list[$i]['title']?>
+        </td>
+        <?php } else { ?>
+        <td class="align_center tooltip_container">
+          <?=$compendium_missing_list[$i]['t_display']?>
+          <div class="tooltip">
+            <?=$compendium_missing_list[$i]['t_full']?>
+          </div>
+        </td>
+        <?php } ?>
+
+        <?php if($compendium_missing_list[$i]['notes']) { ?>
+        <td class="align_center tooltip_container">
+          <?=__icon('message', is_small: true, alt: 'M', title: __('message'), title_case: 'initials')?>
+          <div class="tooltip dowrap">
+            <?=$compendium_missing_list[$i]['notes']?>
+          </div>
+        </td>
+        <?php } else { ?>
+        <td>
+          &nbsp;
+        </td>
+        <?php } ?>
 
         <td class="align_center nowrap">
-          <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials')?>
+          <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list[$i]['url'])?>
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/missing_edit?id='.$compendium_missing_list[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'X', title: __('delete'), title_case: 'initials')?>
         </td>
 
       </tr>
 
-      <?php } ?>
+      <?php } if(count($compendium_missing_list['missing'])) { ?>
 
-      <?php for($i = 0; $i < count($compendium_missing_list['missing']); $i++) { ?>
+      <tr>
+        <td colspan="4" class="uppercase text_light dark bold align_center">
+          <?=__('compendium_missing_uncount', preset_values: array(count($compendium_missing_list['missing'])))?>
+        </td>
+      </tr>
+
+      <?php } for($i = 0; $i < count($compendium_missing_list['missing']); $i++) { ?>
 
       <tr>
 
-        <td class="align_left nbcode_dead_link noglow">
+        <?php if(mb_strlen($compendium_missing_list['missing'][$i]) <= 50) { ?>
+        <td colspan="3" class="align_left nbcode_dead_link noglow">
           <?=$compendium_missing_list['missing'][$i]?>
         </td>
+        <?php } else { ?>
+        <td colspan="3" class="align_left nbcode_dead_link noglow tooltip_container">
+          <?=string_truncate($compendium_missing_list['missing'][$i], 50, '...')?>
+          <div class="tooltip">
+            <?=$compendium_missing_list['missing'][$i]?>
+          </div>
+        </td>
+        <?php } ?>
 
         <td class="align_center nowrap">
-          <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials')?>
+          <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list['missing'][$i])?>
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/missing_edit?name='.$compendium_missing_list['missing'][$i])?>
         </td>
 

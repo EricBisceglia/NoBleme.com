@@ -2103,7 +2103,7 @@ function compendium_images_autocomplete( string $input ) : mixed
  * @return  array                           An array containing wanted missing pages from the compendium.
  */
 
-function compendium_missing_list( string  $sort_by  = 'date'  ,
+function compendium_missing_list( string  $sort_by  = 'url'   ,
                                   array   $search   = array() ) : array
 {
   // Check if the required files have been included
@@ -2121,9 +2121,12 @@ function compendium_missing_list( string  $sort_by  = 'date'  ,
   $pages    = compendium_pages_list_urls();
 
   // Sanitize and prepare the data
-  $missing    = array();
-  $urls       = array();
-  $search_url = isset($search['url']) ? sanitize($search['url'], 'string')  : '';
+  $missing        = array();
+  $urls           = array();
+  $search_url     = isset($search['url'])     ? sanitize($search['url'], 'string')        : '';
+  $search_title   = isset($search['title'])   ? sanitize($search['title'], 'string')      : '';
+  $search_notes   = isset($search['notes'])   ? sanitize($search['notes'], 'int', -1, 1)  : -1;
+  $search_status  = isset($search['status'])  ? sanitize($search['status'], 'int', -1, 1) : -1;
 
   // Fetch a list of all urls
   $qurls = query("  SELECT    compendium_pages.page_url AS 'c_url'
@@ -2220,15 +2223,40 @@ function compendium_missing_list( string  $sort_by  = 'date'  ,
     }
   }
 
+  // Remove all elements from array if some searches are being performed
+  if($search_title || $search_notes == 1 || $search_status == 1)
+    $missing = array();
+
   // Fetch the missing pages in the database
-  $qmissing = "     SELECT    compendium_missing.id       AS 'cm_id'  ,
-                              compendium_missing.page_url AS 'cm_url'
+  $qmissing = "     SELECT    compendium_missing.id       AS 'cm_id'    ,
+                              compendium_missing.page_url AS 'cm_url'   ,
+                              compendium_missing.title    AS 'cm_title' ,
+                              compendium_missing.notes    AS 'cm_notes'
                     FROM      compendium_missing
                     WHERE     1 = 1 ";
 
   // Search the data
   if($search_url)
-    $qmissing .= "  AND       compendium_missing.page_url   LIKE  '%$search_url%' ";
+    $qmissing .= "  AND       compendium_missing.page_url LIKE  '%$search_url%'   ";
+  if($search_title)
+    $qmissing .= "  AND       compendium_missing.title    LIKE  '%$search_title%' ";
+  if($search_notes == 0)
+    $qmissing .= "  AND       compendium_missing.notes    =     ''                ";
+  else if($search_notes == 1)
+    $qmissing .= "  AND       compendium_missing.notes    !=    ''                ";
+  if($search_status == 0)
+    $qmissing .= "  AND       0                           =     1                 ";
+
+  // Order the data
+  if($sort_by == 'title')
+    $qmissing .= "  ORDER BY  compendium_missing.title    = ''  ,
+                              compendium_missing.title    ASC   ,
+                              compendium_missing.page_url ASC   ";
+  else if($sort_by == 'notes')
+    $qmissing .= "  ORDER BY  compendium_missing.notes    = ''  ,
+                              compendium_missing.page_url ASC   ";
+  else
+    $qmissing .= "  ORDER BY  compendium_missing.page_url ASC   ";
 
   // Run the query
   $qmissing = query($qmissing);
@@ -2237,16 +2265,29 @@ function compendium_missing_list( string  $sort_by  = 'date'  ,
   for($i = 0; $row = mysqli_fetch_array($qmissing); $i++)
   {
     // Format the data
-    $data[$i]['id']   = sanitize_output($row['cm_id']);
-    $data[$i]['url']  = sanitize_output($row['cm_url']);
+    $data[$i]['id']         = sanitize_output($row['cm_id']);
+    $data[$i]['url']        = sanitize_output($row['cm_url']);
+    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['cm_url'], 30, '...'));
+    $data[$i]['fullurl']    = (mb_strlen($row['cm_url']) > 30) ? sanitize_output($row['cm_url']) : '';
+    $data[$i]['title']      = sanitize_output($row['cm_title']);
+    $data[$i]['t_display']  = sanitize_output(string_truncate($row['cm_title'], 25, '...'));
+    $data[$i]['t_full']     = (mb_strlen($row['cm_title']) > 25) ? sanitize_output($row['cm_title']) : '';
+    $temp                   = bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true));
+    $data[$i]['notes']      = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
     // Remove matching missing pages
     if(in_array($row['cm_url'], $missing))
       array_splice($missing, array_search($row['cm_url'], $missing), 1);
   }
 
-  // Sort the missing pages array
-  sort($missing);
+  // Sort the missing pages array (with a little encoding trick for accents)
+  $missing = array_map("utf8_decode", $missing);
+  sort($missing, SORT_LOCALE_STRING);
+  $missing = array_map("utf8_encode", $missing);
+
+  // Prepare the missing pages array for displaying
+  foreach($missing as $page_id => $page_name)
+    $missing[$page_id] = sanitize_output($page_name);
 
   // Add the missing pages to the data
   $data['missing'] = $missing;

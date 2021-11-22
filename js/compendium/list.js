@@ -145,6 +145,9 @@ function compendium_missing_list_search( sort_data = null )
   // Assemble the postdata
   postdata  = 'compendium_missing_sort_order='  + fetch_sanitize_id('compendium_missing_sort_order');
   postdata += '&compendium_missing_url='        + fetch_sanitize_id('compendium_missing_url');
+  postdata += '&compendium_missing_title='      + fetch_sanitize_id('compendium_missing_title');
+  postdata += '&compendium_missing_notes='      + fetch_sanitize_id('compendium_missing_notes');
+  postdata += '&compendium_missing_status='     + fetch_sanitize_id('compendium_missing_status');
 
   // Submit the search
   fetch_page('page_missing', 'compendium_missing_list_tbody', postdata);

@@ -37,8 +37,12 @@ $js   = array('compendium/admin');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Create a new compendium page
 
+// Fetch the new page url if one was provided
+$compendium_new_url = isset($_GET['url']) ? form_fetch_element('url', request_type: 'GET') : '';
+$compendium_new_url = isset($_POST['compendium_new_url']) ? form_fetch_element('compendium_new_url') : $compendium_new_url;
+
 // Assemble the postdata
-$compendium_new_url           = compendium_format_url(form_fetch_element('compendium_new_url'));
+$compendium_new_url           = compendium_format_url($compendium_new_url);
 $compendium_new_title_en      = compendium_format_title(form_fetch_element('compendium_new_title_en'));
 $compendium_new_title_fr      = compendium_format_title(form_fetch_element('compendium_new_title_fr'));
 $compendium_new_redirect_en   = compendium_format_url(form_fetch_element('compendium_new_redirect_en'));
