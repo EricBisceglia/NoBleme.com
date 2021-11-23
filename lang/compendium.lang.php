@@ -567,6 +567,27 @@ ___('compendium_missing_page_none',   'EN', "This missing page is not called by 
 ___('compendium_missing_page_none',   'FR', "Cette page manquante n'est appelée par aucune page ou image.");
 
 
+// Edit a missing page
+___('compendium_missing_edit_create',   'EN', "New missing page");
+___('compendium_missing_edit_create',   'FR', "Nouvelle page manquante");
+___('compendium_missing_edit_title',    'EN', "Edit missing page");
+___('compendium_missing_edit_title',    'FR', "Modifier une page manquante");
+___('compendium_missing_edit_url',      'EN', "Missing page URL (no spaces, must not be taken)");
+___('compendium_missing_edit_url',      'FR', "Adresse de la page manquante (ne doit pas être déjà utilisé)");
+___('compendium_missing_edit_name',     'EN', "Missing page title");
+___('compendium_missing_edit_name',     'FR', "Titre de la page manquante");
+___('compendium_missing_edit_notes',    'EN', "Notes ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_missing_edit_notes',    'FR', "Notes ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_missing_edit_no_url',   'EN', "An URL must be provided");
+___('compendium_missing_edit_no_url',   'FR', "La page manquante doit avoir une adresse");
+___('compendium_missing_edit_taken',    'EN', "This page URL is already taken by an existing page");
+___('compendium_missing_edit_taken',    'FR', "Cette adresse est déjà utilisée par une page existante");
+___('compendium_missing_edit_double',   'EN', "A missing page with this URL already exists");
+___('compendium_missing_edit_double',   'FR', "Une page manquante existe déjà pour cette adresse");
+___('compendium_missing_edit_deleted',  'EN', "This missing page does not exist or has been deleted");
+___('compendium_missing_edit_deleted',  'FR', "Cette page manquante n'existe pas ou a été supprimée");
+
+
 
 
 /*********************************************************************************************************************/

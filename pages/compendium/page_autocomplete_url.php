@@ -22,13 +22,15 @@ page_must_be_fetched_dynamically();
 // Autocompletion
 
 // Fetch the postdata
-$autocomplete_url           = form_fetch_element('compendium_autocomplete_url', '');
-$autocomplete_id            = form_fetch_element('compendium_autocomplete_id', '');
-$autocomplete_no_redirects  = (bool)form_fetch_element('compendium_autocomplete_no_redirects', false);
+$autocomplete_url             = form_fetch_element('compendium_autocomplete_url', '');
+$autocomplete_id              = form_fetch_element('compendium_autocomplete_id', '');
+$autocomplete_no_redirects    = (bool)form_fetch_element('compendium_autocomplete_no_redirects', false);
+$autocomplete_include_missing = (bool)form_fetch_element('compendium_autocomplete_include_missing', false);
 
 // Autocomplete the page url
-$autocomplete_data = compendium_pages_autocomplete( $autocomplete_url           ,
-                                                    $autocomplete_no_redirects  );
+$autocomplete_data = compendium_pages_autocomplete( $autocomplete_url             ,
+                                                    $autocomplete_no_redirects    ,
+                                                    $autocomplete_include_missing );
 
 
 

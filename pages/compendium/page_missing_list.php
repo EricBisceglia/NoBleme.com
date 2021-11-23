@@ -66,6 +66,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_missing_title')?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_missing_edit')?>
   </h2>
 
   <table>
@@ -210,7 +211,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center nowrap">
           <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list['missing'][$i])?>
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/missing_edit?name='.$compendium_missing_list['missing'][$i])?>
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?url='.$compendium_missing_list['missing'][$i])?>
         </td>
 
       </tr>

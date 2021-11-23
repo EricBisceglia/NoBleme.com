@@ -33,6 +33,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
 /*  compendium_missing_list                   Fetches a list of all missing compendium pages.                        */
+/*  compendium_missing_edit                   Creates or modifies data on a missing compendium page.                 */
 /*                                                                                                                   */
 /*  compendium_types_get                      Returns data related to a compendium page type.                        */
 /*  compendium_types_list                     Fetches a list of compendium page types.                               */
@@ -1282,14 +1283,16 @@ function compendium_pages_restore( int $page_id ) : void
 /**
  * Autocompletes a page url.
  *
- * @param   string      $input                      The input that needs to be autocompleted.
- * @param   bool        $no_redirects   (OPTIONAL)  If set, the returned page list will exclude redirections.
+ * @param   string      $input                        The input that needs to be autocompleted.
+ * @param   bool        $no_redirects     (OPTIONAL)  If set, the returned page list will exclude redirections.
+ * @param   bool        $include_missing  (OPTIONAL)  If set, the returned page list will include missing pages.
  *
- * @return  array|null                              An array containing autocomplete data, or NULL if something failed.
+ * @return  array|null                                An array containing autocomplete data, NULL if something failed.
  */
 
-function compendium_pages_autocomplete( string  $input                ,
-                                        bool    $no_redirects = false ) : mixed
+function compendium_pages_autocomplete( string  $input                      ,
+                                        bool    $no_redirects     = false   ,
+                                        bool    $include_missing  = false   ) : mixed
 {
   // Sanitize the input
   $input  = sanitize($input, 'string');
@@ -1312,6 +1315,21 @@ function compendium_pages_autocomplete( string  $input                ,
   // Prepare the returned data
   for($i = 0; $dpages = mysqli_fetch_array($qpages); $i++)
     $data[$i]['url'] = sanitize_output($dpages['c_url']);
+
+  // Add missing pages if requested
+  if($include_missing)
+  {
+    // Look for missing pages to add to autocompletion
+    $qmissing = query(" SELECT    compendium_missing.page_url AS 'cm_url'
+                        FROM      compendium_missing
+                        WHERE     compendium_missing.page_url LIKE '$input%'
+                        ORDER BY  compendium_missing.page_url ASC
+                        LIMIT     10 ");
+
+    // Prepare the returned data
+    for($i = $i; $dmissing = mysqli_fetch_array($qmissing); $i++)
+      $data[$i]['url'] = sanitize_output($dmissing['cm_url']);
+  }
 
   // Add the number of rows to the data
   $data['rows'] = $i;
@@ -2112,7 +2130,6 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
   require_included_file('bbcodes.inc.php');
 
   // Get the user's current language, settings, and the compendium pages which they can access
-  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
   $nsfw     = user_settings_nsfw();
   $privacy  = user_settings_privacy();
   $mode     = user_get_mode();
@@ -2136,14 +2153,17 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     return NULL;
 
   // Fetch the missing page data if an id was provided
-  if($missing_id)
+  if($missing_id || database_entry_exists('compendium_missing', 'page_url', $missing_url))
   {
+    // Prepare the query's parameter
+    $where = ($missing_id) ? " compendium_missing.id = '$missing_id' " : " compendium_missing.page_url LIKE '$missing_url' ";
+
     // Fetch the data
     $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.page_url AS 'cm_url'   ,
                                                     compendium_missing.title    AS 'cm_title' ,
                                                     compendium_missing.notes    AS 'cm_notes'
                                             FROM    compendium_missing
-                                            WHERE   compendium_missing.id = '$missing_id' "));
+                                            WHERE   $where "));
 
     // Assemble an array with the missing data
     $missing_url_raw  = $dmissing['cm_url'];
@@ -2151,6 +2171,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $data['title']    = sanitize_output($dmissing['cm_title']);
     $temp             = bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true));
     $data['body']     = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data['notes']    = sanitize_output($dmissing['cm_notes']);
   }
 
   // If no id was provided, fill up the array with empty data
@@ -2165,8 +2186,9 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     return NULL;
 
   // Assemble an array with the data
-  $data['id']  = sanitize_output($missing_id);
-  $data['url'] = sanitize_output($missing_url_raw);
+  $data['id']       = sanitize_output($missing_id);
+  $data['url']      = sanitize_output($missing_url_raw);
+  $data['url_raw']  = $missing_url_raw;
 
   // Assemble the missing page NBCode
   $missing_page_nbcode = '[page:'.$missing_url.'|';
@@ -2414,6 +2436,86 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates or modifies data on a missing compendium page.
+ *
+ * @param   string        $missing_url              The missing page's url.
+ * @param   array         $contents                 The missing page's contents.
+ * @param   int           $missing_id   (OPTIONAL)  The missing page's ID, if it already exists.
+ *
+ * @return  string|null                             A string if an error happened, or NULL if all went well.
+ */
+
+function compendium_missing_edit( string  $missing_url      ,
+                                  array   $contents         ,
+                                  int     $missing_id   = 0 ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $missing_url    = sanitize(compendium_format_url($missing_url), 'string');
+  $missing_id     = sanitize($missing_id, 'int', 0);
+  $missing_title  = (isset($contents['title'])) ? sanitize($contents['title'], 'string')  : '';
+  $missing_notes  = (isset($contents['notes'])) ? sanitize($contents['notes'], 'string')  : '';
+
+  // Error: No url
+  if(!$missing_url)
+    return __('compendium_missing_edit_no_url');
+
+  // Error: URL already taken by a compendium page
+  if(database_entry_exists('compendium_pages', 'page_url', $missing_url))
+    return __('compendium_missing_edit_taken');
+
+  // If the page doesn't exist, create it
+  if(!$missing_id)
+  {
+    // Ensure a missing page with that url doesn't already exist
+    if(database_entry_exists('compendium_missing', 'page_url', $missing_url))
+      return __('compendium_missing_edit_double');
+
+    // Create the missing page
+    query(" INSERT INTO compendium_missing
+            SET         compendium_missing.page_url = '$missing_url'    ,
+                        compendium_missing.title    = '$missing_title'  ,
+                        compendium_missing.notes    = '$missing_notes'  ");
+  }
+
+  // Otherwise, update it
+  else
+  {
+    // Fetch data on the missing page
+    $missing_data = compendium_missing_get(missing_id: $missing_id);
+
+    // Error: Missing page does not exist
+    if(!$missing_data)
+      return __('compendium_missing_edit_deleted');
+
+    // Sanitize the page's url
+    $missing_data_url = sanitize($missing_data['url_raw'], 'string');
+
+    // Error: Missing page's new URL is already taken
+    if($missing_data_url != $missing_url && database_entry_exists('compendium_missing', 'page_url', $missing_url))
+      return __('compendium_missing_edit_double');
+
+    // Update the missing pages
+    query(" UPDATE  compendium_missing
+            SET     compendium_missing.page_url = '$missing_url'    ,
+                    compendium_missing.title    = '$missing_title'  ,
+                    compendium_missing.notes    = '$missing_notes'
+            WHERE   compendium_missing.id       = '$missing_id'     ");
+  }
+
+  // All went well
+  return NULL;
 }
 
 

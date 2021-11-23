@@ -43,6 +43,7 @@ function compendium_admin_menu()
  * @param   {string}  parent_element_id   ID of the element containing the datalist of the url being autocompleted.
  * @param   {string}  list_id             ID of the datalist used for autocompletion.
  * @param   {string}  [no_redirects]      Exclude redirections from the autocompletion proposals.
+ * @param   {string}  [include_missing]   Include missing pages from the autocompletion proposals.
  *
  * @returns {void}
  */
@@ -50,13 +51,16 @@ function compendium_admin_menu()
  function compendium_autocomplete_url(  url_input_id            ,
                                         target_element          ,
                                         list_id                 ,
-                                        no_redirects    = null  )
+                                        no_redirects    = null  ,
+                                        include_missing = null  )
 {
   // Assemble the postdata
   postdata  = 'compendium_autocomplete_url='  + fetch_sanitize_id(url_input_id);
   postdata += '&compendium_autocomplete_id='  + fetch_sanitize(list_id);
   if(no_redirects)
     postdata += '&compendium_autocomplete_no_redirects=true';
+  if(include_missing)
+    postdata += '&compendium_autocomplete_include_missing=true';
 
   // Submit the fetch request
   fetch_page('page_autocomplete_url', target_element, postdata);
