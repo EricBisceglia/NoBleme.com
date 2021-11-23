@@ -9,6 +9,8 @@
 /*                                                                                                                   */
 /*  compendium_image_delete               Triggers the deletion or undeletion of a compendium image.                 */
 /*                                                                                                                   */
+/*  compendium_missing_delete             Triggers the deletion or undeletion of a missing compendium page.          */
+/*                                                                                                                   */
 /*  compendium_type_delete                Triggers the deletion of a compendium page type.                           */
 /*                                                                                                                   */
 /*  compendium_category_delete            Triggers the deletion of a compendium category.                            */
@@ -147,6 +149,40 @@ function compendium_image_delete( image_name  ,
 
     // Submit the deletion
     fetch_page('image?name=' + image_name, 'compendium_image_delete_icon', postdata);
+  }
+}
+
+
+
+
+/**
+ * Triggers the deletion or undeletion of a missing compendium page.
+ *
+ * @param   {int}     missing_id  The missing page's id.
+ * @param   {string}  message     Message to show before the deletion is performed.
+ * @param   {string}  page        The page from which the deletion is being performed.
+ *
+ * @returns {void}
+*/
+
+function compendium_missing_delete( missing_id  ,
+                                    message     ,
+                                    page        )
+{
+  // Make sure the user knows what they're doing
+  if(confirm(message))
+  {
+    // Assemble the postdata
+    postdata = 'compendium_missing_delete_id=' + fetch_sanitize(missing_id);
+
+    // Submit the deletion
+    if(page == 'list')
+      fetch_page('page_missing_list', 'compendium_missing_list_tbody', postdata);
+    else
+    {
+      toggle_element_oneway('compendium_missing_delete_icon', false);
+      fetch_page('page_missing?id=' + missing_id, 'compendium_missing_delete_icon', postdata);
+    }
   }
 }
 

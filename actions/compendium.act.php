@@ -34,6 +34,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
 /*  compendium_missing_list                   Fetches a list of all missing compendium pages.                        */
 /*  compendium_missing_edit                   Creates or modifies data on a missing compendium page.                 */
+/*  compendium_missing_delete                 Deletes a missing compendium page entry.                               */
 /*                                                                                                                   */
 /*  compendium_types_get                      Returns data related to a compendium page type.                        */
 /*  compendium_types_list                     Fetches a list of compendium page types.                               */
@@ -2159,7 +2160,8 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $where = ($missing_id) ? " compendium_missing.id = '$missing_id' " : " compendium_missing.page_url LIKE '$missing_url' ";
 
     // Fetch the data
-    $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.page_url AS 'cm_url'   ,
+    $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.id       AS 'cm_id'    ,
+                                                    compendium_missing.page_url AS 'cm_url'   ,
                                                     compendium_missing.title    AS 'cm_title' ,
                                                     compendium_missing.notes    AS 'cm_notes'
                                             FROM    compendium_missing
@@ -2168,6 +2170,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     // Assemble an array with the missing data
     $missing_url_raw  = $dmissing['cm_url'];
     $missing_url      = sanitize($missing_url_raw, 'string');
+    $missing_id       = $dmissing['cm_id'];
     $data['title']    = sanitize_output($dmissing['cm_title']);
     $temp             = bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true));
     $data['body']     = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
@@ -2513,6 +2516,36 @@ function compendium_missing_edit( string  $missing_url      ,
                     compendium_missing.notes    = '$missing_notes'
             WHERE   compendium_missing.id       = '$missing_id'     ");
   }
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Deletes a missing compendium page entry.
+ *
+ * @param   int           $missing_id   The missing compendium page's id.
+ *
+ * @return  void
+ */
+
+function compendium_missing_delete( int $missing_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the missing compendium page's id
+  $missing_id = sanitize($missing_id, 'int', 0);
+
+  // Delete the missing compendium page
+  query(" DELETE FROM compendium_missing
+          WHERE       compendium_missing.id = '$missing_id' ");
 
   // All went well
   return NULL;

@@ -38,6 +38,14 @@ $js   = array('compendium/list', 'compendium/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a missing page
+
+if(isset($_POST['compendium_missing_delete_id']))
+  compendium_missing_delete(form_fetch_element('compendium_missing_delete_id'));
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the missing pages
 
 // Fetch the sorting order
@@ -179,7 +187,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <td class="align_center nowrap">
           <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list[$i]['url'])?>
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?id='.$compendium_missing_list[$i]['id'])?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'X', title: __('delete'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_missing_delete('".$compendium_missing_list[$i]['id']."', '".__('compendium_missing_delete')."', 'list');")?>
         </td>
 
       </tr>

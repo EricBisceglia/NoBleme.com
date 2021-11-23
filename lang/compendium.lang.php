@@ -556,13 +556,17 @@ ___('compendium_missing_count',         'EN', "{{1}} documented missing pages");
 ___('compendium_missing_count',         'FR', "{{1}} pages à créer documentées");
 ___('compendium_missing_uncount',       'EN', "{{1}} undocumented missing pages");
 ___('compendium_missing_uncount',       'FR', "{{1}} pages à créer non documentées");
+___('compendium_missing_delete',        'EN', "Confirm the deletion of this missing page entry");
+___('compendium_missing_delete',        'FR', "Confirmer la suppression de cette page manquante");
 
 
 // Missing page
 ___('compendium_missing_page_title',  'EN', "Missing page");
 ___('compendium_missing_page_title',  'FR', "Page manquante");
-___('compendium_missing_page_links',  'EN', "Dead links to this missing page:");
-___('compendium_missing_page_links',  'FR', "Liens morts vers cette page manquante :");
+___('compendium_missing_page_links',  'EN', "Dead link to this missing page:");
+___('compendium_missing_page_links',  'FR', "Lien mort vers cette page manquante :");
+___('compendium_missing_page_links+', 'EN', "Dead links to this missing page:");
+___('compendium_missing_page_links+', 'FR', "Liens morts vers cette page manquante :");
 ___('compendium_missing_page_none',   'EN', "This missing page is not called by any existing compendium page or image.");
 ___('compendium_missing_page_none',   'FR', "Cette page manquante n'est appelée par aucune page ou image.");
 
