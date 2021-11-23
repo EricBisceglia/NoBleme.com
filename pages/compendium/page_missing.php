@@ -6,8 +6,8 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
-include_once './../../inc/functions_time.inc.php';  # Time management
 include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../inc/functions_time.inc.php';  # Time management
 
 // Limit page access rights
 user_restrict_to_administrators();
@@ -18,15 +18,9 @@ $hidden_activity = 1;
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/page_missing";
-$page_title_en    = "Compendium missing pages";
-$page_title_fr    = "Compendium : pages manquantes";
-
-// Compendium admin menu selection
-$compendium_admin_menu['missing'] = 1;
-
-// Extra CSS & JS
-$css  = array('compendium');
-$js   = array('compendium/list', 'compendium/admin');
+$page_title_en    = "Compendium: Missing page";
+$page_title_fr    = "Compendium : Page manquante";
+$page_description = "An encyclopedia of 21st century culture, documenting the ";
 
 
 
@@ -38,20 +32,19 @@ $js   = array('compendium/list', 'compendium/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch the missing pages
+// Fetch the missing page data
 
-// Fetch the sorting order
-$compendium_missing_sort_order = form_fetch_element('compendium_missing_sort_order', 'url');
+// Fetch the id or the url
+$compendium_missing_page_id   = (int)form_fetch_element('id', request_type: 'GET');
+$compendium_missing_page_url  = (string)form_fetch_element('url', request_type: 'GET');
 
-// Assemble the search query
-$compendium_missing_search = array( 'url'     => form_fetch_element('compendium_missing_url')     ,
-                                    'title'   => form_fetch_element('compendium_missing_title')   ,
-                                    'notes'   => form_fetch_element('compendium_missing_notes')   ,
-                                    'status'  => form_fetch_element('compendium_missing_status')  );
+// Fetch the missing page data
+$compendium_missing_data = compendium_missing_get(  $compendium_missing_page_id   ,
+                                                    $compendium_missing_page_url  );
 
-// Fetch the missing pages
-$compendium_missing_list = compendium_missing_list( sort_by:  $compendium_missing_sort_order  ,
-                                                    search:   $compendium_missing_search      );
+// Stop here if the missing page doesn't exist
+if(!$compendium_missing_data)
+  exit(header("Location: ".$path."pages/compendium/page_missing_list"));
 
 
 
@@ -60,167 +53,60 @@ $compendium_missing_list = compendium_missing_list( sort_by:  $compendium_missin
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_40">
+<div class="width_90 bigpadding_bot">
 
-  <h2 class="padding_top bigpadding_bot align_center">
-    <?=__('compendium_missing_title')?>
-  </h2>
+  <h1 class="align_center">
+    <?=__link('pages/compendium/page_missing_list', __('compendium_missing_page_title'), 'noglow')?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_data['url'])?>
+    <?php if($compendium_missing_data['id']) { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?id='.$compendium_missing_data['id'])?>
+    <?php } else { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?url='.$compendium_missing_data['url'])?>
+    <?php } ?>
+  </h1>
 
-  <table>
-    <thead>
+  <h4 class="align_center smallpadding_top">
+    <?=__link('pages/compendium/page_add?url='.$compendium_missing_data['url'], $compendium_missing_data['url'], 'noglow')?>
+  </h4>
 
-      <tr class="uppercase">
-        <th>
-          <?=__('compendium_list_admin_url')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('url');")?>
-        </th>
-        <th>
-          <?=__('compendium_missing_page')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('title');")?>
-        </th>
-        <th>
-          <?=__('compendium_missing_notes')?>
-          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('notes');")?>
-        </th>
-        <th>
-          <?=__('act')?>
-        </th>
-      </tr>
+  <?php if($compendium_missing_data['title']) { ?>
+  <h4 class="align_center smallpadding_top">
+    <?=__link('pages/compendium/page_add?url='.$compendium_missing_data['url'], $compendium_missing_data['title'], 'noglow')?>
+  </h4>
+  <?php } ?>
 
-      <tr>
+</div>
 
-        <th>
-          <input type="hidden" name="compendium_missing_sort_order" id="compendium_missing_sort_order" value="<?=$compendium_missing_sort_order?>">
-          <input type="text" class="table_search" name="compendium_missing_url" id="compendium_missing_url" value="" onkeyup="compendium_missing_list_search();">
-        </th>
+<div class="width_50">
 
-        <th>
-          <input type="text" class="table_search" name="compendium_missing_title" id="compendium_missing_title" value="" onkeyup="compendium_missing_list_search();">
-        </th>
+  <?php if($compendium_missing_data['body']) { ?>
+  <p class="align_justify padding_bot">
+    <?=$compendium_missing_data['body']?>
+  </p>
+  <?php } ?>
 
-        <th>
-          <select class="table_search" name="compendium_missing_notes" id="compendium_missing_notes" onchange="compendium_missing_list_search();">
-            <option value="-1">&nbsp;</option>
-            <option value="1"><?=__('compendium_missing_notes')?></option>
-            <option value="0"><?=__('compendium_missing_no_notes')?></option>
-          </select>
-        </th>
-
-        <th>
-          <select class="table_search" name="compendium_missing_status" id="compendium_missing_status" onchange="compendium_missing_list_search();">
-            <option value="-1">&nbsp;</option>
-            <option value="1"><?=__('compendium_missing_documented')?></option>
-            <option value="0"><?=__('compendium_missing_undocumented')?></option>
-          </select>
-        </th>
-
-      </tr>
-
-    </thead>
-
-    <tbody class="altc2 nowrap" id="compendium_missing_list_tbody">
-
+  <?php if(!$compendium_missing_data['count']) { ?>
+  <p class="align_center big bold">
+    <?=__('compendium_missing_page_none')?>
+  </p>
+  <?php } else { ?>
+  <div>
+    <p class="smallpadding_bot">
+      <?=__('compendium_missing_page_links')?>
+    </p>
+    <ul>
+      <?php for($i = 0; $i < $compendium_missing_data['count_pages']; $i++) { ?>
+      <li> <?=__link('pages/compendium/'.$compendium_missing_data[$i]['page_url'], $compendium_missing_data[$i]['page_title'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_images']; $i++) { ?>
+      <li> <?=__link('pages/compendium/image?name='.$compendium_missing_data[$i]['image_name'], $compendium_missing_data[$i]['image_name'])?></li>
       <?php } ?>
+    </ul>
+  </div>
+  <?php } ?>
 
-      <?php if($compendium_missing_list['rows']) { ?>
-
-      <tr>
-        <td colspan="4" class="uppercase text_light dark bold align_center">
-          <?=__('compendium_missing_count', preset_values: array($compendium_missing_list['rows']))?>
-        </td>
-      </tr>
-
-      <?php } for($i = 0; $i < $compendium_missing_list['rows']; $i++) { ?>
-
-      <tr>
-
-        <?php if(!$compendium_missing_list[$i]['fullurl']) { ?>
-        <td class="align_left nbcode_dead_link noglow">
-          <?=$compendium_missing_list[$i]['url']?>
-        </td>
-        <?php } else { ?>
-        <td class="align_left nbcode_dead_link noglow tooltip_container">
-          <?=$compendium_missing_list[$i]['urldisplay']?>
-          <div class="tooltip">
-            <?=$compendium_missing_list[$i]['fullurl']?>
-          </div>
-        </td>
-        <?php } ?>
-
-        <?php if(!$compendium_missing_list[$i]['t_full']) { ?>
-        <td class="align_center">
-          <?=$compendium_missing_list[$i]['title']?>
-        </td>
-        <?php } else { ?>
-        <td class="align_center tooltip_container">
-          <?=$compendium_missing_list[$i]['t_display']?>
-          <div class="tooltip">
-            <?=$compendium_missing_list[$i]['t_full']?>
-          </div>
-        </td>
-        <?php } ?>
-
-        <?php if($compendium_missing_list[$i]['notes']) { ?>
-        <td class="align_center tooltip_container">
-          <?=__icon('message', is_small: true, alt: 'M', title: __('message'), title_case: 'initials')?>
-          <div class="tooltip dowrap">
-            <?=$compendium_missing_list[$i]['notes']?>
-          </div>
-        </td>
-        <?php } else { ?>
-        <td>
-          &nbsp;
-        </td>
-        <?php } ?>
-
-        <td class="align_center nowrap">
-          <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list[$i]['url'])?>
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/missing_edit?id='.$compendium_missing_list[$i]['id'])?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'X', title: __('delete'), title_case: 'initials')?>
-        </td>
-
-      </tr>
-
-      <?php } if(count($compendium_missing_list['missing'])) { ?>
-
-      <tr>
-        <td colspan="4" class="uppercase text_light dark bold align_center">
-          <?=__('compendium_missing_uncount', preset_values: array(count($compendium_missing_list['missing'])))?>
-        </td>
-      </tr>
-
-      <?php } for($i = 0; $i < count($compendium_missing_list['missing']); $i++) { ?>
-
-      <tr>
-
-        <?php if(mb_strlen($compendium_missing_list['missing'][$i]) <= 50) { ?>
-        <td colspan="3" class="align_left nbcode_dead_link noglow">
-          <?=$compendium_missing_list['missing'][$i]?>
-        </td>
-        <?php } else { ?>
-        <td colspan="3" class="align_left nbcode_dead_link noglow tooltip_container">
-          <?=string_truncate($compendium_missing_list['missing'][$i], 50, '...')?>
-          <div class="tooltip">
-            <?=$compendium_missing_list['missing'][$i]?>
-          </div>
-        </td>
-        <?php } ?>
-
-        <td class="align_center nowrap">
-          <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list['missing'][$i])?>
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/missing_edit?name='.$compendium_missing_list['missing'][$i])?>
-        </td>
-
-      </tr>
-
-      <?php } ?>
-
-      <?php if(!page_is_fetched_dynamically()) { ?>
-
-    </tbody>
-  </table>
+</div>
 
 </div>
 

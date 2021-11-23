@@ -31,6 +31,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
 /*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
+/*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
 /*  compendium_missing_list                   Fetches a list of all missing compendium pages.                        */
 /*                                                                                                                   */
 /*  compendium_types_get                      Returns data related to a compendium page type.                        */
@@ -2088,6 +2089,122 @@ function compendium_images_autocomplete( string $input ) : mixed
   $data['rows'] = $i;
 
   // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns data related to a compendium page.
+ *
+ * @param   int         $missing_id   (OPTIONAL)  The missing page's id. One of these two parameters should be set.
+ * @param   string      $missing_url  (OPTIONAL)  The missing page's url. One of these two parameters should be set.
+ *
+ * @return  array|null                            An array containing page related data, or NULL if it does not exist.
+ */
+
+function compendium_missing_get(  int     $missing_id   = 0   ,
+                                  string  $missing_url  = ''  ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Sanitize the data
+  $missing_url_raw  = $missing_url;
+  $missing_id       = sanitize($missing_id, 'int', 0);
+  $missing_url      = sanitize($missing_url, 'string');
+
+  // Return null if both parameters are missing
+  if(!$missing_id && !$missing_url)
+    return NULL;
+
+  // Return null if both parameters are set
+  if($missing_id && $missing_url)
+    return NULL;
+
+  // Check if the missing page exists
+  if($missing_id && !database_row_exists('compendium_missing', $missing_id))
+    return NULL;
+
+  // Fetch the missing page data if an id was provided
+  if($missing_id)
+  {
+    // Fetch the data
+    $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.page_url AS 'cm_url'   ,
+                                                    compendium_missing.title    AS 'cm_title' ,
+                                                    compendium_missing.notes    AS 'cm_notes'
+                                            FROM    compendium_missing
+                                            WHERE   compendium_missing.id = '$missing_id' "));
+
+    // Assemble an array with the missing data
+    $missing_url_raw  = $dmissing['cm_url'];
+    $missing_url      = sanitize($missing_url_raw, 'string');
+    $data['title']    = sanitize_output($dmissing['cm_title']);
+    $temp             = bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true));
+    $data['body']     = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  }
+
+  // If no id was provided, fill up the array with empty data
+  else
+  {
+    $data['title']  = '';
+    $data['body']   = '';
+  }
+
+  // Return null if the missing page has no valid url
+  if(!$missing_url_raw)
+    return NULL;
+
+  // Assemble an array with the data
+  $data['id']  = sanitize_output($missing_id);
+  $data['url'] = sanitize_output($missing_url_raw);
+
+  // Assemble the missing page NBCode
+  $missing_page_nbcode = '[page:'.$missing_url.'|';
+
+  // Look for calls to this missing page in compendium pages
+  $qpages = query(" SELECT    compendium_pages.page_url AS 'c_url'  ,
+                              compendium_pages.title_en AS 'c_title'
+                    FROM      compendium_pages
+                    WHERE   ( compendium_pages.summary_en     LIKE '%$missing_page_nbcode%'
+                    OR        compendium_pages.summary_fr     LIKE '%$missing_page_nbcode%'
+                    OR        compendium_pages.definition_en  LIKE '%$missing_page_nbcode%'
+                    OR        compendium_pages.definition_fr  LIKE '%$missing_page_nbcode%' )
+                    ORDER BY  compendium_pages.page_url ASC ");
+
+  // Add any missing page to the returned data
+  for($count_pages = 0; $dpages = mysqli_fetch_array($qpages); $count_pages++)
+  {
+    $data[$count_pages]['page_url']   = sanitize_output($dpages['c_url']);
+    $data[$count_pages]['page_title'] = sanitize_output($dpages['c_title']);
+  }
+
+  // Look for calls to this missing page in compendium images
+  $qimages = query("  SELECT    compendium_images.file_name AS 'ci_name'
+                      FROM      compendium_images
+                      WHERE   ( compendium_images.caption_en  LIKE '%$missing_page_nbcode%'
+                      OR        compendium_images.caption_fr  LIKE '%$missing_page_nbcode%' )
+                      ORDER BY  compendium_images.file_name ASC ");
+
+  // Add any missing image to the returned data
+  for($count_images = 0; $dimages = mysqli_fetch_array($qimages); $count_images++)
+    $data[$count_images]['image_name'] = sanitize_output($dimages['ci_name']);
+
+  // Sum up the total missing page calls count and all them to the returned data
+  $data['count_pages']  = $count_pages;
+  $data['count_images'] = $count_images;
+  $data['count']        = $count_pages + $count_images;
+
+  // Return the data
   return $data;
 }
 

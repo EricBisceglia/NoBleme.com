@@ -52,7 +52,7 @@ $compendium_admin_menu['missing']     = isset($compendium_admin_menu['missing'])
         <option value="cultural_era_admin"<?=$compendium_admin_menu['eras']?>>
           <?=__('compendium_eras_title')?>
         </option>
-        <option value="page_missing"<?=$compendium_admin_menu['missing']?>>
+        <option value="page_missing_list"<?=$compendium_admin_menu['missing']?>>
           <?=__('compendium_missing_admin_menu')?>
         </option>
       </select>

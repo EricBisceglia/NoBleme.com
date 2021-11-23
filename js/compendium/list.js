@@ -150,7 +150,7 @@ function compendium_missing_list_search( sort_data = null )
   postdata += '&compendium_missing_status='     + fetch_sanitize_id('compendium_missing_status');
 
   // Submit the search
-  fetch_page('page_missing', 'compendium_missing_list_tbody', postdata);
+  fetch_page('page_missing_list', 'compendium_missing_list_tbody', postdata);
 }
 
 
