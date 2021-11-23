@@ -13,17 +13,9 @@ $page_title_en    = "Mission statement";
 $page_title_fr    = "Foire aux questions";
 $page_description = "Goals and inner workings of NoBleme's 21st century compendium";
 
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
+// Temporarily closed
+if(!$is_admin)
+  exit(header("Location: ".$path."pages/compendium/index_closed"));
 
 
 

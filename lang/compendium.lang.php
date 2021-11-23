@@ -12,6 +12,36 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Temporary closure
+___('compendium_closed',    'EN', "Temporarily closed");
+___('compendium_closed',    'FR', "Temporairement fermé");
+___('compendium_closed_1',  'EN', <<<EOT
+Preliminary works on NoBleme's 21st century compendium are currently in progress.
+EOT
+);
+___('compendium_closed_1',  'FR', <<<EOT
+Des travaux préliminaires à l'ouverture du compendium du 21ème siècle sont en cours.
+EOT
+);
+___('compendium_closed_2',  'EN', <<<EOT
+Until these works are over, the compendium will remain closed to the public. It should be a question of weeks, or maybe even of days, until it opens. Sorry for the inconvenience.
+EOT
+);
+___('compendium_closed_2',  'FR', <<<EOT
+Tant que ces travaux ne seront pas finis, le compendium restera fermé au public. Il s'agit de travaux mineurs dont la durée se mesure en semaines, voir même en jours.
+EOT
+);
+___('compendium_closed_3',  'EN', <<<EOT
+You can stay updated on the compendium's status on our {{link|pages/social/irc|IRC}} and {{link|pages/social/discord|Discord}} servers.
+EOT
+);
+___('compendium_closed_3',  'FR', <<<EOT
+Vous pouvez vous tenir au courant de la progression de ces travaux sur nos serveurs {{link|pages/social/irc|IRC}} et {{link|pages/social/discord|Discord}}.
+EOT
+);
+
+
+
 // Introduction
 ___('compendium_index_title',   'EN', "Compendium");
 ___('compendium_index_title',   'FR', "Compendium");

@@ -16,6 +16,10 @@ $page_title_en    = "Compendium: ";
 $page_title_fr    = "Compendium : ";
 $page_description = "An encyclopedia of 21st century culture, documenting the ";
 
+// Temporarily closed
+if(!$is_admin)
+  exit(header("Location: ".$path."pages/compendium/index_closed"));
+
 
 
 

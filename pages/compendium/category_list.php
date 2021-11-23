@@ -14,6 +14,10 @@ $page_title_en    = "Compendium categories";
 $page_title_fr    = "Compendium : Catégories";
 $page_description = "Categorizations used to filter pages within NoBleme's 21st century culture compendium";
 
+// Temporarily closed
+if(!$is_admin)
+  exit(header("Location: ".$path."pages/compendium/index_closed"));
+
 
 
 

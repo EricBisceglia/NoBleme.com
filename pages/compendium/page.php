@@ -24,6 +24,11 @@ $page_description = "An encyclopedia of 21st century culture, internet memes, mo
 $css  = array('compendium');
 $js   = array('compendium/page');
 
+// Temporarily closed
+if(!$is_admin)
+  exit(header("Location: ".$path."pages/compendium/index_closed"));
+
+
 
 
 /*********************************************************************************************************************/
