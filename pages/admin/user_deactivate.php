@@ -67,7 +67,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 padding_bot">
 
   <h1 class="align_center">
-    <?=__('admin_deactivate_title')?>
+    <?=__('submenu_admin_deactivate')?>
   </h1>
 
 </div>

@@ -63,7 +63,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__('meetups_list_title')?>
+    <?=__('submenu_social_meetups')?>
     <?php if($is_moderator) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/meetups/add')?>
     <?php } ?>

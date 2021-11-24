@@ -64,7 +64,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1 class="align_center">
-    <?=__('admin_password_title')?>
+    <?=__('submenu_admin_password')?>
   </h1>
 
 </div>

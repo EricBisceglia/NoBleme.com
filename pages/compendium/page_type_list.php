@@ -65,7 +65,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr class="uppercase">
         <th>
-          <?=__('compendium_types_name')?>
+          <?=__('compendium_page_type')?>
         </th>
         <th>
           <?=__('compendium_eras_entries')?>

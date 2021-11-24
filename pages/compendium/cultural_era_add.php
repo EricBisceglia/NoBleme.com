@@ -131,7 +131,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <input class="indiv" type="text" id="compendium_era_add_short_en" name="compendium_era_add_short_en" value="<?=$compendium_era_add_short_en?>">
           </div>
 
-          <label for="compendium_era_add_body_en"><?=__('compendium_era_add_body_en')?></label>
+          <label for="compendium_era_add_body_en"><?=__('compendium_type_add_body_en')?></label>
           <textarea class="compendium_admin_editor" id="compendium_era_add_body_en" name="compendium_era_add_body_en"><?=$compendium_era_add_body_en?></textarea>
 
         </div>
@@ -148,7 +148,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </div>
 
 
-          <label for="compendium_era_add_body_fr"><?=__('compendium_era_add_body_fr')?></label>
+          <label for="compendium_era_add_body_fr"><?=__('compendium_type_add_body_fr')?></label>
           <textarea class="compendium_admin_editor" id="compendium_era_add_body_fr" name="compendium_era_add_body_fr"><?=$compendium_era_add_body_fr?></textarea>
 
         </div>

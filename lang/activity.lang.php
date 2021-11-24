@@ -13,8 +13,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Header
-___('activity_title',           'EN', "Recent activity");
-___('activity_title',           'FR', "Activité récente");
 ___('activity_title_modlogs',   'EN', "Moderation logs");
 ___('activity_title_modlogs',   'FR', "Logs de modération");
 ___('activity_icon_deleted',    'EN', "Deleted logs");

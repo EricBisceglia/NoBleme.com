@@ -87,7 +87,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <div class="smallpadding_bot">
-        <label for="private_message_title"><?=__('users_message_form_title')?></label>
+        <label for="private_message_title"><?=__('users_inbox_message')?></label>
         <input type="text" class="indiv" id="private_message_title" name="private_message_title" maxlength="25" value="<?=$private_message_title?>">
       </div>
 

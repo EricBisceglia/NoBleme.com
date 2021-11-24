@@ -941,6 +941,9 @@ $javascripts .= '
         <div class="header_submenu_item">
           <?=__link('pages/dev/doc_functions', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
         </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/dev/translations', __('submenu_admin_doc_duplicates'), 'header_submenu_link', 1, $path);?>
+        </div>
         <?php if($GLOBALS['dev_mode']) { ?>
         <div class="header_submenu_item">
           <?=__link('fixtures', __('submenu_admin_local_fixtures'), 'header_submenu_link', 1, $path);?>

@@ -85,8 +85,6 @@ ___('quotes_restore',           'EN', "Undelete");
 ___('quotes_restore',           'FR', "Restaurer");
 ___('quotes_hard_delete',       'EN', "Hard deletion");
 ___('quotes_hard_delete',       'FR', "Suppression définitive");
-___('quotes_random',            'EN', "Random quote");
-___('quotes_random',            'FR', "Citation au hasard");
 ___('quotes_another',           'EN', "Show me another random quote");
 ___('quotes_another',           'FR', "Voir une autre citation au hasard");
 ___('quotes_is_deleted',        'EN', "This quote has been deleted, it is not publicly visible");

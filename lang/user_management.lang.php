@@ -12,11 +12,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Deactivate: Title
-___('admin_deactivate_title', 'EN', "Delete an account");
-___('admin_deactivate_title', 'FR', "Supprimer un compte");
-
-
 // Deactivate: Form
 ___('admin_deactivate_submit',  'EN', "Delete this account");
 ___('admin_deactivate_submit',  'FR', "Supprimer ce compte");
@@ -130,11 +125,6 @@ ___('admin_rename_error_admin',       'FR', "Les modérateurs ne peuvent pas ren
 /*                                                 CHANGE A PASSWORD                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-// Change password: Title
-___('admin_password_title', 'EN', "Change a password");
-___('admin_password_title', 'FR', "Modifier un mot de passe");
-
 
 // Change password: Description
 ___('admin_password_warning', 'EN', <<<EOT

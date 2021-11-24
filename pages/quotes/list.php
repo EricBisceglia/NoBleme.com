@@ -193,7 +193,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php if(!$quote_random) { ?>
       <?=__link('pages/quotes/list', __('quotes_id', preset_values: array($quotes_list[$i]['id'])), "noglow")?>
       <?php } else { ?>
-      <?=__link('pages/quotes/list', __('quotes_random'), "noglow")?>
+      <?=__link('pages/quotes/list', __('submenu_social_quotes_random'), "noglow")?>
       <?php } ?>
     </h1>
 

@@ -162,8 +162,8 @@ ___('nbcodes_image_name',       'FR', "Image compendium<br>Variante floutée");
 ___('nbcodes_image_example',    'EN', "[image:image.png]<br>[image:image.png|left]<br>[image:image.png|right|Description]<br><br>[image-nsfw:image.png]<br>[image-nsfw:image.png|left]<br>[image-nsfw:image.png|right|Description]");
 ___('nbcodes_image_example',    'FR', "[image:image.png]<br>[image:image.png|left]<br>[image:image.png|right|Description]<br><br>[image-nsfw:image.png]<br>[image-nsfw:image.png|left]<br>[image-nsfw:image.png|right|Description]");
 
-___('nbcodes_youtube_name',     'EN', "Compendium image<br>Blurry variant");
-___('nbcodes_youtube_name',     'FR', "Image compendium<br>Variante floutée");
+___('nbcodes_youtube_name',     'EN', "YouTube video<br>Blurry variant");
+___('nbcodes_youtube_name',     'FR', "Vidéo YouTube<br>Variante floutée");
 ___('nbcodes_youtube_example',  'EN', "[youtube:video_id]<br>[youtube:video_id|left]<br>[youtube:video_id|right|Description]<br><br>[youtube-nsfw:video_id]<br>[youtube-nsfw:video_id|left]<br>[youtube-nsfw:video_id|right|Description]");
 ___('nbcodes_youtube_example',  'FR', "[youtube:video_id]<br>[youtube:video_id|left]<br>[youtube:video_id|right|Description]<br><br>[youtube-nsfw:video_id]<br>[youtube-nsfw:video_id|left]<br>[youtube-nsfw:video_id|right|Description]");
 
@@ -182,8 +182,8 @@ ___('nbcodes_menu_name',        'FR', "Bloc menu<br>Élément de menu<br>Ancre d
 ___('nbcodes_menu_example',     'EN', "[menu]<br>[menuitem:anchor_id|Menu entry]<br>[menuitem:anchor_id_2|Menu entry]<br>[/menu]<br><br>[anchor:anchor_id]");
 ___('nbcodes_menu_example',     'FR', "[menu]<br>[menuitem:id_ancre|Élément du menu]<br>[menuitem:id_ancre_2|Élément du menu]<br>[/menu]<br><br>[anchor:id_ancre]");
 
-___('nbcodes_gallery_name',      'EN', "Menu section<br>Menu item<br>Link anchor");
-___('nbcodes_gallery_name',      'FR', "Bloc menu<br>Élément de menu<br>Ancre de lien");
+___('nbcodes_gallery_name',      'EN', "Gallery<br>Gallery elements");
+___('nbcodes_gallery_name',      'FR', "Galerie<br>Éléments de galerie");
 ___('nbcodes_gallery_example',   'EN', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
 ___('nbcodes_gallery_example',   'FR', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
 

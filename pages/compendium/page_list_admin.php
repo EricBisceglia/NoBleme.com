@@ -131,7 +131,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('peak');")?>
         </th>
         <th>
-          <?=__('compendium_list_admin_created')?>
+          <?=__('compendium_index_recent_created')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('created');")?>
         </th>
         <th>

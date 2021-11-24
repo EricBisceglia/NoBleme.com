@@ -164,8 +164,6 @@ EOT
 /*********************************************************************************************************************/
 
 // Bot action selector
-___('irc_bot_action_title',         'EN', "IRC bot management");
-___('irc_bot_action_title',         'FR', "Gestion du bot IRC");
 ___('irc_bot_action_start',         'EN', "Start the bot");
 ___('irc_bot_action_start',         'FR', "Démarrer le bot");
 ___('irc_bot_action_stop',          'EN', "Stop the bot");
@@ -220,8 +218,6 @@ ___('irc_bot_upcoming_purged',        'FR', "La queue de messages du bot IRC a b
 
 
 // Message history
-___('irc_bot_history_channel',        'EN', "Channel");
-___('irc_bot_history_channel',        'FR', "Canal");
 ___('irc_bot_history_nochan',         'EN', "----");
 ___('irc_bot_history_nochan',         'FR', "----");
 ___('irc_bot_history_silenced',       'EN', "Silenced");
@@ -260,12 +256,6 @@ ___('irc_bot_bytes_bytes',            'FR', "CODE PHP");
 
 ___('irc_bot_bytes_reset',            'EN', "Reset to default style");
 ___('irc_bot_bytes_reset',            'FR', "Remise à zéro du style");
-___('irc_bot_bytes_bold',             'EN', "Bold");
-___('irc_bot_bytes_bold',             'FR', "Bold");
-___('irc_bot_bytes_italics',          'EN', "Italics");
-___('irc_bot_bytes_italics',          'FR', "Italique");
-___('irc_bot_bytes_underlined',       'EN', "Underlined");
-___('irc_bot_bytes_underlined',       'FR', "Souligné");
 ___('irc_bot_bytes_text_white',       'EN', "Text color: White");
 ___('irc_bot_bytes_text_white',       'FR', "Couleur du texte : Blanc");
 ___('irc_bot_bytes_text_black',       'EN', "Text color: Black");
@@ -1150,8 +1140,6 @@ ___('irc_faq_vocabulary_body_3',   'FR', <<<EOT
 Un bouncer est un outil qui reste connecté en permanence à un serveur IRC, vous permettant de garder un historique complet des conversations qui ont lieu pendant votre absence.  Vous trouverez plus d'informations sur les bouncers dans la section {{link|pages/social/irc?bouncer|bouncer}} de cette FAQ.
 EOT
 );
-___('irc_faq_vocabulary_title_4',   'EN', "Channel");
-___('irc_faq_vocabulary_title_4',   'FR', "Canal");
 ___('irc_faq_vocabulary_body_4',    'EN', <<<EOT
 An IRC server is comprised of an unlimited number of channels, which can be public or private. When a message is sent on an IRC channel, only the users present on that channel will be able to read the message. IRC channel names begin with the pound sign (#NoBleme, #english, #dev). You can find more information about IRC channels on the {{link|pages/social/irc?channels|channel list}}.
 EOT
@@ -1160,8 +1148,6 @@ ___('irc_faq_vocabulary_body_4',    'FR', <<<EOT
 Un serveur IRC est constitué d'un nombre potentiellement infini de canaux de discussion, qui peuvent être publics ou privés. Lorsqu'un message est envoyé sur un canal, il ne sera visible que par les personnes qui y sont présentes à ce moment-là. Le nom des canaux IRC commence par un symbole croisillon (#NoBleme, #english, #dev). Vous trouverez plus d'informations sur les canaux sur la {{link|pages/social/irc?channels|liste des canaux}}.
 EOT
 );
-___('irc_faq_vocabulary_title_5',   'EN', "Operator");
-___('irc_faq_vocabulary_title_5',   'FR', "Operator");
 ___('irc_faq_vocabulary_body_5',    'EN', <<<EOT
 A channel's founder can give some abilities to specific users (such as the ability to kick problematic users) by making them channel operators. Different operator types have different abilities, which are documented at the bottom of this page in the symbols section. There are also global operators, which have the power to shut down channels, issue server-wide bans, and possess a few more tools useful in extreme situations. In order to avoid tracking their absence to plan mischievous acts when none of them are online, the identity of global operators will remain a secret.
 EOT
@@ -1200,8 +1186,6 @@ ___('irc_faq_vocabulary_body_8',    'FR', <<<EOT
 Si vous désirez effectuer n'importe quelle action autre que discuter sur IRC, vous devrez utiliser des commandes. Il s'agit de messages normaux envoyés sur le serveur de la même façon que lorsque vous discutez, mais dont le premier caractère est un / slash. Par exemple, rejoindre un canal se fait en envoyant le message <span class="monospace">/join #channel</span>. Vous trouverez une liste de commandes utiles dans les sections {{link|pages/social/irc?commands|commandes}}, {{link|pages/social/irc?nickserv|NickServ}}, et {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ.
 EOT
 );
-___('irc_faq_vocabulary_title_9',   'EN', "Mode");
-___('irc_faq_vocabulary_title_9',   'FR', "Mode");
 ___('irc_faq_vocabulary_body_9',    'EN', <<<EOT
 IRC channels have settings which are controlled by operators through changing what is called a "mode". It is materialized as a series of letters defining what can or cannot be done on that channel. For example, a channel with <span class="monospace">mode +m</span> is in mute mode: only operators and voiced users can chat in that channel, others will not be able to send messages.
 EOT

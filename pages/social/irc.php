@@ -577,12 +577,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_vocabulary_body_3')?>
   </p>
 
-  <h5 id="channel"><?=__('irc_faq_vocabulary_title_4')?></h5>
+  <h5 id="channel"><?=__('irc_channels_name')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_vocabulary_body_4')?>
   </p>
 
-  <h5 id="operator"><?=__('irc_faq_vocabulary_title_5')?></h5>
+  <h5 id="operator"><?=__('irc_faq_symbols_operator')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_vocabulary_body_5')?>
   </p>
@@ -602,7 +602,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_vocabulary_body_8')?>
   </p>
 
-  <h5 id="mode"><?=__('irc_faq_vocabulary_title_9')?></h5>
+  <h5 id="mode"><?=__('irc_faq_symbols_mode')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_vocabulary_body_9')?>
   </p>

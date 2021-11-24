@@ -12,11 +12,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Header
-___('dev_scheduler_title',  'EN', "Scheduled tasks");
-___('dev_scheduler_title',  'FR', "Tâches planifiées");
-
-
 // Task list
 ___('dev_scheduler_task_execution',         'EN', "Execution");
 ___('dev_scheduler_task_execution',         'FR', "Exécution");

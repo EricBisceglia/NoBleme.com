@@ -13,8 +13,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Header
-___('meetups_list_title',   'EN', "Real life meetups");
-___('meetups_list_title',   'FR', "Rencontres IRL");
 ___('meetups_list_body_1',  'EN', <<<EOT
 Ever since {{link|pages/doc/nobleme|its inception in 2005}}, NoBleme's community has been organizing regular real life meetups for those who enjoy meeting in person. This page is used to both plan future meetups and keep track of the memories that come with older meetups. At first, the meetups were made solely of french speakers, then over time they expanded to include english speakers aswell. Sadly, as we have only been documenting our meetups since 2012, all data on older meetups has been lost.
 EOT

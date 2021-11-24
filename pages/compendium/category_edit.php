@@ -142,7 +142,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <input class="indiv" type="text" id="compendium_category_edit_name_en" name="compendium_category_edit_name_en" value="<?=$compendium_category_edit_name_en?>">
           </div>
 
-          <label for="compendium_category_edit_body_en"><?=__('compendium_category_add_body_en')?></label>
+          <label for="compendium_category_edit_body_en"><?=__('compendium_type_add_body_en')?></label>
           <textarea class="compendium_admin_editor" id="compendium_category_edit_body_en" name="compendium_category_edit_body_en"><?=$compendium_category_edit_body_en?></textarea>
 
         </div>
@@ -153,7 +153,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <input class="indiv" type="text" id="compendium_category_edit_name_fr" name="compendium_category_edit_name_fr" value="<?=$compendium_category_edit_name_fr?>">
           </div>
 
-          <label for="compendium_category_edit_body_fr"><?=__('compendium_category_add_body_fr')?></label>
+          <label for="compendium_category_edit_body_fr"><?=__('compendium_type_add_body_fr')?></label>
           <textarea class="compendium_admin_editor" id="compendium_category_edit_body_fr" name="compendium_category_edit_body_fr"><?=$compendium_category_edit_body_fr?></textarea>
 
         </div>

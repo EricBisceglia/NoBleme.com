@@ -176,8 +176,6 @@ EOD
 // Message form
 ___('users_message_form_recipient', 'EN', "Message recipient");
 ___('users_message_form_recipient', 'FR', "Destinataire du message");
-___('users_message_form_title',     'EN', "Message title");
-___('users_message_form_title',     'FR', "Titre du message");
 ___('users_message_form_body',      'EN', "Message body - you can use {{1}} for formatting");
 ___('users_message_form_body',      'FR', "Contenu du message - vous pouvez utiliser des {{1}}");
 ___('users_message_form_send',      'EN', "Send the message");

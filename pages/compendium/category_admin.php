@@ -76,7 +76,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__('compendium_category_admin_order')?>
         </th>
         <th>
-          <?=__('compendium_categories_name')?>
+          <?=__('compendium_page_category')?>
         </th>
         <th>
           <?=__('compendium_eras_entries')?>

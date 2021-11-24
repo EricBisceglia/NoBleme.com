@@ -80,9 +80,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1 class="align_center bigpadding_bot">
 
     <?php if($is_moderator) { ?>
-    <?=__link('pages/nobleme/activity?mod', __('activity_title'), 'noglow')?>
+    <?=__link('pages/nobleme/activity?mod', __('submenu_nobleme_activity'), 'noglow')?>
     <?php } else { ?>
-    <?=__('activity_title')?>
+    <?=__('submenu_nobleme_activity')?>
     <?php } ?>
 
     <?php if($is_admin) { ?>
@@ -106,7 +106,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
 
     <?php if($is_moderator) { ?>
-    <?=__icon('user_delete', href: 'pages/nobleme/activity', alt: 'X', title: __('activity_title'));?>
+    <?=__icon('user_delete', href: 'pages/nobleme/activity', alt: 'X', title: __('submenu_nobleme_activity'));?>
     <?php } ?>
 
   </h1>

@@ -387,8 +387,6 @@ ___('compendium_list_admin_appeared',         'EN', "App.");
 ___('compendium_list_admin_appeared',         'FR', "App.");
 ___('compendium_list_admin_peak',             'EN', "Peak");
 ___('compendium_list_admin_peak',             'FR', "Pic");
-___('compendium_list_admin_created',          'EN', "Created");
-___('compendium_list_admin_created',          'FR', "Crée");
 ___('compendium_list_admin_language',         'EN', "Lang.");
 ___('compendium_list_admin_language',         'FR', "Lang.");
 ___('compendium_list_admin_monolingual',      'EN', "Monolingual");
@@ -723,10 +721,6 @@ ___('compendium_era_add_short_en',  'EN', "Short name (english)");
 ___('compendium_era_add_short_en',  'FR', "Nom court (anglais)");
 ___('compendium_era_add_short_fr',  'EN', "Short name (french)");
 ___('compendium_era_add_short_fr',  'FR', "Nom court (français)");
-___('compendium_era_add_body_en',   'EN', "Description (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_era_add_body_en',   'FR', "Description (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_era_add_body_fr',   'EN', "Description (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_era_add_body_fr',   'FR', "Description (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_era_add_submit',    'EN', "Create new era");
 ___('compendium_era_add_submit',    'FR', "Créer la période");
 ___('compendium_era_add_no_name',   'EN', "Eras must have a name and a short name in both languages");
@@ -772,11 +766,6 @@ EOT
 );
 
 
-// Category list: Table
-___('compendium_categories_name', 'EN', "Category");
-___('compendium_categories_name', 'FR', "Catégorie");
-
-
 // Category: Header
 ___('compendium_category_subtitle', 'EN', "Category:");
 ___('compendium_category_subtitle', 'FR', "Catégorie :");
@@ -817,10 +806,6 @@ ___('compendium_category_add_name_en',  'EN', "Category name (english)");
 ___('compendium_category_add_name_en',  'FR', "Nom de la catégorie (anglais)");
 ___('compendium_category_add_name_fr',  'EN', "Category name (french)");
 ___('compendium_category_add_name_fr',  'FR', "Nom de la catégorie (français)");
-___('compendium_category_add_body_en',  'EN', "Description (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_body_en',  'FR', "Description (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_body_fr',  'EN', "Description (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_body_fr',  'FR', "Description (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_category_add_order',    'EN', "Display order");
 ___('compendium_category_add_order',    'FR', "Ordre d'affichage");
 ___('compendium_category_add_submit',   'EN', "Create new category");
@@ -874,11 +859,6 @@ ___('compendium_types_intro_2', 'FR', <<<EOT
 Le tableau ci-dessous liste les thèmatiques abordées dans le compendium, ainsi que le nombre de pages correspondant à chaque thématique. Cliquez sur le nom d'un thème pour en lire plus à son sujet.
 EOT
 );
-
-
-// Types list: Table
-___('compendium_types_name',  'EN', "Page type");
-___('compendium_types_name',  'FR', "Thème");
 
 
 // Type: Header

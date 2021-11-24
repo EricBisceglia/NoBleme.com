@@ -8,22 +8,24 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  dev_doc_icon_to_clipboard     Generates the source code of an icon, ready for pasting to the clipboard.          */
+/*  dev_doc_icon_to_clipboard           Generates the source code of an icon, ready for pasting to the clipboard.    */
 /*                                                                                                                   */
-/*  dev_toggle_website_status     Toggles the website's status between open and closed.                              */
+/*  dev_toggle_website_status           Toggles the website's status between open and closed.                        */
 /*                                                                                                                   */
-/*  dev_versions_get              Returns elements related to a version number.                                      */
-/*  dev_versions_list             Returns the website's version numbering history.                                   */
-/*  dev_versions_create           Releases a new version of the website.                                             */
-/*  dev_versions_edit             Edits an entry in the website's version numbering history.                         */
-/*  dev_versions_delete           Deletes an entry in the website's version numbering history.                       */
+/*  dev_versions_get                    Returns elements related to a version number.                                */
+/*  dev_versions_list                   Returns the website's version numbering history.                             */
+/*  dev_versions_create                 Releases a new version of the website.                                       */
+/*  dev_versions_edit                   Edits an entry in the website's version numbering history.                   */
+/*  dev_versions_delete                 Deletes an entry in the website's version numbering history.                 */
 /*                                                                                                                   */
-/*  dev_blogs_get                 Returns elements related to a devblog.                                             */
-/*  dev_blogs_list                Returns a list of devblogs.                                                        */
-/*  dev_blogs_add                 Creates a new devblog.                                                             */
-/*  dev_blogs_edit                Modifies an existing devblog.                                                      */
-/*  dev_blogs_delete              Deletes an existing devblog.                                                       */
-/*  dev_blogs_restore             Restores a soft deleted devblog.                                                   */
+/*  dev_blogs_get                       Returns elements related to a devblog.                                       */
+/*  dev_blogs_list                      Returns a list of devblogs.                                                  */
+/*  dev_blogs_add                       Creates a new devblog.                                                       */
+/*  dev_blogs_edit                      Modifies an existing devblog.                                                */
+/*  dev_blogs_delete                    Deletes an existing devblog.                                                 */
+/*  dev_blogs_restore                   Restores a soft deleted devblog.                                             */
+/*                                                                                                                   */
+/*  dev_duplicate_translations_list     Looks for duplicate translations in the global translation array.            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -759,4 +761,47 @@ function dev_blogs_restore(int $blog_id) : mixed
 
   // All went well
   return NULL;
+}
+
+
+
+
+/**
+ * Looks for duplicate translations in the global translation array.
+ *
+ * @param   array   $ok_list  (OPTIONAL)  An array of translations which should be excluded from the returned results.
+ *
+ * @return  array                         An array of duplicate translations.
+ */
+
+function dev_duplicate_translations_list( $ok_list = array() ) : array
+{
+  // Fetch the translations
+  $translations = $GLOBALS['translations'];
+
+  // Remove the ok list from the array
+  foreach($ok_list as $name)
+    unset($translations[$name]);
+
+  // Look for duplicates in the global translations array
+  $result = array_unique($translations);
+  $result = array_diff($translations, array_diff($result, array_diff_assoc($translations, $result)));
+
+  // Sort the result
+  asort($result);
+
+  // Turn the result into a usable array
+  $i = 0;
+  foreach($result as $name => $value)
+  {
+    $data[$i]['name']   = $name;
+    $data[$i]['value']  = $value;
+    $i++;
+  }
+
+  // Add the row count to the data
+  $data['rows'] = $i;
+
+  // Return the duplicate data
+  return $data;
 }

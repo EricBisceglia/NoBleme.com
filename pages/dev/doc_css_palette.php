@@ -50,9 +50,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h4 class="align_center">
-    <?=__('dev_palette_title')?>
+    <?=__('submenu_admin_doc_css')?>
     <select class="inh" id="select_css_palette" onchange="dev_palette_selector();">
-      <option value="bbcodes"><?=__('dev_palette_selector_bbcodes')?></option>
+      <option value="bbcodes"><?=__('bbcodes')?></option>
       <option value="colors"><?=__('dev_palette_selector_colors')?></option>
       <option value="default" selected><?=__('dev_palette_selector_default')?></option>
       <option value="divs"><?=__('dev_palette_selector_divs')?></option>

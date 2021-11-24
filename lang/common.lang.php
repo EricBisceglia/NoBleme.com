@@ -287,39 +287,6 @@ function __tooltip( string  $title                      ,
 
 
 
-/**
- * Looks for similar translations in the global translation array.
- *
- * This is a debugging function and should only be used locally during development.
- * To enforce this requirement, the function ends with an exit().
- *
- * @param   bool  $print_all  (OPTIONAL)  If set, prints all values in the array after the duplicates.
- *
- * @return  void
- */
-
-function debug_duplicate_translations( bool $print_all = false ) : void
-{
-  // We do a diff between the array before and after filtering all unique values, and dump it
-  $diff = var_dump(array_unique(array_diff_assoc($GLOBALS['translations'], array_unique($GLOBALS['translations']))));
-
-  // If no full printing is requested, exit with the differences
-  if(!$print_all)
-    exit($diff);
-
-  // Else, print all the existing translations
-  else
-  {
-    echo $diff.'<pre>';
-    ksort($GLOBALS['translations']);
-    print_r($GLOBALS['translations']);
-    exit("</pre>");
-  }
-}
-
-
-
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                SHARED TRANSLATIONS                                                */
@@ -1015,8 +982,8 @@ ___('submenu_admin_stats_users',    'FR', "Comptes");
 ___('submenu_admin_stats_guests',   'EN', "Guests");
 ___('submenu_admin_stats_guests',   'FR', "Visites");
 
-___('submenu_admin_doc',            'EN', "Dev docs");
-___('submenu_admin_doc',            'FR', "Docs dev");
+___('submenu_admin_doc',            'EN', "Dev tools");
+___('submenu_admin_doc',            'FR', "Développement");
 ___('submenu_admin_doc_snippets',   'EN', "Code snippets");
 ___('submenu_admin_doc_snippets',   'FR', "Modèles de code");
 ___('submenu_admin_doc_css',        'EN', "CSS palette");
@@ -1025,6 +992,8 @@ ___('submenu_admin_doc_js',         'EN', "JavaScript toolbox");
 ___('submenu_admin_doc_js',         'FR', "Outils JavaScript");
 ___('submenu_admin_doc_functions',  'EN', "Functions list");
 ___('submenu_admin_doc_functions',  'FR', "Liste de fonctions");
+___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
+___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
 
 ___('submenu_admin_local_fixtures', 'EN', "Local dev: Fixtures");
 ___('submenu_admin_local_fixtures', 'FR', "Dev local : Fixtures");

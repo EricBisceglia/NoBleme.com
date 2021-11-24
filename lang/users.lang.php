@@ -185,8 +185,6 @@ ___('users_profile_ban_end',    'FR', "Fin du bannissement prévue {{1}}");
 // Account summary
 ___('users_profile_summary',    'EN', "Account #{{1}}");
 ___('users_profile_summary',    'FR', "Compte #{{1}}");
-___('users_profile_languages',  'EN', "Languages");
-___('users_profile_languages',  'FR', "Langues");
 ___('users_profile_pronouns',   'EN', "Pronouns");
 ___('users_profile_pronouns',   'FR', "Pronoms");
 ___('users_profile_country',    'EN', "Country / Location");
@@ -303,8 +301,8 @@ ___('users_profile_delete_selection', 'EN', "Selection");
 ___('users_profile_delete_selection', 'FR', "Sélection");
 ___('users_profile_delete_field',     'EN', "Field");
 ___('users_profile_delete_field',     'FR', "Champ");
-___('users_profile_delete_contens',   'EN', "Contents");
-___('users_profile_delete_contens',   'FR', "Contenu");
+___('users_profile_delete_contents',  'EN', "Contents");
+___('users_profile_delete_contents',  'FR', "Contenu");
 ___('users_profile_delete_text',      'EN', "Custom text");
 ___('users_profile_delete_text',      'FR', "Texte libre");
 

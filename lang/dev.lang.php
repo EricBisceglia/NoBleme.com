@@ -41,8 +41,6 @@ ___('dev_close_website_button', 'FR', "Changer");
 /*********************************************************************************************************************/
 
 // Version numbers: header
-___('dev_versions_title',         'EN', "Version numbers");
-___('dev_versions_title',         'FR', "Numéros de version");
 ___('dev_versions_subtitle',      'EN', "NoBleme Semantic Versioning");
 ___('dev_versions_subtitle',      'FR', "NoBleme Semantic Versioning");
 ___('dev_versions_nbsemver',      'EN', "Given a version number MAJOR.MINOR.PATCH-EXTENSION, increment the:");
@@ -148,10 +146,6 @@ ___('dev_snippets_selector_blocks',   'FR', "Blocs de commentaires");
 
 
 // CSS palette selector
-___('dev_palette_title',              'EN', "CSS palette");
-___('dev_palette_title',              'FR', "Palette CSS");
-___('dev_palette_selector_bbcodes',   'EN', "BBCodes");
-___('dev_palette_selector_bbcodes',   'FR', "BBCodes");
 ___('dev_palette_selector_colors',    'EN', "Colors");
 ___('dev_palette_selector_colors',    'FR', "Couleurs");
 ___('dev_palette_selector_default',   'EN', "Default");
@@ -304,3 +298,20 @@ ___('dev_blog_delete_hard_confirm', 'EN', "Confirm the irreversible permanent de
 ___('dev_blog_delete_hard_confirm', 'FR', "Confirmer la suppression définitive et irréversible de ce devblog");
 ___('dev_blog_delete_hard_ok',      'EN', "This devblog has been hard deleted");
 ___('dev_blog_delete_hard_ok',      'FR', "Ce devblog a été définitivement supprimé");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                              DUPLICATE TRANSLATIONS                                               */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Duplicate translation list
+___('dev_translations_name',  'EN', "Translation");
+___('dev_translations_name',  'FR', "Traduction");
+___('dev_translations_value', 'EN', "Contents");
+___('dev_translations_value', 'FR', "Contenu");
+___('dev_translations_none',  'EN', "There are no duplicate translations in the current language");
+___('dev_translations_none',  'FR', "Il n'y a aucune traduction en double dans la langue actuelle");

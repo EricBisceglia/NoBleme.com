@@ -98,7 +98,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_60">
 
   <h1 class="align_center bigpadding_bot">
-    <?=__('dev_scheduler_title')?>
+    <?=__('submenu_admin_scheduler')?>
   </h1>
 
   <form method="post">

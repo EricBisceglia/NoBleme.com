@@ -97,7 +97,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 padding_bot">
 
   <h1>
-    <?=__('dev_versions_title')?>
+    <?=__('submenu_admin_versions')?>
   </h1>
 
   <h5>

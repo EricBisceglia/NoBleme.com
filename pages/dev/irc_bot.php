@@ -187,7 +187,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h4 class="align_center">
-    <?=__('irc_bot_action_title')?>
+    <?=__('submenu_admin_ircbot')?>
     <select class="inh" id="select_bot_action" onchange="irc_bot_action_selector();">
       <option value="start"><?=__('irc_bot_action_start')?></option>
       <option value="stop"><?=__('irc_bot_action_stop')?></option>
@@ -325,7 +325,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <?=__('date')?>
             </th>
             <th>
-              <?=__('irc_bot_history_channel')?>
+              <?=__('irc_channels_name')?>
             </th>
             <th>
               <?=__('message')?>
@@ -483,7 +483,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td>
-          <?=__('irc_bot_bytes_bold')?>
+          <?=__('bold')?>
         </td>
         <td class="bold align_center">
           %B
@@ -495,7 +495,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td>
-          <?=__('irc_bot_bytes_italics')?>
+          <?=__('bbcodes_italics')?>
         </td>
         <td class="bold align_center">
           %I
@@ -507,7 +507,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td>
-          <?=__('irc_bot_bytes_underlined')?>
+          <?=__('bbcodes_underlined')?>
         </td>
         <td class="bold align_center">
           %U
