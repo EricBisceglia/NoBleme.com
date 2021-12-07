@@ -39,19 +39,33 @@ $css = array('index');
     <?=__('nobleme_home_welcome_subtitle')?>
   </h5>
 
-  <?=__('nobleme_home_welcome')?>
+  <p>
+    <?=__('nobleme_home_intro_1')?>
+  </p>
+
+  <p>
+    <?=__('nobleme_home_intro_2')?>
+  </p>
+
+  <p>
+    <?=__('nobleme_home_intro_3')?>
+  </p>
 
   <h5 class="bigpadding_top">
     <?=__('nobleme_home_statement_title')?>
   </h5>
 
-  <?=__('nobleme_home_statement')?>
+  <p>
+    <?=__('nobleme_home_statement_1')?>
+  </p>
 
-  <h5 class="bigpadding_top">
-    <?=__('nobleme_home_tour_title')?>
-  </h5>
+  <p>
+    <?=__('nobleme_home_statement_2')?>
+  </p>
 
-  <?=__('nobleme_home_tour')?>
+  <p>
+    <?=__('nobleme_home_statement_3')?>
+  </p>
 
 </div>
 
