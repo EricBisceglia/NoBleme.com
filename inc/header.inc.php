@@ -42,7 +42,7 @@ if(!isset($is_admin) || !isset($is_moderator))
 if(!isset($lang))
   exit(__('error_forbidden'));
 
-// If the sure doesn't have a mode, stop here
+// If the user doesn't have a mode, stop here
 if(!isset($mode))
   exit(__('error_forbidden'));
 
@@ -92,7 +92,7 @@ if($website_closed  && !$is_admin)
 $query_string = isset($_SERVER['REDIRECT_QUERY_STRING']) ? $_SERVER['REDIRECT_QUERY_STRING'] : $_SERVER['QUERY_STRING'];
 
 // Determine the color theme to suggest
-$color_theme  = ($mode == "dark") ? "light" : "dark";
+$color_theme = ($mode == "dark") ? "light" : "dark";
 
 // Assemble the redirections
 $url_mode   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&'.$color_theme.'_mode=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$color_theme.'_mode=1';

@@ -116,6 +116,7 @@
 
 .flexcontainer   { display: -webkit-flex; display: flex;        }
 .flex            { flex: 1;                                     }
+.autoflex        { flex: auto;                                  }
 .gridcontainer   { display: grid;                               }
 .gridcenter      { display: grid; align-items: center;          }
 .clearfix:after  { clear: both; content: ' '; display: table;   }

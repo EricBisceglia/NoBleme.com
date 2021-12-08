@@ -1191,11 +1191,11 @@ EOT
 );
 
 ___('compendium_faq_answer_6_1',  'EN', <<<EOT
-This compendium is the work of a single person, {{link|todo_link|Eric Bisceglia}}.
+This compendium is the work of a single person, {{link|cv|Eric Bisceglia}}.
 EOT
 );
 ___('compendium_faq_answer_6_1',  'FR', <<<EOT
-Ce compendium est l'œuvre d'une seule personne, {{link|todo_link|Eric Bisceglia}}.
+Ce compendium est l'œuvre d'une seule personne, {{link|cv|Eric Bisceglia}}.
 EOT
 );
 ___('compendium_faq_answer_6_2',  'EN', <<<EOT
