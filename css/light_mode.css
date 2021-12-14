@@ -62,7 +62,8 @@ div.popin_body { background: #FFFFFF; }
 .blur       { text-shadow: 0 0 10px #121212; }
 .blur:hover { color: #121212;                }
 
-.glow_dark { filter: none; }
+.glow_dark    { filter: none; }
+.bigglow_dark { filter: none; }
 
 select.intext, input.intext             { background-color: #FFFFFF; border: 2px solid #EEEEEE; color: #121212; }
 select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus),
