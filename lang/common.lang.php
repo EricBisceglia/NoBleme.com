@@ -852,8 +852,8 @@ ___('submenu_pages_politics',             'EN', "Politics");
 ___('submenu_pages_politics',             'FR', "Politique");
 ___('submenu_pages_politics_manifesto',   'EN', "Contramanifesto");
 ___('submenu_pages_politics_manifesto',   'FR', "Contremanifeste");
-___('submenu_pages_politics_join',        'EN', "The movement");
-___('submenu_pages_politics_join',        'FR', "Le mouvement");
+___('submenu_pages_politics_join',        'EN', "Contrapolitics FAQ");
+___('submenu_pages_politics_join',        'FR', "FAQ Contrepolitique");
 
 
 // Submenu: Social

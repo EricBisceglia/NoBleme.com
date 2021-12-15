@@ -9,8 +9,8 @@ include_once './../../lang/politics.lang.php';  # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/politics/faq";
-$page_title_en    = "The contramovement";
-$page_title_fr    = "Le contramouvement";
+$page_title_en    = "Contrapolitics";
+$page_title_fr    = "Contrepolitique";
 $page_description = "Society has failed us. We, in turn, must fail society";
 
 
@@ -28,7 +28,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('politics_faq_title')?>
   </h1>
 
-  <h5 class="hugepadding_top">
+  <h5 class="bigpadding_top">
     <?=__('politics_faq_nobleme_title')?>
   </h5>
 
@@ -40,11 +40,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('politics_faq_nobleme_2')?>
   </p>
 
-  <p>
-    <?=__('politics_faq_nobleme_3')?>
-  </p>
-
-  <h5 class="hugepadding_top">
+  <h5 class="bigpadding_top">
     <?=__('politics_faq_movement_title')?>
   </h5>
 
@@ -56,11 +52,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('politics_faq_movement_2')?>
   </p>
 
-  <p>
-    <?=__('politics_faq_movement_3')?>
-  </p>
-
-  <h5 class="hugepadding_top">
+  <h5 class="bigpadding_top">
     <?=__('politics_faq_branding_title')?>
   </h5>
 
@@ -72,25 +64,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('politics_faq_branding_2')?>
   </p>
 
-  <div class="floater float_right float_above"><a class="noglow" href="<?=$path?>img/doc/history_2005_forum.png"><img src="<?=$path?>img/common/logo.png" alt="<?=__('image')?>" class="bigglow"></a><?=__('politics_faq_branding_logo')?></div>
+  <div class="floater float_right float_above"><img src="<?=$path?>img/common/logo.png" alt="<?=__('image')?>" class="bigglow"><?=__('politics_faq_branding_logo')?></div>
   <p>
     <?=__('politics_faq_branding_3')?>
   </p>
 
   <p>
     <?=__('politics_faq_branding_4')?>
-  </p>
-
-  <p>
-    <?=__('politics_faq_branding_5')?>
-  </p>
-
-  <h5 class="hugepadding_top">
-    <?=__('politics_faq_name_title')?>
-  </h5>
-
-  <p>
-    <?=__('politics_faq_name_body')?>
   </p>
 
 </div>

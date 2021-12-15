@@ -1318,112 +1318,81 @@ ___('politics_faq_title', 'FR', 'FAQ contrapolitique');
 
 
 // NoBleme
-___('politics_faq_nobleme_title', 'EN', 'NoBleme // Manifesto');
-___('politics_faq_nobleme_title', 'FR', 'NoBleme // Manifeste');
+___('politics_faq_nobleme_title', 'EN', "NoBleme and the contramanifesto");
+___('politics_faq_nobleme_title', 'FR', "NoBleme et le contremanifeste");
 ___('politics_faq_nobleme_1',     'EN', <<<EOT
-NoBleme is the home of a {{link|pages/politics/manifesto|political manifesto}} which preaches anticapitalist values. It must be clarified that {{link|pages/doc/nobleme|NoBleme as a website}} and the manifesto are two entirely separate things. One just happens to be hosting the other, and the manifesto does not reflect the views of NoBleme's whole community.
+NoBleme is the home of a {{link|pages/politics/manifesto|political manifesto}} called the contramanifesto. It must be clarified that {{link|pages/doc/nobleme|NoBleme as a website}} and the contramanifesto are two separate things. One just happens to be hosting the other, and the manifesto does not reflect the views of NoBleme's whole community.
 EOT
 );
 ___('politics_faq_nobleme_1',     'FR', <<<EOT
-NoBleme héberge un {{link|pages/politics/manifesto|manifeste politique}} qui prêche des valeurs anticapitalistes. Il est important de clarifier que {{link|pages/doc/nobleme|NoBleme en tant que site Internet}} et le manifeste sont deux entités complètement séparées. Il s'avère qu'un des deux héberge l'autre, le manifeste ne reflète pas les opinions de toute la communauté de NoBleme.
+NoBleme héberge un {{link|pages/politics/manifesto|manifeste politique}} nommé le contremanifeste. Toutefois, {{link|pages/doc/nobleme|NoBleme en tant que site Internet}} et le manifeste sont deux entités complètement séparées. L'un des deux héberge l'autre, tout simplement. Le manifeste ne reflète pas les opinions de toute la communauté de NoBleme.
 EOT
 );
 ___('politics_faq_nobleme_2',     'EN', <<<EOT
-However, if you are uneasy around the type of content preached in this manifesto, then odds are you might be uneasy on NoBleme as a whole. Inversely, if you are comfortable around the type of content preached by this manifesto, then you might find good company in joining {{link|pages/social/irc|NoBleme's community}}.
+However, if you are uneasy around the type of content presented in this manifesto, then odds are you might be uneasy on NoBleme as a whole. Inversely, if you are comfortable around the type of content presented in this manifesto, then you might also be interested in becoming a part of NoBleme's community by joining our {{link|pages/social/irc|IRC chat}} and {{link|pages/social/discord|Discord server}}.
 EOT
 );
 ___('politics_faq_nobleme_2',     'FR', <<<EOT
-Toutefois, si vous n'êtes pas confortable autour du contenu de ce manifeste, il est probable que vous ne soyez également pas confortable autour de NoBleme en général. Inversement, si vous êtes confortable avec ce type de contenu, vous vous entendrez probablement bien avec {{link|pages/social/irc|la communauté de NoBleme}}.
-EOT
-);
-___('politics_faq_nobleme_3',     'EN', <<<EOT
-Regarding {{link|pages/politics/manifesto|the manifesto}}, it should be pointed out that it is a first draft, written by an author who has little experience in political writing, and that its contents were, are, and will be based on feedback. If you want to give your own feedback on it, even if it is negative, please do so by using the {{link|pages/messages/admins|administrative contact form}}.
-EOT
-);
-___('politics_faq_nobleme_3',     'FR', <<<EOT
-{{link|pages/politics/manifesto|Le manifeste}} est un premier jet, et a été écrit par un auteur qui a peu d'expérience dans l'écriture politique. Son contenu change avec le temps, il est basé sur les retours des personnes qui le lisent. Si vous avez des retours ou remarques à faire sur le manifeste, même négatifs, utilisez le {{link|pages/messages/admins|formulaire de contact administratif}}.
+Toutefois, si vous n'êtes pas confortable autour du contenu de ce manifeste, il est probable que vous ne soyez également pas confortable sur NoBleme en général. Inversement, si vous êtes confortable avec ce type de contenu, vous vous entendrez probablement bien avec la communauté de NoBleme, que vous pouvez rejoindre sur notre {{link|pages/social/irc|chat IRC}} ou sur {{link|pages/social/discord|Discord}}.
 EOT
 );
 
 
 // Movement
-___('politics_faq_movement_title',  'EN', 'The contrapositionist movement');
-___('politics_faq_movement_title',  'FR', 'Le mouvement contrapositionniste');
+___('politics_faq_movement_title',  'EN', 'The contramovement');
+___('politics_faq_movement_title',  'FR', 'Le contremouvement');
 ___('politics_faq_movement_1',      'EN', <<<EOT
-The goal of the contramovement is to offer one extra alternative in the anticapitalist political scene, based on the reasons why various people don't feel that they fit comfortably within other similar political movements. Its manifesto tries to use simple vocabulary whenever possible, states its goals clearly, is extremely inclusive, focuses on moving forward, and condemns any thirst for revenge.
+As stated in {{link|pages/politics/manifesto|the contramanifesto}}, there are no political parties or movements associated with this manifesto. It is simply there to act as a message of hope, and to offer a few ideas for a better future.
 EOT
 );
 ___('politics_faq_movement_1',      'FR', <<<EOT
-Le but du contramouvement est d'offrir une alternative supplémentaire dans la scène politique anticapitaliste. C'est en écoutant les raisons pour lesquelles des gens ne se sentaient pas à l'aise dans d'autres mouvements anticapitalistes que les grandes lignes de la contrapolitique sont nés. Son manifeste tente d'utiliser du vocabulaire aussi simple que possible, clarifie ses objectifs de façon non ambigüe, est extrêmement inclusif, regarde vers l'avenir, et rejette les désirs de violence ou de revanche.
+Comme indiqué dans {{link|pages/politics/manifesto|le contremanifeste}}, il n'y a aucun mouvement ou parti politique associé à ce manifeste. Son rôle est simplement d'être un message d'espoir, et de proposer quelques idées pour un futur meilleur.
 EOT
 );
 ___('politics_faq_movement_2',      'EN', <<<EOT
-As of now, there is nothing more than a manifesto and a few small social circles. No official organizations exist, no actions are being done to try to proactively grow the movement, as it is still in its political infancy. More contratheory will eventually be published on NoBleme, further exploring some of the themes of the manifesto.
+If you wish to run your own social circle or political movement based on this manifesto, go ahead. You don't need to ask for permission. There is no central authority, no decision maker, and no restrictive intellectual property.
 EOT
 );
 ___('politics_faq_movement_2',      'FR', <<<EOT
-Actuellement, le mouvement n'est rien de plus qu'un manifeste et quelques petits cercles sociaux. Aucune organisation officielle n'existe, aucune action n'est engagée pour faire grandir le mouvement, qui en est encore à ses premiers balbutiements. De la contrathéorie supplémentaire sera publiée sur NoBleme dans le futur, explorant plus en détails certains des thèmes du manifeste.
-EOT
-);
-___('politics_faq_movement_3',      'EN', <<<EOT
-If you wish to call yourself a contra, if you wish to run your own social circles and/or workshops inspired by the contramovement, go ahead. You don't need to ask for permission. There is no central authority on this ideology, no vertical form of decision making within the movement, no intellectual property binding it to NoBleme or anywhere else. If you are looking to contribute to the movement in any way (other than financial - use your money on better things), need help organizing something related to the movement, or simply want to have a conversation with the manifesto's author, do it through NoBleme's {{link|pages/messages/admins|administrative contact form}}.
-EOT
-);
-___('politics_faq_movement_3',      'FR', <<<EOT
-Si vous désirez vous considérer comme contra, si vous voulez établir vos propres cercles sociaux et/ou ateliers inspirés par le contramouvement, ne vous retenez pas. Il n'y a pas besoin de demander la permisison. Il n'existe aucune autorité centrale sur cette idéologie, aucune forme verticale de pouvoir au sein du mouvement, aucune forme de propriété intellectuelle n'y est associée. Si vous désirez contribuer au mouvement de n'importe quelle façon (autre que financière - utilisez votre argent de façon plus utile), désirez de l'aide pour organiser quelque chose en rapport avec le mouvement, ou voulez simplement avoir une conversation avec l'auteur du manifeste, faites-le via le {{link|pages/messages/admins|formulaire de contact administratif de NoBleme}}.
+Si vous désirez créer votre propre cercle social ou mouvement politique inspiré par ce manifeste, vous en êtes libre. Nul besoin de demander la permission. Il n'y a aucune autorité centrale, aucune personne décisionnaire, aucune propriété intellectuelle restrictive.
 EOT
 );
 
 
 // Movement
-___('politics_faq_branding_title',  'EN', "Branding // Contrasymbolism");
-___('politics_faq_branding_title',  'FR', "Image // Contrasymbolisme");
-___('politics_faq_branding_logo',   'EN', "NoBleme's logo is a stylyzed example of the \"Circle-NO\" symbol");
-___('politics_faq_branding_logo',   'FR', "Le logo de NoBleme est un exemple stylisé du symbole NO-cerclé");
+___('politics_faq_branding_title',  'EN', "Contrasymbolism");
+___('politics_faq_branding_title',  'FR', "Contresymbolisme");
+___('politics_faq_branding_logo',   'EN', "NoBleme's logo, an encircled NO");
+___('politics_faq_branding_logo',   'FR', "Le logo de NoBleme, un NO encerclé");
 ___('politics_faq_branding_1',      'EN', <<<EOT
-Any movement needs to have its own associated branding. There are no rules regading the branding of contrapolitics, rather consider the following branding ideas to be guidelines.
+If you want to brand yourself, something you own, or a movement as being linked to this manifesto, then below a few suggestions you can use.
 EOT
 );
 ___('politics_faq_branding_1',      'FR', <<<EOT
-Tout mouvement a besoin d'éléments définissant son image. Il n'existe aucune règle autour de l'image de la contrapolitique, considérez plutôt ce qui suit comme des recommandations.
+Si vous vous sentez l'envie de vous associer, d'associer quelque chose que vous possédez, ou d'associer un mouvement à ce manifeste, voici quelques idées que vous pouvez utiliser.
 EOT
 );
 ___('politics_faq_branding_2',      'EN', <<<EOT
-Applying the prefix contra- to anything associates a word with the movement. Examples are contrapolitics, the contramovement, the contramanifesto, contrasymbolism, etc. A person who agrees with contrapositionist ideology can simply refer to themselves as a contra. Odds are the {{external|https://en.wikipedia.org/wiki/Contras|nicaraguan anticommunists}} won't be able to do much about having their name reclaimed by a better cause.
+For any related vocabulary, the prefix contra- tends to be mostly unused within political spheres. Odds are the {{external|https://en.wikipedia.org/wiki/Contras|nicaraguan anticommunists}} won't be able to do much if you decide to reclaim their name for a better cause. It's a fairly versatile prefix that can be applied to pretty much anything (see: contramanifesto, contramovement).
 EOT
 );
 ___('politics_faq_branding_2',      'FR', <<<EOT
-Préfixer la racine contra- permet d'associer des mots au mouvement, comme par exemple contrapolitique, le contramouvement, le contramanifeste, le contrasymbolisme, etc. Une personne en accord avec l'idéologie contrapositionniste peut simplement se dire « contra ». Les {{external|https://fr.wikipedia.org/wiki/Contras|anti-communistes nicaraguayens}} ne pourront pas y faire grand chose si nous décidons de réutiliser leur nom pour une meilleure cause.
+Le préfixe contre- en français et contra- en anglais sont étrangement peu utilisés en politique. Les {{external|https://fr.wikipedia.org/wiki/Contras|anti-communistes nicaraguayens}} ne pourront pas y faire grand chose si vous décidez de réutiliser leur nom pour une meilleure cause. C'est un préfixe pratique car facile à associer à n'importe quoi (comme par exemple contremanifeste, contremouvement, contrepolitique).
 EOT
 );
 ___('politics_faq_branding_3',      'EN', <<<EOT
-The symbol of the movement is a N within a circle. Obviously inspired by the anarchist circle-A symbol, it adds its own twist of making it about rejection of the system, by containing the word NO. Associated colors are black and red, but more specifically the visually pleasing and amusingly named <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30) instead of the traditional pure red of other anticapitalist movements. In order to catch the eye and fit with retro-modern æsthetics, a good dose of <span class="text_red bold glow_dark">neon glow</span> can be applied.
+For any related symbolism, you can freely borrow NoBleme's logo and color theme. Inspired by the anarchist {{external|https://en.wikipedia.org/wiki/Anarchist_symbolism#Circle-A|Circle-A}} logo, it is a circled N instead, which makes it look like the word NO and stands for a rejection of the established system. This version of the logo uses black and red, the colors used by neighboring political ideals, but more specifically the visually pleasing and amusingly named <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30) instead of the traditional pure red of other anticapitalist movements. In order to catch the eye and fit with retro-modern æsthetics, a good dose of <span class="text_red bold glow_dark">neon glow</span> has been applied.
 EOT
 );
 ___('politics_faq_branding_3',      'FR', <<<EOT
-Le symbole du mouvement est un N à l'intérieur d'un cercle. Bien entendu inspiré par le symbole A-cerclé de l'anarchisme, il y ajoute sa propre touche en contenant le mot NON, illustrant son rejet total du système capitaliste et de ce qui l'entoure. Les couleurs associées sont le noir et le rouge, mais plus spécifiquement le rouge <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30), au nom amusant et qui est plus agréable pour les yeux que le traditionnel rouge vif des autres mouvements anticapitalistes. Afin de happer l'attention et de se donner une esthétique rétro-moderne, une bonne dose de <span class="text_red bold glow_dark">néon rouge</span> peut être ajoutée.
+Pour ce qui est du symbolisme, vous pouvez librement emprunter les couleurs et le logo de NoBleme. Inspiré par le {{external|https://fr.wiktionary.org/wiki/A_cercl%C3%A9|A-cerclé}} anarchiste, il s'agit d'un N cerclé, ce qui ressemble au mot NO (non en anglais), symbolisant un rejet du système en place. Cette version du logo utilise du noir et du rouge, couleurs symbolisant les mouvements politiques voisins, plus spécifiquement le rouge <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30), au nom amusant et qui est plus agréable pour les yeux que le traditionnel rouge vif des autres mouvements anticapitalistes. Afin de happer l'attention et de se donner une esthétique rétro-moderne, une bonne dose de <span class="text_red bold glow_dark">néon rouge</span> peut être ajoutée.
 EOT
 );
 ___('politics_faq_branding_4',      'EN', <<<EOT
-The catchphrase associated with the contramovement is "Dissent", or "We must dissent". The world has become enough of a {{external|https://youtu.be/iwqN3Ur-wP0|self-aware colony}} after all (stealing a catchphrase from obscure nerd culture is a nod to the movement's place within {{link|pages/compendium/index|21st century counterculture}}). For now, this catchphrase is used only in english, and has no translation in any other language.
+If you alse need a catchphrase, a suggestion would be "We must dissent".
 EOT
 );
 ___('politics_faq_branding_4',      'FR', <<<EOT
-Le slogan associé au contramouvement est "Dissent" (dissidence), ou "We must dissent" (nous devons nous opposer). Après tout, le monde est devenu assez proche de la {{external|https://youtu.be/iwqN3Ur-wP0|colonie autoconsciente}} (voler une référence obscure de la culture nerd pour en faire son slogan est un clin d'œil à la {{link|pages/compendium/index|contreculture du 21ème siècle}} dont le mouvement est issu). Pour le moment, ce slogan n'est utilisé qu'en anglais, et n'a pas de traduction dans les autres langues.
+Si vous avez également besoin d'un slogan, une suggestion est la phrase anglaise « We must dissent », dont l'équivalent français serait plus ou moins « Nous devons désobéir ».
 EOT
 );
-___('politics_faq_branding_5',      'EN', <<<EOT
-As of writing, there are no typographical symbols, flags, emojis, posters, or graffitis attached to the movement. Any contributions would be more than welcome.
-EOT
-);
-___('politics_faq_branding_5',      'FR', <<<EOT
-Il n'y a actuellement pas de symbole typographique, drapeau, emoji, poster, ou graffiti associés au mouvement. Toute contribution serait bienvenue.
-EOT
-);
-
-
-// Name
-___('politics_faq_name_title',  'EN', "Contrapositionism is a silly name");
-___('politics_faq_name_title',  'FR', "Contrapositionnisme est un nom ridicule");
-___('politics_faq_name_body',   'EN', "You are a silly name.");
-___('politics_faq_name_body',   'FR', "Tu es un nom ridicule");
