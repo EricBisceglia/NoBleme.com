@@ -8,9 +8,9 @@ include_once './../../lang/politics.lang.php';  # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/politics/faq";
-$page_title_en    = "Contrapolitics";
-$page_title_fr    = "Contrepolitique";
+$page_url         = "pages/politics/contrapolitics";
+$page_title_en    = "Contrapolitics FAQ";
+$page_title_fr    = "FAQ Contrepolitique";
 $page_description = "Society has failed us. We, in turn, must fail society";
 
 

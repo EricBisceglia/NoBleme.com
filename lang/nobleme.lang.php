@@ -479,11 +479,11 @@ NoBleme, en tant que petite communauté isolée, ne cherchait pas à avoir la mo
 EOT
 );
 ___('nobleme_history_political4',  'EN', <<<EOT
-In 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a {{link|pages/politics/manifesto|political manifesto}} made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|pages/compendium/index|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
+In late 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a {{link|pages/politics/contramanifesto|political manifesto}} made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|pages/compendium/index|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
 EOT
 );
 ___('nobleme_history_political4',  'FR', <<<EOT
-En 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/manifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|pages/compendium/index|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
+Fin 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/contramanifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|pages/compendium/index|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
 EOT
 );
 

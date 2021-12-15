@@ -1321,11 +1321,11 @@ ___('politics_faq_title', 'FR', 'FAQ contrapolitique');
 ___('politics_faq_nobleme_title', 'EN', "NoBleme and the contramanifesto");
 ___('politics_faq_nobleme_title', 'FR', "NoBleme et le contremanifeste");
 ___('politics_faq_nobleme_1',     'EN', <<<EOT
-NoBleme is the home of a {{link|pages/politics/manifesto|political manifesto}} called the contramanifesto. It must be clarified that {{link|pages/doc/nobleme|NoBleme as a website}} and the contramanifesto are two separate things. One just happens to be hosting the other, and the manifesto does not reflect the views of NoBleme's whole community.
+NoBleme is the home of a {{link|pages/politics/contramanifesto|political manifesto}} called the contramanifesto. It must be clarified that {{link|pages/doc/nobleme|NoBleme as a website}} and the contramanifesto are two separate things. One just happens to be hosting the other, and the manifesto does not reflect the views of NoBleme's whole community.
 EOT
 );
 ___('politics_faq_nobleme_1',     'FR', <<<EOT
-NoBleme héberge un {{link|pages/politics/manifesto|manifeste politique}} nommé le contremanifeste. Toutefois, {{link|pages/doc/nobleme|NoBleme en tant que site Internet}} et le manifeste sont deux entités complètement séparées. L'un des deux héberge l'autre, tout simplement. Le manifeste ne reflète pas les opinions de toute la communauté de NoBleme.
+NoBleme héberge un {{link|pages/politics/contramanifesto|manifeste politique}} nommé le contremanifeste. Toutefois, {{link|pages/doc/nobleme|NoBleme en tant que site Internet}} et le manifeste sont deux entités complètement séparées. L'un des deux héberge l'autre, tout simplement. Le manifeste ne reflète pas les opinions de toute la communauté de NoBleme.
 EOT
 );
 ___('politics_faq_nobleme_2',     'EN', <<<EOT
@@ -1342,11 +1342,11 @@ EOT
 ___('politics_faq_movement_title',  'EN', 'The contramovement');
 ___('politics_faq_movement_title',  'FR', 'Le contremouvement');
 ___('politics_faq_movement_1',      'EN', <<<EOT
-As stated in {{link|pages/politics/manifesto|the contramanifesto}}, there are no political parties or movements associated with this manifesto. It is simply there to act as a message of hope, and to offer a few ideas for a better future.
+As stated in {{link|pages/politics/contramanifesto|the contramanifesto}}, there are no political parties or movements associated with this manifesto. It is simply there to act as a message of hope, and to offer a few ideas for a better future.
 EOT
 );
 ___('politics_faq_movement_1',      'FR', <<<EOT
-Comme indiqué dans {{link|pages/politics/manifesto|le contremanifeste}}, il n'y a aucun mouvement ou parti politique associé à ce manifeste. Son rôle est simplement d'être un message d'espoir, et de proposer quelques idées pour un futur meilleur.
+Comme indiqué dans {{link|pages/politics/contramanifesto|le contremanifeste}}, il n'y a aucun mouvement ou parti politique associé à ce manifeste. Son rôle est simplement d'être un message d'espoir, et de proposer quelques idées pour un futur meilleur.
 EOT
 );
 ___('politics_faq_movement_2',      'EN', <<<EOT

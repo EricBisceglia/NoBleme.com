@@ -198,11 +198,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('nobleme_history_political2')?>
   </p>
 
+  <div class="floater float_left float_above"><a class="noglow" href="<?=$path?>img/doc/history_2021.png"><img src="<?=$path?>img/doc/history_2021.png" alt="<?=__('image')?>"></a><?=__('nobleme_history_img_2021_home')?></div>
+
   <p>
     <?=__('nobleme_history_political3')?>
   </p>
 
-  <div class="floater float_right"><a class="noglow" href="<?=$path?>img/doc/history_2021.png"><img src="<?=$path?>img/doc/history_2021.png" alt="<?=__('image')?>"></a><?=__('nobleme_history_img_2021_home')?></div>
   <p>
     <?=__('nobleme_history_political4')?>
   </p>
