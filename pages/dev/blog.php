@@ -104,9 +104,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
   </h1>
 
-  <h5>
+  <h4>
     <?=$devblog_data['title']?>
-  </h5>
+  </h4>
 
   <span class="monospace"><?=__('dev_blog_published', preset_values: array($devblog_data['date'], $devblog_data['date_since']))?></span>
 

@@ -634,11 +634,11 @@ ___('compendium_eras_title',    'FR', "Périodes");
 ___('compendium_eras_subtitle', 'EN', "21st century culture");
 ___('compendium_eras_subtitle', 'FR', "Culture du 21ème siècle");
 ___('compendium_eras_summary',  'EN', <<<EOT
-This page is about a {{link|pages/compendium/cultural_era_list|cultural era}}, an arbitrary way to separate {{link|todo_list|meme}} history into time periods.
+This page is about a {{link|pages/compendium/cultural_era_list|cultural era}}, an arbitrary way to separate {{link|pages/compendium/page_type_list|meme}} history into time periods.
 EOT
 );
 ___('compendium_eras_summary',  'FR', <<<EOT
-Cette page concerne une {{link|pages/compendium/cultural_era_list|période}}, un découpage arbitraire de l'histoire des {{link|todo_list|memes}} en ères distinctes.
+Cette page concerne une {{link|pages/compendium/cultural_era_list|période}}, un découpage arbitraire de l'histoire des {{link|pages/compendium/page_type_list|memes}} en ères distinctes.
 EOT
 );
 

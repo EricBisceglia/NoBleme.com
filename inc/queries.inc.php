@@ -985,8 +985,34 @@ if($last_query < 22)
   sql_create_index('stats_pages', 'index_queries', 'query_count');
   sql_create_index('stats_pages', 'index_load_time', 'load_time');
 
-  $pageviews_page_urls = array( 'pages/nobleme/activite'  => 'pages/nobleme/activity' ,
-                                'pages/nobleme/404'       => '404'                    );
+  $pageviews_page_urls = array( 'pages/devblog/index'             => 'pages/dev/blog_list'              ,
+                                'pages/doc/donnees_personnelles'  => 'pages/doc/data'                   ,
+                                'pages/doc/mentions_legales'      => 'pages/doc/legal'                  ,
+                                'pages/irc/canaux'                => 'pages/social/irc?channels'        ,
+                                'pages/irc/client'                => 'pages/social/irc?client'          ,
+                                'pages/irc/index'                 => 'pages/social/irc'                 ,
+                                'pages/irc/services'              => 'pages/social/irc?nickserv'        ,
+                                'pages/irl/index'                 => 'pages/meetups/list'               ,
+                                'pages/nobleme/404'               => '404'                              ,
+                                'pages/nobleme/activite'          => 'pages/nobleme/activity'           ,
+                                'pages/nobleme/admins'            => 'pages/users/admins'               ,
+                                'pages/nobleme/coulisses'         => 'pages/doc/dev'                    ,
+                                'pages/nobleme/membres'           => 'pages/users/list'                 ,
+                                'pages/nobleme/online'            => 'pages/users/online'               ,
+                                'pages/nobleme/online?noguest'    => 'pages/users/online'               ,
+                                'pages/quotes/add'                => 'pages/quotes/submit'              ,
+                                'pages/quotes/index'              => 'pages/quotes/list'                ,
+                                'pages/todo/index'                => 'pages/tasks/list'                 ,
+                                'pages/todo/request'              => 'pages/tasks/proposal'             ,
+                                'pages/todo/roadmap'              => 'pages/tasks/roadmap'              ,
+                                'pages/user/email'                => 'pages/account/settings_email'     ,
+                                'pages/user/notifications'        => 'pages/messages/inbox'             ,
+                                'pages/user/nsfw'                 => 'pages/account/settings_nsfw'      ,
+                                'pages/user/pass'                 => 'pages/account/settings_password'  ,
+                                'pages/user/pm'                   => 'pages/messages/write'             ,
+                                'pages/user/privacy'              => 'pages/account/settings_privacy'   ,
+                                'pages/user/profil'               => 'pages/users/profile'              ,
+                                'pages/user/register'             => 'pages/account/register'           );
 
   foreach($pageviews_page_urls as $old_url => $new_url)
   {
@@ -997,12 +1023,77 @@ if($last_query < 22)
             WHERE   stats_pages.page_url LIKE '$old_url' ");
   }
 
+  $qstats = query(" SELECT  stats_pages.id        AS 'p_id' ,
+                            stats_pages.page_url  AS 'p_url'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE 'pages/devblog/devblog?%' ");
+  while($dstats = mysqli_fetch_array($qstats))
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_url  = '".str_replace('pages/devblog/devblog', 'pages/dev/blog', $dstats['p_url'])."'
+            WHERE   stats_pages.id        = '".$dstats['p_id']."' ");
+
+  $qstats = query(" SELECT  stats_pages.id        AS 'p_id' ,
+                            stats_pages.page_url  AS 'p_url'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE 'pages/irl/irl?%' ");
+  while($dstats = mysqli_fetch_array($qstats))
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_url  = '".str_replace('pages/irl/irl?id=', 'pages/meetups/', $dstats['p_url'])."'
+            WHERE   stats_pages.id        = '".$dstats['p_id']."' ");
+
+  $qstats = query(" SELECT  stats_pages.id        AS 'p_id' ,
+                            stats_pages.page_url  AS 'p_url'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE 'pages/quotes/quote?%' ");
+  while($dstats = mysqli_fetch_array($qstats))
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_url  = '".str_replace('pages/quotes/quote?id=', 'pages/quotes/', $dstats['p_url'])."'
+            WHERE   stats_pages.id        = '".$dstats['p_id']."' ");
+
+  $qstats = query(" SELECT  stats_pages.id        AS 'p_id' ,
+                            stats_pages.page_url  AS 'p_url'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE 'pages/todo/index?%' ");
+  while($dstats = mysqli_fetch_array($qstats))
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_url  = '".str_replace('pages/todo/index?id=', 'pages/tasks/', $dstats['p_url'])."'
+            WHERE   stats_pages.id        = '".$dstats['p_id']."' ");
+
+  $qstats = query(" SELECT  stats_pages.id        AS 'p_id' ,
+                            stats_pages.page_url  AS 'p_url'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE 'pages/user/user?%' ");
+  while($dstats = mysqli_fetch_array($qstats))
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_url  = '".str_replace('pages/user/user?id=', 'pages/users/', $dstats['p_url'])."'
+            WHERE   stats_pages.id        = '".$dstats['p_id']."' ");
+
   query(" DELETE FROM stats_pages
-          WHERE       stats_pages.page_url LIKE 'pages/user/login' ");
+          WHERE       stats_pages.page_url  LIKE 'pages/doc/api'
+          OR          stats_pages.page_url  LIKE 'pages/doc/droit_oubli'
+          OR          stats_pages.page_url  LIKE 'pages/doc/emotes'
+          OR          stats_pages.page_url  LIKE 'pages/doc/index'
+          OR          stats_pages.page_url  LIKE 'pages/doc/raccourcis'
+          OR          stats_pages.page_url  LIKE 'pages/doc/rss'
+          OR          stats_pages.page_url  LIKE 'pages/ecrivains/%'
+          OR          stats_pages.page_url  LIKE 'pages/forum/%'
+          OR          stats_pages.page_url  LIKE 'pages/irl/stats'
+          OR          stats_pages.page_url  LIKE 'pages/nobleme/anniversaires'
+          OR          stats_pages.page_url  LIKE 'pages/user/login'
+          OR          stats_pages.page_url  LIKE 'pages/nbdb/%'
+          OR          stats_pages.page_url  LIKE 'pages/nbrpg/%'
+          OR          stats_pages.page_url  LIKE 'pages/nrm/%'
+          OR          stats_pages.page_url  LIKE 'pages/quotes/stats'
+          OR          stats_pages.page_url  LIKE 'pages/radikal/%'
+          OR          stats_pages.page_url  LIKE 'pages/todo/request?bug'
+          OR          stats_pages.page_url  LIKE 'pages/user/delete'
+          OR          stats_pages.page_url  LIKE 'pages/user/pseudo' ");
 
   $timestamp = time();
   query(" UPDATE  stats_pages
-          SET     stats_pages.view_count_archive  = stats_pages.view_count  ,
+          SET     stats_pages.page_name_en        = '-'                     ,
+                  stats_pages.page_name_fr        = '-'                     ,
+                  stats_pages.view_count_archive  = stats_pages.view_count  ,
                   stats_pages.last_viewed_at      = '$timestamp'            ");
 
   query(" UPDATE  system_variables

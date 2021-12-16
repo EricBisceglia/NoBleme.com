@@ -1,7 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  tasks_list_search           Performs a search through the todo list.                                             */
-/*  tasks_list_details          Shows the details of a task in the todo list.                                        */
+/*  tasks_list_search           Performs a search through the task list.                                             */
+/*  tasks_list_details          Shows the details of a task in the task list.                                        */
 /*                                                                                                                   */
 /*  tasks_delete                Triggers the soft deletion of a task.                                                */
 /*  tasks_restore               Triggers the restoration of a soft deleted task.                                     */
@@ -13,7 +13,7 @@ popin_close('task_categories_popin');
 
 
 /**
- * Performs a search through the todo list.
+ * Performs a search through the task list.
  *
  * @param   {string}  [sort_data]   Change the order in which the data will be sorted.
  *
@@ -46,7 +46,7 @@ function tasks_list_search( sort_data = null )
 
 
 /**
- * Shows the details of a task in the todo list.
+ * Shows the details of a task in the task list.
  *
  * @param   {int}   [task_id]   The id of the task for which details will be displayed.
  *
