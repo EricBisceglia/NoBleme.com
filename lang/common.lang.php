@@ -653,7 +653,7 @@ ___('error_website_update', 'EN', <<<EOT
   </head>
   <body style="background: #121212; color: #B00B1E; font-size: 2.5em; font-weight: bold;">
     <div style="text-align: center; width: 60%; margin: auto; padding-top: 3.0em;">
-      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./img/common/logo_full.png" alt="NoBleme.com">
+      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="{{1}}/img/common/logo_full.png" alt="NoBleme.com">
     </div>
     <div style="font-family: sans-serif; text-align: center; padding-top: 5.0em;">
       A maintenance operation is in progress.<br>
@@ -671,7 +671,7 @@ ___('error_website_update', 'FR', <<<EOT
   </head>
   <body style="background: #121212; color: #B00B1E; font-size: 2.5em; font-weight: bold;">
     <div style="text-align: center; width: 60%; margin: auto; padding-top: 3.0em;">
-      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./img/common/logo_full.png" alt="NoBleme.com">
+      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="{{1}}/img/common/logo_full.png" alt="NoBleme.com">
     </div>
     <div style="font-family: sans-serif; text-align: center; padding-top: 5.0em;">
       Une opération de maintenance est en cours.<br>
@@ -1140,7 +1140,7 @@ EOT
 
 ___('coc', 'FR', <<<EOT
 <p class="padding_bot">
-  NoBleme est une petite communauté à l'ambiance décontractée. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter afin de tous cohabiter paisiblement, que vous trouverez ci-dessous :
+  NoBleme est une petite communauté à l'ambiance décontractée. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter afin de cohabiter paisiblement, que vous trouverez ci-dessous :
 </p>
 <ul>
   <li>

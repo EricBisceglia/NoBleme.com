@@ -20,7 +20,7 @@ If you need to add any styling (bold, links, images, etc.) to a message on NoBle
 EOT
 );
 ___('bbcodes_intro',    'FR', <<<EOT
-Si vous avez besoin de styliser le contenu de vos messages sur NoBleme (liens, images, texte gras, etc.), vous devrez le faire en utilisant des {{external|https://fr.wikipedia.org/wiki/BBCode|BBCodes}}. Tous les BBCodes à votre disposition sur NoBleme sont documentés ci-dessous. Vous trouverez égalament à la fin de cette page une zone de texte dans laquelle vous pouvez expérimenter avec les BBCodes.
+Si vous avez besoin de styliser le contenu de vos messages sur NoBleme (liens, images, texte gras, etc.), vous devrez le faire en utilisant des {{external|https://fr.wikipedia.org/wiki/BBCode|BBCodes}}. Tous les BBCodes à votre disposition sur NoBleme sont documentés ci-dessous. Vous trouverez également à la fin de cette page une zone de texte dans laquelle vous pouvez expérimenter avec les BBCodes.
 EOT
 );
 
@@ -121,7 +121,7 @@ The tags listed in the table below can only be used by administrators, and only 
 EOT
 );
 ___('nbcodes_intro',    'FR', <<<EOT
-Les balises listées dans la table ci-dessous ne peuvent être utilisées que par l'administration, et seulement dans certains continus où il est indiqués que les NBCodes sont autorisés. Les NBCodes peuvent être combinés avec des BBCodes. Des exemples visuels ne seront pas fournis, car les NBCodes ont un rôle simple et clair.
+Les balises listées dans la table ci-dessous ne peuvent être utilisées que par l'administration, et seulement dans certains contenus où il est indiqués que les NBCodes sont autorisés. Les NBCodes peuvent être combinés avec des BBCodes. Des exemples visuels ne seront pas fournis, car les NBCodes ont un rôle simple et clair.
 EOT
 );
 
@@ -133,14 +133,14 @@ ___('nbcodes_example',          'EN', "Example");
 ___('nbcodes_example',          'FR', "Exemple");
 
 ___('nbcodes_title_name',       'EN', "Title<br>Subtitle");
-___('nbcodes_title_name',       'FR', "Title<br>Subtitle");
+___('nbcodes_title_name',       'FR', "Titre<br>Sous-titre");
 ___('nbcodes_title_example',    'EN', "== Title ==<br>=== Subtitle ===");
 ___('nbcodes_title_example',    'FR', "== Titre ==<br>=== Sous-titre ===");
 
 ___('nbcodes_nsfw_name',        'EN', "Optional blur");
 ___('nbcodes_nsfw_name',        'FR', "Flou optionnel");
-___('nbcodes_nsfw_example',     'EN', "[nsfw]Contenu[/nsfw]");
-___('nbcodes_nsfw_example',     'FR', "[nsfw]Contents[/nsfw]");
+___('nbcodes_nsfw_example',     'EN', "[nsfw]Contents[/nsfw]");
+___('nbcodes_nsfw_example',     'FR', "[nsfw]Contenu[/nsfw]");
 
 ___('nbcodes_nobleme_name',     'EN', "Internal link");
 ___('nbcodes_nobleme_name',     'FR', "Lien interne");
@@ -257,11 +257,11 @@ EOT
 ___('privacy_data_title', 'EN', "Your personal data");
 ___('privacy_data_title', 'FR', "Vos données personnelles");
 ___('privacy_data_1',     'EN', <<<EOT
-The most important part of online privacy is the fate of your personal data. NoBleme collects the strict minimum personal data required to properly run the website, which is not much. If you are curious about what we specifically collect about you, how long we keep it, why we need it, how we use it, where it is hosted, etc. we have a whole page of the website dedicated to it: {{link|pages/doc/data|Your personal data}}.
+The most important part of online privacy is the fate of your personal data. NoBleme collects the strict minimum personal data required to properly run the website, which is not much. If you are curious about what we specifically collect about you, how long we keep it, why we need it, how we use it, where it is hosted, etc. we have a whole page of the website dedicated to it: {{link|pages/doc/data|your personal data}}.
 EOT
 );
 ___('privacy_data_1',     'FR', <<<EOT
-L'aspect le plus important d'une politique de confidentialité est le destin de vos données personnelles. NoBleme ne collecte de ces données que le strict minimum requis au bon fonctionnement du site. Si vous êtes curieux de ce que nous collectons exactement comme données personnelles, pendant combien de temps nous les conservons, comment nous les utilisons, pourquoi nous en avons besoin, où elles sont stockées, etc. nous avons une page entière du site dédiée à répondre à ces questions : {{link|pages/doc/data|Vos données personnelles}}.
+L'aspect le plus important d'une politique de confidentialité est le destin de vos données personnelles. NoBleme ne collecte de ces données que le strict minimum requis au bon fonctionnement du site. Si vous voulez savoir ce que nous collectons exactement comme données personnelles, pendant combien de temps nous les conservons, comment nous les utilisons, pourquoi nous en avons besoin, où elles sont stockées, etc. nous avons une page entière du site dédiée à répondre à ces questions : {{link|pages/doc/data|vos données personnelles}}.
 EOT
 );
 ___('privacy_data_2',     'EN', <<<EOT
@@ -290,7 +290,7 @@ However, stay aware that anonymity on the public Internet has its limits. It is 
 EOT
 );
 ___('privacy_anonymity_2',     'FR', <<<EOT
-Toutefois, ayez conscience que l'anonymat sur Internet a ses limites. Il se peut que les forces de l'ordre nous demandent de partager des données sur nos comptes dans le cadre d'une enquête, auquel cas nous serons forcés de partager le peu de données personnelles que nous avons à votre sujet. Cela signifie que l'anonymat sur NoBleme (et ailleurs) protège votre identité réelle face aux autres membres du site, mais ne vous protège pas des conséquences d'actions illégales que vous pourriez réaliser.
+Toutefois, ayez conscience que l'anonymat sur Internet a ses limites. Il se peut que les forces de l'ordre nous demandent de partager des données sur nos membres dans le cadre d'une enquête, auquel cas nous n'aurions d'autre choix que de partager le peu de données personnelles que nous avons à votre sujet. Cela signifie que l'anonymat sur NoBleme (et ailleurs) protège votre identité réelle face aux autres membres du site, mais ne vous protège pas des conséquences d'actions illégales que vous pourriez réaliser.
 EOT
 );
 
@@ -365,7 +365,7 @@ Naturellement, vous n'avez pas de raison de croire en tout ce qui est écrit ci-
 EOT
 );
 ___('privacy_source_2',     'EN', <<<EOT
-You can read more about the decision to open source NoBleme's source code {{link|pages/doc/dev|behind the scenes}}.
+You can read more about the decision to open NoBleme's source code {{link|pages/doc/dev|behind the scenes}}.
 EOT
 );
 ___('privacy_source_2',     'FR', <<<EOT
@@ -388,7 +388,7 @@ NoBleme is based and hosted in France, thus french and european intellectual pro
 EOT
 );
 ___('legal_intro',  'FR', <<<EOT
-NoBleme est basé et hébergé en France, par conséquent les lois françaises et européennes sur la propriété intellectuelle s'appliquent à tout contenu créatif et/ou original crée par ou pour NoBleme. Tout contenu tiers (qui n'est pas crée par ou pour NoBleme) appartient à ses créateurs et/ou aux détenteurs de leurs droits, par conséquent des droits internationaux de propriété intellectuelle peuveunt s'appliquer à certains contenus de NoBleme. Si des contenus sur lesquels vous avez droits ou représentez les détenteurs de droits sont utilisés sur NoBleme sans votre permission, effectuez une réclamation via le {{link|pages/messages/admins|formulaire de contact administratif}} - assurez-vous d'inclure une preuve de vos droits - et votre requête sera traitée au plus vite.
+NoBleme est basé et hébergé en France, par conséquent les lois françaises et européennes sur la propriété intellectuelle s'appliquent à tout contenu créatif et/ou original crée par ou pour NoBleme. Tout contenu tiers (qui n'est pas crée par ou pour NoBleme) appartient à ses créateurs et/ou aux détenteurs de leurs droits, par conséquent des droits internationaux de propriété intellectuelle peuvent s'appliquer à certains contenus de NoBleme. Si des contenus sur lesquels vous avez des droits ou représentez les détenteurs de droits sont utilisés sur NoBleme sans votre permission, effectuez une réclamation via le {{link|pages/messages/admins|formulaire de contact administratif}} - assurez-vous d'inclure une preuve de vos droits - et votre requête sera traitée au plus vite.
 EOT
 );
 
@@ -414,7 +414,7 @@ Any time you submit your own creative and/or original content on NoBleme, you im
 EOT
 );
 ___('legal_user_content_body',  'FR', <<<EOT
-En publiant du contenu original sur NoBleme, vous autorisez implicitement à titre gracieux leur reproduction et diffusion sur le reste de NoBleme et sur les autres plateformes appartenent à NoBleme, et autorisez les autres membres de NoBleme à citer vos contenus sur le reste de NoBleme. Toutefois, en tant qu'auteur de tout contenu original que vous publiez sur NoBleme, vous en conservez la propriété intellectuelle et les droits d'auteur assortis. NoBleme s'engage par conséquent à ne pas publier hors du site sans votre permission et à ne pas monétiser les contenus originaux que vous publiez sur le site. Nous respectons entièrement vos droits d'auteur et ne nous donnons pas les pouvoirs requis pour en prendre le contrôle.
+En publiant du contenu original sur NoBleme, vous autorisez implicitement à titre gracieux leur reproduction et diffusion sur le reste de NoBleme et sur les autres plateformes appartenant à NoBleme, et autorisez les autres membres de NoBleme à citer vos contenus sur le reste de NoBleme. Toutefois, en tant qu'auteur de tout contenu original que vous publiez sur NoBleme, vous en conservez la propriété intellectuelle et les droits d'auteur assortis. NoBleme s'engage par conséquent à ne pas publier hors du site sans votre permission et à ne pas monétiser les contenus originaux que vous publiez sur le site. Nous respectons entièrement vos droits d'auteur et ne nous donnons pas les pouvoirs requis pour en prendre le contrôle.
 EOT
 );
 
@@ -525,7 +525,7 @@ Nous utilisons les adresses IP pour détecter les comptes multiples (une personn
 EOT
 );
 ___('doc_data_ip_user_3',  'EN', <<<EOT
-Do note that only your <span class="bold">latest</span> IP address is kept in our database. In case of change your previous IP address will immediately be deleted. We have no interest in logging your IP history. As outlined in our {{link|pages/doc/privacy|privacy policy}}, we strongly believe in your right to remain anonymous.
+Do note that only your <span class="bold">latest</span> IP address is kept in our database. If it changes, your previous IP address will immediately be deleted. We have no interest in logging your IP history. As outlined in our {{link|pages/doc/privacy|privacy policy}}, we strongly believe in your right to remain anonymous.
 EOT
 );
 ___('doc_data_ip_user_3',  'FR', <<<EOT
@@ -587,7 +587,7 @@ Keeping your chosen language in our database allows us to always show you NoBlem
 EOT
 );
 ___('doc_data_lang_users_2',  'FR', <<<EOT
-Conserver votre choix de langue nous permet de toujours afficher NoBleme dans le langage de votre choix, même si vous changez d'ordinateur/appareil. Cette information ne sera jamais affichée publiquement, c'est à vous de décider si vous désirez afficher votre langue sur votre {{link|pages/users/profile_edit|profil public}}.
+Conserver votre choix de langue nous permet de toujours afficher NoBleme dans la langue de votre choix, même si vous changez d'ordinateur/appareil. Cette information ne sera jamais affichée publiquement, c'est à vous de décider si vous désirez afficher votre langue sur votre {{link|pages/users/profile_edit|profil public}}.
 EOT
 );
 
@@ -608,7 +608,7 @@ We hope that you appreciate our respect for your privacy, and will understand th
 EOT
 );
 ___('doc_data_conclusion_2',      'FR', <<<EOT
-Nous espérons que vous appréciez le respect que nous portons à votre vie privée, et que vous verrez le message que cela implique: le bon fonctionnement d'un site Internet ne dépend pas de la collecte, du partage, ou de la vente des données pesonnelles de ses visiteurs. C'est un choix délibéré que font la majorité des autres sites et applications.
+Nous espérons que vous appréciez le respect que nous portons à votre vie privée, et que vous verrez le message que cela implique: le bon fonctionnement d'un site Internet ne dépend pas de la collecte, du partage, ou de la vente des données pesonnelles des pesonnes qui l'utilisent. C'est un choix délibéré que font la majorité des autres sites et applications.
 EOT
 );
 
@@ -650,7 +650,7 @@ ___('doc_bts_creed_1',      'EN', <<<EOT
 EOT
 );
 ___('doc_bts_creed_1',      'FR', <<<EOT
-<span class="bold text_red">Gratuit et sans pubs :</span> Internet est un lieu merveilleux pour la créativité et l'expression, pollué par les publicités, le contenu sponsorisé, et les demandes de financement. Dans le cas de NoBleme, le site restera toujours gratuit à utiliser et libre de toute publicité. Les coûts d'exploitation sont connus à l'avance et budgétisés. NoBleme est une œuvre de passion. Je n'accepte pas les donations.
+<span class="bold text_red">Gratuit et sans publicités :</span> Internet est un lieu merveilleux pour la créativité et l'expression, pollué par les publicités, le contenu sponsorisé, et les demandes de financement. Dans le cas de NoBleme, le site restera toujours gratuit à utiliser et libre de toute publicité. Les coûts d'exploitation sont connus à l'avance et budgétisés. NoBleme est une œuvre de passion. Je n'accepte pas les donations.
 EOT
 );
 ___('doc_bts_creed_2',      'EN', <<<EOT
@@ -662,7 +662,7 @@ ___('doc_bts_creed_2',      'FR', <<<EOT
 EOT
 );
 ___('doc_bts_creed_3',      'EN', <<<EOT
-<span class="bold text_red">Consider all user experiences:</span> {{external|https://en.wikipedia.org/wiki/Dark_pattern|Dark patterns}} are strictly prohibited. All of NoBleme's content is tested not only on a desktop computer, but also simulated as being viewed on several different mobile phones and tablets. Screen readers for blind people are also taken into account. While it is impossible to guarantee the best user experience on all devices, all of them should be equally considered when designing pages.
+<span class="bold text_red">Consider all user experiences:</span> {{external|https://en.wikipedia.org/wiki/Dark_pattern|Dark patterns}} are strictly prohibited. All of NoBleme's content is tested not only on a desktop computer, but also simulated as being viewed on several different mobile phones and tablets. Screen readers for visually impaired people are also taken into account. While it is impossible to guarantee the best user experience on all devices, all of them should be considered when designing pages.
 EOT
 );
 ___('doc_bts_creed_3',      'FR', <<<EOT
@@ -678,7 +678,7 @@ ___('doc_bts_creed_4',      'FR', <<<EOT
 EOT
 );
 ___('doc_bts_creed_5',      'EN', <<<EOT
-<span class="bold text_red">Gender neutrality:</span> Every piece of text on NoBleme should be gender neutral. The default pronoun in use should be `they`, unless referring to specific people. Neutral forms are preferred for traditionally gendered nouns (eg. mailperson over mailman, police agent over policeman).
+<span class="bold text_red">Gender neutrality:</span> Every piece of text on NoBleme should be gender neutral. The default pronoun in use should be `they`, unless referring to specific people. Neutral forms are preferred for traditionally gendered nouns (eg. mailperson over mailman).
 EOT
 );
 ___('doc_bts_creed_5',      'FR', <<<EOT
@@ -686,7 +686,7 @@ ___('doc_bts_creed_5',      'FR', <<<EOT
 EOT
 );
 ___('doc_bts_creed_6',      'EN', <<<EOT
-<span class="bold text_red">Sensitivity:</span> When writing text for NoBleme, a conscious effort should always be made to mind the sensitivities of potential readers. This goes further than simply not using slurs: common triggering topics should ideally be avoided, or at least preceded by a trigger warning, and an effort in educating oneself on any sensitive topics (race, identity, politics, mental health, etc.) should always be done before writing about them.
+<span class="bold text_red">Sensitivity:</span> When writing text for NoBleme, a conscious effort should always be made to mind the sensitivities of potential readers. This goes further than simply not using slurs: common triggering topics should ideally be avoided, or at least preceded by a warning, and an effort in educating oneself on any sensitive topics (race, identity, politics, mental health, etc.) should always be done before writing about them.
 EOT
 );
 ___('doc_bts_creed_6',      'FR', <<<EOT
@@ -700,8 +700,8 @@ ___('doc_bts_stack_title',    'EN', "NoBleme's technological stack");
 ___('doc_bts_stack_title',    'FR', "Technologies utilisées sur NoBleme");
 ___('doc_bts_stack_intro',    'EN', "Here is the exhaustive list of all applications, services, and technologies used in the process of developing, maintaining, and administrating NoBleme:");
 ___('doc_bts_stack_intro',    'FR', "Voici la liste exhaustive des applications, services, et technologies utilisés dans le processus de développement, de maintenance, et d'administration de NoBleme :");
-___('doc_bts_stack_domain',   'EN', "The domain name ({{external|https://reports.internic.net/cgi/whois?whois_nic=nobleme.com&type=domain|nobleme.com}}) is registered on {{external|https://www.ovh.com/|OVH}}");
-___('doc_bts_stack_domain',   'FR', "Le nom de domaine ({{external|https://reports.internic.net/cgi/whois?whois_nic=nobleme.com&type=domain|nobleme.com}}) est enregistré sur {{external|https://www.ovh.com/|OVH}}");
+___('doc_bts_stack_domain',   'EN', "The domain name (nobleme.com) is registered on {{external|https://www.ovh.com/|OVH}}");
+___('doc_bts_stack_domain',   'FR', "Le nom de domaine (nobleme.com) est enregistré sur {{external|https://www.ovh.com/|OVH}}");
 ___('doc_bts_stack_server',   'EN', "The web server is hosted by {{external|https://www.ovh.com/|OVH}} and runs {{external|https://en.wikipedia.org/wiki/Debian|Debian GNU/Linux}}");
 ___('doc_bts_stack_server',   'FR', "Le serveur est hébergé chez {{external|https://www.ovh.com/|OVH}} et utilise {{external|https://fr.wikipedia.org/wiki/Debian|Debian GNU/Linux}}");
 ___('doc_bts_stack_http',     'EN', "Web pages are delivered by an {{external|https://en.wikipedia.org/wiki/Apache_HTTP_Server|Apache HTTP server}}");
@@ -744,7 +744,7 @@ Les raisons derrière l'ouverture au public du code source de NoBleme sont la tr
 EOT
 );
 ___('doc_bts_source_3',     'EN', <<<EOT
-NoBleme's source code is protected by a the very permissive {{external|https://en.wikipedia.org/wiki/MIT_License|MIT license}}, which allows you to use any piece of code from NoBleme in your own projects without asking for permission first. The only condition is to properly credit NoBleme when reusing some of its code - as outlined in the {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/LICENSE.md|LICENSE.MD}} file and in our {{link|pages/doc/legal|legal notice}}.
+NoBleme's source code is protected by the very permissive {{external|https://en.wikipedia.org/wiki/MIT_License|MIT license}}, which allows you to use any piece of code from NoBleme in your own projects without asking for permission first. The only condition is to properly credit NoBleme when reusing some of its code - as outlined in the {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/LICENSE.md|LICENSE.MD}} file and in our {{link|pages/doc/legal|legal notice}}.
 EOT
 );
 ___('doc_bts_source_3',     'FR', <<<EOT

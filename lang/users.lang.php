@@ -39,7 +39,7 @@ Le code couleur suivant est appliqué afin de simplifier la lecture :
   <li>Les personnes sans compte n'ont pas de formattage spécifique.</li>
   <li>{{link|pages/users/list|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
   <li>{{link|pages/users/admins|La modération}} apparait en <span class="text_orange bold">orange.</span></li>
-  <li>{{link|pages/users/admins|L'administration}} apparait en <span class="text_red glow bold">rouge.</span></li>
+  <li>{{link|pages/users/admins|L'administration}} apparait en <span class="text_red glow_dark bold">rouge.</span></li>
 </ul>
 EOD
 );
@@ -129,7 +129,7 @@ NoBleme's administrative team are a group of volunteers that ensure the smooth r
 EOT
 );
 ___('users_admins_intro',   'FR', <<<EOT
-L'équipe administrative de NoBleme est un groupe de volontaires qui maintiennent le site internet et sa communauté en gérant les potentiels problèmes qui peuvent y apparaître. Si vous avez besion de leur aide avec un sujet - qu'il soit humain ou technique - vous pouvez les contacter {{link|pages/social/irc|via notre chat IRC}} ou {{link|pages/messages/admins|via le site web}}.
+L'équipe administrative de NoBleme est un groupe de volontaires qui modèrent le site internet et sa communauté en gérant les potentiels problèmes qui peuvent y apparaître. Si vous avez besion de leur aide avec un sujet - qu'il soit humain ou technique - vous pouvez les contacter {{link|pages/social/irc|via notre chat IRC}} ou {{link|pages/messages/admins|via le site web}}.
 EOT
 );
 ___('users_admins_mods',    'EN', <<<EOT
@@ -179,7 +179,7 @@ ___('users_profile_banned',     'FR', "[compte banni]");
 ___('users_profile_unban',      'EN', "Unban");
 ___('users_profile_unban',      'FR', "Débannir");
 ___('users_profile_ban_end',    'EN', "Ban scheduled to end {{1}}");
-___('users_profile_ban_end',    'FR', "Fin du bannissement prévue {{1}}");
+___('users_profile_ban_end',    'FR', "Fin du bannissement {{1}}");
 
 
 // Account summary

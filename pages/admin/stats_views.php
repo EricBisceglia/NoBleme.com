@@ -105,7 +105,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </th>
           <th class="black text_white">
             <?=__('admin_metrics_views')?>
-            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('views');")?>
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('views');", use_light: true)?>
           </th>
           <th colspan="2">
             <?=__('admin_views_growth')?>
@@ -155,11 +155,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?php if(!$stats_views[$i]['fullname']) { ?>
           <td class="align_left">
-            <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow text_white')?>
+            <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow')?>
           </td>
           <?php } else { ?>
           <td class="align_left tooltip_container">
-            <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow text_white')?>
+            <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow')?>
             <div class="tooltip">
               <?=$stats_views[$i]['fullname']?>
             </div>

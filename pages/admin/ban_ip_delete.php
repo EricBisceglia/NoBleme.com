@@ -34,7 +34,7 @@ $page_title_fr    = "Débannir une IP";
 // Restrict the page to existing and currently banned IPs
 
 // Sanitize the ID
-$ip_ban_id = sanitize_input('GET', 'id', 'string', '');
+$ip_ban_id = (int)sanitize_input('GET', 'id', 'string', '');
 
 // Exit if the ip ban does not exist
 if(!database_row_exists('system_ip_bans', $ip_ban_id))

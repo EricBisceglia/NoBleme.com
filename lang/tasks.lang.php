@@ -20,7 +20,7 @@ The table below lists all of the bugs and functional changes related to NoBleme'
 EOT
 );
 ___('tasks_list_body_1',    'FR', <<<EOT
-Ce tableau contient tous les bugs et idées d'évolutions liés au développement passé et futur de NoBleme. Cliquez sur une tâche pour plus de détails à son sujet. Les premières lignes du tableau vous permettent de filtrer, trier, et chercher les tâches. Le {{link|pages/tasks/roadmap|plan de route}} présente le même contenu de façon plus organisée.
+Ce tableau contient tous les bugs et idées d'évolutions liés au développement passé et futur de NoBleme. Cliquez sur une tâche pour voir plus de détails à son sujet. Les premières lignes du tableau vous permettent de filtrer, trier, et chercher les tâches. Le {{link|pages/tasks/roadmap|plan de route}} présente le même contenu de façon plus organisée.
 EOT
 );
 ___('tasks_list_body_2',    'EN', <<<EOT
@@ -404,11 +404,11 @@ ___('tasks_proposal_title',     'FR', "Proposition de tâche");
 ___('tasks_proposal_subtitle',  'EN', "Bug report or feature request");
 ___('tasks_proposal_subtitle',  'FR', "Rapport de bug ou demande de fonctionnalité");
 ___('tasks_proposal_intro_1',   'EN', <<<EOT
-If you have found a flaw or issue during your usage of NoBleme or while browsing its {{link|pages/doc/dev|source code}}, please fill up the form below and make sure to give as many details as possible.
+If you have found a flaw or issue during your usage of NoBleme or while browsing its {{link|pages/doc/dev|source code}}, please fill up the form below and make sure to include as many details as possible.
 EOT
 );
 ___('tasks_proposal_intro_1',   'FR', <<<EOT
-Si vous repérez une faille ou un problème lors de votre utilisation de NoBleme ou dans son {{link|pages/doc/dev|code source}}, remplissez le formulaire ci-dessous avec le plus d'informations possibles y son sujet.
+Si vous repérez une faille ou un problème lors de votre utilisation de NoBleme ou dans son {{link|pages/doc/dev|code source}}, remplissez le formulaire ci-dessous avec le plus d'informations possibles à son sujet.
 EOT
 );
 ___('tasks_proposal_intro_2',   'EN', <<<EOT

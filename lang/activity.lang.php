@@ -52,7 +52,7 @@ ___('activity_type_dev',        'FR', "Développement");
 // Activity log details
 ___('activity_details_reason',  'EN', "Reason for this action:");
 ___('activity_details_reason',  'FR', "Justification de l'action :");
-___('activity_details_diff',    'EN', "Différence(s) before/after this action:");
+___('activity_details_diff',    'EN', "Difference(s) before/after this action:");
 ___('activity_details_diff',    'FR', "Différence(s) avant/après l'action :");
 
 

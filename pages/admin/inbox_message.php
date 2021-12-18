@@ -100,7 +100,7 @@ if(isset($admin_mail['error'])) { ?>
     <?php } if($admin_mail['read']) { ?>
     <?=__('users_message_read', preset_values: array($admin_mail['read_at']))?>
     <?php } else { ?>
-    <span class="bold glow"><?=__('users_mail_chain_unread')?></span>
+    <span class="bold glow_dark"><?=__('users_mail_chain_unread')?></span>
     <?php } ?>
   </div>
 

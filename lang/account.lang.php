@@ -194,11 +194,11 @@ ___('account_nsfw_confirm', 'FR', "Vos réglages ont été mis à jour");
 
 // Header
 ___('account_privacy_intro',    'EN', <<<EOT
-On NoBleme, we highly value online privacy. As our {{link|pages/doc/privacy|privacy policy}} states, we will only gather the bare minimum {{link|pages/doc/data|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|pages/account/settings_privacy|fully opt out}} at any time.
+On NoBleme, we highly value online privacy. As our {{link|pages/doc/privacy|privacy policy}} states, we will only gather the bare minimum {{link|pages/doc/data|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|pages/messages/admins?delete|delete your account}} if you desire.
 EOT
 );
 ___('account_privacy_intro',    'FR', <<<EOT
-Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|pages/doc/data|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|pages/account/settings_privacy|tout supprimer}} à tout moment.
+Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|pages/doc/data|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|pages/messages/admins?delete|supprimer votre compte}} à tout moment.
 EOT
 );
 ___('account_privacy_others',   'EN', <<<EOT
@@ -210,7 +210,7 @@ Toutefois, nous ne pouvons pas contrôler ce que font les tiers que nous intégr
 EOT
 );
 ___('account_privacy_disable',  'EN', <<<EOT
-If you disable any of the third parties, they will simply not appear at all when you are browsing pages that include external content (for example, a YouTube video embedded in a page will instead be replaced by a link to the YouTube video which you can manually click if you do want to watch it).
+If you disable any of the third parties, they will simply not appear at all when you are browsing pages that include external content (for example, a YouTube video embedded in a page will instead be replaced by a link to the YouTube video which you can manually click if you want to watch it).
 EOT
 );
 ___('account_privacy_disable',  'FR', <<<EOT
@@ -218,11 +218,11 @@ Dans le cas où vous désactiveriez un des tiers, il n'apparaitra plus lorsque v
 EOT
 );
 ___('account_privacy_activity', 'EN', <<<EOT
-We also offer the ability to have your account hidden from the {{link|pages/users/online|Who's online}} page of the website. Appearing on this page allows users to know what each other are up to on the website, but we understand that some of you would rather stay hidden or would like a way to avoid being stalked.
+We also offer the ability to have your account hidden from the {{link|pages/users/online|who's online}} page of the website. Appearing on this page allows users to know what each other are up to on the website, but we understand that some of you would rather stay hidden or would like a way to avoid being stalked.
 EOT
 );
 ___('account_privacy_activity', 'FR', <<<EOT
-Nous vous offrons également la possibilité de ne pas apparaître sur la page {{link|pages/users/online|Qui est en ligne}}. Cette page permet de voir ce que font les autres comptes sur le site, mais nous comprenons très bien qu'un désir d'anonymité ou un besoin d'échapper à des harcèlements peuvent vous mettre mal à l'aise face à ce concept.
+Nous vous offrons également la possibilité de ne pas apparaître sur la page {{link|pages/users/online|qui est en ligne}}. Cette page permet de voir ce que font les autres comptes sur le site, mais nous comprenons très bien qu'un désir d'anonymité ou un besoin d'échapper à des harcèlements peuvent vous mettre mal à l'aise face à ce concept.
 EOT
 );
 

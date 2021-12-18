@@ -92,7 +92,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } else { ?>
           <span id="admin_mail_list_<?=$admin_mail[$i]['id']?>"><?=$admin_mail[$i]['title']?></span><br>
         <?php } ?>
-        <span class="bold glow text_light"><?=$admin_mail[$i]['sender']?></span> - <?=$admin_mail[$i]['sent']?>
+        <span class="bold glow_dark"><?=$admin_mail[$i]['sender']?></span> - <?=$admin_mail[$i]['sent']?>
 
       </div>
       <?php } ?>

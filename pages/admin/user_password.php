@@ -79,7 +79,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <div class="smallpadding_bot">
-        <label for="admin_password_username"><?=string_change_case('username', 'initials')?></label>
+        <label for="admin_password_username"><?=string_change_case(__('username'), 'initials')?></label>
         <input class="indiv" type="text" id="admin_password_username" name="admin_password_username" value="<?=$admin_password_username?>" autocomplete="off" list="admin_password_username_list" onkeyup="autocomplete_username('admin_password_username', 'admin_password_username_list_parent', './../common/autocomplete_username', 'admin_password_username_list', 'normal');">
       </div>
       <div id="admin_password_username_list_parent">

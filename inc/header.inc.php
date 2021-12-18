@@ -74,7 +74,10 @@ $website_closed = $system_variables['update_in_progress'];
 
 // If yes, close the website to anyone who's not an admin
 if($website_closed  && !$is_admin)
-  exit(__('error_website_update'));
+{
+  $logo_path = ($path) ? $path : '.';
+  exit(__('error_website_update', preset_values: array($logo_path)));
+}
 
 
 

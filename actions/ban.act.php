@@ -149,10 +149,10 @@ function admin_ban_create(  int     $banner_id            ,
 
   // Private message to the banned user
   $ban_duration_pm    = ($banned_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
-  $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
-  $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
+  $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en_raw)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
+  $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr_raw)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
   $ban_reason_pm      = ($banned_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
-  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0, hide_admin_mail: true);
+  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, lang: $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0, hide_admin_mail: true);
 
   // IRC bot messages
   $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
@@ -419,7 +419,7 @@ function admin_ban_delete(  string  $unbanned_id            ,
 
   // Private message to let the user know they have been manually unbanned
   $unbanned_user_language = user_get_language($unbanned_id);
-  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 0, 2, $unbanned_user_language), $days_served, $days_left)), $unbanned_id, 0, hide_admin_mail: true);
+  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 0, 2, lang: $unbanned_user_language), $days_served, $days_left)), $unbanned_id, 0, hide_admin_mail: true);
 }
 
 

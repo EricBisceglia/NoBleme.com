@@ -22,11 +22,11 @@ Depuis {{link|pages/doc/nobleme|sa création en 2005}}, la communauté NoBleme a
 EOT
 );
 ___('meetups_list_body_2',  'EN', <<<EOT
-Click on any line in the table below to see more details about a meetup, including how to join one in the case of future meetups (which are shown in green on the table).
+Click on any line in the table below to see more details about a meetup, including how to join one in the case of future meetups.
 EOT
 );
 ___('meetups_list_body_2',  'FR', <<<EOT
-Cliquez sur une ligne du tableau ci-dessous pour afficher plus de détails au sujet de l'IRL, incluant comment la rejoindre s'il s'agit d'une future IRL (qui apparaissent en vert dans la liste).
+Cliquez sur une ligne du tableau ci-dessous pour afficher plus de détails au sujet de l'IRL, incluant comment la rejoindre s'il s'agit d'une future IRL.
 EOT
 );
 
@@ -319,10 +319,10 @@ ___('meetups_organize_title', 'FR', "Organiser une IRL");
 
 
 // Mod disclaimer
-___('meetups_organize_mod_title',   'EN', "Reminder: You are a moderator");
-___('meetups_organize_mod_title',   'FR', "Rappel : Vous faites partie de la modération");
+___('meetups_organize_mod_title',   'EN', "Reminder: You are part of the administrative team");
+___('meetups_organize_mod_title',   'FR', "Rappel : Vous faites partie de l'administration");
 ___('meetups_organize_mod_body_1',  'EN', <<<EOT
-Since you have the ability to host meetups yourself, the contents of the rest of this page do not apply to you. Feel free to use the website's tools to plan your own NoBleme meetups, it is why you were given those abilities! You can create a new meetup by pressing the icon to the right of the title on the {{link|pages/meetups/list|meetups list}} page.
+Since you have the ability to host meetups yourself, the contents of the rest of this page do not apply to you. Feel free to use the website's tools to plan your own NoBleme meetups, it is why you were given those abilities! You can create a new meetup by clicking the icon to the right of the title on the {{link|pages/meetups/list|meetups list}} page.
 EOT
 );
 ___('meetups_organize_mod_body_1',  'FR', <<<EOT
@@ -343,11 +343,11 @@ La plupart des {{link|pages/meetups/list|rencontres IRL}} de NoBleme sont organi
 EOT
 );
 ___('meetups_organize_plan_body_2', 'EN', <<<EOT
-If you are a NoBleme regular and happen to be traveling near other regulars, or would like to suggest hosting a meetup for any other reason, then start by gauging interest on NoBleme's {{link|pages/social/irc|IRC chat}} (or any other social platform containing NoBleme community members). If you can get a few people interested, then make sure a member of NoBleme's {{link|pages/users/admins|administrative team}} is part of the conversation, as they are the only ones with the ability to create new meetups on the website.
+If you are a NoBleme regular and happen to be traveling near other regulars, or would like to suggest hosting a meetup for any other reason, then start by gauging interest on NoBleme's {{link|pages/social/irc|IRC chat}} or on {{link|pages/social/discord|Discord}}. If you can get a few people interested, then make sure a member of NoBleme's {{link|pages/users/admins|administrative team}} is part of the conversation, as they are the only ones with the ability to create new meetups on the website.
 EOT
 );
 ___('meetups_organize_plan_body_2', 'FR', <<<EOT
-Si vous fréquentez NoBleme et comptez voyager quelque part où se trouvent d'autres membres de la communauté, ou voulez suggérer l'organisation d'une rencontre IRL pour n'importe quelle autre raison, commencez par mesurer l'intérêt que cela suscite sur le {{link|pages/social/irc|chat IRC NoBleme}} (ou n'importe quelle autre plateforme sociale contenant des membres de la communauté de NoBleme). Si le lieu et la date intéressent quelques personnes, dans ce cas assurez-vous qu'un membre de {{link|pages/users/admins|l'équipe administrative}} fasse partie de la conversation : ce sont les seules personnes à pouvoir créer de nouvelles rencontres IRL sur le site.
+Si vous fréquentez NoBleme et comptez voyager quelque part où se trouvent d'autres membres de la communauté, ou voulez suggérer l'organisation d'une rencontre IRL pour n'importe quelle autre raison, commencez par mesurer l'intérêt que cela suscite sur le {{link|pages/social/irc|chat IRC NoBleme}} ou sur {{link|pages/social/discord|Discord}}. Si le lieu et la date intéressent quelques personnes, dans ce cas assurez-vous qu'un membre de {{link|pages/users/admins|l'équipe administrative}} fasse partie de la conversation : ce sont les seules personnes à pouvoir créer de nouvelles rencontres IRL sur le site.
 EOT
 );
 ___('meetups_organize_plan_body_3', 'EN', <<<EOT

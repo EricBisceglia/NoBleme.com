@@ -591,17 +591,17 @@ ___('irc_faq_questions_title',  'FR', 'Foire aux questions');
 ___('irc_faq_question_1',       'EN', "What are channels?");
 ___('irc_faq_question_1',       'FR', "Qu'est-ce qu'un canal ?");
 ___('irc_faq_answer_1',         'EN', <<<EOT
-IRC servers are comprised of various channels, which are basically chat rooms. Channel names begin with a <span class="glow">#</span> hash character. Some of NoBleme's channels are generic hubs with no specific theme (such as #english being the main english speaking channel), others are used to offload specific conversations away from the generic channels (such as #dev for computer science related content). You are free to choose which channels you join on the server, the {{link|pages/social/irc?channels|channel list}} explains how to join a channel, and lists NoBleme's main IRC channels.
+IRC servers are comprised of various channels, which are basically chat rooms. Channel names begin with a hash character (<span class="glow_dark">#</span>). Some of NoBleme's channels are generic hubs with no specific theme (such as #english being the main english speaking channel), others are used to offload specific conversations away from the generic channels (such as #dev for computer science related content). You are free to choose which channels you join on the server, the {{link|pages/social/irc?channels|channel list}} explains how to join a channel, and lists NoBleme's main IRC channels.
 EOT
 );
 ___('irc_faq_answer_1',         'FR', <<<EOT
-Les serveurs IRC sont composés de divers canaux, qui sont des salles de discussion séparées les unes des autres. Les canaux ont un nom commençant par un croisillon (<span class="glow">#</span>). Sur le serveur IRC NoBleme, chaque langue possède son canal prinicpal où la majorité des conversations ont lieu (#NoBleme pour le français et #english pour l'anglais), les autres canaux ont des thèmes spécifiques (comme par exemple #dev pour l'informatique). Vous êtes libre de choisir à quels canaux vous vous connectez, la {{link|pages/social/irc?channels|liste des canaux}} vous explique comment les rejoindre, et liste les principaux canaux IRC de NoBleme.
+Les serveurs IRC sont composés de divers canaux, qui sont des salles de discussion séparées les unes des autres. Les canaux ont un nom commençant par un croisillon (<span class="glow_dark">#</span>). Sur le serveur IRC NoBleme, chaque langue possède son canal principal où la majorité des conversations ont lieu (#NoBleme pour le français et #english pour l'anglais), les autres canaux ont des thèmes spécifiques (comme par exemple #dev pour l'informatique). Vous êtes libre de choisir à quels canaux vous vous connectez, la {{link|pages/social/irc?channels|liste des canaux}} vous explique comment les rejoindre, et liste les principaux canaux IRC de NoBleme.
 EOT
 );
 ___('irc_faq_question_2',       'EN', "Why is nobody talking/replying to me?");
 ___('irc_faq_question_2',       'FR', "Pourquoi personne ne me parle/répond ?");
 ___('irc_faq_answer_2',         'EN', <<<EOT
-Users are not always around in front of their computers or phones. If you hit a bad timing and everyone is at work, sleeping, or just busy, then be patient and someone will eventually show up. During a standard day, there are long periods of time where no conversations happen, and others where NoBleme's IRC is busy with conversations, simply spend enough time on IRC and you'll eventually catch it at the right time.
+Users are not always around in front of their computers or mobile devices. If you hit a bad timing and everyone is at work, sleeping, or just busy, then be patient and someone will eventually show up. During a standard day, there are long periods of time where no conversations happen, and others where NoBleme's IRC is busy with conversations, simply spend enough time on IRC and you'll eventually catch it at the right time.
 EOT
 );
 ___('irc_faq_answer_2',         'FR', <<<EOT
@@ -625,7 +625,7 @@ In order to gain exclusive ownership of your username, you first have to registe
 EOT
 );
 ___('irc_faq_answer_4',         'FR', <<<EOT
-Afin d'avoir la propriété exclusive de votre pseudonyme, vous devez d'abord l'enregistrer auprès des services de notre serveur IRC. Plus d'informations à ce sujet sur la page {{link|pages/social/irc?nickserv|Gérer votre pseudonyme}}. Vous êtes également libre de ne pas enregistrer votre pseudonyme, il ne s'agit que d'une option.
+Afin d'avoir la propriété exclusive de votre pseudonyme, vous devez d'abord l'enregistrer auprès des services de notre serveur IRC. Plus d'informations à ce sujet sur la page {{link|pages/social/irc?nickserv|gérer votre pseudonyme}}. Vous êtes également libre de ne pas enregistrer votre pseudonyme, il ne s'agit que d'une option.
 EOT
 );
 ___('irc_faq_question_5',       'EN', "How can I change my username?");
@@ -635,7 +635,7 @@ You can change your username at any time. Some IRC clients allow you to change y
 EOT
 );
 ___('irc_faq_answer_5',         'FR', <<<EOT
-Vous pouvez changer de pseudonyme à tout moment. Certains clients IRC vous permettent de le faire directement depuis leur interface, d'autres attendent que vous le fassiez via une commande. Vous trouverez plus d'inofrmations à ce sujet sur la page {{link|pages/social/irc?commands|Commandes IRC}}.
+Vous pouvez changer de pseudonyme à tout moment. Certains clients IRC vous permettent de le faire directement depuis leur interface, d'autres attendent que vous le fassiez via une commande. Vous trouverez plus d'inofrmations à ce sujet sur la page {{link|pages/social/irc?commands|commandes IRC}}.
 EOT
 );
 ___('irc_faq_question_6',       'EN', "Can I create my own channel on NoBleme's IRC server?");
@@ -645,7 +645,7 @@ If it has anything to do with NoBleme or its community, sure, go ahead, no need 
 EOT
 );
 ___('irc_faq_answer_6',         'FR', <<<EOT
-Si vous désirez créer un canal en rapport avec NoBleme ou sa communauté, allez-y, pas besoin de demander la permisison. Vous trouverez comment faire sur la page {{link|pages/social/irc?chanserv|Gérer vos canaux}}. Si vous voulez que votre canal apparaisse sur la {{link|pages/social/irc?channels|liste des canaux}}, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour en faire la demande. Si vous désirez créer un canal IRC pour des personnes externes qui n'ont aucun rapport avec NoBleme, cela n'est pas non plus un problème, mais assurez-vous toutefois que votre communauté respecte le {{link|pages/doc/coc|code de conduite de NoBleme}}, et utilisez le {{link|pages/messages/admins|formulaire de contact administratif}} pour prévenir l'équie administrative de NoBleme que vous utilisez son serveur IRC pour votre communauté (si vous ne le faites pas, nous risquons de supprimer votre canal par accident).
+Si vous désirez créer un canal en rapport avec NoBleme ou sa communauté, allez-y, pas besoin de demander la permisison. Vous trouverez comment faire sur la page {{link|pages/social/irc?chanserv|Gérer vos canaux}}. Si vous voulez que votre canal apparaisse sur la {{link|pages/social/irc?channels|liste des canaux}}, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour en faire la demande. Si vous désirez créer un canal IRC pour des personnes externes qui n'ont aucun rapport avec NoBleme, cela n'est pas non plus un problème, mais assurez-vous toutefois que votre communauté respecte le {{link|pages/doc/coc|code de conduite de NoBleme}}, et utilisez le {{link|pages/messages/admins|formulaire de contact administratif}} pour prévenir l'équipe administrative de NoBleme que vous utilisez son serveur IRC pour votre communauté (si vous ne le faites pas, nous risquons de supprimer votre canal par accident).
 EOT
 );
 ___('irc_faq_question_7',       'EN', "Where can I get help?");
@@ -785,14 +785,6 @@ ___('irc_faq_why_habit_body_1',   'FR', <<<EOT
 Lorsque nous pesons les pour et les contre d'IRC en tant que plateforme de communication en temps réel sur NoBleme, il est important de se souvenir que nous l'utilisons de façon ininterrompue depuis 2005. Notre communauté y est habituée, pour certaines personnes il s'agit même d'une partie importante de leur vie quotidienne. Afin de ne pas bousculer des habitudes pour rien, seule une solution strictement supérieure à IRC serait une alternative acceptable.
 EOT
 );
-___('irc_faq_why_habit_body_2',   'EN', <<<EOT
-For those of you who are not convinced by our arguments for IRC but still want to interact with NoBleme's community, you can also find {{link|pages/social/others|NoBleme on other platforms}} (including the real time chat service Discord). However, IRC will remain the core of NoBleme's community in the foreseeable future, these other platforms are only peripheral services set up to allow those who don't use IRC to keep in touch with NoBleme's activity.
-EOT
-);
-___('irc_faq_why_habit_body_2',   'FR', <<<EOT
-Si nos arguments en faveur d'IRC ne sont pas assez convaincants mais que vous souhaitez tout de même interagir avec la communauté de NoBleme, vous pouvez retrouver {{link|pages/social/others|NoBleme sur d'autres platformes}} (incluant le service de chat en temps réel Discord). Toutefois, IRC restera le cœur de la communauté de NoBleme dans le futur proche, ces autres plateformes ne sont que des services périphériques mis en place afin de permettre à nos membres qui n'utilisent pas IRC de se tenir au courant de l'activité de NoBleme.
-EOT
-);
 
 ___('irc_faq_why_others_title',   'EN', "Alternatives: What will it take to switch?");
 ___('irc_faq_why_others_title',   'FR', "Alternatives : Que faudra-t-il pour changer ?");
@@ -874,7 +866,7 @@ EOT
 
 // FAQ: IRC client
 ___('irc_faq_client_body_1',          'EN', <<<EOT
-Our {{link|pages/socialirc/faq?browser|browser client}} allows you to easily take part in the conversation, but it lacks all of the customization options that you were promised existed within IRC. This issue is resolved by installing your own IRC client on your devices, or by using a more customizable web client.
+Our {{link|pages/social/irc?browser|browser client}} allows you to easily take part in the conversation, but it lacks all of the customization options that you were promised existed within IRC. This issue is resolved by installing your own IRC client on your devices, or by using a more customizable web client.
 EOT
 );
 ___('irc_faq_client_body_1',          'FR', <<<EOT
@@ -929,7 +921,7 @@ A major downside to this simplicity however is that these clients are hosted by 
 EOT
 );
 ___('irc_faq_client_web_body_2',      'FR', <<<EOT
-La cotrepartie de cette simplicité est que ces clients sont hébergés sur des sites tiers, qui peuvent potentiellement collecter et utiliser vos données personnelles, voir même monitorer vos conversations. De plus, vous devez compter sur la disponibilité de leur plateforme : si leur site est KO, votre accès à IRC sera également KO pendant ce temps.
+La contrepartie de cette simplicité est que ces clients sont hébergés sur des sites tiers, qui peuvent potentiellement collecter et utiliser vos données personnelles, voir même monitorer vos conversations. De plus, vous devez compter sur la disponibilité de leur plateforme : si leur site est KO, votre accès à IRC sera également KO pendant ce temps.
 EOT
 );
 ___('irc_faq_client_web_body_3',      'EN', <<<EOT
@@ -1073,11 +1065,11 @@ ___('irc_faq_bouncer_third_body_2', 'FR', <<<EOT
 EOT
 );
 ___('irc_faq_bouncer_third_body_3', 'EN', <<<EOT
-{{external|https://www.irccloud.com/|IRCCloud}} is a browser IRC client which also includes mobile applications for Android and iOS, aswell as a partial bouncer service (keeps tracking chat history for 2 hours after you log out). The service is free, but includes an optional paid solution (4€/month) which enables full bouncer capabilities, tracking full chat history no matter how long you are offline.
+{{external|https://www.irccloud.com/|IRCCloud}} is a browser IRC client which also includes mobile applications for Android and iOS, aswell as a partial bouncer service (keeps tracking chat history for 2 hours after you log out). The service is free, but includes an optional paid solution which enables full bouncer capabilities, tracking full chat history no matter how long you are offline.
 EOT
 );
 ___('irc_faq_bouncer_third_body_3', 'FR', <<<EOT
-{{external|https://www.irccloud.com/|IRCCloud}} est un client IRC navigateur qui propose également des applications mobiles pour Android et iOS, ainsi qu'un service de bouncer partiel (conserve l'historique des conversations IRC qui ont lieu dans les deux heures suivant votre déconnexion). Le service est gratuit, mais inclut également une solution payante optionnelle (4€/mois) qui en fait un bouncer complet, vous donnant un historique de toutes les conversations qui ont lieu lorsque vous êtes hors ligne.
+{{external|https://www.irccloud.com/|IRCCloud}} est un client IRC navigateur qui propose également des applications mobiles pour Android et iOS, ainsi qu'un service de bouncer partiel (conserve l'historique des conversations IRC qui ont lieu dans les deux heures suivant votre déconnexion). Le service est gratuit, mais inclut également une solution payante optionnelle qui en fait un bouncer complet, vous donnant un historique de toutes les conversations qui ont lieu lorsque vous êtes hors ligne.
 EOT
 );
 
@@ -1169,7 +1161,7 @@ EOT
 ___('irc_faq_vocabulary_title_7',   'EN', "Services: NickServ & ChanServ");
 ___('irc_faq_vocabulary_title_7',   'FR', "Services : NickServ & ChanServ");
 ___('irc_faq_vocabulary_body_7',    'EN', <<<EOT
-All actions related to user accounts or channel administrations are done through what are called Services, special users on the IRC network which go by the usernames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/social/irc?nickserv|NickServ}} and {{link|pages/social/irc?chanserv|ChanServ}} pages of this FAQ.
+All actions related to user accounts or channel administration are done through what are called Services, special users on the IRC network which go by the usernames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/social/irc?nickserv|NickServ}} and {{link|pages/social/irc?chanserv|ChanServ}} pages of this FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_body_7',    'FR', <<<EOT
@@ -1342,11 +1334,11 @@ Vous déconnecte du serveur IRC sur lequel vous vous trouvez actuellement.
 EOT
 );
 ___('irc_faq_commands_connect',   'EN', <<<EOT
-Connects to an existing IRC server. For example connecting to NoBleme's IRC server is done by typing <span class="monospace">/server irc.nobleme.com</span>. You may be on more than one IRC server at once, and can leave a specific server by using the <span class="monospace">/quit</span> command while in a channel located on that server.
+Connects to an existing IRC server. For example connecting to NoBleme's IRC server is done by typing <span class="monospace">/server irc.nobleme.com</span>. You may be on more than one IRC server at once.
 EOT
 );
 ___('irc_faq_commands_connect',   'FR', <<<EOT
-Vous connecte à un serveur IRC existant. Par exemple, vous pouvez vous connecter au serveur IRC NoBleme en écrivant <span class="monospace">/server irc.nobleme.com</span>. Vous pouvez vous connecter à plus d'un serveur IRC simultanément, et pouvez vous déconnecter d'un serveur spécifique en utilisant la commande <span class="monospace">/quit</span> dans un canal situé sur ce serveur.
+Vous connecte à un serveur IRC existant. Par exemple, vous pouvez vous connecter au serveur IRC NoBleme en écrivant <span class="monospace">/server irc.nobleme.com</span>. Vous pouvez vous connecter à plusieurs serveurs IRC simultanément.
 EOT
 );
 ___('irc_faq_commands_list',      'EN', <<<EOT
@@ -1461,7 +1453,7 @@ Registers your current username with NickServ, making you its owner. <span class
 EOT
 );
 ___('irc_faq_nickserv_register',  'FR', <<<EOT
-Enregistre votre pseudonyme actuel auprès de NickServ, vous en donnant la propriété exclusive. <span class="bold">Assurez-vous de retenir votre mot de passe, il n'existe aucune façon de le récupérer si vous le perdez.</span>. Ne cherchez pas à enregistrer les pseudonymes d'autres personnes dans le but de les embêter ou d'usurper leur identité, cela conduirait à une exclusion permanente du serveur IRC NoBleme ainsi qu'à un dé-enregistrement de tous les pseudonymes que vous aurez enregistré.
+Enregistre votre pseudonyme actuel auprès de NickServ, vous en donnant la propriété exclusive. <span class="bold">Assurez-vous de retenir votre mot de passe, il n'existe aucune façon de le récupérer si vous le perdez</span>. Ne cherchez pas à enregistrer les pseudonymes d'autres personnes dans le but de les embêter ou d'usurper leur identité, cela conduirait à une exclusion permanente du serveur IRC NoBleme ainsi qu'à un dé-enregistrement de tous les pseudonymes que vous avez enregistré.
 EOT
 );
 ___('irc_faq_nickserv_identify',  'EN', <<<EOT
@@ -1622,11 +1614,11 @@ Bans a hostmask from the channel. Once banned, any user matching the hostmask wi
 EOT
 );
 ___('irc_faq_chanserv_ban',             'FR', <<<EOT
-Bannit un hostmask du canal. Toute personne dont l'hostmask correspond au hostmask banni ne pourra plus rejoindre ou envoyer de messages sur le canal. Les personnes présentes sur le canal dont le hostmask correspond n'en seront pas automatiquement éjectées - par contre, si vous utiliser un /kick sur elles, ou qu'elles quittent le canal, elles ne pourront plus le rejoindre par la suite.
+Bannit un hostmask du canal. Toute personne dont l'hostmask correspond au hostmask banni ne pourra plus rejoindre ou envoyer de messages sur le canal. Les personnes présentes sur le canal dont le hostmask correspond à celui qui a été banni n'en seront pas automatiquement éjectées - par contre, si vous utiliser un /kick sur elles, ou qu'elles quittent le canal, elles ne pourront plus le rejoindre par la suite.
 EOT
 );
 ___('irc_faq_chanserv_banlist',         'EN', <<<EOT
-Lists all hostmasks currently banned from the channel. This command might not always work, if it doesn't try simply typing <span class="monospace">/mode #[channel] b</span> in the channel instead of the full command.
+Lists all hostmasks currently banned from the channel. This command might not always work. If it doesn't work, try simply typing <span class="monospace">/mode #[channel] b</span> in the channel instead of the full command.
 EOT
 );
 ___('irc_faq_chanserv_banlist',         'FR', <<<EOT
@@ -1654,7 +1646,7 @@ Gives voice to a user: they will gain the ability to send messages in this chann
 EOT
 );
 ___('irc_faq_chanserv_voice',           'FR', <<<EOT
-Rend une personne Voiced : il leur sera possible d'envoyer des messages sur le canal même s'il est en mode muet.
+Rend une personne Voiced : il leur sera possible d'envoyer des messages sur le canal même s'ils sont en mode muet.
 EOT
 );
 ___('irc_faq_chanserv_unmute',          'EN', <<<EOT
@@ -1697,7 +1689,7 @@ Permanently gives voiced status to a user (the user will still be able to chat i
 EOT
 );
 ___('irc_faq_chanserv_voiceop',         'FR', <<<EOT
-Donne le statut Voiced de façon permanente à une personne (il lui sera possible de discuter sur le canal même s'il est en mode muet). Vous pouvez retirer ce statut à quelqu'un en remplaçant <span class="monospace">add</span> par <span class="monospace">del</span> dans cette commande.
+Donne le statut Voiced de façon permanente à une personne (il lui sera possible de discuter sur le canal même si elle est en mode muet). Vous pouvez retirer ce statut à quelqu'un en remplaçant <span class="monospace">add</span> par <span class="monospace">del</span> dans cette commande.
 EOT
 );
 ___('irc_faq_chanserv_halfop',          'EN', <<<EOT
@@ -1859,7 +1851,7 @@ Tous les pseudonymes que vous croisez sur le serveur IRC NoBleme ne corresponden
 EOT
 );
 ___('irc_faq_bots_body_2',          'EN', <<<EOT
-Some of our IRC bots are an integral part of the server. Rather than acting like regalur users, they will never be present in any public IRC channel. They are {{link|pages/social/irc?nickserv|NickServ}}, which handles username management, and {{link|pages/social/irc?chanserv|ChanServ}}, which handles channel management.
+Some of our IRC bots are an integral part of the server. Rather than acting like regular users, they will never be present in any public IRC channel. They are {{link|pages/social/irc?nickserv|NickServ}}, which handles username management, and {{link|pages/social/irc?chanserv|ChanServ}}, which handles channel management.
 EOT
 );
 ___('irc_faq_bots_body_2',          'FR', <<<EOT
@@ -1895,7 +1887,7 @@ EOT
 );
 
 ___('irc_faq_bots_private_title',   'EN', "Non official bot");
-___('irc_faq_bots_private_title',   'FR', "Bot non officiels");
+___('irc_faq_bots_private_title',   'FR', "Bot non officiel");
 ___('irc_faq_bots_private_body_1',  'EN', <<<EOT
 A non official bot can be found in every major {{link|pages/social/irc?channels|channel}} of NoBleme's IRC server. It is an interactive bot, which has a variety of uses - observe how the regulars use it and you might find it useful for your own needs!
 EOT

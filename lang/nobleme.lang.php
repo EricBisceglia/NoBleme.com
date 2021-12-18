@@ -115,11 +115,11 @@ La page {{link|pages/nobleme/activity|activité récente}} vous permet de suivre
 EOT
 );
 ___('nobleme_follow_activity_body_2', 'EN', <<<EOT
-If, instead of checking periodically for new content, you would rather like to be notified in real time whenever anything new happens on the website, notifications are automatically sent to the main english and french channels of our {{link|pages/social/irc|IRC chat server}} anytime something of note happens. Some (but not all) of these notifications are also automatically sent on {{link|pages/social/discord|Discord}}.
+If, instead of checking periodically for new content, you would rather like to be notified in real time whenever anything new happens on the website, notifications are automatically sent to the main english and french channels of our {{link|pages/social/irc|IRC chat server}} aswell as in dedicated notification channels on {{link|pages/social/discord|Discord}} anytime something of note happens.
 EOT
 );
 ___('nobleme_follow_activity_body_2', 'FR', <<<EOT
-Si, plutôt que de regarder périodiquement la page activité récente, vous préférez avoir des notifications en temps réel de l'activité du site, toute forme d'activité sur le site est communiquée en temps réel sur le principal canal de discussion francophone et anglophone de notre {{link|pages/social/irc|serveur IRC}}. Certaines (mais pas toutes) de ces notifications sont également automatiquement envoyées sur {{link|pages/social/discord|Discord}}.
+Si, plutôt que de regarder périodiquement la page activité récente, vous préférez avoir des notifications en temps réel de l'activité du site, toute forme d'activité sur le site est communiquée en temps réel sur le principal canal de discussion francophone et anglophone de notre {{link|pages/social/irc|serveur IRC}}, ainsi que sur notre {{link|pages/social/discord|Discord}}.
 EOT
 );
 
@@ -140,7 +140,7 @@ This might change in the future, as we are aware that some people would like to 
 EOT
 );
 ___('nobleme_follow_social_body_2', 'FR', <<<EOT
-Cela pourrait changer dans le futur : nous sommes au courant que certaines personnes voudraient pouvoir suivre l'activité du NoBleme sur des plateformes plus grandes et plus populaires. Cela sera fait à terme, mais il ne s'agit actuellement pas d'un sujet prioritaire.
+Cela pourrait changer dans le futur : nous sommes au courant que certaines personnes voudraient pouvoir suivre l'activité de NoBleme sur des plateformes plus grandes et plus populaires. Cela sera fait à terme, mais il ne s'agit actuellement pas d'un sujet prioritaire.
 EOT
 );
 
@@ -190,7 +190,7 @@ NoBleme est une communauté qui existe en continu dans son coin d'Internet depui
 EOT
 );
 ___('nobleme_what_intro2',    'EN', <<<EOT
-Telling the tale of NoBleme's past will help you better understand what it is and why it has existed for so long. It will also serve as a way to set up the answers to more questions afterwards: What is NoBleme's purpose? What is NoBleme's future? Why would I want to be a part of NoBleme? Strap yourself in and get ready for a very long (but hopefully entertaining) story.
+Telling the tale of NoBleme's past will help you better understand what it is and why it has existed for so long. It will also serve as a way to set up the answers to more questions afterwards: What is NoBleme's purpose? What is NoBleme's future? Why would I want to be a part of NoBleme? Strap yourself in and get ready for a long (but hopefully entertaining) story.
 EOT
 );
 ___('nobleme_what_intro2',    'FR', <<<EOT
@@ -502,11 +502,11 @@ Vous l'aurez compris en lisant la longue histoire de NoBleme, sa vocation est no
 EOT
 );
 ___('nobleme_existential_what2',    'EN', <<<EOT
-On top of that, NoBleme is also currently a safe space from the oppressive political discourse that you will find on most social networks. Anyone who joins NoBleme's community will be treated with the respect they deserve, as long as they themselves are willing to treat others in the same way. Basically, it is a place where the only rule is to be nice to each other, where one can find shelter from the exhausting aspects of bigger websites. It's in the name: NoBleme, no problem.
+On top of that, NoBleme also aims to be a safe haven from the oppressive political discourse that you will find on most social networks. Anyone who joins NoBleme's community will be treated with the respect they deserve, as long as they themselves are willing to treat others in the same way. Basically, it is a place where the only rule is to be nice to each other, where one can find shelter from the exhausting aspects of bigger websites. It's in the name: NoBleme, no problem.
 EOT
 );
 ___('nobleme_existential_what2',    'FR', <<<EOT
-NoBleme a également pour mission d'être un {{external|https://fr.wikipedia.org/wiki/Safe_space|safe space}} pour sa communauté, la préservant des discours de désinformation et de la propagande politique qui prolifèrent sur les réseaux sociaux. Ainsi, toute personne rejoignant NoBleme sera traitée avec le respect qu'elle mérite, tant qu'elle est à son tour prête à traiter les autres avec le même respect. La seule règle importante est qu'il faut être bienveillants les uns envers les autres. C'est dans le nom : NoBleme, no problème.
+NoBleme a également pour mission d'être une zone de confort pour sa communauté, la préservant des discours de désinformation et de la propagande politique qui prolifèrent sur les réseaux sociaux. Ainsi, toute personne rejoignant NoBleme sera traitée avec le respect qu'elle mérite, tant qu'elle est à son tour prête à traiter les autres avec le même respect. La seule règle importante est qu'il faut faire preuve de bienveillance envers les autres membres de la communauté. C'est dans le nom : NoBleme, no problème.
 EOT
 );
 ___('nobleme_existential_futuret',  'EN', "What is NoBleme's future?");
@@ -538,19 +538,19 @@ Pourquoi pas ? Si ce que vous voyez sur NoBleme vous plait, rejoignez la commun
 EOT
 );
 ___('nobleme_existential_why2',     'EN', <<<EOT
-The community is mostly active on the {{link|pages/social/irc|IRC chat server}}, so hop in there and have a chat with us. Who knows, maybe we'll like eachother. And maybe we won't. Isn't it worth a try? If you feel shy, you can also just come and watch what happens on IRC, and judge by yourself whether you like it or not. If you do, cool. If you don't, it's fine, we'd rather have a community of people who enjoy being in each other's presence than force anyone to join us.
+The community is mostly active on the {{link|pages/social/irc|IRC chat server}} and on {{link|pages/social/discord|Discord}}, so hop in there and have a chat with us. Who knows, maybe we'll like eachother. And maybe we won't. Isn't it worth a try? If you feel shy, you can also just come and watch what happens on IRC, and judge by yourself whether you like it or not.
 EOT
 );
 ___('nobleme_existential_why2',     'FR', <<<EOT
-Nous sommes principalement actifs sur le {{link|pages/social/irc|serveur de chat IRC}}, venez y discuter avec nous. Qui sait, peut-être que nous nous apprécierons. Ou peut-être pas. Il n'y a rien à perdre à essayer. Si vous êtes timide, vous pouvez également venir observer ce qui s'y passe, et décider ensuite de si vous vous y sentez à l'aise ou non. Si oui, tant mieux. Si non, tant pis, nous préférons avoir une petite communauté de gens qui sont à l'aise entre eux que de pousser le plus possible de gens à nous rejoindre même s'ils ne seraient pas confortables parmi nous.
+Nous intéragissons principalement sur le {{link|pages/social/irc|serveur de chat IRC}} et sur {{link|pages/social/discord|Discord}}, venez y discuter avec nous. Qui sait, peut-être que nous nous apprécierons. Ou peut-être pas. Il n'y a rien à perdre à essayer. Si vous êtes timide, vous pouvez également venir observer ce qui s'y passe, et décider ensuite de si vous vous y sentez à l'aise.
 EOT
 );
 ___('nobleme_existential_why3',     'EN', <<<EOT
-In any case, NoBleme's community is very welcoming of new people. Whether you are young or old, marginalized or privileged, introverted or extroverted, talkative or shy, we are a very varied bunch of people who won't judge you for who you are and will always give you a fair chance at including you in our community.
+In any case, NoBleme's community is very welcoming of new people. Whether you are young or old, marginalized or privileged, introverted or extroverted, talkative or shy, we are a very varied bunch of people who will always give you a fair chance at including you in our community.
 EOT
 );
 ___('nobleme_existential_why3',     'FR', <<<EOT
-Dans tous les cas, la communauté de NoBleme est très accueillante envers les personnes inconnues. Peu importe votre âge, que vous soyez dans une situation marginalisée ou privilégiée, que vous ayez une personnalité introvertie ou extravertie, que vous soyez plutôt bavardage ou timidité, nous sommes un groupe de gens variés qui ne vous jugerons pas pour ce que vous êtes et saurons toujours vous donner une chance de vous inclure parmi nous.
+Dans tous les cas, la communauté de NoBleme est très accueillante envers les personnes inconnues. Peu importe votre âge, que vous soyez dans une situation marginalisée ou privilégiée, que vous ayez une personnalité introvertie ou extravertie, que vous soyez plutôt bavardage ou timidité, nous sommes un groupe de gens variés qui saura toujours vous donner une chance de vous inclure parmi nous.
 EOT
 );
 

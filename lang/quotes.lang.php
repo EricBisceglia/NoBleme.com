@@ -28,7 +28,7 @@ Sometimes, funny conversations or monologues happen on NoBleme, mostly on our {{
 EOT
 );
 ___('quotes_header_intro',  'FR', <<<EOT
-Parfois, des conversations ou monologues amusants ont lieu sur NoBleme, principalement sur notre {{link|pages/social/irc|serveur de chat IRC}}. Cette page a pour but de les conserver pour la postérité. Vous trouverez toutes les citations ci-dessous, présentées dans l'ordre antéchronologique. Des consignes de qualité sont appliquées : nous préférons avoir un petit nombre de citations drôles plutôt qu'un grand nombre de citations bof, et nous préférons rire avec les gens que rire des gens. Si vous êtes témoin d'une conversation sur NoBleme qui mérite d'être immortalisée sur cette page, vous pouvez {{link|pages/quotes/submit|proposer une citation}}.
+Parfois, des conversations ou monologues amusants ont lieu sur NoBleme, principalement sur notre {{link|pages/social/irc|serveur de chat IRC}}. Cette page a pour but de les conserver pour la postérité. L'intégralité des citations est présente ci-dessous, dans l'ordre antéchronologique. Des consignes de qualité sont appliquées : nous préférons avoir un petit nombre de citations drôles plutôt qu'un grand nombre de citations bof, et nous préférons rire avec les gens que rire des gens. Si vous êtes témoin d'une conversation sur NoBleme qui mérite d'être immortalisée sur cette page, vous pouvez {{link|pages/quotes/submit|proposer une citation}}.
 EOT
 );
 ___('quotes_header_blur',   'EN', <<<EOT

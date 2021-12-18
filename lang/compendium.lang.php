@@ -330,7 +330,7 @@ Some page titles might appear blurred due to being considered not safe for work:
 EOT
 );
 ___('compendium_list_intro',    'FR', <<<EOT
-La liste ci-dessous recense toutes les pages du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous êtes à la recherche de pages spécifiques, vous pouvez utiliser les premières lignes du tableau pour trier et filtrer son contenu.
+La liste ci-dessous recense toutes les pages du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous êtes à la recherche de pages spécifiques, vous pouvez utiliser les premières lignes du tableau pour filtrer le contenu.
 EOT
 );
 ___('compendium_list_blur',     'FR', <<<EOT
@@ -757,7 +757,7 @@ ___('compendium_era_delete_ok',         'FR', "La période a bien été supprim�
 ___('compendium_categories_title',    'EN', "Categories");
 ___('compendium_categories_title',    'FR', "Catégories");
 ___('compendium_categories_intro',    'EN', <<<EOT
-This {{link|pages/compendium/index|compendium}} is full of varied content. In order to keep everything organized, some pages are categorized as belonging to one or more category. All the categories used to classify compendium pages are lited in the table below, along with the number of pages belonging to each category. If you are looking to browse specific types of content, then click on a category's name to learn more about it and see a list of all pages belonging to it.
+This {{link|pages/compendium/index|compendium}} is full of varied content. In order to keep everything organized, some pages are categorized as belonging to one or more category. All the categories used to classify compendium pages are listed in the table below, along with the number of pages belonging to each category. If you are looking to browse specific types of content, then click on a category's name to learn more about it and see a list of all pages belonging to it.
 EOT
 );
 ___('compendium_categories_intro',    'FR', <<<EOT
@@ -1011,7 +1011,7 @@ ___('compendium_faq_question_9',  'EN', "How is controversial content handled?")
 ___('compendium_faq_question_9',  'FR', "Comment le contenu controversé est-il géré ?");
 ___('compendium_faq_question_10', 'EN', "What makes it different from other similar websites?");
 ___('compendium_faq_question_10', 'FR', "Qu'est-ce qui différencie ce compendium des autres sites similaires ?");
-___('compendium_faq_question_11', 'EN', "Why is the compendium part of NoBleme?");
+___('compendium_faq_question_11', 'EN', "Why is this compendium a part of NoBleme?");
 ___('compendium_faq_question_11', 'FR', "Pourquoi ce compendium fait-il partie de NoBleme ?");
 ___('compendium_faq_question_12', 'EN', "What is NoBleme anyway?");
 ___('compendium_faq_question_12', 'FR', "Qu'est-ce que NoBleme ?");
@@ -1049,7 +1049,7 @@ ___('compendium_faq_answer_1_3',  'FR', <<<EOT
 EOT
 );
 ___('compendium_faq_answer_1_4',  'EN', <<<EOT
-<span class="bold">Slang</span> born or popularized in the 21st century gets featured in short pages explaining their meaning, and sometimes also the hidden meanings which can apear when used in funny or nefarious ways.
+<span class="bold">Slang</span> born or popularized in the 21st century gets featured in short pages explaining their meaning, and sometimes also the hidden meanings which can appear when used in funny or nefarious ways.
 EOT
 );
 ___('compendium_faq_answer_1_4',  'FR', <<<EOT
@@ -1149,7 +1149,7 @@ Peut-être que le fait que tout ce que vous voyez semble être politisé vous fa
 EOT
 );
 ___('compendium_faq_answer_4_3',  'EN', <<<EOT
-In topics related to social justice, staying neutral means siding with the statu quo: accepting that the current state of society is fine, including injustices. It is our encyclopedic duty to document them properly, which means actively listening to minorities, and using this compendium as a platform to relay their words.
+In topics related to social justice, staying neutral means siding with the status quo: accepting that the current state of society is fine, including injustices. It is our encyclopedic duty to document them properly, which means actively listening to minorities, and using this compendium as a platform to relay their words.
 EOT
 );
 ___('compendium_faq_answer_4_3',  'FR', <<<EOT
@@ -1244,7 +1244,7 @@ The fourth guideline is to write entries in a gender neutral way. The default pr
 EOT
 );
 ___('compendium_faq_answer_7_4',  'FR', <<<EOT
-La quatrième consigne est d'écrire les textes d'une façon non genrée. Les formes neutres sont préférées plutôt que les points médians ou les terminaisons mixtes (par exemple « les personnes lisant cette page » plutôt que « les lecteurs » ou « les lecteurices »). Cette documentation (et le reste de ce site) sert accessoirement la preuve qu'il est possible d'écrire du français non genré sans grand effort et sans que la lecture en soit pénible.
+La quatrième consigne est d'écrire les textes d'une façon non genrée. Les formes neutres sont préférées plutôt que les points médians ou les terminaisons mixtes (par exemple « les personnes lisant cette page » plutôt que « les lecteurs » ou « les lecteurices »). Cette documentation (et le reste de ce site) est accessoirement la preuve qu'il est possible d'écrire du français non genré sans grand effort et sans que la lecture en soit pénible.
 EOT
 );
 

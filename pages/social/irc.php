@@ -71,8 +71,8 @@ $page_title_en  = (isset($_GET['client']))    ? "IRC client"              : $pag
 $page_title_fr  = (isset($_GET['client']))    ? "Client IRC"              : $page_title_fr;
 $page_title_en  = (isset($_GET['bouncer']))   ? "IRC bouncer"             : $page_title_en;
 $page_title_fr  = (isset($_GET['bouncer']))   ? "Bouncer IRC"             : $page_title_fr;
-$page_title_en  = (isset($_GET['guide']))     ? "IRC Commands"            : $page_title_en;
-$page_title_fr  = (isset($_GET['guide']))     ? "Commandes IRC"           : $page_title_fr;
+$page_title_en  = (isset($_GET['guide']))     ? "Vocabulary and symbols"  : $page_title_en;
+$page_title_fr  = (isset($_GET['guide']))     ? "Vocabulaire et symboles" : $page_title_fr;
 $page_title_en  = (isset($_GET['commands']))  ? "IRC Commands"            : $page_title_en;
 $page_title_fr  = (isset($_GET['commands']))  ? "Commandes IRC"           : $page_title_fr;
 $page_title_en  = (isset($_GET['nickserv']))  ? "IRC NickServ"            : $page_title_en;
@@ -340,10 +340,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p>
     <?=__('irc_faq_why_habit_body_1')?>
-  </p>
-
-  <p>
-    <?=__('irc_faq_why_habit_body_2')?>
   </p>
 
   <h5 class="bigpadding_top">

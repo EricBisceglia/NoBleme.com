@@ -34,7 +34,7 @@ $page_title_fr    = "Compendium : Restaurer une page";
 // Page contents
 
 // Fetch the page's id
-$compendium_page_id = (string)form_fetch_element('id', request_type: 'GET');
+$compendium_page_id = (int)form_fetch_element('id', request_type: 'GET');
 
 // Fetch the page's data
 $compendium_page_data = compendium_pages_get( page_id:  $compendium_page_id ,

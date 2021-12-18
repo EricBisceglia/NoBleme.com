@@ -31,8 +31,8 @@ ___('users_message_read',     'FR', "Lu le {{1}}.");
 // Private message parents
 ___('users_message_parents',        'EN', "This message is part of a conversation. Below is the rest of the messages in this conversation, from the most recent message to the oldest one.");
 ___('users_message_parents',        'FR', "Ce message fait partie d'une conversation. Vous trouverez ci-dessous le reste de la conversation, du message le plus récent au message le plus ancien.");
-___('users_message_chain_sent',     'EN', "Sent by <span class=\"bold glow\">{{1}}</span> on {{2}} ({{3}})");
-___('users_message_chain_sent',     'FR', "Envoyé par <span class=\"bold glow\">{{1}}</span> le {{2}} ({{3}})");
+___('users_message_chain_sent',     'EN', "Sent by <span class=\"bold glow_dark\">{{1}}</span> on {{2}} ({{3}})");
+___('users_message_chain_sent',     'FR', "Envoyé par <span class=\"bold glow_dark\">{{1}}</span> le {{2}} ({{3}})");
 ___('users_message_chain_deleted',  'EN', "[A message in the conversation has been deleted]");
 ___('users_message_chain_deleted',  'FR', "[Un des messages de la conversation a été supprimé]");
 
@@ -361,8 +361,8 @@ ___('admin_mail_list_none',   'FR', "Il n'y a actuellement aucun message privé 
 // Message chain
 ___('admin_mail_chain_reply',   'EN', "Reply");
 ___('admin_mail_chain_reply',   'FR', "Répondre");
-___('admin_mail_chain_system',  'EN', "Sent to {{link|pages/users/{{1}}|{{2}}}} by <span class=\"bold glow\">{{3}}</span> on {{4}}");
-___('admin_mail_chain_system',  'FR', "Envoyé à {{link|pages/users/{{1}}|{{2}}}} par <span class=\"bold glow\">{{3}}</span> le {{4}}");
+___('admin_mail_chain_system',  'EN', "Sent to {{link|pages/users/{{1}}|{{2}}}} by <span class=\"bold glow_dark\">{{3}}</span> on {{4}}");
+___('admin_mail_chain_system',  'FR', "Envoyé à {{link|pages/users/{{1}}|{{2}}}} par <span class=\"bold glow_dark\">{{3}}</span> le {{4}}");
 ___('users_mail_chain_unread', 'EN', "This message has not been read yet.");
 ___('users_mail_chain_unread', 'FR', "Ce message n'a pas encore été lu.");
 

@@ -30,7 +30,7 @@ Take note that <span class="bold underlined">ban evasion will get you IP banned<
 EOD
 );
 ___('users_banned_header_evason', 'FR', <<<EOD
-Attention, <span class="bold underlined">tentez de contourner le bannissement et vous vous ferez bannir par adresse IP</span> : si vous essayez de défier ce bannissement en créant un nouveau compte, vous vous perdrez la possibilité même d'utiliser le site sans compte. Si vous n'êtes pas d'accord avec votre bannissement, la seule chose que vous pouvez faire est tenter de faire appel de la décision de vous bannir. Continuez à lire cette page si vous désirez savoir comment faire appel de votre bannissement.
+Attention, <span class="bold underlined">tentez de contourner le bannissement et vous vous ferez bannir par adresse IP</span> : si vous essayez de défier ce bannissement en créant un nouveau compte, vous perdrez la possibilité d'utiliser le site même sans compte. Si vous n'êtes pas d'accord avec votre bannissement, la seule chose que vous pouvez faire est tenter de faire appel de la décision. Continuez à lire cette page si vous désirez savoir comment faire appel de votre bannissement.
 EOD
 );
 
@@ -65,11 +65,11 @@ ___('users_banned_coc_title', 'FR', "Rappel du code de conduite");
 ___('users_banned_appeal_title',        'EN', "Appeal your ban");
 ___('users_banned_appeal_title',        'FR', "Faire appel de la décision du bannissement");
 ___('users_banned_appeal_explanation',  'EN', <<<EOD
-If you believe that you have been unfairly banned, or that you have been fairly banned but have learned your lesson, there is an appeal procedure in place. The appeal is not an automated procedure: it is based on a human decision by members of the administrative team, and is done through NoBleme's IRC chat server. If your appeal is accepted, then your sentence might be reduced or even fully lifted. Here are the instructions to follow in order to appeal your ban:
+If you believe that you have been unfairly banned, or that you have been fairly banned but have learned your lesson, there is an appeal procedure in place. The appeal is not automated: it is based on a human decision by members of the administrative team, and is done through NoBleme's IRC chat server. If your appeal is accepted, then your sentence might be reduced or even fully lifted. Here are the instructions to follow in order to appeal your ban:
 EOD
 );
 ___('users_banned_appeal_explanation',  'FR', <<<EOD
-Si vous considéré que votre bannissement est injuste, ou que votre bannissement est juste mais que vous en avez tiré des leçons, une procédure d'appel est possible. Cette procédure n'est pas automatisée : il s'agit d'une décision humaine prise par des l'équipe administrative, et se fait via le serveur de chat IRC de NoBleme. Si votre appel est accepté, alors votre peine pourra être réduite ou même totalement annulée. Voici les instructions à suivre pour faire appel de votre bannissement :
+Si vous considérez que votre bannissement est injuste, ou que votre bannissement est juste mais que vous en avez tiré des leçons, une procédure d'appel est possible. Cette procédure n'est pas automatisée : il s'agit d'une décision humaine prise par l'équipe administrative, et se fait via le serveur de chat IRC de NoBleme. Si votre appel est accepté, alors votre peine pourra être réduite ou même totalement annulée. Voici les instructions à suivre pour faire appel de votre bannissement :
 EOD
 );
 ___('users_banned_appeal_instructions', 'EN', <<<EOD

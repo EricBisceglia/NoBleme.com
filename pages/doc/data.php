@@ -125,7 +125,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } ?>
 
   <h5 class="bigpadding_top">
-    <?=__('doc_data_lang_title')?> <span class="text_light"><?=__($user_data_language)?></span>
+    <?=__('doc_data_lang_title')?> <span class="bold"><?=__($user_data_language)?></span>
   </h5>
 
   <?php if(!$user_data_logged_in) { ?>
