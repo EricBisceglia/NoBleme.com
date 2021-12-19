@@ -19,10 +19,6 @@ $page_description = "List of pages in NoBleme's encyclopedia of 21st century cul
 // Extra js
 $js = array('compendium/list');
 
-// Temporarily closed
-if(!$is_admin)
-  exit(header("Location: ".$path."pages/compendium/index_closed"));
-
 
 
 

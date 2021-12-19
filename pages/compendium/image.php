@@ -19,10 +19,6 @@ $page_description = "An image used to illustrate NoBleme's 21st century culture 
 $css  = array('compendium');
 $js   = array('common/toggle', 'compendium/admin');
 
-// Temporarily closed
-if(!$is_admin)
-  exit(header("Location: ".$path."pages/compendium/index_closed"));
-
 
 
 

@@ -14,10 +14,6 @@ $page_title_en    = "Compendium: Random page";
 $page_title_fr    = "Compendium : Page au hasard";
 $page_description = "A random page from NoBleme's 21st century compendium";
 
-// Temporarily closed
-if(!$is_admin)
-  exit(header("Location: ".$path."pages/compendium/index_closed"));
-
 
 
 

@@ -98,6 +98,6 @@
                              hr                { margin-left: -40px; margin-right: -40px;                  } }
 
 /****************************************************** FOOTER *******************************************************/
-footer { width: 100%; text-align: center; color: #999999; filter: drop-shadow(0 0 15px #B00B1E);    }
-@media (min-width: 1081px) { footer { font-size: 1.4rem; margin-top: 100px; margin-bottom: 50px;  } }
-@media (max-width: 1080px) { footer { font-size: 1.0rem; margin-top: 200px; margin-bottom: 100px; } }
+footer { width: 100%; text-align: center; color: #999999; filter: drop-shadow(0 0 15px #B00B1E);     }
+@media (min-width: 1081px) { footer { font-size: 1.4rem; margin-top: 100px; margin-bottom: 50px;   } }
+@media (max-width: 1080px) { footer { font-size: 0.83rem; margin-top: 200px; margin-bottom: 100px; } }

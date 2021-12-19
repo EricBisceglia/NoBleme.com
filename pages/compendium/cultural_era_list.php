@@ -14,10 +14,6 @@ $page_title_en    = "Compendium eras";
 $page_title_fr    = "Compendium : Périodes";
 $page_description = "Cultural eras of 21st culture";
 
-// Temporarily closed
-if(!$is_admin)
-  exit(header("Location: ".$path."pages/compendium/index_closed"));
-
 
 
 

@@ -34,25 +34,15 @@
 @media (max-width: 1080px) {
 .desktop { display: none; } }
 
-.margin_auto     { margin: auto;                     }
-@media (min-width: 1081px) {
-.width_30        { margin: auto; max-width: 30em;    }
-.width_40        { margin: auto; max-width: 40em;    }
-.width_50        { margin: auto; max-width: 50em;    }
-.width_60        { margin: auto; max-width: 60em;    }
-.width_70        { margin: auto; max-width: 70em;    }
-.width_80        { margin: auto; max-width: 80em;    }
-.width_90        { margin: auto; max-width: 90em;    }
-.width_100       { margin: auto; max-width: 100em; } }
-@media (max-width: 1080px) {
-.width_30        { margin: auto; max-width: 35em;    }
-.width_40        { margin: auto; max-width: 40em;    }
-.width_50        { margin: auto; max-width: 45em;    }
-.width_60        { margin: auto; max-width: 50em;    }
-.width_70        { margin: auto; max-width: 55em;    }
-.width_80        { margin: auto; max-width: 60em;    }
-.width_90        { margin: auto; max-width: 60em;    }
-.width_109       { margin: auto; max-width: 60em;  } }
+.margin_auto { margin: auto;                   }
+.width_30    { margin: auto; max-width: 30em;  }
+.width_40    { margin: auto; max-width: 40em;  }
+.width_50    { margin: auto; max-width: 50em;  }
+.width_60    { margin: auto; max-width: 60em;  }
+.width_70    { margin: auto; max-width: 70em;  }
+.width_80    { margin: auto; max-width: 80em;  }
+.width_90    { margin: auto; max-width: 90em;  }
+.width_100   { margin: auto; max-width: 100em; }
 
 .align_justify   { text-align: justify;            }
 .align_center    { text-align: center;             }
