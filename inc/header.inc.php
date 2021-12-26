@@ -383,6 +383,15 @@ $javascripts .= '
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Favicon
+
+// Determine which favicon to use
+$favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                           DISPLAY THE HEADER AND MENUS                                            */
@@ -403,6 +412,7 @@ $javascripts .= '
     <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/divers/404_gauche.png">
     <meta name="twitter:image:alt" content="NoBleme.com - <?=$page_description?>">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="<?=$path.$favicon?>">
     <?=$stylesheets?>
     <?=$javascripts?>
   </head>
