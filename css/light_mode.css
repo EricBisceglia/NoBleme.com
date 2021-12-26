@@ -13,14 +13,14 @@ pre                     { background-color: #EEEEEE; border-left: 0.3rem solid #
 textarea                { background-color: #EEEEEE; color: #121212;                            }
 input, select, button   { color: #121212; background-color: #EEEEEE; border: 1px solid #CACACA; }
 input[disabled], button[disabled] { background-color: #EEEEEE;                                  }
-select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                                    ,
-input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus)       ,
-input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)                      {
-                          border-color: #121212; background-color: #EEEEEE;                                           }
-input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus         ,
-button:focus, select:focus { border-color: #EEEEEE; background-color: #EEEEEE;                                        }
-input[type='file']      { background-color: #FFFFFF; border: none; color: #121212;                                    }
-input:not([type])       { background-color: #EEEEEE;                                                                  }
+select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                              ,
+input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus) ,
+input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)                {
+                          border-color: #121212; background-color: #EEEEEE;                                     }
+input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus   ,
+button:focus, select:focus { border-color: #EEEEEE; background-color: #EEEEEE;                                  }
+input[type='file']      { background-color: #FFFFFF; border: none; color: #121212;                              }
+input:not([type])       { background-color: #EEEEEE;                                                            }
 
 /****************************************************** HEADER *******************************************************/
 .header_topmenu                 { background-color: #EEEEEE;                                                    }
