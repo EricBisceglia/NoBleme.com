@@ -56,7 +56,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   if($type === 'dev_version')
   {
-    $return['css']  = ($mode == 'dark') ? 'bold green' : 'bold green text_white';
+    $return['css']  = ($mode == 'dark') ? 'text_green bold' : 'text_green bold';
     $return['href'] = $path.'pages/tasks/roadmap';
     $return['EN']   = "New version of the website: ".$title_en;
     $return['FR']   = "Nouvelle version du site : ".$title_fr;
