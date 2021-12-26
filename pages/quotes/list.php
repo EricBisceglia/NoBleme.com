@@ -215,7 +215,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php } ?>
 
-    <div class="monospace padding_top padding_bot align_justify break_words" id="quote_body_<?=$quotes_list[$i]['id']?>">
+    <div class="monospace padding_top padding_bot break_words" id="quote_body_<?=$quotes_list[$i]['id']?>">
 
       <div class="tinypadding_bot">
         <span class="bold">

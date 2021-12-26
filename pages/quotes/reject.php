@@ -114,7 +114,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </fieldset>
   </form>
 
-  <div class="monospace bigpadding_top align_justify break_words">
+  <div class="monospace bigpadding_top break_words">
     <?=$quote_data['body_full']?>
   </div>
 
