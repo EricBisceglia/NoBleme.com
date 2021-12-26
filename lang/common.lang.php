@@ -67,6 +67,7 @@ function __(  string  $string                   ,
   / {{link+|href|text|style}}
   / {{link|href|text}}
   / {{external|href|text}}
+  / {{external_popup|href|text}}    # Will open in a popup (target blank)
   */
   $returned_string = preg_replace('/\{\{link_popup\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", popup: true), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", path: "$5"), $returned_string);
@@ -74,6 +75,7 @@ function __(  string  $string                   ,
   $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
   $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2"), $returned_string);
   $returned_string = preg_replace('/\{\{external\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", is_internal: false), $returned_string);
+  $returned_string = preg_replace('/\{\{external_popup\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", is_internal: false, popup: true), $returned_string);
 
   /*
   / Replace tooltips if needed, using a regex that can work in either of the following ways:
