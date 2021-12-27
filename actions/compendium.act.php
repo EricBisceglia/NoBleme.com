@@ -2255,12 +2255,28 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $data[$count_eras]['era_name']  = sanitize_output($deras['ce_name']);
   }
 
+  // Look for calls to this missing page in compendium page types
+  $qtypes = query(" SELECT    compendium_types.id               AS 'ct_id' ,
+                              compendium_types.full_name_$lang  AS 'ct_name'
+                    FROM      compendium_types
+                    WHERE   ( compendium_types.description_en LIKE '%$missing_page_nbcode%'
+                    OR        compendium_types.description_fr LIKE '%$missing_page_nbcode%' )
+                    ORDER BY  compendium_types.full_name_$lang ASC ");
+
+  // Add any missing page types to the returned data
+  for($count_types = 0; $dtypes = mysqli_fetch_array($qtypes); $count_types++)
+  {
+    $data[$count_types]['type_id']    = sanitize_output($dtypes['ct_id']);
+    $data[$count_types]['type_name']  = sanitize_output($dtypes['ct_name']);
+  }
+
   // Sum up the total missing page calls count and all them to the returned data
   $data['count_pages']      = $count_pages;
   $data['count_images']     = $count_images;
   $data['count_categories'] = $count_categories;
   $data['count_eras']       = $count_eras;
-  $data['count']            = $count_pages + $count_images + $count_categories + $count_eras;
+  $data['count_types']      = $count_types;
+  $data['count']            = $count_pages + $count_images + $count_categories + $count_eras + $count_types;
 
   // Return the data
   return $data;
@@ -2437,6 +2453,34 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
 
     // Look for missing pages in the french era descriptions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $deras['ce_body_fr'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+  }
+
+  // Fetch a list of all page types
+  $qtypes = query(" SELECT    compendium_types.description_en AS 'ct_body_en' ,
+                              compendium_types.description_fr AS 'ct_body_fr'
+                    FROM      compendium_types
+                    ORDER BY  compendium_types.id ASC ");
+
+  // Loop through the page types
+  while($dtypes = mysqli_fetch_array($qtypes))
+  {
+    // Look for missing pages in the english page types descriptions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dtypes['ct_body_en'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the french page types descriptions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dtypes['ct_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
       $dead_link = compendium_format_url($links[1][$i]);

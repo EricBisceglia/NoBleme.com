@@ -112,14 +112,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__('compendium_missing_page_links', amount: $compendium_missing_data['count'])?>
     </p>
     <ul>
-      <?php for($i = 0; $i < $compendium_missing_data['count_pages']; $i++) { ?>
+      <?php for($i = 0; $i < $compendium_missing_data['count_types']; $i++) { ?>
+      <li> <?=__link('pages/compendium/page_type?type='.$compendium_missing_data[$i]['type_id'], $compendium_missing_data[$i]['type_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_eras']; $i++) { ?>
+      <li> <?=__link('pages/compendium/cultural_era?era='.$compendium_missing_data[$i]['era_id'], $compendium_missing_data[$i]['era_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_categories']; $i++) { ?>
+      <li> <?=__link('pages/compendium/category?id='.$compendium_missing_data[$i]['category_id'], $compendium_missing_data[$i]['category_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_pages']; $i++) { ?>
       <li> <?=__link('pages/compendium/'.$compendium_missing_data[$i]['page_url'], $compendium_missing_data[$i]['page_title'])?></li>
       <?php } for($i = 0; $i < $compendium_missing_data['count_images']; $i++) { ?>
       <li> <?=__link('pages/compendium/image?name='.$compendium_missing_data[$i]['image_name'], $compendium_missing_data[$i]['image_name'])?></li>
-      <?php } for($i = 0; $i < $compendium_missing_data['count_categories']; $i++) { ?>
-      <li> <?=__link('pages/compendium/category?id='.$compendium_missing_data[$i]['category_id'], $compendium_missing_data[$i]['category_name'])?></li>
-      <?php } for($i = 0; $i < $compendium_missing_data['count_eras']; $i++) { ?>
-      <li> <?=__link('pages/compendium/cultural_era?era='.$compendium_missing_data[$i]['era_id'], $compendium_missing_data[$i]['era_name'])?></li>
       <?php } ?>
     </ul>
   </div>
