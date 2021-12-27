@@ -2307,6 +2307,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   user_restrict_to_administrators();
 
   // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
   $nsfw     = user_settings_nsfw();
   $privacy  = user_settings_privacy();
   $mode     = user_get_mode();
@@ -2317,6 +2318,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   $urls             = array();
   $search_url       = isset($search['url'])       ? sanitize($search['url'], 'string')          : '';
   $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')        : '';
+  $search_type      = isset($search['type'])      ? sanitize($search['type'], 'int', 0)         : 0;
   $search_priority  = isset($search['priority'])  ? sanitize($search['priority'], 'int', -1, 1) : -1;
   $search_notes     = isset($search['notes'])     ? sanitize($search['notes'], 'int', -1, 1)    : -1;
   $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1)   : -1;
@@ -2503,7 +2505,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   }
 
   // Remove all elements from array if some searches are being performed
-  if($search_title || $search_priority == 1 || $search_notes == 1 || $search_status == 1)
+  if($search_title || $search_type || $search_priority > -1 || $search_notes > -1 || $search_status == 1)
     $missing = array();
 
   // Fetch the missing pages in the database
@@ -2511,8 +2513,10 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                               compendium_missing.page_url       AS 'cm_url'       ,
                               compendium_missing.title          AS 'cm_title'     ,
                               compendium_missing.is_a_priority  AS 'cm_priority'  ,
-                              compendium_missing.notes          AS 'cm_notes'
+                              compendium_missing.notes          AS 'cm_notes'     ,
+                              compendium_types.name_$lang       AS 'cm_type'
                     FROM      compendium_missing
+                    LEFT JOIN compendium_types ON compendium_missing.fk_compendium_types = compendium_types.id
                     WHERE     1 = 1 ";
 
   // Search the data
@@ -2524,6 +2528,8 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     $qmissing .= "  AND       compendium_missing.notes          =     ''                  ";
   else if($search_notes == 1)
     $qmissing .= "  AND       compendium_missing.notes          !=    ''                  ";
+  if($search_type)
+    $qmissing .= "  AND       compendium_missing.fk_compendium_types  =     '$search_type'      ";
   if($search_priority > -1)
     $qmissing .= "  AND       compendium_missing.is_a_priority  =     '$search_priority'  ";
   if($search_status == 0)
@@ -2531,17 +2537,22 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
 
   // Order the data
   if($sort_by == 'url')
-    $qmissing .= "  ORDER BY  compendium_missing.page_url       DESC  ";
+    $qmissing .= "  ORDER BY  compendium_missing.page_url             DESC  ";
   else if($sort_by == 'title')
-    $qmissing .= "  ORDER BY  compendium_missing.title          = ''  ,
-                              compendium_missing.title          ASC   ,
-                              compendium_missing.page_url       ASC   ";
+    $qmissing .= "  ORDER BY  compendium_missing.title                = ''  ,
+                              compendium_missing.title                ASC   ,
+                              compendium_missing.page_url             ASC   ";
+  else if($sort_by == 'type')
+    $qmissing .= "  ORDER BY  compendium_missing.fk_compendium_types  = ''  ,
+                              compendium_types.name_$lang             ASC   ,
+                              compendium_missing.is_a_priority        DESC  ,
+                              compendium_missing.page_url             ASC   ";
   else if($sort_by == 'notes')
-    $qmissing .= "  ORDER BY  compendium_missing.notes          = ''  ,
-                              compendium_missing.page_url       ASC   ";
+    $qmissing .= "  ORDER BY  compendium_missing.notes                = ''  ,
+                              compendium_missing.page_url             ASC   ";
   else
-    $qmissing .= "  ORDER BY  compendium_missing.is_a_priority  DESC  ,
-                              compendium_missing.page_url       ASC   ";
+    $qmissing .= "  ORDER BY  compendium_missing.is_a_priority        DESC  ,
+                              compendium_missing.page_url             ASC   ";
 
   // Run the query
   $qmissing = query($qmissing);
@@ -2552,13 +2563,14 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     // Format the data
     $data[$i]['id']         = sanitize_output($row['cm_id']);
     $data[$i]['url']        = sanitize_output($row['cm_url']);
-    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['cm_url'], 30, '...'));
-    $data[$i]['fullurl']    = (mb_strlen($row['cm_url']) > 30) ? sanitize_output($row['cm_url']) : '';
+    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['cm_url'], 22, '...'));
+    $data[$i]['fullurl']    = (mb_strlen($row['cm_url']) > 22) ? sanitize_output($row['cm_url']) : '';
     $data[$i]['title']      = sanitize_output($row['cm_title']);
-    $data[$i]['t_display']  = sanitize_output(string_truncate($row['cm_title'], 25, '...'));
-    $data[$i]['t_full']     = (mb_strlen($row['cm_title']) > 25) ? sanitize_output($row['cm_title']) : '';
-    $temp                   = bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true));
+    $data[$i]['t_display']  = sanitize_output(string_truncate($row['cm_title'], 22, '...'));
+    $data[$i]['t_full']     = (mb_strlen($row['cm_title']) > 22) ? sanitize_output($row['cm_title']) : '';
+    $data[$i]['type']       = sanitize_output(string_truncate($row['cm_type'], 20, '...'));
     $data[$i]['priority']   = sanitize_output($row['cm_priority']);
+    $temp                   = bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true));
     $data[$i]['notes']      = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
     // Remove matching missing pages

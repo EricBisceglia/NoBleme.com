@@ -457,9 +457,9 @@ function form_fetch_element(  string  $element_name             ,
  * @return  string                        The string, truncated if necessary.
  */
 
-function string_truncate( string  $string       ,
+function string_truncate( ?string $string       ,
                           int     $length       ,
-                          string  $suffix = ''  ) : string
+                          string  $suffix = ''  ) : ?string
 {
   // If the string needs to be truncated, then do it and apply the suffix, else return the string as is
   return (mb_strlen($string, 'UTF-8') > $length) ? mb_substr($string, 0, $length, 'UTF-8').$suffix : $string;

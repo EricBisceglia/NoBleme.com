@@ -146,6 +146,7 @@ function compendium_missing_list_search( sort_data = null )
   postdata  = 'compendium_missing_sort_order='  + fetch_sanitize_id('compendium_missing_sort_order');
   postdata += '&compendium_missing_url='        + fetch_sanitize_id('compendium_missing_url');
   postdata += '&compendium_missing_title='      + fetch_sanitize_id('compendium_missing_title');
+  postdata += '&compendium_missing_type='       + fetch_sanitize_id('compendium_missing_type');
   postdata += '&compendium_missing_priority='   + fetch_sanitize_id('compendium_missing_priority');
   postdata += '&compendium_missing_notes='      + fetch_sanitize_id('compendium_missing_notes');
   postdata += '&compendium_missing_status='     + fetch_sanitize_id('compendium_missing_status');
