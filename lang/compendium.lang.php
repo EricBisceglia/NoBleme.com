@@ -616,6 +616,8 @@ ___('compendium_missing_edit_url',      'EN', "Missing page URL (no spaces, must
 ___('compendium_missing_edit_url',      'FR', "Adresse de la page manquante (ne doit pas être déjà utilisé)");
 ___('compendium_missing_edit_name',     'EN', "Missing page title");
 ___('compendium_missing_edit_name',     'FR', "Titre de la page manquante");
+___('compendium_missing_edit_type',     'EN', "Missing page type");
+___('compendium_missing_edit_type',     'FR', "Thématique de la page manquante");
 ___('compendium_missing_edit_notes',    'EN', "Notes ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_missing_edit_notes',    'FR', "Notes ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_missing_edit_priority', 'EN', "Prioritary page (will appear on top of the missing pages list)");
