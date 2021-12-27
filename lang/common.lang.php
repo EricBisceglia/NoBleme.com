@@ -996,6 +996,8 @@ ___('submenu_admin_doc_functions',  'EN', "Functions list");
 ___('submenu_admin_doc_functions',  'FR', "Liste de fonctions");
 ___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
 ___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
+___('submenu_admin_doc_workflow',   'EN', "Development workflow");
+___('submenu_admin_doc_workflow',   'FR', "Workflow de développement");
 
 ___('submenu_admin_local_fixtures', 'EN', "Local dev: Fixtures");
 ___('submenu_admin_local_fixtures', 'FR', "Dev local : Fixtures");

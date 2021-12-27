@@ -67,7 +67,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <?php } if($js_toolbox === 'clipboard') { ########################################################################## ?>
 
 <div class="width_40">
-  <pre class="dev_pre_code" id="dev_js_toolbox_cliboard" onclick="to_clipboard('', 'dev_js_toolbox_cliboard', 1);">&lt;pre class="dev_pre_code" id="lorem_id" onclick="to_clipboard('', 'lorem_id', 1);">Lorem clipboardum&lt;/pre></pre>
+  <pre class="dev_pre_code" id="dev_js_toolbox_cliboard" onclick="to_clipboard('', 'dev_js_toolbox_cliboard', 1);">&lt;pre id="lorem_id" onclick="to_clipboard('', 'lorem_id', 1);">Lorem clipboardum&lt;/pre></pre>
 </div>
 
 
