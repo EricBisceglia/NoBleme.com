@@ -2240,11 +2240,27 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $data[$count_categories]['category_name'] = sanitize_output($dcategories['cc_name']);
   }
 
+  // Look for calls to this missing page in compendium eras
+  $qeras = query("  SELECT    compendium_eras.id          AS 'ce_id' ,
+                              compendium_eras.name_$lang  AS 'ce_name'
+                    FROM      compendium_eras
+                    WHERE   ( compendium_eras.description_en  LIKE '%$missing_page_nbcode%'
+                    OR        compendium_eras.description_fr  LIKE '%$missing_page_nbcode%' )
+                    ORDER BY  compendium_eras.name_$lang ASC ");
+
+  // Add any missing eras to the returned data
+  for($count_eras = 0; $deras = mysqli_fetch_array($qeras); $count_eras++)
+  {
+    $data[$count_eras]['era_id']    = sanitize_output($deras['ce_id']);
+    $data[$count_eras]['era_name']  = sanitize_output($deras['ce_name']);
+  }
+
   // Sum up the total missing page calls count and all them to the returned data
   $data['count_pages']      = $count_pages;
   $data['count_images']     = $count_images;
   $data['count_categories'] = $count_categories;
-  $data['count']            = $count_pages + $count_images + $count_categories;
+  $data['count_eras']       = $count_eras;
+  $data['count']            = $count_pages + $count_images + $count_categories + $count_eras;
 
   // Return the data
   return $data;
@@ -2345,8 +2361,8 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   }
 
   // Fetch a list of all images
-  $qimages = query("  SELECT    compendium_images.caption_en  AS 'c_caption_en' ,
-                                compendium_images.caption_fr  AS 'c_caption_fr'
+  $qimages = query("  SELECT    compendium_images.caption_en  AS 'ci_caption_en' ,
+                                compendium_images.caption_fr  AS 'ci_caption_fr'
                       FROM      compendium_images
                       WHERE     compendium_images.is_deleted = 0
                       ORDER BY  compendium_images.id ASC ");
@@ -2355,7 +2371,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   while($dimages = mysqli_fetch_array($qimages))
   {
     // Look for missing pages in the english captions
-    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['c_caption_en'], $links);
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['ci_caption_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
       $dead_link = compendium_format_url($links[1][$i]);
@@ -2364,7 +2380,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     }
 
     // Look for missing pages in the french captions
-    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['c_caption_fr'], $links);
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['ci_caption_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
       $dead_link = compendium_format_url($links[1][$i]);
@@ -2374,8 +2390,8 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   }
 
   // Fetch a list of all categories
-  $qcategories = query("  SELECT    compendium_categories.description_en  AS 'c_body_en' ,
-                                    compendium_categories.description_fr  AS 'c_body_fr'
+  $qcategories = query("  SELECT    compendium_categories.description_en  AS 'cc_body_en' ,
+                                    compendium_categories.description_fr  AS 'cc_body_fr'
                           FROM      compendium_categories
                           ORDER BY  compendium_categories.id ASC ");
 
@@ -2383,7 +2399,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   while($dcategories = mysqli_fetch_array($qcategories))
   {
     // Look for missing pages in the english category descriptions
-    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['c_body_en'], $links);
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['cc_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
       $dead_link = compendium_format_url($links[1][$i]);
@@ -2392,7 +2408,35 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     }
 
     // Look for missing pages in the french category descriptions
-    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['c_body_fr'], $links);
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['cc_body_fr'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+  }
+
+  // Fetch a list of all eras
+  $qeras = query("  SELECT    compendium_eras.description_en  AS 'ce_body_en' ,
+                              compendium_eras.description_fr  AS 'ce_body_fr'
+                    FROM      compendium_eras
+                    ORDER BY  compendium_eras.id ASC ");
+
+  // Loop through the eras
+  while($deras = mysqli_fetch_array($qeras))
+  {
+    // Look for missing pages in the english era descriptions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $deras['ce_body_en'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the french era descriptions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $deras['ce_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
       $dead_link = compendium_format_url($links[1][$i]);

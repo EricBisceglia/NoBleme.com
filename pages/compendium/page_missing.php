@@ -118,6 +118,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <li> <?=__link('pages/compendium/image?name='.$compendium_missing_data[$i]['image_name'], $compendium_missing_data[$i]['image_name'])?></li>
       <?php } for($i = 0; $i < $compendium_missing_data['count_categories']; $i++) { ?>
       <li> <?=__link('pages/compendium/category?id='.$compendium_missing_data[$i]['category_id'], $compendium_missing_data[$i]['category_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_eras']; $i++) { ?>
+      <li> <?=__link('pages/compendium/cultural_era?era='.$compendium_missing_data[$i]['era_id'], $compendium_missing_data[$i]['era_name'])?></li>
       <?php } ?>
     </ul>
   </div>
