@@ -2161,10 +2161,11 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $where = ($missing_id) ? " compendium_missing.id = '$missing_id' " : " compendium_missing.page_url LIKE '$missing_url' ";
 
     // Fetch the data
-    $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.id       AS 'cm_id'    ,
-                                                    compendium_missing.page_url AS 'cm_url'   ,
-                                                    compendium_missing.title    AS 'cm_title' ,
-                                                    compendium_missing.notes    AS 'cm_notes'
+    $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.id             AS 'cm_id'        ,
+                                                    compendium_missing.page_url       AS 'cm_url'       ,
+                                                    compendium_missing.title          AS 'cm_title'     ,
+                                                    compendium_missing.is_a_priority  AS 'cm_priority'  ,
+                                                    compendium_missing.notes          AS 'cm_notes'
                                             FROM    compendium_missing
                                             WHERE   $where "));
 
@@ -2173,6 +2174,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $missing_url      = sanitize($missing_url_raw, 'string');
     $missing_id       = $dmissing['cm_id'];
     $data['title']    = sanitize_output($dmissing['cm_title']);
+    $data['prio']     = sanitize_output($dmissing['cm_priority']);
     $temp             = bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true));
     $data['body']     = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data['notes']    = sanitize_output($dmissing['cm_notes']);
@@ -2607,10 +2609,11 @@ function compendium_missing_edit( string  $missing_url      ,
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $missing_url    = sanitize(compendium_format_url($missing_url), 'string');
-  $missing_id     = sanitize($missing_id, 'int', 0);
-  $missing_title  = (isset($contents['title'])) ? sanitize($contents['title'], 'string')  : '';
-  $missing_notes  = (isset($contents['notes'])) ? sanitize($contents['notes'], 'string')  : '';
+  $missing_url      = sanitize(compendium_format_url($missing_url), 'string');
+  $missing_id       = sanitize($missing_id, 'int', 0);
+  $missing_title    = (isset($contents['title']))     ? sanitize($contents['title'], 'string')        : '';
+  $missing_notes    = (isset($contents['notes']))     ? sanitize($contents['notes'], 'string')        : '';
+  $missing_priority = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 1)  : '';
 
   // Error: No url
   if(!$missing_url)
@@ -2629,9 +2632,10 @@ function compendium_missing_edit( string  $missing_url      ,
 
     // Create the missing page
     query(" INSERT INTO compendium_missing
-            SET         compendium_missing.page_url = '$missing_url'    ,
-                        compendium_missing.title    = '$missing_title'  ,
-                        compendium_missing.notes    = '$missing_notes'  ");
+            SET         compendium_missing.page_url       = '$missing_url'      ,
+                        compendium_missing.title          = '$missing_title'    ,
+                        compendium_missing.is_a_priority  = '$missing_priority' ,
+                        compendium_missing.notes          = '$missing_notes'    ");
   }
 
   // Otherwise, update it
@@ -2653,10 +2657,11 @@ function compendium_missing_edit( string  $missing_url      ,
 
     // Update the missing pages
     query(" UPDATE  compendium_missing
-            SET     compendium_missing.page_url = '$missing_url'    ,
-                    compendium_missing.title    = '$missing_title'  ,
-                    compendium_missing.notes    = '$missing_notes'
-            WHERE   compendium_missing.id       = '$missing_id'     ");
+            SET     compendium_missing.page_url       = '$missing_url'      ,
+                    compendium_missing.title          = '$missing_title'    ,
+                    compendium_missing.is_a_priority  = '$missing_priority' ,
+                    compendium_missing.notes          = '$missing_notes'
+            WHERE   compendium_missing.id             = '$missing_id'     ");
   }
 
   // All went well

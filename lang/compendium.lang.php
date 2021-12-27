@@ -618,6 +618,8 @@ ___('compendium_missing_edit_name',     'EN', "Missing page title");
 ___('compendium_missing_edit_name',     'FR', "Titre de la page manquante");
 ___('compendium_missing_edit_notes',    'EN', "Notes ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_missing_edit_notes',    'FR', "Notes ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_missing_edit_priority', 'EN', "Prioritary page (will appear on top of the missing pages list)");
+___('compendium_missing_edit_priority', 'FR', "Page prioritaire (apparaitra en haut de la liste des pages manquantes)");
 ___('compendium_missing_edit_no_url',   'EN', "An URL must be provided");
 ___('compendium_missing_edit_no_url',   'FR', "La page manquante doit avoir une adresse");
 ___('compendium_missing_edit_taken',    'EN', "This page URL is already taken by an existing page");

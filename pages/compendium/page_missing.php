@@ -75,9 +75,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1 class="align_center">
     <?=__link('pages/compendium/page_missing_list', __('compendium_missing_page_title'), 'noglow')?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_data['url'])?>
-    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?url='.$compendium_missing_data['url'])?>
     <?php if($compendium_missing_data['id']) { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?id='.$compendium_missing_data['id'])?>
     <?=__icon('delete', class: 'valign_middle pointer spaced_right', alt: 'X', title: __('delete'), title_case: 'initials', identifier: 'compendium_missing_delete_icon', onclick: "compendium_missing_delete('".$compendium_missing_data['id']."', '".__('compendium_missing_delete')."', 'page');")?>
+    <?php } else { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?url='.$compendium_missing_data['url'])?>
     <?php } ?>
 
   </h1>
