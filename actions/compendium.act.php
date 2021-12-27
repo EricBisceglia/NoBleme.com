@@ -2285,6 +2285,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                               compendium_pages.definition_en  AS 'c_body_en'    ,
                               compendium_pages.definition_fr  AS 'c_body_fr'
                     FROM      compendium_pages
+                    WHERE     compendium_pages.is_deleted = 0
                     ORDER BY  compendium_pages.id ASC ");
 
   // Loop through the pages
@@ -2331,6 +2332,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   $qimages = query("  SELECT    compendium_images.caption_en     AS 'c_caption_en' ,
                                 compendium_images.caption_fr     AS 'c_caption_fr'
                       FROM      compendium_images
+                      WHERE     compendium_images.is_deleted = 0
                       ORDER BY  compendium_images.id ASC ");
 
   // Loop through the images
