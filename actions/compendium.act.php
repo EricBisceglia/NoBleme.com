@@ -2131,6 +2131,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
   require_included_file('bbcodes.inc.php');
 
   // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
   $nsfw     = user_settings_nsfw();
   $privacy  = user_settings_privacy();
   $mode     = user_get_mode();
@@ -2224,10 +2225,26 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
   for($count_images = 0; $dimages = mysqli_fetch_array($qimages); $count_images++)
     $data[$count_images]['image_name'] = sanitize_output($dimages['ci_name']);
 
+  // Look for calls to this missing page in compendium categories
+  $qcategories = query("  SELECT    compendium_categories.id          AS 'cc_id' ,
+                                    compendium_categories.name_$lang  AS 'cc_name'
+                          FROM      compendium_categories
+                          WHERE   ( compendium_categories.description_en  LIKE '%$missing_page_nbcode%'
+                          OR        compendium_categories.description_fr  LIKE '%$missing_page_nbcode%' )
+                          ORDER BY  compendium_categories.name_$lang ASC ");
+
+  // Add any missing categories to the returned data
+  for($count_categories = 0; $dcategories = mysqli_fetch_array($qcategories); $count_categories++)
+  {
+    $data[$count_categories]['category_id']   = sanitize_output($dcategories['cc_id']);
+    $data[$count_categories]['category_name'] = sanitize_output($dcategories['cc_name']);
+  }
+
   // Sum up the total missing page calls count and all them to the returned data
-  $data['count_pages']  = $count_pages;
-  $data['count_images'] = $count_images;
-  $data['count']        = $count_pages + $count_images;
+  $data['count_pages']      = $count_pages;
+  $data['count_images']     = $count_images;
+  $data['count_categories'] = $count_categories;
+  $data['count']            = $count_pages + $count_images + $count_categories;
 
   // Return the data
   return $data;
@@ -2256,7 +2273,6 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   user_restrict_to_administrators();
 
   // Get the user's current language, settings, and the compendium pages which they can access
-  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
   $nsfw     = user_settings_nsfw();
   $privacy  = user_settings_privacy();
   $mode     = user_get_mode();
@@ -2329,8 +2345,8 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   }
 
   // Fetch a list of all images
-  $qimages = query("  SELECT    compendium_images.caption_en     AS 'c_caption_en' ,
-                                compendium_images.caption_fr     AS 'c_caption_fr'
+  $qimages = query("  SELECT    compendium_images.caption_en  AS 'c_caption_en' ,
+                                compendium_images.caption_fr  AS 'c_caption_fr'
                       FROM      compendium_images
                       WHERE     compendium_images.is_deleted = 0
                       ORDER BY  compendium_images.id ASC ");
@@ -2349,6 +2365,34 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
 
     // Look for missing pages in the french captions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['c_caption_fr'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+  }
+
+  // Fetch a list of all categories
+  $qcategories = query("  SELECT    compendium_categories.description_en  AS 'c_body_en' ,
+                                    compendium_categories.description_fr  AS 'c_body_fr'
+                          FROM      compendium_categories
+                          ORDER BY  compendium_categories.id ASC ");
+
+  // Loop through the categories
+  while($dcategories = mysqli_fetch_array($qcategories))
+  {
+    // Look for missing pages in the english category descriptions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['c_body_en'], $links);
+    for($i = 0; $i < count($links[1]); $i++)
+    {
+      $dead_link = compendium_format_url($links[1][$i]);
+      if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
+        array_push($missing, $dead_link);
+    }
+
+    // Look for missing pages in the french category descriptions
+    preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['c_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
       $dead_link = compendium_format_url($links[1][$i]);
