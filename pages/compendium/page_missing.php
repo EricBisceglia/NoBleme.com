@@ -75,9 +75,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1 class="align_center">
     <?=__link('pages/compendium/page_missing_list', __('compendium_missing_page_title'), 'noglow')?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_data['url'])?>
-    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?url='.$compendium_missing_data['url'])?>
     <?php if($compendium_missing_data['id']) { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?id='.$compendium_missing_data['id'])?>
     <?=__icon('delete', class: 'valign_middle pointer spaced_right', alt: 'X', title: __('delete'), title_case: 'initials', identifier: 'compendium_missing_delete_icon', onclick: "compendium_missing_delete('".$compendium_missing_data['id']."', '".__('compendium_missing_delete')."', 'page');")?>
+    <?php } else { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?url='.$compendium_missing_data['url'])?>
     <?php } ?>
 
   </h1>
@@ -112,7 +114,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__('compendium_missing_page_links', amount: $compendium_missing_data['count'])?>
     </p>
     <ul>
-      <?php for($i = 0; $i < $compendium_missing_data['count_pages']; $i++) { ?>
+      <?php for($i = 0; $i < $compendium_missing_data['count_types']; $i++) { ?>
+      <li> <?=__link('pages/compendium/page_type?type='.$compendium_missing_data[$i]['type_id'], $compendium_missing_data[$i]['type_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_eras']; $i++) { ?>
+      <li> <?=__link('pages/compendium/cultural_era?era='.$compendium_missing_data[$i]['era_id'], $compendium_missing_data[$i]['era_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_categories']; $i++) { ?>
+      <li> <?=__link('pages/compendium/category?id='.$compendium_missing_data[$i]['category_id'], $compendium_missing_data[$i]['category_name'])?></li>
+      <?php } for($i = 0; $i < $compendium_missing_data['count_pages']; $i++) { ?>
       <li> <?=__link('pages/compendium/'.$compendium_missing_data[$i]['page_url'], $compendium_missing_data[$i]['page_title'])?></li>
       <?php } for($i = 0; $i < $compendium_missing_data['count_images']; $i++) { ?>
       <li> <?=__link('pages/compendium/image?name='.$compendium_missing_data[$i]['image_name'], $compendium_missing_data[$i]['image_name'])?></li>

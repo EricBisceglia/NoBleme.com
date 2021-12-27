@@ -52,7 +52,9 @@ if($compendium_missing_id && !$compendium_missing_data)
 // Prepare the form values
 $compendium_missing_url   = ($compendium_missing_id)  ? $compendium_missing_data['url']   : $compendium_missing_url;
 $compendium_missing_title = ($compendium_missing_id)  ? $compendium_missing_data['title'] : '';
+$compendium_missing_type  = ($compendium_missing_id)  ? $compendium_missing_data['type']  : 0;
 $compendium_missing_notes = ($compendium_missing_id)  ? $compendium_missing_data['notes'] : '';
+$compendium_missing_prio  = ($compendium_missing_id)  ? $compendium_missing_data['prio']  : 0;
 
 // Update the form values if submitted
 if(isset($_POST['compendium_missing_submit']))
@@ -60,7 +62,19 @@ if(isset($_POST['compendium_missing_submit']))
   $compendium_missing_url   = compendium_format_url(form_fetch_element('compendium_missing_url'));
   $compendium_missing_title = form_fetch_element('compendium_missing_title');
   $compendium_missing_notes = form_fetch_element('compendium_missing_notes');
+  $compendium_missing_prio  = (int)form_fetch_element('compendium_missing_prio', element_exists: 'true');
+  $compendium_missing_type  = form_fetch_element('compendium_missing_type');
 }
+
+// Prepare the priority checkbox
+$compendium_missing_prio_checked = ($compendium_missing_prio) ? ' checked' : '';
+
+// Fetch the page types
+$compendium_types_list = compendium_types_list();
+
+// Keep the proper page type selected
+for($i = 0; $i < $compendium_types_list['rows']; $i++)
+  $compendium_missing_type_select[$i] = ($compendium_missing_type == $compendium_types_list[$i]['id']) ? ' selected' : '';
 
 
 
@@ -72,8 +86,10 @@ if(isset($_POST['compendium_missing_submit']))
 if(isset($_POST['compendium_missing_submit']))
 {
   // Assemble the page data
-  $compendium_missing_edit_data = array(  'title' => $compendium_missing_title  ,
-                                          'notes' => $compendium_missing_notes  );
+  $compendium_missing_edit_data = array(  'title'     => $compendium_missing_title  ,
+                                          'type'      => $compendium_missing_type   ,
+                                          'notes'     => $compendium_missing_notes  ,
+                                          'priority'  => $compendium_missing_prio   );
 
   // Edit the page
   $compendium_missing_edit = compendium_missing_edit( $compendium_missing_url       ,
@@ -137,8 +153,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <div class="smallpadding_top">
+        <label for="compendium_missing_type"><?=__('compendium_missing_edit_type')?></label>
+        <select class="indiv align_left" id="compendium_missing_type" name="compendium_missing_type">
+          <option value="0" selected>&nbsp;</option>
+          <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
+          <option value="<?=$compendium_types_list[$i]['id']?>"<?=$compendium_missing_type_select[$i]?>>
+            <?=$compendium_types_list[$i]['name']?>
+          </option>
+          <?php } ?>
+        </select>
+      </div>
+
+      <div class="smallpadding_top">
         <label for="compendium_missing_notes"><?=__('compendium_missing_edit_notes')?></label>
         <textarea class="indiv compendium_admin_summary" id="compendium_missing_notes" name="compendium_missing_notes"><?=$compendium_missing_notes?></textarea>
+      </div>
+
+      <div class="smallpadding_top">
+        <input type="checkbox" id="compendium_missing_prio" name="compendium_missing_prio"<?=$compendium_missing_prio_checked?>>
+        <label class="label_inline" for="compendium_missing_prio"><?=__('compendium_missing_edit_priority')?></label>
       </div>
 
       <div class="smallpadding_top">
