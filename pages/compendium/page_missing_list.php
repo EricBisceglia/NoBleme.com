@@ -49,13 +49,14 @@ if(isset($_POST['compendium_missing_delete_id']))
 // Fetch the missing pages
 
 // Fetch the sorting order
-$compendium_missing_sort_order = form_fetch_element('compendium_missing_sort_order', 'url');
+$compendium_missing_sort_order = form_fetch_element('compendium_missing_sort_order', 'priority');
 
 // Assemble the search query
-$compendium_missing_search = array( 'url'     => form_fetch_element('compendium_missing_url')     ,
-                                    'title'   => form_fetch_element('compendium_missing_title')   ,
-                                    'notes'   => form_fetch_element('compendium_missing_notes')   ,
-                                    'status'  => form_fetch_element('compendium_missing_status')  );
+$compendium_missing_search = array( 'url'       => form_fetch_element('compendium_missing_url')     ,
+                                    'title'     => form_fetch_element('compendium_missing_title')   ,
+                                    'priority'  => form_fetch_element('compendium_missing_priority')  ,
+                                    'notes'     => form_fetch_element('compendium_missing_notes')   ,
+                                    'status'    => form_fetch_element('compendium_missing_status')  );
 
 // Fetch the missing pages
 $compendium_missing_list = compendium_missing_list( sort_by:  $compendium_missing_sort_order  ,
@@ -70,7 +71,7 @@ $compendium_missing_list = compendium_missing_list( sort_by:  $compendium_missin
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_40">
+<div class="width_50">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_missing_title')?>
@@ -90,6 +91,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('title');")?>
         </th>
         <th>
+          <?=__('compendium_missing_priority')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('priority');")?>
+        </th>
+        <th>
           <?=__('compendium_missing_notes')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('notes');")?>
         </th>
@@ -107,6 +112,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <th>
           <input type="text" class="table_search" name="compendium_missing_title" id="compendium_missing_title" value="" onkeyup="compendium_missing_list_search();">
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_missing_priority" id="compendium_missing_priority" onchange="compendium_missing_list_search();">
+            <option value="-1">&nbsp;</option>
+            <option value="1"><?=__('compendium_missing_prioritary')?></option>
+            <option value="0"><?=__('compendium_missing_no_priority')?></option>
+          </select>
         </th>
 
         <th>
@@ -136,7 +149,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php if($compendium_missing_list['rows']) { ?>
 
       <tr>
-        <td colspan="4" class="uppercase text_light dark bold align_center">
+        <td colspan="5" class="uppercase text_light dark bold align_center">
           <?=__('compendium_missing_count', preset_values: array($compendium_missing_list['rows']))?>
         </td>
       </tr>
@@ -170,6 +183,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </div>
         </td>
         <?php } ?>
+
+        <td class="align_center">
+          <?php if($compendium_missing_list[$i]['priority']) { ?>
+          <?=__icon('warning', is_small: true, alt: 'P', title: __('compendium_missing_priority_full'), title_case: 'initials')?>
+          <?php } else { ?>
+          &nbsp;
+          <?php } ?>
+        </td>
 
         <?php if($compendium_missing_list[$i]['notes']) { ?>
         <td class="align_center tooltip_container">
