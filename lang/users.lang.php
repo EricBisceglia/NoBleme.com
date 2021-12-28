@@ -257,8 +257,8 @@ ___('users_profile_edit_french',    'FR', " (en français)");
 ___('users_profile_edit_pronouns',  'EN', "Your {{external|https://en.wikipedia.org/wiki/Preferred_gender_pronoun|preferred pronouns}}");
 ___('users_profile_edit_pronouns',  'FR', "Vos {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|pronoms}}");
 
-___('users_profile_edit_text',      'EN', "Custom text - You can use {{link|pages/doc/bbcodes|BBCodes}}");
-___('users_profile_edit_text',      'FR', "Texte libre - {{link|pages/doc/bbcodes|BBCodes}} autorisés");
+___('users_profile_edit_text',      'EN', "Custom text - You can use {{link_popup|pages/doc/bbcodes|BBCodes}}");
+___('users_profile_edit_text',      'FR', "Texte libre - {{link_popup|pages/doc/bbcodes|BBCodes}} autorisés");
 
 ___('users_profile_edit_submit',    'EN', "Customize my public profile");
 ___('users_profile_edit_submit',    'FR', "Personnaliser mon profil public");

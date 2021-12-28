@@ -52,6 +52,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
     <?=__link('pages/tasks/list', __('tasks_roadmap_title'), 'noglow')?>
     <?php if($is_admin) { ?>
+      <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/tasks/add')?>
       <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', onclick: 'tasks_milestones_popin();')?>
       <?php if(!isset($_GET['user'])) { ?>
       <?=__icon('user', alt: 'U', title: __('tasks_roadmap_user'), href: 'pages/tasks/roadmap?user')?>
