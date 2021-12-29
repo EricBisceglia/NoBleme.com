@@ -12,34 +12,34 @@
 
 @media (min-width: 1081px) {
 .header_topmenu_title   { padding: 6px 20px 6px 20px; font-size: 2.8rem; }
-.header_topmenu_account { height: 32px; margin: 0.3em 0.8em 0 0;         }
-.header_topmenu_mail    { height: 36px; margin: 0.2em 0.8em 0 0;         }
-.header_topmenu_panel   { height: 32px; margin: 0.1em 0.8em 0 -0.2em;    }
-.header_topmenu_flag    { height: 26px; margin: 0 0.8em 0 0;           } }
+.header_topmenu_account { height: 3.2rem; margin: 0.3em 0.8em 0 0;         }
+.header_topmenu_mail    { height: 3.6rem; margin: 0.2em 0.8em 0 0;         }
+.header_topmenu_panel   { height: 3.2rem; margin: 0.1em 0.8em 0 -0.2em;    }
+.header_topmenu_flag    { height: 2.6rem; margin: 0 0.8em 0 0;           } }
 @media (max-width: 1080px) {
-.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.8rem; }
-.header_topmenu_account { height: 1.9rem; margin: 0.2em 0.8em 0 0;       }
-.header_topmenu_mail    { height: 1.8rem; margin: 0.1em 0.6em 0 0;       }
-.header_topmenu_panel   { height: 1.9rem; margin: 0 1.0em 0 0em;         }
-.header_topmenu_flag    { height: 1.8rem; margin: 0 0.8em 0.15em 0;    } }
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 2.5rem; }
+.header_topmenu_account { height: 2.6rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 2.8rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 2.6rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 2.4rem; margin: 0 0.8em 0.15em 0;    } }
 @media (max-width: 960px) {
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 2.1rem; }
+.header_topmenu_account { height: 2.1rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 2.3rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 2.1rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 1.9rem; margin: 0 0.8em 0.15em 0;    } }
+@media (max-width: 828px) {
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.7rem; }
+.header_topmenu_account { height: 1.8rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 1.9rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 1.8rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 1.7rem; margin: 0 0.8em 0.15em 0;    } }
+@media (max-width: 760px) {
 .header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.5rem; }
 .header_topmenu_account { height: 1.6rem; margin: 0.2em 0.8em 0 0;       }
-.header_topmenu_mail    { height: 1.5rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_mail    { height: 1.7rem; margin: 0.1em 0.6em 0 0;       }
 .header_topmenu_panel   { height: 1.6rem; margin: 0 1.0em 0 0em;         }
 .header_topmenu_flag    { height: 1.5rem; margin: 0 0.8em 0.15em 0;    } }
-@media (max-width: 828px) {
-.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.3rem; }
-.header_topmenu_account { height: 1.4rem; margin: 0.2em 0.8em 0 0;       }
-.header_topmenu_mail    { height: 1.3rem; margin: 0.1em 0.6em 0 0;       }
-.header_topmenu_panel   { height: 1.4rem; margin: 0 1.0em 0 0em;         }
-.header_topmenu_flag    { height: 1.3rem; margin: 0 0.8em 0.15em 0;    } }
-@media (max-width: 760px) {
-.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.2rem; }
-.header_topmenu_account { height: 1.3rem; margin: 0.2em 0.8em 0 0;       }
-.header_topmenu_mail    { height: 1.2rem; margin: 0.1em 0.6em 0 0;       }
-.header_topmenu_panel   { height: 1.3rem; margin: 0 1.0em 0 0em;         }
-.header_topmenu_flag    { height: 1.2rem; margin: 0 0.8em 0.15em 0;    } }
 
 /****************************************************** SUBMENU ******************************************************/
 .header_submenu              { display: none; white-space: nowrap; background-color: #121212    ;
