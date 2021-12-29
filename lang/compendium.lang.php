@@ -64,11 +64,11 @@ Dans cette nouvelle société hyperconnectée, il est devenu impossible de suivr
 EOT
 );
 ___('compendium_index_intro_3', 'EN', <<<EOT
-You might be wondering why this compendium has been created, whether it has a deliberate political bias, who runs it, which guidelines it follows, all those questions and more are answered in our {{link|pages/compendium/mission_statement|mission statement}}.
+You might be wondering what a compendium is, whether there is a deliberate political bias, who writes the content, which guidelines it follows, all those questions and more are answered in our {{link|pages/compendium/mission_statement|mission statement}}.
 EOT
 );
 ___('compendium_index_intro_3', 'FR', <<<EOT
-Si vous vous demandez dans quel but ce compendium a été crée, d'où viennent ses contenus, s'il a un biais politique délibéré, des réponses à ces questions et à d'autres se trouvent dans notre {{link|pages/compendium/mission_statement|foire aux questions}}.
+Si vous vous demandez ce qu'est un compendium, s'il y a un biais politique délibéré, qui écrit les contenus, des réponses à ces questions et à d'autres se trouvent dans notre {{link|pages/compendium/mission_statement|foire aux questions}}.
 EOT
 );
 ___('compendium_index_intro_4', 'EN', <<<EOT
