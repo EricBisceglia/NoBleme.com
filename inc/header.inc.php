@@ -327,6 +327,14 @@ if(strlen($page_description) <= 25)
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Theme color
+
+$theme_color  = ($mode == 'dark') ? '#B00B1E' : '#EEEEEE';
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                  FILE INCLUSIONS                                                  */
@@ -412,6 +420,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
     <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/divers/404_gauche.png">
     <meta name="twitter:image:alt" content="NoBleme.com - <?=$page_description?>">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="<?=$theme_color?>">
     <link rel="icon" href="<?=$path.$favicon?>">
     <?=$stylesheets?>
     <?=$javascripts?>
