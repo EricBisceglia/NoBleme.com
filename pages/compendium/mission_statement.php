@@ -42,7 +42,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <ul>
     <li>
-      <?=__link('#q1', __('compendium_faq_question_1'), is_internal: false)?>
+      <?=__link('mission_statement#q0', __('compendium_faq_question_0'), is_internal: false)?>
+    </li>
+    <li>
+      <?=__link('mission_statement#q1', __('compendium_faq_question_1'), is_internal: false)?>
     </li>
     <li>
       <?=__link('mission_statement#q2',__('compendium_faq_question_2'), is_internal: false)?>
@@ -87,6 +90,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__link('mission_statement#q15',__('compendium_faq_question_15'), is_internal: false)?>
     </li>
   </ul>
+
+  <h5 id="q0" class="bigpadding_top">
+    <?=__('compendium_faq_question_0')?>
+  </h5>
+
+  <p>
+    <?=__('compendium_faq_answer_0_1')?>
+  </p>
+
+  <p>
+    <?=__('compendium_faq_answer_0_2')?>
+  </p>
 
   <h5 id="q1" class="bigpadding_top">
     <?=__('compendium_faq_question_1')?>

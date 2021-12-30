@@ -1003,6 +1003,8 @@ ___('compendium_faq_contents',  'FR', "Sommaire des questions :");
 
 
 // Questions
+___('compendium_faq_question_0',  'EN', "What is a compendium?");
+___('compendium_faq_question_0',  'FR', "Qu'est-ce qu'un compendium ?");
 ___('compendium_faq_question_1',  'EN', "What will I find in this compendium?");
 ___('compendium_faq_question_1',  'FR', "Que trouverais-je dans ce compendium ?");
 ___('compendium_faq_question_2',  'EN', "What are the compendium's goals?");
@@ -1036,6 +1038,24 @@ ___('compendium_faq_question_15', 'FR', "Où / comment se tenir au courant des f
 
 
 // Answers
+___('compendium_faq_answer_0_1',  'EN', <<<EOT
+The Merriam-Webster dictionary defines a compendium as being "a brief summary of a larger work or of a field of knowledge".
+EOT
+);
+___('compendium_faq_answer_0_1',  'FR', <<<EOT
+Le Trésor de la langue française définit un compendium comme étant un « résumé de l'ensemble d'une science, d'une doctrine » et par extension la « brève synthèse d'une totalité ».
+EOT
+);
+___('compendium_faq_answer_0_2',  'EN', <<<EOT
+NoBleme's compendium fits this definition, as it has a focus on quality over quantity. Consider it a brief summary of the near infinite topic that is 21st century culture.
+EOT
+);
+___('compendium_faq_answer_0_2',  'FR', <<<EOT
+Le compendium de NoBleme correspond à cette définition : il s'agit d'une brève synthèse du sujet très vaste qu'est la culture du 21ème siècle, cherchant à faire de la qualité plutôt que de la quantité.
+EOT
+);
+
+
 ___('compendium_faq_answer_1_1',  'EN', <<<EOT
 A documentation of elements of 21st century culture.
 EOT
