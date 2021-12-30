@@ -14,6 +14,10 @@ $page_title_en    = "Devblog";
 $page_title_fr    = "Blog de développement";
 $page_description = "Blogs containing updates on NoBleme's development over the years";
 
+// Wider header menu
+if($is_admin)
+  $header_width = 60;
+
 
 
 

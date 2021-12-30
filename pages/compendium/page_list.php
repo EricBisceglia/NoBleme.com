@@ -16,6 +16,9 @@ $page_title_en    = "Compendium";
 $page_title_fr    = "Compendium";
 $page_description = "List of pages in NoBleme's encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
+// Wider header menu
+$header_width = 70;
+
 // Extra js
 $js = array('compendium/list');
 

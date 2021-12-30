@@ -117,6 +117,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?php if($task_list[$i]['road_full']) { ?>
           <td class="bold align_left tooltip_container">
+            <?php if($is_admin) { ?>
+            #<?=$task_list[$i]['id']?> -
+            <?php } ?>
             <?=$task_list[$i]['road_title']?>
             <div class="tooltip">
               <?=$task_list[$i]['road_full']?>
@@ -124,6 +127,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } else { ?>
           <td class="bold align_left">
+            <?php if($is_admin) { ?>
+            #<?=$task_list[$i]['id']?> -
+            <?php } ?>
             <?=$task_list[$i]['road_title']?>
           </td>
           <?php } ?>

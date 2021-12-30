@@ -21,6 +21,9 @@ $page_url         = "pages/admin/stats_metrics";
 $page_title_en    = "Metrics";
 $page_title_fr    = "Performances";
 
+// Wider header menu
+$header_width = 60;
+
 // Extra JS
 $js = array('admin/stats');
 
