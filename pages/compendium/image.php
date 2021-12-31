@@ -176,14 +176,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php } if($compendium_image_data['used']) { ?>
 
-  <p class="align_center padding_bot">
+  <p class="align_center smallpadding_bot">
     <?=__('compendium_image_used', amount: $compendium_image_data['used_count'])?><br>
     <?=$compendium_image_data['used']?>
   </p>
 
   <?php } ?>
 
-  <p class="align_center padding_bot bigger">
+  <p class="align_center padding_bot">
     <?=__link('pages/compendium/random_image?id='.$compendium_image_data['id'], __('compendium_image_random'))?>
   </p>
 

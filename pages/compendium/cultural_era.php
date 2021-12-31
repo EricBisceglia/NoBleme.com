@@ -76,7 +76,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <?php if($compendium_era_data['body']) { ?>
-  <div class="padding_top">
+  <div class="padding_top align_justify">
     <?=$compendium_era_data['body']?>
   </div>
   <?php } ?>

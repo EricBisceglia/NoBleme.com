@@ -229,7 +229,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <?php if($compendium_era_edit_preview_en) { ?>
-  <div class="padding_top">
+  <div class="padding_top align_justify">
     <?=$compendium_era_edit_preview_en?>
   </div>
   <?php } ?>
@@ -263,7 +263,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <?php if($compendium_era_edit_preview_fr) { ?>
-  <div class="padding_top">
+  <div class="padding_top align_justify">
     <?=$compendium_era_edit_preview_fr?>
   </div>
   <?php } ?>
