@@ -82,6 +82,8 @@ ___('tasks_list_state_4',       'EN', "Important");
 ___('tasks_list_state_4',       'FR', "Important");
 ___('tasks_list_state_5',       'EN', "Emergency");
 ___('tasks_list_state_5',       'FR', "Urgence");
+___('tasks_list_open',          'EN', "Unsolved");
+___('tasks_list_open',          'FR', "Non résolu");
 ___('tasks_list_solved',        'EN', "Solved");
 ___('tasks_list_solved',        'FR', "Résolu");
 ___('tasks_list_solved_in',     'EN', "Solved in {{1}}");

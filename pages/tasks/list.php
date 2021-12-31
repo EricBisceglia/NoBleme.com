@@ -164,6 +164,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <select class="table_search" name="tasks_search_status" id="tasks_search_status" onchange="tasks_list_search();">
             <option value="0">&nbsp;</option>
+            <option class="text_black task_status_6" value="-2"><?=__('tasks_list_open')?></option>
             <?php for($i = 6; $i >= 1; $i--) { ?>
             <option class="text_black task_status_<?=($i-1)?>" value="<?=$i?>"><?=__('tasks_list_state_'.($i-1))?></option>
             <?php } ?>
