@@ -18,6 +18,9 @@ $page_url       = "pages/dev/doc_snippets";
 $page_title_en  = "Code snippets";
 $page_title_fr  = "Modèles de code";
 
+// Wider header menu
+$header_width = 60;
+
 // Extra JS
 $js = array('dev/doc');
 
@@ -88,6 +91,9 @@ $page_url         = "pages/nobleme/index";
 $page_title_en    = "Title";
 $page_title_fr    = "Titre";
 $page_description = "Metadescription";
+
+// Wider header menu
+$header_width = 70;
 
 // Extra CSS & JS
 $css  = array('');
@@ -214,6 +220,9 @@ $page_url         = "pages/nobleme/index";
 $page_title_en    = "Title";
 $page_title_fr    = "Titre";
 $page_description = "Metadescription";
+
+// Wider header menu
+$header_width = 70;
 
 // Extra CSS & JS
 $css  = array('');

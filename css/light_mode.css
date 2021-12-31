@@ -1,18 +1,18 @@
 /********************************************** RESET / COMMON ELEMENTS **********************************************/
-body                    { background-color: #FFFFFF; color: #121212;                            }
-h1, h2, h3, h4, h5, h6  { color: #121212;                                                       }
-a                       { color: #37536A; text-decoration: none; filter: none;                  }
-a:focus, a:hover        { color: #78A1BC;                                                       }
-h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a { color: #121212;                                }
-table                   { background-color: #FFFFFF;                                            }
-tbody > tr              { border-top: 1px solid #EEEEEE;                                        }
-tbody > tr:hover        { background-color: #EEEEEE;                                            }
-hr                      { background-color: #EEEEEE;                                            }
-blockquote              { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;         }
-pre                     { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;         }
-textarea                { background-color: #EEEEEE; color: #121212;                            }
-input, select, button   { color: #121212; background-color: #EEEEEE; border: 1px solid #CACACA; }
-input[disabled], button[disabled] { background-color: #EEEEEE;                                  }
+body                    { background-color: #FFFFFF; color: #121212;                                            }
+h1, h2, h3, h4, h5, h6  { color: #121212;                                                                       }
+a                       { color: #37536A; text-decoration: none; filter: none;                                  }
+a:focus, a:hover        { color: #78A1BC;                                                                       }
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a { color: #121212;                                                }
+table                   { background-color: #FFFFFF;                                                            }
+tbody > tr              { border-top: 1px solid #EEEEEE;                                                        }
+tbody > tr:hover        { background-color: #EEEEEE;                                                            }
+hr                      { background-color: #EEEEEE;                                                            }
+blockquote              { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;                         }
+pre                     { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;                         }
+textarea                { background-color: #EEEEEE; color: #121212;                                            }
+input, select, button   { color: #121212; background-color: #EEEEEE; border: 1px solid #CACACA;                 }
+input[disabled], button[disabled] { background-color: #EEEEEE;                                                  }
 select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                              ,
 input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus) ,
 input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)                {
@@ -23,19 +23,20 @@ input[type='file']      { background-color: #FFFFFF; border: none; color: #12121
 input:not([type])       { background-color: #EEEEEE;                                                            }
 
 /****************************************************** HEADER *******************************************************/
-.header_topmenu                 { background-color: #EEEEEE;                                                    }
-.header_topmenu_title           { color: #121212; background-color: #EEEEEE;                                    }
-.header_topmenu_title:hover     { color: #B00B1E; background-color: #121212;                                    }
-.header_topmenu_title_selected  { color: #B00B1E; background-color: #121212;                                    }
-.header_infobar                 { background-color: #EEEEEE; border-bottom: 3px solid #121212;                  }
-.header_infobar_link            { color: #37536A;                                                               }
-.header_infobar_link:hover      { color: #78A1BC;                                                               }
-.header_submenu                 { background-color: #FFFFFF; color: #37536A; border-bottom: 2px solid #CACACA;  }
-.header_submenu_title           { color: #121212;                                                               }
-.header_submenu_link            { color: #37536A;                                                               }
-.header_submenu_link:hover      { filter: none; color: #78A1BC;                                                 }
-footer                          { color: #999999; filter: none;                                                 }
-.login_form_text                { color: #121212;                                                               }
+.header_topbar                  { background-color: #EEEEEE;                                    }
+.header_topmenu                 { background-color: #EEEEEE;                                    }
+.header_topmenu_title           { color: #121212; background-color: #EEEEEE;                    }
+.header_topmenu_title:hover     { color: #EEEEEE; background-color: #121212;                    }
+.header_topmenu_title_selected  { color: #EEEEEE; background-color: #121212;                    }
+.header_infobar                 { background-color: #EEEEEE; border-bottom: 3px solid #121212;  }
+.header_infobar_link            { color: #37536A;                                               }
+.header_infobar_link:hover      { color: #78A1BC;                                               }
+.header_submenu                 { background-color: #FFFFFF; color: #37536A;                    }
+.header_submenu_title           { color: #121212;                                               }
+.header_submenu_link            { color: #37536A;                                               }
+.header_submenu_link:hover      { filter: none; color: #78A1BC;                                 }
+footer                          { color: #999999; filter: none;                                 }
+.login_form_text                { color: #121212;                                               }
 
 /***************************************************** TOOLTIPS ******************************************************/
 .tooltip_container:hover .tooltip { color: #121212; background-color: #FFFFFF ; border-radius: 5px  ;

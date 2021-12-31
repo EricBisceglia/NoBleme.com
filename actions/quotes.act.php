@@ -68,7 +68,7 @@ function quotes_get( int $quote_id ) : mixed
   $data['submitter']    = sanitize_output($dquote['q_submitter']);
   $data['body']         = sanitize_output($dquote['q_body']);
   $data['body_full']    = sanitize_output($dquote['q_body'], true);
-  $data['date']         = sanitize_output(date('Y-m-d', $dquote['q_date']));
+  $data['date']         = ($dquote['q_date']) ? sanitize_output(date('Y-m-d', $dquote['q_date'])) : '';
   $data['lang']         = $dquote['q_lang'];
   $data['nsfw']         = $dquote['q_nsfw'];
 

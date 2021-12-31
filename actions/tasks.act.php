@@ -164,7 +164,7 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   // Sanitize the search parameters
   $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)         : 0;
   $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')      : '';
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1)    : 0;
+  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -2)    : 0;
   $search_status_id = sanitize($search_status - 1, 'int', 0, 5);
   $search_created   = isset($search['created'])   ? sanitize($search['created'], 'int', 0)    : 0;
   $search_reporter  = isset($search['reporter'])  ? sanitize($search['reporter'], 'string')   : '';
@@ -209,7 +209,9 @@ function tasks_list(  string  $sort_by    = 'status'  ,
     $qtasks .= "  AND       dev_tasks.id                                = '$search_id'          ";
   if($search_title)
     $qtasks .= "  AND       dev_tasks.title_$lang                    LIKE '%$search_title%'     ";
-  if($search_status == -1)
+  if($search_status == -2)
+    $qtasks .= "  AND       dev_tasks.finished_at                       = 0                     ";
+  else if($search_status == -1)
     $qtasks .= "  AND       dev_tasks.finished_at                       > 0                     ";
   else if($search_status > 0 && $search_status <= 6)
     $qtasks .= "  AND       dev_tasks.priority_level                    = '$search_status_id'

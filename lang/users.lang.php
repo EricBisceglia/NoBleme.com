@@ -240,31 +240,33 @@ EOT
 
 
 // Edit form
-___('users_profile_edit_bilingual', 'EN', "Spoken languages");
-___('users_profile_edit_bilingual', 'FR', "Langues parlées");
+___('users_profile_edit_bilingual',   'EN', "Spoken languages");
+___('users_profile_edit_bilingual',   'FR', "Langues parlées");
 
-___('users_profile_edit_birthday',  'EN', "Birth date (day - month - year)");
-___('users_profile_edit_birthday',  'FR', "Date de naissance (jour - mois - année)");
+___('users_profile_edit_birthday',    'EN', "Birth date (day - month - year)");
+___('users_profile_edit_birthday',    'FR', "Date de naissance (jour - mois - année)");
 
-___('users_profile_edit_residence', 'EN', "Your place of residence (country, city, etc.)");
-___('users_profile_edit_residence', 'FR', "Votre localisation (pays, ville, etc.)");
+___('users_profile_edit_residence',   'EN', "Your place of residence (country, city, etc.)");
+___('users_profile_edit_residence',   'FR', "Votre localisation (pays, ville, etc.)");
 
-___('users_profile_edit_english',   'EN', " (in english)");
-___('users_profile_edit_english',   'FR', " (en anglais)");
-___('users_profile_edit_french',    'EN', " (in french)");
-___('users_profile_edit_french',    'FR', " (en français)");
+___('users_profile_edit_english',     'EN', " (in english)");
+___('users_profile_edit_english',     'FR', " (en anglais)");
+___('users_profile_edit_french',      'EN', " (in french)");
+___('users_profile_edit_french',      'FR', " (en français)");
 
-___('users_profile_edit_pronouns',  'EN', "Your {{external|https://en.wikipedia.org/wiki/Preferred_gender_pronoun|preferred pronouns}}");
-___('users_profile_edit_pronouns',  'FR', "Vos {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|pronoms}}");
+___('users_profile_edit_pronouns_en', 'EN', "Your {{external|https://en.wikipedia.org/wiki/Preferred_gender_pronoun|preferred pronouns}}");
+___('users_profile_edit_pronouns_en', 'FR', "Vos {{external|https://en.wikipedia.org/wiki/Preferred_gender_pronoun|pronoms}}");
+___('users_profile_edit_pronouns_fr', 'EN', "Your {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|preferred pronouns}}");
+___('users_profile_edit_pronouns_fr', 'FR', "Vos {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|pronoms}}");
 
-___('users_profile_edit_text',      'EN', "Custom text - You can use {{link|pages/doc/bbcodes|BBCodes}}");
-___('users_profile_edit_text',      'FR', "Texte libre - {{link|pages/doc/bbcodes|BBCodes}} autorisés");
+___('users_profile_edit_text',        'EN', "Custom text - You can use {{link_popup|pages/doc/bbcodes|BBCodes}}");
+___('users_profile_edit_text',        'FR', "Texte libre - {{link_popup|pages/doc/bbcodes|BBCodes}} autorisés");
 
-___('users_profile_edit_submit',    'EN', "Customize my public profile");
-___('users_profile_edit_submit',    'FR', "Personnaliser mon profil public");
+___('users_profile_edit_submit',      'EN', "Customize my public profile");
+___('users_profile_edit_submit',      'FR', "Personnaliser mon profil public");
 
-___('users_profile_edit_preview',   'EN', "Preview of your custom text:");
-___('users_profile_edit_preview',   'FR', "Prévisualisation de votre texte libre :");
+___('users_profile_edit_preview',     'EN', "Preview of your custom text:");
+___('users_profile_edit_preview',     'FR', "Prévisualisation de votre texte libre :");
 
 
 

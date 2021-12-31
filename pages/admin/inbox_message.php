@@ -86,7 +86,7 @@ if(isset($admin_mail['error'])) { ?>
   <h5 class="padding_top indented">
     <?=$admin_mail['title']?>
     <?php if($admin_mail['sender_id']) { ?>
-    <?=__icon('edit', class: 'pointer admin_mail_icon valign_middle spaced_left', alt: 'E', title: __('admin_mail_chain_reply'), identifier: 'admin_mail_reply_icon', onclick: 'admin_mail_reply();')?>
+    <?=__icon('edit', class: 'pointer admin_mail_icon valign_middle spaced_left', alt: 'E', title: __('admin_mail_chain_reply'), identifier: 'admin_mail_reply_icon', onclick: "admin_mail_reply();")?>
     <?php } if($is_admin) { ?>
     <?=__icon('delete', class: 'pointer admin_mail_icon valign_middle spaced_left', alt: 'X', title: __('delete'), title_case: 'initials' , identifier: 'admin_mail_reply_icon', onclick: "admin_mail_delete(".$admin_mail['id'].", '".__('admin_mail_delete_confirm')."');")?>
     <?php } ?>

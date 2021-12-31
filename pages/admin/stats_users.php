@@ -23,6 +23,9 @@ $page_url         = "pages/admin/stats_users";
 $page_title_en    = "Users";
 $page_title_fr    = "Comptes";
 
+// Wider header menu
+$header_width = 100;
+
 // Extra JS & CSS
 $js   = array('admin/stats');
 $css  = array('admin');

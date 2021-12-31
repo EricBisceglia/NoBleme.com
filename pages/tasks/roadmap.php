@@ -52,7 +52,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
     <?=__link('pages/tasks/list', __('tasks_roadmap_title'), 'noglow')?>
     <?php if($is_admin) { ?>
-      <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', onclick: 'tasks_milestones_popin();')?>
+      <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/tasks/add')?>
+      <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', onclick: "tasks_milestones_popin();")?>
       <?php if(!isset($_GET['user'])) { ?>
       <?=__icon('user', alt: 'U', title: __('tasks_roadmap_user'), href: 'pages/tasks/roadmap?user')?>
       <?php } else { ?>
@@ -116,6 +117,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?php if($task_list[$i]['road_full']) { ?>
           <td class="bold align_left tooltip_container">
+            <?php if($is_admin) { ?>
+            #<?=$task_list[$i]['id']?> -
+            <?php } ?>
             <?=$task_list[$i]['road_title']?>
             <div class="tooltip">
               <?=$task_list[$i]['road_full']?>
@@ -123,6 +127,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } else { ?>
           <td class="bold align_left">
+            <?php if($is_admin) { ?>
+            #<?=$task_list[$i]['id']?> -
+            <?php } ?>
             <?=$task_list[$i]['road_title']?>
           </td>
           <?php } ?>

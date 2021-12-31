@@ -64,11 +64,11 @@ Dans cette nouvelle société hyperconnectée, il est devenu impossible de suivr
 EOT
 );
 ___('compendium_index_intro_3', 'EN', <<<EOT
-You might be wondering why this compendium has been created, whether it has a deliberate political bias, who runs it, which guidelines it follows, all those questions and more are answered in our {{link|pages/compendium/mission_statement|mission statement}}.
+You might be wondering what a compendium is, whether there is a deliberate political bias, who writes the content, which guidelines it follows, all those questions and more are answered in our {{link|pages/compendium/mission_statement|mission statement}}.
 EOT
 );
 ___('compendium_index_intro_3', 'FR', <<<EOT
-Si vous vous demandez dans quel but ce compendium a été crée, d'où viennent ses contenus, s'il a un biais politique délibéré, des réponses à ces questions et à d'autres se trouvent dans notre {{link|pages/compendium/mission_statement|foire aux questions}}.
+Si vous vous demandez ce qu'est un compendium, s'il y a un biais politique délibéré, qui écrit les contenus, des réponses à ces questions et à d'autres se trouvent dans notre {{link|pages/compendium/mission_statement|foire aux questions}}.
 EOT
 );
 ___('compendium_index_intro_4', 'EN', <<<EOT
@@ -1003,6 +1003,8 @@ ___('compendium_faq_contents',  'FR', "Sommaire des questions :");
 
 
 // Questions
+___('compendium_faq_question_0',  'EN', "What is a compendium?");
+___('compendium_faq_question_0',  'FR', "Qu'est-ce qu'un compendium ?");
 ___('compendium_faq_question_1',  'EN', "What will I find in this compendium?");
 ___('compendium_faq_question_1',  'FR', "Que trouverais-je dans ce compendium ?");
 ___('compendium_faq_question_2',  'EN', "What are the compendium's goals?");
@@ -1036,6 +1038,24 @@ ___('compendium_faq_question_15', 'FR', "Où / comment se tenir au courant des f
 
 
 // Answers
+___('compendium_faq_answer_0_1',  'EN', <<<EOT
+The Merriam-Webster dictionary defines a compendium as being "a brief summary of a larger work or of a field of knowledge".
+EOT
+);
+___('compendium_faq_answer_0_1',  'FR', <<<EOT
+Le Trésor de la langue française définit un compendium comme étant un « résumé de l'ensemble d'une science, d'une doctrine » et par extension la « brève synthèse d'une totalité ».
+EOT
+);
+___('compendium_faq_answer_0_2',  'EN', <<<EOT
+NoBleme's compendium fits this definition, as it has a focus on quality over quantity. Consider it a brief summary of the near infinite topic that is 21st century culture.
+EOT
+);
+___('compendium_faq_answer_0_2',  'FR', <<<EOT
+Le compendium de NoBleme correspond à cette définition : il s'agit d'une brève synthèse du sujet très vaste qu'est la culture du 21ème siècle, cherchant à faire de la qualité plutôt que de la quantité.
+EOT
+);
+
+
 ___('compendium_faq_answer_1_1',  'EN', <<<EOT
 A documentation of elements of 21st century culture.
 EOT

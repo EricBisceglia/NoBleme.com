@@ -23,6 +23,9 @@ $page_url         = "pages/admin/stats_guests";
 $page_title_en    = "Guests";
 $page_title_fr    = "Visites";
 
+// Wider header menu
+$header_width = 60;
+
 // Extra JS
 $js = array('admin/stats');
 

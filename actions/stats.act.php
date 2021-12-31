@@ -640,11 +640,11 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
     $data[$i]['hidden']   = ($row['u_hidden']);
 
     // Update the stats
-    $sum_visited  += ($row['u_visit'] >= (time() - 86400))  ? 1 : 0;
-    $sum_english  += ($row['u_lang'] == 'EN')               ? 1 : 0;
-    $sum_french   += ($row['u_lang'] == 'FR')               ? 1 : 0;
-    $sum_dark     += ($row['u_theme'] == 'dark')            ? 1 : 0;
-    $sum_light    += ($row['u_theme'] == 'light')           ? 1 : 0;
+    $sum_visited  += ($row['u_visit'] >= (time() - 8640000))  ? 1 : 0;
+    $sum_english  += ($row['u_lang'] == 'EN')                 ? 1 : 0;
+    $sum_french   += ($row['u_lang'] == 'FR')                 ? 1 : 0;
+    $sum_dark     += ($row['u_theme'] == 'dark')              ? 1 : 0;
+    $sum_light    += ($row['u_theme'] == 'light')             ? 1 : 0;
     $sum_profile  += ($row['u_birthday'] != '0000-00-00' || $row['u_location'] || $row['u_languages'] || $row['u_pronouns_en'] || $row['u_pronouns_fr'] || $row['u_profile_en'] || $row['u_profile_fr']) ? 1 : 0;
   }
 

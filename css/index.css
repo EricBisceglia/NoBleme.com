@@ -1,7 +1,9 @@
 /************************************************** LOGO HEARTBEAT ***************************************************/
-.nobleme_logo:hover           { animation-name: nobleme-logo-blink              ;
+.nobleme_logo                 { animation-name: nobleme-logo-blink              ;
                                 animation-iteration-count: infinite             ;
-                                animation-duration: 4500ms;                     }
+                                animation-duration: 4500ms;                     ;
+                                animation-play-state: paused;                   }
+.nobleme_logo:hover           { animation-play-state: running;                  }
 @keyframes nobleme-logo-blink { 0%   { filter: drop-shadow(0 0 10px #B00B1E);   }
                                 10%  { filter: drop-shadow(0 0 10px #B00B1E);   }
                                 40%  { filter: none;                            }

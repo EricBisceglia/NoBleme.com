@@ -20,6 +20,9 @@ $page_url         = "pages/dev/scheduler";
 $page_title_en    = "Task scheduler";
 $page_title_fr    = "Tâches planifiées";
 
+// Wider header menu
+$header_width = 60;
+
 // Extra JS
 $js = array('dev/scheduler');
 

@@ -936,8 +936,8 @@ ___('submenu_user_logout_logout',     'FR', "Se déconnecter du compte");
 
 
 // Submenu: Admin
-___('submenu_admin_activity',       'EN', "Mod tools");
-___('submenu_admin_activity',       'FR', "Outils de modération");
+___('submenu_admin_activity',       'EN', "Mod. tools");
+___('submenu_admin_activity',       'FR', "Outils de mod.");
 ___('submenu_admin_inbox',          'EN', "Administrative mail");
 ___('submenu_admin_inbox',          'FR', "Courrier administratif");
 ___('submenu_admin_modlogs',        'EN', "Moderation logs");
