@@ -324,9 +324,9 @@ function tasks_list(  string  $sort_by    = 'status'  ,
     $temp                   = ($lang != 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $temp;
     $temp                   = ($sort_by == 'roadmap' && !$row['t_public']) ? __('tasks_roadmap_private').$temp : $temp;
     $data[$i]['title']      = sanitize_output(string_truncate($temp, 42, '…'));
-    $data[$i]['road_title'] = sanitize_output(string_truncate($temp, 60, '…'));
+    $data[$i]['road_title'] = sanitize_output(string_truncate($temp, 55, '…'));
     $data[$i]['fulltitle']  = (strlen($temp) > 42) ? sanitize_output($temp) : '';
-    $data[$i]['road_full']  = (strlen($temp) > 60) ? sanitize_output($temp) : '';
+    $data[$i]['road_full']  = (strlen($temp) > 55) ? sanitize_output($temp) : '';
     $data[$i]['shorttitle'] = sanitize_output(string_truncate($temp, 38, '…'));
     $temp                   = sanitize_output(__('tasks_list_solved'));
     $data[$i]['status']     = ($row['t_finished']) ? $temp : sanitize_output(__('tasks_list_state_'.$row['t_status']));
