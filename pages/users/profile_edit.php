@@ -182,7 +182,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <div style="flex: 8;"<?=$hide_lang_full?>>
 
-          <label for="profile_edit_pronouns_fr"><?=__('users_profile_edit_pronouns')?><span<?=$hide_lang_full?>><?=__('users_profile_edit_french')?></span></label>
+          <label for="profile_edit_pronouns_fr"><?=__('users_profile_edit_pronouns_fr')?><span<?=$hide_lang_full?>><?=__('users_profile_edit_french')?></span></label>
           <input type="text" class="indiv" id="profile_edit_pronouns_fr" name="profile_edit_pronouns_fr" value="<?=$profile_data['pronoun_fr']?>" maxlength="40">
 
           <div class="padding_top">
@@ -204,7 +204,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <div style="flex: 8;">
 
-          <label for="profile_edit_pronouns_en"><?=__('users_profile_edit_pronouns')?><span<?=$hide_lang_full?>><?=__('users_profile_edit_english')?></span></label>
+          <label for="profile_edit_pronouns_en"><?=__('users_profile_edit_pronouns_en')?><span<?=$hide_lang_full?>><?=__('users_profile_edit_english')?></span></label>
           <input type="text" class="indiv" id="profile_edit_pronouns_en" name="profile_edit_pronouns_en" value="<?=$profile_data['pronoun_en']?>" maxlength="25">
 
           <div class="padding_top">
