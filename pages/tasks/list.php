@@ -261,7 +261,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $task_list['rows']; $i++) { ?>
 
-      <tr class="align_center pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
+      <tr class="align_center nowrap pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
 
         <td>
           #<?=$task_list[$i]['id']?>
@@ -284,28 +284,28 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$task_list[$i]['shorttitle']?>
         </td>
 
-        <td class="nowrap<?=$task_list[$i]['css_status']?>"">
+        <td class="<?=$task_list[$i]['css_status']?>"">
           <?=$task_list[$i]['status']?>
         </td>
 
-        <td class="nowrap">
+        <td>
           <?=$task_list[$i]['created']?>
         </td>
 
-        <td class="nowrap desktop">
+        <td class="desktop">
           <?=$task_list[$i]['author']?>
         </td>
 
-        <td class="nowrap desktop">
+        <td class="desktop">
           <?=$task_list[$i]['category']?>
         </td>
 
-        <td class="nowrap desktop">
+        <td class="desktop">
           <?=$task_list[$i]['milestone']?>
         </td>
 
         <?php if($is_admin) { ?>
-        <td class="nowrap desktop">
+        <td class="desktop">
           <?php if($task_list[$i]['nolang_en']) { ?>
           <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="14" alt="<?=__('EN')?>" title="<?=__('tasks_list_nolang_en')?>">
           <?php } if($task_list[$i]['nolang_fr']) { ?>
