@@ -99,9 +99,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <?php if($compendium_missing_data['body']) { ?>
-  <p class="align_justify padding_bot">
+  <div class="align_justify padding_top padding_bot">
     <?=$compendium_missing_data['body']?>
-  </p>
+  </div>
   <?php } ?>
 
   <?php if(!$compendium_missing_data['count']) { ?>

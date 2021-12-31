@@ -448,19 +448,19 @@ EOT
 
 
 // Image usage
-___('compendium_image_used',  'EN', "This image is being used on this page:");
-___('compendium_image_used',  'FR', "Cette image est utilisée sur cette page :");
-___('compendium_image_used+', 'EN', "This image is being used on these pages:");
-___('compendium_image_used+', 'FR', "Cette image est utilisée sur ces pages :");
+___('compendium_image_used',  'EN', "This image is featured on the following page:");
+___('compendium_image_used',  'FR', "Cette image est présente dans l'article suivant :");
+___('compendium_image_used+', 'EN', "This image is featured on the following pages:");
+___('compendium_image_used+', 'FR', "Cette image est présente dans les articles suivants :");
 
 
 // Disclaimer
 ___('compendium_image_disclaimer',  'EN', <<<EOT
-This image is being hosted here for encyclopedic purposes, as a part of NoBleme's {{link|pages/compendium/index|21st century compendium}}. If you are the author of this image and want it to be removed from this website, contact us by using our {{link|pages/messages/admins|contact form}} and it will be removed from the website.
+This image is displayed here for encyclopedic purposes, as a part of NoBleme's {{link|pages/compendium/index|21st century compendium}}.
 EOT
 );
 ___('compendium_image_disclaimer',  'FR', <<<EOT
-Cette image est présente ici pour des raisons encyclopédiques, en tant qu'élément du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous détenez la propriété intellectuelle de cette image et désirez qu'elle soit supprimée, utilisez notre {{link|pages/messages/admins|formulaire de contact}} et nous coopèrerons.
+Cette image est présente ici pour des raisons encyclopédiques, en tant qu'élément du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme.
 EOT
 );
 
