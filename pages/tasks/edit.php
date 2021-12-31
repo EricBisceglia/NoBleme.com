@@ -215,9 +215,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </div>
         <div class="flex align_center tasks_edit_category_icon nowrap">
 
-          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_popin();')?>
+          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: "tasks_categories_popin();")?>
 
-          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_reload("edit");')?>
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: "tasks_categories_reload('edit?id=".$task_id."');")?>
 
         </div>
 
@@ -242,9 +242,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </div>
         <div class="flex align_center tasks_edit_category_icon nowrap">
 
-          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_popin();')?>
+          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: "tasks_milestones_popin();")?>
 
-          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload("edit");')?>
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: "tasks_milestones_reload('edit?id=".$task_id."');")?>
 
         </div>
 

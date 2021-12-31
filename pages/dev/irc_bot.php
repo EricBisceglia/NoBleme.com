@@ -290,7 +290,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_center">
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'irc_bot_purge_message_queue('.$i.');')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "irc_bot_purge_message_queue('".$i."');")?>
         </td>
         <td>
           <?=$irc_bot_message_queue[$i]['line']?>

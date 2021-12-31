@@ -204,7 +204,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
       <?php if($is_moderator) { ?>
-      <?=__icon('user_add', alt: '+', title: __('add'), title_case: 'initials', class: 'valign_h4 pointer spaced', onclick: 'meetups_attendee_add_form();')?>
+      <?=__icon('user_add', alt: '+', title: __('add'), title_case: 'initials', class: 'valign_h4 pointer spaced', onclick: "meetups_attendee_add_form();")?>
       <?php } ?>
 
     </h4>

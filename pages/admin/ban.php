@@ -366,7 +366,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
-          <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, class: 'valign_middle spaced', alt: 'M', title: __('details'), title_case: 'initials', onclick: 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].', '.$banned_users[$i]['ip_ban_id'].');')?>
+          <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, class: 'valign_middle spaced', alt: 'M', title: __('details'), title_case: 'initials', onclick: "admin_ban_fetch_log(0, '".$banned_users[$i]['id']."', '".$banned_users[$i]['ip_ban_id']."');")?>
           <?php if($banned_users[$i]['type'] == 'user') { ?>
           <?=__icon('edit', is_small: true, href: 'pages/admin/ban_edit?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'M', title: __('modify'), title_case: 'initials')?>
           <?=__icon('delete', is_small: true, href: 'pages/admin/ban_delete?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
@@ -571,7 +571,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, alt: 'M', title: __('details'), title_case: 'initials', onclick: 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
+            <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, alt: 'M', title: __('details'), title_case: 'initials', onclick: "admin_ban_fetch_log('".$ban_logs[$i]['id']."');")?>
             <?php if($is_admin && $ban_logs[$i]['end']) { ?>
             <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_ban_delete_log('".$ban_logs[$i]['id']."', '".__('admin_ban_logs_info_delete')."')")?>
             <?php } ?>
