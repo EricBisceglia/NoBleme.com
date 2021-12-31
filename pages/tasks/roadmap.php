@@ -113,7 +113,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php } ?>
 
-        <tr class="align_center pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
+        <tr class="align_center nowrap pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
 
           <?php if($task_list[$i]['road_full']) { ?>
           <td class="bold align_left tooltip_container">
@@ -134,11 +134,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } ?>
 
-          <td class="nowrap">
+          <td>
             <?=$task_list[$i]['created']?>
           </td>
 
-          <td class="nowrap">
+          <td>
             <?=$task_list[$i]['solved']?>
           </td>
 
