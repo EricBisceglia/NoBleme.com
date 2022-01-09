@@ -98,5 +98,5 @@ a.forced_link                            { color: #37536A; text-decoration: none
 a.forced_link:focus, a.forced_link:hover { color: #78A1BC; text-decoration: none; filter: none; }
 
 /***************************************************** INDEX LOGO ****************************************************/
-.nobleme_logo       { filter: none;               }
-.nobleme_logo:hover { animation: none !important; }
+.nobleme_logo       { filter: none; animation: none !important; }
+.nobleme_logo:hover { animation: none !important;               }
