@@ -961,13 +961,16 @@ function user_restrict_to_users() : void
   // Fetch the user's language
   $lang = user_get_language();
 
+  // Determine the icon's color
+  $icon_color = (user_get_mode() == 'dark') ? ' red' : '';
+
   // If the user is logged out, throw an error page asking the user to log in or register
   if(!user_is_logged_in())
   {
     if($lang == 'EN')
-      error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> icon on the top right of the page");
+      error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle$icon_color\"> icon on the top right of the page");
     else
-      error_page("Cette page nécessite de vous connecter à un compte.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> en haut à droite de la page");
+      error_page("Cette page nécessite de vous connecter à un compte.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle$icon_color\"> en haut à droite de la page");
   }
 }
 
