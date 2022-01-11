@@ -422,11 +422,11 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
     <meta property="og:description" content="<?=$page_description?>">
     <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="NoBleme">
-    <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/common/logo.png">
+    <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/common/logo_filled.png">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="fr_FR">
     <meta name="twitter:title" content="<?=$page_title?>">
-    <meta name="twitter:image" content="<?=$GLOBALS['website_url']?>img/common/logo.png">
+    <meta name="twitter:image" content="<?=$GLOBALS['website_url']?>img/common/logo_filled.png">
     <meta name="twitter:image:alt" content="NoBleme.com - <?=$page_description?>">
     <meta name="twitter:description" content="NoBleme.com - <?=$page_description?>">
     <meta name="twitter:card" content="summary_large_image">
