@@ -416,13 +416,19 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
     <title><?=$page_title?></title>
     <link rel="shortcut icon" href="<?=$path?>favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="robots" content="index, follow">
     <meta name="description" content="<?=$page_description?>">
     <meta property="og:title" content="<?=$page_title?>">
     <meta property="og:description" content="<?=$page_description?>">
     <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
-    <meta property="og:site_name" content="NoBleme.com">
-    <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/divers/404_gauche.png">
+    <meta property="og:site_name" content="NoBleme">
+    <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/common/logo.png">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta name="twitter:title" content="<?=$page_title?>">
+    <meta name="twitter:image" content="<?=$GLOBALS['website_url']?>img/common/logo.png">
     <meta name="twitter:image:alt" content="NoBleme.com - <?=$page_description?>">
+    <meta name="twitter:description" content="NoBleme.com - <?=$page_description?>">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="<?=$theme_color?>">
     <link rel="icon" href="<?=$path.$favicon?>">
