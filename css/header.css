@@ -18,8 +18,8 @@
 .header_topmenu_mail    { height: 3.6rem; margin: 0.2em 0.8em 0 0;                  }
 .header_topmenu_panel   { height: 3.2rem; margin: 0.1em 0.8em 0 -0.2em;             }
 .header_topmenu_flag    { height: 2.6rem; margin: 0 0.8em 0 0;                    } }
-@media(max-width: 1800px) {
-.header_topmenu_zone    { margin-left: 0rem; margin-right: 0rem;                  } }
+@media(max-width: 1279px) {
+.header_topmenu_zone    { margin-left: 0rem; margin-right: 0rem;                 } }
 @media (max-width: 1080px) {
 .header_topmenu_title   { padding: 0.6rem 1.2rem 0.6rem 1.2rem; font-size: 2.2rem; }
 .header_topmenu_account { height: 2.6rem; margin: 0.2em 0.8em 0 0;                 }
