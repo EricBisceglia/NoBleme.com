@@ -128,19 +128,27 @@ EOT
 ___('nobleme_follow_social_title',  'EN', "Social media");
 ___('nobleme_follow_social_title',  'FR', "Médias sociaux");
 ___('nobleme_follow_social_body_1', 'EN', <<<EOT
-There are currently no official NoBleme accounts or pages on any social media.
+NoBleme has two official socia media accounts. Any other social media account claiming to represent NoBleme is not an official account.
 EOT
 );
 ___('nobleme_follow_social_body_1', 'FR', <<<EOT
-Il n'existe actuellement aucun compte NoBleme officiel ni aucune page NoBleme officielle sur les réseaux sociaux.
+NoBleme possède deux comptes officiels sur des sites tiers. Tout autre compte sur un site tiers affirmant représenter NoBleme ne représente pas NoBleme.
 EOT
 );
 ___('nobleme_follow_social_body_2', 'EN', <<<EOT
-This might change in the future, as we are aware that some people would like to be able to follow NoBleme's activity on bigger, more popular platforms or websites. These plans are however not a priority at the moment.
+{{external_popup|https://twitter.com/badnobleme|Our twitter account @badnobleme}} relays updates from the {{link|pages/compendium/index|21st century compendium}}, along with major NoBleme website and community news. It is a mostly automated account which will usually not engage in any conversations over Twitter.
 EOT
 );
 ___('nobleme_follow_social_body_2', 'FR', <<<EOT
-Cela pourrait changer dans le futur : nous sommes au courant que certaines personnes voudraient pouvoir suivre l'activité de NoBleme sur des plateformes plus grandes et plus populaires. Cela sera fait à terme, mais il ne s'agit actuellement pas d'un sujet prioritaire.
+{{external_popup|https://twitter.com/badnobleme|Notre compte twitter @badnobleme}} partage l'activité du {{link|pages/compendium/index|compendium du 21ème siècle}}, ainsi que les nouvelles majeures concernant la communauté et le site. Le compte est automatisé, et n'a pas pour but de participer à des conversations sur Twitter.
+EOT
+);
+___('nobleme_follow_social_body_3', 'EN', <<<EOT
+{{external_popup|https://reddit.com/r/NoBleme/|Our subreddit r/nobleme}} relays updates from the {{link|pages/compendium/index|21st century compendium}}, along with major NoBleme website and community news. Feel free to engage in conversations on the subreddit, but make sure to respect its rules and keep it on the topic of NoBleme.
+EOT
+);
+___('nobleme_follow_social_body_3', 'FR', <<<EOT
+{{external_popup|https://reddit.com/r/NoBleme/|Notre subreddit r/nobleme}} partage l'activité du {{link|pages/compendium/index|compendium du 21ème siècle}}, ainsi que les nouvelles majeures concernant la communauté et le site. Si vous participez à des conversations sur le subreddit, assurez-vous d'en respecter les règles.
 EOT
 );
 
