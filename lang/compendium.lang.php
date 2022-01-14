@@ -949,6 +949,39 @@ ___('compendium_type_delete_ok',          'FR', "La thématique a bien été sup
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   SOCIAL MEDIA                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('compendium_social_media_title',        'EN', "Publish on social media");
+___('compendium_social_media_title',        'FR', "Publier sur les réseaux sociaux");
+
+
+// Reddit
+___('compendium_social_media_reddit',   'EN', "{{external_popup|https://www.reddit.com/r/NoBleme/submit|Reddit}}");
+___('compendium_social_media_reddit',   'FR', "{{external_popup|https://www.reddit.com/r/NoBleme/submit|Reddit}}");
+___('compendium_social_media_reddit_2', 'EN', "{{1}} / {{2}}");
+___('compendium_social_media_reddit_2', 'FR', "{{1}} / {{2}}");
+
+
+// Twitter
+___('compendium_social_media_twitter',  'EN', "{{external_popup|https://twitter.com/compose/tweet|Twitter}}");
+___('compendium_social_media_twitter',  'FR', "{{external_popup|https://twitter.com/compose/tweet|Twitter}}");
+___('compendium_social_media_tweet_1',  'EN', "{{1}} ({{2}}) {{3}}");
+___('compendium_social_media_tweet_1',  'FR', "{{1}} ({{2}}) {{3}}");
+___('compendium_social_media_tweet_2',  'EN', "{{1}} / {{2}} ({{3}}) {{4}}");
+___('compendium_social_media_tweet_2',  'FR', "{{1}} / {{2}} ({{3}}) {{4}}");
+___('compendium_social_media_tweet_3',  'EN', "{{1}} {{2}}");
+___('compendium_social_media_tweet_3',  'FR', "{{1}} {{2}}");
+___('compendium_social_media_tweet_4',  'EN', "{{1}} / {{2}} {{3}}");
+___('compendium_social_media_tweet_4',  'FR', "{{1}} / {{2}} {{3}}");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                    ADMIN TOOLS                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
