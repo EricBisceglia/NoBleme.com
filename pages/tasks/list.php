@@ -270,7 +270,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($task_list[$i]['fulltitle']) { ?>
         <td class="bold align_left tooltip_container desktop">
           <?=$task_list[$i]['title']?>
-          <div class="tooltip">
+          <div class="tooltip dowrap">
             <?=$task_list[$i]['fulltitle']?>
           </div>
         </td>

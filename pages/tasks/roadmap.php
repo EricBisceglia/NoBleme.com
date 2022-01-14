@@ -121,7 +121,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             #<?=$task_list[$i]['id']?> -
             <?php } ?>
             <?=$task_list[$i]['road_title']?>
-            <div class="tooltip">
+            <div class="tooltip dowrap">
               <?=$task_list[$i]['road_full']?>
             </div>
           </td>
