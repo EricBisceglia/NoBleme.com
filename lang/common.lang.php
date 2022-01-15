@@ -143,6 +143,7 @@ function ___( string  $name         ,
  * @param   bool    $is_internal  (OPTIONAL)  Whether the link is internal (on the website) or external.
  * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
  * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
+ * @param   string  $onmouseover  (OPTIONAL)  A javascript option to trigger upon hovering over the link.
  * @param   bool    $popup        (OPTIONAL)  Opens the link in a new window.
  * @param   string  $confirm      (OPTIONAL)  A confirmation dialog that must be accepted before the link is followed.
  *
@@ -155,6 +156,7 @@ function __link(  string  $href                       ,
                   bool    $is_internal  = true        ,
                   string  $path         = "./../../"  ,
                   string  $onclick      = ''          ,
+                  string  $onmouseover  = ''          ,
                   bool    $popup        = false       ,
                   string  $confirm      = ''          ) : string
 {
@@ -174,8 +176,11 @@ function __link(  string  $href                       ,
   // Prepare the onclick
   $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
 
+  // Prepare the onmouseover
+  $onmouseover = ($onmouseover) ? 'onmouseover="'.$onmouseover.'"' : '';
+
   // Return the built link
-  return "<a $class $url $popup $onclick>$text</a>";
+  return "<a $class $url $popup $onclick $onmouseover>$text</a>";
 }
 
 

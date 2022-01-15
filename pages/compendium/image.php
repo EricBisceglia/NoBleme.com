@@ -161,7 +161,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_70">
 
   <div class="padding_top padding_bot align_center">
-    <img src="<?=$path?>img/compendium/<?=$compendium_image_file_name?>"<?=$compendium_image_data['blur']?>>
+    <img src="<?=$path?>img/compendium/<?=$compendium_image_file_name?>"<?=$compendium_image_data['blur']?> onmouseover="unblur();">
   </div>
 
 </div>

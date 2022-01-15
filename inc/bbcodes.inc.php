@@ -192,7 +192,7 @@ function bbcodes( string  $message ) : string
   // [blur]Blurry content[/blur]
 
   // Solved with a regex
-  $message = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="blur">$1</span>', $message);
+  $message = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="blur" onmouseover="unblur();">$1</span>', $message);
 
 
   /*******************************************************************************************************************/
@@ -258,6 +258,7 @@ function nbcodes( string  $message                                              
   $blurring2  = ($nsfw_settings < 2) ? 'class="nbcode_blur_2"' : '';
   $blurring3  = ($nsfw_settings < 1) ? ' nbcode_blur_3' : '';
   $blurring4  = ($nsfw_settings < 1) ? ' class="nbcode_blur_3"' : '';
+  $unblur     = ($nsfw_settings < 2) ? ' onmouseover="unblur();"' : '';
 
 
   /*******************************************************************************************************************/
@@ -299,7 +300,7 @@ function nbcodes( string  $message                                              
   // [nsfw]Blurred text[/nsfw]
 
   // Replace tags with HTML
-  $message = str_replace("[nsfw]", "<span".$blurring4.">", $message, $open);
+  $message = str_replace("[nsfw]", "<span".$blurring4.$unblur.">", $message, $open);
   $message = str_replace("[/nsfw]", "</span>", $message, $close);
 
   // Close leftover open tags
@@ -383,13 +384,13 @@ function nbcodes( string  $message                                              
   // [image-nsfw:image.png|left|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a><br>$3</div>', $message);
+  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring2.$unblur.' src="'.$path.'img/compendium/$1" alt="$1"></a><br>$3</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
+  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring2.$unblur.' src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
 
   // Same thing if the images has no description or alignment
-  $message = preg_replace('/\[image-nsfw:(.*?)\]/i','<a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring.' src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
+  $message = preg_replace('/\[image-nsfw:(.*?)\]/i','<a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring.$unblur.' src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
 
 
   /*******************************************************************************************************************/
@@ -420,19 +421,19 @@ function nbcodes( string  $message                                              
 
   // Depending on privacy levels, blur it or not - both cases are treated with a regex
   if(!$privacy_level['youtube'])
-    $message = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><iframe '.$blurring2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $message);
+    $message = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><iframe '.$blurring2.$unblur.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $message);
   else
     $message = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden').'</span><br><br>$3</div>', $message);
 
   // Same thing if the video has no description
   if(!$privacy_level['youtube'])
-    $message = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><iframe '.$blurring2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
+    $message = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><iframe '.$blurring2.$unblur.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
   else
     $message = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden').'</span></div>', $message);
 
   // Same thing if the video has no description or alignment
   if(!$privacy_level['youtube'])
-    $message = preg_replace('/\[youtube-nsfw:(.*?)\]/i','<div class="align_center"><iframe '.$blurring2.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
+    $message = preg_replace('/\[youtube-nsfw:(.*?)\]/i','<div class="align_center"><iframe '.$blurring2.$unblur.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
   else
     $message = preg_replace('/\[youtube-nsfw:(.*?)\]/i','<div class="align_center"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden').'</span></div>', $message);
 
@@ -458,10 +459,10 @@ function nbcodes( string  $message                                              
   // [gallery-nsfw:image.png|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
+  $message = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.$unblur.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[gallery-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
+  $message = preg_replace('/\[gallery-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.$unblur.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -485,13 +486,13 @@ function nbcodes( string  $message                                              
 
   // Depending on privacy levels, blur it or not - both cases are treated with a regex
   if(!$privacy_level['youtube'])
-    $message = preg_replace('/\[gallery-youtube-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><div class="nbcode_gallery_container"><iframe '.$blurring2.'src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe></div><hr class="nbcode_gallery_hr">$2</div>', $message);
+    $message = preg_replace('/\[gallery-youtube-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><div class="nbcode_gallery_container"><iframe '.$blurring2.$unblur.'src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe></div><hr class="nbcode_gallery_hr">$2</div>', $message);
   else
     $message = preg_replace('/\[gallery-youtube-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden_small').'</span><br><br>$2</div>', $message);
 
   // Same thing if the video has no description
   if(!$privacy_level['youtube'])
-    $message = preg_replace('/\[gallery-youtube-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><div class="nbcode_gallery_container"><iframe '.$blurring2.' src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe></div></div>', $message);
+    $message = preg_replace('/\[gallery-youtube-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><div class="nbcode_gallery_container"><iframe '.$blurring2.$unblur.' src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe></div></div>', $message);
   else
     $message = preg_replace('/\[gallery-youtube-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden_small').'</span></div>', $message);
 
@@ -513,7 +514,7 @@ function nbcodes( string  $message                                              
   /*******************************************************************************************************************/
   // [trends:word]
 
-  // Depending on privacy levels, blur it or not - both cases are treated with a regex
+  // Depending on privacy levels, hide it or not - both cases are treated with a regex
   if(!$privacy_level['trends'])
     $message = preg_replace('/\[trends:(.*?)\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
@@ -526,7 +527,7 @@ function nbcodes( string  $message                                              
   /*******************************************************************************************************************/
   // [trends2:word|word]
 
-  // Depending on privacy levels, blur it or not - both cases are treated with a regex
+  // Depending on privacy levels, hide it or not - both cases are treated with a regex
   if(!$privacy_level['trends'])
     $message = preg_replace('/\[trends2:(.*?)\|(.*?)\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
@@ -539,7 +540,7 @@ function nbcodes( string  $message                                              
   /*******************************************************************************************************************/
   // [trends3:word|word|word]
 
-  // Depending on privacy levels, blur it or not - both cases are treated with a regex
+  // Depending on privacy levels, hide it or not - both cases are treated with a regex
   if(!$privacy_level['trends'])
     $message = preg_replace('/\[trends3:(.*?)\|(.*?)\|(.*?)\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
@@ -552,7 +553,7 @@ function nbcodes( string  $message                                              
   /*******************************************************************************************************************/
   // [trends4:word|word|word|word]
 
-  // Depending on privacy levels, blur it or not - both cases are treated with a regex
+  // Depending on privacy levels, hide it or not - both cases are treated with a regex
   if(!$privacy_level['trends'])
     $message = preg_replace('/\[trends4:(.*?)\|(.*?)\|(.*?)\|(.*?)\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
@@ -565,7 +566,7 @@ function nbcodes( string  $message                                              
   /*******************************************************************************************************************/
   // [trends5:word|word|word|word|word]
 
-  // Depending on privacy levels, blur it or not - both cases are treated with a regex
+  // Depending on privacy levels, hide it or not - both cases are treated with a regex
   if(!$privacy_level['trends'])
     $message = preg_replace('/\[trends5:(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
@@ -586,7 +587,7 @@ function nbcodes( string  $message                                              
   // [copypasta-nsfw=unique_id]Some text[/copypasta-nsfw]
 
   // Handle this with a regex
-  $message = preg_replace('/\[copypasta-nsfw\=(.*?)\](.*?)\[\/copypasta-nsfw\]/is','<pre onclick="to_clipboard(\' \', \'copypasta_$1\', true);" class="monospace spaced dowrap nbcode_copypasta'.$blurring3.'" id="copypasta_$1">$2</pre>', $message);
+  $message = preg_replace('/\[copypasta-nsfw\=(.*?)\](.*?)\[\/copypasta-nsfw\]/is','<pre onclick="to_clipboard(\' \', \'copypasta_$1\', true);" class="monospace spaced dowrap nbcode_copypasta'.$blurring3.'"'.$unblur.' id="copypasta_$1">$2</pre>', $message);
 
 
   /*******************************************************************************************************************/
