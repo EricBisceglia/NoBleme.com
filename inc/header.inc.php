@@ -377,7 +377,8 @@ if(isset($css))
 $javascripts = '
     <script src="'.$path.'js/common/header.js"> </script>
     <script src="'.$path.'js/common/clipboard.js"> </script>
-    <script src="'.$path.'js/common/fetch.js"> </script>';
+    <script src="'.$path.'js/common/fetch.js"> </script>
+    <script src="'.$path.'js/common/unblur.js"> </script>';
 
 // If extra JS files are set, add them to the list
 if (isset($js))

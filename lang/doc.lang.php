@@ -61,8 +61,8 @@ ___('bbcodes_doc_strike',       'FR', "[s]Ce texte[/s] sera barré");
 
 ___('bbcodes_blur',             'EN', "Blurred");
 ___('bbcodes_blur',             'FR', "Flouté");
-___('bbcodes_doc_blur',         'EN', "[blur]This is blurry[/blur], click on it");
-___('bbcodes_doc_blur',         'FR', "[blur]Ceci est flou[/blur], cliquez dessus");
+___('bbcodes_doc_blur',         'EN', "[blur]This is blurry[/blur], hover on it");
+___('bbcodes_doc_blur',         'FR', "[blur]Ceci est flou[/blur], survolez-le");
 
 ___('bbcodes_align',            'EN', "Alignment");
 ___('bbcodes_align',            'FR', "Alignement");

@@ -204,12 +204,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <?php if(!$compendium_pages_list[$i]['fulltitle'] && !$compendium_pages_list[$i]['summary']) { ?>
-        <td class="align_left<?=$compendium_pages_list[$i]['blur']?>">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'bold'.$compendium_pages_list[$i]['blur'])?>
+        <td class="align_left<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur();">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur();')?>
         </td>
         <?php } else { ?>
-        <td class="tooltip_container<?=$compendium_pages_list[$i]['blur']?>">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'])?>
+        <td class="tooltip_container<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur();">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur();')?>
           <div class="tooltip dowrap">
             <h5>
               <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'noglow')?>
