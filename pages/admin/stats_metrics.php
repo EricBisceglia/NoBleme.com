@@ -84,25 +84,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <thead class="align_center">
 
       <tr class="uppercase">
-        <th colspan="2" rowspan="8" class="dark valign_middle">
+        <th colspan="2" rowspan="8" class="background valign_middle">
           <button onclick="admin_metrics_reset('<?=__('admin_metrics_reset_warning')?>');"><?=__('admin_metrics_reset')?></button>
         </th>
-        <th class="dark">
+        <th class="background">
           &nbsp;
         </th>
-        <th class="dark">
+        <th class="background">
           <?=__('admin_metrics_queries')?>
         </th>
-        <th class="dark">
+        <th class="background">
           <?=__('admin_metrics_load')?>
         </th>
-        <th rowspan="9" class="dark">
+        <th rowspan="9" class="background">
           &nbsp;
         </th>
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold background spaced">
           <?=__('admin_metrics_minimum').__(':')?>
         </th>
         <th class="bold blue">
@@ -114,7 +114,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold background spaced">
           <?=__('admin_metrics_average').__(':')?>
         </th>
         <th class="bold purple">
@@ -126,7 +126,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold background spaced">
           <?=__('admin_metrics_maximum').__(':')?>
         </th>
         <th class="bold brown">
@@ -138,13 +138,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="3" class="dark smallest">
+        <th colspan="3" class="background smallest">
           &nbsp;
         </th>
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold background spaced">
           <?=__('admin_metrics_target').__(':')?>
         </th>
         <th class="bold green">
@@ -156,7 +156,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold background spaced">
           <?=__('admin_metrics_warning').__(':')?>
         </th>
         <th class="bold orange">
@@ -168,7 +168,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold background spaced">
           <?=__('admin_metrics_bad').__(':')?>
         </th>
         <th class="bold red">
@@ -180,7 +180,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="5" class="dark">
+        <th colspan="5" class="background">
           &nbsp;
         </th>
       </tr>
@@ -262,7 +262,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } if($admin_reset_metrics <= 0) { ?>
 
       <tr>
-        <td class="uppercase bold dark" colspan="6">
+        <td class="uppercase bold dark text_white" colspan="6">
           <?php if($admin_metrics['realrows'] == $admin_metrics['totalrows']) { ?>
           <?=__('admin_metrics_count', $admin_metrics['totalrows'], 0, 0, array($admin_metrics['totalrows']))?>
           <?php } else { ?>
@@ -277,14 +277,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr id="admin_metrics_row_<?=$admin_metrics[$i]['id']?>">
         <?php if($admin_metrics[$i]['url_full']) { ?>
         <td class="tooltip_container align_left">
-          <?=__link($admin_metrics[$i]['url_full'], $admin_metrics[$i]['url'], 'bold noglow text_white')?>
+          <?=__link($admin_metrics[$i]['url_full'], $admin_metrics[$i]['url'], 'bold noglow')?>
           <div class="tooltip">
             <?=__link($admin_metrics[$i]['url_full'], $admin_metrics[$i]['url_full'])?>
           </div>
         </td>
         <?php } else { ?>
         <td class="align_left">
-          <?=__link($admin_metrics[$i]['url'], $admin_metrics[$i]['url'], 'bold noglow text_white')?>
+          <?=__link($admin_metrics[$i]['url'], $admin_metrics[$i]['url'], 'bold noglow')?>
         </td>
         <?php } ?>
         <td class="nowrap spaced">

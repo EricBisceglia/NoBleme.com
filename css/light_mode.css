@@ -60,6 +60,8 @@ div.popin_body { background: #FFFFFF; }
 .nbcode_dead_link:hover { color: #B00B1E; }
 
 /**************************************************** NOBLEME.CSS ****************************************************/
+.background { background-color: #FFFFFF !important; }
+
 .blur       { text-shadow: 0 0 10px #121212; }
 .blur:hover { color: #121212;                }
 

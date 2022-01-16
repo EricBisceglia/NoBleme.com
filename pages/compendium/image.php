@@ -166,7 +166,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-<div class="width_50">
+<div class="width_50 compendium_image_body">
 
   <?php if($compendium_image_data['body']) { ?>
 

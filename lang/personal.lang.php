@@ -137,6 +137,22 @@ Technologie ; Finance ; Patrimonial ; Comptabilité ; Industrie ; Retail<br
 Français natif ; Bilingue anglais ; Bases d'allemand, russe, espagnol
 EOT
 );
+___('cv_skills_mobile',   'EN', <<<EOT
+Experience ; Communication ; Customer facing<br>
+Digital transformation ; GDPR & Privacy laws<br>
+Operational processes ; ITIL ; Human resources<br>
+Technology ; Finance ; Accounting ; Retail<br>
+Native french ; Fluent english
+EOT
+);
+___('cv_skills_mobile',   'FR', <<<EOT
+Expérience ; Communication ; Facing client<br>
+Transformation numérique ; RGPD & Vie privée<br>
+Process opérationnels ; ITIL ; Agilité<br>
+Technologie ; Finance ; Patrimonial ; Retail<br>
+Français natif ; Bilingue anglais
+EOT
+);
 
 
 // CV: Afterword

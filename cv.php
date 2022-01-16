@@ -18,6 +18,9 @@ $mode         = 'light';
 $hide_header  = true;
 $hide_footer  = true;
 
+// Extra CSS
+$css = array('cv');
+
 
 
 
@@ -76,8 +79,11 @@ $hide_footer  = true;
     <div class="autoflex spaced_right">
       <?=__('cv_skills_name')?>
     </div>
-    <div class="autoflex spaced_left">
+    <div class="autoflex spaced_left desktop">
       <?=__('cv_skills_details')?>
+    </div>
+    <div class="autoflex spaced_left mobile">
+      <?=__('cv_skills_mobile')?>
     </div>
   </div>
 
@@ -99,7 +105,7 @@ $hide_footer  = true;
     <?=__('cv_afterword_3')?>
   </p>
 
-  <p class="dowrap bigpadding_bot">
+  <p class="dowrap bigpadding_bot cv_body">
     <?=__('cv_afterword_4')?>
   </p>
 

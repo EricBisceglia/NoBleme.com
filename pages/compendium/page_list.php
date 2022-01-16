@@ -113,7 +113,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('compendium_page_era')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('era');")?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('compendium_list_appeared')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('appeared');")?>
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('appeared_desc');", class: 'valign_middle pointer desktop')?>
@@ -123,7 +123,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('peak');")?>
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('peak_desc');", class: 'valign_middle pointer desktop')?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('compendium_list_created')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('created');")?>
         </th>
@@ -154,7 +154,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </select>
         </th>
 
-        <th>
+        <th class="desktop">
           <select class="table_search" name="compendium_search_appeared" id="compendium_search_appeared" onchange="compendium_page_list_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $compendium_appearance_list_years['rows']; $i++) { ?>
@@ -176,7 +176,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </select>
         </th>
 
-        <th>
+        <th class="desktop">
           <select class="table_search" name="compendium_search_created" id="compendium_search_created" onchange="compendium_page_list_search();">
             <option value="0">&nbsp;</option>
             <?php for($i = 0; $i < $compendium_page_list_years['rows']; $i++) { ?>
@@ -194,7 +194,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
       <tr>
-        <td colspan="6" class="uppercase text_light dark bold align_center">
+        <td colspan="6" class="uppercase text_light dark bold align_center desktop">
+          <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
+        </td>
+        <td colspan="4" class="uppercase text_light dark bold align_center mobile">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>
@@ -231,7 +234,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__link('pages/compendium/cultural_era?era='.$compendium_pages_list[$i]['era_id'], $compendium_pages_list[$i]['era'])?>
         </td>
 
-        <td class="align_center">
+        <td class="align_center desktop">
           <?=$compendium_pages_list[$i]['appeared']?>
         </td>
 
@@ -239,7 +242,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$compendium_pages_list[$i]['peak']?>
         </td>
 
-        <td class="align_center">
+        <td class="align_center desktop">
           <?=$compendium_pages_list[$i]['created']?>
         </td>
 
