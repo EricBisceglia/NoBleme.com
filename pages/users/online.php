@@ -59,11 +59,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_online_header_intro')?>
   </p>
 
-  <div class="padding_top padding_bot">
+  <div class="padding_top desktop">
     <?=__('users_online_header_colors')?>
   </div>
 
-  <fieldset class="padding_bot">
+  <fieldset class="padding_top padding_bot">
 
     <label><?=string_change_case(__('option', 2), 'initials').__(':');?></label>
 

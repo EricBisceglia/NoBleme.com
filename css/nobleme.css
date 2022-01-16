@@ -4,6 +4,7 @@
 /*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
 /*        I like to call NoBleme's theme "retrofutirist anarcho-immaterial design". Purposefully pretentious.        */
 /****************************************************** COLORS *******************************************************/
+.background         { background-color: #121212 !important; }
 .dark               { background-color: #121212 !important; } .text_dark               { color: #121212 !important; }
 .black              { background-color: #000000 !important; } .text_black              { color: #000000 !important; }
 .white              { background-color: #FFFFFF !important; } .text_white              { color: #FFFFFF !important; }
@@ -34,15 +35,25 @@
 @media (max-width: 1080px) {
 .desktop { display: none; } }
 
-.margin_auto { margin: auto;                   }
-.width_30    { margin: auto; max-width: 30em;  }
-.width_40    { margin: auto; max-width: 40em;  }
-.width_50    { margin: auto; max-width: 50em;  }
-.width_60    { margin: auto; max-width: 60em;  }
-.width_70    { margin: auto; max-width: 70em;  }
-.width_80    { margin: auto; max-width: 80em;  }
-.width_90    { margin: auto; max-width: 90em;  }
-.width_100   { margin: auto; max-width: 100em; }
+.margin_auto { margin: auto;                    }
+.width_30    { margin: auto; max-width: 48rem;  }
+.width_40    { margin: auto; max-width: 64rem;  }
+.width_50    { margin: auto; max-width: 80rem;  }
+.width_60    { margin: auto; max-width: 96rem;  }
+.width_70    { margin: auto; max-width: 112rem; }
+.width_80    { margin: auto; max-width: 128rem; }
+.width_90    { margin: auto; max-width: 144rem; }
+.width_100   { margin: auto; max-width: 160rem; }
+
+@media (max-width: 1080px) {
+.width_30    { margin: auto; max-width: 45rem;    }
+.width_40    { margin: auto; max-width: 50rem;    }
+.width_50    { margin: auto; max-width: 55rem;    }
+.width_60    { margin: auto; max-width: 60rem;    }
+.width_70    { margin: auto; max-width: 70rem;    }
+.width_80    { margin: auto; max-width: 80rem;    }
+.width_90    { margin: auto; max-width: 90rem;    }
+.width_100   { margin: auto; max-width: 100rem; } }
 
 .align_justify   { text-align: justify;            }
 .align_center    { text-align: center;             }
@@ -212,15 +223,15 @@ a.forced_link:focus, a.forced_link:hover { filter: drop-shadow(0 0 5px #B00B1E);
 .nbcode_dead_link         { color: #0069C0;                                                             }
 .nbcode_dead_link:hover   { color: #673AB7;                                                             }
 .nbcode_link_icon         { vertical-align: middle; padding-left: 0.2em; padding-bottom: 0.3em;         }
-.nbcode_floater           { border: double #232323 3px; padding: 0.6em; font-size: 0.78em               ;
-                            border-radius: 0.3em; text-align: justify; text-align-last: center;         }
+.nbcode_floater           { border: double #232323 3px; padding: 0.6em;  border-radius: 0.3em           ;
+                            text-align: justify; text-align-last: center;                               }
 .nbcode_floater_left      { float: left; margin-top: 0.4em; margin-bottom: 0.5em; margin-right: 1.0em;  }
 .nbcode_floater_right     { float: right; margin-top: 0.4em; margin-bottom: 0.5em; margin-left: 1.0em;  }
 .nbcode_gallery           { display: flex; flex-wrap: wrap;                                             }
 .nbcode_gallery_cell      { border: 1px solid #232323; margin: 0.25em; border-radius: 0.25em            ;
-                            text-align: justify; text-align-last: center; font-size: 0.85em             ;
+                            text-align: justify; text-align-last: center; flex: 0 0 48%;                ;
                             padding-top: 0.3em; padding-bottom: 0.3em; padding-left: 0.5em              ;
-                            padding-right: 0.5em; flex: 0 0 48%;                                        }
+                            padding-right: 0.5em;                                                       }
 .nbcode_gallery_hr        { height: 1px; background: #232323; border: 0px; margin-top: 0.5em            ;
                             margin-bottom: 0.5em; margin-left: -0.5em; margin-right: -0.5em;            }
 .nbcode_gallery_container { height: 16.0em; display: flex; align-items: center; justify-content: center;}
@@ -229,11 +240,11 @@ a.forced_link:focus, a.forced_link:hover { filter: drop-shadow(0 0 5px #B00B1E);
 .nbcode_source            { font-size: 0.7em; vertical-align: top;                                      }
 
 @media (min-width: 1081px) {
-.nbcode_floater       { max-width: 24em;      }
-.nbcode_gallery_cell  { font-size: 0.88em;  } }
+.nbcode_floater       { max-width: 24em; font-size: 0.78em; }
+.nbcode_gallery_cell  { font-size: 0.88em;                } }
 @media (max-width: 1080px) {
-.nbcode_floater       { max-width: 15em;      }
-.nbcode_gallery_cell  { font-size: 0.78em;  } }
+.nbcode_floater       { max-width: 22.0rem; font-size: 1.6rem; }
+.nbcode_gallery_cell  { flex: 0 0 100%; font-size: 1.6rem; } }
 
 /***************************************************** TOOLTIPS ******************************************************/
 .tooltip_container                { cursor: pointer;                                                                 }

@@ -141,7 +141,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <?php if(!$adult_settings) { ?>
-  <p>
+  <p class="desktop">
     <?=__('quotes_header_blur')?>
   </p>
   <?php } ?>

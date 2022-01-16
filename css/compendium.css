@@ -2,9 +2,13 @@
 .compendium_warning_icon { vertical-align: middle; height: 100%; padding-left: 1.0rem; padding-right: 1.0rem; }
 .compendium_warning_text { flex: 6; vertical-align: middle; height: 100%; }
 
+@media (max-width: 1080px) { .compendium_warning_text { font-size: 2.5rem; } }
+
 /************************************************* COMPENDIUM IMAGE **************************************************/
 .compendium_image_blur        { filter: blur(25px); }
 .compendium_image_blur:hover  { filter: none;       }
+
+@media (max-width: 1080px) { .compendium_image_body { font-size: 0.75rem; } }
 
 /********************************************* COMPENDIUM ADMINISTRATION *********************************************/
 .compendium_admin_editor  { min-height: 35.0rem;  }

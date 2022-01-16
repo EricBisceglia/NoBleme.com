@@ -24,7 +24,7 @@ Cette page recense les visites sur NoBleme ce mois-ci. Dans le cas des personnes
 EOD
 );
 ___('users_online_header_colors', 'EN', <<<EOD
-In order to tell them apart from each other, users are color coded:
+<p class="nopadding">In order to tell them apart from each other, users are color coded:</p>
 <ul class="nopadding">
   <li>Guests do not have any specific formatting.</li>
   <li>{{link|pages/users/list|Registered users}} appear in <span class="bold">bold</span>.</li>
@@ -34,7 +34,7 @@ In order to tell them apart from each other, users are color coded:
 EOD
 );
 ___('users_online_header_colors', 'FR', <<<EOD
-Le code couleur suivant est appliqué afin de simplifier la lecture :
+<p class="nopadding">Le code couleur suivant est appliqué afin de simplifier la lecture :</p>
 <ul class="nopadding">
   <li>Les personnes sans compte n'ont pas de formattage spécifique.</li>
   <li>{{link|pages/users/list|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
