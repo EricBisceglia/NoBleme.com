@@ -376,16 +376,17 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   require_included_file('functions_time.inc.php');
 
   // Get the user's current language, access rights, settings, and the compendium pages which they can access
-  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-  $is_admin = ($user_view) ? 0 : user_is_administrator();
-  $nsfw     = user_settings_nsfw();
-  $privacy  = user_settings_privacy();
-  $mode     = user_get_mode();
-  $pages    = compendium_pages_list_urls();
+  $lang       = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $otherlang  = ($lang == 'en') ? 'fr' : 'en';
+  $is_admin   = ($user_view) ? 0 : user_is_administrator();
+  $nsfw       = user_settings_nsfw();
+  $privacy    = user_settings_privacy();
+  $mode       = user_get_mode();
+  $pages      = compendium_pages_list_urls();
 
   // Sanitize the search parameters
   $search_url         = isset($search['url'])         ? sanitize($search['url'], 'string')                  : '';
-  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -2, 1)             : 0;
+  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -2, 2)             : 0;
   $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
   $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], -1, 1)                : 0;
   $search_redirname   = isset($search['redirname'])   ? sanitize($search['redirname'], 'string')            : '';
@@ -419,6 +420,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                             compendium_pages.title_en           AS 'p_title_en'   ,
                             compendium_pages.title_fr           AS 'p_title_fr'   ,
                             compendium_pages.redirection_$lang  AS 'p_redirect'   ,
+                            compendium_pages.redirection_en     AS 'p_redir_en'   ,
+                            compendium_pages.redirection_fr     AS 'p_redir_fr'   ,
                             compendium_pages.year_appeared      AS 'p_app_year'   ,
                             compendium_pages.month_appeared     AS 'p_app_month'  ,
                             compendium_pages.year_peak          AS 'p_peak_year'  ,
@@ -458,7 +461,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Search the data
   if($search_url && $is_admin)
     $qpages .= "  AND       compendium_pages.page_url                             LIKE '%$search_url%'        ";
-  if($search_translation == -2)
+  if($search_translation == -2 && $is_admin)
     $qpages .= "  AND       compendium_pages.title_en                             =     ''
                   AND       compendium_pages.title_fr                             =     ''                    ";
   else if($search_translation == -1 && $is_admin)
@@ -467,14 +470,23 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                   OR        compendium_pages.title_fr                             !=    '' )                  ";
   else if($search_translation == 1 && $is_admin)
     $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
+  else if($search_translation == 2 && $is_admin)
+    $qpages .= "  AND     ( compendium_pages.title_$lang                          !=    ''
+                  OR        compendium_pages.title_$otherlang                     !=    '' )                  ";
   if($search_title == 'exists' && $is_admin)
     $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
   else if($search_title)
-    $qpages .= "  AND       compendium_pages.title_$lang                          LIKE  '%$search_title%'     ";
-  if($search_redirect == -1)
-    $qpages .= "  AND       compendium_pages.redirection_$lang                    =     ''                    ";
+    $qpages .= "  AND       compendium_pages.title_$lang                          LIKE  '%$search_title%'
+                  OR      ( compendium_pages.title_$lang                          =     ''
+                  AND       compendium_pages.title_$otherlang                     LIKE  '%$search_title%' )   ";
+  if($search_redirect == -1 && $is_admin)
+    $qpages .= "  AND     ( compendium_pages.title_$lang                          !=    ''
+                  OR        compendium_pages.title_$otherlang                     !=    '' )
+                  AND       compendium_pages.redirection_$lang                    =     ''                    ";
   else if($search_redirect == 1 && $is_admin)
-    $qpages .= "  AND       compendium_pages.redirection_$lang                    !=    ''                    ";
+    $qpages .= "  AND     ( compendium_pages.redirection_$lang                    !=    ''
+                  OR        compendium_pages.title_$lang                          =     ''
+                  AND       compendium_pages.redirection_$otherlang               !=    '' )                  ";
   if($search_redirname && $is_admin)
     $qpages .= "  AND       compendium_pages.redirection_$lang                    LIKE  '%$search_redirname%' ";
   if($search_nsfw > -1)
@@ -550,71 +562,75 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Sort the data
   if($sort_by == 'url' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.page_url             ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.page_url               ASC                 ";
   else if($sort_by == 'title')
-    $qpages .= "  ORDER BY    compendium_pages.title_$lang          = ''                ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.title_$lang            = ''                ,
+                              compendium_pages.title_$lang            ASC                 ,
+                              compendium_pages.title_$otherlang       = ''                ,
+                              compendium_pages.title_$otherlang       ASC                 ";
   else if($sort_by == 'redirect' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.redirection_$lang    = ''                ,
-                              compendium_pages.redirection_$lang    ASC                 ,
-                              compendium_pages.page_url             ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.redirection_$lang      = ''                ,
+                              compendium_pages.redirection_$lang      ASC                 ,
+                              compendium_pages.redirection_$otherlang = ''                ,
+                              compendium_pages.redirection_$otherlang ASC                 ,
+                              compendium_pages.page_url               ASC                 ";
   else if($sort_by == 'theme')
-    $qpages .= "  ORDER BY    compendium_types.id                   IS NULL             ,
-                              compendium_types.name_en              != 'meme'           ,
-                              compendium_types.name_en              != 'definition'     ,
-                              compendium_types.name_en              != 'sociocultural'  ,
-                              compendium_types.name_en              ASC                 ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_types.id                     IS NULL             ,
+                              compendium_types.name_en                != 'meme'           ,
+                              compendium_types.name_en                != 'definition'     ,
+                              compendium_types.name_en                != 'sociocultural'  ,
+                              compendium_types.name_en                ASC                 ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'categories' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages_categories.id        IS NULL             ,
-                              COUNT(compendium_pages_categories.id) DESC                ,
-                              compendium_pages.page_url             ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages_categories.id          IS NULL             ,
+                              COUNT(compendium_pages_categories.id)   DESC                ,
+                              compendium_pages.page_url               ASC                 ";
   else if($sort_by == 'era')
-    $qpages .= "  ORDER BY    compendium_eras.id                    IS NULL             ,
-                              compendium_eras.year_start            DESC                ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_eras.id                      IS NULL             ,
+                              compendium_eras.year_start              DESC                ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'appeared')
-    $qpages .= "  ORDER BY    compendium_pages.year_appeared        DESC                ,
-                              compendium_pages.month_appeared       DESC                ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.year_appeared          DESC                ,
+                              compendium_pages.month_appeared         DESC                ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'appeared_desc')
-    $qpages .= "  ORDER BY    compendium_pages.year_appeared        = 0                 ,
-                              compendium_pages.year_appeared        ASC                 ,
-                              compendium_pages.month_appeared       ASC                 ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.year_appeared          = 0                 ,
+                              compendium_pages.year_appeared          ASC                 ,
+                              compendium_pages.month_appeared         ASC                 ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'peak')
-    $qpages .= "  ORDER BY    compendium_pages.year_peak            DESC                ,
-                              compendium_pages.month_peak           DESC                ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.year_peak              DESC                ,
+                              compendium_pages.month_peak             DESC                ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'peak_desc')
-    $qpages .= "  ORDER BY    compendium_pages.year_peak            = 0                 ,
-                              compendium_pages.year_peak            ASC                 ,
-                              compendium_pages.month_peak           ASC                 ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.year_peak              = 0                 ,
+                              compendium_pages.year_peak              ASC                 ,
+                              compendium_pages.month_peak             ASC                 ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'created')
-    $qpages .= "  ORDER BY    compendium_pages.created_at           DESC                ,
-                              compendium_pages.title_$lang          ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.created_at             DESC                ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'language' && $is_admin)
-    $qpages .= "  ORDER BY  ( compendium_pages.title_en             != ''
-                  AND         compendium_pages.title_fr             != '' )             ,
-                              compendium_pages.title_en             = ''                ,
-                              compendium_pages.title_fr             = ''                ,
-                              compendium_pages.page_url             ASC                 ";
+    $qpages .= "  ORDER BY  ( compendium_pages.title_en               != ''
+                  AND         compendium_pages.title_fr               != '' )             ,
+                              compendium_pages.title_en               = ''                ,
+                              compendium_pages.title_fr               = ''                ,
+                              compendium_pages.page_url               ASC                 ";
   else if($sort_by == 'nsfw' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.title_is_nsfw        = ''                ,
-                              compendium_pages.is_nsfw              = ''                ,
-                              compendium_pages.is_gross             = ''                ,
-                              compendium_pages.is_offensive         = ''                ,
-                              compendium_pages.page_url             ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.title_is_nsfw          = ''                ,
+                              compendium_pages.is_nsfw                = ''                ,
+                              compendium_pages.is_gross               = ''                ,
+                              compendium_pages.is_offensive           = ''                ,
+                              compendium_pages.page_url               ASC                 ";
   else if($sort_by == 'wip' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.is_draft             = 0                 ,
-                              compendium_pages.is_deleted           = 0                 ,
-                              compendium_pages.page_url             ASC                 ";
+    $qpages .= "  ORDER BY    compendium_pages.is_draft               = 0                 ,
+                              compendium_pages.is_deleted             = 0                 ,
+                              compendium_pages.page_url               ASC                 ";
   else
     $qpages .= "  ORDER BY
-                  GREATEST  ( compendium_pages.created_at                               ,
-                              compendium_pages.last_edited_at )     DESC                ,
-                              compendium_pages.title_$lang          ASC                 ";
+                  GREATEST  ( compendium_pages.created_at                                 ,
+                              compendium_pages.last_edited_at )       DESC                ,
+                              compendium_pages.title_$lang            ASC                 ";
 
   // Limit the amount of pages returned
   if($limit)
@@ -649,6 +665,11 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['lang_fr']    = ($row['p_title_fr']) ? 1 : 0;
     $data[$i]['redirect']   = sanitize_output(string_truncate($row['p_redirect'], 20, '...'));
     $data[$i]['fullredir']  = (mb_strlen($row['p_redirect']) > 20) ? sanitize_output($row['p_redirect']) : '';
+    $temp                   = sanitize_output(string_truncate($row['p_redir_'.$otherlang], 20, '...'));
+    $data[$i]['redirlang']  = (!$row['p_redir_'.$lang] && $row['p_redir_'.$otherlang]) ? $temp : '';
+    $temp                   = sanitize_output($row['p_redir_'.$otherlang]);
+    $temp                   = (mb_strlen($row['p_redir_'.$otherlang]) > 20) ? $temp : '';
+    $data[$i]['fullrlang']  = ($temp && !$row['p_redir_'.$lang] && $row['p_redir_'.$otherlang]) ? $temp : '';
     $temp                   = ($row['p_app_month']) ? __('month_'.$row['p_app_month'], spaces_after: 1) : '';
     $data[$i]['appeared']   = ($row['p_app_year']) ? $temp.$row['p_app_year'] : '';
     $temp                   = ($row['p_app_month']) ? __('month_short_'.$row['p_app_month'], spaces_after: 1) : '';

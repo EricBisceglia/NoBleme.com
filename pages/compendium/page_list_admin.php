@@ -164,9 +164,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th class="compendium_admin_search_big">
           <select class="table_search" name="compendium_search_translation" id="compendium_search_translation" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
+            <option value="2"><?=__('compendium_list_admin_has_title')?></option>
+            <option value="-2"><?=__('compendium_list_admin_missing_title')?></option>
             <option value="1"><?=__('compendium_list_admin_translated')?></option>
             <option value="-1"><?=__('compendium_list_admin_untranslated')?></option>
-            <option value="-2"><?=__('compendium_list_admin_missing_title')?></option>
           </select>
         </th>
 
@@ -348,7 +349,18 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
         <?php } ?>
 
-        <?php if(!$compendium_pages_list[$i]['fullredir']) { ?>
+        <?php if($compendium_pages_list[$i]['redirlang'] && !$compendium_pages_list[$i]['fullrlang']) { ?>
+        <td class="align_left strikethrough" colspan="2">
+          <?=$compendium_pages_list[$i]['redirlang']?>
+        </td>
+        <?php } else if($compendium_pages_list[$i]['fullrlang']) { ?>
+        <td class="align_left strikethrough tooltip_container" colspan="2">
+          <?=$compendium_pages_list[$i]['redirlang']?>
+          <div class="tooltip">
+            <?=$compendium_pages_list[$i]['fullrlang']?>
+          </div>
+        </td>
+        <?php } else if(!$compendium_pages_list[$i]['fullredir']) { ?>
         <td class="align_left" colspan="2">
           <?=$compendium_pages_list[$i]['redirect']?>
         </td>
