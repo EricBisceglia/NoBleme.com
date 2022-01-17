@@ -369,6 +369,8 @@ ___('compendium_list_admin_translated',       'EN', "Translated");
 ___('compendium_list_admin_translated',       'FR', "Traduit");
 ___('compendium_list_admin_untranslated',     'EN', "Not translated");
 ___('compendium_list_admin_untranslated',     'FR', "Non traduit");
+___('compendium_list_admin_has_title',        'EN', "Has a title");
+___('compendium_list_admin_has_title',        'FR', "A un titre");
 ___('compendium_list_admin_missing_title',    'EN', "No title");
 ___('compendium_list_admin_missing_title',    'FR', "Pas de titre");
 ___('compendium_list_admin_missing',          'EN', "No title in this language");
