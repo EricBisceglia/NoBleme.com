@@ -49,6 +49,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
     <?=__('compendium_index_title')?>
     <?php if($is_admin) { ?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add')?>
     <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/admin_notes')?>
     <?php } ?>
   </h1>
