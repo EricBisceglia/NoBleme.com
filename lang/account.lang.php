@@ -130,7 +130,7 @@ EOT
 
 // Body
 ___('users_welcome_title',  'EN', "Your account has been created");
-___('users_welcome_title',  'FR', "Votre compte a été crée");
+___('users_welcome_title',  'FR', "Votre compte a été créé");
 ___('users_welcome_body',   'EN', <<<EOT
 You have successfully registered an account on NoBleme. You can now use the login form above to log into your newly created account and begin using the website as a registered user!
 EOT

@@ -335,6 +335,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <div class="smallpadding_top">
         <label for="compendium_edit_type"><?=__('compendium_page_new_type')?></label>
         <select class="indiv align_left" id="compendium_edit_type" name="compendium_edit_type">
+          <option value="0">&nbsp;</option>
           <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
           <option value="<?=$compendium_types_list[$i]['id']?>"<?=$compendium_edit_type_select[$i]?>>
             <?=$compendium_types_list[$i]['name']?>

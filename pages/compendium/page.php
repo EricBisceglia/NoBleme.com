@@ -107,14 +107,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </<?=$compendium_page_data['title_size']?>>
 
   <p class="tinypadding_top padding_bot">
+    <?php if($compendium_page_data['type']) { ?>
     <span class="bold"><?=__('compendium_page_type').__(':')?></span>
     <?=__link('pages/compendium/page_type?type='.$compendium_page_data['type_id'], $compendium_page_data['type'])?>
-    <?php if($compendium_page_data['era']) { ?>
     <br>
+    <?php } if($compendium_page_data['era']) { ?>
     <span class="bold"><?=__('compendium_page_era').__(':')?></span>
     <?=__link('pages/compendium/cultural_era?era='.$compendium_page_data['era_id'], $compendium_page_data['era'])?>
-    <?php } if($compendium_page_data['categories']) { ?>
     <br>
+    <?php } if($compendium_page_data['categories']) { ?>
     <span class="bold"><?=__('compendium_page_category', amount: $compendium_page_data['categories']).__(':')?></span>
     <?php for($i = 0; $i < $compendium_page_data['categories']; $i++) { ?>
     <?=__link('pages/compendium/category?id='.$compendium_page_data['category_id'][$i], $compendium_page_data['category_name'][$i])?>
@@ -122,8 +123,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     ;
     <?php } ?>
     <?php } ?>
-    <?php } if($compendium_page_data['appeared']) { ?>
     <br>
+    <?php } if($compendium_page_data['appeared']) { ?>
     <span class="bold"><?=__('compendium_page_appeared').__(':')?></span>
     <?=$compendium_page_data['appeared']?>
     <?php } if($compendium_page_data['peak']) { ?>
@@ -182,7 +183,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p class="align_center bigpadding_top">
     <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
     <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
+    <?php if($compendium_page_data['type_id']) { ?>
     <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])))?><br>
+    <?php } ?>
     <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?>
   </p>
 

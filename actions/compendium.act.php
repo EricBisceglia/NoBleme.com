@@ -385,7 +385,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Sanitize the search parameters
   $search_url         = isset($search['url'])         ? sanitize($search['url'], 'string')                  : '';
-  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -1, 1)             : 0;
+  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -2, 1)             : 0;
   $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
   $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], -1, 1)                : 0;
   $search_redirname   = isset($search['redirname'])   ? sanitize($search['redirname'], 'string')            : '';
@@ -393,8 +393,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
   $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
   $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
-  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', 0)                 : 0;
-  $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', 0)                  : 0;
+  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', -1)                : 0;
+  $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', -1)                 : 0;
   $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', -2)            : 0;
   $search_language    = isset($search['language'])    ? sanitize($search['language'], 'string')             : '';
   $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
@@ -458,8 +458,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Search the data
   if($search_url && $is_admin)
     $qpages .= "  AND       compendium_pages.page_url                             LIKE '%$search_url%'        ";
-  if($search_translation == -1 && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_$lang                          =     ''                    ";
+  if($search_translation == -2)
+    $qpages .= "  AND       compendium_pages.title_en                             =     ''
+                  AND       compendium_pages.title_fr                             =     ''                    ";
+  else if($search_translation == -1 && $is_admin)
+    $qpages .= "  AND       compendium_pages.title_$lang                          =     ''
+                  AND     ( compendium_pages.title_en                             !=    ''
+                  OR        compendium_pages.title_fr                             !=    '' )                  ";
   else if($search_translation == 1 && $is_admin)
     $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
   if($search_title == 'exists' && $is_admin)
@@ -480,9 +485,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $qpages .= "  AND       compendium_pages.is_offensive                         =     '$search_offensive'   ";
   if($search_nsfw_title > -1)
     $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     '$search_nsfw_title'  ";
-  if($search_type)
+  if($search_type == -1)
+    $qpages .= "  AND       compendium_pages.fk_compendium_types                  = 0                         ";
+  else if($search_type)
     $qpages .= "  AND       compendium_pages.fk_compendium_types                  =     '$search_type'        ";
-  if($search_era)
+  if($search_era == -1)
+    $qpages .= "  AND       compendium_pages.fk_compendium_eras                   = 0                         ";
+  else if($search_era)
     $qpages .= "  AND       compendium_pages.fk_compendium_eras                   =     '$search_era'         ";
   if($search_category > 0)
     $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'    ";
@@ -550,7 +559,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                               compendium_pages.redirection_$lang    ASC                 ,
                               compendium_pages.page_url             ASC                 ";
   else if($sort_by == 'theme')
-    $qpages .= "  ORDER BY    compendium_types.name_en              != 'meme'           ,
+    $qpages .= "  ORDER BY    compendium_types.id                   IS NULL             ,
+                              compendium_types.name_en              != 'meme'           ,
                               compendium_types.name_en              != 'definition'     ,
                               compendium_types.name_en              != 'sociocultural'  ,
                               compendium_types.name_en              ASC                 ,
@@ -619,8 +629,10 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['id']         = sanitize_output($row['p_id']);
     $data[$i]['deleted']    = ($row['p_deleted']);
     $data[$i]['draft']      = ($row['p_draft']);
-    $data[$i]['created']    = ($row['p_created']) ? sanitize_output(time_since($row['p_created'])) : '';
-    $data[$i]['edited']     = ($row['p_edited']) ? sanitize_output(time_since($row['p_edited'])) : '';
+    $temp                   = sanitize_output(string_change_case(time_since($row['p_created']), 'lowercase'));
+    $data[$i]['created']    = ($row['p_created']) ? $temp : '';
+    $temp                   = sanitize_output(string_change_case(time_since($row['p_edited']), 'lowercase'));
+    $data[$i]['edited']     = ($row['p_edited']) ? $temp : '';
     $data[$i]['url']        = sanitize_output($row['p_url']);
     $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 25, '...'));
     $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 25) ? sanitize_output($row['p_url']) : '';
@@ -632,6 +644,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $temp                   = ($lang == 'en') ? $row['p_title_fr'] : $row['p_title_en'];
     $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 23, '...'));
     $data[$i]['fullwrong']  = (mb_strlen($temp) > 23) ? sanitize_output($temp) : '';
+    $data[$i]['notitle']    = (!$row['p_title_en'] && !$row['p_title_fr']) ? 1 : 0;
     $data[$i]['lang_en']    = ($row['p_title_en']) ? 1 : 0;
     $data[$i]['lang_fr']    = ($row['p_title_fr']) ? 1 : 0;
     $data[$i]['redirect']   = sanitize_output(string_truncate($row['p_redirect'], 20, '...'));
@@ -769,7 +782,7 @@ function compendium_pages_add( array $contents ) : mixed
     return __('compendium_page_new_no_url');
 
   // Error: No title in either language
-  if(!$page_title_en && !$page_title_fr)
+  if(!$page_title_en && !$page_redirect_en && !$page_title_fr && !$page_redirect_fr)
     return __('compendium_page_new_no_title');
 
   // Error: Redirects to non existing pages
@@ -777,10 +790,6 @@ function compendium_pages_add( array $contents ) : mixed
     return __('compendium_page_new_bad_redirect');
   if($page_redirect_fr && !database_entry_exists('compendium_pages', 'page_url', $page_redirect_fr))
     return __('compendium_page_new_bad_redirect');
-
-  // Error: No page type
-  if(!$page_type || !database_row_exists('compendium_types', $page_type))
-    return __('compendium_page_new_no_type');
 
   // Create the compendium page
   query(" INSERT INTO compendium_pages
@@ -921,7 +930,7 @@ function compendium_pages_edit( int   $page_id  ,
     return __('compendium_page_new_no_url');
 
   // Error: No title in either language
-  if(!$page_title_en && !$page_title_fr)
+  if(!$page_title_en && !$page_redirect_en && !$page_title_fr && !$page_redirect_fr)
     return __('compendium_page_new_no_title');
 
   // Error: Redirects to non existing pages
@@ -929,10 +938,6 @@ function compendium_pages_edit( int   $page_id  ,
     return __('compendium_page_new_bad_redirect');
   if($page_redirect_fr && !database_entry_exists('compendium_pages', 'page_url', $page_redirect_fr))
     return __('compendium_page_new_bad_redirect');
-
-  // Error: No page type
-  if(!$page_type || !database_row_exists('compendium_types', $page_type))
-    return __('compendium_page_new_no_type');
 
   // Update the compendium page
   query(" UPDATE  compendium_pages
@@ -963,7 +968,7 @@ function compendium_pages_edit( int   $page_id  ,
   $categories = compendium_categories_list();
 
   // Prepare the page's category list
-  $page_categories = ($page_data['category_id']) ? $page_data['category_id'] : array();
+  $page_categories = (isset($page_data['category_id'])) ? $page_data['category_id'] : array();
 
   // Loop through the categories
   for($i = 0; $i < $categories['rows']; $i++)

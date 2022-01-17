@@ -166,6 +166,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <option value="0">&nbsp;</option>
             <option value="1"><?=__('compendium_list_admin_translated')?></option>
             <option value="-1"><?=__('compendium_list_admin_untranslated')?></option>
+            <option value="-2"><?=__('compendium_list_admin_missing_title')?></option>
           </select>
         </th>
 
@@ -188,6 +189,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <select class="table_search" name="compendium_search_type" id="compendium_search_type" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
+            <option value="-1"><?=__('compendium_list_admin_theme_no')?></option>
             <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
             <option value="<?=$compendium_types_list[$i]['id']?>"><?=$compendium_types_list[$i]['name']?></option>
             <?php } ?>
@@ -208,6 +210,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <select class="table_search" name="compendium_search_era" id="compendium_search_era" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
+            <option value="-1"><?=__('compendium_list_admin_era_no')?></option>
             <?php for($i = 0; $i < $compendium_eras_list['rows']; $i++) { ?>
             <option value="<?=$compendium_eras_list[$i]['id']?>"><?=$compendium_eras_list[$i]['short']?></option>
             <?php } ?>
@@ -311,7 +314,11 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
         <?php } ?>
 
-        <?php if($compendium_pages_list[$i]['admintitle'] && !$compendium_pages_list[$i]['adminfull']) { ?>
+        <?php if($compendium_pages_list[$i]['notitle']) { ?>
+        <td class="align_left" colspan="2">
+          <?=__icon('x', is_small: true, alt: 'M', title: __('compendium_list_admin_no_title'), class: 'valign_middle spaced_right')?>
+        </td>
+        <?php } else if($compendium_pages_list[$i]['admintitle'] && !$compendium_pages_list[$i]['adminfull']) { ?>
         <td class="align_left" colspan="2">
           <?=$compendium_pages_list[$i]['admintitle']?>
         </td>
@@ -324,14 +331,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
         <?php } else if(!$compendium_pages_list[$i]['fullwrong']) { ?>
         <td class="align_left" colspan="2">
-          <?=__icon('message', is_small: true, alt: 'M', title: __('compendium_list_admin_missing'), title_case: 'initials', class: 'valign_middle spaced_right')?>
+          <?=__icon('message', is_small: true, alt: 'M', title: __('compendium_list_admin_missing'), class: 'valign_middle spaced_right')?>
           <span class="strikethrough">
             <?=$compendium_pages_list[$i]['wrongtitle']?>
           </span>
         </td>
         <?php } else { ?>
         <td class="align_left tooltip_container" colspan="2">
-          <?=__icon('message', is_small: true, alt: 'M', title: __('compendium_list_admin_missing'), title_case: 'initials', class: 'valign_middle spaced_right')?>
+          <?=__icon('message', is_small: true, alt: 'M', title: __('compendium_list_admin_missing'), class: 'valign_middle spaced_right')?>
           <span class="strikethrough">
             <?=$compendium_pages_list[$i]['wrongtitle']?>
           </span>

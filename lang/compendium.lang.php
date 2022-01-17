@@ -89,7 +89,7 @@ ___('compendium_index_recent_type',     'FR', "Thème :");
 ___('compendium_index_recent_reworked', 'EN', "Reworked");
 ___('compendium_index_recent_reworked', 'FR', "Modifié");
 ___('compendium_index_recent_created',  'EN', "Created");
-___('compendium_index_recent_created',  'FR', "Crée");
+___('compendium_index_recent_created',  'FR', "Publié");
 
 
 
@@ -205,8 +205,6 @@ ___('compendium_page_new_no_title',     'EN', "The page must have a title in at 
 ___('compendium_page_new_no_title',     'FR', "La page doit avoir un titre dans au moins une langue");
 ___('compendium_page_new_bad_redirect', 'EN', "Redirection points to a non existing page URL");
 ___('compendium_page_new_bad_redirect', 'FR', "Redirection vers une adresse de page non existante");
-___('compendium_page_new_no_type',      'EN', "Every compendium page must have a page type");
-___('compendium_page_new_no_type',      'FR', "Toutes les pages du compendium doivent avoir une thématique");
 ___('compendium_page_new_preview',      'EN', "Preview");
 ___('compendium_page_new_preview',      'FR', "Prévisualisation");
 
@@ -345,7 +343,7 @@ ___('compendium_list_title',    'FR', "Titre de la page");
 ___('compendium_list_theme',    'EN', "Theme");
 ___('compendium_list_theme',    'FR', "Thème");
 ___('compendium_list_created',  'EN', "Page created");
-___('compendium_list_created',  'FR', "Page crée");
+___('compendium_list_created',  'FR', "Page créé");
 ___('compendium_list_appeared', 'EN', "Appeared");
 ___('compendium_list_appeared', 'FR', "Apparition");
 ___('compendium_list_peak',     'EN', "Peak popularity");
@@ -371,8 +369,14 @@ ___('compendium_list_admin_translated',       'EN', "Translated");
 ___('compendium_list_admin_translated',       'FR', "Traduit");
 ___('compendium_list_admin_untranslated',     'EN', "Not translated");
 ___('compendium_list_admin_untranslated',     'FR', "Non traduit");
+___('compendium_list_admin_missing_title',    'EN', "No title");
+___('compendium_list_admin_missing_title',    'FR', "Pas de titre");
 ___('compendium_list_admin_missing',          'EN', "No title in this language");
 ___('compendium_list_admin_missing',          'FR', "Pas de titre dans cette langue");
+___('compendium_list_admin_no_title',         'EN', "This page does not have a title");
+___('compendium_list_admin_no_title',         'FR', "Cette page n'a pas de titre");
+___('compendium_list_admin_theme_no',         'EN', "None");
+___('compendium_list_admin_theme_no',         'FR', "Aucun");
 ___('compendium_list_admin_categories',       'EN', "Cat.");
 ___('compendium_list_admin_categories',       'FR', "Cat.");
 ___('compendium_list_admin_categories_no',    'EN', "Uncategorized");
@@ -383,6 +387,8 @@ ___('compendium_list_admin_category_count',   'EN', "Page has {{1}} category");
 ___('compendium_list_admin_category_count',   'FR', "La page a {{1}} catégorie");
 ___('compendium_list_admin_category_count+',  'EN', "Page has {{1}} categories");
 ___('compendium_list_admin_category_count+',  'FR', "La page a {{1}} catégories");
+___('compendium_list_admin_era_no',           'EN', "None");
+___('compendium_list_admin_era_no',           'FR', "Aucune");
 ___('compendium_list_admin_appeared',         'EN', "App.");
 ___('compendium_list_admin_appeared',         'FR', "App.");
 ___('compendium_list_admin_peak',             'EN', "Peak");
@@ -716,6 +722,8 @@ ___('compendium_era_admin_name',  'EN', "Full name");
 ___('compendium_era_admin_name',  'FR', "Nom complet");
 ___('compendium_era_admin_short', 'EN', "Short name");
 ___('compendium_era_admin_short', 'FR', "Nom court");
+___('compendium_era_admin_none',  'EN', "No era");
+___('compendium_era_admin_none',  'FR', "Pas de période");
 
 
 // Create a new era
@@ -904,6 +912,8 @@ ___('compendium_type_admin_short',  'EN', "Page type");
 ___('compendium_type_admin_short',  'FR', "Thématique");
 ___('compendium_type_admin_long',   'EN', "Full name");
 ___('compendium_type_admin_long',   'FR', "Nom complet");
+___('compendium_type_admin_none',   'EN', "No type");
+___('compendium_type_admin_none',   'FR', "Sans thématique");
 
 
 // Create a new page type
