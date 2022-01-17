@@ -715,9 +715,10 @@ function compendium_pages_list_urls() : array
   // Fetch the page urls
   $qpages = query(" SELECT    compendium_pages.page_url AS 'p_url'
                     FROM      compendium_pages
-                    WHERE     compendium_pages.title_$lang != ''
-                    AND       compendium_pages.is_deleted   = 0
-                    AND       compendium_pages.is_draft     = 0
+                    WHERE   ( compendium_pages.title_$lang        != ''
+                    OR        compendium_pages.redirection_$lang  != '' )
+                    AND       compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
                     ORDER BY  compendium_pages.page_url ASC ");
 
   // Prepare an array with the page urls
