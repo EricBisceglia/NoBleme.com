@@ -385,7 +385,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Sanitize the search parameters
   $search_url         = isset($search['url'])         ? sanitize($search['url'], 'string')                  : '';
-  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -1, 1)             : 0;
+  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -2, 1)             : 0;
   $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
   $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], -1, 1)                : 0;
   $search_redirname   = isset($search['redirname'])   ? sanitize($search['redirname'], 'string')            : '';
@@ -458,8 +458,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Search the data
   if($search_url && $is_admin)
     $qpages .= "  AND       compendium_pages.page_url                             LIKE '%$search_url%'        ";
-  if($search_translation == -1 && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_$lang                          =     ''                    ";
+  if($search_translation == -2)
+    $qpages .= "  AND       compendium_pages.title_en                             =     ''
+                  AND       compendium_pages.title_fr                             =     ''                    ";
+  else if($search_translation == -1 && $is_admin)
+    $qpages .= "  AND       compendium_pages.title_$lang                          =     ''
+                  AND     ( compendium_pages.title_en                             !=    ''
+                  OR        compendium_pages.title_fr                             !=    '' )                  ";
   else if($search_translation == 1 && $is_admin)
     $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
   if($search_title == 'exists' && $is_admin)
@@ -637,6 +642,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $temp                   = ($lang == 'en') ? $row['p_title_fr'] : $row['p_title_en'];
     $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 23, '...'));
     $data[$i]['fullwrong']  = (mb_strlen($temp) > 23) ? sanitize_output($temp) : '';
+    $data[$i]['notitle']    = (!$row['p_title_en'] && !$row['p_title_fr']) ? 1 : 0;
     $data[$i]['lang_en']    = ($row['p_title_en']) ? 1 : 0;
     $data[$i]['lang_fr']    = ($row['p_title_fr']) ? 1 : 0;
     $data[$i]['redirect']   = sanitize_output(string_truncate($row['p_redirect'], 20, '...'));
@@ -774,7 +780,7 @@ function compendium_pages_add( array $contents ) : mixed
     return __('compendium_page_new_no_url');
 
   // Error: No title in either language
-  if(!$page_title_en && !$page_title_fr)
+  if(!$page_title_en && !$page_redirect_en && !$page_title_fr && !$page_redirect_fr)
     return __('compendium_page_new_no_title');
 
   // Error: Redirects to non existing pages
@@ -922,7 +928,7 @@ function compendium_pages_edit( int   $page_id  ,
     return __('compendium_page_new_no_url');
 
   // Error: No title in either language
-  if(!$page_title_en && !$page_title_fr)
+  if(!$page_title_en && !$page_redirect_en && !$page_title_fr && !$page_redirect_fr)
     return __('compendium_page_new_no_title');
 
   // Error: Redirects to non existing pages
