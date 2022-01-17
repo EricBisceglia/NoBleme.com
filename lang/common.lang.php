@@ -144,6 +144,7 @@ function ___( string  $name         ,
  * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
  * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
  * @param   string  $onmouseover  (OPTIONAL)  A javascript option to trigger upon hovering over the link.
+ * @param   string  $id           (OPTIONAL)  An ID to give the <a> element containing the link.
  * @param   bool    $popup        (OPTIONAL)  Opens the link in a new window.
  * @param   string  $confirm      (OPTIONAL)  A confirmation dialog that must be accepted before the link is followed.
  *
@@ -157,6 +158,7 @@ function __link(  string  $href                       ,
                   string  $path         = "./../../"  ,
                   string  $onclick      = ''          ,
                   string  $onmouseover  = ''          ,
+                  string  $id           = ''          ,
                   bool    $popup        = false       ,
                   string  $confirm      = ''          ) : string
 {
@@ -179,8 +181,11 @@ function __link(  string  $href                       ,
   // Prepare the onmouseover
   $onmouseover = ($onmouseover) ? 'onmouseover="'.$onmouseover.'"' : '';
 
+  // Prepare the ID
+  $id = ($id) ? 'id="'.$id.'"' : '';
+
   // Return the built link
-  return "<a $class $url $popup $onclick $onmouseover>$text</a>";
+  return "<a $class $url $popup $onclick $onmouseover $id>$text</a>";
 }
 
 
