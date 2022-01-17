@@ -25,12 +25,12 @@ function unblur()
  * @returns {void}
  */
 
- function unblur_element( element_id )
- {
+function unblur_element( element_id )
+{
   // Remove the blur filter
   document.getElementById(element_id).classList.remove('blur');
   document.getElementById(element_id).classList.remove('nbcode_blur');
   document.getElementById(element_id).classList.remove('nbcode_blur_2');
   document.getElementById(element_id).classList.remove('nbcode_blur_3');
   document.getElementById(element_id).classList.remove('compendium_image_blur');
- }
+}

@@ -188,6 +188,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <select class="table_search" name="compendium_search_type" id="compendium_search_type" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
+            <option value="-1"><?=__('compendium_list_admin_theme_no')?></option>
             <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
             <option value="<?=$compendium_types_list[$i]['id']?>"><?=$compendium_types_list[$i]['name']?></option>
             <?php } ?>
@@ -208,6 +209,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <select class="table_search" name="compendium_search_era" id="compendium_search_era" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
+            <option value="-1"><?=__('compendium_list_admin_era_no')?></option>
             <?php for($i = 0; $i < $compendium_eras_list['rows']; $i++) { ?>
             <option value="<?=$compendium_eras_list[$i]['id']?>"><?=$compendium_eras_list[$i]['short']?></option>
             <?php } ?>

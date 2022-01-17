@@ -81,8 +81,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="padding_top">
     <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow forced_link')?><br>
+    <?php if($compendium_pages_list[$i]['type_id']) { ?>
     <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
-    <?php if($compendium_pages_list[$i]['edited']) { ?>
+    <?php } if($compendium_pages_list[$i]['edited']) { ?>
     <span class=""><?=__('compendium_index_recent_reworked', spaces_after: 1).$compendium_pages_list[$i]['edited']?></span><br>
     <?php } ?>
     <span class=""><?=__('compendium_index_recent_created', spaces_after: 1).$compendium_pages_list[$i]['created']?></span>

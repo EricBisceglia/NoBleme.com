@@ -43,6 +43,12 @@ $js   = array('compendium/admin');
 // Fetch a list of eras
 $compendium_eras_list = compendium_eras_list();
 
+// Fetch the list of pages without an era
+$compendium_page_list = compendium_pages_list( search: array( 'era'       => -1           ,
+                                                              'title'     => 'exists'     ,
+                                                              'redirect'  => -1           ,
+                                                              'wip'       => 'finished' ) );
+
 
 
 
@@ -89,6 +95,27 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
     </thead>
     <tbody class="altc align_center">
+
+      <tr>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+        <td class="bold pointer">
+          <?=__('compendium_era_admin_none')?>
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          <?=$compendium_page_list['rows']?>
+        </td>
+        <td>
+          -
+        </td>
+      </tr>
 
       <?php for($i = 0; $i < $compendium_eras_list['rows']; $i++) { ?>
 

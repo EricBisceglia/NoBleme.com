@@ -44,9 +44,10 @@ $js   = array('compendium/admin');
 $compendium_categories_list = compendium_categories_list();
 
 // Fetch the list of uncategorized pages
-$compendium_page_list = compendium_pages_list( search: array( 'category'  => -1       ,
-                                                              'title'     => 'exists' ,
-                                                              'redirect'  => -1       ) );
+$compendium_page_list = compendium_pages_list( search: array( 'category'  => -1           ,
+                                                              'title'     => 'exists'     ,
+                                                              'redirect'  => -1           ,
+                                                              'wip'       => 'finished' ) );
 
 
 

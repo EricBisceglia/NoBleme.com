@@ -393,8 +393,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
   $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
   $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
-  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', 0)                 : 0;
-  $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', 0)                  : 0;
+  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', -1)                : 0;
+  $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', -1)                 : 0;
   $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', -2)            : 0;
   $search_language    = isset($search['language'])    ? sanitize($search['language'], 'string')             : '';
   $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
@@ -480,9 +480,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $qpages .= "  AND       compendium_pages.is_offensive                         =     '$search_offensive'   ";
   if($search_nsfw_title > -1)
     $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     '$search_nsfw_title'  ";
-  if($search_type)
+  if($search_type == -1)
+    $qpages .= "  AND       compendium_pages.fk_compendium_types                  = 0                         ";
+  else if($search_type)
     $qpages .= "  AND       compendium_pages.fk_compendium_types                  =     '$search_type'        ";
-  if($search_era)
+  if($search_era == -1)
+    $qpages .= "  AND       compendium_pages.fk_compendium_eras                   = 0                         ";
+  else if($search_era)
     $qpages .= "  AND       compendium_pages.fk_compendium_eras                   =     '$search_era'         ";
   if($search_category > 0)
     $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'    ";
@@ -550,7 +554,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                               compendium_pages.redirection_$lang    ASC                 ,
                               compendium_pages.page_url             ASC                 ";
   else if($sort_by == 'theme')
-    $qpages .= "  ORDER BY    compendium_types.name_en              != 'meme'           ,
+    $qpages .= "  ORDER BY    compendium_types.id                   IS NULL             ,
+                              compendium_types.name_en              != 'meme'           ,
                               compendium_types.name_en              != 'definition'     ,
                               compendium_types.name_en              != 'sociocultural'  ,
                               compendium_types.name_en              ASC                 ,
@@ -778,10 +783,6 @@ function compendium_pages_add( array $contents ) : mixed
   if($page_redirect_fr && !database_entry_exists('compendium_pages', 'page_url', $page_redirect_fr))
     return __('compendium_page_new_bad_redirect');
 
-  // Error: No page type
-  if(!$page_type || !database_row_exists('compendium_types', $page_type))
-    return __('compendium_page_new_no_type');
-
   // Create the compendium page
   query(" INSERT INTO compendium_pages
           SET         compendium_pages.fk_compendium_types  = '$page_type'          ,
@@ -930,10 +931,6 @@ function compendium_pages_edit( int   $page_id  ,
   if($page_redirect_fr && !database_entry_exists('compendium_pages', 'page_url', $page_redirect_fr))
     return __('compendium_page_new_bad_redirect');
 
-  // Error: No page type
-  if(!$page_type || !database_row_exists('compendium_types', $page_type))
-    return __('compendium_page_new_no_type');
-
   // Update the compendium page
   query(" UPDATE  compendium_pages
           SET     compendium_pages.fk_compendium_types  = '$page_type'          ,
@@ -963,7 +960,7 @@ function compendium_pages_edit( int   $page_id  ,
   $categories = compendium_categories_list();
 
   // Prepare the page's category list
-  $page_categories = ($page_data['category_id']) ? $page_data['category_id'] : array();
+  $page_categories = (isset($page_data['category_id'])) ? $page_data['category_id'] : array();
 
   // Loop through the categories
   for($i = 0; $i < $categories['rows']; $i++)
