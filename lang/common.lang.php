@@ -721,7 +721,7 @@ ___('time_diff_past_minute',  'EN', "A minute ago");
 ___('time_diff_past_minute',  'FR', "Il y a 1 minute");
 ___('time_diff_past_minutes', 'EN', "{{1}} minutes ago");
 ___('time_diff_past_minutes', 'FR', "Il y a {{1}} minutes");
-___('time_diff_past_hour',    'EN', "A hour ago");
+___('time_diff_past_hour',    'EN', "An hour ago");
 ___('time_diff_past_hour',    'FR', "Il y a 1 heure");
 ___('time_diff_past_hours',   'EN', "{{1}} hours ago");
 ___('time_diff_past_hours',   'FR', "Il y a {{1}} heures");

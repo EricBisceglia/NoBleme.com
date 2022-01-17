@@ -89,7 +89,7 @@ ___('compendium_index_recent_type',     'FR', "Thème :");
 ___('compendium_index_recent_reworked', 'EN', "Reworked");
 ___('compendium_index_recent_reworked', 'FR', "Modifié");
 ___('compendium_index_recent_created',  'EN', "Created");
-___('compendium_index_recent_created',  'FR', "Crée");
+___('compendium_index_recent_created',  'FR', "Publié");
 
 
 
@@ -343,7 +343,7 @@ ___('compendium_list_title',    'FR', "Titre de la page");
 ___('compendium_list_theme',    'EN', "Theme");
 ___('compendium_list_theme',    'FR', "Thème");
 ___('compendium_list_created',  'EN', "Page created");
-___('compendium_list_created',  'FR', "Page crée");
+___('compendium_list_created',  'FR', "Page créé");
 ___('compendium_list_appeared', 'EN', "Appeared");
 ___('compendium_list_appeared', 'FR', "Apparition");
 ___('compendium_list_peak',     'EN', "Peak popularity");
