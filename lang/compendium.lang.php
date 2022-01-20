@@ -136,8 +136,14 @@ ___('compendium_page_gross',      'FR', "Cette page inclut du contenu dégueulas
 // Footer
 ___('compendium_page_list',         'EN', "List of all pages");
 ___('compendium_page_list',         'FR', "Liste des pages");
-___('compendium_page_compendium',   'EN', "NoBleme's 21st century compendium");
-___('compendium_page_compendium',   'FR', "Compendium du 21ème siècle de NoBleme");
+___('compendium_page_pageviews',    'EN', "{{1}} pageview");
+___('compendium_page_pageviews',    'FR', "Page vue {{1}} fois");
+___('compendium_page_pageviews+',   'EN', "{{1}} pageviews");
+___('compendium_page_pageviews+',   'FR', "Page vue {{1}} fois");
+___('compendium_page_copyright',    'EN', "&copy; NoBleme 2005 - {{1}}");
+___('compendium_page_copyright',    'FR', "&copy; NoBleme 2005 - {{1}}");
+___('compendium_page_compendium',   'EN', "21st century compendium");
+___('compendium_page_compendium',   'FR', "Compendium du 21ème siècle");
 ___('compendium_page_random_page',  'EN', "Another random page");
 ___('compendium_page_random_page',  'FR', "Autre page au hasard");
 ___('compendium_page_random_type',  'EN', "Another random {{1}}");

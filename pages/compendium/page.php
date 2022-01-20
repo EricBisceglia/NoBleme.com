@@ -20,6 +20,9 @@ $page_title_en    = "";
 $page_title_fr    = "";
 $page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
+// Hide the regular footer, except for admins
+$hide_footer = true;
+
 // Extra CSS & JS
 $css  = array('compendium');
 $js   = array('compendium/page');
@@ -55,6 +58,19 @@ $page_url        .= $compendium_page_url;
 $page_title_en   .= $compendium_page_data['title_en'];
 $page_title_fr   .= $compendium_page_data['title_fr'];
 $page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta'] : $page_description;
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Footer
+
+// Copyright ending date
+$copyright_date = date('Y');
+
+// Current pageview count
+$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
+
 
 
 
@@ -176,17 +192,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <div class="smallpadding_top padding_bot align_justify">
+  <div class="smallpadding_top align_justify">
     <?=$compendium_page_data['body']?>
   </div>
 
-  <p class="align_center bigpadding_top">
-    <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
+  <p class="align_center hugepadding_top hugepadding_bot">
+    <?php if($is_admin && $pageviews) { ?>
+    <?=__link("pages/admin/stats_views", __('compendium_page_pageviews', amount: $pageviews, preset_values: array($pageviews)));?><br>
+    <?php } ?>
+    <?=__link("pages/doc/legal", __('compendium_page_copyright', preset_values: array($copyright_date)));?><br>
+    <?=__link('pages/compendium/mission_statement', __('compendium_page_compendium'))?><br>
     <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
     <?php if($compendium_page_data['type_id']) { ?>
     <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])))?><br>
     <?php } ?>
-    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?>
+    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?><br>
   </p>
 
 </div>
