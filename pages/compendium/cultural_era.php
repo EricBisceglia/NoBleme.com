@@ -75,6 +75,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('compendium_eras_summary')?>
   </p>
 
+  <p class="italics">
+    <?php if($compendium_era_data['start'] && $compendium_era_data['end']) { ?>
+    <?=__('compendium_era_years', preset_values: array($compendium_era_data['start'], $compendium_era_data['end']))?>
+    <?php } else if(!$compendium_era_data['start']) { ?>
+    <?=__('compendium_era_no_start', preset_values: array($compendium_era_data['end']))?>
+    <?php } else if(!$compendium_era_data['end']) { ?>
+    <?=__('compendium_era_no_end', preset_values: array($compendium_era_data['start']))?>
+    <?php } if($compendium_era_data['prev_id']) { ?>
+    <br>
+    <?=__('compendium_era_previous', spaces_after: 1).__link('pages/compendium/cultural_era?era='.$compendium_era_data['prev_id'], $compendium_era_data['prev_name'], style: '')?>
+    <?php } if($compendium_era_data['next_id']) { ?>
+    <br>
+    <?=__('compendium_era_next', spaces_after: 1).__link('pages/compendium/cultural_era?era='.$compendium_era_data['next_id'], $compendium_era_data['next_name'], style: '')?>
+    <?php } ?>
+  </p>
+
   <?php if($compendium_era_data['body']) { ?>
   <div class="padding_top align_justify">
     <?=$compendium_era_data['body']?>

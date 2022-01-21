@@ -3295,6 +3295,38 @@ function compendium_eras_get( int $era_id ) : mixed
   $data['body_en']      = sanitize_output($dera['ce_body_en']);
   $data['body_fr']      = sanitize_output($dera['ce_body_fr']);
 
+  // Sanitize the start and end years
+  $era_start  = sanitize($dera['ce_start'], 'int', 0);
+  $era_end    = sanitize($dera['ce_end'], 'int', 0);
+
+  // Fetch the previous era
+  $dera = mysqli_fetch_array(query("  SELECT    compendium_eras.id          AS 'ce_prev_id' ,
+                                                compendium_eras.name_$lang  AS 'ce_prev_name'
+                                      FROM      compendium_eras
+                                      WHERE     compendium_eras.year_end    <= '$era_start'
+                                      AND       compendium_eras.id          != '$era_id'
+                                      AND       compendium_eras.name_$lang  != ''
+                                      ORDER BY  compendium_eras.year_end DESC
+                                      LIMIT     1 "));
+
+  // Add the previous devblog's info to the data array
+  $data['prev_id']    = ($era_start && isset($dera['ce_prev_id']))    ? sanitize_output($dera['ce_prev_id'])    : 0;
+  $data['prev_name']  = ($era_start && isset($dera['ce_prev_name']))  ? sanitize_output($dera['ce_prev_name'])  : '';
+
+  // Fetch the next era
+  $dera = mysqli_fetch_array(query("  SELECT    compendium_eras.id          AS 'ce_next_id' ,
+                                                compendium_eras.name_$lang  AS 'ce_next_name'
+                                      FROM      compendium_eras
+                                      WHERE     compendium_eras.year_start  >= '$era_end'
+                                      AND       compendium_eras.id          != '$era_id'
+                                      AND       compendium_eras.name_$lang  != ''
+                                      ORDER BY  compendium_eras.year_start ASC
+                                      LIMIT     1 "));
+
+  // Add the previous devblog's info to the data array
+  $data['next_id']    = ($era_end && isset($dera['ce_next_id']))    ? sanitize_output($dera['ce_next_id'])    : 0;
+  $data['next_name']  = ($era_end && isset($dera['ce_next_name']))  ? sanitize_output($dera['ce_next_name'])  : '';
+
   // Return the data
   return $data;
 }

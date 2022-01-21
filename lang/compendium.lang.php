@@ -710,6 +710,16 @@ ___('compendium_eras_entries',  'FR', "Pages");
 // Era: Header
 ___('compendium_era_subtitle',  'EN', "Era:");
 ___('compendium_era_subtitle',  'FR', "Période :");
+___('compendium_era_years',     'EN', "This cultural era began around <span class=\"bold\">{{1}}</span> and ended around <span class=\"bold\">{{2}}</span>.");
+___('compendium_era_years',     'FR', "Cette période commence vers <span class=\"bold\">{{1}}</span> et finit vers <span class=\"bold\">{{2}}</span>.");
+___('compendium_era_no_start',  'EN', "This cultural era encompasses everything until <span class=\"bold\">{{1}}</span>.");
+___('compendium_era_no_start',  'FR', "Cette période englobe tout ce a eu lieu avant <span class=\"bold\">{{1}}</span>.");
+___('compendium_era_no_end',    'EN', "This cultural era began around <span class=\"bold\">{{1}}</span> and is still currently ongoing.");
+___('compendium_era_no_end',    'FR', "Cette période commence vers <span class=\"bold\">{{1}}</span> et est toujours en cours.");
+___('compendium_era_previous',  'EN', "Previous cultural era:");
+___('compendium_era_previous',  'FR', "Période précédente :");
+___('compendium_era_next',      'EN', "Next cultural era:");
+___('compendium_era_next',      'FR', "Période suivante :");
 
 
 // Era: Page list

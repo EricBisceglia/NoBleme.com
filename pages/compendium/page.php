@@ -196,17 +196,17 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=$compendium_page_data['body']?>
   </div>
 
-  <p class="align_center hugepadding_top hugepadding_bot">
+  <p class="align_center hugepadding_top bigpadding_bot">
     <?php if($is_admin && $pageviews) { ?>
-    <?=__link("pages/admin/stats_views", __('compendium_page_pageviews', amount: $pageviews, preset_values: array($pageviews)));?><br>
+    <?=__link("pages/admin/stats_views", __('compendium_page_pageviews', amount: $pageviews, preset_values: array($pageviews)), style: 'hugeglow_dark')?><br>
     <?php } ?>
-    <?=__link("pages/doc/legal", __('compendium_page_copyright', preset_values: array($copyright_date)));?><br>
-    <?=__link('pages/compendium/mission_statement', __('compendium_page_compendium'))?><br>
-    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
+    <?=__link("pages/doc/legal", __('compendium_page_copyright', preset_values: array($copyright_date)), style: 'hugeglow_dark')?><br>
+    <?=__link('pages/compendium/mission_statement', __('compendium_page_compendium'), style: 'hugeglow_dark')?><br>
+    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')", style: 'hugeglow_dark')?><br>
     <?php if($compendium_page_data['type_id']) { ?>
-    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])))?><br>
+    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])), style: 'hugeglow_dark')?><br>
     <?php } ?>
-    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?><br>
+    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'), style: 'hugeglow_dark')?><br>
   </p>
 
 </div>
