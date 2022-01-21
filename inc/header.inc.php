@@ -333,9 +333,6 @@ if(strlen($page_description) <= 25)
 // Theme color
 $theme_color  = ($mode == 'dark') ? '#B00B1E' : '#EEEEEE';
 
-// Header width
-$header_width = (isset($header_width)) ? ' width_'.$header_width : ' width_50';
-
 
 
 
@@ -480,7 +477,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
     <div class="header_topbar">
 
-      <div class="header_topmenu<?=$header_width?>">
+      <div class="header_topmenu width_50">
 
         <div id="header_titres" class="header_topmenu_zone">
 
@@ -842,14 +839,9 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
                 <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="">
               </div>
 
-              <div class="desktop float_right">
-                <input id="login_form_remember_desktop" name="login_form_remember_desktop" type="checkbox" checked>
-                <label class="label_inline login_form_text" for="login_form_remember_desktop"><?=__('login_form_form_remember')?></label>
-              </div>
-
-              <div class="mobile padding_bot">
-                <input id="login_form_remember_mobile" name="login_form_remember_mobile" type="checkbox" checked>
-                <label class="label_inline login_form_text" for="login_form_remember_mobile"><?=__('login_form_form_remember')?></label>
+              <div class="padding_bot">
+                <input id="login_form_remember" name="login_form_remember" type="checkbox" checked>
+                <label class="label_inline login_form_text" for="login_form_remember"><?=__('login_form_form_remember')?></label>
               </div>
 
               <input type="submit" class="button_chain" value="<?=__('login_form_title')?>">

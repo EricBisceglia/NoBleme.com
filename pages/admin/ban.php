@@ -23,9 +23,6 @@ $page_url         = "pages/admin/ban";
 $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
-// Wider header menu
-$header_width = 70;
-
 // Extra JS
 $js = array('admin/ban', 'users/autocomplete_username', 'common/toggle');
 

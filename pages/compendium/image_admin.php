@@ -21,9 +21,6 @@ $page_url         = "pages/compendium/image_admin";
 $page_title_en    = "Compendium images";
 $page_title_fr    = "Compendium : images";
 
-// Wider header menu
-$header_width = 80;
-
 // Compendium admin menu selection
 $compendium_admin_menu['images'] = 1;
 

@@ -75,6 +75,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('compendium_eras_summary')?>
   </p>
 
+  <p class="italics">
+    <?php if($compendium_era_data['start'] && $compendium_era_data['end']) { ?>
+    <?=__('compendium_era_years', preset_values: array($compendium_era_data['start'], $compendium_era_data['end']))?>
+    <?php } else if(!$compendium_era_data['start']) { ?>
+    <?=__('compendium_era_no_start', preset_values: array($compendium_era_data['end']))?>
+    <?php } else if(!$compendium_era_data['end']) { ?>
+    <?=__('compendium_era_no_end', preset_values: array($compendium_era_data['start']))?>
+    <?php } if($compendium_era_data['prev_id']) { ?>
+    <br>
+    <?=__('compendium_era_previous', spaces_after: 1).__link('pages/compendium/cultural_era?era='.$compendium_era_data['prev_id'], $compendium_era_data['prev_name'], style: '')?>
+    <?php } if($compendium_era_data['next_id']) { ?>
+    <br>
+    <?=__('compendium_era_next', spaces_after: 1).__link('pages/compendium/cultural_era?era='.$compendium_era_data['next_id'], $compendium_era_data['next_name'], style: '')?>
+    <?php } ?>
+  </p>
+
   <?php if($compendium_era_data['body']) { ?>
   <div class="padding_top align_justify">
     <?=$compendium_era_data['body']?>
@@ -87,10 +103,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
-  <p class="padding_top">
-    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur();')?><br>
+  <p class="bigpadding_top">
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur();')?>
+  </p>
+
+  <p class="tinypadding_top">
     <?php if($compendium_pages_list[$i]['type']) { ?>
     <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
+    <?php } if($compendium_pages_list[$i]['appeared']) { ?>
+    <?=__('compendium_list_appeared').__(':', spaces_after: 1),$compendium_pages_list[$i]['appeared']?>
+    <?php } if($compendium_pages_list[$i]['appeared'] && $compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <br>
+    <?php } if($compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <?=__('compendium_list_peak').__(':', spaces_after: 1),$compendium_pages_list[$i]['peak']?>
     <?php } ?>
   </p>
 

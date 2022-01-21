@@ -21,9 +21,6 @@ $page_url         = "pages/compendium/page_list_admin";
 $page_title_en    = "Compendium page list";
 $page_title_fr    = "Compendium : liste des pages";
 
-// Wider header menu
-$header_width = 100;
-
 // Compendium admin menu selection
 $compendium_admin_menu['page_list'] = 1;
 

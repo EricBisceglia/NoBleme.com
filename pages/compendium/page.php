@@ -20,6 +20,9 @@ $page_title_en    = "";
 $page_title_fr    = "";
 $page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
+// Hide the regular footer, except for admins
+$hide_footer = true;
+
 // Extra CSS & JS
 $css  = array('compendium');
 $js   = array('compendium/page');
@@ -39,22 +42,46 @@ $js   = array('compendium/page');
 // Fetch the page's url
 $compendium_page_url = (string)form_fetch_element('page', request_type: 'GET');
 
+// Redirect if the page doesn't have an url
+if(!$compendium_page_url)
+  exit(header('Location: '.$path.'pages/compendium/page_list'));
+
 // Fetch the page's data
 $compendium_page_data = compendium_pages_get( page_url: $compendium_page_url );
-
-// Redirect if the page doesn't exist or shouldn't be accessed
-if(!$compendium_page_data)
-  exit(header('Location: '.$path.'pages/compendium/page_list'));
 
 // Redirect if needed
 if(isset($compendium_page_data['redirect']))
   exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
 
 // Update the page summary
-$page_url        .= $compendium_page_url;
-$page_title_en   .= $compendium_page_data['title_en'];
-$page_title_fr   .= $compendium_page_data['title_fr'];
-$page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta'] : $page_description;
+if($compendium_page_data)
+{
+  $page_url        .= $compendium_page_url;
+  $page_title_en   .= $compendium_page_data['title_en'];
+  $page_title_fr   .= $compendium_page_data['title_fr'];
+  $page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta'] : $page_description;
+}
+else
+{
+  $page_url        .= 'dead_link';
+  $page_title_en   .= "Compendium";
+  $page_title_fr   .= "Compendium";
+  unset($hide_footer);
+  $compendium_random_image = compendium_images_get_random();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Footer
+
+// Copyright ending date
+$copyright_date = date('Y');
+
+// Current pageview count
+$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
+
 
 
 
@@ -63,6 +90,8 @@ $page_description = ($compendium_page_data['summary']) ? $compendium_page_data['
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+
+<?php if($compendium_page_data) { ?>
 
 <div class="width_50">
 
@@ -176,17 +205,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <div class="smallpadding_top padding_bot align_justify">
+  <div class="smallpadding_top align_justify">
     <?=$compendium_page_data['body']?>
   </div>
 
-  <p class="align_center bigpadding_top">
-    <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
-    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
-    <?php if($compendium_page_data['type_id']) { ?>
-    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])))?><br>
+  <p class="align_center hugepadding_top bigpadding_bot">
+    <?php if($is_admin && $pageviews) { ?>
+    <?=__link("pages/admin/stats_views", __('compendium_page_pageviews', amount: $pageviews, preset_values: array($pageviews)), style: 'hugeglow_dark')?><br>
     <?php } ?>
-    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?>
+    <?=__link("pages/doc/legal", __('compendium_page_copyright', preset_values: array($copyright_date)), style: 'hugeglow_dark')?><br>
+    <?=__link('pages/compendium/mission_statement', __('compendium_page_compendium'), style: 'hugeglow_dark')?><br>
+    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')", style: 'hugeglow_dark')?><br>
+    <?php if($compendium_page_data['type_id']) { ?>
+    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])), style: 'hugeglow_dark')?><br>
+    <?php } ?>
+    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'), style: 'hugeglow_dark')?><br>
   </p>
 
 </div>
@@ -199,6 +232,32 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </div>
   </div>
 </div>
+
+<?php } else { ?>
+
+<div class="width_50">
+
+  <h1>
+    <?=__('compendium_page_missing_title')?>
+  </h1>
+
+  <p class="bold">
+    <?=__('compendium_page_missing_body_1')?>
+  </p>
+
+  <p class="hugepadding_bot">
+    <?=__('compendium_page_missing_body_2')?>
+  </p>
+
+  <div class="align_center">
+    <a class="noglow" href="<?=$path?>pages/compendium/image?name=<?=$compendium_random_image?>">
+      <img src="<?=$path?>img/compendium/<?=$compendium_random_image?>" alt="<?=$compendium_random_image?>">
+    </a>
+  </div>
+
+</div>
+
+<?php } ?>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

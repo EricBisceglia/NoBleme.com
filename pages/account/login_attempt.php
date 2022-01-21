@@ -27,7 +27,7 @@ user_restrict_to_guests();
 if(isset($_POST['login_form_username']) && isset($_POST['login_form_password']))
 {
   // Check whether the remember me box is checked
-  $login_form_remember_me = (form_fetch_element('login_form_remember_desktop') == 'false' || form_fetch_element('login_form_remember_mobile') == 'false') ? 0 : 1;
+  $login_form_remember_me = (form_fetch_element('login_form_remember') == 'true') ? 1 : 0;
 
   // Attempt to login
   $login_form_attempt = user_authenticate(  $_SERVER["REMOTE_ADDR"]                   ,

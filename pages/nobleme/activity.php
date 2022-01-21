@@ -24,9 +24,6 @@ $page_title_en    = (!isset($_GET['mod'])) ? "Recent activity" : "Moderation log
 $page_title_fr    = (!isset($_GET['mod'])) ? "Activité récente" : "Logs de modération";
 $page_description = "Chronology of recent events that happened on NoBleme";
 
-// Wider header menu
-$header_width = 60;
-
 // Extra CSS & JS
 $css  = array('pages');
 $js   = array('common/toggle', 'nobleme/activity');

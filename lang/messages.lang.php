@@ -255,19 +255,19 @@ EOD
 ___('users_message_admins_del_title',   'EN', "Account deletion request");
 ___('users_message_admins_del_title',   'FR', "Suppression de compte");
 ___('users_message_admins_del_intro',   'EN', <<<EOD
-Account deletion requests are not automated. Instead, you must write a message to the {{link|pages/users/admins|administrative team}}, which will then proceed to delete your account if the request seems justified (we will do it in most cases).
+As stated in {{link|pages/doc/privacy|our privacy policy}}, you have a right to be forgotten.
 EOD
 );
 ___('users_message_admins_del_intro',   'FR', <<<EOD
-La suppression de comptes n'est pas automatisée. Vous devez écrire un message à {{link|pages/users/admins|l'équipe administrative}}, qui se chargera de la suppression de votre compte si votre requête lui semble justifiée (nous le ferons dans la majorité des cas).
+Comme précisé dans {{link|pages/doc/privacy|notre politique de confidentialité}}, vous disposez d'un droit à l'oubli.
 EOD
 );
 ___('users_message_admin_del_history',  'EN', <<<EOD
-Deleting an account includes the deletion of a lot of historical content on the website, which we are looking to avoid doing unless strictly necessary. However, our {{link|pages/doc/privacy|privacy policy}} is more important to us than our feelings on the integrity of the website's history. Therefore, we will honor your right to disappearance as long as you properly explain in the form below why you want your account deleted.
+Account deletion requests are however not automated. Instead, you must write a message to the {{link|pages/users/admins|administrative team}} in the form below, which will then proceed to delete your account. You can write anything you want, it is just a formality: every account deletion request will be honored.
 EOD
 );
 ___('users_message_admin_del_history',  'FR', <<<EOD
-Supprimer un compte implique la suppression de beaucoup de contenu historique du site, ce que nous essayons d'éviter de faire si ce n'est pas strictement nécessaire. Toutefois, notre {{link|pages/doc/privacy|politique de confidentialité}} est plus importante pour nous que nos sentiments sur l'intégrité de l'historique du site. Par conséquent, nous honorerons votre droit à disparaître, à condition que vous expliquiez la raison pour laquelle vous désirez disparaître de NoBleme dans le formulaire ci-dessous.
+La suppression de comptes n'est toutefois pas automatisée. Vous devez écrire un message à {{link|pages/users/admins|l'équipe administrative}} dans le formulaire ci-dessous, qui se chargera ensuite de la suppression de votre compte. Vous pouvez écrire ce que vous voulez, il ne s'agit que d'une formalité : toutes les requêtes de suppression de compte sont exécutées.
 EOD
 );
 

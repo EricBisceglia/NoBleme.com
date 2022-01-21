@@ -92,10 +92,9 @@ function user_login_attempt(  login_path  ,
   if(!form_failed)
   {
     // Prepare the postdata
-    postdata  = 'login_form_username='          + fetch_sanitize_id('login_form_username');
-    postdata += '&login_form_password='         + fetch_sanitize_id('login_form_password');
-    postdata += '&login_form_remember_desktop=' + fetch_sanitize(document.getElementById('login_form_remember_desktop').checked);
-    postdata += '&login_form_remember_mobile='  + fetch_sanitize(document.getElementById('login_form_remember_mobile').checked);
+    postdata  = 'login_form_username='  + fetch_sanitize_id('login_form_username');
+    postdata += '&login_form_password=' + fetch_sanitize_id('login_form_password');
+    postdata += '&login_form_remember=' + fetch_sanitize(document.getElementById('login_form_remember').checked);
 
     // Send the login attempt to the backend (it will handle the rest)
     fetch_page(login_path, 'login_form_error', postdata, user_login_attempt_process);

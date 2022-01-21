@@ -1040,7 +1040,7 @@ ___('footer_copyright', 'FR', "&copy; NoBleme.com : 2005 - {{1}}");
 ___('login_form_title',         'EN', "Login");
 ___('login_form_title',         'FR', "Connexion");
 ___('login_form_form_remember', 'EN', "Stay logged in");
-___('login_form_form_remember', 'FR', "Rester connecté");
+___('login_form_form_remember', 'FR', "Maintenir la connexion");
 ___('login_form_form_register', 'EN', "REGISTER");
 ___('login_form_form_register', 'FR', "INSCRIPTION");
 

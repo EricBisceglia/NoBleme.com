@@ -88,6 +88,8 @@
 .glowhover:hover { filter: drop-shadow(0 0 5px #B00B1E);       }
 .bigglow         { filter: drop-shadow(0 0 10px #B00B1E);      }
 .bigglow_dark    { filter: drop-shadow(0 0 10px #B00B1E);      }
+.hugeglow        { filter: drop-shadow(0 0 15px #B00B1E);      }
+.hugeglow_dark   { filter: drop-shadow(0 0 15px #B00B1E);      }
 .noglow          { filter: none;                               }
 .pointer         { cursor: pointer;                            }
 

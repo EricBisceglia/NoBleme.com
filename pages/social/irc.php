@@ -99,12 +99,6 @@ $page_url = (isset($_GET['chanserv']))  ? 'pages/social/irc?chanserv' : $page_ur
 $page_url = (isset($_GET['bots']))      ? 'pages/social/irc?bots'     : $page_url;
 $page_url = (isset($_GET['channels']))  ? 'pages/social/irc?channels' : $page_url;
 
-// Set the correct header menu width
-if(isset($_GET['browser']))
-  $header_width = 70;
-if(isset($_GET['channels']))
-  $header_width = 60;
-
 
 
 

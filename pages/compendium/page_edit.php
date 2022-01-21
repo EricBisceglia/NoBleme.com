@@ -571,13 +571,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <div class="smallpadding_top padding_bot align_justify">
+  <div class="smallpadding_top align_justify">
     <?=$compendium_preview_body_en?>
   </div>
 
-  <p class="align_center bigpadding_top">
-    <?=__link('#', __('compendium_page_compendium'), is_internal: false)?><br>
-    <?=__link('#', __('compendium_page_random_page'), is_internal: false)?>
+  <p class="align_center hugepadding_top bigpadding_bot">
+    <?=__link('#', __('compendium_page_copyright', preset_values: array(date('Y'))), style: 'hugeglow_dark')?><br>
+    <?=__link('#', __('compendium_page_compendium'), is_internal: false, style: 'hugeglow_dark')?><br>
+    <?=__link('#', __('compendium_page_random_page'), is_internal: false, style: 'hugeglow_dark')?>
   </p>
 
 </div>
@@ -649,13 +650,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <div class="smallpadding_top padding_bot align_justify">
+  <div class="smallpadding_top align_justify">
     <?=$compendium_preview_body_fr?>
   </div>
 
-  <p class="align_center bigpadding_top">
-    <?=__link('#', __('compendium_page_compendium'), is_internal: false)?><br>
-    <?=__link('#', __('compendium_page_random_page'), is_internal: false)?>
+  <p class="align_center hugepadding_top bigpadding_bot">
+    <?=__link('#', __('compendium_page_copyright', preset_values: array(date('Y'))), style: 'hugeglow_dark')?><br>
+    <?=__link('#', __('compendium_page_compendium'), is_internal: false, style: 'hugeglow_dark')?><br>
+    <?=__link('#', __('compendium_page_random_page'), is_internal: false, style: 'hugeglow_dark')?>
   </p>
 
 </div>

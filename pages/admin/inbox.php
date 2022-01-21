@@ -21,9 +21,6 @@ $page_title_en    = "Administrative mail";
 $page_title_fr    = "Courrier administratif";
 $page_description = "Private message exchanges between users and the administrative team";
 
-// Wider header menu
-$header_width = 70;
-
 // Extra JS & CSS
 $js   = array('admin/messages', 'common/toggle', 'common/editor', 'common/preview');
 $css  = array('admin');
