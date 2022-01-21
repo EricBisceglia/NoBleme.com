@@ -42,22 +42,33 @@ $js   = array('compendium/page');
 // Fetch the page's url
 $compendium_page_url = (string)form_fetch_element('page', request_type: 'GET');
 
+// Redirect if the page doesn't have an url
+if(!$compendium_page_url)
+  exit(header('Location: '.$path.'pages/compendium/page_list'));
+
 // Fetch the page's data
 $compendium_page_data = compendium_pages_get( page_url: $compendium_page_url );
-
-// Redirect if the page doesn't exist or shouldn't be accessed
-if(!$compendium_page_data)
-  exit(header('Location: '.$path.'pages/compendium/page_list'));
 
 // Redirect if needed
 if(isset($compendium_page_data['redirect']))
   exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
 
 // Update the page summary
-$page_url        .= $compendium_page_url;
-$page_title_en   .= $compendium_page_data['title_en'];
-$page_title_fr   .= $compendium_page_data['title_fr'];
-$page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta'] : $page_description;
+if($compendium_page_data)
+{
+  $page_url        .= $compendium_page_url;
+  $page_title_en   .= $compendium_page_data['title_en'];
+  $page_title_fr   .= $compendium_page_data['title_fr'];
+  $page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta'] : $page_description;
+}
+else
+{
+  $page_url        .= 'dead_link';
+  $page_title_en   .= "Compendium";
+  $page_title_fr   .= "Compendium";
+  unset($hide_footer);
+  $compendium_random_image = compendium_images_get_random();
+}
 
 
 
@@ -79,6 +90,8 @@ $pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+
+<?php if($compendium_page_data) { ?>
 
 <div class="width_50">
 
@@ -219,6 +232,32 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </div>
   </div>
 </div>
+
+<?php } else { ?>
+
+<div class="width_50">
+
+  <h1>
+    <?=__('compendium_page_missing_title')?>
+  </h1>
+
+  <p class="bold">
+    <?=__('compendium_page_missing_body_1')?>
+  </p>
+
+  <p class="hugepadding_bot">
+    <?=__('compendium_page_missing_body_2')?>
+  </p>
+
+  <div class="align_center">
+    <a class="noglow" href="<?=$path?>pages/compendium/image?name=<?=$compendium_random_image?>">
+      <img src="<?=$path?>img/compendium/<?=$compendium_random_image?>" alt="<?=$compendium_random_image?>">
+    </a>
+  </div>
+
+</div>
+
+<?php } ?>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

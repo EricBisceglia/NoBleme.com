@@ -100,7 +100,7 @@ ___('compendium_index_recent_created',  'FR', "Publié");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Warnings
+// Errors
 ___('compendium_page_deleted',  'EN', "This page has been soft deleted. It is not viewable by the general public.");
 ___('compendium_page_deleted',  'FR', "Cette page a été supprimée de façon non définitive. Elle n'est pas visible par le public.");
 ___('compendium_page_draft',    'EN', "This page is an unpublished draft. It is not viewable by the general public.");
@@ -148,6 +148,27 @@ ___('compendium_page_random_page',  'EN', "Another random page");
 ___('compendium_page_random_page',  'FR', "Autre page au hasard");
 ___('compendium_page_random_type',  'EN', "Another random {{1}}");
 ___('compendium_page_random_type',  'FR', "Autre {{1}} au hasard");
+
+
+// Missing page
+___('compendium_page_missing_title',  'EN', "Missing page");
+___('compendium_page_missing_title',  'FR', "Page manquante");
+___('compendium_page_missing_body_1', 'EN', <<<EOT
+This page currently does not exist in NoBleme's {{link|pages/compendium/index|21st century compendium}}.
+EOT
+);
+___('compendium_page_missing_body_1', 'FR', <<<EOT
+Cette page n'existe pas dans le {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme.
+EOT
+);
+___('compendium_page_missing_body_2', 'EN', <<<EOT
+If you followed a link from another page which led you here, then this page will most likely exist some day! However, as NoBleme's compendium has a focus on {{link|pages/compendium/mission_statement#q10|quality over quantity}}, it might take a long time for every planned page to be created. In the meantime, you can explore the {{link|pages/compendium/page_list|list of all pages}}, or go to a {{link|pages/compendium/random_page|random page}}.
+EOT
+);
+___('compendium_page_missing_body_2', 'FR', <<<EOT
+Si vous avez suivi un lien jusqu'ici, alors cette page existera probablement un jour ! Toutefois, vu que le compendium de NoBleme vise {{link|pages/compendium/mission_statement#q10|la qualité plutôt que la quantité}}, il faudra probablement énormément de temps pour que toutes les pages prévues soient rédigées : ne retenez pas votre souffle. En attendant, vous pouvez explorer la {{link|pages/compendium/page_list|liste des pages}} ou visiter une {{link|pages/compendium/random_page|page au hasard}}.
+EOT
+);
 
 
 // New page

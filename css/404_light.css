@@ -1,6 +1,7 @@
 /***************************************************** 404 ERROR *****************************************************/
 body { background-color: #000000; }
 
+.header_topbar                  { background-color: #B00B1E;                                                    }
 .header_topmenu                 { background-color: #B00B1E;                                                    }
 .header_topmenu_title           { color: #000000; background-color: #B00B1E;                                    }
 .header_topmenu_title:hover     { color: #B00B1E; background-color: #000000;                                    }
