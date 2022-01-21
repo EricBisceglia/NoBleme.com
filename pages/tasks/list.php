@@ -18,9 +18,6 @@ $page_title_en    = "To-do list";
 $page_title_fr    = "Liste des tâches";
 $page_description = "List of tasks laying the roadmap for NoBleme's past and future development";
 
-// Wider header menu
-$header_width = 80;
-
 // Extra CSS & JS
 $css  = array('tasks');
 $js   = array('tasks/list', 'common/toggle');

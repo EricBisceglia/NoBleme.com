@@ -333,9 +333,6 @@ if(strlen($page_description) <= 25)
 // Theme color
 $theme_color  = ($mode == 'dark') ? '#B00B1E' : '#EEEEEE';
 
-// Header width
-$header_width = (isset($header_width)) ? ' width_'.$header_width : ' width_50';
-
 
 
 
@@ -480,7 +477,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
     <div class="header_topbar">
 
-      <div class="header_topmenu<?=$header_width?>">
+      <div class="header_topmenu width_50">
 
         <div id="header_titres" class="header_topmenu_zone">
 

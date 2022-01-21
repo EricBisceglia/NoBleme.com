@@ -22,9 +22,6 @@ $page_url         = "pages/admin/stats_views";
 $page_title_en    = "Pageviews";
 $page_title_fr    = "Pages populaires";
 
-// Wider header menu
-$header_width = 60;
-
 // Extra JS
 $js = array('admin/stats');
 

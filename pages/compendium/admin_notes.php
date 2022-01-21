@@ -21,9 +21,6 @@ $page_url         = "pages/compendium/admin_notes";
 $page_title_en    = "Compendium admin notes";
 $page_title_fr    = "Compendium : Notes admin";
 
-// Wider header menu
-$header_width = 70;
-
 // Compendium admin menu selection
 $compendium_admin_menu['notes'] = 1;
 
