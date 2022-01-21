@@ -103,10 +103,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
-  <p class="padding_top">
-    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur();')?><br>
+  <p class="bigpadding_top">
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur();')?>
+  </p>
+
+  <p class="tinypadding_top">
     <?php if($compendium_pages_list[$i]['type']) { ?>
     <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
+    <?php } if($compendium_pages_list[$i]['appeared']) { ?>
+    <?=__('compendium_list_appeared').__(':', spaces_after: 1),$compendium_pages_list[$i]['appeared']?>
+    <?php } if($compendium_pages_list[$i]['appeared'] && $compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <br>
+    <?php } if($compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <?=__('compendium_list_peak').__(':', spaces_after: 1),$compendium_pages_list[$i]['peak']?>
     <?php } ?>
   </p>
 

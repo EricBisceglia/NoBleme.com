@@ -32,7 +32,7 @@ $compendium_pages_list = compendium_pages_list( search:     array(  'nsfw'      
                                                                     'gross'       => 0    ,
                                                                     'offensive'   => 0    ,
                                                                     'nsfw_title'  => 0  ) ,
-                                                limit:      10                            ,
+                                                limit:      20                            ,
                                                 user_view:  true                          );
 
 
@@ -80,8 +80,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
-  <p class="padding_top">
-    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow forced_link')?><br>
+  <p class="bigpadding_top">
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow forced_link')?>
+  </p>
+
+  <p class="tinypadding_top">
     <?php if($compendium_pages_list[$i]['type_id']) { ?>
     <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
     <?php } ?>

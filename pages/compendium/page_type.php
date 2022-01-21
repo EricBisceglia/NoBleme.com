@@ -71,7 +71,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
   </h5>
 
-  <p class="italics">
+  <p class="italics tinypadding_top">
     <?=__('compendium_type_summary')?>
   </p>
 
@@ -87,9 +87,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
-  <p class="padding_top">
+  <p class="bigpadding_top">
     <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur();')?>
   </p>
+
+  <?php if($compendium_pages_list[$i]['appeared'] || $compendium_pages_list[$i]['peak']) { ?>
+  <p class="tinypadding_top">
+    <?php if($compendium_pages_list[$i]['appeared']) { ?>
+    <?=__('compendium_list_appeared').__(':', spaces_after: 1),$compendium_pages_list[$i]['appeared']?>
+    <?php } if($compendium_pages_list[$i]['appeared'] && $compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <br>
+    <?php } if($compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <?=__('compendium_list_peak').__(':', spaces_after: 1),$compendium_pages_list[$i]['peak']?>
+    <?php } ?>
+  </p>
+  <?php } ?>
 
   <?php if($compendium_pages_list[$i]['summary']) { ?>
   <p class="tinypadding_top">
