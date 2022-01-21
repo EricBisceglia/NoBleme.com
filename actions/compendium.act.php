@@ -1954,6 +1954,94 @@ function compendium_images_recalculate_links( int $image_id ) : void
   if(!$image_name)
     return;
 
+  // Prepare strings for the image usages
+  $usage_list_en  = '';
+  $usage_list_fr  = '';
+
+  // Look up page types containing the image
+  $qusage = query(" SELECT    compendium_types.id           AS 'ct_id'  ,
+                              compendium_types.full_name_en AS 'ct_name'
+                    FROM      compendium_types
+                    WHERE     compendium_types.description_en LIKE '%:$image_name%'
+                    ORDER BY  compendium_types.full_name_en ASC ");
+
+  // Add any english page types to the string
+  while($dusage = mysqli_fetch_array($qusage))
+  {
+    $usage_list_en .= ($usage_list_en) ? '|||' : '';
+    $usage_list_en .= 'page_type?type='.$dusage['ct_id'].'|||Type: '.$dusage['ct_name'];
+  }
+
+  // Look up page types containing the image in french
+  $qusage = query(" SELECT    compendium_types.id           AS 'ct_id'  ,
+                              compendium_types.full_name_fr AS 'ct_name'
+                    FROM      compendium_types
+                    WHERE     compendium_types.description_fr LIKE '%:$image_name%'
+                    ORDER BY  compendium_types.full_name_fr ASC ");
+
+  // Add any french page types to the string
+  while($dusage = mysqli_fetch_array($qusage))
+  {
+    $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
+    $usage_list_fr .= 'page_type?type='.$dusage['ct_id'].'|||Thématique: '.$dusage['ct_name'];
+  }
+
+  // Look up categories containing the image in english
+  $qusage = query(" SELECT    compendium_categories.id      AS 'cc_id'  ,
+                              compendium_categories.name_en AS 'cc_name'
+                    FROM      compendium_categories
+                    WHERE     compendium_categories.description_en LIKE '%:$image_name%'
+                    ORDER BY  compendium_categories.name_en ASC ");
+
+  // Add any english categories to the string
+  while($dusage = mysqli_fetch_array($qusage))
+  {
+    $usage_list_en .= ($usage_list_en) ? '|||' : '';
+    $usage_list_en .= 'category?id='.$dusage['cc_id'].'|||Category: '.$dusage['cc_name'];
+  }
+
+  // Look up categories containing the image in french
+  $qusage = query(" SELECT    compendium_categories.id      AS 'cc_id'  ,
+                              compendium_categories.name_fr AS 'cc_name'
+                    FROM      compendium_categories
+                    WHERE     compendium_categories.description_fr LIKE '%:$image_name%'
+                    ORDER BY  compendium_categories.name_fr ASC ");
+
+  // Add any french categories to the string
+  while($dusage = mysqli_fetch_array($qusage))
+  {
+    $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
+    $usage_list_fr .= 'category?id='.$dusage['cc_id'].'|||Category: '.$dusage['cc_name'];
+  }
+
+  // Look up eras containing the image in english
+  $qusage = query(" SELECT    compendium_eras.id      AS 'ce_id'  ,
+                              compendium_eras.name_en AS 'ce_name'
+                    FROM      compendium_eras
+                    WHERE     compendium_eras.description_en LIKE '%:$image_name%'
+                    ORDER BY  compendium_eras.name_en ASC ");
+
+  // Add any english eras to the string
+  while($dusage = mysqli_fetch_array($qusage))
+  {
+    $usage_list_en .= ($usage_list_en) ? '|||' : '';
+    $usage_list_en .= 'cultural_era?era='.$dusage['ce_id'].'|||Era: '.$dusage['ce_name'];
+  }
+
+  // Look up eras containing the image in french
+  $qusage = query(" SELECT    compendium_eras.id      AS 'ce_id'  ,
+                              compendium_eras.name_fr AS 'ce_name'
+                    FROM      compendium_eras
+                    WHERE     compendium_eras.description_fr LIKE '%:$image_name%'
+                    ORDER BY  compendium_eras.name_fr ASC ");
+
+  // Add any french eras to the string
+  while($dusage = mysqli_fetch_array($qusage))
+  {
+    $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
+    $usage_list_fr .= 'cultural_era?era='.$dusage['ce_id'].'|||Période: '.$dusage['ce_name'];
+  }
+
   // Look up pages containing the image in english
   $qusage = query(" SELECT    compendium_pages.page_url   AS 'c_url'  ,
                               compendium_pages.title_en   AS 'c_title'
@@ -1965,12 +2053,10 @@ function compendium_images_recalculate_links( int $image_id ) : void
                     AND       compendium_pages.definition_en  LIKE '%:$image_name%'
                     ORDER BY  compendium_pages.title_en       ASC ");
 
-  // Assemble the english page names into an string
-  $usage_list_en = '';
-  for($i = 0; $dusage = mysqli_fetch_array($qusage); $i++)
+  // Add any english page names to the string
+  while($dusage = mysqli_fetch_array($qusage))
   {
-    if($i > 0)
-      $usage_list_en .= '|||';
+    $usage_list_en .= ($usage_list_en) ? '|||' : '';
     $usage_list_en .= $dusage['c_url'].'|||'.$dusage['c_title'];
   }
 
@@ -1985,12 +2071,10 @@ function compendium_images_recalculate_links( int $image_id ) : void
                     AND       compendium_pages.definition_fr  LIKE '%:$image_name%'
                     ORDER BY  compendium_pages.title_fr       ASC ");
 
-  // Assemble the french page names into an string
-  $usage_list_fr = '';
-  for($i = 0; $dusage = mysqli_fetch_array($qusage); $i++)
+  // Add any french page names to the string
+  while($dusage = mysqli_fetch_array($qusage))
   {
-    if($i > 0)
-      $usage_list_fr .= '|||';
+    $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
     $usage_list_fr .= $dusage['c_url'].'|||'.$dusage['c_title'];
   }
 
