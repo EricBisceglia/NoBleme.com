@@ -3393,7 +3393,7 @@ function compendium_eras_get( int $era_id ) : mixed
                                       ORDER BY  compendium_eras.year_end DESC
                                       LIMIT     1 "));
 
-  // Add the previous devblog's info to the data array
+  // Add the previous era's info to the data array
   $data['prev_id']    = ($era_start && isset($dera['ce_prev_id']))    ? sanitize_output($dera['ce_prev_id'])    : 0;
   $data['prev_name']  = ($era_start && isset($dera['ce_prev_name']))  ? sanitize_output($dera['ce_prev_name'])  : '';
 
@@ -3407,7 +3407,7 @@ function compendium_eras_get( int $era_id ) : mixed
                                       ORDER BY  compendium_eras.year_start ASC
                                       LIMIT     1 "));
 
-  // Add the previous devblog's info to the data array
+  // Add the previous era's info to the data array
   $data['next_id']    = ($era_end && isset($dera['ce_next_id']))    ? sanitize_output($dera['ce_next_id'])    : 0;
   $data['next_name']  = ($era_end && isset($dera['ce_next_name']))  ? sanitize_output($dera['ce_next_name'])  : '';
 
