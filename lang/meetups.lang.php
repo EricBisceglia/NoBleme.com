@@ -174,8 +174,8 @@ ___('meetups_attendees_body',         'FR', <<<EOT
 Afin d'éviter certains abus, vous ne pouvez pas vous ajouter vous-même à la liste ci-dessous : seule {{link|pages/users/admins|l'équipe administrative}} de NoBleme peut le faire. Si vous désirez participer à cette IRL, contactez l'administration afin de vous faire ajouter à cette liste, idéalement via notre {{link|pages/social/irc|chat IRC}} ou notre serveur {{link|pages/social/discord|Discord}}.
 EOT
 );
-___('meetups_attendees_lock',         'EN', "Présence<br>confirmée");
-___('meetups_attendees_lock',         'FR', "Confirmed<br>attendance");
+___('meetups_attendees_lock',         'EN', "Confirmed<br>attendance");
+___('meetups_attendees_lock',         'FR', "Présence<br>confirmée");
 ___('meetups_attendees_details',      'EN', "Extra details");
 ___('meetups_attendees_details',      'FR', "Détails supplémentaires");
 
