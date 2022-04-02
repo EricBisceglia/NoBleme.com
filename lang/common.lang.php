@@ -488,54 +488,54 @@ ___('year_short',   'FR', "a");
 
 
 // Month names
-___('month_1',        'EN', 'January');
-___('month_1',        'FR', 'Janvier');
-___('month_2',        'EN', 'February');
-___('month_2',        'FR', 'Février');
-___('month_3',        'EN', 'March');
-___('month_3',        'FR', 'Mars');
-___('month_4',        'EN', 'April');
-___('month_4',        'FR', 'Avril');
-___('month_5',        'EN', 'May');
-___('month_5',        'FR', 'Mai');
-___('month_6',        'EN', 'June');
-___('month_6',        'FR', 'Juin');
-___('month_7',        'EN', 'July');
-___('month_7',        'FR', 'Juillet');
-___('month_8',        'EN', 'August');
-___('month_8',        'FR', 'Août');
-___('month_9',        'EN', 'September');
-___('month_9',        'FR', 'Septembre');
-___('month_10',       'EN', 'October');
-___('month_10',       'FR', 'Octobre');
-___('month_11',       'EN', 'November');
-___('month_11',       'FR', 'Novembre');
-___('month_12',       'EN', 'December');
-___('month_12',       'FR', 'Décembre');
-___('month_short_1',  'EN', 'Jan.');
-___('month_short_1',  'FR', 'Jan.');
-___('month_short_2',  'EN', 'Feb.');
-___('month_short_2',  'FR', 'Fév.');
-___('month_short_3',  'EN', 'Mar.');
-___('month_short_3',  'FR', 'Mar.');
-___('month_short_4',  'EN', 'Apr.');
-___('month_short_4',  'FR', 'Avr.');
-___('month_short_5',  'EN', 'May');
-___('month_short_5',  'FR', 'Mai');
-___('month_short_6',  'EN', 'June');
-___('month_short_6',  'FR', 'Juin');
-___('month_short_7',  'EN', 'July');
-___('month_short_7',  'FR', 'Juil.');
-___('month_short_8',  'EN', 'Aug.');
-___('month_short_8',  'FR', 'Août');
-___('month_short_9',  'EN', 'Sept.');
-___('month_short_9',  'FR', 'Sept.');
-___('month_short_10', 'EN', 'Oct.');
-___('month_short_10', 'FR', 'Oct.');
-___('month_short_11', 'EN', 'Nov.');
-___('month_short_11', 'FR', 'Nov.');
-___('month_short_12', 'EN', 'Dec.');
-___('month_short_12', 'FR', 'Déc.');
+___('month_1',        'EN', "January");
+___('month_1',        'FR', "Janvier");
+___('month_2',        'EN', "February");
+___('month_2',        'FR', "Février");
+___('month_3',        'EN', "March");
+___('month_3',        'FR', "Mars");
+___('month_4',        'EN', "April");
+___('month_4',        'FR', "Avril");
+___('month_5',        'EN', "May");
+___('month_5',        'FR', "Mai");
+___('month_6',        'EN', "June");
+___('month_6',        'FR', "Juin");
+___('month_7',        'EN', "July");
+___('month_7',        'FR', "Juillet");
+___('month_8',        'EN', "August");
+___('month_8',        'FR', "Août");
+___('month_9',        'EN', "September");
+___('month_9',        'FR', "Septembre");
+___('month_10',       'EN', "October");
+___('month_10',       'FR', "Octobre");
+___('month_11',       'EN', "November");
+___('month_11',       'FR', "Novembre");
+___('month_12',       'EN', "December");
+___('month_12',       'FR', "Décembre");
+___('month_short_1',  'EN', "Jan.");
+___('month_short_1',  'FR', "Jan.");
+___('month_short_2',  'EN', "Feb.");
+___('month_short_2',  'FR', "Fév.");
+___('month_short_3',  'EN', "Mar.");
+___('month_short_3',  'FR', "Mar.");
+___('month_short_4',  'EN', "Apr.");
+___('month_short_4',  'FR', "Avr.");
+___('month_short_5',  'EN', "May");
+___('month_short_5',  'FR', "Mai");
+___('month_short_6',  'EN', "June");
+___('month_short_6',  'FR', "Juin");
+___('month_short_7',  'EN', "July");
+___('month_short_7',  'FR', "Juil.");
+___('month_short_8',  'EN', "Aug.");
+___('month_short_8',  'FR', "Août");
+___('month_short_9',  'EN', "Sept.");
+___('month_short_9',  'FR', "Sept.");
+___('month_short_10', 'EN', "Oct.");
+___('month_short_10', 'FR', "Oct.");
+___('month_short_11', 'EN', "Nov.");
+___('month_short_11', 'FR', "Nov.");
+___('month_short_12', 'EN', "Dec.");
+___('month_short_12', 'FR', "Déc.");
 
 
 // Generic user related terms
@@ -563,6 +563,116 @@ ___('user',           'EN', "user");
 ___('user',           'FR', "membre");
 ___('username',       'EN', "username");
 ___('username',       'FR', "pseudonyme");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       DATES                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Bilingual ordinals
+___('ordinal_0_en', 'EN', "th");
+___('ordinal_0_en', 'FR', "th");
+___('ordinal_1_en', 'EN', "st");
+___('ordinal_1_en', 'FR', "st");
+___('ordinal_2_en', 'EN', "nd");
+___('ordinal_2_en', 'FR', "nd");
+___('ordinal_3_en', 'EN', "rd");
+___('ordinal_3_en', 'FR', "rd");
+___('ordinal_1_fr', 'EN', "er");
+___('ordinal_1_fr', 'FR', "er");
+
+
+// Bilingual time indicator
+___('time_indicator_en',  'EN', "at");
+___('time_indicator_en',  'FR', "at");
+___('time_indicator_fr',  'EN', "à");
+___('time_indicator_fr',  'FR', "à");
+
+
+// Bilingual days
+___('day_1_en', 'EN', "Monday");
+___('day_1_en', 'FR', "Monday");
+___('day_2_en', 'EN', "Tuesday");
+___('day_2_en', 'FR', "Tuesday");
+___('day_3_en', 'EN', "Wednesday");
+___('day_3_en', 'FR', "Wednesday");
+___('day_4_en', 'EN', "Thursday");
+___('day_4_en', 'FR', "Thursday");
+___('day_5_en', 'EN', "Friday");
+___('day_5_en', 'FR', "Friday");
+___('day_6_en', 'EN', "Saturday");
+___('day_6_en', 'FR', "Saturday");
+___('day_7_en', 'EN', "Sunday");
+___('day_7_en', 'FR', "Sunday");
+___('day_1_fr', 'EN', "Lundi");
+___('day_1_fr', 'FR', "Lundi");
+___('day_2_fr', 'EN', "Mardi");
+___('day_2_fr', 'FR', "Mardi");
+___('day_3_fr', 'EN', "Mercredi");
+___('day_3_fr', 'FR', "Mercredi");
+___('day_4_fr', 'EN', "Jeudi");
+___('day_4_fr', 'FR', "Jeudi");
+___('day_5_fr', 'EN', "Vendredi");
+___('day_5_fr', 'FR', "Vendredi");
+___('day_6_fr', 'EN', "Samedi");
+___('day_6_fr', 'FR', "Samedi");
+___('day_7_fr', 'EN', "Dimanche");
+___('day_7_fr', 'FR', "Dimanche");
+
+
+// Bilingual months
+___('month_1_en',   'EN', "January");
+___('month_1_en',   'FR', "January");
+___('month_2_en',   'EN', "February");
+___('month_2_en',   'FR', "February");
+___('month_3_en',   'EN', "March");
+___('month_3_en',   'FR', "March");
+___('month_4_en',   'EN', "April");
+___('month_4_en',   'FR', "April");
+___('month_5_en',   'EN', "May");
+___('month_5_en',   'FR', "May");
+___('month_6_en',   'EN', "June");
+___('month_6_en',   'FR', "June");
+___('month_7_en',   'EN', "July");
+___('month_7_en',   'FR', "July");
+___('month_8_en',   'EN', "August");
+___('month_8_en',   'FR', "August");
+___('month_9_en',   'EN', "September");
+___('month_9_en',   'FR', "September");
+___('month_10_en',  'EN', "October");
+___('month_10_en',  'FR', "October");
+___('month_11_en',  'EN', "November");
+___('month_11_en',  'FR', "November");
+___('month_12_en',  'EN', "December");
+___('month_12_en',  'FR', "December");
+___('month_1_fr',   'EN', "Janvier");
+___('month_1_fr',   'FR', "Janvier");
+___('month_2_fr',   'EN', "Février");
+___('month_2_fr',   'FR', "Février");
+___('month_3_fr',   'EN', "Mars");
+___('month_3_fr',   'FR', "Mars");
+___('month_4_fr',   'EN', "Avril");
+___('month_4_fr',   'FR', "Avril");
+___('month_5_fr',   'EN', "Mai");
+___('month_5_fr',   'FR', "Mai");
+___('month_6_fr',   'EN', "Juin");
+___('month_6_fr',   'FR', "Juin");
+___('month_7_fr',   'EN', "Juillet");
+___('month_7_fr',   'FR', "Juillet");
+___('month_8_fr',   'EN', "Août");
+___('month_8_fr',   'FR', "Août");
+___('month_9_fr',   'EN', "Septembre");
+___('month_9_fr',   'FR', "Septembre");
+___('month_10_fr',  'EN', "Octobre");
+___('month_10_fr',  'FR', "Octobre");
+___('month_11_fr',  'EN', "Novembre");
+___('month_11_fr',  'FR', "Novembre");
+___('month_12_fr',  'EN', "Décembre");
+___('month_12_fr',  'FR', "Décembre");
 
 
 

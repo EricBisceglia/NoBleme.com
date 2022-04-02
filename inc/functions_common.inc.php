@@ -617,7 +617,7 @@ function date_french_ordinal( int $timestamp ) : string
  *
  * @param   string|int  $date           (OPTIONAL)  The MySQL date or timestamp that we want to transform.
  * @param   int         $strip_day      (OPTIONAL)  If 1, strips the day's name. If 2, strips the whole day.
- * @param   int         $include_time   (OPTIONAL)  If 1, will add the time after the date. If 2, strips milliseconds.
+ * @param   int         $include_time   (OPTIONAL)  If 1, will add the time after the date. If 2, strips seconds.
  * @param   bool        $strip_year     (OPTIONAL)  If set, omits the year from the returned data.
  * @param   string      $lang           (OPTIONAL)  The language used, defaults to current lang.
  *
@@ -636,51 +636,66 @@ function date_to_text(  mixed   $date         = ''    ,
   // If we are dealing with a MySQL date, transform it into a timestamp
   $date = (!is_numeric($date)) ? strtotime($date) : $date;
 
-  // Set the correct locale for times
+  // Fetch the user's language if none was specified
   $lang = (!$lang) ? user_get_language() : $lang;
-  if($lang == 'EN')
-    setlocale(LC_TIME, "en_US.UTF-8", 'eng');
-  else
-    setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
+  $lang = string_change_case($lang, 'lowercase');
 
-  // Prepare the year stripping option if needed
-  $year       = ($strip_year) ? '' : ' %Y';
-  $year_comma = ($strip_year) ? '' : ', %Y';
+  // Decompose the date
+  $day      = date('j', $date);
+  $weekday  = date('N', $date);
+  $month    = date('n', $date);
+  $year     = date('Y', $date);
+  $time     = date('H:i', $date);
+  $seconds  = date('s', $date);
 
-  // Return the formatted date - each language has its own date formatting rules
+  // Prepare an empty return string
+  $return = '';
+
+  // Add the plaintext day to the return string
   if(!$strip_day)
   {
-    if($lang == 'EN')
-      $full_date = date_better_strftime('%A, %B %#d%O'.$year_comma, $date);
-    else
-      $full_date = string_change_case(utf8_encode(strftime('%A %#d'.date_french_ordinal($date).' %B'.$year, $date)), "initials");
+    $return .= __('day_'.$weekday.'_'.$lang);
+    $return .= ($lang == 'en') ? "," : "";
   }
 
-  // Treat this situation differently if the day needs to be stripped
-  else if($strip_day == 1)
+  // Add the month to the return string if the date is in english
+  if($lang == 'en')
+    $return .= " ".__('month_'.$month.'_en');
+
+  // Add the day's number to the return string
+  if($strip_day < 2)
+    $return .= " ".date('j', $date);
+
+  // Add the day's ordinal to the return string
+  if($strip_day < 2 && $lang == 'en')
   {
-    if($lang == 'EN')
-      $full_date = date_better_strftime('%B %#d%O'.$year_comma, $date);
-    else
-      $full_date = utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B'.$year, $date), "initials"));
+    $ordinal = __('ordinal_0_en');
+    $ordinal = ($day == 1 || $day == 21 || $day == 31) ? __('ordinal_1_en') : $ordinal;
+    $ordinal = (($day % 10) == 2) ? __('ordinal_2_en') : $ordinal;
+    $ordinal = (($day % 10) == 3) ? __('ordinal_3_en') : $ordinal;
+    $return .= $ordinal;
   }
+  else if($strip_day < 2 && $lang == 'fr')
+    $return .= ($day == 1) ? __('ordinal_1_fr') : '';
 
-  // And differently aswell if the full day is being stripped
-  else
+  // Add the month to the return string if the date is in french
+  if($lang == 'fr')
+    $return .= " ".string_change_case(__('month_'.$month.'_fr'), 'lowercase');
+
+  // Add the year to the return string
+  if(!$strip_year)
+    $return .= " ".$year;
+
+  // Add the time to the return string
+  if($include_time)
   {
-    if($lang == 'EN')
-      $full_date = date_better_strftime('%B'.$year, $date);
-    else
-      $full_date = string_change_case(utf8_encode(strftime('%B'.$year, $date)), "initials");
+    $return .= " ".__('time_indicator_'.$lang);
+    $return .= " ".$time;
+    $return .= ($include_time == 1) ? ":".$seconds : '';
   }
 
-  // Append the time to the date if requested
-  if($include_time == 2)
-    return $full_date.__('at_date', 0, 1, 1).date('H:i', $date);
-  else if($include_time)
-    return $full_date.__('at_date', 0, 1, 1).date('H:i:s', $date);
-  else
-    return $full_date;
+  // Return the formatted date
+  return $return;
 }
 
 
