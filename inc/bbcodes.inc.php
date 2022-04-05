@@ -40,7 +40,7 @@ function bbcodes( string  $message ) : string
   // Close leftover open tags
   if($open > $close)
   {
-    for($i=0;$i<($open-$close);$i++)
+     for($i = 0; $i < ($open - $close); $i++)
       $message.="</span>";
   }
 
@@ -55,7 +55,7 @@ function bbcodes( string  $message ) : string
   // Close leftover open tags
   if($open > $close)
   {
-    for($i=0;$i<($open-$close);$i++)
+     for($i = 0; $i < ($open - $close); $i++)
       $message.="</span>";
   }
 
@@ -70,7 +70,7 @@ function bbcodes( string  $message ) : string
   // Close leftover open tags
   if($open > $close)
   {
-    for($i=0;$i<($open-$close);$i++)
+     for($i = 0; $i < ($open - $close); $i++)
       $message.="</span>";
   }
 
@@ -85,7 +85,7 @@ function bbcodes( string  $message ) : string
   // Close leftover open tags
   if($open > $close)
   {
-    for($i=0;$i<($open-$close);$i++)
+     for($i = 0; $i < ($open - $close); $i++)
       $message.="</span>";
   }
 
@@ -100,7 +100,7 @@ function bbcodes( string  $message ) : string
   // Close leftover open tags
   if($open > $close)
   {
-    for($i=0;$i<($open-$close);$i++)
+     for($i = 0; $i < ($open - $close); $i++)
       $message.="</ins>";
   }
 
@@ -115,7 +115,7 @@ function bbcodes( string  $message ) : string
   // Close leftover open tags
   if($open > $close)
   {
-    for($i=0;$i<($open-$close);$i++)
+     for($i = 0; $i < ($open - $close); $i++)
       $message.="</del>";
   }
 
@@ -269,31 +269,21 @@ function nbcodes( string  $message                                              
   /*******************************************************************************************************************/
   // === Subtitle ===
 
-  // Replace tags with HTML
-  $message = str_replace("=== ", "<h5>", $message, $open);
-  $message = str_replace(" ===", "</h5>", $message, $close);
+  // Initialize the tag counter
+  $i = 0;
 
-  // Close leftover open tags
-  if($open > $close)
-  {
-    for($i = 0; $i < ($open - $close); $i++)
-      $message.="</h5>";
-  }
+  // Handle this with a regex
+  $message = preg_replace_callback('/\=\=\=\ (.*?)\ \=\=\=/is', function($m) use(&$i) {$i++; return '<h5 class="pointer" id="subsection'.$i.'" onclick="document.location=\'#subsection'.$i.'\'">'.$m[1].'</h5>';}, $message);
 
 
   /*******************************************************************************************************************/
   // == Title == (must parse after subtitles or it won't work)
 
-  // Replace tags with HTML
-  $message = str_replace("== ", "<h4>", $message, $open);
-  $message = str_replace(" ==", "</h4>", $message, $close);
+  // Initialize the tag counter
+  $i = 0;
 
-  // Close leftover open tags
-  if($open > $close)
-  {
-    for($i = 0; $i < ($open - $close); $i++)
-      $message.="</h4>";
-  }
+  // Handle this with a regex
+  $message = preg_replace_callback('/\=\=\ (.*?)\ \=\=/is', function($m) use(&$i) {$i++; return '<h4 class="pointer" id="section'.$i.'" onclick="document.location=\'#section'.$i.'\'">'.$m[1].'</h4>';}, $message);
 
 
   /*******************************************************************************************************************/
