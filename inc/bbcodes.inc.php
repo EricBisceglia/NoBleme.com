@@ -273,7 +273,7 @@ function nbcodes( string  $message                                              
   $i = 0;
 
   // Handle this with a regex
-  $message = preg_replace_callback('/\=\=\=\ (.*?)\ \=\=\=/is', function($m) use(&$i) {$i++; return '<h5 class="pointer" id="subsection'.$i.'" onclick="document.location=\'#subsection'.$i.'\'">'.$m[1].'</h5>';}, $message);
+  $message = preg_replace_callback('/\=\=\=\ (.*?)\ \=\=\=/is', function($m) use(&$i) {$i++; return '<h5 class="pointer" id="subsection'.$i.'" onclick="document.location=\'#subsection'.$i.'\';">'.$m[1].'</h5>';}, $message);
 
 
   /*******************************************************************************************************************/
@@ -283,7 +283,7 @@ function nbcodes( string  $message                                              
   $i = 0;
 
   // Handle this with a regex
-  $message = preg_replace_callback('/\=\=\ (.*?)\ \=\=/is', function($m) use(&$i) {$i++; return '<h4 class="pointer" id="section'.$i.'" onclick="document.location=\'#section'.$i.'\'">'.$m[1].'</h4>';}, $message);
+  $message = preg_replace_callback('/\=\=\ (.*?)\ \=\=/is', function($m) use(&$i) {$i++; return '<h4 class="pointer" id="section'.$i.'" onclick="document.location=\'#section'.$i.'\';">'.$m[1].'</h4>';}, $message);
 
 
   /*******************************************************************************************************************/
