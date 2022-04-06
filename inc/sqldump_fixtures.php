@@ -1829,6 +1829,7 @@ for($i = 0; $i < $random; $i++)
   $temp         = (mt_rand(0, 1)) ? $temp : $temp.';'.$temp2;
   $temp         = (mt_rand(0,3) < 3) ? $temp : $temp.';'.$temp3;
   $admin_urls   = (mt_rand(0,7) < 7) ? '' : $temp;
+  $view_count   = (mt_rand(0, 10000));
 
   // Generate the pages if they don't exist already
   if(!in_array($title_en, $page_titles_en) && !in_array($title_fr, $page_titles_fr))
@@ -1846,6 +1847,7 @@ for($i = 0; $i < $random; $i++)
                         compendium_pages.page_url             = '$url'          ,
                         compendium_pages.title_en             = '$title_en'     ,
                         compendium_pages.title_fr             = '$title_fr'     ,
+                        compendium_pages.view_count           = '$view_count'   ,
                         compendium_pages.year_appeared        = '$appeared_y'   ,
                         compendium_pages.month_appeared       = '$appeared_m'   ,
                         compendium_pages.year_peak            = '$spread_y'     ,
@@ -2004,6 +2006,7 @@ for($i = 0; $i < $random; $i++)
   $used_fr     .= ($used_fr && mt_rand(0,1)) ? ';'.fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
   $caption_en   = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
   $caption_fr   = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
+  $view_count   = (mt_rand(0, 10000));
 
   // Generate the image placeholders
   query(" INSERT INTO compendium_images
@@ -2011,6 +2014,7 @@ for($i = 0; $i < $random; $i++)
                       compendium_images.uploaded_at       = '$uploaded_at'  ,
                       compendium_images.file_name         = '$file_name'    ,
                       compendium_images.tags              = '$tags'         ,
+                      compendium_images.view_count        = '$view_count'   ,
                       compendium_images.is_nsfw           = '$nsfw'         ,
                       compendium_images.is_gross          = '$gross'        ,
                       compendium_images.is_offensive      = '$offensive'    ,

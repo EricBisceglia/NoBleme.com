@@ -140,8 +140,8 @@ function user_authenticate( string  $ip                   ,
   {
     // Generate the hash and its expiry date
     $token_hash   = sanitize(bin2hex(random_bytes(64)), 'string');
-    $token_regen  = sanitize(time() + 60, 'int', 0);
-    $token_expiry = sanitize(time() + 7890000, 'int', 0);
+    $token_regen  = sanitize(time() + 600, 'int', 0);
+    $token_expiry = sanitize(time() + 31536000, 'int', 0);
 
     // Create the cookie
     if($GLOBALS['dev_http_only'])

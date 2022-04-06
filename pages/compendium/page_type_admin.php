@@ -3,11 +3,12 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';        # Core
-include_once './../../actions/compendium.act.php';  # Actions
-include_once './../../lang/compendium.lang.php';    # Translations
-include_once './../../inc/bbcodes.inc.php';         # BBCodes
-include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../inc/includes.inc.php';          # Core
+include_once './../../actions/compendium.act.php';    # Actions
+include_once './../../lang/compendium.lang.php';      # Translations
+include_once './../../inc/bbcodes.inc.php';           # BBCodes
+include_once './../../inc/functions_time.inc.php';    # Time management
+include_once './../../inc/functions_numbers.inc.php'; # Number formatting
 
 // Limit page access rights
 user_restrict_to_administrators();
