@@ -170,7 +170,7 @@ function __link(  string  $href                       ,
   $url = ($url)         ? "href=\"".$url."\"" : "";
 
   // Make it pop-up if needed
-  $popup = ($popup) ? 'target="_blank"' : '';
+  $popup = ($popup) ? 'rel="noopener noreferrer" target="_blank"' : '';
 
   // Prepare the confirmation dialog
   $onclick = ($confirm) ? "return confirm('".$confirm."'); ".$onclick : $onclick;
@@ -233,7 +233,7 @@ function __icon(  string  $icon                                   ,
   $url = ($url)         ? "href=\"".$url."\"" : "";
 
   // Make the link pop-up if needed
-  $popup = ($popup) ? 'target="_blank"' : '';
+  $popup = ($popup) ? 'rel="noopener noreferrer" target="_blank"' : '';
 
   // Prepare the identifier if needed
   $id = ($identifier) ? ' id="'.$identifier.'"' : '';

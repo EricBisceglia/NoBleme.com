@@ -326,7 +326,7 @@ function nbcodes( string  $message                                              
   // [link:https://example.com|page name]
 
   // Handle this with a regex
-  $message = preg_replace('/\[link:(.*?)\|(.*?)\]/i','<a href="$1" target="_blank">$2<img src="'.$path.'img/icons/link_external'.$mode.'.svg" alt=" " class="smallicon nbcode_link_icon"></a>', $message);
+  $message = preg_replace('/\[link:(.*?)\|(.*?)\]/i','<a href="$1" rel="noopener noreferrer" target="_blank">$2<img src="'.$path.'img/icons/link_external'.$mode.'.svg" alt=" " class="smallicon nbcode_link_icon"></a>', $message);
 
 
   /*******************************************************************************************************************/
