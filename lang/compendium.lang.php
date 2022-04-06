@@ -422,6 +422,8 @@ ___('compendium_list_admin_appeared',         'EN', "App.");
 ___('compendium_list_admin_appeared',         'FR', "App.");
 ___('compendium_list_admin_peak',             'EN', "Peak");
 ___('compendium_list_admin_peak',             'FR', "Pic");
+___('compendium_list_admin_views',            'EN', "Views");
+___('compendium_list_admin_views',            'FR', "Vues");
 ___('compendium_list_admin_language',         'EN', "Lang.");
 ___('compendium_list_admin_language',         'FR', "Lang.");
 ___('compendium_list_admin_monolingual',      'EN', "Monolingual");

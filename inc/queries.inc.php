@@ -639,16 +639,16 @@ $last_query = sql_check_query_id();
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                       4.0.x                                                       */
+/*                                                       4.1.x                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Add a type and a priority to compendium missing pages
+// Store a copy of the page count in compendium pages and images
 
-if($last_query < 34)
+if($last_query < 35)
 {
-  sql_create_field('compendium_missing', 'fk_compendium_types', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('compendium_missing', 'is_a_priority', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'title');
-  sql_update_query_id(34);
+  sql_create_field('compendium_pages', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'redirection_fr');
+  sql_create_field('compendium_images', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'tags');
+  sql_update_query_id(35);
 }

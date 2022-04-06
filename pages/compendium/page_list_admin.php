@@ -3,11 +3,12 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';        # Core
-include_once './../../actions/compendium.act.php';  # Actions
-include_once './../../lang/compendium.lang.php';    # Translations
-include_once './../../inc/bbcodes.inc.php';         # BBCodes
-include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../inc/includes.inc.php';          # Core
+include_once './../../actions/compendium.act.php';    # Actions
+include_once './../../lang/compendium.lang.php';      # Translations
+include_once './../../inc/bbcodes.inc.php';           # BBCodes
+include_once './../../inc/functions_time.inc.php';    # Time management
+include_once './../../inc/functions_numbers.inc.php'; # Number formatting
 
 // Limit page access rights
 user_restrict_to_administrators();
@@ -135,6 +136,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('created');")?>
         </th>
         <th>
+          <?=__('compendium_list_admin_views')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('pageviews');")?>
+        </th>
+        <th>
           <?=__('compendium_list_admin_language')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('language');")?>
         </th>
@@ -246,6 +251,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </select>
         </th>
 
+        <th>
+          &nbsp;
+        </th>
+
         <th class="compendium_admin_search_small">
           <select class="table_search" name="compendium_search_language" id="compendium_search_language" onchange="compendium_admin_list_search();">
             <option value="">&nbsp;</option>
@@ -290,7 +299,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php } ?>
 
       <tr>
-        <td colspan="15" class="uppercase text_light dark bold align_center">
+        <td colspan="16" class="uppercase text_light dark bold align_center">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>
@@ -401,6 +410,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center">
           <?=$compendium_pages_list[$i]['created']?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['viewcount']?>
         </td>
 
         <td class="align_center">

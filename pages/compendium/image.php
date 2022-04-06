@@ -66,6 +66,16 @@ $page_description = ($compendium_image_data['body_clean']) ? $compendium_image_d
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Update pageview count
+
+if($compendium_image_data)
+  compendium_images_update_pageviews( $compendium_image_data['id']  ,
+                                      $page_url                     );
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */

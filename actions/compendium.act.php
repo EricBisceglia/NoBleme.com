@@ -17,6 +17,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_pages_publish                  Publishes an existing compendium page.                                 */
 /*  compendium_pages_delete                   Deletes an existing compendium page.                                   */
 /*  compendium_pages_restore                  Restores a deleted compendium page.                                    */
+/*  compendium_pages_update_pageviews         Updates the pageview count for an existing compendium page.            */
 /*  compendium_pages_autocomplete             Autocompletes a page url.                                              */
 /*                                                                                                                   */
 /*  compendium_images_get                     Returns data related to an image used in the compendium.               */
@@ -29,6 +30,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
 /*  compendium_images_assemble_links          Lists all compendium pages containing an image in a usable format.     */
 /*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
+/*  compendium_pages_update_pageviews         Updates the pageview count for an existing compendium image.           */
 /*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
 /*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
@@ -374,6 +376,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
   require_included_file('functions_time.inc.php');
+  require_included_file('functions_numbers.inc.php');
 
   // Get the user's current language, access rights, settings, and the compendium pages which they can access
   $lang       = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -422,6 +425,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                             compendium_pages.redirection_$lang  AS 'p_redirect'   ,
                             compendium_pages.redirection_en     AS 'p_redir_en'   ,
                             compendium_pages.redirection_fr     AS 'p_redir_fr'   ,
+                            compendium_pages.view_count         AS 'p_viewcount'  ,
                             compendium_pages.year_appeared      AS 'p_app_year'   ,
                             compendium_pages.month_appeared     AS 'p_app_month'  ,
                             compendium_pages.year_peak          AS 'p_peak_year'  ,
@@ -440,8 +444,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                             compendium_types.full_name_$lang    AS 'pt_display'
                             $count_categories
                   FROM      compendium_pages
-                  LEFT JOIN compendium_types  ON compendium_pages.fk_compendium_types = compendium_types.id
-                  LEFT JOIN compendium_eras   ON compendium_pages.fk_compendium_eras  = compendium_eras.id
+                  LEFT JOIN compendium_types  ON    compendium_pages.fk_compendium_types  = compendium_types.id
+                  LEFT JOIN compendium_eras   ON    compendium_pages.fk_compendium_eras   = compendium_eras.id
                             $join_categories
                   WHERE     1 = 1 ";
 
@@ -610,6 +614,11 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   else if($sort_by == 'created')
     $qpages .= "  ORDER BY    compendium_pages.created_at             DESC                ,
                               compendium_pages.title_$lang            ASC                 ";
+  else if($sort_by == 'pageviews')
+    $qpages .= "  ORDER BY    compendium_pages.view_count             DESC                ,
+                  GREATEST  ( compendium_pages.created_at                                 ,
+                              compendium_pages.last_edited_at )       DESC                ,
+                              compendium_pages.title_$lang            ASC                 ";
   else if($sort_by == 'language' && $is_admin)
     $qpages .= "  ORDER BY  ( compendium_pages.title_en               != ''
                   AND         compendium_pages.title_fr               != '' )             ,
@@ -650,15 +659,15 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $temp                   = sanitize_output(string_change_case(time_since($row['p_edited']), 'lowercase'));
     $data[$i]['edited']     = ($row['p_edited']) ? $temp : '';
     $data[$i]['url']        = sanitize_output($row['p_url']);
-    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 25, '...'));
-    $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 25) ? sanitize_output($row['p_url']) : '';
+    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 23, '...'));
+    $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 23) ? sanitize_output($row['p_url']) : '';
     $data[$i]['title']      = sanitize_output($row['p_title']);
     $data[$i]['shorttitle'] = sanitize_output(string_truncate($row['p_title'], 32, '...'));
     $data[$i]['fulltitle']  = (mb_strlen($row['p_title']) > 32) ? sanitize_output($row['p_title']) : '';
-    $data[$i]['admintitle'] = sanitize_output(string_truncate($row['p_title'], 25, '...'));
-    $data[$i]['adminfull']  = (mb_strlen($row['p_title']) > 25) ? sanitize_output($row['p_title']) : '';
+    $data[$i]['admintitle'] = sanitize_output(string_truncate($row['p_title'], 22, '...'));
+    $data[$i]['adminfull']  = (mb_strlen($row['p_title']) > 22) ? sanitize_output($row['p_title']) : '';
     $temp                   = ($lang == 'en') ? $row['p_title_fr'] : $row['p_title_en'];
-    $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 23, '...'));
+    $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 21, '...'));
     $data[$i]['fullwrong']  = (mb_strlen($temp) > 23) ? sanitize_output($temp) : '';
     $data[$i]['notitle']    = (!$row['p_title_en'] && !$row['p_title_fr']) ? 1 : 0;
     $data[$i]['lang_en']    = ($row['p_title_en']) ? 1 : 0;
@@ -694,6 +703,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
     $data[$i]['era']        = sanitize_output($row['pe_name']);
     $data[$i]['categories'] = ($join_categories) ? sanitize_output($row['pc_count']) : 0;
+    $temp                   = number_display_format($row['p_viewcount'], "number");
+    $data[$i]['viewcount']  = ($row['p_viewcount'] > 1) ? sanitize_output($temp) : '&nbsp;';
 
     // Prepare the admin urls
     if($row['p_urlnotes'])
@@ -1309,6 +1320,41 @@ function compendium_pages_restore( int $page_id ) : void
 
 
 /**
+ * Updates the pageview count for an existing compendium page.
+ *
+ * @param   string  $page_id    The compendium page's id.
+ * @param   string  $page_url   The complete page url.
+ */
+
+function compendium_pages_update_pageviews( int     $page_id  ,
+                                            string  $page_url )
+{
+  // Sanitize the data
+  $page_url = sanitize($page_url, 'string');
+  $page_id  = sanitize($page_id, 'int', 0);
+
+  // Ensure the compendium page exists
+  if(!$page_url || !$page_id || !database_row_exists('compendium_pages', $page_id))
+    return;
+
+  // Fetch the pageview count
+  $dviews = mysqli_fetch_array(query("  SELECT  stats_pages.view_count AS 'sp_count'
+                                        FROM    stats_pages
+                                        WHERE   stats_pages.page_url LIKE '$page_url' "));
+
+  // Sanitize the pageview count
+  $view_count = sanitize($dviews['sp_count'], 'int', 0);
+
+  // Update the pageview count
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.view_count = '$view_count'
+          WHERE   compendium_pages.id         = '$page_id' ");
+}
+
+
+
+
+/**
  * Autocompletes a page url.
  *
  * @param   string      $input                        The input that needs to be autocompleted.
@@ -1522,8 +1568,9 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                                   array   $search   = array() ) : array
 {
   // Check if the required files have been included
-  require_included_file('functions_time.inc.php');
   require_included_file('bbcodes.inc.php');
+  require_included_file('functions_time.inc.php');
+  require_included_file('functions_numbers.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
@@ -1551,6 +1598,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                             compendium_images.uploaded_at       AS 'ci_date'        ,
                             compendium_images.file_name         AS 'ci_name'        ,
                             compendium_images.tags              AS 'ci_tags'        ,
+                            compendium_images.view_count        AS 'ci_viewcount'   ,
                             compendium_images.is_nsfw           AS 'ci_nsfw'        ,
                             compendium_images.is_gross          AS 'ci_gross'       ,
                             compendium_images.is_offensive      AS 'ci_offensive'   ,
@@ -1635,6 +1683,9 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                               compendium_images.caption_fr        != ''   ,
                               compendium_images.caption_en        != ''   ,
                               compendium_images.uploaded_at       DESC    ";
+  else if($sort_by == 'views')
+    $qimages .= " ORDER BY    compendium_images.view_count        DESC    ,
+                              compendium_images.uploaded_at       DESC    ";
   else if($sort_by == 'deleted')
     $qimages .= " ORDER BY    compendium_images.is_deleted        DESC    ,
                               compendium_images.uploaded_at       DESC    ";
@@ -1649,7 +1700,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   {
     $data[$i]['id']         = sanitize_output($row['ci_id']);
     $data[$i]['deleted']    = ($row['ci_del']) ? 1 : 0;
-    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 22, '...'));
+    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 20, '...'));
     $data[$i]['fullname']   = sanitize_output($row['ci_name']);
     $data[$i]['date']       = sanitize_output(time_since($row['ci_date']));
     $data[$i]['blur']       = ($row['ci_nsfw'] || $row['ci_gross'] || $row['ci_offensive']) ? 1 : 0;
@@ -1672,6 +1723,8 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
     $data[$i]['caption_fr'] = ($row['ci_caption_fr']) ? 1 : 0;
     $temp                   = bbcodes(sanitize_output($row['ci_caption'], preserve_line_breaks: true));
     $data[$i]['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $temp                   = number_display_format($row['ci_viewcount'], "number");
+    $data[$i]['views']      = ($row['ci_viewcount'] > 1) ? sanitize_output($temp) : '&nbsp;';
   }
 
   // Add the number of rows to the data
@@ -2172,7 +2225,7 @@ function compendium_images_assemble_tags( string  $tags             ,
   $formatted_tags = '';
   for($i = 0; $i < count($tags_array); $i++)
   {
-    $temp = ($shorten) ? string_truncate($tags_array[$i], 18, '...') : $tags_array[$i];
+    $temp = ($shorten) ? string_truncate($tags_array[$i], 15, '...') : $tags_array[$i];
     $formatted_tags .= sanitize_output($temp).'<br>';
   }
 
@@ -2182,6 +2235,41 @@ function compendium_images_assemble_tags( string  $tags             ,
 
   // Return the formatted page list
   return $data;
+}
+
+
+
+
+/**
+ * Updates the pageview count for an existing compendium image.
+ *
+ * @param   string  $image_id   The compendium image's id.
+ * @param   string  $page_url   The complete page url.
+ */
+
+function compendium_images_update_pageviews(  int     $image_id ,
+                                              string  $page_url )
+{
+  // Sanitize the data
+  $page_url = sanitize($page_url, 'string');
+  $image_id = sanitize($image_id, 'int', 0);
+
+  // Ensure the compendium image exists
+  if(!$page_url || !$image_id || !database_row_exists('compendium_images', $image_id))
+    return;
+
+  // Fetch the pageview count
+  $dviews = mysqli_fetch_array(query("  SELECT  stats_pages.view_count AS 'sp_count'
+                                        FROM    stats_pages
+                                        WHERE   stats_pages.page_url LIKE '$page_url' "));
+
+  // Sanitize the pageview count
+  $view_count = (isset($dviews['sp_count']) && $dviews['sp_count']) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
+
+  // Update the pageview count
+  query(" UPDATE  compendium_images
+          SET     compendium_images.view_count  = '$view_count'
+          WHERE   compendium_images.id          = '$image_id' ");
 }
 
 
