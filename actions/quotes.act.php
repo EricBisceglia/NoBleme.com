@@ -379,9 +379,15 @@ function quotes_edit( int   $quote_id   ,
                   quotes.is_nsfw      = '$quote_nsfw'
           WHERE   quotes.id           = '$quote_id' ");
 
+  // Fetch more data on the quote
+  $quote_data = quotes_get($quote_id);
+
   // IRC bot message
-  $username = user_get_username();
-  irc_bot_send_message("A quote has been modified by $username: ".$GLOBALS['website_url']."pages/quotes/".$quote_id, 'admin');
+  if(!$quote_data['deleted'] && $quote_data['validated'])
+  {
+    $username = user_get_username();
+    irc_bot_send_message("A quote has been modified by $username: ".$GLOBALS['website_url']."pages/quotes/".$quote_id, 'admin');
+  }
 }
 
 
