@@ -953,6 +953,7 @@ function compendium_pages_edit( int   $page_id  ,
   $page_history_en    = isset($contents['history_en'])    ? sanitize($contents['history_en'], 'string')       : '';
   $page_history_fr    = isset($contents['history_fr'])    ? sanitize($contents['history_fr'], 'string')       : '';
   $page_history_major = isset($contents['major'])         ? sanitize($contents['major'], 'int', 0, 1)         : 0;
+  $page_silent_edit   = isset($contents['silent'])        ? sanitize($contents['silent'], 'int', 0, 1)        : 0;
 
   // Error: No URL
   if(!$page_url)
@@ -1043,8 +1044,8 @@ function compendium_pages_edit( int   $page_id  ,
                           global_type_wipe: true      ,
                           restore:          true      );
 
-  // Do not handle history, activity or integrations for redirections, deleted pages, or drafts
-  if(!$page_redirect_en && !$page_redirect_fr && !$page_data['draft'] && !$page_data['deleted'])
+  // Do not handle history, activity, integrations for redirections, deleted pages, drafts or if silence is requested
+  if(!$page_silent_edit && !$page_redirect_en && !$page_redirect_fr && !$page_data['draft'] && !$page_data['deleted'])
   {
     // Page history
     query(" INSERT INTO compendium_pages_history

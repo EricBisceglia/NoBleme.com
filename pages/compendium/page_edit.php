@@ -23,7 +23,7 @@ $page_title_fr    = "Compendium : Modifier une page";
 
 // Extra CSS & JS
 $css  = array('compendium');
-$js   = array('compendium/admin');
+$js   = array('compendium/admin', 'common/toggle');
 
 
 
@@ -72,6 +72,7 @@ $compendium_edit_admin_notes  = $compendium_page_data['admin_note'];
 $compendium_edit_admin_urls   = $compendium_page_data['admin_urls'];
 $compendium_edit_history_en   = "";
 $compendium_edit_history_fr   = "";
+$compendium_edit_silent       = false;
 $compendium_edit_major        = false;
 $compendium_edit_activity     = false;
 $compendium_edit_irc          = false;
@@ -111,6 +112,7 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_admin_urls   = form_fetch_element('compendium_edit_admin_urls');
   $compendium_edit_history_en   = form_fetch_element('compendium_edit_history_en');
   $compendium_edit_history_fr   = form_fetch_element('compendium_edit_history_fr');
+  $compendium_edit_silent       = form_fetch_element('compendium_edit_silent', element_exists: true);
   $compendium_edit_major        = form_fetch_element('compendium_edit_major', element_exists: true);
   $compendium_edit_activity     = form_fetch_element('compendium_edit_activity', element_exists: true);
   $compendium_edit_irc          = form_fetch_element('compendium_edit_irc', element_exists: true);
@@ -154,6 +156,7 @@ if(isset($_POST['compendium_edit_submit']))
                                   'admin_urls'    => $compendium_edit_admin_urls    ,
                                   'history_en'    => $compendium_edit_history_en    ,
                                   'history_fr'    => $compendium_edit_history_fr    ,
+                                  'silent'        => $compendium_edit_silent        ,
                                   'major'         => $compendium_edit_major         ,
                                   'activity'      => $compendium_edit_activity      ,
                                   'irc'           => $compendium_edit_irc           ,
@@ -237,6 +240,7 @@ $compendium_edit_nsfw_title_checkbox  = ($compendium_edit_nsfw_title) ? ' checke
 $compendium_edit_nsfw_checkbox        = ($compendium_edit_nsfw)       ? ' checked' : '';
 $compendium_edit_gross_checkbox       = ($compendium_edit_gross)      ? ' checked' : '';
 $compendium_edit_offensive_checkbox   = ($compendium_edit_offensive)  ? ' checked' : '';
+$compendium_edit_silent_checkbox      = ($compendium_edit_silent)     ? ' checked' : '';
 $compendium_edit_major_checkbox       = ($compendium_edit_major)      ? ' checked' : '';
 $compendium_edit_activity_checkbox    = ($compendium_edit_activity)   ? ' checked' : '';
 $compendium_edit_irc_checkbox         = ($compendium_edit_irc)        ? ' checked' : '';
@@ -428,27 +432,42 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php if(!$compendium_edit_redirect_en && !$compendium_edit_redirect_fr && !$compendium_page_data['deleted'] && !$compendium_page_data['draft']) { ?>
 
-      <div class="smallpadding_bot">
-        <label for="compendium_edit_history_en"><?=__('compendium_page_edit_history_en')?></label>
-        <input type="text" class="indiv" id="compendium_edit_history_en" name="compendium_edit_history_en" value="<?=$compendium_edit_history_en?>">
+      <div id="compendium_edit_history_descriptions">
+
+        <div class="smallpadding_bot">
+          <label for="compendium_edit_history_en"><?=__('compendium_page_edit_history_en')?></label>
+          <input type="text" class="indiv" id="compendium_edit_history_en" name="compendium_edit_history_en" value="<?=$compendium_edit_history_en?>">
+        </div>
+
+        <div class="smallpadding_bot">
+          <label for="compendium_edit_history_fr"><?=__('compendium_page_edit_history_fr')?></label>
+          <input type="text" class="indiv" id="compendium_edit_history_fr" name="compendium_edit_history_fr" value="<?=$compendium_edit_history_fr?>">
+        </div>
+
       </div>
 
-      <div class="smallpadding_bot">
-        <label for="compendium_edit_history_fr"><?=__('compendium_page_edit_history_fr')?></label>
-        <input type="text" class="indiv" id="compendium_edit_history_fr" name="compendium_edit_history_fr" value="<?=$compendium_edit_history_fr?>">
+      <input type="checkbox" id="compendium_edit_silent" name="compendium_edit_silent"<?=$compendium_edit_silent_checkbox?> onclick="compendium_edit_toggle_history()">
+      <label class="label_inline" for="compendium_edit_silent"><?=__('compendium_page_edit_silent')?></label><br>
+
+      <div id="compendium_edit_history_checkboxes">
+
+        <input type="checkbox" id="compendium_edit_major" name="compendium_edit_major"<?=$compendium_edit_major_checkbox?> onclick="compendium_edit_toggle_major()">
+        <label class="label_inline" for="compendium_edit_major"><?=__('compendium_page_edit_major')?></label><br>
+
+        <div id="compendium_edit_history_major" class="hidden">
+
+          <input type="checkbox" id="compendium_edit_activity" name="compendium_edit_activity"<?=$compendium_edit_activity_checkbox?>>
+          <label class="label_inline" for="compendium_edit_activity"><?=__('compendium_page_draft_activity')?></label><br>
+
+          <input type="checkbox" id="compendium_edit_irc" name="compendium_edit_irc"<?=$compendium_edit_irc_checkbox?>>
+          <label class="label_inline" for="compendium_edit_irc"><?=__('compendium_page_draft_irc')?></label><br>
+
+          <input type="checkbox" id="compendium_edit_discord" name="compendium_edit_discord"<?=$compendium_edit_discord_checkbox?>>
+          <label class="label_inline" for="compendium_edit_discord"><?=__('compendium_page_draft_discord')?></label>
+
+        </div>
+
       </div>
-
-      <input type="checkbox" id="compendium_edit_major" name="compendium_edit_major"<?=$compendium_edit_major_checkbox?>>
-      <label class="label_inline" for="compendium_edit_major"><?=__('compendium_page_edit_major')?></label><br>
-
-      <input type="checkbox" id="compendium_edit_activity" name="compendium_edit_activity"<?=$compendium_edit_activity_checkbox?>>
-      <label class="label_inline" for="compendium_edit_activity"><?=__('compendium_page_draft_activity')?></label><br>
-
-      <input type="checkbox" id="compendium_edit_irc" name="compendium_edit_irc"<?=$compendium_edit_irc_checkbox?>>
-      <label class="label_inline" for="compendium_edit_irc"><?=__('compendium_page_draft_irc')?></label><br>
-
-      <input type="checkbox" id="compendium_edit_discord" name="compendium_edit_discord"<?=$compendium_edit_discord_checkbox?>>
-      <label class="label_inline" for="compendium_edit_discord"><?=__('compendium_page_draft_discord')?></label>
 
       <?php } ?>
 

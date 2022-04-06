@@ -266,6 +266,8 @@ ___('compendium_page_edit_history_en',  'EN', "Reason for the modification (opti
 ___('compendium_page_edit_history_en',  'FR', "Raison de la modification (optional, english)");
 ___('compendium_page_edit_history_fr',  'EN', "Reason for the modification (optional, french)");
 ___('compendium_page_edit_history_fr',  'FR', "Raison de la modification (optional, french)");
+___('compendium_page_edit_silent',      'EN', "Silent modification (no history entry, no notifications)");
+___('compendium_page_edit_silent',      'FR', "Modification silencieuses (pas d'entrée dans l'historique, pas de notifications)");
 ___('compendium_page_edit_major',       'EN', "This edit is a major modification");
 ___('compendium_page_edit_major',       'FR', "Cette modification est une modification majeure");
 ___('compendium_page_edit_submit',      'EN', "Edit the page");

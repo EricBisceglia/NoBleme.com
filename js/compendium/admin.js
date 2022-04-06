@@ -17,6 +17,9 @@
 /*                                                                                                                   */
 /*  compendium_era_delete                 Triggers the deletion of a compendium era.                                 */
 /*                                                                                                                   */
+/*  compendium_edit_toggle_history        Toggles the history options when editing a compendium page.                */
+/*  compendium_edit_toggle_major          Toggles more history options when editing a compendium page.               */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -262,4 +265,40 @@ function compendium_missing_delete( missing_id  ,
     // Trigger the deletion
     fetch_page('cultural_era_delete', 'compendium_admin_era_row_' + era_id, postdata);
   }
+}
+
+
+
+
+/**
+ * Toggles the history options when editing a compendium page.
+ *
+ * @returns {void}
+ */
+
+function compendium_edit_toggle_history()
+{
+  // Toggle the form elements
+  toggle_element('compendium_edit_history_descriptions');
+  toggle_element('compendium_edit_history_checkboxes');
+}
+
+
+
+
+/**
+ * Toggles more history options when editing a compendium page.
+ *
+ * @returns {void}
+ */
+
+function compendium_edit_toggle_major()
+{
+  // Uncheck the checkboxes
+  document.getElementById('compendium_edit_activity').checked = false;
+  document.getElementById('compendium_edit_irc').checked      = false;
+  document.getElementById('compendium_edit_discord').checked  = false;
+
+  // Toggle the form elements
+  toggle_element('compendium_edit_history_major');
 }
