@@ -1309,11 +1309,11 @@ EOT
 );
 
 ___('compendium_faq_answer_6_1',  'EN', <<<EOT
-This compendium is the work of a single person, {{link|cv|Eric Bisceglia}}.
+This compendium is the work of a single person, Eric B. (known online as {{link|pages/users/1|Bad}}).
 EOT
 );
 ___('compendium_faq_answer_6_1',  'FR', <<<EOT
-Ce compendium est l'œuvre d'une seule personne, {{link|cv|Eric Bisceglia}}.
+Ce compendium est l'œuvre d'une seule personne, Eric B. (utilisant sur Internet le pseudonyme {{link|pages/users/1|Bad}}).
 EOT
 );
 ___('compendium_faq_answer_6_2',  'EN', <<<EOT

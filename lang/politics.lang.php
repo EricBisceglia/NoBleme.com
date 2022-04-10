@@ -1285,7 +1285,7 @@ EOT
 
 // Conclusion
 ___('politics_manifesto_credits',  'EN', <<<EOT
-Written by Éric Bisceglia<br>
+Written by Eric B.<br>
 Published on nobleme.com<br>
 First published: 2020-03-19<br>
 Current version: 2021-12-14<br>
@@ -1294,7 +1294,7 @@ Current version: 2021-12-14<br>
 EOT
 );
 ___('politics_manifesto_credits',  'FR', <<<EOT
-Écrit par Éric Bisceglia<br>
+Écrit par Éric B.<br>
 Publié sur nobleme.com<br>
 Version initiale : 2020-03-19<br>
 Version actuelle : 2021-12-14<br>
