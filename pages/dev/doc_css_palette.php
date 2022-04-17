@@ -338,11 +338,11 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.</span>
   </p>
   <p>
-    <span style="font-family: 'NoBleme-header'">font-family: NoBleme-header.<br>
+    <span style="font-family: 'NoBleme-alt'">font-family: NoBleme-alt.<br>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.</span>
   </p>
   <p>
-    <span style="font-family: 'NoBleme-submenu'">font-family: NoBleme-submenu.<br>
+    <span style="font-family: 'NoBleme-alt-bold'">font-family: NoBleme-alt-bold.<br>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.</span>
   </p>
 

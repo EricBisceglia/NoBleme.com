@@ -346,9 +346,7 @@ $theme_color  = ($mode == 'dark') ? '#B00B1E' : '#EEEEEE';
 // CSS stylesheets
 
 // Include the default stylesheets (weird line breaks are for indentation)
-$stylesheets = '<link rel="stylesheet" href="'.$path.'css/reset.css" type="text/css">
-    <link rel="stylesheet" href="'.$path.'css/header.css" type="text/css">
-    <link rel="stylesheet" href="'.$path.'css/nobleme.css" type="text/css">';
+$stylesheets = '<link rel="stylesheet" href="'.$path.'css/nobleme.css" type="text/css">';
 
 // Add light mode if required
 if($mode == "light")
