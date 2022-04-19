@@ -196,7 +196,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td colspan="6" class="uppercase text_light dark bold align_center desktop">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
-        <td colspan="4" class="uppercase text_light dark bold align_center mobile">
+        <td colspan="4" class="uppercase text_light dark bold align_center mobile_table">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>

@@ -509,9 +509,9 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
           <a href="<?=$url_mode?>">
             <?php if($mode == "dark") { ?>
-            <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/light_mode.svg" alt="L" title="<?=string_change_case(__('mode_light'), 'initials');?>">
+            <img class="header_topmenu_icon header_topmenu_mode" src="<?=$path?>img/icons/light_mode.svg" alt="L" title="<?=string_change_case(__('mode_light'), 'initials');?>">
             <?php } else { ?>
-            <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/dark_mode.svg" alt="D" title="<?=string_change_case(__('mode_dark'), 'initials');?>">
+            <img class="header_topmenu_icon header_topmenu_mode" src="<?=$path?>img/icons/dark_mode.svg" alt="D" title="<?=string_change_case(__('mode_dark'), 'initials');?>">
             <?php } ?>
           </a>
 
@@ -531,7 +531,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
       <div class="header_submenu header_submenu_5" id="header_submenu_nobleme">
 
-        <div class="header_submenu_column desktop">
+        <div class="header_submenu_column desktop_wide">
           &nbsp;
         </div>
 
@@ -605,10 +605,10 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
       <div class="header_submenu header_submenu_6" id="header_submenu_pages">
 
-        <div class="header_submenu_column desktop">
+        <div class="header_submenu_column desktop_wide">
           &nbsp;
         </div>
-        <div class="header_submenu_column desktop">
+        <div class="header_submenu_column desktop_wide">
           &nbsp;
         </div>
 
@@ -882,10 +882,10 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
       <div class="header_submenu header_submenu_5" id="header_submenu_admin">
       <?php } else { ?>
       <div class="header_submenu header_submenu_6" id="header_submenu_admin">
-        <div class="header_submenu_column desktop">
+        <div class="header_submenu_column desktop_wide">
           &nbsp;
         </div>
-        <div class="header_submenu_column desktop">
+        <div class="header_submenu_column desktop_wide">
           &nbsp;
         </div>
         <?php } ?>
