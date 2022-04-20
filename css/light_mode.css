@@ -50,7 +50,7 @@ div.popin_body { background: #FFFFFF; }
 .bbcode_quote_body    { background-color: #EEEEEE; border: 1px solid #121212; }
 .bbcode_spoiler_title { border-bottom: 1px solid #121212;                     }
 .bbcode_spoiler_body  { background-color: #EEEEEE; border: 1px solid #121212; }
-.nbcode_floater       { border: double #CACACA 3px;                           }
+.nbcode_floater       { border: 1px solid #CACACA;                            }
 .nbcode_gallery_image { border: 1px solid #CACACA;                            }
 .nbcode_gallery_cell  { border: 1px solid #CACACA;                            }
 .nbcode_gallery_hr    { background: #CACACA; border: 0px;                     }
@@ -61,6 +61,8 @@ div.popin_body { background: #FFFFFF; }
 
 /**************************************************** NOBLEME.CSS ****************************************************/
 .background { background-color: #FFFFFF !important; }
+
+.floater { border: 1px solid #CACACA; }
 
 .blur       { text-shadow: 0 0 10px #121212; }
 .blur:hover { color: #121212;                }

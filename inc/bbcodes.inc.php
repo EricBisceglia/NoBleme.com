@@ -206,7 +206,7 @@ function bbcodes( string  $message ) : string
   // [line] Horizontal separator
 
   // Solved with a regex
-  $message = preg_replace('/\[line\]/is','<hr>', $message);
+  $message = preg_replace('/\[line\]/is','<hr class="bbcode_line">', $message);
 
 
   /*******************************************************************************************************************/
