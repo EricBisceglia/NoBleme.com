@@ -311,6 +311,39 @@ button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focus
 [type="checkbox"], [type="radio"] { box-sizing: border-box;                                       }
 ::-webkit-file-upload-button      { -webkit-appearance: button; font: inherit;                    }
 
+/***************************************************** TOOLTIPS ******************************************************/
+
+.tooltip_container                { cursor: pointer;                                                            }
+.tooltip_container .tooltip       { display: none; z-index: 1337; margin-top: -1.3rem; cursor: normal           ;
+                                    padding-top: 0.3rem; padding-bottom: 0.4rem; padding-left: 0.4rem           ;
+                                    padding-right: 0.3rem; text-align: left; overflow-y: auto;                  }
+.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF                         ;
+                                    background-color: #232323 ; border-radius: 5px; border: 1px solid #888888   ;
+                                    box-shadow: 2px 2px 2px #888888; max-width: 30.0rem; max-height: 15.0rem    }
+@media (max-width: 992px)                                                                                       {
+.tooltip_container .tooltip       { padding-top: 1.0rem; padding-bottom: 1.5rem; padding-left: 1.5rem           ;
+                                    padding-right: 1.5rem; overflow-y: scroll;                                  }
+.tooltip_container:hover .tooltip { border-radius: 10px; border: 3px solid #888888                              ;
+                                    box-shadow: 5px 5px 5px #888888; max-width: 40.0rem; max-height: 50.0rem; } }
+
+/****************************************************** POPINS *******************************************************/
+
+div.popin_background        { position: fixed; top: 0; bottom: 0; left: 0; right: 0                 ;
+                              background: rgba(0, 0, 0, 0.8); transition: opacity 1000ms            ;
+                              visibility: hidden; opacity: 0; z-index: 9999;                        }
+div.popin_background:target { visibility: visible; opacity: 1; transition: opacity 1000ms;          }
+div.popin_body              { margin: auto; margin-top: 12.0rem; background: #121212                ;
+                              border-radius: 10px; width: 55.0rem; max-width: 80%; max-height: 60%  ;
+                              overflow-x: auto; position: relative; transition: all 1s ease-in-out; }
+a.popin_close               { position: absolute; transition: all 0.5s; font-size: 250%             ;
+                              filter: none; color: #B00B1E; z-index: 10000; cursor: pointer;        }
+a.popin_close:hover         { filter: drop-shadow(0 0 10px #B00B1E);                                }
+div.popin_body              { padding-top: 2.5rem; padding-bottom: 2.5rem; padding-left: 2.5rem     ;
+                              padding-right: 2.5rem;                                                }
+a.popin_close               { top: -0.9rem; right: 0.3rem;                                          }
+@media (max-width: 992px)                                                                           {
+a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;                       } }
+
 /****************************************************** BBCODES ******************************************************/
 
 .bbcode_quote_title   { border-bottom: 1px solid #343434; margin-bottom: 0.2rem     ;
@@ -546,32 +579,3 @@ button.bigbutton, input[type='reset'].bigbutton, input[type='submit'].bigbutton
 { border-radius: 0.6rem; font-size: 2.5rem; letter-spacing: 0.15rem; padding: 0.8rem 1.6rem; }
 
 button.button_chain, input[type='reset'].button_chain, input[type='submit'].button_chain { margin-right: 1.65rem; }
-
-/***************************************************** TOOLTIPS ******************************************************/
-
-.tooltip_container                { cursor: pointer;                                                                 }
-.tooltip_container .tooltip       { display: none; padding: 0.5em; z-index: 1337; margin-top: -20px; cursor: normal; }
-.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF; text-align: left            ;
-                                    background-color: #232323 ; border-radius: 5px; border: 1px solid #888888        ;
-                                    box-shadow: 2px 2px 2px #888888;                                                 }
-.tooltip_container:hover .tooltip { max-width: 500px; max-height: 250px; overflow-y: auto;                         }
-@media (max-width: 992px)        {
-.tooltip_container:hover .tooltip { max-width: 750px; max-height: 1250px; overflow-y: scroll; font-size: 1.5em;    } }
-
-/****************************************************** POPINS *******************************************************/
-
-div.popin_background        { position: fixed; top: 0; bottom: 0; left: 0; right: 0                 ;
-                              background: rgba(0, 0, 0, 0.8); transition: opacity 1000ms            ;
-                              visibility: hidden; opacity: 0; z-index: 9999;                        }
-div.popin_background:target { visibility: visible; opacity: 1; transition: opacity 1000ms;          }
-div.popin_body              { margin: auto; margin-top: 10em; background: #121212                   ;
-                              border-radius: 0.6em; width: 55em; max-width: 80%; max-height: 60%    ;
-                              overflow-x: auto; position: relative; transition: all 1s ease-in-out; }
-a.popin_close               { position: absolute; transition: all 0.5s; font-size: 2.5em            ;
-                              filter: none; color: #B00B1E; z-index: 10000; cursor: pointer;        }
-a.popin_close:hover         { filter: drop-shadow(0 0 10px #B00B1E);                                }
-div.popin_body              { padding: 2.25em;                                                      }
-a.popin_close               { top: -0.2em; right: 0.2em;                                           }
-@media (max-width: 992px)  {
-div.popin_body              { padding: 1.5em;                                                       }
-a.popin_close               { top: 0; right: 0.3em;                                               } }
