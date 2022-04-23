@@ -315,13 +315,13 @@ input[type='checkbox'], input[type='radio'] { display: inline;                  
 input[disabled], button[disabled] { background-color: #181818; opacity: 0.4;                                    }
 button:not([disabled]), input[type='reset']:not([disabled]), input[type='submit']:not([disabled]),
 input[type='reset']:not([disabled]) { cursor: pointer;                                                          }
-select:hover, input[type='text']:hover:not([disabled]):not(:focus),
-input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus),
+select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                              ,
+input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus) ,
 input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)
                                   { border-color: #CACACA; background-color: #323232;                           }
-input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus,
+input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus   ,
 button:focus, select:focus        { border-color: #888888; background-color: #323232;                           }
-button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner,
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner                   ,
 [type="submit"]::-moz-focus-inner { border-style: none;                                                         }
 button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring
                                   { outline: 1px dotted ButtonText;                                             }
@@ -347,12 +347,12 @@ select.intext, input.intext             { background-color: #121212; border: 2px
                                           padding-top: 0.1rem; padding-bottom: 0.1rem; padding-left: 0.1rem         ;
                                           padding-right: 0.1rem; width: 12.0rem;                                    }
 select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus),
-input.intext:focus, select.intext:focus { border-color: #CACACA; background-color: #232323; border-color: #555555;  }
+input.intext:focus, select.intext:focus { background-color: #232323; border-color: #555555;                         }
 select.inh, input.inh                   { background-color: #121212; color: #B00B1E; border: 2px solid #232323      ;
                                           font-weight: bold; max-width: 100%; padding-top: 0.1rem                   ;
                                           padding-bottom: 0.1rem; padding-left: 0.2rem; padding-right: 0.2rem;      }
 select.inh:hover, input.inh:hover, input.inh[type='text']:hover:not([disabled]):not(:focus),
-input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #121212; border-color: #555555;  }
+input.inh:focus, select.inh:focus       { background-color: #121212; border-color: #555555;                         }
 button.bigbutton, input[type='reset'].bigbutton, input[type='submit'].bigbutton
                                         { border-radius: 0.5rem; font-size: 160%; letter-spacing: 0.10rem           ;
                                           padding-top: 0.6rem; padding-bottom: 0.6rem; padding-left: 1.2rem         ;
