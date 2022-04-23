@@ -1,29 +1,13 @@
-/***************************************************** 404 ERROR *****************************************************/
-body { background-color: #000000; }
+/************************************** 404 ERROR PAGE HEADER MENU ALTERATIONS ***************************************/
 
-.header_topbar                  { background-color: #B00B1E;                                                    }
-.header_topmenu                 { background-color: #B00B1E;                                                    }
-.header_topmenu_title           { color: #000000; background-color: #B00B1E;                                    }
-.header_topmenu_title:hover     { color: #B00B1E; background-color: #000000;                                    }
-.header_topmenu_title_selected  { color: #B00B1E; background-color: #000000;                                    }
-.header_infobar                 { background-color: #000000; border-bottom: 3px solid #B00B1E;                  }
-.header_infobar_link            { color: #B00B1E;                                                               }
-.header_infobar_link:hover      { color: #B00B1E;                                                               }
-.header_submenu                 { background-color: #000000; color: #B00B1E; border-bottom: 2px solid #B00B1E;  }
-.header_submenu_title           { color: #CACACA;                                                               }
-.header_submenu_link            { color: #B00B1E;                                                               }
-.header_submenu_link:hover      { filter:drop-shadow(0 0 5px #B00B1E); color: #B00B1E;                          }
-
-.header_login_form_title { color: #B00B1E; }
-.login_form_text         { color: #CACACA; }
-
-.container404               { width: 1000px; max-width: 100%;                                      }
-.table404                   { background-color: #000000;                                           }
-.table404 tbody > tr:hover  { background-color: #000000                                            }
-.img404                     { width: 300px;                                                        }
-.img404left                 { margin-right: 10px;                                                  }
-.img404right                { margin-left: 10px;                                                   }
-.text404                    { background-color: #000000; border: 0px solid #000000; color: #CACACA ;
-                              text-align: center; overflow: auto; resize: none;                    }
-@media (min-width: 1081px) { .text404 { font-size: 1.5rem; height: 17.0rem;                      } }
-@media (max-width: 1080px) { .text404 { font-size: 1.5rem; height: 40.0rem;                      } }
+.header_topbar                  { background-color: #B00B1E;                            }
+.header_topmenu                 { background-color: #B00B1E;                            }
+.header_topmenu_title           { background-color: #B00B1E; color: #000000;            }
+.header_topmenu_title:hover     { background-color: #000000; color: #B00B1E;            }
+.header_topmenu_title_selected  { color: #B00B1E; background-color: #000000;            }
+.header_infobar                 { background-color: #000000;                            }
+.header_infobar:hover           { background-color: #000000;                            }
+.header_submenu                 { background-color: #000000;                            }
+.header_submenu_title           { color: #CACACA;                                       }
+.header_submenu_link            { color: #B00B1E;                                       }
+.header_submenu_link:hover      { color: #B00B1E; filter: drop-shadow(0 0 5px #B00B1E); }

@@ -348,11 +348,6 @@ $theme_color  = ($mode == 'dark') ? '#B00B1E' : '#EEEEEE';
 // Include the default stylesheets (weird line breaks are for indentation)
 $stylesheets = '<link rel="stylesheet" href="'.$path.'css/nobleme.css" type="text/css">';
 
-// Add light mode if required
-if($mode == "light")
-$stylesheets .= '
-    <link rel="stylesheet" href="'.$path.'css/light_mode.css" type="text/css">';
-
 // If extra stylesheets are set, add them to the list
 if(isset($css))
 {
@@ -360,6 +355,20 @@ if(isset($css))
   for($i = 0; $i < count($css); $i++)
     $stylesheets .= '
     <link rel="stylesheet" href="'.$path.'css/'.$css[$i].'.css" type="text/css">';
+}
+
+// Add light mode if required
+if($mode == "light")
+$stylesheets .= '
+    <link rel="stylesheet" href="'.$path.'css/light_mode.css" type="text/css">';
+
+// If extra stylesheets are added after light mode, add them to the list
+if(isset($css_after_light))
+{
+  // Loop through all extra sheets and include them
+  for($i = 0; $i < count($css_after_light); $i++)
+    $stylesheets .= '
+    <link rel="stylesheet" href="'.$path.'css/'.$css_after_light[$i].'.css" type="text/css">';
 }
 
 
