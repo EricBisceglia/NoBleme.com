@@ -98,7 +98,7 @@ $register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['registe
 
 </div>
 
-<div class="width_35 bigpadding_top">
+<div class="width_40 bigpadding_top">
 
   <form method="POST" id="register_form" action="register#register_form">
     <fieldset>

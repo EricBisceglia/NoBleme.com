@@ -1,28 +1,32 @@
 /**************************************************** ADMIN MAIL ****************************************************/
-.admin_mail_border      { border: 2px solid #FF0000;                                    }
-.admin_mail_container   { height: 50rem; padding: 3px; box-shadow: 0 0 15px #FF0000     ;
-                          border-radius: 10px;                                          }
-.admin_mail_left_panel  { margin-right: 3px; padding: 5px; box-shadow: 0 0 10px #FF0000 ;
-                          border-top-left-radius: 8px; border-bottom-left-radius: 8px   ;
-                          overflow-y: auto; overflow-x: hidden; flex: 7;                }
-.admin_mail_right_panel { overflow-y: scroll; box-shadow: 0 0 10px #FF0000              ;
-                          border-bottom: 2px solid #FF0000; border-top-right-radius: 8px;
-                          border-bottom-right-radius: 8px; flex: 3;                     }
-.admin_mail_search      { padding: 5px;                                                 }
-.admin_mail_right_entry { padding-left: 4px; padding-right: 4px; padding-top: 2px       ;
-                          padding-bottom: 2px; text-align: center;                      }
-.admin_mail_icon        { height: 2.0rem; padding-bottom: 2px;                          }
 
-@media (max-width: 1080px) {
-.admin_mail_left_panel    { flex: 5;              }
-.admin_mail_right_panel   { flex: 3;              }
-.admin_mail_search_label  { font-size: 0.6rem;    }
-.admin_mail_icon          { height: 1.4rem;     } }
+.admin_mail_border      { border: 2px solid #FF0000;                                      }
+.admin_mail_container   { height: 50.0rem; padding: 3px; box-shadow: 0 0 15px #FF0000     ;
+                          border-radius: 10px;                                            }
+.admin_mail_left_panel  { margin-right: 0.2rem; box-shadow: 0 0 10px #FF0000              ;
+                          border-top-left-radius: 8px; border-bottom-left-radius: 8px     ;
+                          overflow-y: auto; overflow-x: hidden; flex: 7                   ;
+                          padding-top: 0.5rem; padding-bottom: 0.5rem                     ;
+                          padding-left: 0.5rem; padding-right: 0.5rem;                    }
+.admin_mail_right_panel { overflow-y: scroll; box-shadow: 0 0 10px #FF0000                ;
+                          border-bottom: 2px solid #FF0000; border-top-right-radius: 8px  ;
+                          border-bottom-right-radius: 8px; flex: 3;                       }
+.admin_mail_search      { padding-top: 0.2rem; padding-bottom: 0.3rem                     ;
+                          padding-left: 0.3rem; padding-right: 0.3rem;                    }
+.admin_mail_right_entry { text-align: center; padding-top: 0.2rem; padding-bottom: 0.2rem ;
+                          padding-left: 0.3rem; padding-right: 0.3rem;                    }
+.admin_mail_icon        { height: 1.5rem; padding-bottom: 0.2rem; padding-left: 0.2rem;   }
 
-/******************************************************* STATS *******************************************************/
-@media (max-width: 1080px) {
-.admin_stats_profile_dropdown  { width: 5.0rem !important;   }
-.admin_stats_settings_dropdown { width: 5.0rem !important; } }
-@media (min-width: 1081px) {
-.admin_stats_profile_dropdown  { width: 9.0rem !important;   }
-.admin_stats_settings_dropdown { width: 9.0rem !important; } }
+/*********************************************** ADMIN MAIL ON MOBILE ************************************************/
+
+@media (max-width: 992px) {
+.admin_mail_container     { font-size: 70%;                         }
+.admin_mail_left_panel    { flex: 5;                                }
+.admin_mail_right_panel   { flex: 3;                                }
+.admin_mail_icon          { height: 2.0rem; padding-left: 0.6rem; } }
+
+/**************************************************** USER STATS *****************************************************/
+
+@media (min-width: 993px)                               {
+.admin_stats_profile_dropdown   { max-width: 6.0rem;    }
+.admin_stats_settings_dropdown  { max-width: 5.0rem;  } }

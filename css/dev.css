@@ -1,5 +1,6 @@
 /*************************************************** DOCUMENTATION ***************************************************/
-pre.dev_pre_code    { font-size: 1.3rem; max-height: 200px; overflow: auto; white-space: pre-wrap; }
-div.dev_div_border  { border: 1px dashed #B00B1E;                                                  }
-div.dev_div_spacing { border: 1px dashed #B00B1E; display: inline-block; font-weight: bold;        }
-td.dev_td_valign    { height: 50px; font-weight: bold;                                             }
+
+pre.dev_pre_code    { max-height: 12.5rem; overflow: auto; white-space: pre-wrap;           }
+div.dev_div_border  { border: 1px dashed #B00B1E;                                           }
+div.dev_div_spacing { border: 1px dashed #B00B1E; display: inline-block; font-weight: bold; }
+td.dev_td_valign    { height: 5.0rem; font-weight: bold;                                    }

@@ -1,20 +1,19 @@
 /**************************************************** TO-DO LIST *****************************************************/
-.task_status_0 { background:#FFECEC; }
-.task_status_1 { background:#FFCACA; }
-.task_status_2 { background:#FFA8A8; }
-.task_status_3 { background:#FF8686; }
-.task_status_4 { background:#FF6464; }
-.task_status_5 { background:#FF4242; }
-.task_status_6 { background:#FF2121; }
-.task_solved   { background:#599B49; }
 
-.tasks_admin_selector { width: 4.5em !important; }
+.task_status_0        { background:#FFECEC; }
+.task_status_1        { background:#FFCACA; }
+.task_status_2        { background:#FFA8A8; }
+.task_status_3        { background:#FF8686; }
+.task_status_4        { background:#FF6464; }
+.task_status_5        { background:#FF4242; }
+.task_status_6        { background:#FF2121; }
+.task_solved          { background:#599B49; }
+@media (min-width: 993px)                   {
+.tasks_admin_selector { max-width: 4.5em; } }
 
 /**************************************************** EDIT TASKS *****************************************************/
 
-@media (min-width: 1081px) {
-.tasks_edit_category      { flex: 6;            }
-.tasks_edit_category_icon { margin-top: 1.5em; } }
-@media (max-width: 1080px) {
-.tasks_edit_category      { flex: 4;             }
-.tasks_edit_category_icon { margin-top: 3.5em; } }
+.tasks_edit_category      { flex: 5;            }
+.tasks_edit_category_icon { margin-top: 1.85em; }
+@media (max-width: 992px)                       {
+.tasks_edit_category      { flex: 3;          } }

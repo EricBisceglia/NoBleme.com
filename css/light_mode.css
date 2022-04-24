@@ -139,7 +139,19 @@ a.popin_close:hover { filter: drop-shadow(0 0 10px #121212);  }
 
 footer { color: #999999; filter: none; }
 
-/***************************************************** INDEX.CSS *****************************************************/
+/********************************************** ADMIN.CSS - ADMIN MAIL ***********************************************/
+
+.admin_mail_border      { border-color: #CACACA;                                }
+.admin_mail_container   { box-shadow: 0 0 15px #CACACA;                         }
+.admin_mail_left_panel  { box-shadow: 0 0 10px #CACACA;                         }
+.admin_mail_right_panel { box-shadow: 0 0 10px #CACACA; border-color: #CACACA;  }
+
+/********************************************** DEV.CSS - DOCUMENTATION **********************************************/
+
+div.dev_div_border  { border-color: #121212;  }
+div.dev_div_spacing { border-color: #121212;  }
+
+/******************************************** INDEX.CSS - LOGO HEARTBEAT *********************************************/
 
 .nobleme_logo       { filter: none; animation: none !important; }
 .nobleme_logo:hover { animation: none !important;               }

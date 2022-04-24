@@ -1,3 +1,7 @@
 /************************************************** RECENT ACTIVITY **************************************************/
-select.activity_amount { width: 4em;  }
-select.activity_type   { width: 12em; }
+
+select.activity_amount  { width: 5.0rem;    }
+select.activity_type    { width: 14.0rem;   }
+@media (max-width: 992px)                   {
+select.activity_amount  { width: 8.0rem;    }
+select.activity_type    { width: 20.0rem; } }
