@@ -148,7 +148,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </th>
 
         <th>
-          <select class="table_search" name="compendium_missing_status" id="compendium_missing_status" onchange="compendium_missing_list_search();">
+          <select class="table_search compendium_admin_actions" name="compendium_missing_status" id="compendium_missing_status" onchange="compendium_missing_list_search();">
             <option value="-1">&nbsp;</option>
             <option value="1"><?=__('compendium_missing_documented')?></option>
             <option value="0"><?=__('compendium_missing_undocumented')?></option>

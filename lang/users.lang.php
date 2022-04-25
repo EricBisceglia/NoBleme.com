@@ -259,7 +259,7 @@ ___('users_profile_edit_pronouns_en', 'FR', "Vos {{external|https://en.wikipedia
 ___('users_profile_edit_pronouns_fr', 'EN', "Your {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|preferred pronouns}}");
 ___('users_profile_edit_pronouns_fr', 'FR', "Vos {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|pronoms}}");
 
-___('users_profile_edit_text',        'EN', "Custom text - You can use {{link_popup|pages/doc/bbcodes|BBCodes}}");
+___('users_profile_edit_text',        'EN', "Custom text - {{link_popup|pages/doc/bbcodes|BBCodes}} allowed");
 ___('users_profile_edit_text',        'FR', "Texte libre - {{link_popup|pages/doc/bbcodes|BBCodes}} autorisés");
 
 ___('users_profile_edit_submit',      'EN', "Customize my public profile");

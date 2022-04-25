@@ -1350,7 +1350,7 @@ function irc_bot_send_message(  string  $message                          ,
     $message = str_replace('%C14',chr(0x03).'14',$message); // Color: Grey
 
     // Custom made bytes
-    $message = str_replace('%BW',chr(0x02).chr(0x03).'00,01',$message);              // Bold white on black
+    $message = str_replace('%WHITE',chr(0x02).chr(0x03).'00,01',$message);              // Bold white on black
     $message = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message); // Bold underlined yellow on green
   }
 

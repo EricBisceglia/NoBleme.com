@@ -1389,7 +1389,7 @@ Pour ce qui est du symbolisme, vous pouvez librement emprunter les couleurs et l
 EOT
 );
 ___('politics_faq_branding_4',      'EN', <<<EOT
-If you alse need a catchphrase, a suggestion would be "We must dissent".
+If you also need a catchphrase, a suggestion would be "We must dissent".
 EOT
 );
 ___('politics_faq_branding_4',      'FR', <<<EOT

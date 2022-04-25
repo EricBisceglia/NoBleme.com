@@ -450,7 +450,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?php } ?>
         </td>
 
-        <td class="align_center nowrap">
+        <td class="align_center nowrap compendium_admin_actions">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/image_edit?id='.$compendium_images_list[$i]['id'])?>
           <?php if($compendium_images_list[$i]['used_en'] || $compendium_images_list[$i]['used_fr']) { ?>
           <?=__icon('x', is_small: true, alt: 'X', title: __('compendium_image_list_no_delete'), onclick: "alert('".__('compendium_image_list_no_delete')."')")?>
