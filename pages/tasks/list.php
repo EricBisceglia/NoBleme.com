@@ -96,7 +96,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-<div class="width_80 bigpadding_top">
+<div class="width_80 bigpadding_top autoscroll">
 
   <table>
     <thead>

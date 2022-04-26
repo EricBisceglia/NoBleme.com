@@ -88,7 +88,7 @@ $compendium_peak_list_years       = compendium_peak_list_years();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_100">
+<div class="width_100 autoscroll">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__link('pages/compendium/page_list', __('compendium_list_admin_title'), 'noglow')?>

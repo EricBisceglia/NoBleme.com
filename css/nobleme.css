@@ -180,6 +180,7 @@ hr   { height: 3px;                                                 } }
 .nowrap           { white-space: nowrap;                                    }
 .dowrap           { white-space: normal;                                    }
 .break_words      { word-wrap: break-word;                                  }
+.autoscroll       { overflow-x: auto;                                       }
 .scrollbar        { overflow-x: scroll;                                     }
 .vscrollbar       { overflow-y: scroll;                                     }
 @media (max-width: 992px)                                                   {

@@ -387,13 +387,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-<div class="width_80 smallpadding_top" id="logs">
+<div class="width_90 smallpadding_top autoscroll" id="logs">
 
   <h2 class="align_center padding_top bigpadding_bot">
     <?=__('admin_ban_logs_title')?>
   </h2>
 
-  <fieldset class="bigpadding_bot align_center">
+  <fieldset class="align_center">
     <table class="nowrap">
       <thead>
 

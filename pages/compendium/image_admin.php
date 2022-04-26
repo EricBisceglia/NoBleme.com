@@ -203,7 +203,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
 <hr>
 
-<div class="width_80">
+<div class="width_80 autoscroll">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_image_list_title')?>
