@@ -53,7 +53,7 @@ $task_list = tasks_list(  $tasks_list_search_order  ,
 
 // Compute the number of columns depending on the what the user is allowed to see
 $tasks_rows_desktop = ($is_admin) ? 8 : 7;
-$tasks_rows_mobile  = 4;
+$tasks_rows_mobile  = 3;
 
 // Fetch task categories
 $tasks_categories_list = tasks_categories_list();
@@ -96,14 +96,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-<div class="width_80 bigpadding_top">
+<div class="width_80 bigpadding_top autoscroll">
 
   <table>
     <thead>
 
       <tr class="uppercase nowrap">
 
-        <th>
+        <th class="desktop">
           <?=__('id')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "tasks_list_search('id');")?>
         </th>
@@ -149,7 +149,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
 
-        <th>
+        <th class="desktop">
           <input type="hidden" name="tasks_search_order" id="tasks_search_order" value="">
           <input type="text" class="table_search" name="tasks_search_id" id="tasks_search_id" value="" size="1" onkeyup="tasks_list_search();">
         </th>
@@ -242,7 +242,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </span>
         </td>
 
-        <td colspan="<?=$tasks_rows_mobile?>" class="mobile uppercase text_light dark bold align_center">
+        <td colspan="<?=$tasks_rows_mobile?>" class="mobile_table uppercase text_light dark bold align_center">
           <span class="spaced">
             <?=__('tasks_list_count', amount: $task_list['rows'], preset_values: array($task_list['rows']))?>
           </span>
@@ -260,7 +260,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr class="align_center nowrap pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
 
-        <td>
+        <td class="desktop">
           #<?=$task_list[$i]['id']?>
         </td>
 

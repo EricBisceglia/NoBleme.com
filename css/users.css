@@ -1,19 +1,23 @@
 /************************************************** PUBLIC PROFILES **************************************************/
-.profile_box_dark       { margin-top: 3em; overflow-x: auto; border-radius: 10px    ;
-                          border: 2px solid #FF0000; box-shadow: 0 0 15px #FF0000;  }
-.profile_info_box_dark  { border-bottom: 2px solid #FF0000; padding: 0.4em 0.5em    ;
-                          box-shadow: 0 0 8px #FF0000; text-align: center;          }
-.profile_box_light      { margin-top: 3em; overflow-x: auto; border-radius: 10px    ;
-                          border: 2px solid #CACACA; box-shadow: 0 0 15px #CACACA;  }
-.profile_info_box_light { border-bottom: 2px solid #CACACA; padding: 0.4em 0.5em    ;
-                          box-shadow: 0 0 8px #CACACA; text-align: center;          }
-.profile_admin          { margin-top: 4em;                                          }
-.profile_text_cell      { max-height: 10em; overflow-x: auto;                       }
 
-@media (min-width: 1081px) {
-.profile_text { max-height: 12em; padding: 0.25em 0.5em;  }
-.profile_flag { height: 18px; margin: 0 0.1em;          } }
-
-@media (max-width: 1080px) {
-.profile_text { max-height: 20em; padding: 1.0em;         }
-.profile_flag { height: 32px; margin: 0 0.2em;          } }
+.profile_box_dark, .profile_box_light           { margin-top: 3.0rem; overflow-x: auto; border-radius: 10px;      }
+.profile_box_dark                               { border: 2px solid #FF0000; box-shadow: 0 0 15px #FF0000;        }
+.profile_box_light                              { border: 2px solid #CACACA; box-shadow: 0 0 15px #CACACA;        }
+.profile_info_box_dark, .profile_info_box_light { text-align: center; padding-top: 0.4rem; padding-bottom: 0.4rem ;
+                                                  padding-left: 0.5rem; padding-right: 0.5rem;                    }
+.profile_info_box_dark                          { border-bottom: 2px solid #FF0000; box-shadow: 0 0 8px #FF0000;  }
+.profile_info_box_light                         { border-bottom: 2px solid #CACACA; box-shadow: 0 0 8px #CACACA;  }
+.profile_admin                                  { margin-top: 4.0rem;                                             }
+.profile_text_cell                              { overflow-x: auto;                                               }
+.profile_text                                   { max-height: 12.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;
+                                                  padding-left: 0.5rem; padding-right: 0.5rem;                    }
+.profile_flag                                   { height: 1.2rem; padding-left: 0.1rem; padding-right: 0.1rem     ;
+                                                  margin-top: 0.3rem;                                             }
+@media (max-width: 992px)                                                                                         {
+.profile_box_dark, .profile_box_light           { margin-top: 7.0rem;                                             }
+.profile_info_box_dark, .profile_info_box_light { padding-top: 1.2rem; padding-bottom: 1.0rem                     ;
+                                                  padding-left: 1.0rem; padding-right: 1.0rem;                    }
+.profile_text                                   { max-height: 42.0rem; padding-top: 1.0rem; padding-bottom: 1.0rem;
+                                                  padding-left: 1.0rem; padding-right: 1.0rem;                    }
+.profile_flag                                   { height: 2.2rem; padding-left: 0.2rem; padding-right: 0.2rem     ;
+                                                  margin-top: 0.5rem;                                           } }

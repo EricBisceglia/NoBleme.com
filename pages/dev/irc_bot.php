@@ -267,7 +267,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'upcoming') { ############################################################# ?>
 
-<div id="bot_actions_purge" class="width_80">
+<div id="bot_actions_purge" class="width_80 autoscroll">
 
   <?php if(!$irc_bot_message_queue['line_count'] && !isset($_POST['purge_line_number'])) { ?>
 
@@ -311,7 +311,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'message_log') { ########################################################## ?>
 
-<div id="bot_actions_history" class="width_80">
+<div id="bot_actions_history" class="width_80 autoscroll">
 
   <form method="POST">
     <fieldset>
@@ -450,7 +450,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'specialchars') { ######################################################### ?>
 
-<div class="width_40">
+<div class="width_50 autoscroll">
   <table>
     <thead>
 
@@ -495,7 +495,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td>
-          <?=__('bbcodes_italics')?>
+          <?=__('italics')?>
         </td>
         <td class="bold align_center">
           %I
@@ -507,7 +507,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td>
-          <?=__('bbcodes_underlined')?>
+          <?=__('underlined')?>
         </td>
         <td class="bold align_center">
           %U
@@ -702,7 +702,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('irc_bot_bytes_black_white')?>
         </td>
         <td class="bold align_center">
-          %BW
+          %WHITE
         </td>
         <td class="bold align_center">
           chr(0x02).chr(0x03).'00,01'

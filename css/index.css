@@ -1,17 +1,24 @@
 /************************************************** LOGO HEARTBEAT ***************************************************/
-.nobleme_logo                 { animation-name: nobleme-logo-blink              ;
-                                animation-iteration-count: infinite             ;
-                                animation-duration: 4500ms;                     ;
-                                animation-play-state: paused;                   }
-.nobleme_logo:hover           { animation-play-state: running;                  }
-@keyframes nobleme-logo-blink { 0%   { filter: drop-shadow(0 0 10px #B00B1E);   }
-                                10%  { filter: drop-shadow(0 0 10px #B00B1E);   }
-                                40%  { filter: none;                            }
-                                60%  { filter: none;                            }
-                                90%  { filter: drop-shadow(0 0 10px #B00B1E);   }
-                                100% { filter: drop-shadow(0 0 10px #B00B1E); } }
+
+.nobleme_logo                 { animation-name: nobleme-logo-blink; animation-iteration-count: infinite ;
+                                animation-duration: 4500ms; animation-play-state: paused                ;
+                                padding-left: 6.0rem; padding-right: 8.0rem;                            }
+.nobleme_logo:hover           { animation-play-state: running;                                          }
+@keyframes nobleme-logo-blink { 0%   { filter: drop-shadow(0 0 10px #B00B1E);                           }
+                                10%  { filter: drop-shadow(0 0 10px #B00B1E);                           }
+                                40%  { filter: none;                                                    }
+                                60%  { filter: none;                                                    }
+                                90%  { filter: drop-shadow(0 0 10px #B00B1E);                           }
+                                100% { filter: drop-shadow(0 0 10px #B00B1E); }                         }
+@media (max-width: 992px)                                                                               {
+.nobleme_logo                 { padding-left: 4.0rem; padding-right: 5.0rem; padding-top: 10.0rem     } }
 
 /**************************************************** ERROR PAGE *****************************************************/
-div.error_container       { margin-top: 150px; margin-bottom: 150px; }
-h3.small_error_gap        { margin-bottom: 50px;                     }
-h3.big_error_gap          { margin-bottom: 100px;                    }
+
+div.error_container       { margin-top: 10.0rem; margin-bottom: 10.0rem;  }
+h3.small_error_gap        { margin-bottom: 3.0rem;                        }
+h3.big_error_gap          { margin-bottom: 6.0rem;                        }
+@media (max-width: 992px)                                                 {
+div.error_container       { margin-top: 15.0rem; margin-bottom: 15.0rem;  }
+h3.small_error_gap        { margin-bottom: 5.0rem;                        }
+h3.big_error_gap          { margin-bottom: 10.0rem;                     } }

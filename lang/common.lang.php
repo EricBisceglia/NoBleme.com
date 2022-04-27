@@ -686,6 +686,8 @@ ___('month_12_fr',  'FR', "Décembre");
 // BBCodes editor
 ___('bold',       'EN', "Bold");
 ___('bold',       'FR', "Gras");
+___('italics',    'EN', "Italics");
+___('italics',    'FR', "Italique");
 ___('underlined', 'EN', "Underline");
 ___('underlined', 'FR', "Souligner");
 ___('quote',      'EN', "Quote");

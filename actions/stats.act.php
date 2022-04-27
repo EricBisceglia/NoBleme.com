@@ -81,8 +81,8 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   for($i = 0; $row = mysqli_fetch_array($qmetrics); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['s_id']);
-    $data[$i]['url']      = sanitize_output(string_truncate($row['s_url'], 35, '...'));
-    $data[$i]['url_full'] = (mb_strlen($row['s_url']) > 35) ? sanitize_output($row['s_url']) : '';
+    $data[$i]['url']      = sanitize_output(string_truncate($row['s_url'], 30, '...'));
+    $data[$i]['url_full'] = (mb_strlen($row['s_url']) > 30) ? sanitize_output($row['s_url']) : '';
     $data[$i]['activity'] = sanitize_output(time_since($row['s_activity']));
     $data[$i]['views']    = number_display_format($row['s_views'], 'number');
     $data[$i]['queries']  = sanitize_output($row['s_queries']);
@@ -620,7 +620,7 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
     $data[$i]['language'] = sanitize_output($row['u_lang']);
     $data[$i]['theme']    = sanitize_output($row['u_theme']);
     $data[$i]['active']   = sanitize_output(time_since($row['u_visit']));
-    $data[$i]['page']     = sanitize_output(string_truncate($row['u_page'], 25, '...'));
+    $data[$i]['page']     = sanitize_output(string_truncate($row['u_page'], 18, '...'));
     $data[$i]['url']      = sanitize_output($row['u_url']);
     $data[$i]['action']   = ($row['u_action']) ? sanitize_output(time_since($row['u_action'])) : '-';
     $data[$i]['visits']   = ($row['u_visits'] > 1) ? sanitize_output($row['u_visits']) : '-';
@@ -794,7 +794,7 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
     $data[$i]['language'] = sanitize_output($row['g_lang']);
     $data[$i]['theme']    = sanitize_output($row['g_theme']);
     $data[$i]['active']   = sanitize_output(time_since($row['g_visit']));
-    $data[$i]['page']     = sanitize_output(string_truncate($row['g_page'], 40, '...'));
+    $data[$i]['page']     = sanitize_output(string_truncate($row['g_page'], 30, '...'));
     $data[$i]['url']      = sanitize_output($row['g_url']);
     $data[$i]['visits']   = ($row['g_visits'] > 1) ? sanitize_output($row['g_visits']) : '-';
 

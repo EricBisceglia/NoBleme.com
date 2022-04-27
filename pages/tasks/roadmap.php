@@ -92,7 +92,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php } ?>
 
-  <div class="bigpadding_top">
+  <div class="bigpadding_top autoscroll">
     <table>
       <thead>
 
@@ -100,10 +100,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <th>
             <?=__('tasks_roadmap_task')?>
           </th>
-          <th>
+          <th class="desktop">
             <?=__('tasks_list_created')?>
           </th>
-          <th>
+          <th class="desktop">
             <?=__('tasks_list_solved')?>
           </th>
         </tr>
@@ -134,11 +134,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } ?>
 
-          <td>
+          <td class="desktop">
             <?=$task_list[$i]['created']?>
           </td>
 
-          <td>
+          <td class="desktop">
             <?=$task_list[$i]['solved']?>
           </td>
 

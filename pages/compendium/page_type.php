@@ -77,7 +77,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <?php if($compendium_type_data['body']) { ?>
-  <div class="padding_top align_justify">
+  <div class="padding_top align_desktop">
     <?=$compendium_type_data['body']?>
   </div>
   <?php } ?>

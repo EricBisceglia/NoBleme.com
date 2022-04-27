@@ -659,13 +659,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $temp                   = sanitize_output(string_change_case(time_since($row['p_edited']), 'lowercase'));
     $data[$i]['edited']     = ($row['p_edited']) ? $temp : '';
     $data[$i]['url']        = sanitize_output($row['p_url']);
-    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 23, '...'));
-    $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 23) ? sanitize_output($row['p_url']) : '';
+    $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 20, '...'));
+    $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 20) ? sanitize_output($row['p_url']) : '';
     $data[$i]['title']      = sanitize_output($row['p_title']);
     $data[$i]['shorttitle'] = sanitize_output(string_truncate($row['p_title'], 32, '...'));
     $data[$i]['fulltitle']  = (mb_strlen($row['p_title']) > 32) ? sanitize_output($row['p_title']) : '';
-    $data[$i]['admintitle'] = sanitize_output(string_truncate($row['p_title'], 22, '...'));
-    $data[$i]['adminfull']  = (mb_strlen($row['p_title']) > 22) ? sanitize_output($row['p_title']) : '';
+    $data[$i]['admintitle'] = sanitize_output(string_truncate($row['p_title'], 20, '...'));
+    $data[$i]['adminfull']  = (mb_strlen($row['p_title']) > 20) ? sanitize_output($row['p_title']) : '';
     $temp                   = ($lang == 'en') ? $row['p_title_fr'] : $row['p_title_en'];
     $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 21, '...'));
     $data[$i]['fullwrong']  = (mb_strlen($temp) > 23) ? sanitize_output($temp) : '';
@@ -1701,7 +1701,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   {
     $data[$i]['id']         = sanitize_output($row['ci_id']);
     $data[$i]['deleted']    = ($row['ci_del']) ? 1 : 0;
-    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 20, '...'));
+    $data[$i]['name']       = sanitize_output(string_truncate($row['ci_name'], 18, '...'));
     $data[$i]['fullname']   = sanitize_output($row['ci_name']);
     $data[$i]['date']       = sanitize_output(time_since($row['ci_date']));
     $data[$i]['blur']       = ($row['ci_nsfw'] || $row['ci_gross'] || $row['ci_offensive']) ? 1 : 0;
@@ -2191,7 +2191,7 @@ function compendium_images_assemble_links(  string  $page_list          ,
   {
     if(!($i % 2) && isset($page_list_array[$i + 1]))
     {
-      $temp = ($shorten) ? string_truncate($page_list_array[$i + 1], 20, '...') : $page_list_array[$i + 1];
+      $temp = ($shorten) ? string_truncate($page_list_array[$i + 1], 18, '...') : $page_list_array[$i + 1];
       $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], sanitize_output($temp)).'<br>';
     }
   }

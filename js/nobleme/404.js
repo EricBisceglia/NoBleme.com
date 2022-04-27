@@ -58,7 +58,8 @@ function this_page_is_a_404()
     textarea_contents += text_404[current_row++] + '\r\n';
 
   // Print the text in the textarea, then position an underscore at the end to simulate a cursor
-  document.getElementById('text404').value = textarea_contents + text_404[cursor_row].substring(0,cursor_position) + "_";
+  document.getElementById('text404_desktop').value = textarea_contents + text_404[cursor_row].substring(0,cursor_position) + "_";
+  document.getElementById('text404_mobile').value = textarea_contents + text_404[cursor_row].substring(0,cursor_position) + "_";
 
   // Check if we need to move to the next line
   if(cursor_position++ == text_length)

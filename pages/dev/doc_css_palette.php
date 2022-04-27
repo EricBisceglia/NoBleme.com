@@ -338,11 +338,11 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.</span>
   </p>
   <p>
-    <span style="font-family: 'NoBleme-header'">font-family: NoBleme-header.<br>
+    <span style="font-family: 'NoBleme-alt'">font-family: NoBleme-alt.<br>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.</span>
   </p>
   <p>
-    <span style="font-family: 'NoBleme-submenu'">font-family: NoBleme-submenu.<br>
+    <span style="font-family: 'NoBleme-alt-bold'">font-family: NoBleme-alt-bold.<br>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.</span>
   </p>
 
@@ -1358,26 +1358,28 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </table>
 
   <div class="padding_top">
-    <pre class="dev_pre_code" id="dev_palette_table" onclick="to_clipboard('', 'dev_palette_table', 1);">&lt;table>
-  &lt;thead>
+    <pre class="dev_pre_code" id="dev_palette_table" onclick="to_clipboard('', 'dev_palette_table', 1);">&ltdiv class="autoscroll">
+  &lt;table>
+    &lt;thead>
 
-    &lt;tr>
-      &lt;th>
-        HEADER
-      &lt;/th>
-    &lt;/tr>
+      &lt;tr>
+        &lt;th>
+          HEADER
+        &lt;/th>
+      &lt;/tr>
 
-  &lt;/thead>
-  &lt;tbody>
+    &lt;/thead>
+    &lt;tbody>
 
-    &lt;tr>
-      &lt;td>
-        body
-      &lt;/td>
-    &lt;/tr>
+      &lt;tr>
+        &lt;td>
+          body
+        &lt;/td>
+      &lt;/tr>
 
-  &lt;/tbody>
-&lt;/table></pre>
+    &lt;/tbody>
+  &lt;/table>
+&lt;/div></pre>
   </div>
 
 </div>

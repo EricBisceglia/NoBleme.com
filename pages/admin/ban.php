@@ -256,129 +256,131 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('admin_ban_list_subtitle')?>
   </h5>
 
-  <table class="nowrap">
-    <thead>
+  <div class="autoscroll">
+    <table class="nowrap">
+      <thead>
 
-      <tr class="uppercase">
-        <th>
-          <?=__('admin_ban_list_account')?>
-        </th>
-        <th>
-          <?=__('admin_ban_list_start')?>
-        </th>
-        <th class="desktop">
-          <?=__('admin_ban_list_length')?>
-        </th>
-        <th>
-          <?=__('admin_ban_list_end')?>
-        </th>
-        <th class="desktop">
-          <?=__('admin_ban_list_served')?>
-        </th>
-        <th>
-          <?=__('reason')?>
-        </th>
-        <th>
-          <?=__('action+')?>
-        </th>
-      </tr>
+        <tr class="uppercase">
+          <th>
+            <?=__('admin_ban_list_account')?>
+          </th>
+          <th>
+            <?=__('admin_ban_list_start')?>
+          </th>
+          <th class="desktop">
+            <?=__('admin_ban_list_length')?>
+          </th>
+          <th>
+            <?=__('admin_ban_list_end')?>
+          </th>
+          <th class="desktop">
+            <?=__('admin_ban_list_served')?>
+          </th>
+          <th>
+            <?=__('reason')?>
+          </th>
+          <th>
+            <?=__('action+')?>
+          </th>
+        </tr>
 
-    </thead>
-    <tbody class="align_center">
+      </thead>
+      <tbody class="align_center">
 
-      <?php for($i = 0; $i < $banned_users['rows']; $i++) { ?>
+        <?php for($i = 0; $i < $banned_users['rows']; $i++) { ?>
 
-      <tr>
+        <tr>
 
-        <?php if($banned_users[$i]['type'] == 'user') { ?>
-        <td>
-          <?=__link('pages/users/'.$banned_users[$i]['id'], $banned_users[$i]['username'], $banned_users[$i]['css'])?>
-        </td>
-        <?php } else { ?>
-        <td class="tooltip_container">
-          <span class="<?=$banned_users[$i]['css']?>"><?=$banned_users[$i]['ip']?></span>
-          <div class="tooltip dowrap">
-            <?php if($banned_users[$i]['total_ban']) { ?>
-            <div class="text_red bold glow padding_bot">
-              <?=__('admin_ban_list_tooltip_total')?>
-            </div>
-            <?php } ?>
-            <?php if($banned_users[$i]['ip_bans']['rows']) { ?>
-            <div class="smallpadding_bot">
-              <?=__('admin_ban_list_tooltip_users', $banned_users[$i]['ip_bans']['rows'], 0, 0, array($banned_users[$i]['ip_bans']['rows']))?>
-            </div>
-            <ul>
-              <?php for($j = 0; $j < $banned_users[$i]['ip_bans']['rows']; $j++) { ?>
-                <li>
-                  <?=__link('pages/users/'.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['username'])?>
-                </li>
+          <?php if($banned_users[$i]['type'] == 'user') { ?>
+          <td>
+            <?=__link('pages/users/'.$banned_users[$i]['id'], $banned_users[$i]['username'], $banned_users[$i]['css'])?>
+          </td>
+          <?php } else { ?>
+          <td class="tooltip_container">
+            <span class="<?=$banned_users[$i]['css']?>"><?=$banned_users[$i]['ip']?></span>
+            <div class="tooltip dowrap">
+              <?php if($banned_users[$i]['total_ban']) { ?>
+              <div class="text_red bold glow padding_bot">
+                <?=__('admin_ban_list_tooltip_total')?>
+              </div>
               <?php } ?>
-            </ul>
-            <?php } else { ?>
-            <div class="bold">
-              <?=__('admin_ban_list_tooltip_none')?>
+              <?php if($banned_users[$i]['ip_bans']['rows']) { ?>
+              <div class="smallpadding_bot">
+                <?=__('admin_ban_list_tooltip_users', $banned_users[$i]['ip_bans']['rows'], 0, 0, array($banned_users[$i]['ip_bans']['rows']))?>
+              </div>
+              <ul>
+                <?php for($j = 0; $j < $banned_users[$i]['ip_bans']['rows']; $j++) { ?>
+                  <li>
+                    <?=__link('pages/users/'.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['username'])?>
+                  </li>
+                <?php } ?>
+              </ul>
+              <?php } else { ?>
+              <div class="bold">
+                <?=__('admin_ban_list_tooltip_none')?>
+              </div>
+              <?php } ?>
             </div>
+          </td>
+          <?php } ?>
+
+          <td>
+            <div class="tooltip_container">
+              <?=$banned_users[$i]['ban_start']?>
+              <div class="tooltip">
+                <?=$banned_users[$i]['ban_startf']?>
+              </div>
+            </div>
+          </td>
+
+          <td class="desktop">
+            <?=$banned_users[$i]['ban_length'].__('day', $banned_users[$i]['ban_length'], 1)?>
+          </td>
+
+          <td>
+            <div class="tooltip_container">
+              <?=$banned_users[$i]['ban_end']?>
+              <div class="tooltip">
+                <?=$banned_users[$i]['ban_endf']?>
+              </div>
+            </div>
+          </td>
+
+          <td class="desktop">
+            <?=$banned_users[$i]['ban_served'].__('day', $banned_users[$i]['ban_served'], 1)?>
+          </td>
+
+          <td>
+            <?php if($banned_users[$i]['ban_full']) { ?>
+            <div class="tooltip_container">
+              <?=$banned_users[$i]['ban_reason']?>
+              <div class="tooltip dowrap">
+                <?=$banned_users[$i]['ban_full']?>
+              </div>
+            </div>
+            <?php } else { ?>
+            <?=$banned_users[$i]['ban_reason']?>
             <?php } ?>
-          </div>
-        </td>
+          </td>
+
+          <td>
+            <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, class: 'valign_middle spaced', alt: 'M', title: __('details'), title_case: 'initials', onclick: "admin_ban_fetch_log(0, '".$banned_users[$i]['id']."', '".$banned_users[$i]['ip_ban_id']."');")?>
+            <?php if($banned_users[$i]['type'] == 'user') { ?>
+            <?=__icon('edit', is_small: true, href: 'pages/admin/ban_edit?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'M', title: __('modify'), title_case: 'initials')?>
+            <?=__icon('delete', is_small: true, href: 'pages/admin/ban_delete?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+            <?php } else { ?>
+            <?=__icon('delete', is_small: true, href: 'pages/admin/ban_ip_delete?id='.$banned_users[$i]['ip_ban_id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+            <?php } ?>
+          </td>
+
+        </tr>
+
         <?php } ?>
 
-        <td>
-          <div class="tooltip_container">
-            <?=$banned_users[$i]['ban_start']?>
-            <div class="tooltip">
-              <?=$banned_users[$i]['ban_startf']?>
-            </div>
-          </div>
-        </td>
+      </tbody>
 
-        <td class="desktop">
-          <?=$banned_users[$i]['ban_length'].__('day', $banned_users[$i]['ban_length'], 1)?>
-        </td>
-
-        <td>
-          <div class="tooltip_container">
-            <?=$banned_users[$i]['ban_end']?>
-            <div class="tooltip">
-              <?=$banned_users[$i]['ban_endf']?>
-            </div>
-          </div>
-        </td>
-
-        <td class="desktop">
-          <?=$banned_users[$i]['ban_served'].__('day', $banned_users[$i]['ban_served'], 1)?>
-        </td>
-
-        <td>
-          <?php if($banned_users[$i]['ban_full']) { ?>
-          <div class="tooltip_container">
-            <?=$banned_users[$i]['ban_reason']?>
-            <div class="tooltip dowrap">
-              <?=$banned_users[$i]['ban_full']?>
-            </div>
-          </div>
-          <?php } else { ?>
-          <?=$banned_users[$i]['ban_reason']?>
-          <?php } ?>
-        </td>
-
-        <td>
-          <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, class: 'valign_middle spaced', alt: 'M', title: __('details'), title_case: 'initials', onclick: "admin_ban_fetch_log(0, '".$banned_users[$i]['id']."', '".$banned_users[$i]['ip_ban_id']."');")?>
-          <?php if($banned_users[$i]['type'] == 'user') { ?>
-          <?=__icon('edit', is_small: true, href: 'pages/admin/ban_edit?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'M', title: __('modify'), title_case: 'initials')?>
-          <?=__icon('delete', is_small: true, href: 'pages/admin/ban_delete?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
-          <?php } else { ?>
-          <?=__icon('delete', is_small: true, href: 'pages/admin/ban_ip_delete?id='.$banned_users[$i]['ip_ban_id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
-          <?php } ?>
-        </td>
-
-      </tr>
-
-      <?php } ?>
-
-    </tbody>
-
-  </table>
+    </table>
+  </div>
 
 </div>
 
@@ -387,13 +389,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-<div class="width_80 smallpadding_top" id="logs">
+<div class="width_90 smallpadding_top autoscroll" id="logs">
 
   <h2 class="align_center padding_top bigpadding_bot">
     <?=__('admin_ban_logs_title')?>
   </h2>
 
-  <fieldset class="bigpadding_bot align_center">
+  <fieldset class="align_center">
     <table class="nowrap">
       <thead>
 

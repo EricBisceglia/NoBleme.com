@@ -70,7 +70,7 @@ $admin_metrics = stats_metrics_list(  form_fetch_element('stats_metrics_sort', '
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_60">
+<div class="width_60 autoscroll">
 
   <h1 class="align_center bigpadding_bot">
     <?=__('submenu_admin_metrics')?>

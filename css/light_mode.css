@@ -1,105 +1,157 @@
-/********************************************** RESET / COMMON ELEMENTS **********************************************/
-body                    { background-color: #FFFFFF; color: #121212;                                            }
-h1, h2, h3, h4, h5, h6  { color: #121212;                                                                       }
-a                       { color: #37536A; text-decoration: none; filter: none;                                  }
-a:focus, a:hover        { color: #78A1BC;                                                                       }
-h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a { color: #121212;                                                }
-table                   { background-color: #FFFFFF;                                                            }
-tbody > tr              { border-top: 1px solid #EEEEEE;                                                        }
-tbody > tr:hover        { background-color: #EEEEEE;                                                            }
-hr                      { background-color: #EEEEEE;                                                            }
-blockquote              { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;                         }
-pre                     { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;                         }
-textarea                { background-color: #EEEEEE; color: #121212;                                            }
-input, select, button   { color: #121212; background-color: #EEEEEE; border: 1px solid #CACACA;                 }
-input[disabled], button[disabled] { background-color: #EEEEEE;                                                  }
-select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                              ,
-input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus) ,
-input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)                {
-                          border-color: #121212; background-color: #EEEEEE;                                     }
-input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus   ,
-button:focus, select:focus { border-color: #EEEEEE; background-color: #EEEEEE;                                  }
-input[type='file']      { background-color: #FFFFFF; border: none; color: #121212;                              }
-input:not([type])       { background-color: #EEEEEE;                                                            }
+/************************************************* GENERIC ELEMENTS **************************************************/
+body                    { background-color: #FFFFFF; color: #121212;  }
+h1, h2, h3, h4, h5, h6  { color: #121212;                             }
+hr                      { background-color: #EEEEEE;                  }
 
-/****************************************************** HEADER *******************************************************/
-.header_topbar                  { background-color: #EEEEEE;                                    }
-.header_topmenu                 { background-color: #EEEEEE;                                    }
-.header_topmenu_title           { color: #121212; background-color: #EEEEEE;                    }
-.header_topmenu_title:hover     { color: #EEEEEE; background-color: #121212;                    }
-.header_topmenu_title_selected  { color: #EEEEEE; background-color: #121212;                    }
-.header_infobar                 { background-color: #EEEEEE; border-bottom: 3px solid #121212;  }
-.header_infobar_link            { color: #37536A;                                               }
-.header_infobar_link:hover      { color: #78A1BC;                                               }
-.header_submenu                 { background-color: #FFFFFF; color: #37536A;                    }
-.header_submenu_title           { color: #121212;                                               }
-.header_submenu_link            { color: #37536A;                                               }
-.header_submenu_link:hover      { filter: none; color: #78A1BC;                                 }
-footer                          { color: #999999; filter: none;                                 }
-.login_form_text                { color: #121212;                                               }
+/****************************************************** COLORS *******************************************************/
+
+.background { background-color: #121212 !important; }
+
+/*************************************************** TEXT STYLING ****************************************************/
+
+.blur           { text-shadow: 0 0 10px #121212;  }
+.blur:hover     { color: #121212;                 }
+.glow_dark      { filter: none;                   }
+.bigglow_dark   { filter: none;                   }
+.hugeglow_dark  { filter: none;                   }
+
+/**************************************************** PAGE LAYOUT ****************************************************/
+
+.floater { border-color: #CACACA; }
+
+/******************************************************* LINKS *******************************************************/
+
+a                                         { color: #37536A; text-decoration: none; filter: none;  }
+a:focus, a:hover                          { color: #78A1BC;                                       }
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a { color: #121212;                                  }
+a.forced_link                             { color: #37536A; text-decoration: none; filter: none;  }
+a.forced_link:focus, a.forced_link:hover  { color: #78A1BC; text-decoration: none; filter: none;  }
+
+/************************************************** TEXT CONTAINERS **************************************************/
+
+pre, code, blockquote   { background-color: #EEEEEE; border-color: #CACACA; }
+blockquote.nobackground { background-color: #FFFFFF;                        }
+
+/******************************************************* FORMS *******************************************************/
+
+button, input, select             { color: #121212; background-color: #EEEEEE; border-color: #CACACA; }
+textarea                          { background-color: #EEEEEE; color: #121212;                        }
+input[disabled], button[disabled] { background-color: #EEEEEE;                                        }
+select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                    ,
+input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus),
+input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)
+                                  { border-color: #121212; background-color: #EEEEEE;                 }
+input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus,
+button:focus, select:focus        { border-color: #EEEEEE; background-color: #EEEEEE;                 }
+input[type='file']                { background-color: #FFFFFF; border: none; color: #121212;          }
+input:not([type])                 { background-color: #EEEEEE;                                        }
+
+/*********************************************** CUSTOM FORM ELEMENTS ************************************************/
+
+select.table_search, input.table_search { background-color: #EEEEEE;                                        }
+select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
+                                        { background-color: #FFFFFF;                                        }
+select.intext, input.intext             { background-color: #FFFFFF; border-color: #EEEEEE; color: #121212; }
+select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus)        ,
+input.intext:focus, select.intext:focus { border-color: #CACACA; background-color: #FFFFFF;                 }
+select.inh, input.inh                   { background-color: #FFFFFF; border-color: #EEEEEE; color: #121212; }
+select.inh:hover, input.inh:hover, input.inh[type='text']:hover:not([disabled]):not(:focus),
+input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #FFFFFF;                 }
+
+/****************************************************** TABLES *******************************************************/
+
+table             { background-color: #FFFFFF;  }
+tbody > tr        { border-color: #EEEEEE;      }
+tbody > tr:hover  { background-color: #EEEEEE;  }
+
+/*********************************************** CUSTOM TABLE ELEMENTS ***********************************************/
+
+tbody.altc tr:nth-child(odd)                                                { background-color: #EEEEEE;  }
+tbody.altc tr:nth-child(odd):hover                                          { background-color: #CACACA;  }
+tbody.altc2 tr:nth-child(even)                                              { background-color: #EEEEEE;  }
+tbody.altc2 tr:nth-child(even):hover                                        { background-color: #CACACA;  }
+tbody.doublealtc tr:nth-child(4n-2), tbody.doublealtc tr:nth-child(4n-3)    { background-color: #EEEEEE;  }
+tbody.doublealtc tr:nth-child(4n-3):hover                                   { background-color: #CACACA;  }
+tbody.doublealtc tr:nth-child(4n):hover                                     { background-color: #CACACA;  }
+tbody.doublealtc2 tr:nth-child(4n-1), tbody.doublealtc2 tr:nth-child(4n-2)  { background-color: #EEEEEE;  }
+tbody.doublealtc2 tr:nth-child(4n-2):hover                                  { background-color: #CACACA;  }
+tbody.doublealtc2 tr:nth-child(4n-3):hover                                  { background-color: #CACACA;  }
+tr.row_separator_dark                                                       { border-color: #CACACA;      }
+tr.row_separator_dark_thin                                                  { border-color: #CACACA;      }
+@media (max-width: 992px)                                                                                 {
+tr.row_separator_dark                                                       { border-color: #CACACA;      }
+tr.row_separator_dark_thin                                                  { border-color: #CACACA;    } }
 
 /***************************************************** TOOLTIPS ******************************************************/
-.tooltip_container:hover .tooltip { color: #121212; background-color: #FFFFFF ; border-radius: 5px  ;
-  border: 1px solid #CACACA; box-shadow: 2px 2px 2px #CACACA;     }
+
+.tooltip_container:hover .tooltip { color: #121212; background-color: #FFFFFF                 ;
+                                    border-color: #CACACA; box-shadow: 2px 2px 2px #CACACA;   }
+@media (max-width: 992px)                                                                     {
+.tooltip_container:hover .tooltip { border-color: #CACACA; box-shadow: 5px 5px 5px #CACACA; } }
 
 /****************************************************** POPINS *******************************************************/
-div.popin_body { background: #FFFFFF; }
+
+div.popin_body      { background: #FFFFFF;                    }
+a.popin_close       { color: #121212;                         }
+a.popin_close:hover { filter: drop-shadow(0 0 10px #121212);  }
 
 /****************************************************** BBCODES ******************************************************/
-.bbcode_quote_title   { border-bottom: 1px solid #121212;                     }
-.bbcode_quote_body    { background-color: #EEEEEE; border: 1px solid #121212; }
-.bbcode_spoiler_title { border-bottom: 1px solid #121212;                     }
-.bbcode_spoiler_body  { background-color: #EEEEEE; border: 1px solid #121212; }
-.nbcode_floater       { border: double #CACACA 3px;                           }
-.nbcode_gallery_image { border: 1px solid #CACACA;                            }
-.nbcode_gallery_cell  { border: 1px solid #CACACA;                            }
-.nbcode_gallery_hr    { background: #CACACA; border: 0px;                     }
+
+.bbcode_quote_title   { border-color: #121212;                            }
+.bbcode_quote_body    { background-color: #EEEEEE; border-color: #121212; }
+.bbcode_spoiler_title { border-color: #121212;                            }
+.bbcode_spoiler_body  { background-color: #EEEEEE; border-color: #121212; }
 
 /****************************************************** NBCODES ******************************************************/
-.nbcode_dead_link       { color: #B00B1E; }
-.nbcode_dead_link:hover { color: #B00B1E; }
 
-/**************************************************** NOBLEME.CSS ****************************************************/
-.background { background-color: #FFFFFF !important; }
+.nbcode_dead_link       { color: #B00B1E;         }
+.nbcode_dead_link:hover { color: #B00B1E;         }
+.nbcode_floater         { border-color: #CACACA;  }
+.nbcode_gallery_cell    { border-color: #CACACA;  }
+.nbcode_gallery_hr      { background: #CACACA;    }
 
-.blur       { text-shadow: 0 0 10px #121212; }
-.blur:hover { color: #121212;                }
+/************************************************* NBCODES ON MOBILE *************************************************/
 
-.glow_dark     { filter: none; }
-.bigglow_dark  { filter: none; }
-.hugeglow_dark { filter: none; }
+@media (max-width: 992px)                         {
+.nbcode_floater       { border-color: #CACACA;    }
+.nbcode_gallery_cell  { border-color: #CACACA;  } }
 
-select.intext, input.intext             { background-color: #FFFFFF; border: 2px solid #EEEEEE; color: #121212; }
-select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus),
-input.intext:focus, select.intext:focus { border-color: #CACACA; background-color: #FFFFFF;                     }
-select.inh, input.inh                   { background-color: #FFFFFF; border: 2px solid #EEEEEE; color: #121212; }
-select.inh:hover, input.inh:hover, input.inh[type='text']:hover:not([disabled]):not(:focus),
-input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #FFFFFF;                     }
+/***************************************************** TOP MENU ******************************************************/
 
-tbody.altc tr:nth-child(odd)         { background-color: #EEEEEE; }
-tbody.altc tr:nth-child(odd):hover   { background-color: #CACACA; }
-tbody.altc2 tr:nth-child(even)       { background-color: #EEEEEE; }
-tbody.altc2 tr:nth-child(even):hover { background-color: #CACACA; }
+.header_topbar                 { background-color: #EEEEEE;                         }
+.header_topmenu                { background-color: #EEEEEE;                         }
+.header_topmenu_title          { color: #121212; background-color: #EEEEEE;         }
+.header_topmenu_title:hover    { color: #EEEEEE; background-color: #121212;         }
+.header_topmenu_title_selected { color: #EEEEEE; background-color: #121212;         }
+.header_infobar                { background-color: #EEEEEE; border-color: #121212;  }
+.header_infobar_link           { color: #37536A;                                    }
+.header_infobar_link:hover     { color: #78A1BC;                                    }
 
-tbody.doublealtc tr:nth-child(4n-2), tbody.doublealtc tr:nth-child(4n-3)   { background-color: #EEEEEE; }
-tbody.doublealtc tr:nth-child(4n-3):hover                                  { background-color: #CACACA; }
-tbody.doublealtc tr:nth-child(4n):hover                                    { background-color: #CACACA; }
-tbody.doublealtc2 tr:nth-child(4n-1), tbody.doublealtc2 tr:nth-child(4n-2) { background-color: #EEEEEE; }
-tbody.doublealtc2 tr:nth-child(4n-2):hover                                 { background-color: #CACACA; }
-tbody.doublealtc2 tr:nth-child(4n-3):hover                                 { background-color: #CACACA; }
+/***************************************** TOP MENU HIDDEN DROPDOWN SECTION ******************************************/
 
-tr.row_separator_dark      { border-bottom: 1.0rem solid #CACACA; }
-tr.row_separator_dark_thin { border-bottom: 0.7rem solid #CACACA; }
+.header_submenu             { background-color: #FFFFFF; color: #37536A;  }
+.header_submenu_title       { color: #121212;                             }
+.header_submenu_link        { color: #37536A;                             }
+.header_submenu_link:hover  { filter: none; color: #78A1BC;               }
+.login_form_text            { color: #121212;                             }
 
-select.table_search, input.table_search { background-color: #EEEEEE; }
-select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
-                                        { background-color: #FFFFFF; }
+/****************************************************** FOOTER *******************************************************/
 
-blockquote.nobackground { background-color: #FFFFFF; }
+footer { color: #999999; filter: none; }
 
-a.forced_link                            { color: #37536A; text-decoration: none; filter: none; }
-a.forced_link:focus, a.forced_link:hover { color: #78A1BC; text-decoration: none; filter: none; }
+/********************************************** ADMIN.CSS - ADMIN MAIL ***********************************************/
 
-/***************************************************** INDEX LOGO ****************************************************/
+.admin_mail_border      { border-color: #CACACA;                                }
+.admin_mail_container   { box-shadow: 0 0 15px #CACACA;                         }
+.admin_mail_left_panel  { box-shadow: 0 0 10px #CACACA;                         }
+.admin_mail_right_panel { box-shadow: 0 0 10px #CACACA; border-color: #CACACA;  }
+
+/********************************************** DEV.CSS - DOCUMENTATION **********************************************/
+
+div.dev_div_border  { border-color: #121212;  }
+div.dev_div_spacing { border-color: #121212;  }
+
+/******************************************** INDEX.CSS - LOGO HEARTBEAT *********************************************/
+
 .nobleme_logo       { filter: none; animation: none !important; }
 .nobleme_logo:hover { animation: none !important;               }

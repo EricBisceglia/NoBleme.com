@@ -196,7 +196,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td colspan="6" class="uppercase text_light dark bold align_center desktop">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
-        <td colspan="4" class="uppercase text_light dark bold align_center mobile">
+        <td colspan="4" class="uppercase text_light dark bold align_center mobile_table">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>
@@ -210,7 +210,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur();', id: 'compendium_list_link_'.$compendium_pages_list[$i]['id'])?>
         </td>
         <?php } else { ?>
-        <td class="tooltip_container<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur(); unblur_element('compendium_list_link_<?=$compendium_pages_list[$i]['id']?>');">
+        <td class="tooltip_container tooltip_desktop<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur(); unblur_element('compendium_list_link_<?=$compendium_pages_list[$i]['id']?>');">
           <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur();', id: 'compendium_list_link_'.$compendium_pages_list[$i]['id'])?>
           <div class="tooltip dowrap">
             <h5>

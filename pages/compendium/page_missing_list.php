@@ -75,7 +75,7 @@ $compendium_types_list = compendium_types_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_50">
+<div class="width_50 autoscroll">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_missing_title')?>
@@ -148,7 +148,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </th>
 
         <th>
-          <select class="table_search" name="compendium_missing_status" id="compendium_missing_status" onchange="compendium_missing_list_search();">
+          <select class="table_search compendium_admin_actions" name="compendium_missing_status" id="compendium_missing_status" onchange="compendium_missing_list_search();">
             <option value="-1">&nbsp;</option>
             <option value="1"><?=__('compendium_missing_documented')?></option>
             <option value="0"><?=__('compendium_missing_undocumented')?></option>
@@ -169,7 +169,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <td colspan="6" class="uppercase text_light dark bold align_center desktop">
           <?=__('compendium_missing_count', preset_values: array($compendium_missing_list['rows']))?>
         </td>
-        <td colspan="4" class="uppercase text_light dark bold align_center mobile">
+        <td colspan="4" class="uppercase text_light dark bold align_center mobile_table">
           <?=__('compendium_missing_count', preset_values: array($compendium_missing_list['rows']))?>
         </td>
       </tr>
@@ -243,7 +243,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <td colspan="6" class="uppercase text_light dark bold align_center desktop">
           <?=__('compendium_missing_uncount', preset_values: array(count($compendium_missing_list['missing'])))?>
         </td>
-        <td colspan="4" class="uppercase text_light dark bold align_center mobile">
+        <td colspan="4" class="uppercase text_light dark bold align_center mobile_table">
           <?=__('compendium_missing_uncount', preset_values: array(count($compendium_missing_list['missing'])))?>
         </td>
       </tr>
@@ -256,7 +256,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <td colspan="5" class="align_left desktop">
           <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
         </td>
-        <td colspan="3" class="align_left mobile">
+        <td colspan="3" class="align_left mobile_table">
           <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
         </td>
         <?php } else { ?>
@@ -266,7 +266,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
           </div>
         </td>
-        <td colspan="3" class="align_left nbcode_dead_link noglow tooltip_container mobile">
+        <td colspan="3" class="align_left nbcode_dead_link noglow tooltip_container mobile_table">
           <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], string_truncate($compendium_missing_list['missing'][$i], 50, '...'), 'nbcode_dead_link noglow')?>
           <div class="tooltip">
             <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>

@@ -88,7 +88,7 @@ $compendium_peak_list_years       = compendium_peak_list_years();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_100">
+<div class="width_100 autoscroll">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__link('pages/compendium/page_list', __('compendium_list_admin_title'), 'noglow')?>
@@ -455,7 +455,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?php } ?>
         </td>
 
-        <td class="align_center nowrap">
+        <td class="align_center nowrap compendium_admin_actions">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_pages_list[$i]['id'])?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/page_delete?id='.$compendium_pages_list[$i]['id'])?>
         </td>

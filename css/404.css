@@ -1,6 +1,27 @@
-/***************************************************** 404 ERROR *****************************************************/
-body { background-color: #000000; }
+/************************************************** 404 ERROR PAGE ***************************************************/
 
+body                        { background-color: #000000;                                          }
+.topimg404                  { padding-top: 3.0rem; padding-bottom: 4.0rem;                        }
+.container404               { width: 65.0rem; max-width: 100%;                                    }
+.table404                   { background-color: #000000;                                          }
+.table404 tbody > tr:hover  { background-color: #000000                                           }
+.img404                     { width: 19.0rem;                                                     }
+.img404left                 { margin-right: 1.0rem;                                               }
+.img404right                { margin-left: 1.0rem;                                                }
+.text404                    { background-color: #000000; border: 0; color: #CACACA                ;
+                              text-align: center; overflow: auto; resize: none; height: 14.0rem;  }
+
+/********************************************* 404 ERROR PAGE ON MOBILE **********************************************/
+
+@media (max-width: 992px)                                     {
+.topimg404    { padding-top: 5.0rem; padding-bottom: 10.0rem; }
+.img404left   { padding-bottom: 5.0rem;                       }
+.img404right  { padding-top: 2.0rem; padding-bottom: 4.0rem;  }
+.text404      { height: 15.0rem; font-size: 80%;            } }
+
+/************************************** 404 ERROR PAGE HEADER MENU ALTERATIONS ***************************************/
+
+.header_topbar                  { background-color: #B00B1E;                            }
 .header_topmenu                 { background-color: #B00B1E;                            }
 .header_topmenu_title           { background-color: #B00B1E; color: #000000;            }
 .header_topmenu_title:hover     { background-color: #000000; color: #B00B1E;            }
@@ -11,14 +32,3 @@ body { background-color: #000000; }
 .header_submenu_title           { color: #CACACA;                                       }
 .header_submenu_link            { color: #B00B1E;                                       }
 .header_submenu_link:hover      { color: #B00B1E; filter: drop-shadow(0 0 5px #B00B1E); }
-
-.container404               { width: 1000px; max-width: 100%;                                      }
-.table404                   { background-color: #000000;                                           }
-.table404 tbody > tr:hover  { background-color: #000000                                            }
-.img404                     { width: 300px;                                                        }
-.img404left                 { margin-right: 10px;                                                  }
-.img404right                { margin-left: 10px;                                                   }
-.text404                    { background-color: #000000; border: 0px solid #000000; color: #CACACA ;
-                              text-align: center; overflow: auto; resize: none;                    }
-@media (min-width: 1081px) { .text404 { font-size: 1.5rem; height: 17.0rem;                      } }
-@media (max-width: 1080px) { .text404 { font-size: 1.5rem; height: 40.0rem;                      } }

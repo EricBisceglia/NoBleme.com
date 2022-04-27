@@ -85,7 +85,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=$stats_views['comparison_date']?>
   </h5>
 
-  <div class="align_center bigpadding_bot">
+  <div class="align_center bigpadding_bot autoscroll">
     <form method="POST" onsubmit="return confirm('<?=__('admin_views_warning')?>');">
       <fieldset>
         <input type="submit" name="stats_views_reset" value="<?=__('admin_views_reset')?>">
@@ -93,7 +93,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </form>
   </div>
 
-  <div class="padding_top">
+  <div class="padding_top autoscroll">
     <table>
       <thead>
 

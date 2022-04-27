@@ -17,12 +17,12 @@ $captcha_rand = rand(100000, 999999);
 $_SESSION['captcha'] = $captcha_rand;
 
 // Prepare the properties of the image
-$captcha_image      = imagecreate(70, 30);
+$captcha_image      = imagecreate(120, 40);
 $captcha_background = imagecolorallocate($captcha_image, 18, 18, 18);
 $captcha_text_color = imagecolorallocate($captcha_image, 127, 157, 177);
 
 // Assemble the image
-imagestring($captcha_image, 5, 8, 7, $captcha_rand, $captcha_text_color);
+imagettftext($captcha_image, 20, 0, 10, 25, $captcha_text_color, './../css/fonts/Open-sans.ttf', $captcha_rand);
 
 // Send a header with an expilation date in the past to disable browser caching
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

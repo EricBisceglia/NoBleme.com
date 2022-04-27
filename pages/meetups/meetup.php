@@ -289,7 +289,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </p>
     <?php } ?>
 
-    <div class="padding_top">
+    <div class="padding_top autoscroll">
       <table>
         <thead>
 

@@ -79,70 +79,72 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
     <span class="desktop">
-      <label class="label_inline desktop" for="online_refresh"><?=__('users_online_refresh')?></label>
+      <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label>
     </span>
-    <span class="mobile">
-      <label class="label_inline mobile" for="online_refresh"><?=__('users_online_refresh_mobile')?></label>
+    <span class="mobile_inline">
+      <label class="label_inline" for="online_refresh"><?=__('users_online_refresh_mobile')?></label>
     </span>
 
   </fieldset>
 
-  <table>
+  <div class="autoscroll">
+    <table>
 
-    <thead>
-      <tr>
-        <th>
-          <?=string_change_case(__('username'), 'uppercase')?>
-        </th>
-        <th>
-          <?=__('users_online_activity')?>
-        </th>
-        <th>
-          <?=__('users_online_page')?>
-        </th>
-      </tr>
-    </thead>
-
-    <tbody class="altc" id="users_online_table">
-      <?php } ?>
-      <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
+      <thead>
         <tr>
-
-          <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
-          <td class="tooltip_container align_center<?=$userlist[$i]['css']?>">
-          <?php } else { ?>
-          <td class="align_center<?=$userlist[$i]['css']?>">
-          <?php } ?>
-            <?php if($userlist[$i]['type'] == 'user') { ?>
-            <?=__link('pages/users/'.$userlist[$i]['id'], $userlist[$i]['username'], $userlist[$i]['css'])?>
-            <?php } else { ?>
-            <?=$userlist[$i]['username']?>
-            <?php } ?>
-            <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
-            <div class="tooltip">
-              <?=$userlist[$i]['ip']?>
-            </div>
-            <?php } ?>
-          </td>
-
-          <td class="align_center<?=$userlist[$i]['css']?>">
-            <?=$userlist[$i]['activity']?>
-          </td>
-
-          <td class="align_center<?=$userlist[$i]['css']?>">
-            <?php if($userlist[$i]['last_url']) { ?>
-            <?=__link($userlist[$i]['last_url'], $userlist[$i]['last_page'], $userlist[$i]['css'])?>
-            <?php } else { ?>
-            <?=$userlist[$i]['last_page']?>
-            <?php } ?>
-          </td>
-
+          <th>
+            <?=string_change_case(__('username'), 'uppercase')?>
+          </th>
+          <th>
+            <?=__('users_online_activity')?>
+          </th>
+          <th>
+            <?=__('users_online_page')?>
+          </th>
         </tr>
-      <?php } ?>
-      <?php if(!page_is_fetched_dynamically()) { ?>
-    </tbody>
+      </thead>
 
-  </table>
+      <tbody class="altc" id="users_online_table">
+        <?php } ?>
+        <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
+          <tr>
+
+            <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
+            <td class="tooltip_container align_center<?=$userlist[$i]['css']?>">
+            <?php } else { ?>
+            <td class="align_center<?=$userlist[$i]['css']?>">
+            <?php } ?>
+              <?php if($userlist[$i]['type'] == 'user') { ?>
+              <?=__link('pages/users/'.$userlist[$i]['id'], $userlist[$i]['username'], $userlist[$i]['css'])?>
+              <?php } else { ?>
+              <?=$userlist[$i]['username']?>
+              <?php } ?>
+              <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
+              <div class="tooltip">
+                <?=$userlist[$i]['ip']?>
+              </div>
+              <?php } ?>
+            </td>
+
+            <td class="align_center<?=$userlist[$i]['css']?>">
+              <?=$userlist[$i]['activity']?>
+            </td>
+
+            <td class="align_center<?=$userlist[$i]['css']?>">
+              <?php if($userlist[$i]['last_url']) { ?>
+              <?=__link($userlist[$i]['last_url'], $userlist[$i]['last_page'], $userlist[$i]['css'])?>
+              <?php } else { ?>
+              <?=$userlist[$i]['last_page']?>
+              <?php } ?>
+            </td>
+
+          </tr>
+        <?php } ?>
+        <?php if(!page_is_fetched_dynamically()) { ?>
+      </tbody>
+
+    </table>
+  </div>
 
 </div>
 

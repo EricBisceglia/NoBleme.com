@@ -104,168 +104,170 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <form method="post">
     <fieldset>
 
-      <table>
-        <thead>
+      <div class="autoscroll">
+        <table>
+          <thead>
 
-          <tr class="nowrap uppercase">
-            <th>
-              <?=__('type')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('type');")?>
-            </th>
-            <th>
-              <?=__('id')?>
-            </th>
-            <th>
-              <?=__('dev_scheduler_task_execution')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('date');")?>
-            </th>
-            <th>
-              <?=__('dev_scheduler_task_description')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('description');")?>
-            </th>
-            <th>
-              <?=__('dev_scheduler_task_report')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('report');")?>
-            </th>
-            <th>
-              <?=__('action')?>
-            </th>
-          </tr>
+            <tr class="nowrap uppercase">
+              <th>
+                <?=__('type')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('type');")?>
+              </th>
+              <th>
+                <?=__('id')?>
+              </th>
+              <th>
+                <?=__('dev_scheduler_task_execution')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('date');")?>
+              </th>
+              <th>
+                <?=__('dev_scheduler_task_description')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('description');")?>
+              </th>
+              <th>
+                <?=__('dev_scheduler_task_report')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('report');")?>
+              </th>
+              <th>
+                <?=__('action')?>
+              </th>
+            </tr>
 
-          <tr>
+            <tr>
 
-            <th>
-              <input type="hidden" class="hidden" name="scheduler_sort_order" id="scheduler_search_order" value="date">
-              <select class="table_search" name="scheduler_search_type" id="scheduler_search_type" onchange="dev_scheduler_list_search();">
-                <option value="0">&nbsp;</option>
-                <?php for($i = 0; $i < $scheduler_task_types['rows'] ; $i++) { ?>
-                <option value="<?=$scheduler_task_types[$i]['type']?>"><?=$scheduler_task_types[$i]['type']?></option>
-                <?php } ?>
-              </select>
-            </th>
+              <th>
+                <input type="hidden" class="hidden" name="scheduler_sort_order" id="scheduler_search_order" value="date">
+                <select class="table_search" name="scheduler_search_type" id="scheduler_search_type" onchange="dev_scheduler_list_search();">
+                  <option value="0">&nbsp;</option>
+                  <?php for($i = 0; $i < $scheduler_task_types['rows'] ; $i++) { ?>
+                  <option value="<?=$scheduler_task_types[$i]['type']?>"><?=$scheduler_task_types[$i]['type']?></option>
+                  <?php } ?>
+                </select>
+              </th>
 
-            <th>
-              <input type="text" class="table_search" name="scheduler_search_id" id="scheduler_search_id" value="" size="2" onkeyup="dev_scheduler_list_search();">
-            </th>
+              <th>
+                <input type="text" class="table_search" name="scheduler_search_id" id="scheduler_search_id" value="" size="2" onkeyup="dev_scheduler_list_search();">
+              </th>
 
-            <th>
-              <select class="table_search" name="scheduler_search_date" id="scheduler_search_date" onchange="dev_scheduler_list_search();">
-                <option value="0">&nbsp;</option>
-                <option value="1"><?=__('dev_scheduler_task_execution_future')?></option>
-                <option value="2"><?=__('dev_scheduler_task_execution_past')?></option>
-              </select>
-            </th>
+              <th>
+                <select class="table_search" name="scheduler_search_date" id="scheduler_search_date" onchange="dev_scheduler_list_search();">
+                  <option value="0">&nbsp;</option>
+                  <option value="1"><?=__('dev_scheduler_task_execution_future')?></option>
+                  <option value="2"><?=__('dev_scheduler_task_execution_past')?></option>
+                </select>
+              </th>
 
-            <th>
-              <input type="text" class="table_search" name="scheduler_search_description" id="scheduler_search_description" value="" onkeyup="dev_scheduler_list_search();">
-            </th>
+              <th>
+                <input type="text" class="table_search" name="scheduler_search_description" id="scheduler_search_description" value="" onkeyup="dev_scheduler_list_search();">
+              </th>
 
-            <th>
-              <input type="text" class="table_search" name="scheduler_search_report" id="scheduler_search_report" value="" onkeyup="dev_scheduler_list_search();">
-            </th>
+              <th>
+                <input type="text" class="table_search" name="scheduler_search_report" id="scheduler_search_report" value="" onkeyup="dev_scheduler_list_search();">
+              </th>
 
-            <th>
-              &nbsp;
-            </th>
+              <th>
+                &nbsp;
+              </th>
 
-          </tr>
+            </tr>
 
-        </thead>
-
-        <?php } ?>
-
-        <tbody class="altc2 align_center" id="scheduler_list_tbody">
-
-          <tr>
-            <td colspan="6" class="uppercase text_light dark bold align_center">
-              <?=__('dev_scheduler_task_results', 0, 0, 0, array($scheduler_tasks['rows'], $scheduler_tasks['rows_future'], $scheduler_tasks['rows_past']))?>
-            </td>
-          </tr>
-
-          <?php for($i = 0; $i < $scheduler_tasks['rows'] ; $i++) { ?>
-
-          <?php if($i && $scheduler_tasks['sort'] == 'date' && $scheduler_tasks[$i]['type'] != $scheduler_tasks[$i-1]['type']) { ?>
-
-          <tr>
-            <td colspan="6" class="dark">
-              &nbsp;
-            </td>
-          </tr>
-          <tr class="hidden">
-            <td colspan="6" class="dark">
-              &nbsp;
-            </td>
-          </tr>
+          </thead>
 
           <?php } ?>
 
-          <tr>
+          <tbody class="altc2 align_center" id="scheduler_list_tbody">
 
-            <td class="nowrap">
-              <?=$scheduler_tasks[$i]['task_type']?>
-            </td>
+            <tr>
+              <td colspan="6" class="uppercase text_light dark bold align_center">
+                <?=__('dev_scheduler_task_results', 0, 0, 0, array($scheduler_tasks['rows'], $scheduler_tasks['rows_future'], $scheduler_tasks['rows_past']))?>
+              </td>
+            </tr>
 
-            <td class="nowrap">
-              <?=$scheduler_tasks[$i]['task_id']?>
-            </td>
+            <?php for($i = 0; $i < $scheduler_tasks['rows'] ; $i++) { ?>
 
-            <td class="nowrap">
-              <span class="tooltip_container">
-              <?=$scheduler_tasks[$i]['date']?>
-                <span class="tooltip notbold">
-                  <?=$scheduler_tasks[$i]['fdate']?>
+            <?php if($i && $scheduler_tasks['sort'] == 'date' && $scheduler_tasks[$i]['type'] != $scheduler_tasks[$i-1]['type']) { ?>
+
+            <tr>
+              <td colspan="6" class="dark">
+                &nbsp;
+              </td>
+            </tr>
+            <tr class="hidden">
+              <td colspan="6" class="dark">
+                &nbsp;
+              </td>
+            </tr>
+
+            <?php } ?>
+
+            <tr>
+
+              <td class="nowrap">
+                <?=$scheduler_tasks[$i]['task_type']?>
+              </td>
+
+              <td class="nowrap">
+                <?=$scheduler_tasks[$i]['task_id']?>
+              </td>
+
+              <td class="nowrap">
+                <span class="tooltip_container">
+                <?=$scheduler_tasks[$i]['date']?>
+                  <span class="tooltip notbold">
+                    <?=$scheduler_tasks[$i]['fdate']?>
+                  </span>
                 </span>
-              </span>
-            </td>
+              </td>
 
-            <?php if($scheduler_tasks[$i]['fdescription']) { ?>
-            <td>
-              <span class="tooltip_container">
-              <?=$scheduler_tasks[$i]['description']?>
-                <span class="tooltip notbold">
-                  <?=$scheduler_tasks[$i]['fdescription']?>
-                </span>
-              </span>
-            </td>
-            <?php } else { ?>
+              <?php if($scheduler_tasks[$i]['fdescription']) { ?>
               <td>
-              <?=$scheduler_tasks[$i]['description']?>
-            </td>
-            <?php } ?>
-
-            <?php if($scheduler_tasks[$i]['freport']) { ?>
-            <td>
-              <span class="tooltip_container">
-              <?=$scheduler_tasks[$i]['report']?>
-                <span class="tooltip notbold">
-                  <?=$scheduler_tasks[$i]['freport']?>
+                <span class="tooltip_container">
+                <?=$scheduler_tasks[$i]['description']?>
+                  <span class="tooltip notbold">
+                    <?=$scheduler_tasks[$i]['fdescription']?>
+                  </span>
                 </span>
-              </span>
-            </td>
-            <?php } else { ?>
-            <td>
-              <?=$scheduler_tasks[$i]['report']?>
-            </td>
+              </td>
+              <?php } else { ?>
+                <td>
+                <?=$scheduler_tasks[$i]['description']?>
+              </td>
+              <?php } ?>
+
+              <?php if($scheduler_tasks[$i]['freport']) { ?>
+              <td>
+                <span class="tooltip_container">
+                <?=$scheduler_tasks[$i]['report']?>
+                  <span class="tooltip notbold">
+                    <?=$scheduler_tasks[$i]['freport']?>
+                  </span>
+                </span>
+              </td>
+              <?php } else { ?>
+              <td>
+                <?=$scheduler_tasks[$i]['report']?>
+              </td>
+              <?php } ?>
+
+              <td class="align_center nowrap">
+                <?php if($scheduler_tasks[$i]['type'] == 'future') { ?>
+                <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('edit'), title_case: 'initials', onclick: "dev_scheduler_edit_popin('".$scheduler_tasks[$i]['id']."', '".$scheduler_tasks[$i]['type']."');")?>
+                <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_task('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_task')."');")?>
+                <?php } else { ?>
+                <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_log('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_log')."');")?>
+                <?php } ?>
+              </td>
+
+            </tr>
+
             <?php } ?>
 
-            <td class="align_center nowrap">
-              <?php if($scheduler_tasks[$i]['type'] == 'future') { ?>
-              <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('edit'), title_case: 'initials', onclick: "dev_scheduler_edit_popin('".$scheduler_tasks[$i]['id']."', '".$scheduler_tasks[$i]['type']."');")?>
-              <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_task('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_task')."');")?>
-              <?php } else { ?>
-              <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_log('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_log')."');")?>
-              <?php } ?>
-            </td>
+          </tbody>
 
-          </tr>
+          <?php if(!page_is_fetched_dynamically()) { ?>
 
-          <?php } ?>
-
-        </tbody>
-
-        <?php if(!page_is_fetched_dynamically()) { ?>
-
-      </table>
+        </table>
+      </div>
 
     </fieldset>
   </form>
