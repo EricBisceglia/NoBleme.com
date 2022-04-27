@@ -56,7 +56,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_admins_admins')?>
   </p>
 
-  <div class="bigpadding_top">
+  <div class="bigpadding_top autoscroll">
     <table>
       <thead>
 

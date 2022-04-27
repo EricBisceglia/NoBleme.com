@@ -114,63 +114,65 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
     </fieldset>
   </form>
 
-  <table>
-    <thead>
+  <div class="autoscroll">
+    <table>
+      <thead>
 
-      <tr class="uppercase">
-        <th>
-          <?=__('compendium_admin_notes_page')?>
-        </th>
-        <th>
-          <?=__('compendium_admin_notes_text')?>
-        </th>
-        <th>
-          <?=__('compendium_admin_notes_url')?>
-        </th>
-        <th>
-          <?=__('act')?>
-        </th>
-      </tr>
+        <tr class="uppercase">
+          <th>
+            <?=__('compendium_admin_notes_page')?>
+          </th>
+          <th>
+            <?=__('compendium_admin_notes_text')?>
+          </th>
+          <th>
+            <?=__('compendium_admin_notes_url')?>
+          </th>
+          <th>
+            <?=__('act')?>
+          </th>
+        </tr>
 
-    </thead>
+      </thead>
 
-    <tbody class="altc">
+      <tbody class="altc">
 
-      <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
+        <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
-      <tr>
+        <tr>
 
-        <?php if(!$compendium_pages_list[$i]['fullurl']) { ?>
-        <td class="align_left nowrap">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['url'])?>
-        </td>
-        <?php } else { ?>
-        <td class="align_left tooltip_container">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['urldisplay'])?>
-          <div class="tooltip">
-            <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['fullurl'])?>
-          </div>
-        </td>
+          <?php if(!$compendium_pages_list[$i]['fullurl']) { ?>
+          <td class="align_left nowrap">
+            <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['url'])?>
+          </td>
+          <?php } else { ?>
+          <td class="align_left tooltip_container">
+            <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['urldisplay'])?>
+            <div class="tooltip">
+              <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['fullurl'])?>
+            </div>
+          </td>
+          <?php } ?>
+
+          <td class="align_left">
+            <?=$compendium_pages_list[$i]['notes']?>
+          </td>
+
+          <td class="align_left nowrap">
+            <?=$compendium_pages_list[$i]['urlnotes']?>
+          </td>
+
+          <td class="align_center">
+            <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_pages_list[$i]['id'])?>
+          </td>
+
+        </tr>
+
         <?php } ?>
 
-        <td class="align_left">
-          <?=$compendium_pages_list[$i]['notes']?>
-        </td>
-
-        <td class="align_left nowrap">
-          <?=$compendium_pages_list[$i]['urlnotes']?>
-        </td>
-
-        <td class="align_center">
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_pages_list[$i]['id'])?>
-        </td>
-
-      </tr>
-
-      <?php } ?>
-
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 

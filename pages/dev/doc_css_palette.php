@@ -1358,26 +1358,28 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </table>
 
   <div class="padding_top">
-    <pre class="dev_pre_code" id="dev_palette_table" onclick="to_clipboard('', 'dev_palette_table', 1);">&lt;table>
-  &lt;thead>
+    <pre class="dev_pre_code" id="dev_palette_table" onclick="to_clipboard('', 'dev_palette_table', 1);">&ltdiv class="autoscroll">
+  &lt;table>
+    &lt;thead>
 
-    &lt;tr>
-      &lt;th>
-        HEADER
-      &lt;/th>
-    &lt;/tr>
+      &lt;tr>
+        &lt;th>
+          HEADER
+        &lt;/th>
+      &lt;/tr>
 
-  &lt;/thead>
-  &lt;tbody>
+    &lt;/thead>
+    &lt;tbody>
 
-    &lt;tr>
-      &lt;td>
-        body
-      &lt;/td>
-    &lt;/tr>
+      &lt;tr>
+        &lt;td>
+          body
+        &lt;/td>
+      &lt;/tr>
 
-  &lt;/tbody>
-&lt;/table></pre>
+    &lt;/tbody>
+  &lt;/table>
+&lt;/div></pre>
   </div>
 
 </div>

@@ -150,16 +150,18 @@ hr   { height: 3px;                                                 } }
 
 /**************************************************** VISIBILITY *****************************************************/
 
-[hidden]      { display: none;        }
-.hidden       { display: none;        }
-.mobile       { display: none;        }
-.mobile_table { display: none;        }
-@media (max-width: 1366px)            {
-.desktop_wide { display: none;      } }
-@media (max-width: 992px)             {
-.mobile       { display: block;       }
-.mobile_table { display: table-cell;  }
-.desktop      { display: none;      } }
+[hidden]        { display: none;          }
+.hidden         { display: none;          }
+.mobile         { display: none;          }
+.mobile_table   { display: none;          }
+.mobile_inline  { display: none;          }
+@media (max-width: 1366px)                {
+.desktop_wide   { display: none;        } }
+@media (max-width: 992px)                 {
+.mobile         { display: block;         }
+.mobile_table   { display: table-cell;    }
+.mobile_inline  { display: inline-block;  }
+.desktop        { display: none;        } }
 
 /**************************************************** PAGE LAYOUT ****************************************************/
 
@@ -434,7 +436,8 @@ tr.row_separator_dark_thin                  { border-bottom: 0.6rem solid #12121
 .tooltip_container .tooltip       { padding-top: 1.0rem; padding-bottom: 1.5rem; padding-left: 1.5rem           ;
                                     padding-right: 1.5rem; overflow-y: scroll;                                  }
 .tooltip_container:hover .tooltip { border-radius: 10px; border: 3px solid #888888                              ;
-                                    box-shadow: 5px 5px 5px #888888; max-width: 40.0rem; max-height: 50.0rem; } }
+                                    box-shadow: 5px 5px 5px #888888; max-width: 40.0rem; max-height: 50.0rem;   }
+.tooltip_desktop:hover .tooltip   { display: none;                                                            } }
 
 /****************************************************** POPINS *******************************************************/
 

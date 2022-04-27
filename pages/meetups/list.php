@@ -82,124 +82,126 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <input type="hidden" name="meetups_list_search_order" id="meetups_list_search_order" value="<?=$meetups_list_search_order?>">
 
-      <table>
-        <thead>
+      <div class="autoscroll">
+        <table>
+          <thead>
 
-          <tr class="uppercase">
+            <tr class="uppercase">
 
-            <th>
-              <?=__('meetups_list_date')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('date');")?>
-            </th>
+              <th>
+                <?=__('meetups_list_date')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('date');")?>
+              </th>
 
-            <th>
-              <?=__('language', amount: 2)?>
-            </th>
+              <th>
+                <?=__('language', amount: 2)?>
+              </th>
 
-            <th>
-              <?=__('meetups_list_location')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('location');")?>
-            </th>
+              <th>
+                <?=__('meetups_list_location')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('location');")?>
+              </th>
 
-            <th>
-              <?=__('meetups_list_attendees')?>
-              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('people');")?>
-            </th>
+              <th>
+                <?=__('meetups_list_attendees')?>
+                <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('people');")?>
+              </th>
 
-          </tr>
+            </tr>
+
+            <tr>
+
+              <th>
+                <select class="table_search" name="meetups_list_date" id="meetups_list_date" onchange="meetups_list_search()">
+                  <option value="0" selected>&nbsp;</option>
+                  <?php for($i = 0; $i < $meetup_years['rows']; $i++) { ?>
+                  <option value="<?=$meetup_years[$i]['year']?>"><?=$meetup_years[$i]['year']?></option>
+                  <?php } ?>
+                </select>
+              </th>
+
+              <th>
+                <select class="table_search" name="meetups_list_language" id="meetups_list_language" onchange="meetups_list_search()">
+                  <option value="0">&nbsp;</option>
+                  <?php if($lang == 'EN') { ?>
+                  <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
+                  <option value="ENFR"><?=__('meetups_list_bilingual')?></option>
+                  <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
+                  <?php } else { ?>
+                  <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
+                  <option value="FREN"><?=__('meetups_list_bilingual')?></option>
+                  <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
+                  <?php } ?>
+                </select>
+              </th>
+
+              <th>
+                <input type="text" class="table_search" name="meetups_list_location" id="meetups_list_location" value="" size="1" onkeyup="meetups_list_search();">
+              </th>
+
+              <th>
+                <select class="table_search" name="meetups_list_attendees" id="meetups_list_attendees" onchange="meetups_list_search()">
+                  <option value="0" selected>&nbsp;</option>
+                  <?php for($i = 5; $i <= $meetups_max_attendees; $i += 5) { ?>
+                  <option value="<?=$i?>"><?=$i?>+</option>
+                  <?php } ?>
+                </select>
+              </th>
+
+            </tr>
+
+          </thead>
+          <tbody class="altc" id="meetups_list_tbody">
+
+          <?php } ?>
 
           <tr>
-
-            <th>
-              <select class="table_search" name="meetups_list_date" id="meetups_list_date" onchange="meetups_list_search()">
-                <option value="0" selected>&nbsp;</option>
-                <?php for($i = 0; $i < $meetup_years['rows']; $i++) { ?>
-                <option value="<?=$meetup_years[$i]['year']?>"><?=$meetup_years[$i]['year']?></option>
-                <?php } ?>
-              </select>
-            </th>
-
-            <th>
-              <select class="table_search" name="meetups_list_language" id="meetups_list_language" onchange="meetups_list_search()">
-                <option value="0">&nbsp;</option>
-                <?php if($lang == 'EN') { ?>
-                <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
-                <option value="ENFR"><?=__('meetups_list_bilingual')?></option>
-                <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
-                <?php } else { ?>
-                <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
-                <option value="FREN"><?=__('meetups_list_bilingual')?></option>
-                <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
-                <?php } ?>
-              </select>
-            </th>
-
-            <th>
-              <input type="text" class="table_search" name="meetups_list_location" id="meetups_list_location" value="" size="1" onkeyup="meetups_list_search();">
-            </th>
-
-            <th>
-              <select class="table_search" name="meetups_list_attendees" id="meetups_list_attendees" onchange="meetups_list_search()">
-                <option value="0" selected>&nbsp;</option>
-                <?php for($i = 5; $i <= $meetups_max_attendees; $i += 5) { ?>
-                <option value="<?=$i?>"><?=$i?>+</option>
-                <?php } ?>
-              </select>
-            </th>
-
-          </tr>
-
-        </thead>
-        <tbody class="altc" id="meetups_list_tbody">
-
-        <?php } ?>
-
-        <tr>
-          <?php if($is_moderator) { ?>
-          <td colspan="5" class="uppercase text_light dark bold align_center">
-          <?php } else { ?>
-          <td colspan="4" class="uppercase text_light dark bold align_center">
-          <?php } ?>
-            <?php if(!$meetups_list['rows']) { ?>
-            <?=__('meetups_list_none')?>
+            <?php if($is_moderator) { ?>
+            <td colspan="5" class="uppercase text_light dark bold align_center">
             <?php } else { ?>
-            <?=__('meetups_list_count', preset_values:array($meetups_list['rows']))?>
+            <td colspan="4" class="uppercase text_light dark bold align_center">
             <?php } ?>
-          </td>
-        </tr>
-
-          <?php for($i = 0; $i < $meetups_list['rows']; $i++) { ?>
-
-          <tr class="align_center pointer<?=$meetups_list[$i]['css']?>" onclick="window.location = '<?=$path.'pages/meetups/'.$meetups_list[$i]['id']?>';">
-
-            <td class="nowrap">
-              <?=__link('pages/meetups/'.$meetups_list[$i]['id'], $meetups_list[$i]['date'], 'noglow '.$meetups_list[$i]['css_link'])?>
-            </td>
-
-            <td class="nowrap">
-              <?php if($meetups_list[$i]['lang_en']) { ?>
-              <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="20" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
-              <?php } if($meetups_list[$i]['lang_fr']) { ?>
-              <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="20" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
+              <?php if(!$meetups_list['rows']) { ?>
+              <?=__('meetups_list_none')?>
+              <?php } else { ?>
+              <?=__('meetups_list_count', preset_values:array($meetups_list['rows']))?>
               <?php } ?>
             </td>
-
-            <td>
-              <?=$meetups_list[$i]['location']?>
-            </td>
-
-            <td class="bold nowrap">
-              <?=$meetups_list[$i]['people']?>
-            </td>
-
           </tr>
 
-          <?php } ?>
+            <?php for($i = 0; $i < $meetups_list['rows']; $i++) { ?>
 
-          <?php if(!page_is_fetched_dynamically()) { ?>
+            <tr class="align_center pointer<?=$meetups_list[$i]['css']?>" onclick="window.location = '<?=$path.'pages/meetups/'.$meetups_list[$i]['id']?>';">
 
-        </tbody>
-      </table>
+              <td class="nowrap">
+                <?=__link('pages/meetups/'.$meetups_list[$i]['id'], $meetups_list[$i]['date'], 'noglow '.$meetups_list[$i]['css_link'])?>
+              </td>
+
+              <td class="nowrap">
+                <?php if($meetups_list[$i]['lang_en']) { ?>
+                <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="20" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
+                <?php } if($meetups_list[$i]['lang_fr']) { ?>
+                <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="20" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
+                <?php } ?>
+              </td>
+
+              <td>
+                <?=$meetups_list[$i]['location']?>
+              </td>
+
+              <td class="bold nowrap">
+                <?=$meetups_list[$i]['people']?>
+              </td>
+
+            </tr>
+
+            <?php } ?>
+
+            <?php if(!page_is_fetched_dynamically()) { ?>
+
+          </tbody>
+        </table>
+      </div>
 
     </fieldset>
   </form>

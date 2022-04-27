@@ -64,7 +64,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_list_description_colors')?>
   </div>
 
-  <div class="smallpadding_top">
+  <div class="smallpadding_top autoscroll">
     <table>
       <thead>
 
@@ -77,11 +77,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <th>
             <?=__('users_list_registered')?>
-            <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "users_list_search('registered');")?>
+            <span class="desktop">
+              <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "users_list_search('registered');")?>
+            </span>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('rregistered');")?>
           </th>
 
-          <th>
+          <th class="desktop">
             <?=__('users_online_activity')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('activity');")?>
           </th>
@@ -91,7 +93,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('language');")?>
           </th>
 
-          <th>
+          <th class="desktop">
             <?=__('id')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('id');")?>
           </th>
@@ -114,7 +116,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </select>
           </th>
 
-          <th>
+          <th class="desktop">
             <select class="table_search" name="users_list_search_activity" id="users_list_search_activity" onchange="users_list_search();">
               <option value="0">&nbsp;</option>
               <option value="1"><?=__('users_list_active')?></option>
@@ -129,7 +131,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </select>
           </th>
 
-          <th>
+          <th class="desktop">
             <input type="text" class="table_search" name="users_list_search_id" id="users_list_search_id" value="" size="3" onkeyup="users_list_search();">
           </th>
 
@@ -141,7 +143,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <tr>
-          <td colspan="5" class="uppercase text_light dark bold align_center">
+          <td colspan="5" class="uppercase text_light dark bold align_center desktop">
+            <?=__('users_list_count', $user_list['rows'], 0, 0, array($user_list['rows']))?>
+          </td>
+          <td colspan="3" class="uppercase text_light dark bold align_center mobile_table">
             <?=__('users_list_count', $user_list['rows'], 0, 0, array($user_list['rows']))?>
           </td>
         </tr>
@@ -165,7 +170,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </div>
           </td>
 
-          <td class="tooltip_container">
+          <td class="tooltip_container desktop">
             <?=$user_list[$i]['activity']?>
             <div class="tooltip">
               <?=$user_list[$i]['active_at']?>
@@ -180,7 +185,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } ?>
           </td>
 
-          <td>
+          <td class="desktop">
             <?=$user_list[$i]['id']?>
           </td>
 

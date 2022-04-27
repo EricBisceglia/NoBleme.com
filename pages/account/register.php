@@ -184,10 +184,10 @@ $register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['registe
 
       <label for="register_captcha" id="label_register_captcha"><?=__('users_register_form_captcha')?></label>
       <div class="flexcontainer bigpadding_bot">
-        <div style="flex:1">
+        <div class="flex">
           <img src="<?=$path?>inc/captcha.inc.php" alt="<?=__('users_register_form_captcha_alt')?>">
         </div>
-        <div style="flex:4">
+        <div class="register_captcha_flex">
           <input id="register_captcha" name="register_captcha" class="indiv" type="text">
         </div>
       </div>

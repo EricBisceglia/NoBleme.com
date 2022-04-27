@@ -72,7 +72,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_outbox_intro')?>
   </p>
 
-  <div class="padding_top">
+  <div class="padding_top autoscroll">
     <table>
       <thead>
 
@@ -94,7 +94,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('rsent');")?>
           </th>
 
-          <th>
+          <th class="desktop">
             <?=__('users_inbox_read')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('read');")?>
           </th>
@@ -125,7 +125,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </select>
           </th>
 
-          <th>
+          <th class="desktop">
             <select class="table_search" name="outbox_search_read" id="outbox_search_read" onchange="users_outbox_search();">
               <option value="0">&nbsp;</option>
               <option value="-1"><?=__('users_inbox_unread')?></option>
@@ -145,7 +145,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <tr>
-          <td class="uppercase text_white align_center dark bold" colspan="5">
+          <td class="uppercase text_white align_center dark bold desktop" colspan="5">
+            <?php if($messages_list['rows']) { ?>
+            <?=__('users_outbox_count', $messages_list['rows'], 0, 0, array($messages_list['rows']))?>
+            <?php } else { ?>
+            <?=__('users_outbox_empty')?>
+            <?php } ?>
+          </td>
+          <td class="uppercase text_white align_center dark bold mobile_table" colspan="4">
             <?php if($messages_list['rows']) { ?>
             <?=__('users_outbox_count', $messages_list['rows'], 0, 0, array($messages_list['rows']))?>
             <?php } else { ?>
@@ -158,7 +165,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <tr class="align_center pointer" id="private_message_row_<?=$messages_list[$i]['id']?>">
 
-          <td class="align_left tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
+          <td class="align_left tooltip_container tooltip_desktop" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <span class="<?=$messages_list[$i]['css']?>" id="private_message_title_<?=$messages_list[$i]['id']?>"><?=$messages_list[$i]['title']?></span>
             <div class="tooltip">
               <?=$messages_list[$i]['body']?>
@@ -166,7 +173,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <?php if($messages_list[$i]['system']) { ?>
-          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
+          <td class="nowrap tooltip_container tooltip_desktop" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=__('nobleme')?>
             <div class="tooltip">
               <?=__('users_outbox_system')?>
@@ -178,14 +185,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } ?>
 
-          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
+          <td class="nowrap tooltip_container tooltip_desktop" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=$messages_list[$i]['sent']?>
             <div class="tooltip">
               <?=$messages_list[$i]['fsent']?>
             </div>
           </td>
 
-          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
+          <td class="nowrap tooltip_container desktop" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=$messages_list[$i]['read']?>
             <div class="tooltip">
               <?php if($messages_list[$i]['fread']) { ?>

@@ -92,7 +92,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       </tr>
 
     </thead>
-    <tbody class="altc align_center">
+    <tbody class="altc align_center nowrap">
 
       <tr>
         <td>

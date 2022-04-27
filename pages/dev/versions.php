@@ -172,7 +172,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-<div class="width_40 padding_top">
+<div class="width_40 padding_top autoscroll">
 
   <h2 class="align_center padding_bot">
     <?=__('dev_versions_table_title')?>

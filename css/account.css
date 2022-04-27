@@ -1,0 +1,5 @@
+/*********************************************** ACCOUNT REGISTRATION ************************************************/
+
+.register_captcha_flex  { flex: 4;    }
+@media(max-width: 992px)              {
+.register_captcha_flex  { flex: 3;  } }

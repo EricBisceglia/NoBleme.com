@@ -267,7 +267,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'upcoming') { ############################################################# ?>
 
-<div id="bot_actions_purge" class="width_80">
+<div id="bot_actions_purge" class="width_80 autoscroll">
 
   <?php if(!$irc_bot_message_queue['line_count'] && !isset($_POST['purge_line_number'])) { ?>
 
@@ -311,7 +311,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'message_log') { ########################################################## ?>
 
-<div id="bot_actions_history" class="width_80">
+<div id="bot_actions_history" class="width_80 autoscroll">
 
   <form method="POST">
     <fieldset>
@@ -450,7 +450,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'specialchars') { ######################################################### ?>
 
-<div class="width_50">
+<div class="width_50 autoscroll">
   <table>
     <thead>
 
