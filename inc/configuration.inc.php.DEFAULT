@@ -21,9 +21,17 @@ $GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not a
                                                       /  if NoBleme is at http://example.com/example/, set this to 1
                                                       /  at http://example.com/domains/example/, set this to 2, etc. */
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PHP CLI configuration, you don't need to enable this if you don't want to use CLI scripts
+
+$GLOBALS['enable_scripts']  = 0;                        // Toggle to enable php CLI scripts
+$GLOBALS['scripts_command'] = 'php';                    // Name of your php CLI command
+$GLOBALS['scripts_path']    = '/var/www/html/scripts/'; // Path to the scripts folder from your server's root
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IRC bot configuration, you don't need to change these if you're not going to use the bot
+// PHP CLI scripts must be enabled above or the IRC bot will fail to boot without an error message
 
 $GLOBALS['enable_irc_bot']    = 0;                                                    // Toggle this to enable the bot
 $GLOBALS['irc_bot_file_name'] = 'ircbot.txt';                                         // Name of the bot's txt file

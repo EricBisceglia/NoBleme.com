@@ -1,0 +1,7 @@
+Options +FollowSymlinks -MultiViews
+RewriteEngine On
+
+# Don't allow web access to any file in this directory
+<Files *>
+  Deny from all
+</Files>

@@ -37,7 +37,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC]
 
-# Custom 404 page
+# Custom error page
+ErrorDocument 403 https://nobleme.com/404
 ErrorDocument 404 https://nobleme.com/404
 
 # Don't allow direct access to ircbot.txt
