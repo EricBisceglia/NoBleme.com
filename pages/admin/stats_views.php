@@ -158,7 +158,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow')?>
           </td>
           <?php } else { ?>
-          <td class="align_left tooltip_container">
+          <td class="align_left tooltip_container tooltip_desktop">
             <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow')?>
             <div class="tooltip">
               <?=$stats_views[$i]['fullname']?>

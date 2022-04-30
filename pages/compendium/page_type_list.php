@@ -10,7 +10,7 @@ include_once './../../lang/compendium.lang.php';    # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/page_type_list";
-$page_title_en    = "Compendium types";
+$page_title_en    = "Compendium page types";
 $page_title_fr    = "Compendium : Thèmes";
 $page_description = "List of page types present of NoBleme's 21st century culture compendium";
 

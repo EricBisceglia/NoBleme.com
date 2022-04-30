@@ -313,7 +313,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['url'])?>
         </td>
         <?php } else { ?>
-        <td class="align_left tooltip_container">
+        <td class="align_left tooltip_container tooltip_desktop">
           <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['urldisplay'])?>
           <div class="tooltip">
             <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['fullurl'])?>
@@ -330,7 +330,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=$compendium_pages_list[$i]['admintitle']?>
         </td>
         <?php } else if($compendium_pages_list[$i]['adminfull']) { ?>
-        <td class="align_left tooltip_container" colspan="2">
+        <td class="align_left tooltip_container tooltip_desktop" colspan="2">
           <?=$compendium_pages_list[$i]['admintitle']?>
           <div class="tooltip">
             <?=$compendium_pages_list[$i]['adminfull']?>
@@ -344,7 +344,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </span>
         </td>
         <?php } else { ?>
-        <td class="align_left tooltip_container" colspan="2">
+        <td class="align_left tooltip_container tooltip_desktop" colspan="2">
           <?=__icon('message', is_small: true, alt: 'M', title: __('compendium_list_admin_missing'), class: 'valign_middle spaced_right')?>
           <span class="strikethrough">
             <?=$compendium_pages_list[$i]['wrongtitle']?>
@@ -360,7 +360,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=$compendium_pages_list[$i]['redirlang']?>
         </td>
         <?php } else if($compendium_pages_list[$i]['fullrlang']) { ?>
-        <td class="align_left strikethrough tooltip_container" colspan="2">
+        <td class="align_left strikethrough tooltip_container tooltip_desktop" colspan="2">
           <?=$compendium_pages_list[$i]['redirlang']?>
           <div class="tooltip">
             <?=$compendium_pages_list[$i]['fullrlang']?>
@@ -371,7 +371,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=$compendium_pages_list[$i]['redirect']?>
         </td>
         <?php } else { ?>
-        <td class="align_left tooltip_container" colspan="2">
+        <td class="align_left tooltip_container tooltip_desktop" colspan="2">
           <?=$compendium_pages_list[$i]['redirect']?>
           <div class="tooltip">
             <?=$compendium_pages_list[$i]['fullredir']?>
@@ -384,7 +384,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
 
         <?php if($compendium_pages_list[$i]['categories']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=__icon('done', is_small: true, alt: 'C', title: __('compendium_list_admin_category_count', amount: $compendium_pages_list[$i]['categories'], preset_values: array($compendium_pages_list[$i]['categories'])))?>
           <div class="tooltip">
             <?=__('compendium_list_admin_category_count', amount: $compendium_pages_list[$i]['categories'], preset_values: array($compendium_pages_list[$i]['categories']))?>
@@ -425,7 +425,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
 
         <?php if($compendium_pages_list[$i]['adminnsfw']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=__icon('warning', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('compendium_list_admin_nsfw'), title_case: 'initials')?>
           <div class="tooltip">
             <?php if($compendium_pages_list[$i]['nsfwtitle']) { ?>

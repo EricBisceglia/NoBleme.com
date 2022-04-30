@@ -325,7 +325,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
 
           <td>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$banned_users[$i]['ban_start']?>
               <div class="tooltip">
                 <?=$banned_users[$i]['ban_startf']?>
@@ -338,7 +338,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$banned_users[$i]['ban_end']?>
               <div class="tooltip">
                 <?=$banned_users[$i]['ban_endf']?>
@@ -352,7 +352,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td>
             <?php if($banned_users[$i]['ban_full']) { ?>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$banned_users[$i]['ban_reason']?>
               <div class="tooltip dowrap">
                 <?=$banned_users[$i]['ban_full']?>
@@ -500,7 +500,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$ban_logs[$i]['start']?>
               <div class="tooltip dowrap">
                 <?=$ban_logs[$i]['start_full']?>
@@ -510,7 +510,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td>
             <?php if($ban_logs[$i]['end']) { ?>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$ban_logs[$i]['end']?>
               <div class="tooltip dowrap">
                 <?=$ban_logs[$i]['end_full']?>
@@ -545,7 +545,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td class="desktop">
             <?php if($ban_logs[$i]['ban_reason_full']) { ?>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$ban_logs[$i]['ban_reason']?>
               <div class="tooltip dowrap">
                 <?=$ban_logs[$i]['ban_reason_full']?>
@@ -558,7 +558,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td class="desktop">
             <?php if($ban_logs[$i]['unban_reason_full']) { ?>
-            <div class="tooltip_container">
+            <div class="tooltip_container tooltip_desktop">
               <?=$ban_logs[$i]['unban_reason']?>
               <div class="tooltip dowrap">
                 <?=$ban_logs[$i]['unban_reason_full']?>

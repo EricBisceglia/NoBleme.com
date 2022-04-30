@@ -273,7 +273,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr id="admin_metrics_row_<?=$admin_metrics[$i]['id']?>">
         <?php if($admin_metrics[$i]['url_full']) { ?>
-        <td class="tooltip_container align_left">
+        <td class="tooltip_container tooltip_desktop align_left">
           <?=__link($admin_metrics[$i]['url_full'], $admin_metrics[$i]['url'], 'bold noglow')?>
           <div class="tooltip">
             <?=__link($admin_metrics[$i]['url_full'], $admin_metrics[$i]['url_full'])?>

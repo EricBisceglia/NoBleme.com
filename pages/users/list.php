@@ -163,7 +163,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } ?>
           </td>
 
-          <td class="tooltip_container">
+          <td class="tooltip_container tooltip_desktop">
             <?=$user_list[$i]['registered']?>
             <div class="tooltip">
               <?=$user_list[$i]['created']?>

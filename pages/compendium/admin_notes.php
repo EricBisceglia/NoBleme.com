@@ -146,7 +146,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['url'])?>
           </td>
           <?php } else { ?>
-          <td class="align_left tooltip_container">
+          <td class="align_left tooltip_container tooltip_desktop">
             <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['urldisplay'])?>
             <div class="tooltip">
               <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['fullurl'])?>

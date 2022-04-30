@@ -13,8 +13,8 @@ include_once './../../inc/functions_numbers.inc.php'; # Number formatting
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/page_list";
-$page_title_en    = "Compendium";
-$page_title_fr    = "Compendium";
+$page_title_en    = "Compendium: Pages";
+$page_title_fr    = "Compendium : Pages";
 $page_description = "List of pages in NoBleme's encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
 // Extra js
