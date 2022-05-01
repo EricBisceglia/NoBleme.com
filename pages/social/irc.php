@@ -850,7 +850,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_commands_nick')?>
   </p>
 
-  <h5 id="register">/msg NickServ register <?=__('irc_faq_commands_password')?></h5>
+  <h5 id="register">/msg NickServ register <?=__('irc_faq_commands_password')?> <?=__('irc_faq_commands_email')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_nickserv_register')?>
   </p>
