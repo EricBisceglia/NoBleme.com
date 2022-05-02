@@ -103,9 +103,20 @@ function dev_js_toolbox_selector()
 
 function dev_functions_type_selector()
 {
-  // Fetch the requested type
-  fetch_functions_type = document.getElementById('select_functions_list_type').value;
+  // Fetch the value of the function list selector
+  page_name = document.getElementById('dev_functions_type_selector').value;
 
-  // Update the page
-  fetch_page('doc_functions', 'dev_functions_list_body', 'functions_list_type=' + fetch_functions_type);
+  // Hide all function list entries
+  toggle_class_oneway('dev_functions_section', 0);
+
+  // Display the requested function list entry
+  toggle_element_oneway('dev_functions_' + page_name, 1);
+
+  // If the main function list entry is being selected, remove all URL parameters
+  if(page_name == 'fetch')
+    history.pushState({}, null, 'doc_functions');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_functions?' + page_name);
 }

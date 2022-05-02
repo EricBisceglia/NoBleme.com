@@ -176,8 +176,8 @@ ___('dev_js_toolbox_title', 'FR', "Boîte à outils JavaScript :");
 
 
 // Functions list selector
-___('dev_functions_list_title',             'EN', "Functions for");
-___('dev_functions_list_title',             'FR', "Fonctions pour");
+___('dev_functions_list_title',             'EN', "Functions:");
+___('dev_functions_list_title',             'FR', "Fonctions :");
 ___('dev_functions_selector_database',      'EN', "Database");
 ___('dev_functions_selector_database',      'FR', "Base de données");
 ___('dev_functions_selector_dates',         'EN', "Dates & Time");
