@@ -1302,6 +1302,8 @@ ___('irc_faq_commands_server',    'EN', "[server]");
 ___('irc_faq_commands_server',    'FR', "[serveur]");
 ___('irc_faq_commands_channel',   'EN', "[channel]");
 ___('irc_faq_commands_channel',   'FR', "[canal]");
+___('irc_faq_commands_email',     'EN', "[email-address]");
+___('irc_faq_commands_email',     'FR', "[adresse-email]");
 ___('irc_faq_commands_username',  'EN', "[username]");
 ___('irc_faq_commands_username',  'FR', "[pseudonyme]");
 ___('irc_faq_commands_message',   'EN', "[message]");
@@ -1449,11 +1451,11 @@ La majorité des commandes listées sur cette page commencent par <span class="m
 EOT
 );
 ___('irc_faq_nickserv_register',  'EN', <<<EOT
-Registers your current username with NickServ, making you its owner. <span class="bold">Make sure you remember your chosen password, as there is no way to recover it if you lose it.</span> Do not register other people's usernames in order to annoy or impersonate them, this would only lead to getting permanently banned from NoBleme's IRC server and all your registered usernames being unregistered.
+Registers your current username with NickServ, making you its owner. Even though you must specify an email address when registering your account, it will never be used. <span class="bold">Make sure you remember your chosen password, as there is no way to recover it if you lose it.</span> Do not register other people's usernames in order to annoy or impersonate them, this would only lead to getting permanently banned from NoBleme's IRC server and all your registered usernames being unregistered.
 EOT
 );
 ___('irc_faq_nickserv_register',  'FR', <<<EOT
-Enregistre votre pseudonyme actuel auprès de NickServ, vous en donnant la propriété exclusive. <span class="bold">Assurez-vous de retenir votre mot de passe, il n'existe aucune façon de le récupérer si vous le perdez</span>. Ne cherchez pas à enregistrer les pseudonymes d'autres personnes dans le but de les embêter ou d'usurper leur identité, cela conduirait à une exclusion permanente du serveur IRC NoBleme ainsi qu'à un dé-enregistrement de tous les pseudonymes que vous avez enregistré.
+Enregistre votre pseudonyme actuel auprès de NickServ, vous en donnant la propriété exclusive. Même si vous devez préciser une adresse email lors de l'enregistrement, elle ne sera jamais utilisée. <span class="bold">Assurez-vous de retenir votre mot de passe, il n'existe aucune façon de le récupérer si vous le perdez</span>. Ne cherchez pas à enregistrer les pseudonymes d'autres personnes dans le but de les embêter ou d'usurper leur identité, cela conduirait à une exclusion permanente du serveur IRC NoBleme ainsi qu'à un dé-enregistrement de tous les pseudonymes que vous avez enregistré.
 EOT
 );
 ___('irc_faq_nickserv_identify',  'EN', <<<EOT

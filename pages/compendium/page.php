@@ -64,8 +64,8 @@ if($compendium_page_data)
 else
 {
   $page_url        .= 'dead_link';
-  $page_title_en   .= "Compendium";
-  $page_title_fr   .= "Compendium";
+  $page_title_en   .= "Compendium: Missing page";
+  $page_title_fr   .= "Compendium : Page manquante";
   unset($hide_footer);
   $compendium_random_image = compendium_images_get_random();
 }

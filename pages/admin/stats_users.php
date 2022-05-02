@@ -276,7 +276,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
 
-        <td class="tooltip_container">
+        <td>
           <?=__link('pages/users/'.$users_data[$i]['id'], $users_data[$i]['username'], style: $users_data[$i]['user_css'])?>
         </td>
 
@@ -342,7 +342,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$users_data[$i]['birthday']?>
         </td>
 
-        <td class="pointer tooltip_container" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
+        <td class="pointer tooltip_container tooltip_desktop" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
           <?php if($users_data[$i]['speaks']) { ?>
           <span class="text_green" title="<?=__('admin_stats_users_speaks')?>">&check;</span>
           <?php } else { ?>
@@ -389,11 +389,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </div>
         </td>
 
-        <td class="pointer tooltip_container" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
+        <td class="pointer tooltip_container tooltip_desktop" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
           <?php if($users_data[$i]['nsfw'] == 0) { ?>
           <span class="text_red" title="<?=__('admin_stats_users_no_nsfw')?>">&cross;</span>
           <?php } else if($users_data[$i]['nsfw'] == 1) { ?>
-          <span class="text_orange" title="<?=__('admin_stats_users_some_nsfw')?>">&cross;</span>
+          <span class="text_orange" title="<?=__('admin_stats_users_some_nsfw')?>">&frac12;</span>
           <?php } else { ?>
           <span class="text_green" title="<?=__('admin_stats_users_all_nsfw')?>">&check;</span>
           <?php } if($users_data[$i]['youtube']) { ?>

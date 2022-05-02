@@ -163,7 +163,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } else { ?>
         <td class="nowrap <?=$activity_logs[$i]['css']?>">
         <?php } ?>
-          <span class="tooltip_container">
+          <span class="tooltip_container tooltip_desktop">
           <?=$activity_logs[$i]['date']?>
             <span class="tooltip notbold">
               <?=$activity_logs[$i]['fulldate']?>
@@ -180,7 +180,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php if(!$activity_logs[$i]['fulltext']) { ?>
           <?=$activity_logs[$i]['text']?>
           <?php } else { ?>
-          <span class="tooltip_container">
+          <span class="tooltip_container tooltip_desktop">
             <?=$activity_logs[$i]['text']?>
             <span class="tooltip notbold">
               <?=$activity_logs[$i]['fulltext']?>

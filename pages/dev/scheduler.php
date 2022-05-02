@@ -211,7 +211,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               </td>
 
               <td class="nowrap">
-                <span class="tooltip_container">
+                <span class="tooltip_container tooltip_desktop">
                 <?=$scheduler_tasks[$i]['date']?>
                   <span class="tooltip notbold">
                     <?=$scheduler_tasks[$i]['fdate']?>
@@ -221,7 +221,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
               <?php if($scheduler_tasks[$i]['fdescription']) { ?>
               <td>
-                <span class="tooltip_container">
+                <span class="tooltip_container tooltip_desktop">
                 <?=$scheduler_tasks[$i]['description']?>
                   <span class="tooltip notbold">
                     <?=$scheduler_tasks[$i]['fdescription']?>
@@ -236,7 +236,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
               <?php if($scheduler_tasks[$i]['freport']) { ?>
               <td>
-                <span class="tooltip_container">
+                <span class="tooltip_container tooltip_desktop">
                 <?=$scheduler_tasks[$i]['report']?>
                   <span class="tooltip notbold">
                     <?=$scheduler_tasks[$i]['freport']?>

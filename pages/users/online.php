@@ -106,11 +106,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tbody class="altc" id="users_online_table">
         <?php } ?>
-        <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
+        <?php for($i = 0; $i < $userlist['rows']; $i++) { ?>
           <tr>
 
             <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
-            <td class="tooltip_container align_center<?=$userlist[$i]['css']?>">
+            <td class="tooltip_container tooltip_desktop align_center<?=$userlist[$i]['css']?>">
             <?php } else { ?>
             <td class="align_center<?=$userlist[$i]['css']?>">
             <?php } ?>

@@ -183,7 +183,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__link('pages/compendium/page_missing?id='.$compendium_missing_list[$i]['id'], $compendium_missing_list[$i]['url'], 'nbcode_dead_link noglow')?>
         </td>
         <?php } else { ?>
-        <td class="align_left nbcode_dead_link noglow tooltip_container">
+        <td class="align_left nbcode_dead_link noglow tooltip_container tooltip_desktop">
           <?=__link('pages/compendium/page_missing?id='.$compendium_missing_list[$i]['id'], $compendium_missing_list[$i]['urldisplay'], 'nbcode_dead_link noglow')?>
           <div class="tooltip">
             <?=__link('pages/compendium/page_missing?id='.$compendium_missing_list[$i]['id'], $compendium_missing_list[$i]['fullurl'], 'nbcode_dead_link noglow')?>
@@ -196,7 +196,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=$compendium_missing_list[$i]['title']?>
         </td>
         <?php } else { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=$compendium_missing_list[$i]['t_display']?>
           <div class="tooltip">
             <?=$compendium_missing_list[$i]['t_full']?>
@@ -217,7 +217,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
 
         <?php if($compendium_missing_list[$i]['notes']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=__icon('message', is_small: true, alt: 'M', title: __('message'), title_case: 'initials')?>
           <div class="tooltip dowrap">
             <?=$compendium_missing_list[$i]['notes']?>
@@ -256,9 +256,6 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <td colspan="5" class="align_left desktop">
           <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
         </td>
-        <td colspan="3" class="align_left mobile_table">
-          <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
-        </td>
         <?php } else { ?>
         <td colspan="5" class="align_left nbcode_dead_link noglow tooltip_container desktop">
           <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], string_truncate($compendium_missing_list['missing'][$i], 50, '...'), 'nbcode_dead_link noglow')?>
@@ -266,13 +263,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
           </div>
         </td>
-        <td colspan="3" class="align_left nbcode_dead_link noglow tooltip_container mobile_table">
-          <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], string_truncate($compendium_missing_list['missing'][$i], 50, '...'), 'nbcode_dead_link noglow')?>
-          <div class="tooltip">
-            <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
-          </div>
-        </td>
         <?php } ?>
+        <td colspan="2" class="align_left mobile_table">
+          <?=__link('pages/compendium/page_missing?url='.$compendium_missing_list['missing'][$i], $compendium_missing_list['missing'][$i], 'nbcode_dead_link noglow')?>
+        </td>
 
         <td class="align_center nowrap">
           <?=__icon('add', is_small: true, class: 'valign_middle pointer spaced_right', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_list['missing'][$i])?>

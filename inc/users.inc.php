@@ -161,8 +161,11 @@ if(!isset($_SESSION['lang']))
   // If there is no language cookie, then the default language is fetched from the browser's accept language headers
   if(!isset($_COOKIE['nobleme_language']))
   {
-    // Fetch the language settings (default to english if it isn't french)
-    $language_header = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == 'fr') ? 'FR' : 'EN';
+    // Fetch the language settings (default to english if it isn't french or if it isn't found)
+    if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+      $language_header  = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == 'fr') ? 'FR' : 'EN';
+    else
+      $language_header  = 'EN';
 
     // Create the cookie and the session variable
     $_SESSION['lang'] = $language_header;

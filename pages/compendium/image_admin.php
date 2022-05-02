@@ -351,7 +351,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('image', is_small: true, class: 'valign_middle pointer', alt: 'P', title: __('image'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].", 1);")?>
         </td>
 
-        <td class="align_left tooltip_container"  id="compendium_image_list_preview_cell_<?=$compendium_images_list[$i]['id']?>" onmouseover="compendium_image_list_preview('<?=$compendium_images_list[$i]['id']?>', '<?=$compendium_images_list[$i]['fullname']?>', '<?=$path?>');">
+        <td class="align_left tooltip_container tooltip_desktop"  id="compendium_image_list_preview_cell_<?=$compendium_images_list[$i]['id']?>" onmouseover="compendium_image_list_preview('<?=$compendium_images_list[$i]['id']?>', '<?=$compendium_images_list[$i]['fullname']?>', '<?=$path?>');">
           <?=__link('pages/compendium/image?name='.$compendium_images_list[$i]['fullname'], $compendium_images_list[$i]['name'])?>
           <div class="tooltip compendium_image_preview">
             <h2 class="align_center padding_bot">
@@ -369,7 +369,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
 
         <?php if($compendium_images_list[$i]['tags']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=$compendium_images_list[$i]['tags']?>
           <div class="tooltip">
             <?=$compendium_images_list[$i]['tags_full']?>
@@ -382,7 +382,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <?php } ?>
 
         <?php if($compendium_images_list[$i]['used_en']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=$compendium_images_list[$i]['used_en']?>
           <div class="tooltip">
             <?=$compendium_images_list[$i]['used_en_f']?>
@@ -395,7 +395,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <?php } ?>
 
         <?php if($compendium_images_list[$i]['used_fr']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=$compendium_images_list[$i]['used_fr']?>
           <div class="tooltip">
             <?=$compendium_images_list[$i]['used_fr_f']?>
@@ -424,7 +424,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </td>
 
         <?php if($compendium_images_list[$i]['blur']) { ?>
-        <td class="align_center tooltip_container">
+        <td class="align_center tooltip_container tooltip_desktop">
           <?=__icon('warning', is_small: true, class: 'valign_middle pointer', alt: 'X', title: __('compendium_list_admin_nsfw'), title_case: 'initials')?>
           <div class="tooltip">
             <?php if($compendium_images_list[$i]['nsfw']) { ?>

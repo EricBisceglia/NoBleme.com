@@ -24,11 +24,22 @@
 
 function irc_bot_action_selector()
 {
-  // Fetch the requested bot action
-  fetch_bot_action = document.getElementById('select_bot_action').value;
+  // Fetch the value of the irc bot action selector
+  page_name = document.getElementById('irc_bot_action_selector').value;
 
-  // Update the page
-  fetch_page('irc_bot', 'bot_actions_body', 'bot_action=' + fetch_bot_action);
+  // Hide all irc bot actions
+  toggle_class_oneway('irc_bot_section', 0);
+
+  // Display the requested irc bot actions
+  toggle_element_oneway('irc_bot_' + page_name, 1);
+
+  // If the main irc bot action is being selected, remove all URL parameters
+  if(page_name == 'full')
+    history.pushState({}, null, 'irc_bot');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'irc_bot?' + page_name);
 }
 
 
@@ -45,10 +56,10 @@ function irc_bot_action_selector()
 function irc_bot_start(starting_message)
 {
   // Send the starting message
-  document.getElementById('bot_actions_start').innerHTML = '<h2 class="align_center text_green">' + starting_message + '</h2>';
+  document.getElementById('irc_bot_start').innerHTML = '<h2 class="align_center padding_top text_green">' + starting_message + '</h2>';
 
   // Trigger the actual bot launch
-  fetch_page('irc_bot_start', 'bot_actions_start');
+  fetch_page('irc_bot_start?start', 'irc_bot_start');
 }
 
 
@@ -63,7 +74,7 @@ function irc_bot_start(starting_message)
 function irc_bot_stop()
 {
   // Trigger the death of the IRC bot
-  fetch_page('irc_bot', 'bot_actions_stop', 'irc_bot_stop=1');
+  fetch_page('irc_bot?stop', 'irc_bot_stop', 'irc_bot_stop=1');
 }
 
 
@@ -78,7 +89,7 @@ function irc_bot_stop()
 function irc_bot_toggle_silence_mode()
 {
   // Trigger the death of the IRC bot
-  fetch_page('irc_bot', 'bot_actions_silence', 'irc_bot_toggle_silence_mode=1');
+  fetch_page('irc_bot?silence', 'irc_bot_silence', 'irc_bot_toggle_silence_mode=1');
 }
 
 
@@ -107,7 +118,7 @@ function irc_bot_purge_message_queue( purge_line_number             ,
   postdata = 'purge_line_number=' + fetch_sanitize(purge_line_number);
 
   // Trigger the purge of the messages
-  fetch_page('irc_bot', 'bot_actions_purge', postdata);
+  fetch_page('irc_bot?upcoming', 'irc_bot_upcoming', postdata);
 }
 
 
@@ -159,7 +170,7 @@ function irc_bot_replay_history_entry(  log_id                ,
   postdata += '&irc_bot_replay_log_id='       + fetch_sanitize(log_id);
 
   // Trigger the replaying of the log
-  fetch_page('irc_bot', 'bot_actions_history', postdata);
+  fetch_page('irc_bot?message_log', 'irc_bot_history_tbody', postdata);
 }
 
 
@@ -191,5 +202,5 @@ function irc_bot_delete_history_entry(  log_id                ,
   postdata += '&irc_bot_delete_log_id='       + fetch_sanitize(log_id);
 
   // Trigger the deletion of the log
-  fetch_page('irc_bot', 'bot_actions_history', postdata);
+  fetch_page('irc_bot?message_log', 'irc_bot_history_tbody', postdata);
 }

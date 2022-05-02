@@ -116,7 +116,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="align_center nowrap pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
 
           <?php if($task_list[$i]['road_full']) { ?>
-          <td class="bold align_left tooltip_container">
+          <td class="bold align_left tooltip_container tooltip_desktop">
             <?php if($is_admin) { ?>
             #<?=$task_list[$i]['id']?> -
             <?php } ?>

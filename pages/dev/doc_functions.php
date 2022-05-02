@@ -18,8 +18,9 @@ $page_url         = "pages/dev/doc_functions";
 $page_title_en    = "Functions list";
 $page_title_fr    = "Liste des fonctions";
 
-// Extra JS
-$js   = array('dev/doc');
+// Extra CSS & JS
+$css  = array('dev');
+$js   = array('dev/doc', 'common/toggle');
 
 
 
@@ -31,9 +32,36 @@ $js   = array('dev/doc');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Dropdown selector
+// Display the correct function list entry
 
-$functions_list_type = sanitize_input('POST', 'functions_list_type', 'string', 'unsorted');
+// Prepare a list of all function list entries
+$dev_functions_selection = array('database', 'dates', 'numbers', 'sanitization', 'strings', 'unsorted', 'users', 'website');
+
+// Prepare the CSS for each function list entry
+foreach($dev_functions_selection as $dev_functions_selection_name)
+{
+  // If a function list entry is selected, display it and select the correct dropdown menu entry
+  if(!isset($dev_functions_is_selected) && isset($_GET[$dev_functions_selection_name]))
+  {
+    $dev_functions_is_selected                            = true;
+    $dev_functions_hide[$dev_functions_selection_name]      = '';
+    $dev_functions_selected[$dev_functions_selection_name]  = ' selected';
+  }
+
+  // Hide every other function list entry
+  else
+  {
+    $dev_functions_hide[$dev_functions_selection_name]      = ' hidden';
+    $dev_functions_selected[$dev_functions_selection_name]  = '';
+  }
+}
+
+// If no function list entry is selected, select the main one by default
+if(!isset($dev_functions_is_selected))
+{
+  $dev_functions_hide['unsorted']     = '';
+  $dev_functions_selected['unsorted'] = ' selected';
+}
 
 
 
@@ -44,34 +72,36 @@ $functions_list_type = sanitize_input('POST', 'functions_list_type', 'string', '
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="padding_bot align_center dev_doc_selector">
 
-  <h4 class="align_center">
-    <?=__('dev_functions_list_title')?>
-    <select class="inh" id="select_functions_list_type" onchange="dev_functions_type_selector();">
-      <option value="database"><?=__('dev_functions_selector_database')?></option>
-      <option value="dates"><?=__('dev_functions_selector_dates')?></option>
-      <option value="numbers"><?=__('dev_functions_selector_numbers')?></option>
-      <option value="sanitization"><?=__('dev_functions_selector_sanitization')?></option>
-      <option value="strings"><?=__('dev_functions_selector_strings')?></option>
-      <option value="unsorted" selected><?=__('dev_functions_selector_unsorted')?></option>
-      <option value="users"><?=__('dev_functions_selector_users')?></option>
-      <option value="website"><?=__('dev_functions_selector_website')?></option>
-    </select>
-  </h4>
+  <fieldset>
+    <h5>
+      <?=__('dev_functions_list_title')?>
+      <select class="inh" id="dev_functions_type_selector" onchange="dev_functions_type_selector();">
+        <option value="database"<?=$dev_functions_selected['database']?>><?=__('dev_functions_selector_database')?></option>
+        <option value="dates"<?=$dev_functions_selected['dates']?>><?=__('dev_functions_selector_dates')?></option>
+        <option value="numbers"<?=$dev_functions_selected['numbers']?>><?=__('dev_functions_selector_numbers')?></option>
+        <option value="sanitization"<?=$dev_functions_selected['sanitization']?>><?=__('dev_functions_selector_sanitization')?></option>
+        <option value="strings"<?=$dev_functions_selected['strings']?>><?=__('dev_functions_selector_strings')?></option>
+        <option value="unsorted"<?=$dev_functions_selected['unsorted']?>><?=__('dev_functions_selector_unsorted')?></option>
+        <option value="users"<?=$dev_functions_selected['users']?>><?=__('dev_functions_selector_users')?></option>
+        <option value="website"<?=$dev_functions_selected['website']?>><?=__('dev_functions_selector_website')?></option>
+      </select>
+    </h5>
+  </fieldset>
 
 </div>
 
-<div class="bigpadding_top" id="dev_functions_list_body">
+<hr>
 
 
 
 
-<?php } if($functions_list_type === 'database') { ################################################################## ?>
+<?php /************************************************ DATABASE **************************************************/ ?>
 
-<div class="width_50">
+<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['database']?>" id="dev_functions_database">
 
-<h2 class="align_center padding_bot">
+  <h2 class="align_center padding_bot">
     Queries
   </h2>
 
@@ -305,128 +335,132 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if($functions_list_type === 'dates') { ################################################################ ?>
+<?php /************************************************* DATES ****************************************************/ ?>
 
-<div class="width_50">
+<div class="padding_top dev_functions_section<?=$dev_functions_hide['dates']?>" id="dev_functions_dates">
 
-  <h2 class="align_center padding_bot">
-    Date formats
-  </h2>
+  <div class="width_50">
 
-  <table>
-    <thead>
+    <h2 class="align_center padding_bot">
+      Date formats
+    </h2>
 
-      <tr>
-        <th class="align_right">
-          FUNCTION
-        </th>
-        <th class="align_left">
-          DESCRIPTION
-        </th>
-      </tr>
+    <table>
+      <thead>
 
-    </thead>
-    <tbody class="altc">
+        <tr>
+          <th class="align_right">
+            FUNCTION
+          </th>
+          <th class="align_left">
+            DESCRIPTION
+          </th>
+        </tr>
 
-      <tr>
-        <td class="align_right glow_dark bold">
-          date_to_text()
-        </td>
-        <td class="align_left">
-          Transforms a MySQL date or a timestamp into a plaintext date.
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right glow_dark bold">
-          date_to_ddmmyy()
-        </td>
-        <td class="align_left">
-          Converts a mysql date to the DD/MM/YY format.
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right glow_dark bold">
-          date_to_mysql()
-        </td>
-        <td class="align_left">
-          Converts a date to the mysql date format.
-        </td>
-      </tr>
+      </thead>
+      <tbody class="altc">
 
-    </tbody>
-  </table>
+        <tr>
+          <td class="align_right glow_dark bold">
+            date_to_text()
+          </td>
+          <td class="align_left">
+            Transforms a MySQL date or a timestamp into a plaintext date.
+          </td>
+        </tr>
+        <tr>
+          <td class="align_right glow_dark bold">
+            date_to_ddmmyy()
+          </td>
+          <td class="align_left">
+            Converts a mysql date to the DD/MM/YY format.
+          </td>
+        </tr>
+        <tr>
+          <td class="align_right glow_dark bold">
+            date_to_mysql()
+          </td>
+          <td class="align_left">
+            Converts a date to the mysql date format.
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="width_60">
+
+    <h2 class="align_center bigpadding_top padding_bot">
+      Time differentials
+    </h2>
+
+    <table>
+      <thead>
+
+        <tr>
+          <th class="align_right">
+            FUNCTION
+          </th>
+          <th class="align_center">
+            REQUIRES
+          </th>
+          <th class="align_left">
+            DESCRIPTION
+          </th>
+        </tr>
+
+      </thead>
+      <tbody class="altc">
+
+        <tr>
+          <td class="align_right glow_dark bold">
+            time_since()
+          </td>
+          <td class="align_center glow_dark bold">
+            functions_time.inc.php
+          </td>
+          <td class="align_left">
+            Returns in plain text how long ago a timestamp happened.
+          </td>
+        </tr>
+        <tr>
+          <td class="align_right glow_dark bold">
+            time_until()
+          </td>
+          <td class="align_center glow_dark bold">
+            functions_time.inc.php
+          </td>
+          <td class="align_left">
+            Returns in plain text in how long a timestamp will happen.
+          </td>
+        </tr>
+        <tr>
+          <td class="align_right glow_dark bold">
+            time_days_elapsed()
+          </td>
+          <td class="align_center glow_dark bold">
+            functions_time.inc.php
+          </td>
+          <td class="align_left">
+            Calculates the number of days elapsed between two MySQL dates.
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
 
 </div>
 
-<div class="width_60">
-
-  <h2 class="align_center bigpadding_top padding_bot">
-    Time differentials
-  </h2>
-
-  <table>
-    <thead>
-
-      <tr>
-        <th class="align_right">
-          FUNCTION
-        </th>
-        <th class="align_center">
-          REQUIRES
-        </th>
-        <th class="align_left">
-          DESCRIPTION
-        </th>
-      </tr>
-
-    </thead>
-    <tbody class="altc">
-
-      <tr>
-        <td class="align_right glow_dark bold">
-          time_since()
-        </td>
-        <td class="align_center glow_dark bold">
-          functions_time.inc.php
-        </td>
-        <td class="align_left">
-          Returns in plain text how long ago a timestamp happened.
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right glow_dark bold">
-          time_until()
-        </td>
-        <td class="align_center glow_dark bold">
-          functions_time.inc.php
-        </td>
-        <td class="align_left">
-          Returns in plain text in how long a timestamp will happen.
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right glow_dark bold">
-          time_days_elapsed()
-        </td>
-        <td class="align_center glow_dark bold">
-          functions_time.inc.php
-        </td>
-        <td class="align_left">
-          Calculates the number of days elapsed between two MySQL dates.
-        </td>
-      </tr>
-
-    </tbody>
-  </table>
-
-</div>
 
 
 
+<?php /************************************************ NUMBERS ***************************************************/ ?>
 
-<?php } else if($functions_list_type === 'numbers') { ############################################################## ?>
-
-<div class="width_70">
+<div class="width_70 padding_top dev_functions_section<?=$dev_functions_hide['numbers']?>" id="dev_functions_numbers">
 
   <h2 class="align_center padding_bot">
     Number formats
@@ -540,9 +574,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if($functions_list_type === 'sanitization') { ######################################################### ?>
+<?php /********************************************** SANITIZATION ************************************************/ ?>
 
-<div class="width_50">
+<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['sanitization']?>" id="dev_functions_sanitization">
 
   <h2 class="align_center padding_bot">
     Input (for MySQL usage)
@@ -643,9 +677,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if($functions_list_type === 'strings') { ############################################################## ?>
+<?php /************************************************ STRINGS ***************************************************/ ?>
 
-<div class="width_50">
+<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['strings']?>" id="dev_functions_strings">
 
   <h2 class="align_center padding_bot">
     String manipulation
@@ -825,9 +859,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if($functions_list_type === 'unsorted') { ############################################################# ?>
+<?php /************************************************ UNSORTED **************************************************/ ?>
 
-<div class="width_50">
+<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['unsorted']?>" id="dev_functions_unsorted">
 
   <h2 class="align_center padding_bot">
     Errors
@@ -1005,9 +1039,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if($functions_list_type === 'users') { ################################################################ ?>
+<?php /************************************************* USERS ****************************************************/ ?>
 
-<div class="width_50">
+<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['users']?>" id="dev_functions_users">
 
   <h2 class="align_center padding_bot">
     User info
@@ -1218,9 +1252,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if($functions_list_type === 'website') { ############################################################## ?>
+<?php /************************************************ WEBSITE ***************************************************/ ?>
 
-<div class="width_60">
+<div class="width_60 padding_top dev_functions_section<?=$dev_functions_hide['website']?>" id="dev_functions_website">
 
   <h2 class="align_center padding_bot">
     System variables
@@ -1432,13 +1466,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     </tbody>
   </table>
-
-</div>
-
-
-
-
-<?php } if(!page_is_fetched_dynamically()) { ###################################################################### ?>
 
 </div>
 

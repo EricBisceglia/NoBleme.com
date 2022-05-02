@@ -16,11 +16,22 @@
 
 function dev_snippet_selector()
 {
-  // Fetch the requested snippet
-  fetch_snippet = document.getElementById('select_snippet').value;
+  // Fetch the value of the snippet selector
+  page_name = document.getElementById('dev_snippet_selector').value;
 
-  // Update the page
-  fetch_page('doc_snippets', 'dev_snippets_body', 'snippet=' + fetch_snippet);
+  // Hide all snippets
+  toggle_class_oneway('dev_snippets_section', 0);
+
+  // Display the requested snippet
+  toggle_element_oneway('dev_snippets_' + page_name, 1);
+
+  // If the main snippet is being selected, remove all URL parameters
+  if(page_name == 'full')
+    history.pushState({}, null, 'doc_snippets');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_snippets?' + page_name);
 }
 
 
@@ -34,11 +45,22 @@ function dev_snippet_selector()
 
 function dev_palette_selector()
 {
-  // Fetch the requested palette
-  fetch_palette = document.getElementById('select_css_palette').value;
+  // Fetch the value of the css palette selector
+  page_name = document.getElementById('dev_palette_selector').value;
 
-  // Update the page
-  fetch_page('doc_css_palette', 'dev_palette_body', 'palette=' + fetch_palette);
+  // Hide all css palette elements
+  toggle_class_oneway('dev_palette_section', 0);
+
+  // Display the requested css palette element
+  toggle_element_oneway('dev_palette_' + page_name, 1);
+
+  // If the main css palette element is being selected, remove all URL parameters
+  if(page_name == 'default')
+    history.pushState({}, null, 'doc_css_palette');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_css_palette?' + page_name);
 }
 
 
@@ -52,11 +74,22 @@ function dev_palette_selector()
 
 function dev_js_toolbox_selector()
 {
-  // Fetch the requested toolbox
-  fetch_toolbox = document.getElementById('select_js_toolbox').value;
+  // Fetch the value of the js toolbox selector
+  page_name = document.getElementById('dev_jstools_selector').value;
 
-  // Update the page
-  fetch_page('doc_js_toolbox', 'dev_js_toolbox_body', 'js_toolbox=' + fetch_toolbox);
+  // Hide all js toolbox entries
+  toggle_class_oneway('dev_jstools_section', 0);
+
+  // Display the requested js toolbox entry
+  toggle_element_oneway('dev_jstools_' + page_name, 1);
+
+  // If the main js toolbox entry is being selected, remove all URL parameters
+  if(page_name == 'fetch')
+    history.pushState({}, null, 'doc_js_toolbox');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_js_toolbox?' + page_name);
 }
 
 
@@ -70,9 +103,20 @@ function dev_js_toolbox_selector()
 
 function dev_functions_type_selector()
 {
-  // Fetch the requested type
-  fetch_functions_type = document.getElementById('select_functions_list_type').value;
+  // Fetch the value of the function list selector
+  page_name = document.getElementById('dev_functions_type_selector').value;
 
-  // Update the page
-  fetch_page('doc_functions', 'dev_functions_list_body', 'functions_list_type=' + fetch_functions_type);
+  // Hide all function list entries
+  toggle_class_oneway('dev_functions_section', 0);
+
+  // Display the requested function list entry
+  toggle_element_oneway('dev_functions_' + page_name, 1);
+
+  // If the main function list entry is being selected, remove all URL parameters
+  if(page_name == 'fetch')
+    history.pushState({}, null, 'doc_functions');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_functions?' + page_name);
 }
