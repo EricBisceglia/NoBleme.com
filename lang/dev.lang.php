@@ -133,8 +133,8 @@ ___('dev_versions_edit_error_duplicate',  'FR', "Erreur : Ce numéro de version
 /*********************************************************************************************************************/
 
 // Code snippets selector
-___('dev_snippets_title',             'EN', "Snippets");
-___('dev_snippets_title',             'FR', "Modèles");
+___('dev_snippets_title',             'EN', "Code snippets:");
+___('dev_snippets_title',             'FR', "Modèles de code :");
 ___('dev_snippets_selector_full',     'EN', "Full page");
 ___('dev_snippets_selector_full',     'FR', "Page complète");
 ___('dev_snippets_selector_fetched',  'EN', "Fetched page");
@@ -161,7 +161,7 @@ ___('dev_palette_selector_icons',     'FR', "Icônes");
 ___('dev_palette_selector_popins',    'EN', "Popins");
 ___('dev_palette_selector_popins',    'FR', "Popins");
 ___('dev_palette_selector_spacing',   'EN', "Spacing");
-___('dev_palette_selector_spacing',   'FR', "Spacing");
+___('dev_palette_selector_spacing',   'FR', "Espacement");
 ___('dev_palette_selector_tables',    'EN', "Tables");
 ___('dev_palette_selector_tables',    'FR', "Tableaux");
 ___('dev_palette_selector_text',      'EN', "Text");

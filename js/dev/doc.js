@@ -14,25 +14,25 @@
  * @returns {void}
  */
 
- function dev_snippet_selector()
- {
-   // Fetch the value of the snippet selector
-   page_name = document.getElementById('dev_snippet_selector').value;
+function dev_snippet_selector()
+{
+  // Fetch the value of the snippet selector
+  page_name = document.getElementById('dev_snippet_selector').value;
 
-   // Hide all snippets
-   toggle_class_oneway('dev_snippets_section', 0);
+  // Hide all snippets
+  toggle_class_oneway('dev_snippets_section', 0);
 
-   // Display the requested snippet
-   toggle_element_oneway('dev_snippets_' + page_name, 1);
+  // Display the requested snippet
+  toggle_element_oneway('dev_snippets_' + page_name, 1);
 
-   // If the main snippet is being selected, remove all URL parameters
-   if(page_name == 'full')
-     history.pushState({}, null, 'doc_snippets');
+  // If the main snippet is being selected, remove all URL parameters
+  if(page_name == 'full')
+    history.pushState({}, null, 'doc_snippets');
 
-   // Otherwise, set the currently selected section as an URL parameter
-   else
-     history.pushState({}, null, 'doc_snippets?' + page_name);
- }
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_snippets?' + page_name);
+}
 
 
 
@@ -45,11 +45,22 @@
 
 function dev_palette_selector()
 {
-  // Fetch the requested palette
-  fetch_palette = document.getElementById('select_css_palette').value;
+  // Fetch the value of the css palette selector
+  page_name = document.getElementById('dev_palette_selector').value;
 
-  // Update the page
-  fetch_page('doc_css_palette', 'dev_palette_body', 'palette=' + fetch_palette);
+  // Hide all css palette elements
+  toggle_class_oneway('dev_palette_section', 0);
+
+  // Display the requested css palette element
+  toggle_element_oneway('dev_palette_' + page_name, 1);
+
+  // If the main css palette element is being selected, remove all URL parameters
+  if(page_name == 'default')
+    history.pushState({}, null, 'doc_css_palette');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_css_palette?' + page_name);
 }
 
 

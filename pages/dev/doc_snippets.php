@@ -18,8 +18,9 @@ $page_url       = "pages/dev/doc_snippets";
 $page_title_en  = "Code snippets";
 $page_title_fr  = "Modèles de code";
 
-// Extra JS
-$js = array('dev/doc', 'common/toggle');
+// Extra CSS & JS
+$css  = array('dev');
+$js   = array('dev/doc', 'common/toggle');
 
 
 
@@ -71,28 +72,30 @@ if(!isset($dev_snippet_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_50 padding_bot dev_doc_selector">
 
-  <h4 class="align_center">
-    <?=__('dev_snippets_title')?>
-    <select class="inh" id="dev_snippet_selector" onchange="dev_snippet_selector();">
-      <option value="full"<?=$dev_snippet_selected['full']?>><?=__('dev_snippets_selector_full')?></option>
-      <option value="fetched"<?=$dev_snippet_selected['fetched']?>><?=__('dev_snippets_selector_fetched')?></option>
-      <option value="header"<?=$dev_snippet_selected['header']?>><?=__('dev_snippets_selector_header')?></option>
-      <option value="blocks"<?=$dev_snippet_selected['blocks']?>><?=__('dev_snippets_selector_blocks')?></option>
-    </select>
-  </h4>
+  <fieldset>
+    <h4 class="align_center">
+      <?=__('dev_snippets_title')?>
+      <select class="inh" id="dev_snippet_selector" onchange="dev_snippet_selector();">
+        <option value="full"<?=$dev_snippet_selected['full']?>><?=__('dev_snippets_selector_full')?></option>
+        <option value="fetched"<?=$dev_snippet_selected['fetched']?>><?=__('dev_snippets_selector_fetched')?></option>
+        <option value="header"<?=$dev_snippet_selected['header']?>><?=__('dev_snippets_selector_header')?></option>
+        <option value="blocks"<?=$dev_snippet_selected['blocks']?>><?=__('dev_snippets_selector_blocks')?></option>
+      </select>
+    </h4>
+  </fieldset>
 
 </div>
 
-<div class="bigpadding_top" id="dev_snippets_body">
+<hr>
 
 
 
 
 <?php /************************************************** FULL ****************************************************/ ?>
 
-<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['full']?>" id="dev_snippets_full">
+<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['full']?>" id="dev_snippets_full">
 
   <pre class="small" id="dev_snippets_full_standard" onclick="to_clipboard('', 'dev_snippets_full_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -170,7 +173,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ FETCHED ***************************************************/ ?>
 
-<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['fetched']?>" id="dev_snippets_fetched">
+<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['fetched']?>" id="dev_snippets_fetched">
 
   <pre class="small" id="dev_snippets_fetched_standard" onclick="to_clipboard('', 'dev_snippets_fetched_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -217,7 +220,7 @@ user_restrict_to_guests();
 
 <?php /************************************************* HEADER ***************************************************/ ?>
 
-<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['header']?>" id="dev_snippets_header">
+<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['header']?>" id="dev_snippets_header">
 
   <div class="padding_bot">
     <pre class="small" id="dev_snippets_header_standard" onclick="to_clipboard('', 'dev_snippets_header_standard', 1);">&lt;?php /***************************************************************************************************************/
@@ -280,7 +283,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 <?php /************************************************* BLOCKS ***************************************************/ ?>
 
-<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['blocks']?>" id="dev_snippets_blocks">
+<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['blocks']?>" id="dev_snippets_blocks">
 
   <div class="padding_bot">
     <pre class="small" id="dev_snippets_blocks_comments" onclick="to_clipboard('', 'dev_snippets_blocks_comments', 1);">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
