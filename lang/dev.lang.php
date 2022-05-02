@@ -171,8 +171,8 @@ ___('dev_palette_selector_tooltips',  'FR', "Infobulles");
 
 
 // JS toolbox selector
-___('dev_js_toolbox_title', 'EN', "JavaScript toolbox");
-___('dev_js_toolbox_title', 'FR', "Boîte à outils JavaScript");
+___('dev_js_toolbox_title', 'EN', "JavaScript toolbox:");
+___('dev_js_toolbox_title', 'FR', "Boîte à outils JavaScript :");
 
 
 // Functions list selector

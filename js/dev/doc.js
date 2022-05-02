@@ -74,11 +74,22 @@ function dev_palette_selector()
 
 function dev_js_toolbox_selector()
 {
-  // Fetch the requested toolbox
-  fetch_toolbox = document.getElementById('select_js_toolbox').value;
+  // Fetch the value of the js toolbox selector
+  page_name = document.getElementById('dev_jstools_selector').value;
 
-  // Update the page
-  fetch_page('doc_js_toolbox', 'dev_js_toolbox_body', 'js_toolbox=' + fetch_toolbox);
+  // Hide all js toolbox entries
+  toggle_class_oneway('dev_jstools_section', 0);
+
+  // Display the requested js toolbox entry
+  toggle_element_oneway('dev_jstools_' + page_name, 1);
+
+  // If the main js toolbox entry is being selected, remove all URL parameters
+  if(page_name == 'fetch')
+    history.pushState({}, null, 'doc_js_toolbox');
+
+  // Otherwise, set the currently selected section as an URL parameter
+  else
+    history.pushState({}, null, 'doc_js_toolbox?' + page_name);
 }
 
 

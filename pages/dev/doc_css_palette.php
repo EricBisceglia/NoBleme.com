@@ -34,7 +34,7 @@ $js  = array('dev/doc', 'common/toggle');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Display the correct css palette
+// Display the correct css palette entry
 
 // Prepare a list of all css palette entry options
 $dev_palette_selection = array('bbcodes', 'colors', 'default', 'divs', 'forms', 'grids', 'icons', 'popins', 'spacing', 'tables', 'text', 'tooltips');
@@ -74,10 +74,10 @@ if(!isset($dev_palette_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50 padding_bot dev_doc_selector">
+<div class="padding_bot align_center dev_doc_selector">
 
   <fieldset>
-    <h4 class="align_center">
+    <h5>
       <?=__('submenu_admin_doc_css').__(':')?>
       <select class="inh" id="dev_palette_selector" onchange="dev_palette_selector();">
         <option value="bbcodes"<?=$dev_palette_selected['bbcodes']?>><?=__('bbcodes')?></option>
@@ -93,7 +93,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="text"<?=$dev_palette_selected['text']?>><?=__('dev_palette_selector_text')?></option>
         <option value="tooltips"<?=$dev_palette_selected['tooltips']?>><?=__('dev_palette_selector_tooltips')?></option>
       </select>
-    </h4>
+    </h5>
   </fieldset>
 
 </div>
@@ -322,7 +322,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top">
       <pre>&lt;pre> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
-  Line breaks are respected in a pre tag and the font is monospace.</pre>
+Line breaks are respected in a pre tag and the font is monospace.</pre>
     </div>
 
     <div class="padding_top">
@@ -477,11 +477,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="width_50 bigpadding_bot">
 
-    <pre class="dev_pre_code" id="dev_palette_form" onclick="to_clipboard('', 'dev_palette_form', 1);">&lt;form method="POST">
-    &lt;fieldset>
+  <pre class="dev_pre_code" id="dev_palette_form" onclick="to_clipboard('', 'dev_palette_form', 1);">&lt;form method="POST">
+  &lt;fieldset>
 
-    &lt;/fieldset>
-  &lt;/form></pre>
+  &lt;/fieldset>
+&lt;/form></pre>
 
   </div>
 
@@ -509,7 +509,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="smallpadding_top bigpadding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_input" onclick="to_clipboard('', 'dev_palette_form_input', 1);">&lt;label for="example_input">&lt;?=__('nobleme')?>&lt;/label>
-  &lt;input type="text" id="example_input" name="example_input" value=""></pre>
+&lt;input type="text" id="example_input" name="example_input" value=""></pre>
     </div>
 
     <label for="dev_palette_select">&lt;label> for &lt;select></label>
@@ -520,9 +520,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top bigpadding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_select" onclick="to_clipboard('', 'dev_palette_form_select', 1);">&lt;label for="example_select">&lt;?=__('nobleme')?>&lt;/label>
-  &lt;select id="example_select" name="example_select">
-    &lt;option value="0" selected>&lt;?=__('nobleme')?>&lt;/option>
-  &lt;/select></pre>
+&lt;select id="example_select" name="example_select">
+  &lt;option value="0" selected>&lt;?=__('nobleme')?>&lt;/option>
+&lt;/select></pre>
     </div>
 
     <label for="dev_palette_textarea">&lt;label> for &lt;textarea></label>
@@ -532,7 +532,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top bigpadding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_textarea" onclick="to_clipboard('', 'dev_palette_form_textarea', 1);">&lt;label for="example_textarea">&lt;?=__('nobleme')?>&lt;/label>
-  &lt;textarea id="example_textarea" name="example_textarea">&lt;/textarea></pre>
+&lt;textarea id="example_textarea" name="example_textarea">&lt;/textarea></pre>
     </div>
 
     <div>
@@ -548,14 +548,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top padding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_input_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_checkbox', 1);">&lt;input type="checkbox" id="example_checkbox" name="example_checkbox">
-  &lt;label class="label_inline" for="example_checkbox">&lt;?=__('nobleme')?>&lt;/label></pre>
+&lt;label class="label_inline" for="example_checkbox">&lt;?=__('nobleme')?>&lt;/label></pre>
     </div>
 
     <div class="bigpadding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_input_multi_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_multi_checkbox', 1);">&lt;input type="checkbox" id="example_checkbox_1" name="example_checkbox[]" value="1">
-  &lt;label class="label_inline" for="example_checkbox_1">&lt;?=__('nobleme')?>&lt;/label>
-  &lt;input type="checkbox" id="example_checkbox_2" name="example_checkbox[]" value="2">
-  &lt;label class="label_inline" for="example_checkbox_2">&lt;?=__('nobleme')?>&lt;/label></pre>
+&lt;label class="label_inline" for="example_checkbox_1">&lt;?=__('nobleme')?>&lt;/label>
+&lt;input type="checkbox" id="example_checkbox_2" name="example_checkbox[]" value="2">
+&lt;label class="label_inline" for="example_checkbox_2">&lt;?=__('nobleme')?>&lt;/label></pre>
     </div>
 
     <div>
@@ -571,9 +571,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top bigpadding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_input_radio" onclick="to_clipboard('', 'dev_palette_form_input_radio', 1);">&lt;input type="radio" id="example_radio_1" name="example_radio[]" value="1">
-  &lt;label class="label_inline" for="example_radio_1">&lt;?=__('nobleme')?>&lt;/label>
-  &lt;input type="radio" id="example_radio_2" name="example_radio[]" value="2">
-  &lt;label class="label_inline" for="example_radio_2">&lt;?=__('nobleme')?>&lt;/label></pre>
+&lt;label class="label_inline" for="example_radio_1">&lt;?=__('nobleme')?>&lt;/label>
+&lt;input type="radio" id="example_radio_2" name="example_radio[]" value="2">
+&lt;label class="label_inline" for="example_radio_2">&lt;?=__('nobleme')?>&lt;/label></pre>
     </div>
 
     <div class="smallpadding_bot">
@@ -668,13 +668,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top">
       <pre class="dev_pre_code" id="dev_palette_flex" onclick="to_clipboard('', 'dev_palette_flex', 1);">&lt;div class="flexcontainer">
-    &lt;div class="flex">
-      Flex_1
-    &lt;/div>
-    &lt;div style="flex:2">
-      Flex_2
-    &lt;/div>
-  &lt;/div></pre>
+  &lt;div class="flex">
+    Flex_1
+  &lt;/div>
+  &lt;div style="flex:2">
+    Flex_2
+  &lt;/div>
+&lt;/div></pre>
     </div>
 
   </div>
@@ -709,25 +709,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </div>
 
     <pre class="dev_pre_code" id="dev_palette_grid" onclick="to_clipboard('', 'dev_palette_grid', 1);">&lt;div style="grid-template-columns: repeat(3, 1fr);" class="gridcontainer">
-    &lt;div style="grid-column: 1 / 1" class="red">
-      &nbsp;
-    &lt;/div>
-    &lt;div style="grid-column: 2 / 4" class="white">
-      &nbsp;
-    &lt;/div>
-    &lt;div style="grid-row: 2 / 5" class="blue gridcontainer gridcenter">
-      &nbsp;
-    &lt;/div>
-    &lt;div class="purple">
-      &nbsp;
-    &lt;/div>
-    &lt;div class="orange">
-      &nbsp;
-    &lt;/div>
-    &lt;div style="grid-column: 2 / 4; grid-row: 3 / 5" class="brown">
-      &nbsp;
-    &lt;/div>
-  &lt;/div></pre>
+  &lt;div style="grid-column: 1 / 1" class="red">
+    &nbsp;
+  &lt;/div>
+  &lt;div style="grid-column: 2 / 4" class="white">
+    &nbsp;
+  &lt;/div>
+  &lt;div style="grid-row: 2 / 5" class="blue gridcontainer gridcenter">
+    &nbsp;
+  &lt;/div>
+  &lt;div class="purple">
+    &nbsp;
+  &lt;/div>
+  &lt;div class="orange">
+    &nbsp;
+  &lt;/div>
+  &lt;div style="grid-column: 2 / 4; grid-row: 3 / 5" class="brown">
+    &nbsp;
+  &lt;/div>
+&lt;/div></pre>
 
   </div>
 
@@ -750,11 +750,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </h1>
 
     <pre class="dev_pre_code" id="dev_palette_h1_icons" onclick="to_clipboard('', 'dev_palette_h1_icons', 1);">&lt;h1>
-    Title with icons
-    &lt;?=__icon('delete', alt: 'X', title: __('delete'))?>
-    &lt;?=__icon('settings', alt: 'X', title: __('settings'))?>
-    &lt;?=__icon('rss', alt: 'X', title: __('rss'))?>
-  &lt;/h1></pre>
+  Title with icons
+  &lt;?=__icon('delete', alt: 'X', title: __('delete'))?>
+  &lt;?=__icon('settings', alt: 'X', title: __('settings'))?>
+  &lt;?=__icon('rss', alt: 'X', title: __('rss'))?>
+&lt;/h1></pre>
 
   </div>
 
@@ -1168,12 +1168,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <pre class="dev_pre_code" id="dev_palette_popin" onclick="to_clipboard('', 'dev_palette_popin', 1);">&lt;a href="#example_popin">Popin&lt;/a>
 
-  &lt;div id="example_popin" class="popin_background">
-    &lt;div class="popin_body">
-      &lt;a class="popin_close" onclick="popin_close('example_popin');">&amp;times;&lt;/a>
-      &lt;p class="nopadding_top">Body&lt;/p>
-    &lt;/div>
-  &lt;/div></pre>
+&lt;div id="example_popin" class="popin_background">
+  &lt;div class="popin_body">
+    &lt;a class="popin_close" onclick="popin_close('example_popin');">&amp;times;&lt;/a>
+    &lt;p class="nopadding_top">Body&lt;/p>
+  &lt;/div>
+&lt;/div></pre>
 
   </div>
 
@@ -1421,27 +1421,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top">
       <pre class="dev_pre_code" id="dev_palette_table" onclick="to_clipboard('', 'dev_palette_table', 1);">&ltdiv class="autoscroll">
-    &lt;table>
-      &lt;thead>
+  &lt;table>
+    &lt;thead>
 
-        &lt;tr>
-          &lt;th>
-            HEADER
-          &lt;/th>
-        &lt;/tr>
+      &lt;tr>
+        &lt;th>
+          HEADER
+        &lt;/th>
+      &lt;/tr>
 
-      &lt;/thead>
-      &lt;tbody>
+    &lt;/thead>
+    &lt;tbody>
 
-        &lt;tr>
-          &lt;td>
-            body
-          &lt;/td>
-        &lt;/tr>
+      &lt;tr>
+        &lt;td>
+          body
+        &lt;/td>
+      &lt;/tr>
 
-      &lt;/tbody>
-    &lt;/table>
-  &lt;/div></pre>
+    &lt;/tbody>
+  &lt;/table>
+&lt;/div></pre>
     </div>
 
   </div>
@@ -1492,25 +1492,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top">
       <pre class="dev_pre_code" id="dev_palette_table_noresize" onclick="to_clipboard('', 'dev_palette_table_noresize', 1);">&lt;table class="noresize">
-    &lt;thead>
+  &lt;thead>
 
-      &lt;tr>
-        &lt;th>
-          HEADER
-        &lt;/th>
-      &lt;/tr>
+    &lt;tr>
+      &lt;th>
+        HEADER
+      &lt;/th>
+    &lt;/tr>
 
-    &lt;/thead>
-    &lt;tbody>
+  &lt;/thead>
+  &lt;tbody>
 
-      &lt;tr>
-        &lt;td>
-          body
-        &lt;/td>
-      &lt;/tr>
+    &lt;tr>
+      &lt;td>
+        body
+      &lt;/td>
+    &lt;/tr>
 
-    &lt;/tbody>
-  &lt;/table></pre>
+  &lt;/tbody>
+&lt;/table></pre>
     </div>
 
   </div>
@@ -1647,25 +1647,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <div class="padding_top">
       <pre class="dev_pre_code" id="dev_palette_table_altc" onclick="to_clipboard('', 'dev_palette_table_altc', 1);">&lt;table>
-    &lt;thead>
+  &lt;thead>
 
-      &lt;tr>
-        &lt;th>
-          HEADER
-        &lt;/th>
-      &lt;/tr>
+    &lt;tr>
+      &lt;th>
+        HEADER
+      &lt;/th>
+    &lt;/tr>
 
-    &lt;/thead>
-    &lt;tbody class="altc">
+  &lt;/thead>
+  &lt;tbody class="altc">
 
-      &lt;tr>
-        &lt;td>
-          body
-        &lt;/td>
-      &lt;/tr>
+    &lt;tr>
+      &lt;td>
+        body
+      &lt;/td>
+    &lt;/tr>
 
-    &lt;/tbody>
-  &lt;/table></pre>
+  &lt;/tbody>
+&lt;/table></pre>
     </div>
 
   </div>
@@ -1787,75 +1787,75 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <pre class="dev_pre_code" id="dev_palette_table_icons_header" onclick="to_clipboard('', 'dev_palette_table_icons_header', 1);">
   &lt;thead>
 
-    &lt;tr>
-      &lt;th>
-        HEADER
-        &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
-      &lt;/th>
-      &lt;th>
-        HEADER
-        &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
-      &lt;/th>
-      &lt;th>
-        HEADER
-        &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
-      &lt;/th>
-      &lt;th>
-        ICONS
-      &lt;/th>
-    &lt;/tr>
+  &lt;tr>
+    &lt;th>
+      HEADER
+      &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
+    &lt;/th>
+    &lt;th>
+      HEADER
+      &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
+    &lt;/th>
+    &lt;th>
+      HEADER
+      &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
+    &lt;/th>
+    &lt;th>
+      ICONS
+    &lt;/th>
+  &lt;/tr>
 
-    &lt;tr>
+  &lt;tr>
 
-      &lt;th>
-        &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
-      &lt;/th>
+    &lt;th>
+      &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
+    &lt;/th>
 
-      &lt;th>
-        &lt;input type="text" class="table_search" name="example_input" id="example_input" value="" size="1">
-      &lt;/th>
+    &lt;th>
+      &lt;input type="text" class="table_search" name="example_input" id="example_input" value="" size="1">
+    &lt;/th>
 
-      &lt;th>
-        &lt;select class="table_search" name="example_select" id="example_select">
-          &lt;option value="0">&amp;nbsp;&lt;/option>
-        &lt;/select>
-      &lt;/th>
+    &lt;th>
+      &lt;select class="table_search" name="example_select" id="example_select">
+        &lt;option value="0">&amp;nbsp;&lt;/option>
+      &lt;/select>
+    &lt;/th>
 
-      &lt;th>
-        &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="&lt;?=string_change_case(__('search'), 'initials')?>">
-      &lt;/th>
+    &lt;th>
+      &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="&lt;?=string_change_case(__('search'), 'initials')?>">
+    &lt;/th>
 
-    &lt;/tr>
+  &lt;/tr>
 
-  &lt;/thead></pre>
+&lt;/thead></pre>
 
     <div class="smallpadding_top">
       <pre class="dev_pre_code" id="dev_palette_table_icons_body" onclick="to_clipboard('', 'dev_palette_table_icons_body', 1);">
   &lt;tbody class="altc2">
 
-    &lt;tr>
-      &lt;td colspan="4" class="uppercase text_light dark bold align_center">
-        XX results found
-      &lt;/td>
-    &lt;/tr>
+  &lt;tr>
+    &lt;td colspan="4" class="uppercase text_light dark bold align_center">
+      XX results found
+    &lt;/td>
+  &lt;/tr>
 
-    &lt;tr>
-      &lt;td>
-        body
-      &lt;/td>
-      &lt;td>
-        body
-      &lt;/td>
-      &lt;td>
-        body
-      &lt;/td>
-      &lt;td class="align_center">
-        &lt?=__icon('help', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('details'), title_case: 'initials')?>
-        &lt?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
-      &lt;/td>
-    &lt;/tr>
+  &lt;tr>
+    &lt;td>
+      body
+    &lt;/td>
+    &lt;td>
+      body
+    &lt;/td>
+    &lt;td>
+      body
+    &lt;/td>
+    &lt;td class="align_center">
+      &lt?=__icon('help', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('details'), title_case: 'initials')?>
+      &lt?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+    &lt;/td>
+  &lt;/tr>
 
-  &lt;/tbody></pre>
+&lt;/tbody></pre>
     </div>
 
   </div>

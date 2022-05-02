@@ -72,10 +72,10 @@ if(!isset($dev_snippet_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50 padding_bot dev_doc_selector">
+<div class="padding_bot align_center dev_doc_selector">
 
   <fieldset>
-    <h4 class="align_center">
+    <h5>
       <?=__('dev_snippets_title')?>
       <select class="inh" id="dev_snippet_selector" onchange="dev_snippet_selector();">
         <option value="full"<?=$dev_snippet_selected['full']?>><?=__('dev_snippets_selector_full')?></option>
@@ -83,7 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="header"<?=$dev_snippet_selected['header']?>><?=__('dev_snippets_selector_header')?></option>
         <option value="blocks"<?=$dev_snippet_selected['blocks']?>><?=__('dev_snippets_selector_blocks')?></option>
       </select>
-    </h4>
+    </h5>
   </fieldset>
 
 </div>
