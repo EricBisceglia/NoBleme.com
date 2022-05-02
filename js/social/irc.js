@@ -15,7 +15,7 @@
 
 function irc_faq_display_section()
 {
-  // Fetch the value of the selction selector
+  // Fetch the value of the irc selector
   page_name = document.getElementById('irc_faq_section_selector').value;
 
   // Hide all currently selected FAQ sections

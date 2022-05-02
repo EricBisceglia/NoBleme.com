@@ -19,7 +19,7 @@ $page_title_en  = "Code snippets";
 $page_title_fr  = "Modèles de code";
 
 // Extra JS
-$js = array('dev/doc');
+$js = array('dev/doc', 'common/toggle');
 
 
 
@@ -31,9 +31,36 @@ $js = array('dev/doc');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Dropdown selector
+// Display the correct code snippets
 
-$selected_snippet = sanitize_input('POST', 'snippet', 'string', 'full');
+// Prepare a list of all snippet options
+$dev_snippet_selection = array('full', 'fetched', 'header', 'blocks');
+
+// Prepare the CSS for each snippet
+foreach($dev_snippet_selection as $dev_snippet_selection_name)
+{
+  // If a snippet is selected, display it and select the correct dropdown menu entry
+  if(!isset($dev_snippet_is_selected) && isset($_GET[$dev_snippet_selection_name]))
+  {
+    $dev_snippet_is_selected                            = true;
+    $dev_snippet_hide[$dev_snippet_selection_name]      = '';
+    $dev_snippet_selected[$dev_snippet_selection_name]  = ' selected';
+  }
+
+  // Hide every other snippet
+  else
+  {
+    $dev_snippet_hide[$dev_snippet_selection_name]      = ' hidden';
+    $dev_snippet_selected[$dev_snippet_selection_name]  = '';
+  }
+}
+
+// If no snippet is selected, select the main one by default
+if(!isset($dev_snippet_is_selected))
+{
+  $dev_snippet_hide['full']     = '';
+  $dev_snippet_selected['full'] = ' selected';
+}
 
 
 
@@ -48,11 +75,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h4 class="align_center">
     <?=__('dev_snippets_title')?>
-    <select class="inh" id="select_snippet" onchange="dev_snippet_selector();">
-      <option value="full" selected><?=__('dev_snippets_selector_full')?></option>
-      <option value="fetched"><?=__('dev_snippets_selector_fetched')?></option>
-      <option value="header"><?=__('dev_snippets_selector_header')?></option>
-      <option value="blocks"><?=__('dev_snippets_selector_blocks')?></option>
+    <select class="inh" id="dev_snippet_selector" onchange="dev_snippet_selector();">
+      <option value="full"<?=$dev_snippet_selected['full']?>><?=__('dev_snippets_selector_full')?></option>
+      <option value="fetched"<?=$dev_snippet_selected['fetched']?>><?=__('dev_snippets_selector_fetched')?></option>
+      <option value="header"<?=$dev_snippet_selected['header']?>><?=__('dev_snippets_selector_header')?></option>
+      <option value="blocks"<?=$dev_snippet_selected['blocks']?>><?=__('dev_snippets_selector_blocks')?></option>
     </select>
   </h4>
 
@@ -63,9 +90,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } if($selected_snippet === 'full') { ######################################################################### ?>
+<?php /************************************************** FULL ****************************************************/ ?>
 
-<div class="width_60">
+<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['full']?>" id="dev_snippets_full">
 
   <pre class="small" id="dev_snippets_full_standard" onclick="to_clipboard('', 'dev_snippets_full_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -141,9 +168,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php } else if ($selected_snippet === 'fetched') { ################################################################ ?>
+<?php /************************************************ FETCHED ***************************************************/ ?>
 
-<div class="width_60">
+<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['fetched']?>" id="dev_snippets_fetched">
 
   <pre class="small" id="dev_snippets_fetched_standard" onclick="to_clipboard('', 'dev_snippets_fetched_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -188,9 +215,9 @@ user_restrict_to_guests();
 
 
 
-<?php } else if ($selected_snippet === 'header') { ################################################################# ?>
+<?php /************************************************* HEADER ***************************************************/ ?>
 
-<div class="width_60">
+<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['header']?>" id="dev_snippets_header">
 
   <div class="padding_bot">
     <pre class="small" id="dev_snippets_header_standard" onclick="to_clipboard('', 'dev_snippets_header_standard', 1);">&lt;?php /***************************************************************************************************************/
@@ -251,9 +278,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 
-<?php } else if ($selected_snippet === 'blocks') { ################################################################# ?>
+<?php /************************************************* BLOCKS ***************************************************/ ?>
 
-<div class="width_60">
+<div class="width_60 dev_snippets_section<?=$dev_snippet_hide['blocks']?>" id="dev_snippets_blocks">
 
   <div class="padding_bot">
     <pre class="small" id="dev_snippets_blocks_comments" onclick="to_clipboard('', 'dev_snippets_blocks_comments', 1);">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -299,13 +326,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                                                                                                                   */
 /*****************************************************************************/ include './../../inc/footer.inc.php'; }</pre>
   </div>
-
-</div>
-
-
-
-
-<?php } if(!page_is_fetched_dynamically()) { ####################################################################### ?>
 
 </div>
 

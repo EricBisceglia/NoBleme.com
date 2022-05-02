@@ -14,14 +14,25 @@
  * @returns {void}
  */
 
-function dev_snippet_selector()
-{
-  // Fetch the requested snippet
-  fetch_snippet = document.getElementById('select_snippet').value;
+ function dev_snippet_selector()
+ {
+   // Fetch the value of the snippet selector
+   page_name = document.getElementById('dev_snippet_selector').value;
 
-  // Update the page
-  fetch_page('doc_snippets', 'dev_snippets_body', 'snippet=' + fetch_snippet);
-}
+   // Hide all snippets
+   toggle_class_oneway('dev_snippets_section', 0);
+
+   // Display the requested snippet
+   toggle_element_oneway('dev_snippets_' + page_name, 1);
+
+   // If the main snippet is being selected, remove all URL parameters
+   if(page_name == 'full')
+     history.pushState({}, null, 'doc_snippets');
+
+   // Otherwise, set the currently selected section as an URL parameter
+   else
+     history.pushState({}, null, 'doc_snippets?' + page_name);
+ }
 
 
 
