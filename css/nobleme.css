@@ -310,8 +310,8 @@ button, select                    { text-transform: none;                       
 select                            { text-align: center;                                                         }
 textarea                          { overflow: auto; box-sizing: inherit; min-height: 12.0rem; width: 100%       ;
                                     background-color: #232323; color: #CACACA; box-shadow: none                 ;
-                                    border-radius: 5px; padding-top: 0.6rem; padding-bottom: 0.6rem             ;
-                                    padding-left: 1.0rem; padding-right: 1.0rem;                                }
+                                    border-radius: 5px; padding-top: 0.2rem; padding-bottom: 0.2rem             ;
+                                    padding-left: 0.5rem; padding-right: 0.5rem;                                }
 button, [type="button"], [type="reset"], [type="submit"]
                                   { -webkit-appearance: button; font-size: 120%; letter-spacing: 0.06rem        ;
                                     text-align: center; text-decoration: none; font-weight: bold                ;
@@ -459,15 +459,19 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 
 /****************************************************** BBCODES ******************************************************/
 
-.bbcode_quote_title   { border-bottom: 1px solid #343434; margin-bottom: 0.2rem     ;
-                        font-weight: bold;                                          }
-.bbcode_quote_body    { background-color: #121212; border: 1px solid #343434        ;
-                        padding-top: 0.2rem; padding-bottom: 0.2rem;                }
-.bbcode_spoiler_title { text-transform: uppercase; border-bottom: 1px solid #343434 ;
-                        margin-bottom: 0.2rem; font-weight: bold;                   }
-.bbcode_spoiler_body  { background-color: #121212; border: 1px solid #343434;       ;
-                        padding-top: 0.2rem; padding-bottom: 0.2rem;                }
-.bbcode_line          { margin-left: 0; margin-right: 0;                            }
+.bbcode_quote_title       { margin-bottom: 0.2rem; font-weight: bold;                         }
+.bbcode_quote_separator   { background-color: #343434; margin-left: -0.5rem                   ;
+                            margin-right: -0.5rem; margin-top: 0; margin-bottom: 0.2rem;      }
+.bbcode_quote_body        { background-color: #121212; border: 1px solid #343434              ;
+                            padding-top: 0.2rem; padding-bottom: 0.3rem                       ;
+                            padding-left: 0.5rem; padding-right: 0.5rem;                      }
+.bbcode_spoiler_title     { text-transform: uppercase; font-weight: bold;                     }
+.bbcode_spoiler_separator { background-color: #343434; margin-left: -0.5rem                   ;
+                            margin-right: -0.5rem; margin-top: 0.2rem; margin-bottom: 0.2rem; }
+.bbcode_spoiler_body      { background-color: #121212; border: 1px solid #343434;             ;
+                            padding-top: 0.2rem; padding-bottom: 0.3rem                       ;
+                            padding-left: 0.5rem; padding-right: 0.5rem;                      }
+.bbcode_line              { margin-left: 0; margin-right: 0;                                  }
 
 /****************************************************** NBCODES ******************************************************/
 

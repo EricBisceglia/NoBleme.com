@@ -1346,7 +1346,7 @@ function compendium_pages_update_pageviews( int     $page_id  ,
                                         WHERE   stats_pages.page_url LIKE '$page_url' "));
 
   // Sanitize the pageview count
-  $view_count = sanitize($dviews['sp_count'], 'int', 0);
+  $view_count = (isset($dviews['sp_count'])) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
 
   // Update the pageview count
   query(" UPDATE  compendium_pages

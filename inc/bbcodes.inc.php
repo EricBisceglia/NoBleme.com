@@ -161,7 +161,7 @@ function bbcodes( string  $message ) : string
   // [code]Code block[/code]
 
   // Solved with a regex
-  $message = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre>$1</pre>', $message);
+  $message = preg_replace('/\[code\](.*?)\[\/code\]/is','<div class="tinypadding_top"><pre>$1</pre></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -169,11 +169,11 @@ function bbcodes( string  $message ) : string
 
   // Solved with a regex in a while loop
   while(preg_match('/\[quote\](.*?)\[\/quote\]/is',$message))
-    $message = preg_replace('/\[quote\](.*?)\[\/quote\]/is',"<div class=\"bbcode_quote_body\"><div class=\"bbcode_quote_title\">".__('bbcodes_quote')."</div>$1</div>", $message);
+    $message = preg_replace('/\[quote\](.*?)\[\/quote\]/is',"<div class=\"tinypadding_top\"><div class=\"bbcode_quote_body\"><div class=\"bbcode_quote_title\">".__('bbcodes_quote')."</div><hr class=\"bbcode_quote_separator\">$1</div></div>", $message);
 
   // Same thing but with a parameter specifying the author
   while(preg_match('/\[quote=(.*?)\](.*?)\[\/quote\]/is',$message))
-    $message = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"<div class=\"bbcode_quote_body\"><div class=\"bbcode_quote_title\">".__('bbcodes_quote_by')." $1 :</div>$2</div>", $message);
+    $message = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"<div class=\"tinypadding_top\"><div class=\"bbcode_quote_body\"><div class=\"bbcode_quote_title\">".__('bbcodes_quote_by')." $1 :</div><hr class=\"bbcode_quote_separator\">$2</div></div>", $message);
 
 
   /*******************************************************************************************************************/
@@ -181,11 +181,11 @@ function bbcodes( string  $message ) : string
 
   // Solved with a regex in a while loop - seems complicated, but it's just because we're applying a lot of js here
   while(preg_match('/\[spoiler\](.*?)\[\/spoiler\]/is',$message))
-    $message = preg_replace("/\[spoiler\](.*?)\[\/spoiler\]/is", "<div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".__('bbcodes_spoiler')." : <a class=\'bold\' href=\'#\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".__('bbcodes_spoiler')." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".__('bbcodes_spoiler')." : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\">$1</div></div></div>", $message);
+    $message = preg_replace("/\[spoiler\](.*?)\[\/spoiler\]/is", "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".__('bbcodes_spoiler')." : <a class=\'bold\' href=\'#\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".__('bbcodes_spoiler')." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".__('bbcodes_spoiler')." : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">$1</div></div></div></div>", $message);
 
   // Same thing but with a parameter describing the spoiler's contents
   while(preg_match('/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is',$message))
-    $message = preg_replace("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", "<div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">$1 : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\">$2</div></div></div>", $message);
+    $message = preg_replace("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">$1 : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">$2</div></div></div></div>", $message);
 
 
   /*******************************************************************************************************************/
