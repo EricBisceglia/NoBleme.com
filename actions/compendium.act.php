@@ -3944,17 +3944,32 @@ function compendium_admin_notes_edit( array $notes_data ) : void
 /**
  * Fetches the years at which compendium pages have been created.
  *
- * @return  array   An array containing years.
+ * @param   bool  $admin_view   Lists every possible year including drafts, deleted pages, and wrong language.
+ *
+ * @return  array               An array containing years.
  */
 
-function compendium_pages_list_years() : array
+function compendium_pages_list_years(bool $admin_view = false) : array
 {
+  // Get the user's current language
+  $lang = user_get_language();
+
   // Fetch the compendium page years
-  $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_pages.created_at)) AS 'c_year'
-                    FROM      compendium_pages
-                    WHERE     compendium_pages.created_at != '0000-00-00'
-                    GROUP BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at))
-                    ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
+  if($admin_view)
+    $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_pages.created_at)) AS 'c_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.created_at != '0000-00-00'
+                      GROUP BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at))
+                      ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
+  else
+    $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_pages.created_at)) AS 'c_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.created_at != '0000-00-00'
+                      AND       compendium_pages.title_$lang       != ''
+                      AND       compendium_pages.is_deleted         = 0
+                      AND       compendium_pages.is_draft           = 0
+                      GROUP BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at))
+                      ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
@@ -4002,16 +4017,30 @@ function compendium_images_list_years() : array
 /**
  * Fetches the years at which compendium content has appeared.
  *
- * @return  array   An array containing years.
+ * @param   bool  $admin_view   Lists every possible year including drafts, deleted pages, and wrong language.
+ *
+ * @return  array               An array containing years.
  */
 
-function compendium_appearance_list_years() : array
+function compendium_appearance_list_years(bool $admin_view = false) : array
 {
+  // Get the user's current language
+  $lang = user_get_language();
+
   // Fetch the compendium page years
-  $qyears = query(" SELECT    compendium_pages.year_appeared AS 'a_year'
-                    FROM      compendium_pages
-                    GROUP BY  compendium_pages.year_appeared
-                    ORDER BY  compendium_pages.year_appeared DESC ");
+  if($admin_view)
+    $qyears = query(" SELECT    compendium_pages.year_appeared AS 'a_year'
+                      FROM      compendium_pages
+                      GROUP BY  compendium_pages.year_appeared
+                      ORDER BY  compendium_pages.year_appeared DESC ");
+  else
+    $qyears = query(" SELECT    compendium_pages.year_appeared AS 'a_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.title_$lang       != ''
+                      AND       compendium_pages.is_deleted         = 0
+                      AND       compendium_pages.is_draft           = 0
+                      GROUP BY  compendium_pages.year_appeared
+                      ORDER BY  compendium_pages.year_appeared DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
@@ -4030,16 +4059,30 @@ function compendium_appearance_list_years() : array
 /**
  * Fetches the years at which compendium content has peaked.
  *
- * @return  array   An array containing years.
+ * @param   bool  $admin_view   Lists every possible year including drafts, deleted pages, and wrong language.
+ *
+ * @return  array               An array containing years.
  */
 
-function compendium_peak_list_years() : array
+function compendium_peak_list_years(bool $admin_view = false) : array
 {
+  // Get the user's current language
+  $lang = user_get_language();
+
   // Fetch the compendium page years
-  $qyears = query(" SELECT    compendium_pages.year_peak AS 'p_year'
-                    FROM      compendium_pages
-                    GROUP BY  compendium_pages.year_peak
-                    ORDER BY  compendium_pages.year_peak DESC ");
+  if($admin_view)
+    $qyears = query(" SELECT    compendium_pages.year_peak AS 'p_year'
+                      FROM      compendium_pages
+                      GROUP BY  compendium_pages.year_peak
+                      ORDER BY  compendium_pages.year_peak DESC ");
+  else
+    $qyears = query(" SELECT    compendium_pages.year_peak AS 'p_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.title_$lang       != ''
+                      AND       compendium_pages.is_deleted         = 0
+                      AND       compendium_pages.is_draft           = 0
+                      GROUP BY  compendium_pages.year_peak
+                      ORDER BY  compendium_pages.year_peak DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)

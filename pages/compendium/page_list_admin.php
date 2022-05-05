@@ -75,9 +75,9 @@ $compendium_categories_list = compendium_categories_list();
 $compendium_eras_list = compendium_eras_list();
 
 // Fetch the appearance, peak, and page creation years
-$compendium_page_list_years       = compendium_pages_list_years();
-$compendium_appearance_list_years = compendium_appearance_list_years();
-$compendium_peak_list_years       = compendium_peak_list_years();
+$compendium_page_list_years       = compendium_pages_list_years(admin_view: true);
+$compendium_appearance_list_years = compendium_appearance_list_years(admin_view: true);
+$compendium_peak_list_years       = compendium_peak_list_years(admin_view: true);
 
 
 
