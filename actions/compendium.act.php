@@ -159,6 +159,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
                                                 compendium_eras.name_$lang          AS 'pe_name'        ,
                                                 compendium_types.id                 AS 'pt_id'          ,
                                                 compendium_types.name_$lang         AS 'pt_name'        ,
+                                                compendium_types.name_en            AS 'pt_name_en'     ,
                                                 compendium_types.full_name_$lang    AS 'pt_display'
                                       FROM      compendium_pages
                                       LEFT JOIN compendium_types
@@ -218,6 +219,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['admin_urls'] = sanitize_output($dpage['p_admin_urls']);
   $data['type_id']    = sanitize_output($dpage['pt_id']);
   $data['type']       = sanitize_output($dpage['pt_name']);
+  $data['type_en']    = sanitize_output($dpage['pt_name_en']);
   $data['type_full']  = sanitize_output(string_change_case($dpage['pt_display'], 'lowercase'));
   $data['era_id']     = sanitize_output($dpage['pe_id']);
   $data['era']        = sanitize_output($dpage['pe_name']);

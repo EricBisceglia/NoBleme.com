@@ -74,9 +74,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <label for="compendium_social_media_tweet_1"><?=__('compendium_social_media_twitter')?></label>
-    <pre id="compendium_social_media_tweet_1" onclick="to_clipboard('', 'compendium_social_media_tweet_1', 1);"><?=__('compendium_social_media_tweet_1', preset_values: array($compendium_page_data['title_en'], string_change_case($compendium_page_data['type'], 'lowercase'), $GLOBALS['website_url'].'pages/compendium/'.$compendium_page_data['url_raw']))?></pre>
+    <pre id="compendium_social_media_tweet_1" onclick="to_clipboard('', 'compendium_social_media_tweet_1', 1);"><?=__('compendium_social_media_tweet_1', preset_values: array($compendium_page_data['title_en'], string_change_case($compendium_page_data['type_en'], 'lowercase'), $GLOBALS['website_url'].'pages/compendium/'.$compendium_page_data['url_raw']))?></pre>
     <div class="tinypadding_top">
-      <pre id="compendium_social_media_tweet_2" onclick="to_clipboard('', 'compendium_social_media_tweet_2', 1);"><?=__('compendium_social_media_tweet_2', preset_values: array($compendium_page_data['title_en'], $compendium_page_data['title_fr'], string_change_case($compendium_page_data['type'], 'lowercase'), $GLOBALS['website_url'].'pages/compendium/'.$compendium_page_data['url_raw']))?></pre>
+      <pre id="compendium_social_media_tweet_2" onclick="to_clipboard('', 'compendium_social_media_tweet_2', 1);"><?=__('compendium_social_media_tweet_2', preset_values: array($compendium_page_data['title_en'], $compendium_page_data['title_fr'], string_change_case($compendium_page_data['type_en'], 'lowercase'), $GLOBALS['website_url'].'pages/compendium/'.$compendium_page_data['url_raw']))?></pre>
     </div>
     <div class="tinypadding_top">
       <pre id="compendium_social_media_tweet_3" onclick="to_clipboard('', 'compendium_social_media_tweet_3', 1);"><?=__('compendium_social_media_tweet_3', preset_values: array($compendium_page_data['title_en'], $GLOBALS['website_url'].'pages/compendium/'.$compendium_page_data['url_raw']))?></pre>
