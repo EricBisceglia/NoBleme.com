@@ -58,8 +58,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  discord_send_message                Uses a Discord webhook to broadcast a message.                               */
 /*                                                                                                                   */
-/*  html_fix_meta_tags                  Makes the content of meta tags valid.                                        */
-/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -1487,42 +1485,4 @@ function discord_send_message(  string  $message          ,
 
   // Send the message through the webhook, ignore any errors
   @file_get_contents($webhook, false, $context);
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                             HTML OUTPUT MANIPULATION                                              */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-/**
- * Makes the content of meta tags valid.
- *
- * Some characters are forbidden in HTML <meta> tags, this function replaces them with their valid equivalent.
- * Note that I am not even sure this is the proper way to do things... I'm just hoping it's right.
- *
- * @param   string  $string   A string to turn meta-tag-valid.
- *
- * @return  string            The meta-tag-valid string.
- */
-
-function html_fix_meta_tags( string $string ) : string
-{
-  // Replace illegal characters by their legal counterparcs
-  $string = str_replace("'","&#39;",$string);
-  $string = str_replace("\"","&#34;",$string);
-  $string = str_replace("<","&#60;",$string);
-  $string = str_replace(">","&#62;",$string);
-  $string = str_replace("{","&#123;",$string);
-  $string = str_replace("}","&#125;",$string);
-  $string = str_replace("[","&#91;",$string);
-  $string = str_replace("]","&#93;",$string);
-  $string = str_replace("(","&#40;",$string);
-  $string = str_replace(")","&#41;",$string);
-
-  // Return the modified string
-  return $string;
 }

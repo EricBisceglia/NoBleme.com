@@ -13,6 +13,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  sanitize_output               Sanitizes data for HTML usage.                                                     */
 /*  sanitize_output_full          Sanitizes data before outputting it as HTML, for untrusted user data.              */
 /*  sanitize_output_javascript    Sanitizes data for passing to inline javascript.                                   */
+/*  sanitize_meta_tags            Sanitizes the content of meta tags.                                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -308,4 +309,27 @@ function sanitize_output_javascript( string $data ) : string
 
   // Return the sanitized data
   return $sanitized_data;
+}
+
+
+
+
+/**
+ * Sanitizes the contents of meta tags.
+ *
+ * @param   string  $data   The data to be sanitized.
+ *
+ * @return  string          The sanitized data, ready to be used in a meta tag.
+ */
+
+function sanitize_meta_tags( string $data ) : string
+{
+  // Strip illegal characters
+  $data = str_replace("\"","",$data);
+  $data = str_replace("<","",$data);
+  $data = str_replace(">","",$data);
+  $data = str_replace("&","",$data);
+
+  // Return the sanitized data
+  return $data;
 }

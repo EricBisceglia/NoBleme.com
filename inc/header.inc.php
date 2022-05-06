@@ -313,12 +313,12 @@ $page_title = ($page_title) ? $page_title.$temp : 'NoBleme.com';
 // If there is no description, use a default generic one
 $page_description = (isset($page_description)) ? $page_description : $page_title_en." - See more by visiting this page on NoBleme.com";
 
-// Make the page's description W3C meta tag compliant
-$page_description = html_fix_meta_tags($page_description);
-
 // Shorten the description if it is too long
 if(strlen($page_description) >= 155)
   $page_description = string_truncate($page_description, 150, '...');
+
+// Make the page's description W3C meta tag compliant
+$page_description = sanitize_meta_tags($page_description);
 
 // Set the page description to default if it is too short
 if(strlen($page_description) <= 25)
