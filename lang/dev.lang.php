@@ -197,10 +197,12 @@ ___('dev_functions_selector_website',       'FR', "Éléments internes");
 
 
 // Development workflows selector
-___('dev_workflow_selector_git',      'EN', "Git");
-___('dev_workflow_selector_git',      'FR', "Git");
-___('dev_workflow_selector_aliases',  'EN', "Aliases");
-___('dev_workflow_selector_aliases',  'FR', "Alias");
+___('dev_workflow_selector_git',          'EN', "Git");
+___('dev_workflow_selector_git',          'FR', "Git");
+___('dev_workflow_selector_aliases',      'EN', "Aliases");
+___('dev_workflow_selector_aliases',      'FR', "Alias");
+___('dev_workflow_selector_server_setup', 'EN', "Server setup");
+___('dev_workflow_selector_server_setup', 'FR', "Installation serveur");
 
 
 
