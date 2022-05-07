@@ -4,6 +4,7 @@
 /*  dev_palette_selector            Displays the selected CSS palette.                                               */
 /*  dev_js_toolbox_selector         Displays the selected JS toolbox.                                                */
 /*  dev_functions_type_selector     Displays functions of the selected type.                                         */
+/*  dev_workflow_selector           Displays the selected workflow reminders.                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -119,4 +120,33 @@ function dev_functions_type_selector()
   // Otherwise, set the currently selected section as an URL parameter
   else
     history.pushState({}, null, 'doc_functions?' + page_name);
+}
+
+
+
+
+/**
+ * Displays the selected workflow reminders.
+ *
+ * @returns {void}
+ */
+
+function dev_workflow_selector()
+{
+  // Fetch the value of the workflow reminders selector
+  page_name = document.getElementById('dev_workflow_selector').value;
+
+  // Hide all workflow reminders entries
+  toggle_class_oneway('dev_workflow_section', 0);
+
+  // Display the requested workflow reminder
+  toggle_element_oneway('dev_workflow_' + page_name, 1);
+
+  // If the main workflow reminder is being selected, remove all URL parameters
+  if(page_name == 'fetch')
+    history.pushState({}, null, 'doc_workflow');
+
+  // Otherwise, set the currently selected reminder as an URL parameter
+  else
+    history.pushState({}, null, 'doc_workflow?' + page_name);
 }
