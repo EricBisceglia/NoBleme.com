@@ -59,7 +59,7 @@ if(!$task_details)
 $page_url         = "pages/tasks/".$task_id;
 $page_title_en   .= " #".$task_id.": ".$task_details['title_en_raw'];
 $page_title_fr   .= " #".$task_id." : ".$task_details['title_fr_raw'];
-$page_description = ($task_details['summary']) ? $task_details['summary'] : $page_description;
+$page_description = ($task_details['meta_desc']) ? $task_details['meta_desc'] : $page_description;
 
 
 

@@ -325,10 +325,14 @@ function sanitize_output_javascript( string $data ) : string
 function sanitize_meta_tags( string $data ) : string
 {
   // Strip illegal characters
-  $data = str_replace("\"","",$data);
-  $data = str_replace("<","",$data);
-  $data = str_replace(">","",$data);
-  $data = str_replace("&","",$data);
+  $data = str_replace("\"", "", $data);
+  $data = str_replace("<", "", $data);
+  $data = str_replace(">", "", $data);
+  $data = str_replace("&", "", $data);
+  $data = str_replace("[", "", $data);
+  $data = str_replace("]", "", $data);
+  $data = str_replace("page:", "", $data);
+  $data = str_replace("://", "", $data);
 
   // Return the sanitized data
   return $data;

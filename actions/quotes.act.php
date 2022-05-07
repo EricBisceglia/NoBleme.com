@@ -256,7 +256,7 @@ function quotes_list( ?array  $search         = array() ,
     $data[$i]['deleted']      = $row['q_deleted'];
     $data[$i]['validated']    = $row['q_public'];
     $data[$i]['body']         = sanitize_output($row['q_body'], true);
-    $data[$i]['summary']      = sanitize_output(string_truncate($row['q_body'], 80, '...'));
+    $data[$i]['meta_desc']    = string_truncate($row['q_body'], 250, '...');
   }
 
   // Add the language filters to the data

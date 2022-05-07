@@ -15,8 +15,7 @@ $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/cultural_era";
 $page_title_en    = "Compendium: ";
 $page_title_fr    = "Compendium : ";
-$page_description = "An encyclopedia of 21st century culture, documenting the ";
-
+$page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
 
 
@@ -43,7 +42,6 @@ if(!$compendium_type_data)
 $page_url         .= "?era=".$compendium_type_id;
 $page_title_en    .= $compendium_type_data['full_en_raw'];
 $page_title_fr    .= $compendium_type_data['full_fr_raw'];
-$page_description .= string_change_case($compendium_type_data['full_en'], 'lowercase')." and its associated memes";
 
 // Fetch the page list
 $compendium_pages_list = compendium_pages_list( sort_by:    'title'                                 ,

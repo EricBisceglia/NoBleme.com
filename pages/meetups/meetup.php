@@ -98,7 +98,7 @@ if($meetup_data['is_deleted'])
 $page_url           = "pages/meetups/".$meetup_id;
 $page_title_en      = $meetup_data['date_short_en']." meetup";
 $page_title_fr      = "IRL du ".$meetup_data['date_short_fr'];
-$page_description  .= " taking place ".$meetup_data['date_en']." in ".$meetup_data['location'];
+$page_description  .= " taking place ".$meetup_data['date_en']." in ".$meetup_data['location_raw'];
 
 
 
