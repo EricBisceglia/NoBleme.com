@@ -11,7 +11,7 @@ $page_lang        = array('FR', 'EN');
 $page_url         = "index";
 $page_title_en    = "Homepage";
 $page_title_fr    = "Accueil";
-$page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
+$page_description = "NoBleme - An oldschool internet community";
 
 // Extra CSS
 $css = array('index');

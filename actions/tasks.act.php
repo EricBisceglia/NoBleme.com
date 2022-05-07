@@ -128,7 +128,7 @@ function tasks_get( int $task_id ) : mixed
   $data['body_fr']        = sanitize_output($dtask['t_body_fr']);
   $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
   $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
-  $data['summary']        = sanitize_output('Task #'.$task_id.': '.string_truncate($temp, 100, '…'));
+  $data['meta_desc']      = 'Task #'.$task_id.': '.$temp;
 
   // Return the array
   return $data;

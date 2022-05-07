@@ -159,6 +159,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
                                                 compendium_eras.name_$lang          AS 'pe_name'        ,
                                                 compendium_types.id                 AS 'pt_id'          ,
                                                 compendium_types.name_$lang         AS 'pt_name'        ,
+                                                compendium_types.name_en            AS 'pt_name_en'     ,
                                                 compendium_types.full_name_$lang    AS 'pt_display'
                                       FROM      compendium_pages
                                       LEFT JOIN compendium_types
@@ -206,7 +207,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['offensive']  = sanitize_output($dpage['p_offensive']);
   $data['gross']      = sanitize_output($dpage['p_gross']);
   $data['nsfw_title'] = sanitize_output($dpage['p_nsfw_title']);
-  $data['meta']       = sanitize_output(string_truncate($dpage['p_summary'], 140, '...'));
+  $data['meta_desc']  = string_truncate($dpage['p_summary_en'], 250, '...');
   $data['summary']    = sanitize_output($dpage['p_summary']);
   $data['summary_en'] = sanitize_output($dpage['p_summary_en']);
   $data['summary_fr'] = sanitize_output($dpage['p_summary_fr']);
@@ -218,6 +219,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['admin_urls'] = sanitize_output($dpage['p_admin_urls']);
   $data['type_id']    = sanitize_output($dpage['pt_id']);
   $data['type']       = sanitize_output($dpage['pt_name']);
+  $data['type_en']    = sanitize_output($dpage['pt_name_en']);
   $data['type_full']  = sanitize_output(string_change_case($dpage['pt_display'], 'lowercase'));
   $data['era_id']     = sanitize_output($dpage['pe_id']);
   $data['era']        = sanitize_output($dpage['pe_name']);
@@ -1344,7 +1346,7 @@ function compendium_pages_update_pageviews( int     $page_id  ,
                                         WHERE   stats_pages.page_url LIKE '$page_url' "));
 
   // Sanitize the pageview count
-  $view_count = sanitize($dviews['sp_count'], 'int', 0);
+  $view_count = (isset($dviews['sp_count'])) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
 
   // Update the pageview count
   query(" UPDATE  compendium_pages
@@ -1506,6 +1508,8 @@ function compendium_images_get( ?int    $image_id   = 0 ,
   $data['used_fr']    = sanitize_output($dimage['ci_used_fr']);
   $data['caption_en'] = sanitize_output($dimage['ci_caption_en']);
   $data['caption_fr'] = sanitize_output($dimage['ci_caption_fr']);
+  $temp               = ($dimage['ci_caption_en']) ? $dimage['ci_caption_en'] : $dimage['ci_caption_fr'];
+  $data['meta_desc']  = string_truncate($temp, 250, '...');
 
   // Return the data
   return $data;
@@ -3942,17 +3946,32 @@ function compendium_admin_notes_edit( array $notes_data ) : void
 /**
  * Fetches the years at which compendium pages have been created.
  *
- * @return  array   An array containing years.
+ * @param   bool  $admin_view   Lists every possible year including drafts, deleted pages, and wrong language.
+ *
+ * @return  array               An array containing years.
  */
 
-function compendium_pages_list_years() : array
+function compendium_pages_list_years(bool $admin_view = false) : array
 {
+  // Get the user's current language
+  $lang = user_get_language();
+
   // Fetch the compendium page years
-  $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_pages.created_at)) AS 'c_year'
-                    FROM      compendium_pages
-                    WHERE     compendium_pages.created_at != '0000-00-00'
-                    GROUP BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at))
-                    ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
+  if($admin_view)
+    $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_pages.created_at)) AS 'c_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.created_at != '0000-00-00'
+                      GROUP BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at))
+                      ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
+  else
+    $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(compendium_pages.created_at)) AS 'c_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.created_at != '0000-00-00'
+                      AND       compendium_pages.title_$lang       != ''
+                      AND       compendium_pages.is_deleted         = 0
+                      AND       compendium_pages.is_draft           = 0
+                      GROUP BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at))
+                      ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
@@ -4000,16 +4019,30 @@ function compendium_images_list_years() : array
 /**
  * Fetches the years at which compendium content has appeared.
  *
- * @return  array   An array containing years.
+ * @param   bool  $admin_view   Lists every possible year including drafts, deleted pages, and wrong language.
+ *
+ * @return  array               An array containing years.
  */
 
-function compendium_appearance_list_years() : array
+function compendium_appearance_list_years(bool $admin_view = false) : array
 {
+  // Get the user's current language
+  $lang = user_get_language();
+
   // Fetch the compendium page years
-  $qyears = query(" SELECT    compendium_pages.year_appeared AS 'a_year'
-                    FROM      compendium_pages
-                    GROUP BY  compendium_pages.year_appeared
-                    ORDER BY  compendium_pages.year_appeared DESC ");
+  if($admin_view)
+    $qyears = query(" SELECT    compendium_pages.year_appeared AS 'a_year'
+                      FROM      compendium_pages
+                      GROUP BY  compendium_pages.year_appeared
+                      ORDER BY  compendium_pages.year_appeared DESC ");
+  else
+    $qyears = query(" SELECT    compendium_pages.year_appeared AS 'a_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.title_$lang       != ''
+                      AND       compendium_pages.is_deleted         = 0
+                      AND       compendium_pages.is_draft           = 0
+                      GROUP BY  compendium_pages.year_appeared
+                      ORDER BY  compendium_pages.year_appeared DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
@@ -4028,16 +4061,30 @@ function compendium_appearance_list_years() : array
 /**
  * Fetches the years at which compendium content has peaked.
  *
- * @return  array   An array containing years.
+ * @param   bool  $admin_view   Lists every possible year including drafts, deleted pages, and wrong language.
+ *
+ * @return  array               An array containing years.
  */
 
-function compendium_peak_list_years() : array
+function compendium_peak_list_years(bool $admin_view = false) : array
 {
+  // Get the user's current language
+  $lang = user_get_language();
+
   // Fetch the compendium page years
-  $qyears = query(" SELECT    compendium_pages.year_peak AS 'p_year'
-                    FROM      compendium_pages
-                    GROUP BY  compendium_pages.year_peak
-                    ORDER BY  compendium_pages.year_peak DESC ");
+  if($admin_view)
+    $qyears = query(" SELECT    compendium_pages.year_peak AS 'p_year'
+                      FROM      compendium_pages
+                      GROUP BY  compendium_pages.year_peak
+                      ORDER BY  compendium_pages.year_peak DESC ");
+  else
+    $qyears = query(" SELECT    compendium_pages.year_peak AS 'p_year'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.title_$lang       != ''
+                      AND       compendium_pages.is_deleted         = 0
+                      AND       compendium_pages.is_draft           = 0
+                      GROUP BY  compendium_pages.year_peak
+                      ORDER BY  compendium_pages.year_peak DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qyears); $i++)

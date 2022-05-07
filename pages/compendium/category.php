@@ -15,8 +15,7 @@ $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/category";
 $page_title_en    = "Compendium: ";
 $page_title_fr    = "Compendium : ";
-$page_description = "Pages categorized as being ";
-
+$page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
 
 
@@ -43,7 +42,6 @@ if(!$compendium_category_data)
 $page_url         .= "?id=".$compendium_category_id;
 $page_title_en    .= $compendium_category_data['name_en_raw'];
 $page_title_fr    .= $compendium_category_data['name_fr_raw'];
-$page_description .= string_change_case($compendium_category_data['name_en'], 'lowercase')." in NoBleme's encyclopedia of 21st century culture";
 
 // Fetch the page list
 $compendium_pages_list = compendium_pages_list( sort_by:    'title'                                         ,

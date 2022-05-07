@@ -78,6 +78,7 @@ function meetups_get( int $meetup_id ) : mixed
   $data['date_short_fr']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'FR');
   $data['date_ddmmyy']    = sanitize_output(date('d/m/y', strtotime($dmeetup['m_date'])));
   $data['location']       = sanitize_output($dmeetup['m_location']);
+  $data['location_raw']   = $dmeetup['m_location'];
   $temp                   = time_days_elapsed(date('Y-m-d'), $dmeetup['m_date']);
   $data['days_until']     = sanitize_output($temp.__('day', amount: $temp, spaces_before: 1));
   $data['lang_en']        = str_contains($dmeetup['m_lang'], 'EN');

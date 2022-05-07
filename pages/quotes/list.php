@@ -93,7 +93,7 @@ if($quote_id)
   $page_url         = "pages/quotes/".$quotes_list[0]['id'];
   $page_title_en    = "Quote #".$quote_id;
   $page_title_fr    = "Citation #".$quote_id;
-  $page_description = $quotes_list[0]['summary'];
+  $page_description = $quotes_list[0]['meta_desc'];
 
   // If the quote is deleted or not validated yet, it shouldn't show up in who's online
   if($is_admin && ($quotes_list[0]['deleted'] || !$quotes_list[0]['validated']))

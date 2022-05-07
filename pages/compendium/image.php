@@ -61,7 +61,7 @@ if(!isset($compendium_image_data) || !$compendium_image_data)
 $page_url        .= '?name='.$compendium_image_file_name;
 $page_title_en   .= ': '.$compendium_image_file_name;
 $page_title_fr   .= ' : '.$compendium_image_file_name;
-$page_description = ($compendium_image_data['body_clean']) ? $compendium_image_data['body_clean'] : $page_description;
+$page_description = ($compendium_image_data['meta_desc']) ? $compendium_image_data['meta_desc'] : $page_description;
 
 
 
