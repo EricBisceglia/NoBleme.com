@@ -35,7 +35,7 @@ $js   = array('dev/doc', 'common/toggle');
 // Display the correct workflow reminder entry
 
 // Prepare a list of all workflow reminders
-$dev_workflow_selection = array('git', 'server_maintenance', 'server_setup', 'aliases');
+$dev_workflow_selection = array('git', 'server_maintenance', 'server_issues', 'server_setup', 'aliases');
 
 // Prepare the CSS for each workflow reminder
 foreach($dev_workflow_selection as $dev_workflow_selection_name)
@@ -80,6 +80,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <select class="inh" id="dev_workflow_selector" onchange="dev_workflow_selector();">
         <option value="git"<?=$dev_workflow_selected['git']?>><?=__('dev_workflow_selector_git')?></option>
         <option value="server_maintenance"<?=$dev_workflow_selected['server_maintenance']?>><?=__('dev_workflow_selector_server_maintenance')?></option>
+        <option value="server_issues"<?=$dev_workflow_selected['server_issues']?>><?=__('dev_workflow_selector_server_issues')?></option>
         <option value="server_setup"<?=$dev_workflow_selected['server_setup']?>><?=__('dev_workflow_selector_server_setup')?></option>
         <option value="aliases"<?=$dev_workflow_selected['aliases']?>><?=__('dev_workflow_selector_aliases')?></option>
       </select>
@@ -229,6 +230,25 @@ gitlog</pre>
 
 
 
+<?php /********************************************* SERVER ISSUES ************************************************/ ?>
+
+<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_issues']?>" id="dev_workflow_server_issues">
+
+  <h5>
+    SSH key warning
+  </h5>
+
+  <p class="smallpadding_bot">
+    Run this command locally if faced with an issue regarding host authenticity.
+  </p>
+
+  <pre>ssh-keygen -R nobleme.com</pre>
+
+</div>
+
+
+
+
 <?php /********************************************** SERVER SETUP ************************************************/ ?>
 
 <div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_setup']?>" id="dev_workflow_server_setup">
@@ -242,7 +262,8 @@ gitlog</pre>
   </p>
 
   <p>
-    Don't follow them blindly, and be ready to adapt.
+    Don't follow them blindly, and be ready to adapt.<br>
+    Some issues you might encounter are documented in <?=__link('pages/dev/doc_workflow?server_issues', "server issues")?>.
   </p>
 
   <h5 class="bigpadding_top">
