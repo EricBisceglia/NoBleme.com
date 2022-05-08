@@ -35,7 +35,7 @@ $js   = array('dev/doc', 'common/toggle');
 // Display the correct workflow reminder entry
 
 // Prepare a list of all workflow reminders
-$dev_workflow_selection = array('git', 'server_maintenance', 'server_issues', 'server_setup', 'aliases');
+$dev_workflow_selection = array('git', 'tags', 'server_maintenance', 'server_issues', 'server_setup', 'aliases');
 
 // Prepare the CSS for each workflow reminder
 foreach($dev_workflow_selection as $dev_workflow_selection_name)
@@ -79,6 +79,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__('submenu_admin_doc_workflow').__(':')?>
       <select class="inh" id="dev_workflow_selector" onchange="dev_workflow_selector();">
         <option value="git"<?=$dev_workflow_selected['git']?>><?=__('dev_workflow_selector_git')?></option>
+        <option value="tags"<?=$dev_workflow_selected['tags']?>><?=__('dev_workflow_selector_tags')?></option>
         <option value="server_maintenance"<?=$dev_workflow_selected['server_maintenance']?>><?=__('dev_workflow_selector_server_maintenance')?></option>
         <option value="server_issues"<?=$dev_workflow_selected['server_issues']?>><?=__('dev_workflow_selector_server_issues')?></option>
         <option value="server_setup"<?=$dev_workflow_selected['server_setup']?>><?=__('dev_workflow_selector_server_setup')?></option>
@@ -116,7 +117,7 @@ gitlog</pre>
   </p>
 
   <h5 class="bigpadding_top smallpadding_bot">
-    Working in a new branch
+    Work in a new branch
   </h5>
 
   <pre>git switch -c $branch</pre>
@@ -126,9 +127,13 @@ gitlog</pre>
     When in doubt, the corresponding task number can be used as the branch name.
   </p>
 
-  <h5 class="bigpadding_top smallpadding_bot">
-    Publishing code changes
+  <h5 class="bigpadding_top">
+    Publish code changes
   </h5>
+
+  <p class="smallpadding_bot">
+    Commit and push your changes.
+  </p>
 
   <pre>git add .
 git commit
@@ -164,7 +169,7 @@ gitpush</pre>
     Pull request description: Link to solved tasks <?=__link('https://nobleme.com/pages/tasks/list', "on the website", is_internal: false, popup: true)?> - do not link to private tasks.<br>
     <br>
     Once the pull request has been merged, press the "Delete branch" button on GitHub.<br>
-    Locally, switch to the <span class="monospace">trunk</span> branch and ensure that everything has been properly updated:
+    Locally, switch to the <span class="monospace">trunk</span> branch and ensure that everything has been properly updated.
   </p>
 
   <pre>git checkout trunk
@@ -173,28 +178,58 @@ git reset --hard origin/trunk
 gitlog</pre>
 
   <p class="padding_bot">
-    Delete the straggler local branch if you have no plans to keep using it:
+    Delete the straggler local branch if you have no plans to keep using it.
   </p>
 
   <pre>git branch -d $branch</pre>
 
   <h5 class="bigpadding_top">
-    Updating the tasks on NoBleme
+    Deploy the changes
   </h5>
 
   <p>
     Make sure that the code has been deployed and tested, including <?=__link('https://nobleme.com/pages/dev/queries', "queries", is_internal: false, popup: true)?> if needed.<br>
-    Find the appropriate tasks in the <?=__link('https://nobleme.com/pages/tasks/roadmap', "roadmap", is_internal: false, popup: true)?> or the <?=__link('https://nobleme.com/pages/tasks/list', "to-do list", is_internal: false, popup: true)?> and mark them as solved.<br>
+    You might want to <?=__link('https://nobleme.com/pages/dev/close_website', "close", is_internal: false, popup: true)?> then <?=__link('https://nobleme.com/pages/dev/close_website', "reopen", is_internal: false, popup: true)?> the website if your update contains major changes.
   </p>
 
-  <h5 class="bigpadding_top">
-    New version number
+  <p>
+    Find the appropriate tasks in the <?=__link('https://nobleme.com/pages/tasks/roadmap', "roadmap", is_internal: false, popup: true)?> or the <?=__link('https://nobleme.com/pages/tasks/list', "to-do list", is_internal: false, popup: true)?> and mark them as solved.
+  </p>
+
+</div>
+
+
+
+
+<?php /******************************************* TAGS AND VERSIONS **********************************************/ ?>
+
+<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['tags']?>" id="dev_workflow_tags">
+
+  <h5>
+    Should I release a new version?
   </h5>
 
-  <p class="padding_bot">
-    Release a new version only for major changes, not for hotfixes, tweaks, or minor cosmetic changes.<br>
-    Find the next version number to use <?=__link('https://nobleme.com/pages/dev/versions', "on the website", is_internal: false, popup: true)?> and confirm it by running <span class="monospace">gitlog</span>.<br>
-    Tag the new version in the Git repository:
+  <p>
+    Release a new version only for new features, major bugfixes, or significant refactors.<br>
+    Do not release a new version for hotfixes, small bug fixes, tweaks, or minor cosmetic changes.
+  </p>
+
+  <p>
+    MAJOR releases should only be for significant core reworks.<br>
+    MINOR releases should correspond to a new major functionality.<br>
+    PATCH releases should correspond to a new minor functionality or major bugfix.<br>
+    EXTENSION releases should only be used for alpha/beta testing of major or minor releases.
+
+  <h5 class="bigpadding_top">
+    Git tag
+  </h5>
+
+  <p>
+    Find the next version number to use <?=__link('https://nobleme.com/pages/dev/versions', "on the website", is_internal: false, popup: true)?> and confirm it by running <?=__link('pages/dev/doc_workflow?aliases', "gitlog")?>.
+  </p>
+
+  <p class="smallpadding_bot">
+    Tag the new version in the Git repository.
   </p>
 
   <pre>git tag $tag
@@ -202,7 +237,14 @@ gitpush
 gitlog</pre>
 
   <p>
-    Ensure that the tag has properly been created and pushed <?=__link('https://github.com/EricBisceglia/NoBleme.com/tags', "on GitHub", is_internal: false, popup: true)?>.<br>
+    Ensure that the tag has properly been created and pushed <?=__link('https://github.com/EricBisceglia/NoBleme.com/tags', "on GitHub", is_internal: false, popup: true)?>.
+  </p>
+
+  <h5 class="bigpadding_top">
+    Version number
+  </h5>
+
+  <p>
     Publish the corresponding version number <?=__link('https://nobleme.com/pages/dev/versions', "on the website", is_internal: false, popup: true)?>.
   </p>
 
@@ -216,7 +258,7 @@ gitlog</pre>
 <div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_maintenance']?>" id="dev_workflow_server_maintenance">
 
   <h5>
-    MySQL backup
+    Manual MySQL backup
   </h5>
 
   <p class="smallpadding_bot">
@@ -632,7 +674,7 @@ sudo systemctl enable anope.service
   </h5>
 
   <p class="padding_bot">
-    These aliases will simplify the <?=__link('pages/dev/doc_workflow?git', "Git worflow")?> and should be placed in your <span class="monospace">~/.bash_profile</span> file.
+    These aliases will simplify the <?=__link('pages/dev/doc_workflow?git', "Git workflow")?> and should be placed in your <span class="monospace">~/.bash_profile</span> file.
   </p>
 
   <pre id="doc_workflow_git_aliases" onclick="to_clipboard('', 'doc_workflow_git_aliases', 1);">alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all;"

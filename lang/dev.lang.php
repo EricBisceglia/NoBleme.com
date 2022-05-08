@@ -197,8 +197,10 @@ ___('dev_functions_selector_website',       'FR', "Éléments internes");
 
 
 // Development workflows selector
-___('dev_workflow_selector_git',                'EN', "Git");
-___('dev_workflow_selector_git',                'FR', "Git");
+___('dev_workflow_selector_git',                'EN', "Git workflow");
+___('dev_workflow_selector_git',                'FR', "Workflow git");
+___('dev_workflow_selector_tags',               'EN', "Tags and versions");
+___('dev_workflow_selector_tags',               'FR', "Tags et versions");
 ___('dev_workflow_selector_server_maintenance', 'EN', "Server maintenance");
 ___('dev_workflow_selector_server_maintenance', 'FR', "Maintenance serveur");
 ___('dev_workflow_selector_server_issues',      'EN', "Server issues");
