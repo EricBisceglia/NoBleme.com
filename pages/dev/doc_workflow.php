@@ -35,7 +35,7 @@ $js   = array('dev/doc', 'common/toggle');
 // Display the correct workflow reminder entry
 
 // Prepare a list of all workflow reminders
-$dev_workflow_selection = array('git', 'aliases', 'server_setup');
+$dev_workflow_selection = array('git', 'server_maintenance', 'server_setup', 'aliases');
 
 // Prepare the CSS for each workflow reminder
 foreach($dev_workflow_selection as $dev_workflow_selection_name)
@@ -79,8 +79,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__('submenu_admin_doc_workflow').__(':')?>
       <select class="inh" id="dev_workflow_selector" onchange="dev_workflow_selector();">
         <option value="git"<?=$dev_workflow_selected['git']?>><?=__('dev_workflow_selector_git')?></option>
-        <option value="aliases"<?=$dev_workflow_selected['aliases']?>><?=__('dev_workflow_selector_aliases')?></option>
+        <option value="server_maintenance"<?=$dev_workflow_selected['server_maintenance']?>><?=__('dev_workflow_selector_server_maintenance')?></option>
         <option value="server_setup"<?=$dev_workflow_selected['server_setup']?>><?=__('dev_workflow_selector_server_setup')?></option>
+        <option value="aliases"<?=$dev_workflow_selected['aliases']?>><?=__('dev_workflow_selector_aliases')?></option>
       </select>
     </h5>
   </fieldset>
@@ -209,24 +210,19 @@ gitlog</pre>
 
 
 
-<?php /************************************************* ALIASES **************************************************/ ?>
+<?php /******************************************* SERVER MAINTENANCE *********************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['aliases']?>" id="dev_workflow_aliases">
+<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_maintenance']?>" id="dev_workflow_server_maintenance">
 
   <h5>
-    Git aliases
+    MySQL backup
   </h5>
 
-  <p class="padding_bot">
-    These aliases will simplify the <?=__link('pages/dev/doc_workflow?git', "Git worflow")?> and should be placed in your <span class="monospace">~/.bash_profile</span> file.
+  <p class="smallpadding_bot">
+    Run this command then use SCP to fetch the database dump in the /tmp/ folder.
   </p>
 
-  <pre id="doc_workflow_git_aliases" onclick="to_clipboard('', 'doc_workflow_git_aliases', 1);">alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all;"
-alias gitlog2="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)';"
-alias gitpull='git fetch --all; git fetch -p;'
-alias gitpush='git push origin --all; git push origin --tags;'
-alias gitstatus='git status -s;'
-alias gitdiff='git diff --cached;'</pre>
+  <pre>mysqldump -u root -p nobleme > /tmp/nobleme.sql</pre>
 
 </div>
 
@@ -600,6 +596,30 @@ sudo systemctl enable anope.service
       Starting the IRC bot and sending a message with it.
     </li>
   </ul>
+
+</div>
+
+
+
+
+<?php /************************************************* ALIASES **************************************************/ ?>
+
+<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['aliases']?>" id="dev_workflow_aliases">
+
+  <h5>
+    Git aliases
+  </h5>
+
+  <p class="padding_bot">
+    These aliases will simplify the <?=__link('pages/dev/doc_workflow?git', "Git worflow")?> and should be placed in your <span class="monospace">~/.bash_profile</span> file.
+  </p>
+
+  <pre id="doc_workflow_git_aliases" onclick="to_clipboard('', 'doc_workflow_git_aliases', 1);">alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all;"
+alias gitlog2="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)';"
+alias gitpull='git fetch --all; git fetch -p;'
+alias gitpush='git push origin --all; git push origin --tags;'
+alias gitstatus='git status -s;'
+alias gitdiff='git diff --cached;'</pre>
 
 </div>
 
