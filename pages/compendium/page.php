@@ -57,8 +57,8 @@ if(isset($compendium_page_data['redirect']))
 if($compendium_page_data)
 {
   $page_url        .= $compendium_page_url;
-  $page_title_en   .= $compendium_page_data['title_en'];
-  $page_title_fr   .= $compendium_page_data['title_fr'];
+  $page_title_en   .= $compendium_page_data['titleenraw'];
+  $page_title_fr   .= $compendium_page_data['titlefrraw'];
   $page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta_desc'] : $page_description;
 }
 else
