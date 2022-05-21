@@ -502,6 +502,10 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 .nbcode_gallery_contents  { max-height: 16.0rem;                                                          }
 .nbcode_copypasta         { padding-left: 1.0rem; padding-right: 0.8rem;                                  }
 .nbcode_source            { font-size: 70%; vertical-align: top; padding-left: 0.1rem;                    }
+.nbcode_menu_bull         { font-size: 130%; padding-right: 0.2rem;                                       }
+.nbcode_menu_link         { font-size: 110%; font-weight: bold;                                           }
+@media (max-width: 992px)                                                                                 {
+.nbcode_menu_link         { font-size: 120%;                                                            } }
 
 /************************************************* NBCODES ON MOBILE *************************************************/
 
@@ -542,7 +546,7 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 
 /************************************************ TOP MENU ON MOBILE *************************************************/
 
-@media (max-width: 992px) {
+@media (max-width: 992px)                                                               {
 .header_topmenu_zone    { margin-left: 1.0rem; margin-right: 0.8rem;                    }
 .header_topmenu_title   { font-size: 100%; padding-left: 1.2rem; padding-right: 1.2rem  ;
                           padding-top: 0.6rem; padding-bottom: 0.6rem;                  }

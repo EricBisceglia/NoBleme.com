@@ -347,14 +347,14 @@ function nbcodes( string  $message                                              
   // [menu][/menu]
 
   // Handle this with a regex
-  $message = preg_replace('/\[menu\](.*?)\[\/menu\]/is','<h5>'.__('nbcodes_menu_contents').'</h5>$1', $message);
+  $message = preg_replace('/\[menu\](.*?)\[\/menu\]/is','<h4>'.__('nbcodes_menu_contents').'</h4>$1', $message);
 
 
   /*******************************************************************************************************************/
   // [menuitem:link|text]
 
   // Handle this with a regex
-  $message = preg_replace('/\[menuitem:(.*?)\|(.*?)\]/i','<span class="big">&bull;</span> <a class="bold big" href="#$1">$2</a>', $message);
+  $message = preg_replace('/\[menuitem:(.*?)\|(.*?)\]/i','<span class="nbcode_menu_bull">&bull;</span> <a class="nbcode_menu_link" href="#$1">$2</a>', $message);
 
 
   /*******************************************************************************************************************/
