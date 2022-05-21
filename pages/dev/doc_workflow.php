@@ -177,11 +177,17 @@ gitpull
 git reset --hard origin/trunk
 gitlog</pre>
 
-  <p class="padding_bot">
+  <p class="smallpadding_bot">
     Delete the straggler local branch if you have no plans to keep using it.
   </p>
 
   <pre>git branch -d $branch</pre>
+
+  <p class="smallpadding_bot">
+    If the remote branch is still present, delete it aswell
+  </p>
+
+  <pre>git push origin -d $branch</pre>
 
   <h5 class="bigpadding_top">
     Deploy the changes
