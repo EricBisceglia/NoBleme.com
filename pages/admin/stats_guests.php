@@ -71,11 +71,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <p>
-    <?=__('admin_stats_guests_languages', preset_values: array($guests_data['sum_en'], $guests_data['sum_fr'], $guests_data['percent_english'], $guests_data['percent_french']))?>
+    <?=__('admin_stats_guests_lang_en', amount: $guests_data['sum_en'], preset_values: array($guests_data['sum_en'], $guests_data['percent_english']))?><br>
+    <?=__('admin_stats_guests_lang_fr', amount: $guests_data['sum_fr'], preset_values: array($guests_data['sum_fr'], $guests_data['percent_french']))?>
   </p>
 
   <p class="bigpadding_bot">
-    <?=__('admin_stats_guests_themes', preset_values: array($guests_data['sum_dark'], $guests_data['sum_light'], $guests_data['percent_dark'], $guests_data['percent_light']))?>
+    <?=__('admin_stats_guests_themes_dark', amount: $guests_data['sum_dark'], preset_values: array($guests_data['sum_dark'], $guests_data['percent_dark']))?><br>
+    <?=__('admin_stats_guests_themes_light', amount: $guests_data['sum_light'], preset_values: array($guests_data['sum_light'], $guests_data['percent_light']))?>
   </p>
 
   <div class="autoscroll">

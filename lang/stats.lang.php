@@ -100,40 +100,68 @@ ___('admin_views_delete', 'FR', "Confirmer la suppression irréversible des donn
 /*********************************************************************************************************************/
 
 // Header
-___('admin_stats_guests_storage',   'EN', <<<EOT
+___('admin_stats_guests_storage',     'EN', <<<EOT
 Guest data is currently being stored for <span class="bold text_red glow">{{1}} day</span>.
 EOT
 );
-___('admin_stats_guests_storage',   'FR', <<<EOT
+___('admin_stats_guests_storage',     'FR', <<<EOT
 Les données sur les personnes sans compte sont actuellement stockées <span class="bold text_red glow">{{1}} jour</span>.
 EOT
 );
-___('admin_stats_guests_storage+',  'EN', <<<EOT
+___('admin_stats_guests_storage+',      'EN', <<<EOT
 Guest data is currently being stored for <span class="bold text_red glow">{{1}} days</span>.
 EOT
 );
-___('admin_stats_guests_storage+',  'FR', <<<EOT
+___('admin_stats_guests_storage+',      'FR', <<<EOT
 Les données sur les personnes sans compte sont actuellement stockées <span class="bold text_red glow">{{1}} jours</span>.
 EOT
 );
-___('admin_stats_guests_languages', 'EN', <<<EOT
-<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">english</span> language ({{3}}).<br>
-<span class="bold text_red glow">{{2}}</span> use the <span class="bold text_red glow">french</span> language ({{4}}).<br>
+___('admin_stats_guests_lang_en',       'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">english</span> language ({{2}}).
 EOT
 );
-___('admin_stats_guests_languages', 'FR', <<<EOT
-<span class="bold text_red glow">{{1}}</span> utilisent le site en <span class="bold text_red glow">anglais</span> ({{3}}).<br>
-<span class="bold text_red glow">{{2}}</span> utilisent le site en <span class="bold text_red glow">français</span> ({{4}}).<br>
+___('admin_stats_guests_lang_en',       'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilise le site en <span class="bold text_red glow">anglais</span> ({{2}}).
 EOT
 );
-___('admin_stats_guests_themes',    'EN', <<<EOT
-<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">dark</span> theme ({{3}}).<br>
-<span class="bold text_red glow">{{2}}</span> use the <span class="bold text_red glow">light</span> theme ({{4}}).<br>
+___('admin_stats_guests_lang_en+',      'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilisent le site en <span class="bold text_red glow">anglais</span> ({{2}}).
 EOT
 );
-___('admin_stats_guests_themes',    'FR', <<<EOT
-<span class="bold text_red glow">{{1}}</span> utilisent le mode <span class="bold text_red glow">sombre</span> ({{3}}).<br>
-<span class="bold text_red glow">{{2}}</span> utilisent le mode <span class="bold text_red glow">clair</span> ({{4}}).<br>
+___('admin_stats_guests_lang_fr',       'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">french</span> language ({{2}}).
+EOT
+);
+___('admin_stats_guests_lang_fr',       'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilise le site en <span class="bold text_red glow">français</span> ({{2}}).
+EOT
+);
+___('admin_stats_guests_lang_fr+',      'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilisent le site en <span class="bold text_red glow">français</span> ({{2}}).
+EOT
+);
+___('admin_stats_guests_themes_dark',   'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">dark</span> theme ({{2}}).
+EOT
+);
+___('admin_stats_guests_themes_dark',   'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilise le mode <span class="bold text_red glow">sombre</span> ({{2}}).
+EOT
+);
+___('admin_stats_guests_themes_dark+',  'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilisent le mode <span class="bold text_red glow">sombre</span> ({{2}}).
+EOT
+);
+___('admin_stats_guests_themes_light',  'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">light</span> theme ({{2}}).
+EOT
+);
+___('admin_stats_guests_themes_light',  'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilise le mode <span class="bold text_red glow">clair</span> ({{2}}).
+EOT
+);
+___('admin_stats_guests_themes_light+',  'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilisent le mode <span class="bold text_red glow">clair</span> ({{2}}).
 EOT
 );
 
@@ -159,7 +187,6 @@ ___('admin_stats_guests_theme_dark',  'FR', "Sombre");
 
 
 
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       USERS                                                       */
@@ -168,18 +195,34 @@ ___('admin_stats_guests_theme_dark',  'FR', "Sombre");
 
 // Header
 ___('admin_stats_users_visited',      'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> user logged into their account in the past <span class="bold text_red glow">100 days</span> ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_visited+',     'EN', <<<EOT
 <span class="bold text_red glow">{{1}}</span> users logged into their account in the past <span class="bold text_red glow">100 days</span> ({{2}}).<br>
 EOT
 );
 ___('admin_stats_users_visited',      'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> personne s'est connectée à son compte dans les <span class="bold text_red glow">100 jours</span> passés ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_visited+',     'FR', <<<EOT
 <span class="bold text_red glow">{{1}}</span> personnes se sont connectées à leur compte dans les <span class="bold text_red glow">100 jours</span> passés ({{2}}).<br>
 EOT
 );
 ___('admin_stats_users_profiledata',  'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> account has filled some <span class="bold text_red glow">profile</span> data ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_profiledata+', 'EN', <<<EOT
 <span class="bold text_red glow">{{1}}</span> accounts have filled some <span class="bold text_red glow">profile</span> data ({{2}}).<br>
 EOT
 );
 ___('admin_stats_users_profiledata',  'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> compte a modifié son <span class="bold text_red glow">profil</span> ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_profiledata+', 'FR', <<<EOT
 <span class="bold text_red glow">{{1}}</span> comptes ont modifié leur <span class="bold text_red glow">profil</span> ({{2}}).<br>
 EOT
 );
