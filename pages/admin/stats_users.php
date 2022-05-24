@@ -77,19 +77,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h1>
 
   <p>
-    <?=__('admin_stats_users_visited', preset_values: array($users_data['sum_visited'], $users_data['percent_visited']))?>
+    <?=__('admin_stats_users_visited', amount: $users_data['sum_visited'], preset_values: array($users_data['sum_visited'], $users_data['percent_visited']))?>
   </p>
 
   <p>
-    <?=__('admin_stats_users_profiledata', preset_values: array($users_data['sum_profile'], $users_data['percent_profile']))?>
+    <?=__('admin_stats_users_profiledata', amount: $users_data['sum_profile'], preset_values: array($users_data['sum_profile'], $users_data['percent_profile']))?>
   </p>
 
   <p>
-    <?=__('admin_stats_guests_languages', preset_values: array($users_data['sum_en'], $users_data['sum_fr'], $users_data['percent_english'], $users_data['percent_french']))?>
+    <?=__('admin_stats_guests_lang_en', amount: $users_data['sum_en'], preset_values: array($users_data['sum_en'], $users_data['percent_english']))?><br>
+    <?=__('admin_stats_guests_lang_fr', amount: $users_data['sum_fr'], preset_values: array($users_data['sum_fr'], $users_data['percent_french']))?>
   </p>
 
   <p>
-    <?=__('admin_stats_guests_themes', preset_values: array($users_data['sum_dark'], $users_data['sum_light'], $users_data['percent_dark'], $users_data['percent_light']))?>
+    <?=__('admin_stats_guests_themes_dark', amount: $users_data['sum_dark'], preset_values: array($users_data['sum_dark'], $users_data['percent_dark']))?><br>
+    <?=__('admin_stats_guests_themes_light', amount: $users_data['sum_light'], preset_values: array($users_data['sum_light'], $users_data['percent_light']))?>
   </p>
 
 </div>
