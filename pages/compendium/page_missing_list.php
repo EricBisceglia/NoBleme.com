@@ -152,6 +152,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <option value="-1">&nbsp;</option>
             <option value="1"><?=__('compendium_missing_documented')?></option>
             <option value="0"><?=__('compendium_missing_undocumented')?></option>
+            <option value="2"><?=__('compendium_missing_missing')?></option>
           </select>
         </th>
 

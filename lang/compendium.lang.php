@@ -627,6 +627,8 @@ ___('compendium_missing_documented',    'EN', "Documented");
 ___('compendium_missing_documented',    'FR', "Documenté");
 ___('compendium_missing_undocumented',  'EN', "Undocumented");
 ___('compendium_missing_undocumented',  'FR', "Non documenté");
+___('compendium_missing_missing',       'EN', "Missing");
+___('compendium_missing_missing',       'FR', "Manquant");
 ___('compendium_missing_count',         'EN', "{{1}} documented missing pages");
 ___('compendium_missing_count',         'FR', "{{1}} pages à créer documentées");
 ___('compendium_missing_uncount',       'EN', "{{1}} undocumented missing pages");

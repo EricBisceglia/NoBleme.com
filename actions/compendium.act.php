@@ -2527,7 +2527,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   $search_type      = isset($search['type'])      ? sanitize($search['type'], 'int', 0)         : 0;
   $search_priority  = isset($search['priority'])  ? sanitize($search['priority'], 'int', -1, 1) : -1;
   $search_notes     = isset($search['notes'])     ? sanitize($search['notes'], 'int', -1, 1)    : -1;
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1)   : -1;
+  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 2)   : -1;
 
   // Fetch a list of all urls
   $qurls = query("  SELECT    compendium_pages.page_url AS 'c_url'
@@ -2554,7 +2554,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2563,7 +2563,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2572,7 +2572,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_summary_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2581,7 +2581,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_summary_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2601,7 +2601,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['ci_caption_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2610,7 +2610,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['ci_caption_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2629,7 +2629,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['cc_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2638,7 +2638,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['cc_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2657,7 +2657,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $deras['ce_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2666,7 +2666,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $deras['ce_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2685,7 +2685,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dtypes['ct_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2694,7 +2694,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dtypes['ct_body_fr'], $links);
     for($i = 0; $i < count($links[1]); $i++)
     {
-      $dead_link = compendium_format_url($links[1][$i]);
+      $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
     }
@@ -2738,7 +2738,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     $qmissing .= "  AND       compendium_missing.fk_compendium_types  =     '$search_type'      ";
   if($search_priority > -1)
     $qmissing .= "  AND       compendium_missing.is_a_priority  =     '$search_priority'  ";
-  if($search_status == 0)
+  if($search_status == 2)
     $qmissing .= "  AND       0                                 =     1                   ";
 
   // Order the data
@@ -2798,6 +2798,10 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
 
   // Add the number of rows to the data
   $data['rows'] = $i;
+
+  // Remove the rows when searching for undocumented pages
+  if($search_status == 0)
+    $data['rows'] = 0;
 
   // Return the prepared data
   return $data;
@@ -4103,12 +4107,14 @@ function compendium_peak_list_years(bool $admin_view = false) : array
 /**
  * Formats a compendium page url.
  *
- * @param   string  $url  The compendium page url.
+ * @param   string  $url                The compendium page url.
+ * @param   bool    $no_reserved_urls   Do not check for reserved urls
  *
- * @return  string        The formatted page url.
+ * @return  string                      The formatted page url.
  */
 
-function compendium_format_url( ?string $url ) : string
+function compendium_format_url( ?string $url                      ,
+                                bool    $no_reserved_urls = false ) : string
 {
   // Change the url to lowercase
   $url = string_change_case($url, 'lowercase');
@@ -4131,14 +4137,17 @@ function compendium_format_url( ?string $url ) : string
   $url = str_replace('?', '', $url);
 
   // Prohibit reserved urls
-  $url = (mb_substr($url, 0, 6)   == 'admin_')            ? mb_substr($url, 6)  : $url;
-  $url = (mb_substr($url, 0, 8)   == 'category')          ? mb_substr($url, 8)  : $url;
-  $url = (mb_substr($url, 0, 12)  == 'cultural_era')      ? mb_substr($url, 12) : $url;
-  $url = (mb_substr($url, 0, 5)   == 'index')             ? mb_substr($url, 5)  : $url;
-  $url = (mb_substr($url, 0, 5)   == 'image')             ? mb_substr($url, 5)  : $url;
-  $url = (mb_substr($url, 0, 17)  == 'mission_statement') ? mb_substr($url, 17) : $url;
-  $url = (mb_substr($url, 0, 5)   == 'page_')             ? mb_substr($url, 5)  : $url;
-  $url = (mb_substr($url, 0, 7)   == 'random_')           ? mb_substr($url, 7)  : $url;
+  if(!$no_reserved_urls)
+  {
+    $url = (mb_substr($url, 0, 6)   == 'admin_')            ? mb_substr($url, 6)  : $url;
+    $url = (mb_substr($url, 0, 8)   == 'category')          ? mb_substr($url, 8)  : $url;
+    $url = (mb_substr($url, 0, 12)  == 'cultural_era')      ? mb_substr($url, 12) : $url;
+    $url = (mb_substr($url, 0, 5)   == 'index')             ? mb_substr($url, 5)  : $url;
+    $url = (mb_substr($url, 0, 5)   == 'image')             ? mb_substr($url, 5)  : $url;
+    $url = (mb_substr($url, 0, 17)  == 'mission_statement') ? mb_substr($url, 17) : $url;
+    $url = (mb_substr($url, 0, 5)   == 'page_')             ? mb_substr($url, 5)  : $url;
+    $url = (mb_substr($url, 0, 7)   == 'random_')           ? mb_substr($url, 7)  : $url;
+  }
 
   // Return the formatted url
   return $url;
