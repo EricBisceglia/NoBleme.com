@@ -1108,18 +1108,18 @@ ___('submenu_admin_stats_guests',   'FR', "Visites");
 
 ___('submenu_admin_doc',            'EN', "Dev tools");
 ___('submenu_admin_doc',            'FR', "Développement");
-___('submenu_admin_doc_snippets',   'EN', "Code snippets");
-___('submenu_admin_doc_snippets',   'FR', "Modèles de code");
 ___('submenu_admin_doc_css',        'EN', "CSS palette");
 ___('submenu_admin_doc_css',        'FR', "Palette CSS");
 ___('submenu_admin_doc_js',         'EN', "JavaScript toolbox");
 ___('submenu_admin_doc_js',         'FR', "Outils JavaScript");
+___('submenu_admin_doc_snippets',   'EN', "Code snippets");
+___('submenu_admin_doc_snippets',   'FR', "Modèles de code");
 ___('submenu_admin_doc_functions',  'EN', "Functions list");
 ___('submenu_admin_doc_functions',  'FR', "Liste de fonctions");
-___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
-___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
 ___('submenu_admin_doc_workflow',   'EN', "Development workflow");
 ___('submenu_admin_doc_workflow',   'FR', "Workflow de développement");
+___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
+___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
 
 ___('submenu_admin_local_fixtures', 'EN', "Local dev: Fixtures");
 ___('submenu_admin_local_fixtures', 'FR', "Dev local : Fixtures");

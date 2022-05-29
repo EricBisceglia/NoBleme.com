@@ -133,16 +133,20 @@ ___('dev_versions_edit_error_duplicate',  'FR', "Erreur : Ce numéro de version
 /*********************************************************************************************************************/
 
 // Code snippets selector
-___('dev_snippets_title',             'EN', "Code snippets:");
-___('dev_snippets_title',             'FR', "Modèles de code :");
-___('dev_snippets_selector_full',     'EN', "Full page");
-___('dev_snippets_selector_full',     'FR', "Page complète");
-___('dev_snippets_selector_fetched',  'EN', "Fetched page");
-___('dev_snippets_selector_fetched',  'FR', "Page fetchée");
-___('dev_snippets_selector_header',   'EN', "Headers");
-___('dev_snippets_selector_header',   'FR', "En-têtes");
-___('dev_snippets_selector_blocks',   'EN', "Comment blocks");
-___('dev_snippets_selector_blocks',   'FR', "Blocs de commentaires");
+___('dev_snippets_title',                 'EN', "Code snippets:");
+___('dev_snippets_title',                 'FR', "Modèles de code :");
+___('dev_snippets_selector_full',         'EN', "Full page");
+___('dev_snippets_selector_full',         'FR', "Page complète");
+___('dev_snippets_selector_fetched',      'EN', "Fetched page");
+___('dev_snippets_selector_fetched',      'FR', "Page fetchée");
+___('dev_snippets_selector_header',       'EN', "Headers");
+___('dev_snippets_selector_header',       'FR', "En-têtes");
+___('dev_snippets_selector_blocks',       'EN', "Comment blocks");
+___('dev_snippets_selector_blocks',       'FR', "Blocs de commentaires");
+___('dev_snippets_selector_action',       'EN', "Action template");
+___('dev_snippets_selector_action',       'FR', "Modèle d'action");
+___('dev_snippets_selector_act_elements', 'EN', "Action elements");
+___('dev_snippets_selector_act_elements', 'FR', "Élements d'actions");
 
 
 // CSS palette selector
