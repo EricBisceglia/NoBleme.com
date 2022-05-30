@@ -2521,13 +2521,16 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
 
   // Sanitize and prepare the data
   $missing          = array();
+  $links            = array();
+  $call_count       = array();
   $urls             = array();
   $search_url       = isset($search['url'])       ? sanitize($search['url'], 'string')          : '';
   $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')        : '';
   $search_type      = isset($search['type'])      ? sanitize($search['type'], 'int', 0)         : 0;
   $search_priority  = isset($search['priority'])  ? sanitize($search['priority'], 'int', -1, 1) : -1;
   $search_notes     = isset($search['notes'])     ? sanitize($search['notes'], 'int', -1, 1)    : -1;
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 2)   : -1;
+  $search_links     = isset($search['links'])     ? sanitize($search['links'], 'int', 0, 1)     : 0;
+  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1)   : -1;
 
   // Fetch a list of all urls
   $qurls = query("  SELECT    compendium_pages.page_url AS 'c_url'
@@ -2550,6 +2553,9 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   // Loop through the pages
   while($dpages = mysqli_fetch_array($qpages))
   {
+    // Reset the list of already called pages
+    $called = array();
+
     // Look for missing pages in the english definitions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dpages['c_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
@@ -2557,6 +2563,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the french definitions
@@ -2566,6 +2577,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the english summaries
@@ -2575,6 +2591,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the french summaries
@@ -2584,6 +2605,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
   }
 
@@ -2597,6 +2623,9 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   // Loop through the images
   while($dimages = mysqli_fetch_array($qimages))
   {
+    // Reset the list of already called pages
+    $called = array();
+
     // Look for missing pages in the english captions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dimages['ci_caption_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
@@ -2604,6 +2633,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the french captions
@@ -2613,6 +2647,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
   }
 
@@ -2625,6 +2664,9 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   // Loop through the categories
   while($dcategories = mysqli_fetch_array($qcategories))
   {
+    // Reset the list of already called pages
+    $called = array();
+
     // Look for missing pages in the english category descriptions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dcategories['cc_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
@@ -2632,6 +2674,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the french category descriptions
@@ -2641,6 +2688,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
   }
 
@@ -2653,6 +2705,9 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   // Loop through the eras
   while($deras = mysqli_fetch_array($qeras))
   {
+    // Reset the list of already called pages
+    $called = array();
+
     // Look for missing pages in the english era descriptions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $deras['ce_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
@@ -2660,6 +2715,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the french era descriptions
@@ -2669,6 +2729,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
   }
 
@@ -2681,6 +2746,9 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   // Loop through the page types
   while($dtypes = mysqli_fetch_array($qtypes))
   {
+    // Reset the list of already called pages
+    $called = array();
+
     // Look for missing pages in the english page types descriptions
     preg_match_all('/\[page:(.*?)\|(.*?)\]/', $dtypes['ct_body_en'], $links);
     for($i = 0; $i < count($links[1]); $i++)
@@ -2688,6 +2756,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
 
     // Look for missing pages in the french page types descriptions
@@ -2697,6 +2770,11 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
       $dead_link = compendium_format_url($links[1][$i], no_reserved_urls: true);
       if(!in_array($dead_link, $missing) && !in_array($dead_link, $urls))
         array_push($missing, $dead_link);
+      if(!isset($called[$dead_link]))
+      {
+        $call_count[$dead_link] = (!isset($call_count[$dead_link])) ? 1 : ($call_count[$dead_link] + 1);
+        $called[$dead_link] = 1;
+      }
     }
   }
 
@@ -2738,7 +2816,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     $qmissing .= "  AND       compendium_missing.fk_compendium_types  =     '$search_type'      ";
   if($search_priority > -1)
     $qmissing .= "  AND       compendium_missing.is_a_priority  =     '$search_priority'  ";
-  if($search_status == 2)
+  if($search_links || ($sort_by == 'links' && $search_status != 0))
     $qmissing .= "  AND       0                                 =     1                   ";
 
   // Order the data
@@ -2779,9 +2857,14 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     $temp                   = bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true));
     $data[$i]['notes']      = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
-    // Remove matching missing pages
+    // Find page call count and remove matching missing pages
     if(in_array($row['cm_url'], $missing))
+    {
+      $data[$i]['links']  = (isset($call_count[$row['cm_url']])) ? sanitize_output($call_count[$row['cm_url']]) : '&nbsp;';
       array_splice($missing, array_search($row['cm_url'], $missing), 1);
+    }
+    else
+      $data[$i]['links'] = '&nbsp;';
   }
 
   // Sort the missing pages array (with a little encoding trick for accents)
@@ -2789,12 +2872,38 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   sort($missing, SORT_LOCALE_STRING);
   $missing = array_map("utf8_encode", $missing);
 
-  // Prepare the missing pages array for displaying
+  // Prepare the missing pages array and page call counts for displaying
   foreach($missing as $page_id => $page_name)
-    $missing[$page_id] = sanitize_output($page_name);
+  {
+    $missing[$page_id]  = sanitize_output($page_name);
+    $links[$page_id]    = (isset($call_count[$page_name])) ? sanitize_output($call_count[$page_name]) : 0;
+  }
 
-  // Add the missing pages to the data
-  $data['missing'] = $missing;
+  // Sort the array by links if requested
+  if($sort_by == 'links')
+  {
+    // Create a new temporary array combining both page names and link count
+    $sort_pages = array();
+    foreach($missing as $page_id => $page_name)
+    {
+      $sort_pages[$page_id]['name']   = $page_name;
+      $sort_pages[$page_id]['links']  = $links[$page_id];
+    }
+
+    // Sort the temporary array by link count
+    usort($sort_pages, function($a, $b) { return $b['links'] <=> $a['links']; });
+
+    // Replace the missing pages and page call count arrays by the contents of the sorted temporary array
+    foreach($sort_pages as $sort_id => $sort_values)
+    {
+      $missing[$sort_id]  = sanitize_output($sort_values['name']);
+      $links[$sort_id]    = (isset($call_count[$sort_values['name']])) ? sanitize_output($call_count[$sort_values['name']]) : 0;
+    }
+  }
+
+  // Add the missing pages and page call count to the data
+  $data['missing']  = $missing;
+  $data['links']    = $links;
 
   // Add the number of rows to the data
   $data['rows'] = $i;

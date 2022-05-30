@@ -19,5 +19,6 @@
 .compendium_admin_search_big    { min-width: 3.0rem; max-width: 4.0rem;                     }
 .compendium_image_preview       { max-width: 100% !important; max-height: 100% !important;  }
 @media (min-width: 993px)                                                                   {
+.compendium_admin_missing_links { max-width: 5.0rem;                                        }
 .compendium_admin_actions       { min-width: 4.5rem;                                        }
 .compendium_admin_menu          { margin-top: -2.3rem;                                    } }
