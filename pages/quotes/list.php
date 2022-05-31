@@ -256,7 +256,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <?php if($quotes_list[$i]['nsfw'] && !$adult_settings) { ?>
-      <span class="blur" onmouseover="unblur();"><?=$quotes_list[$i]['body']?></span>
+      <span class="blur" onmouseover="unblur(this);"><?=$quotes_list[$i]['body']?></span>
       <?php } else { ?>
       <?=$quotes_list[$i]['body']?>
       <?php } ?>

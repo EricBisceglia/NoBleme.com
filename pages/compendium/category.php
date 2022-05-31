@@ -87,7 +87,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
   <p class="bigpadding_top">
-    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur();')?>
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'], onmouseover: 'unblur(this);')?>
   </p>
 
   <?php if($compendium_pages_list[$i]['type']) { ?>

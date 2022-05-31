@@ -988,16 +988,16 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__('submenu_admin_doc')?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/dev/doc_css_palette', __('submenu_admin_doc_css'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/dev/doc_js_toolbox', __('submenu_admin_doc_js'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
             <?=__link('pages/dev/doc_snippets', __('submenu_admin_doc_snippets'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/doc_functions', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/dev/doc_css_palette', __('submenu_admin_doc_css'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/dev/doc_js_toolbox', __('submenu_admin_doc_js'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/doc_workflow', __('submenu_admin_doc_workflow'), 'header_submenu_link', 1, $path);?>
