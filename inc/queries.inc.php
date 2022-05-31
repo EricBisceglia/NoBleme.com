@@ -53,7 +53,7 @@ if(!$old_structure)
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  sql_check_query_id        Checks whether a query should be ran or not.                                           */
-/*  sql_update_query_id       Updates th ID of the last query that was ran.                                          */
+/*  sql_update_query_id       Updates the ID of the last query that was ran.                                         */
 /*                                                                                                                   */
 /*  sql_create_table          Creates a new table.                                                                   */
 /*  sql_rename_table          Renames an existing table.                                                             */
@@ -137,7 +137,7 @@ function sql_check_query_id() : mixed
 
 
 /**
- * Updates th ID of the last query that was ran.
+ * Updates the ID of the last query that was ran.
  *
  * @param   int   $id   ID of the query.
  *

@@ -2259,24 +2259,14 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             &lt;tr class="row_separator_dark"&gt;
           </td>
         </tr>
-        <tr>
+        <tr class="row_separator_dark_thin">
           <td>
-            &lt;tr class="row_separator_dark"&gt;
-          </td>
-        </tr>
-        <tr class="row_separator_dark">
-          <td>
-            &lt;tr class="row_separator_dark"&gt;
+            &lt;tr class="row_separator_dark_thin"&gt;
           </td>
         </tr>
         <tr>
           <td>
-            &lt;tr class="row_separator_dark"&gt;
-          </td>
-        </tr>
-        <tr>
-          <td>
-            &lt;tr class="row_separator_dark"&gt;
+            &lt;tr class="row_separator_dark_thin"&gt;
           </td>
         </tr>
       </tbody>

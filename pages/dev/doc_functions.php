@@ -181,6 +181,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_right glow_dark bold">
+          sql_check_query_id()
+        </td>
+        <td class="align_left">
+        Checks whether a query should be ran or not.
+        </td>
+      </tr>
+      <tr class="row_separator_dark_thin">
+        <td class="align_right glow_dark bold">
+          sql_update_query_id()
+        </td>
+        <td class="align_left">
+          Updates the ID of the last query that was ran.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
           sql_create_table()
         </td>
         <td class="align_left">
@@ -203,7 +219,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Gets rid of all the data in an existing table.
         </td>
       </tr>
-      <tr>
+      <tr class="row_separator_dark_thin">
         <td class="align_right glow_dark bold">
           sql_delete_table()
         </td>
@@ -243,7 +259,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Moves an existing field in an existing table.
         </td>
       </tr>
-      <tr>
+      <tr class="row_separator_dark_thin">
         <td class="align_right glow_dark bold">
           sql_delete_field()
         </td>
@@ -259,7 +275,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Creates an index in an existing table.
         </td>
       </tr>
-      <tr>
+      <tr class="row_separator_dark_thin">
         <td class="align_right glow_dark bold">
           sql_delete_index()
         </td>
@@ -267,7 +283,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Deletes an existing index in an existing table.
         </td>
       </tr>
-      <tr>
+      <tr class="row_separator_dark_thin">
         <td class="align_right glow_dark bold">
           sql_insert_value()
         </td>
@@ -312,6 +328,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_right glow_dark bold">
+          fixtures_lorem_ipsum()
+        </td>
+        <td class="align_left">
+          Generates a lorem ipsum like sentence.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
           fixtures_generate_data()
         </td>
         <td class="align_left">
@@ -324,6 +348,30 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Finds a random legitimate id in a table.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          fixtures_fetch_random_value()
+        </td>
+        <td class="align_left">
+          Finds a random legitimate entry in a table.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          fixtures_check_entry()
+        </td>
+        <td class="align_left">
+          Check if a table entry already exists.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          fixtures_query_id()
+        </td>
+        <td class="align_left">
+          Returns the ID of the latest inserted row.
         </td>
       </tr>
 
@@ -665,7 +713,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           html_fix_meta_tags()
         </td>
         <td class="align_left">
-          Makes the content of meta tags valid.
+          Sanitizes the content of meta tags.
         </td>
       </tr>
 
@@ -1072,6 +1120,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
       <tr>
         <td class="align_right glow_dark bold">
+        user_fetch_id()
+        </td>
+        <td class="align_left">
+          Returns the user id for a specific username.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
           user_get_username()
         </td>
         <td class="align_left">
@@ -1084,6 +1140,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Detects the user's language.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_get_mode()
+        </td>
+        <td class="align_left">
+          Returns the current user's display mode.
         </td>
       </tr>
       <tr>
@@ -1127,14 +1191,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_right glow_dark bold">
-          user_is_moderator()
-        </td>
-        <td class="align_left">
-          Checks if a user is a moderator (or above).
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right glow_dark bold">
           user_is_administrator()
         </td>
         <td class="align_left">
@@ -1143,18 +1199,42 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
       <tr>
         <td class="align_right glow_dark bold">
-          user_restrict_to_guests()
+          user_is_moderator()
         </td>
         <td class="align_left">
-          Allows access only to guests (not logged into an account).
+          Checks if a user is a moderator (or above).
         </td>
       </tr>
       <tr>
         <td class="align_right glow_dark bold">
-          user_restrict_to_users()
+          user_is_banned()
         </td>
         <td class="align_left">
-          Allows access only to logged in users.
+          Checks if a user is banned.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_is_ip_banned()
+        </td>
+        <td class="align_left">
+          Checks if a user is IP banned.
+        </td>
+      </tr>
+      <tr class="row_separator_dark_thin">
+        <td class="align_right glow_dark bold">
+          user_is_deleted()
+        </td>
+        <td class="align_left">
+          Checks if a user's account is deleted.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_restrict_to_administrators()
+        </td>
+        <td class="align_left">
+          Allows access only to administrators.
         </td>
       </tr>
       <tr>
@@ -1167,10 +1247,81 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
       <tr>
         <td class="align_right glow_dark bold">
-          user_restrict_to_administrators()
+          user_restrict_to_users()
         </td>
         <td class="align_left">
-          Allows access only to administrators.
+          Allows access only to logged in users.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_restrict_to_guests()
+        </td>
+        <td class="align_left">
+          Allows access only to guests (not logged into an account).
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_restrict_to_banned()
+        </td>
+        <td class="align_left">
+          Allows access only to banned users.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_restrict_to_ip_banned()
+        </td>
+        <td class="align_left">
+          Allows access only to fully IP banned users.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_restrict_to_non_ip_banned()
+        </td>
+        <td class="align_left">
+          Allows access only to users who are not IP banned.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h2 class="align_center bigpadding_top padding_bot">
+    Account data
+  </h2>
+
+  <table>
+    <thead>
+
+      <tr>
+        <th class="align_right">
+          FUNCTION
+        </th>
+        <th class="align_left">
+          DESCRIPTION
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_get_oldest()
+        </td>
+        <td class="align_left">
+          Finds when the oldest user registered on the website.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          user_get_birth_years()
+        </td>
+        <td class="align_left">
+          Returns all the years during which a user was born.
         </td>
       </tr>
 
@@ -1257,6 +1408,37 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_60 padding_top dev_functions_section<?=$dev_functions_hide['website']?>" id="dev_functions_website">
 
   <h2 class="align_center padding_bot">
+    Utilities
+  </h2>
+
+  <table>
+    <thead>
+
+      <tr>
+        <th class="align_right">
+          FUNCTION
+        </th>
+        <th class="align_left">
+          DESCRIPTION
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td class="align_right glow_dark bold">
+          root_path()
+        </td>
+        <td class="align_left">
+          Returns the path to the root of the website
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h2 class="align_center bigpadding_top padding_bot">
     System variables
   </h2>
 

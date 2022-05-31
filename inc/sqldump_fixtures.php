@@ -33,6 +33,18 @@ if(!$GLOBALS['dev_mode'])
 /*                                      FUNCTIONS REQUIRED TO INSERT FIXTURES                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  fixtures_lorem_ipsum              Generates a lorem ipsum like sentence.                                         */
+/*  fixtures_generate_data            Generates SQL safe random data.                                                */
+/*                                                                                                                   */
+/*  fixtures_fetch_random_id          Finds a random legitimate id in a table.                                       */
+/*  fixtures_fetch_random_value       Finds a random legitimate entry in a table.                                    */
+/*                                                                                                                   */
+/*  fixtures_check_entry              Check if a table entry already exists.                                         */
+/*                                                                                                                   */
+/*  fixtures_query_id                 Returns the ID of the latest inserted row.                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Generates a lorem ipsum like sentence.
