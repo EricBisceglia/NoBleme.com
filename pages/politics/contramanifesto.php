@@ -698,7 +698,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('politics_manifesto_postface_3')?>
   </p>
   <p>
-    <?=__('politics_manifesto_postface_4')?>
+    <?=__('politics_manifesto_postface_quote')?>
   </p>
   <p>
     <?=__('politics_manifesto_postface_5')?>

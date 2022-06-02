@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_90 bigpadding_bot">
 
   <h1 class="align_center">
-    <?=__link('pages/compendium/page_missing_list', __('compendium_missing_page_title'), 'noglow')?>
+    <?=__link('pages/compendium/page_missing_list', __('compendium_page_missing_title'), 'noglow')?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add?url='.$compendium_missing_data['url'])?>
     <?php if($compendium_missing_data['id']) { ?>
     <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_missing_edit?id='.$compendium_missing_data['id'])?>

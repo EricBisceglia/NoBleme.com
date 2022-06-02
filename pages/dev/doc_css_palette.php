@@ -90,7 +90,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="popins"<?=$dev_palette_selected['popins']?>><?=__('dev_palette_selector_popins')?></option>
         <option value="spacing"<?=$dev_palette_selected['spacing']?>><?=__('dev_palette_selector_spacing')?></option>
         <option value="tables"<?=$dev_palette_selected['tables']?>><?=__('dev_palette_selector_tables')?></option>
-        <option value="text"<?=$dev_palette_selected['text']?>><?=__('dev_palette_selector_text')?></option>
+        <option value="text"<?=$dev_palette_selected['text']?>><?=string_change_case(__('text'), 'initials')?></option>
         <option value="tooltips"<?=$dev_palette_selected['tooltips']?>><?=__('dev_palette_selector_tooltips')?></option>
       </select>
     </h5>
@@ -157,6 +157,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="width_30 padding_top">
 
+    <p class="smallpadding_bot">
+      [nsfw]Censored[/nsfw] -> <?=nbcodes(bbcodes('[nsfw]Censored[/nsfw]'))?><br>
+      [page:page_name|Compendium link] -> <?=nbcodes(bbcodes('[page:page_name|Compendium link]'))?><br>
+      [nobleme:pages/dev/doc_css_palette|Internal link] -> <?=nbcodes(bbcodes('[nobleme:pages/dev/doc_css_palette|Internal link]'))?><br>
+      [link:https://nobleme.com|External link] -> <?=nbcodes(bbcodes('[link:https://nobleme.com|External link]'))?><br>
+      [source:1] -> <?=nbcodes(bbcodes('[source:1]'))?><br>
+      [sources:1|Description] -> <?=nbcodes(bbcodes('[sources:1|Description]'))?>
+    </p>
+
+    <p>
+      [menu][/menu]<br>
+      [menuitem:anchor_name|Menu item title]<br>
+      [anchor:anchor_name]<br>
+      <?=nbcodes(bbcodes('[menu][menuitem:anchor_link|Menu item title]<br>[menuitem:anchor_link|Other menu entry][/menu]'))?>
+    </p>
+
     <p>
       == Title ==<br>
       <?=nbcodes(bbcodes('== Title =='))?>
@@ -165,6 +181,67 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <p>
       === Subtitle ===<br>
       <?=nbcodes(bbcodes('=== Subtitle ==='))?>
+    </p>
+
+    <p class="smallpadding_bot">
+      [copypasta=id]Lorem pasta[/copypasta]<br>
+      <?=nbcodes(bbcodes('[copypasta=id]Lorem pasta[/copypasta]'))?>
+    </p>
+
+    <p class="smallpadding_bot">
+      [copypasta-nsfw=id]Lorem pasta[/copypasta-nsfw]<br>
+      <?=nbcodes(bbcodes('[copypasta-nsfw=id]Lorem pasta[/copypasta-nsfw]'))?>
+    </p>
+
+    <p class="smallpadding_bot">
+      [trends:test]<br>
+      [trends5:one|two|three|four|five]<br>
+      <br>
+      <?=nbcodes(bbcodes('[trends5:one|two|three|four|five]'))?>
+    </p>
+
+    <p>
+      [image:ah_original.jpg|left|Image description]<br>
+      <br>
+      <?=nbcodes(bbcodes('[image:ah_original.jpg|left|Image description]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
+    </p>
+
+    <p>
+      [image-nsfw:ah_original.jpg|right]<br>
+      <br>
+      <?=nbcodes(bbcodes('[image-nsfw:ah_original.jpg|right]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam.
+    </p>
+
+    <p>
+      [youtube:XE6YaLtctcI|left|Video description]<br>
+      <br>
+      <?=nbcodes(bbcodes('[youtube:XE6YaLtctcI|left|Video description]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in.
+    </p>
+
+    <p>
+      [youtube-nsfw:XE6YaLtctcI|right]<br>
+      <br>
+      <?=nbcodes(bbcodes('[youtube-nsfw:XE6YaLtctcI|right]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
+    </p>
+
+  </div>
+
+  <div class="width_50">
+
+    <p>
+      [gallery]<br>
+      [gallery:ah_original.jpg|Description]<br>
+      [gallery-nsfw:ah_original.jpg]<br>
+      [gallery-youtube:XE6YaLtctcI]<br>
+      [gallery-youtube-nsfw:XE6YaLtctcI|Description]<br>
+      [/gallery]<br>
+      <br>
+      <?=nbcodes(bbcodes('[gallery]
+      [gallery:ah_original.jpg|Description]
+      [gallery-nsfw:ah_original.jpg]
+      [gallery-youtube:XE6YaLtctcI]
+      [gallery-youtube-nsfw:XE6YaLtctcI|Description]
+      [/gallery]'))?>
     </p>
 
   </div>
@@ -176,7 +253,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* COLORS ***************************************************/ ?>
 
-<div class="width_30 padding_top dev_palette_section<?=$dev_palette_hide['colors']?>" id="dev_palette_colors">
+<div class="width_50 padding_top dev_palette_section<?=$dev_palette_hide['colors']?>" id="dev_palette_colors">
 
   <table class="noresize">
     <tbody class="align_center dark">
@@ -187,6 +264,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="dark">
           .dark
         </td>
+        <td class="black text_light dark_hover">
+          .dark_hover
+        </td>
+        <td class="black text_light text_dark_hover">
+          .text_dark_hover
+        </td>
       </tr>
       <tr>
         <td class="text_black light">
@@ -194,6 +277,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="black">
           .black
+        </td>
+        <td class="dark text_light black_hover">
+          .black_hover
+        </td>
+        <td class="dark text_light text_black_hover">
+          .text_black_hover
         </td>
       </tr>
       <tr>
@@ -203,6 +292,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="white text_dark">
           .white
         </td>
+        <td class="dark text_light white_hover">
+          .white_hover
+        </td>
+        <td class="dark text_light text_white_hover">
+          .text_white_hover
+        </td>
       </tr>
       <tr>
         <td class="text_light">
@@ -210,6 +305,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="light text_dark">
           .light
+        </td>
+        <td class="dark text_white light_hover">
+          .light_hover
+        </td>
+        <td class="dark text_white text_light_hover">
+          .text_light_hover
         </td>
       </tr>
       <tr>
@@ -219,6 +320,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="yellow">
           .yellow
         </td>
+        <td class="dark text_light yellow_hover">
+          .yellow_hover
+        </td>
+        <td class="dark text_light text_yellow_hover">
+          .text_yellow_hover
+        </td>
       </tr>
       <tr>
         <td class="text_orange">
@@ -226,6 +333,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="orange">
           .orange
+        </td>
+        <td class="dark text_light orange_hover">
+          .orange_hover
+        </td>
+        <td class="dark text_light text_orange_hover">
+          .text_orange_hover
         </td>
       </tr>
       <tr>
@@ -235,6 +348,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="red">
           .red
         </td>
+        <td class="dark text_light red_hover">
+          .red_hover
+        </td>
+        <td class="dark text_light text_red_hover">
+          .text_red_hover
+        </td>
       </tr>
       <tr>
         <td class="text_purple">
@@ -242,6 +361,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="purple">
           .purple
+        </td>
+        <td class="dark text_light purple_hover">
+          .purple_hover
+        </td>
+        <td class="dark text_light text_purple_hover">
+          .text_purple_hover
         </td>
       </tr>
       <tr>
@@ -251,6 +376,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="blue">
           .blue
         </td>
+        <td class="dark text_light blue_hover">
+          .blue_hover
+        </td>
+        <td class="dark text_light text_blue_hover">
+          .text_blue_hover
+        </td>
       </tr>
       <tr>
         <td class="text_brown">
@@ -259,6 +390,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="brown">
           .brown
         </td>
+        <td class="dark text_light brown_hover">
+          .brown_hover
+        </td>
+        <td class="dark text_light text_brown_hover">
+          .text_brown_hover
+        </td>
       </tr>
       <tr>
         <td class="text_green">
@@ -266,6 +403,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="green">
           .green
+        </td>
+        <td class="dark text_light green_hover">
+          .green_hover
+        </td>
+        <td class="dark text_light text_green_hover">
+          .text_green_hover
         </td>
       </tr>
     </tbody>
@@ -278,17 +421,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* DEFAULT **************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['default']?>" id="dev_palette_default">
-
-  <div class="width_50 padding_bot">
-
-    <p>&lt;p> above a &lt;hr><br>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. The ins and del tags are used in diffs. Aliquam ultricies eleifend egestas.
-    </p>
-
-  </div>
-
-  <hr>
+<div class="dev_palette_section<?=$dev_palette_hide['default']?>" id="dev_palette_default">
 
   <div class="width_50">
 
@@ -305,7 +438,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <h6 class="smallpadding_top">&lt;h6> isn't really much of a section header</h6>
 
     <p>
-      &lt;a> This phrase <a>contains a link</a> inside it.
+      &lt;p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. &lt;/p>
+    </p>
+
+    <p>
+      &lt;a> This phrase <a>contains a link</a> inside it. This is a <a class="forced_link">.forced_link</a>.
     </p>
 
     <div class="padding_top">
@@ -396,8 +533,13 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
     <p>
       <span class="bold">.hidden:</span> Will always be hidden.<br>
-      <span class="bold">.mobile:</span> Will be visible on mobile only.<br>
+      <br>
       <span class="bold">.desktop:</span> Will be visible on desktop only.<br>
+      <span class="bold">.desktop_wide:</span> Will be visible on widescreen desktops only.<br>
+      <br>
+      <span class="bold">.mobile:</span> Will be visible on mobile only.<br>
+      <span class="bold">.mobile_table:</span> Same as .mobile, for table elements.<br>
+      <span class="bold">.mobile_inline:</span> Same as .mobile, for inline elements.<br>
     </p>
 
   </div>
@@ -444,10 +586,26 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     </div>
   </div>
 
-  <div class="padding_top padding_bot">
+  <div class="padding_top">
     <div class="width_80 dev_div_border align_center">
       <div class="padding_top padding_bot bold">
         div.width_80
+      </div>
+    </div>
+  </div>
+
+  <div class="padding_top">
+    <div class="width_90 dev_div_border align_center">
+      <div class="padding_top padding_bot bold">
+        div.width_90
+      </div>
+    </div>
+  </div>
+
+  <div class="padding_top padding_bot">
+    <div class="width_100 dev_div_border align_center">
+      <div class="padding_top padding_bot bold">
+        div.width_100
       </div>
     </div>
   </div>
@@ -464,6 +622,11 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
       .vscrollbar
     </div>
   </div>
+  <div class="width_30 padding_top">
+    <div class="autoscroll align_center smallpadding_top smallpadding_bot">
+      .autoscroll
+    </div>
+  </div>
 
   </div>
 
@@ -475,7 +638,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <div class="padding_top dev_palette_section<?=$dev_palette_hide['forms']?>" id="dev_palette_forms">
 
-  <div class="width_50 bigpadding_bot">
+  <div class="width_50 padding_bot">
 
   <pre class="dev_pre_code" id="dev_palette_form" onclick="to_clipboard('', 'dev_palette_form', 1);">&lt;form method="POST">
   &lt;fieldset>
@@ -485,9 +648,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 bigpadding_top bigpadding_bot">
+  <div class="width_50 padding_top bigpadding_bot">
 
     <div class="smallpadding_bot">
       <label for="dev_palette_input">&lt;label> for &lt;input></label>
@@ -528,7 +689,14 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     <label for="dev_palette_textarea">&lt;label> for &lt;textarea></label>
     <textarea id="dev_palette_textarea" name="dev_palette_textarea">Indentation and line breaks and are respected.
 
-  Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. Aliquam ultricies eleifend egestas. Nunc nisi lorem, dapibus et lobortis id, porttitor a diam. Aenean varius ac mauris sed convallis. Nunc in tellus viverra orci aliquet consectetur eu sit amet sapien. Maecenas placerat vel purus efficitur rhoncus. Etiam ex ligula, convallis quis laoreet a, bibendum vitae dolor. Suspendisse sagittis, massa ac viverra laoreet, nibh dolor ultrices urna, vel rutrum justo nibh quis lectus.</textarea>
+Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. Aliquam ultricies eleifend egestas. Nunc nisi lorem, dapibus et lobortis id, porttitor a diam. Aenean varius ac mauris sed convallis. Nunc in tellus viverra orci aliquet consectetur eu sit amet sapien. Maecenas placerat vel purus efficitur rhoncus. Etiam ex ligula, convallis quis laoreet a, bibendum vitae dolor. Suspendisse sagittis, massa ac viverra laoreet, nibh dolor ultrices urna, vel rutrum justo nibh quis lectus.</textarea>
+
+    <div class="smallpadding_top">
+      <label for="dev_palette_textarea">&lt;textarea class="higher"></label>
+      <textarea class="higher">Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. Aliquam ultricies eleifend egestas. Nunc nisi lorem, dapibus et lobortis id, porttitor a diam. Aenean varius ac mauris sed convallis. Nunc in tellus viverra orci aliquet consectetur eu sit amet sapien. Maecenas placerat vel purus efficitur rhoncus. Etiam ex ligula, convallis quis laoreet a, bibendum vitae dolor. Suspendisse sagittis, massa ac viverra laoreet, nibh dolor ultrices urna, vel rutrum justo nibh quis lectus.
+
+Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. Aliquam ultricies eleifend egestas. Nunc nisi lorem, dapibus et lobortis id, porttitor a diam. Aenean varius ac mauris sed convallis. Nunc in tellus viverra orci aliquet consectetur eu sit amet sapien. Maecenas placerat vel purus efficitur rhoncus. Etiam ex ligula, convallis quis laoreet a, bibendum vitae dolor. Suspendisse sagittis, massa ac viverra laoreet, nibh dolor ultrices urna, vel rutrum justo nibh quis lectus.</textarea>
+    </div>
 
     <div class="padding_top bigpadding_bot">
       <pre class="dev_pre_code" id="dev_palette_form_textarea" onclick="to_clipboard('', 'dev_palette_form_textarea', 1);">&lt;label for="example_textarea">&lt;?=__('nobleme')?>&lt;/label>
@@ -587,8 +755,14 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     </div>
 
     <div class="smallpadding_bot">
-      <input type="submit" class="bigbutton" name="dev_palette_input_submit_big" value="Big submit button">
+      <input type="submit" class="bigbutton" name="dev_palette_input_submit_big" value=".bigbutton">
       <input type="submit" class="bigbutton" name="dev_palette_input_submit_big_disabled" value="Disabled" disabled>
+    </div>
+
+    <div class="smallpadding_bot">
+      <input type="submit" class="button_chain" name="dev_palette_input_submit" value=".button_chain">
+      <input type="submit" class="button_chain" name="dev_palette_input_submit" value=".button_chain">
+      <input type="submit" class="button_chain" name="dev_palette_input_submit" value=".button_chain">
     </div>
 
     <div>
@@ -601,8 +775,6 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     </div>
 
   </div>
-
-  <hr>
 
   <div class="width_50 bigpadding_top">
 
@@ -647,9 +819,20 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <div class="padding_top dev_palette_section<?=$dev_palette_hide['grids']?>" id="dev_palette_grids">
 
-  <div class="width_50 bigpadding_bot">
+  <div class="width_50 padding_bot">
     <div class="align_center dev_div_border bold">
       .flexcontainer
+    </div>
+    <div class="flexcontainer align_center dev_div_border bold">
+      <div class="flex autoflex dev_div_border">
+        .autoflex
+      </div>
+      <div class="flex autoflex dev_div_border">
+        .autoflex
+      </div>
+      <div class="flex autoflex dev_div_border">
+        .autoflex
+      </div>
     </div>
     <div class="flexcontainer align_center dev_div_border bold">
       <div class="flex dev_div_border">
@@ -679,9 +862,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 bigpadding_top">
+  <div class="width_50 padding_top">
 
     <div class="padding_bot">
       <div style="grid-template-columns: repeat(3, 1fr);" class="gridcontainer align_center dev_div_border">
@@ -740,7 +921,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <div class="padding_top dev_palette_section<?=$dev_palette_hide['icons']?>" id="dev_palette_icons">
 
-  <div class="width_50 bigpadding_bot">
+  <div class="width_50 padding_bot">
 
     <h1 class="smallpadding_bot">
       &lt;h1> with icons
@@ -758,9 +939,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_30 bigpadding_top">
+  <div class="width_30 padding_top">
 
     <table>
       <thead>
@@ -1193,6 +1372,11 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
     </p>
 
+    <p class="align_desktop">
+      .align_desktop:<br>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
+    </p>
+
     <p class="align_left">
       .align_left:<br>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
@@ -1210,9 +1394,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_30">
+  <div class="width_30 padding_top">
     <div class="padding_top padding_bot">
       <table class="align_center">
         <tbody>
@@ -1232,8 +1414,6 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     </div>
   </div>
 
-  <hr>
-
   <div class="width_70 padding_top">
 
     <div class="smallpadding_bot">
@@ -1243,20 +1423,29 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     </div>
 
     <div class="smallpadding_bot">
-      <div class="dev_div_spacing indented">
-        .indented
+      <div class="dev_div_spacing nospaced">
+        .nospaced
       </div>
       <div class="dev_div_spacing spaced">
         .spaced
       </div>
+      <div class="dev_div_spacing indented">
+        .indented
+      </div>
+    </div>
+
+    <div class="smallpadding_bot">
       <div class="dev_div_spacing spaced_left">
         .spaced_left
+      </div>
+      <div class="dev_div_spacing bigspaced_left">
+        .bigspaced_left
       </div>
       <div class="dev_div_spacing spaced_right">
         .spaced_right
       </div>
-      <div class="dev_div_spacing nospaced">
-        .nospaced
+      <div class="dev_div_spacing bigspaced_right">
+        .bigspaced_right
       </div>
     </div>
 
@@ -1264,53 +1453,71 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
       <div class="dev_div_spacing nopadding">
         .nopadding
       </div>
-      <div class="dev_div_spacing tinypadding_top">
-        .tinypadding_top
+      <div class="dev_div_spacing nopadding_top">
+        .nopadding_top
       </div>
-      <div class="dev_div_spacing smallpadding_top">
-        .smallpadding_top
+      <div class="dev_div_spacing nopadding_bot">
+        .nopadding_bot
       </div>
-      <div class="dev_div_spacing padding_top">
-        .padding_top
+    </div>
+
+    <div class="smallpadding_bot">
+      <div class="dev_div_spacing nopadding">
+        .nopadding
       </div>
-      <div class="dev_div_spacing bigpadding_top">
-        .bigpadding_top
+      <div class="dev_div_spacing nopadding_top">
+        .nopadding_top
       </div>
-      <div class="dev_div_spacing hugepadding_top">
-        .hugepadding_top
+      <div class="dev_div_spacing nopadding_bot">
+        .nopadding_bot
+      </div>
+    </div>
+
+    <div class="smallpadding_bot">
+      <div class="dev_div_spacing gigapadding_top">
+        .gigapadding_top
       </div>
       <div class="dev_div_spacing megapadding_top">
         .megapadding_top
       </div>
-      <div class="dev_div_spacing gigapadding_top">
-        .gigapadding_top
+      <div class="dev_div_spacing hugepadding_top">
+        .hugepadding_top
+      </div>
+      <div class="dev_div_spacing bigpadding_top">
+        .bigpadding_top
+      </div>
+      <div class="dev_div_spacing padding_top">
+        .padding_top
+      </div>
+      <div class="dev_div_spacing smallpadding_top">
+        .smallpadding_top
+      </div>
+      <div class="dev_div_spacing tinypadding_top">
+        .tinypadding_top
       </div>
     </div>
 
     <div>
-      <div class="dev_div_spacing nopadding">
-        .nopadding
-      </div>
-      <div class="dev_div_spacing tinypadding_bot">
-        .tinypadding_bot
-      </div>
-      <div class="dev_div_spacing smallpadding_bot">
-        .smallpadding_bot
-      </div>
-      <div class="dev_div_spacing padding_bot">
-        .padding_bot
-      </div>
-      <div class="dev_div_spacing bigpadding_bot">
-        .bigpadding_bot
-      </div>
-      <div class="dev_div_spacing hugepadding_bot">
-        .hugepadding_bot
+      <div class="dev_div_spacing gigapadding_bot">
+        .gigapadding_bot
       </div>
       <div class="dev_div_spacing megapadding_bot">
         .megapadding_bot
       </div>
-      <div class="dev_div_spacing gigapadding_bot">
-        .gigapadding_bot
+      <div class="dev_div_spacing hugepadding_bot">
+        .hugepadding_bot
+      </div>
+      <div class="dev_div_spacing bigpadding_bot">
+        .bigpadding_bot
+      </div>
+      <div class="dev_div_spacing padding_bot">
+        .padding_bot
+      </div>
+      <div class="dev_div_spacing smallpadding_bot">
+        .smallpadding_bot
+      </div>
+      <div class="dev_div_spacing tinypadding_bot">
+        .tinypadding_bot
       </div>
     </div>
 
@@ -1325,7 +1532,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <div class="padding_top dev_palette_section<?=$dev_palette_hide['tables']?>" id="dev_palette_tables">
 
-  <div class="width_50 padding_bot">
+  <div class="width_50 bigpadding_bot">
 
     <table>
       <thead>
@@ -1446,9 +1653,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 padding_top padding_bot">
+  <div class="width_50 padding_top bigpadding_bot">
 
     <table class="noresize">
       <thead>
@@ -1515,9 +1720,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 padding_top padding_bot">
+  <div class="width_50 padding_top bigpadding_bot">
 
     <table>
       <thead>
@@ -1540,7 +1743,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
         </tr>
       </thead>
       <tbody class="altc">
-      <tr>
+        <tr>
           <td>
             tbody.altc
           </td>
@@ -1670,9 +1873,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 padding_top padding_bot">
+  <div class="width_50 padding_top bigpadding_bot">
 
     <form class="padding_bot" method="post">
       <fieldset>
@@ -1860,9 +2061,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 padding_top padding_bot">
+  <div class="width_50 padding_top bigpadding_bot">
 
     <table>
       <thead>
@@ -1948,9 +2147,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
-  <div class="width_50 padding_top padding_bot">
+  <div class="width_50 padding_top bigpadding_bot">
 
     <table>
       <thead>
@@ -2041,8 +2238,6 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
   </div>
 
-  <hr>
-
   <div class="width_30 padding_top">
 
     <table>
@@ -2064,24 +2259,14 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
             &lt;tr class="row_separator_dark"&gt;
           </td>
         </tr>
-        <tr>
+        <tr class="row_separator_dark_thin">
           <td>
-            &lt;tr class="row_separator_dark"&gt;
-          </td>
-        </tr>
-        <tr class="row_separator_dark">
-          <td>
-            &lt;tr class="row_separator_dark"&gt;
+            &lt;tr class="row_separator_dark_thin"&gt;
           </td>
         </tr>
         <tr>
           <td>
-            &lt;tr class="row_separator_dark"&gt;
-          </td>
-        </tr>
-        <tr>
-          <td>
-            &lt;tr class="row_separator_dark"&gt;
+            &lt;tr class="row_separator_dark_thin"&gt;
           </td>
         </tr>
       </tbody>
@@ -2099,6 +2284,8 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 <div class="width_30 padding_top dev_palette_section<?=$dev_palette_hide['text']?>" id="dev_palette_text">
 
   <p class="align_center">
+    <span class="smallest">.smallest text</span><br>
+    <span class="smaller">.smaller text</span><br>
     <span class="small">.small text</span><br>
     Normal<br>
     <span class="big">.big text</span><br>
@@ -2107,21 +2294,26 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
   </p>
 
   <p class="align_center">
-    <span class="uppercase">.uppercase text</span><br>
     <span class="bold">.bold text</span><br>
     <span class="notbold">.notbold text</span><br>
     <span class="italics">.italics text</span><br>
     <span class="underlined">.underlined text</span><br>
     <span class="strikethrough">.strikethrough text</span><br>
-    <span class="pointer">.pointer (hover me)</span><br>
+    <span class="monospace">.monospace text</span><br>
+    <span class="uppercase">.uppercase text</span><br>
+    <span class="pointer">.pointer (hover me)</span>
   </p>
 
   <p class="align_center">
     <span class="noglow">.noglow text</span><br>
-    <span class="glowhover">.glowhover text</span><br>
     <span class="smallglow">.smallglow text</span><br>
     <span class="glow">.glow text</span><br>
     <span class="bigglow">.bigglow text</span><br>
+    <span class="hugeglow">.hugeglow text</span><br>
+    <span class="glow_dark">.glow_dark text</span><br>
+    <span class="bigglow_dark">.bigglow_dark text</span><br>
+    <span class="hugeglow_dark">.hugeglow_dark text</span><br>
+    <span class="glowhover">.glowhover (hover me)</span>
   </p>
 
   <p>
@@ -2136,6 +2328,8 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
     Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui.
     <button class="float_right">.float_right</button>
     Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. The ins and del tags are used in diffs. Aliquam ultricies eleifend egestas.
+    <button class="float_left float_above">.float_left .float_above</button>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
   </p>
 
   <p class="nowrap">
@@ -2146,6 +2340,11 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
   <p class="dowrap">
     .dowrap<br>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam.
+  </p>
+
+  <p class="break_words">
+    .break_words<br>
+    Loremipsumdolorsitamet,consecteturadipiscingelit.Etiamrisusnulla,temporarisusac,consectetursuscipitquam.Loremipsumdolorsitamet,consecteturadipiscingelit.
   </p>
 
 </div>

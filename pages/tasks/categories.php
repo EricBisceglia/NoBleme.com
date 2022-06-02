@@ -155,7 +155,7 @@ $task_categories = tasks_categories_list();
 
       <div class="smallpadding_top padding_bot">
         <input type="submit" class="light text_dark spaced" name="tasks_categories_edit_submit_<?=$task_categories[$i]['id']?>" value="<?=__('tasks_categories_edit')?>" onclick="tasks_categories_edit('<?=$task_categories[$i]['id']?>');">
-        <input type="submit" class="black text_white spaced" name="tasks_categories_edit_close_<?=$task_categories[$i]['id']?>" value="<?=__('tasks_categories_close')?>" onclick="tasks_categories_edit_form('<?=$task_categories[$i]['id']?>');">
+        <input type="submit" class="black text_white spaced" name="tasks_categories_edit_close_<?=$task_categories[$i]['id']?>" value="<?=__('close_form')?>" onclick="tasks_categories_edit_form('<?=$task_categories[$i]['id']?>');">
       </div>
 
       </td>

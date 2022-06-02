@@ -98,7 +98,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               </th>
 
               <th>
-                <?=__('meetups_list_location')?>
+                <?=__('location')?>
                 <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('location');")?>
               </th>
 
@@ -125,11 +125,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
                   <option value="0">&nbsp;</option>
                   <?php if($lang == 'EN') { ?>
                   <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
-                  <option value="ENFR"><?=__('meetups_list_bilingual')?></option>
+                  <option value="ENFR"><?=string_change_case(__('bilingual'), 'initials')?></option>
                   <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
                   <?php } else { ?>
                   <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
-                  <option value="FREN"><?=__('meetups_list_bilingual')?></option>
+                  <option value="FREN"><?=string_change_case(__('bilingual'), 'initials')?></option>
                   <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
                   <?php } ?>
                 </select>

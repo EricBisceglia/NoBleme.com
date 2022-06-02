@@ -99,8 +99,6 @@ ___('users_inbox_message',  'EN', "Message title");
 ___('users_inbox_message',  'FR', "Titre du message");
 ___('users_inbox_sender',   'EN', "Sender");
 ___('users_inbox_sender',   'FR', "Expéditeur");
-___('users_inbox_sent',     'EN', "Sent");
-___('users_inbox_sent',     'FR', "Envoyé");
 ___('users_inbox_read',     'EN', "Read");
 ___('users_inbox_read',     'FR', "Lu");
 ___('users_inbox_count',    'EN', "{{1}} message in your inbox");

@@ -222,11 +222,8 @@ ___('irc_bot_history_nochan',         'EN', "----");
 ___('irc_bot_history_nochan',         'FR', "----");
 ___('irc_bot_history_silenced',       'EN', "Silenced");
 ___('irc_bot_history_silenced',       'FR', "Silencieux");
-___('irc_bot_history_sent',           'EN', "Sent");
-___('irc_bot_history_sent',           'FR', "Envoyés");
 ___('irc_bot_history_failed',         'EN', "Failed");
 ___('irc_bot_history_failed',         'FR', "Échec");
-
 ___('irc_bot_history_confirm_delete', 'EN', "Confirm permanent deletion of this log: ");
 ___('irc_bot_history_confirm_delete', 'FR', "Confirmer la suppression définitive de ce message : ");
 ___('irc_bot_history_resend',         'EN', "Resend");
@@ -328,16 +325,10 @@ EOT
 
 
 // Table
-___('irc_channels_name',      'EN', "Channel");
-___('irc_channels_name',      'FR', "Canal");
-___('irc_channels_type',      'EN', "Type");
-___('irc_channels_type',      'FR', "Type");
-___('irc_channels_language',  'EN', "Language");
-___('irc_channels_language',  'FR', "Langue");
-___('irc_channels_desc',      'EN', "Description");
-___('irc_channels_desc',      'FR', "Description");
-___('irc_channels_add',       'EN', "Add a new channel to the list");
-___('irc_channels_add',       'FR', "Ajouter un nouveau canal à la liste");
+___('irc_channels_name',  'EN', "Channel");
+___('irc_channels_name',  'FR', "Canal");
+___('irc_channels_add',   'EN', "Add a new channel to the list");
+___('irc_channels_add',   'FR', "Ajouter un nouveau canal à la liste");
 
 
 // Channel edition instructions
@@ -1238,8 +1229,6 @@ Vous trouverez plus d'informations sur les Operator et comment gérer et utilise
 EOT
 );
 
-___('irc_faq_symbols_name',           'EN', "Title");
-___('irc_faq_symbols_name',           'FR', "Titre");
 ___('irc_faq_symbols_symbol',         'EN', "Symbol");
 ___('irc_faq_symbols_symbol',         'FR', "Symbole");
 ___('irc_faq_symbols_mode',           'EN', "Mode");
@@ -1262,8 +1251,6 @@ ___('irc_faq_symbols_operator',       'EN', "Operator");
 ___('irc_faq_symbols_operator',       'FR', "Operator");
 ___('irc_faq_symbols_operator_desc',  'EN', "Can kick or ban anyone who is not an admin or channel founder.");
 ___('irc_faq_symbols_operator_desc',  'FR', "Peut kick ou ban toute personne qui n'est pas Admin ou Founder.");
-___('irc_faq_symbols_admin',          'EN', "Admin");
-___('irc_faq_symbols_admin',          'FR', "Admin");
 ___('irc_faq_symbols_admin_desc',     'EN', "Can kick or ban anyone who is not channel founder, and can name or remove operators.");
 ___('irc_faq_symbols_admin_desc',     'FR', "Peut kick ou ban toute personne qui n'est pas Founder, gérer le canal, et nommer ou révoquer des Operators.");
 ___('irc_faq_symbols_founder',        'EN', "Founder");

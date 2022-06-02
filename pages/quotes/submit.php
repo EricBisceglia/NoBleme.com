@@ -53,7 +53,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h1>
 
   <h5>
-    <?=__('quotes_add_subtitle')?>
+    <?=__('quotes_add')?>
   </h5>
 
   <?php if(isset($quote_create) && is_int($quote_create)) { ?>

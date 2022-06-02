@@ -49,8 +49,6 @@ ___('bbcodes_underlined',       'FR', "Souligné");
 ___('bbcodes_doc_underlined',   'EN', "[u]This text[/u] will be underlined");
 ___('bbcodes_doc_underlined',   'FR', "[u]Ce texte[/u] sera souligné");
 
-___('bbcodes_italics',          'EN', "Italics");
-___('bbcodes_italics',          'FR', "Italique");
 ___('bbcodes_doc_italics',      'EN', "[i]This text[/i] will be oblique");
 ___('bbcodes_doc_italics',      'FR', "[i]Ce texte[/i] sera incliné");
 
@@ -254,8 +252,6 @@ EOT
 
 
 // GDPR
-___('privacy_data_title', 'EN', "Your personal data");
-___('privacy_data_title', 'FR', "Vos données personnelles");
 ___('privacy_data_1',     'EN', <<<EOT
 The most important part of online privacy is the fate of your personal data. NoBleme collects the strict minimum personal data required to properly run the website, which is not much. If you are curious about what we specifically collect about you, how long we keep it, why we need it, how we use it, where it is hosted, etc. we have a whole page of the website dedicated to it: {{link|pages/doc/data|your personal data}}.
 EOT

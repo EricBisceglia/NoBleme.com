@@ -1257,14 +1257,6 @@ ___('politics_manifesto_postface_3',      'FR', <<<EOT
 Même si nous vivons dans un monde égoïste, l'empathie arrive tout de même à avoir de l'effet sur la plupart des gens. La compassion est une force. L'écoute est un pouvoir. L'entraide est la nature humaine.
 EOT
 );
-___('politics_manifesto_postface_4',      'EN', <<<EOT
-Society has failed us. We, in turn, must fail society.
-EOT
-);
-___('politics_manifesto_postface_4',      'FR', <<<EOT
-La société nous a abandonnés. Nous devons, à notre tour, abandonner la société.
-EOT
-);
 ___('politics_manifesto_postface_5',      'EN', <<<EOT
 Time is ticking away.
 EOT
@@ -1311,11 +1303,6 @@ EOT
 /*                                                        FAQ                                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-// Header
-___('politics_faq_title', 'EN', 'Contrapolitics FAQ');
-___('politics_faq_title', 'FR', 'FAQ contrapolitique');
-
 
 // NoBleme
 ___('politics_faq_nobleme_title', 'EN', "NoBleme and the contramanifesto");

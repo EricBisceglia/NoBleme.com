@@ -38,14 +38,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_30">
 
   <h1>
-    <?=__link('pages/compendium/index', __('compendium_categories_title'), 'noglow')?>
+    <?=__link('pages/compendium/index', string_change_case(__('category+'), 'initials'), 'noglow')?>
     <?php if($is_admin) { ?>
     <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/category_admin')?>
     <?php } ?>
   </h1>
 
   <h5>
-    <?=__link('pages/compendium/index', __('compendium_eras_subtitle'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'noglow')?>
   </h5>
 
   <p class="bigpadding_bot">
@@ -57,7 +57,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr class="uppercase">
         <th>
-          <?=__('compendium_page_category')?>
+          <?=string_change_case(__('category'), 'initials')?>
         </th>
         <th>
           <?=__('compendium_eras_entries')?>

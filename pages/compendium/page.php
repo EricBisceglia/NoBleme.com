@@ -155,7 +155,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/compendium/cultural_era?era='.$compendium_page_data['era_id'], $compendium_page_data['era'])?>
     <br>
     <?php } if($compendium_page_data['categories']) { ?>
-    <span class="bold"><?=__('compendium_page_category', amount: $compendium_page_data['categories']).__(':')?></span>
+    <span class="bold"><?=string_change_case(__('category', amount: $compendium_page_data['categories']), 'initials').__(':')?></span>
     <?php for($i = 0; $i < $compendium_page_data['categories']; $i++) { ?>
     <?=__link('pages/compendium/category?id='.$compendium_page_data['category_id'][$i], $compendium_page_data['category_name'][$i])?>
     <?php if(($i + 1) < $compendium_page_data['categories']) { ?>

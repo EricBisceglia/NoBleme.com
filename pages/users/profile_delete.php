@@ -118,7 +118,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <?=__('users_profile_delete_selection')?>
             </th>
             <th>
-              <?=__('users_profile_delete_contents')?>
+              <?=__('contents')?>
             </th>
           </tr>
         </thead>

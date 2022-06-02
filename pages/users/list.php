@@ -89,7 +89,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </th>
 
           <th>
-            <?=__('users_list_languages')?>
+            <?=__('language+')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('language');")?>
           </th>
 

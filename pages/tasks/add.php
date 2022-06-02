@@ -154,7 +154,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <div class="tasks_edit_category">
 
-          <label for="tasks_add_category"><?=__('tasks_list_category')?></label>
+          <label for="tasks_add_category"><?=string_change_case(__('category'), 'initials')?></label>
           <select class="indiv align_left" id="tasks_add_category" name="tasks_add_category">
             <option value="0" selected>&nbsp;</option>
             <?php for($i = 0; $i < $tasks_categories['rows']; $i++) { ?>

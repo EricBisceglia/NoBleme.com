@@ -69,10 +69,6 @@ ___('users_register_form_submit',               'FR', "Créer mon compte");
 
 
 // Error messages
-___('users_register_error_no_username',         'EN', "You must specify a username");
-___('users_register_error_no_username',         'FR', "Vous devez saisir un pseudonyme");
-___('users_register_error_no_password',         'EN', "You must specify a password");
-___('users_register_error_no_password',         'FR', "Vous devez saisir un mot de passe");
 ___('users_register_error_passwords',           'EN', "You must enter the same password twice");
 ___('users_register_error_passwords',           'FR', "Vous devez saisir deux fois le même mot de passe");
 ___('users_register_error_password_length',     'EN', "Your password is too short (8 characters minimum)");
@@ -262,8 +258,6 @@ EOT
 // Form
 ___('account_email_label',    'EN', "Your e-mail address");
 ___('account_email_label',    'FR', "Votre adresse e-mail");
-___('account_email_submit',   'EN', "Change my e-mail");
-___('account_email_submit',   'FR', "Changer mon e-mail");
 ___('account_email_error',    'EN', "The provided e-mail address is not valid");
 ___('account_email_error',    'FR', "L'adresse e-mail fournie est invalide");
 ___('account_email_confirm',  'EN', "Your account's e-mail address has been updated");
@@ -290,8 +284,6 @@ ___('account_password_new',     'EN', "Your new password (at least 8 characters 
 ___('account_password_new',     'FR', "Nouveau mot de passe (8 caractères minimum)");
 ___('account_password_confirm', 'EN', "Type your new password again to confirm it");
 ___('account_password_confirm', 'FR', "Entrez à nouveau votre mot de passe pour le confirmer");
-___('account_password_submit',  'EN', "Change my password");
-___('account_password_submit',  'FR', "Changer mon mot de passe");
 
 
 // Errors / Success

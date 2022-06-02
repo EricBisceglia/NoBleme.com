@@ -94,7 +94,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <input class="indiv" type="text" id="quote_edit_submitted" name="quote_edit_submitted" value="<?=$quote_data['submitter']?>" disabled>
 
       <div class="smallpadding_top">
-        <label for="quotes_edit_body"><?=__('quotes_edit_body')?></label>
+        <label for="quotes_edit_body"><?=string_change_case(__('contents'), 'initials')?></label>
         <textarea id="quotes_edit_body" name="quotes_edit_body"><?=$quote_data['body']?></textarea>
       </div>
 
@@ -104,7 +104,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <div class="smallpadding_top">
-        <label for="quote_edit_language"><?=__('quotes_edit_language')?></label>
+        <label for="quote_edit_language"><?=string_change_case(__('language'), 'initials')?></label>
         <select class="indiv align_left" id="quote_edit_language" name="quote_edit_language">
           <option value="EN"<?=$quote_lang_en?>><?=string_change_case(__('english'), 'initials')?></option>
           <option value="FR"<?=$quote_lang_fr?>><?=string_change_case(__('french'), 'initials')?></option>

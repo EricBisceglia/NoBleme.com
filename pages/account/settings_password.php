@@ -69,7 +69,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <div class="padding_top">
-        <input type="submit" name="account_settings_password_submit" value="<?=__('account_password_submit')?>">
+        <input type="submit" name="account_settings_password_submit" value="<?=__('submenu_user_edit_password')?>">
       </div>
 
     </fieldset>

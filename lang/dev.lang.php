@@ -133,16 +133,20 @@ ___('dev_versions_edit_error_duplicate',  'FR', "Erreur : Ce numéro de version
 /*********************************************************************************************************************/
 
 // Code snippets selector
-___('dev_snippets_title',             'EN', "Code snippets:");
-___('dev_snippets_title',             'FR', "Modèles de code :");
-___('dev_snippets_selector_full',     'EN', "Full page");
-___('dev_snippets_selector_full',     'FR', "Page complète");
-___('dev_snippets_selector_fetched',  'EN', "Fetched page");
-___('dev_snippets_selector_fetched',  'FR', "Page fetchée");
-___('dev_snippets_selector_header',   'EN', "Headers");
-___('dev_snippets_selector_header',   'FR', "En-têtes");
-___('dev_snippets_selector_blocks',   'EN', "Comment blocks");
-___('dev_snippets_selector_blocks',   'FR', "Blocs de commentaires");
+___('dev_snippets_title',                 'EN', "Code snippets:");
+___('dev_snippets_title',                 'FR', "Modèles de code :");
+___('dev_snippets_selector_full',         'EN', "Full page");
+___('dev_snippets_selector_full',         'FR', "Page complète");
+___('dev_snippets_selector_fetched',      'EN', "Fetched page");
+___('dev_snippets_selector_fetched',      'FR', "Page fetchée");
+___('dev_snippets_selector_header',       'EN', "Headers");
+___('dev_snippets_selector_header',       'FR', "En-têtes");
+___('dev_snippets_selector_blocks',       'EN', "Comment blocks");
+___('dev_snippets_selector_blocks',       'FR', "Blocs de commentaires");
+___('dev_snippets_selector_action',       'EN', "Action template");
+___('dev_snippets_selector_action',       'FR', "Modèle d'action");
+___('dev_snippets_selector_act_elements', 'EN', "Action elements");
+___('dev_snippets_selector_act_elements', 'FR', "Élements d'actions");
 
 
 // CSS palette selector
@@ -164,8 +168,6 @@ ___('dev_palette_selector_spacing',   'EN', "Spacing");
 ___('dev_palette_selector_spacing',   'FR', "Espacement");
 ___('dev_palette_selector_tables',    'EN', "Tables");
 ___('dev_palette_selector_tables',    'FR', "Tableaux");
-___('dev_palette_selector_text',      'EN', "Text");
-___('dev_palette_selector_text',      'FR', "Texte");
 ___('dev_palette_selector_tooltips',  'EN', "Tooltips");
 ___('dev_palette_selector_tooltips',  'FR', "Infobulles");
 
@@ -190,8 +192,6 @@ ___('dev_functions_selector_strings',       'EN', "Strings");
 ___('dev_functions_selector_strings',       'FR', "Chaînes de caractères");
 ___('dev_functions_selector_unsorted',      'EN', "Unsorted");
 ___('dev_functions_selector_unsorted',      'FR', "Divers");
-___('dev_functions_selector_users',         'EN', "Users");
-___('dev_functions_selector_users',         'FR', "Utilisateurs");
 ___('dev_functions_selector_website',       'EN', "Website internals");
 ___('dev_functions_selector_website',       'FR', "Éléments internes");
 
@@ -235,14 +235,8 @@ EOT
 
 
 // Devblog list: Table
-___('dev_blog_table_title', 'EN', "Title");
-___('dev_blog_table_title', 'FR', "Titre");
 ___('dev_blog_table_date',  'EN', "Publication date");
 ___('dev_blog_table_date',  'FR', "Date de publication");
-___('dev_blog_table_views', 'EN', "Views");
-___('dev_blog_table_views', 'FR', "Vues");
-___('dev_blog_table_lang',  'EN', "Languages");
-___('dev_blog_table_lang',  'FR', "Langues");
 
 
 // Devblog
@@ -300,8 +294,6 @@ ___('dev_blog_delete_ok',       'FR', "Ce devblog a été supprimé de façon no
 
 
 // Devblog: Restore
-___('dev_blog_restore_icon',      'EN', "Undelete");
-___('dev_blog_restore_icon',      'FR', "Restaurer");
 ___('dev_blogs_restore_confirm',  'EN', "Confirm the undeletion of this devblog");
 ___('dev_blogs_restore_confirm',  'FR', "Confirmer la restauration de ce devblog");
 ___('dev_blog_restore_ok',        'EN', "This devblog has been restored");
@@ -326,7 +318,5 @@ ___('dev_blog_delete_hard_ok',      'FR', "Ce devblog a été définitivement su
 // Duplicate translation list
 ___('dev_translations_name',  'EN', "Translation");
 ___('dev_translations_name',  'FR', "Traduction");
-___('dev_translations_value', 'EN', "Contents");
-___('dev_translations_value', 'FR', "Contenu");
 ___('dev_translations_none',  'EN', "There are no duplicate translations in the current language");
 ___('dev_translations_none',  'FR', "Il n'y a aucune traduction en double dans la langue actuelle");

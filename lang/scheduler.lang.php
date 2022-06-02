@@ -15,8 +15,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Task list
 ___('dev_scheduler_task_execution',         'EN', "Execution");
 ___('dev_scheduler_task_execution',         'FR', "Exécution");
-___('dev_scheduler_task_description',       'EN', "Description");
-___('dev_scheduler_task_description',       'FR', "Description");
 ___('dev_scheduler_task_report',            'EN', "Report");
 ___('dev_scheduler_task_report',            'FR', "Résultat");
 ___('dev_scheduler_task_results',           'EN', "{{1}} results found   //   {{2}} future tasks   //   {{3}} past logs");

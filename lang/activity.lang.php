@@ -13,8 +13,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Header
-___('activity_title_modlogs',   'EN', "Moderation logs");
-___('activity_title_modlogs',   'FR', "Logs de modération");
 ___('activity_icon_deleted',    'EN', "Deleted logs");
 ___('activity_icon_deleted',    'FR', "Logs supprimés");
 ___('activity_mod_info',        'EN', <<<EOT
@@ -35,14 +33,8 @@ ___('activity_latest_actions',  'FR', "DERNIÈRES ACTIONS");
 
 ___('activity_type_all',        'EN', "All activity types");
 ___('activity_type_all',        'FR', "Tous types d'activité");
-___('activity_type_users',      'EN', "Users");
-___('activity_type_users',      'FR', "Membres");
 ___('activity_type_meetups',    'EN', "Meetups");
 ___('activity_type_meetups',    'FR', "Rencontres IRL");
-___('activity_type_quotes',     'EN', "Quotes");
-___('activity_type_quotes',     'FR', "Citations");
-___('activity_type_compendium', 'EN', "Compendium");
-___('activity_type_compendium', 'FR', "Compendium");
 ___('activity_type_irc',        'EN', "IRC server");
 ___('activity_type_irc',        'FR', "Serveur IRC");
 ___('activity_type_dev',        'EN', "Website internals");

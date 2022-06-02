@@ -192,7 +192,7 @@ function bbcodes( string  $message ) : string
   // [blur]Blurry content[/blur]
 
   // Solved with a regex
-  $message = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="blur" onmouseover="unblur();">$1</span>', $message);
+  $message = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="blur" onmouseover="unblur(this);">$1</span>', $message);
 
 
   /*******************************************************************************************************************/

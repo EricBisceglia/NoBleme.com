@@ -320,8 +320,6 @@ ___(':', 'FR', " :");
 // Buttons and labels
 ___('add',        'EN', "add");
 ___('add',        'FR', "créer");
-___('account',    'EN', "account");
-___('account',    'FR', "compte");
 ___('calendar',   'EN', "calendar");
 ___('calendar',   'FR', "calendrier");
 ___('clock',      'EN', "clock");
@@ -360,6 +358,8 @@ ___('more',       'EN', "more");
 ___('more',       'FR', "plus");
 ___('preview',    'EN', "preview");
 ___('preview',    'FR', "prévisualiser");
+___('preview_2',  'EN', "preview");
+___('preview_2',  'FR', "prévisualisation");
 ___('refresh',    'EN', "refresh");
 ___('refresh',    'FR', "recharger");
 ___('rss',        'EN', "RSS feed");
@@ -376,6 +376,8 @@ ___('stats',      'EN', "stats");
 ___('stats',      'FR', "statistiques");
 ___('submit',     'EN', "submit");
 ___('submit',     'FR', "envoyer");
+___('undelete',   'EN', "undelete");
+___('undelete',   'FR', "restaurer");
 ___('upload',     'EN', "upload");
 ___('upload',     'FR', "téléverser");
 ___('warning',    'EN', "warning");
@@ -383,6 +385,18 @@ ___('warning',    'FR', "avertissement");
 
 
 // Common words
+___('bilingual',    'EN', "bilingual");
+___('bilingual',    'FR', "bilingue");
+___('birthday',     'EN', "birthday");
+___('birthday',     'FR', "anniversaire");
+___('category',     'EN', "category");
+___('category',     'FR', "catégorie");
+___('category+',    'EN', "categories");
+___('category+',    'FR', "catégories");
+___('contents',     'EN', "contents");
+___('contents',     'FR', "contenu");
+___('created',      'EN', "created");
+___('created',      'FR', "crée");
 ___('description',  'EN', "description");
 ___('description',  'FR', "description");
 ___('en',           'EN', "EN");
@@ -393,18 +407,46 @@ ___('fr',           'EN', "FR");
 ___('fr',           'FR', "FR");
 ___('french',       'EN', "french");
 ___('french',       'FR', "français");
+___('lang.',        'EN', "lang.");
+___('lang.',        'FR', "lang.");
 ___('language',     'EN', "language");
 ___('language',     'FR', "langue");
 ___('language+',    'EN', "languages");
 ___('language+',    'FR', "langues");
+___('link+',        'EN', "links");
+___('link+',        'FR', "liens");
+___('location',     'EN', "location");
+___('location',     'FR', "lieu");
 ___('no',           'EN', "no");
 ___('no',           'FR', "non");
 ___('none',         'EN', "none");
 ___('none',         'FR', "aucun");
+___('none_f',       'EN', "none");
+___('none_f',       'FR', "aucune");
+___('opened',       'EN', "opened");
+___('opened',       'FR', "ouvert");
+___('order',        'EN', "order");
+___('order',        'FR', "ordre");
 ___('page',         'EN', "page");
 ___('page',         'FR', "page");
+___('published',    'EN', "published");
+___('published',    'FR', "publié");
+___('sent',         'EN', "sent");
+___('sent',         'FR', "envoyé");
+___('sent+',        'EN', "sent");
+___('sent+',        'FR', "envoyés");
+___('text',         'EN', "text");
+___('text',         'FR', "texte");
+___('theme',        'EN', "theme");
+___('theme',        'FR', "thème");
 ___('the',          'EN', "the");
 ___('the',          'FR', "le");
+___('title',        'EN', "title");
+___('title',        'FR', "titre");
+___('view',         'EN', "view");
+___('view',         'FR', "vue");
+___('view+',        'EN', "views");
+___('view+',        'FR', "vues");
 ___('with',         'EN', "with");
 ___('with',         'FR', "avec");
 ___('yes',          'EN', "yes");
@@ -412,20 +454,22 @@ ___('yes',          'FR', "oui");
 
 
 // Common actions
-___('act',      'EN', "act.");
-___('act',      'FR', "act.");
-___('action',   'EN', "action");
-___('action+',  'EN', "actions");
-___('action',   'FR', "action");
-___('action+',  'FR', "actions");
-___('restore',  'EN', "restore");
-___('restore',  'FR', "restaurer");
-___('search',   'EN', "search");
-___('search',   'FR', "chercher");
-___('sort',     'EN', "sort");
-___('sort',     'FR', "trier");
-___('message',  'EN', "message");
-___('message',  'FR', "message");
+___('act',        'EN', "act.");
+___('act',        'FR', "act.");
+___('action',     'EN', "action");
+___('action+',    'EN', "actions");
+___('action',     'FR', "action");
+___('action+',    'FR', "actions");
+___('close_form', 'EN', "close this form");
+___('close_form', 'FR', "fermer ce formulaire");
+___('restore',    'EN', "restore");
+___('restore',    'FR', "restaurer");
+___('search',     'EN', "search");
+___('search',     'FR', "chercher");
+___('sort',       'EN', "sort");
+___('sort',       'FR', "trier");
+___('message',    'EN', "message");
+___('message',    'FR', "message");
 
 
 // Common technical terms
@@ -487,58 +531,9 @@ ___('year_short',   'EN', "y");
 ___('year_short',   'FR', "a");
 
 
-// Month names
-___('month_1',        'EN', "January");
-___('month_1',        'FR', "Janvier");
-___('month_2',        'EN', "February");
-___('month_2',        'FR', "Février");
-___('month_3',        'EN', "March");
-___('month_3',        'FR', "Mars");
-___('month_4',        'EN', "April");
-___('month_4',        'FR', "Avril");
-___('month_5',        'EN', "May");
-___('month_5',        'FR', "Mai");
-___('month_6',        'EN', "June");
-___('month_6',        'FR', "Juin");
-___('month_7',        'EN', "July");
-___('month_7',        'FR', "Juillet");
-___('month_8',        'EN', "August");
-___('month_8',        'FR', "Août");
-___('month_9',        'EN', "September");
-___('month_9',        'FR', "Septembre");
-___('month_10',       'EN', "October");
-___('month_10',       'FR', "Octobre");
-___('month_11',       'EN', "November");
-___('month_11',       'FR', "Novembre");
-___('month_12',       'EN', "December");
-___('month_12',       'FR', "Décembre");
-___('month_short_1',  'EN', "Jan.");
-___('month_short_1',  'FR', "Jan.");
-___('month_short_2',  'EN', "Feb.");
-___('month_short_2',  'FR', "Fév.");
-___('month_short_3',  'EN', "Mar.");
-___('month_short_3',  'FR', "Mar.");
-___('month_short_4',  'EN', "Apr.");
-___('month_short_4',  'FR', "Avr.");
-___('month_short_5',  'EN', "May");
-___('month_short_5',  'FR', "Mai");
-___('month_short_6',  'EN', "June");
-___('month_short_6',  'FR', "Juin");
-___('month_short_7',  'EN', "July");
-___('month_short_7',  'FR', "Juil.");
-___('month_short_8',  'EN', "Aug.");
-___('month_short_8',  'FR', "Août");
-___('month_short_9',  'EN', "Sept.");
-___('month_short_9',  'FR', "Sept.");
-___('month_short_10', 'EN', "Oct.");
-___('month_short_10', 'FR', "Oct.");
-___('month_short_11', 'EN', "Nov.");
-___('month_short_11', 'FR', "Nov.");
-___('month_short_12', 'EN', "Dec.");
-___('month_short_12', 'FR', "Déc.");
-
-
 // Generic user related terms
+___('account',    'EN', "account");
+___('account',    'FR', "compte");
 ___('activity',       'EN', "activity");
 ___('activity',       'FR', "activité");
 ___('admin',          'EN', "admin");
@@ -561,6 +556,10 @@ ___('rights',         'EN', "rights");
 ___('rights',         'FR', "droits");
 ___('user',           'EN', "user");
 ___('user',           'FR', "membre");
+___('user+',          'EN', "users");
+___('user+',          'FR', "membres");
+___('user_acc+',      'EN', "users");
+___('user_acc+',      'FR', "comptes");
 ___('username',       'EN', "username");
 ___('username',       'FR', "pseudonyme");
 
@@ -622,6 +621,57 @@ ___('day_6_fr', 'EN', "Samedi");
 ___('day_6_fr', 'FR', "Samedi");
 ___('day_7_fr', 'EN', "Dimanche");
 ___('day_7_fr', 'FR', "Dimanche");
+
+
+// Month names
+___('month_1',        'EN', "January");
+___('month_1',        'FR', "Janvier");
+___('month_2',        'EN', "February");
+___('month_2',        'FR', "Février");
+___('month_3',        'EN', "March");
+___('month_3',        'FR', "Mars");
+___('month_4',        'EN', "April");
+___('month_4',        'FR', "Avril");
+___('month_5',        'EN', "May");
+___('month_5',        'FR', "Mai");
+___('month_6',        'EN', "June");
+___('month_6',        'FR', "Juin");
+___('month_7',        'EN', "July");
+___('month_7',        'FR', "Juillet");
+___('month_8',        'EN', "August");
+___('month_8',        'FR', "Août");
+___('month_9',        'EN', "September");
+___('month_9',        'FR', "Septembre");
+___('month_10',       'EN', "October");
+___('month_10',       'FR', "Octobre");
+___('month_11',       'EN', "November");
+___('month_11',       'FR', "Novembre");
+___('month_12',       'EN', "December");
+___('month_12',       'FR', "Décembre");
+___('month_short_1',  'EN', "Jan.");
+___('month_short_1',  'FR', "Jan.");
+___('month_short_2',  'EN', "Feb.");
+___('month_short_2',  'FR', "Fév.");
+___('month_short_3',  'EN', "Mar.");
+___('month_short_3',  'FR', "Mar.");
+___('month_short_4',  'EN', "Apr.");
+___('month_short_4',  'FR', "Avr.");
+___('month_short_5',  'EN', "May");
+___('month_short_5',  'FR', "Mai");
+___('month_short_6',  'EN', "June");
+___('month_short_6',  'FR', "Juin");
+___('month_short_7',  'EN', "July");
+___('month_short_7',  'FR', "Juil.");
+___('month_short_8',  'EN', "Aug.");
+___('month_short_8',  'FR', "Août");
+___('month_short_9',  'EN', "Sept.");
+___('month_short_9',  'FR', "Sept.");
+___('month_short_10', 'EN', "Oct.");
+___('month_short_10', 'FR', "Oct.");
+___('month_short_11', 'EN', "Nov.");
+___('month_short_11', 'FR', "Nov.");
+___('month_short_12', 'EN', "Dec.");
+___('month_short_12', 'FR', "Déc.");
 
 
 // Bilingual months
@@ -918,8 +968,6 @@ ___('submenu_nobleme_follow',         'FR', "Suivre NoBleme");
 ___('submenu_nobleme_activity',       'EN', "Recent activity");
 ___('submenu_nobleme_activity',       'FR', "Activité récente");
 
-___('submenu_nobleme_users',          'EN', "Users");
-___('submenu_nobleme_users',          'FR', "Membres");
 ___('submenu_nobleme_online',         'EN', "Who's online");
 ___('submenu_nobleme_online',         'FR', "Qui est en ligne");
 ___('submenu_nobleme_userlist',       'EN', "Registered users");
@@ -967,8 +1015,6 @@ ___('submenu_pages_compendium_image',       'EN', "Random image");
 ___('submenu_pages_compendium_image',       'FR', "Image au hasard");
 ___('submenu_pages_compendium_types',       'EN', "Page types");
 ___('submenu_pages_compendium_types',       'FR', "Thématiques");
-___('submenu_pages_compendium_categories',  'EN', "Categories");
-___('submenu_pages_compendium_categories',  'FR', "Catégories");
 ___('submenu_pages_compendium_eras',        'EN', "Cultural eras");
 ___('submenu_pages_compendium_eras',        'FR', "Périodes");
 
@@ -976,8 +1022,8 @@ ___('submenu_pages_politics',             'EN', "Politics");
 ___('submenu_pages_politics',             'FR', "Politique");
 ___('submenu_pages_politics_manifesto',   'EN', "Contramanifesto");
 ___('submenu_pages_politics_manifesto',   'FR', "Contremanifeste");
-___('submenu_pages_politics_join',        'EN', "Contrapolitics FAQ");
-___('submenu_pages_politics_join',        'FR', "FAQ Contrepolitique");
+___('submenu_pages_politics_faq',         'EN', "Contrapolitics FAQ");
+___('submenu_pages_politics_faq',         'FR', "FAQ Contrepolitique");
 
 
 // Submenu: Social
@@ -1095,31 +1141,27 @@ ___('submenu_admin_versions',       'FR', "Numéros de version");
 ___('submenu_admin_scheduler',      'EN', "Scheduled tasks");
 ___('submenu_admin_scheduler',      'FR', "Tâches planifiées");
 
-___('submenu_admin_stats',          'EN', "Stats");
-___('submenu_admin_stats',          'FR', "Statistiques");
 ___('submenu_admin_metrics',        'EN', "Metrics");
 ___('submenu_admin_metrics',        'FR', "Performances");
 ___('submenu_admin_pageviews',      'EN', "Pageviews");
 ___('submenu_admin_pageviews',      'FR', "Pages populaires");
-___('submenu_admin_stats_users',    'EN', "Users");
-___('submenu_admin_stats_users',    'FR', "Comptes");
 ___('submenu_admin_stats_guests',   'EN', "Guests");
 ___('submenu_admin_stats_guests',   'FR', "Visites");
 
-___('submenu_admin_doc',            'EN', "Dev tools");
-___('submenu_admin_doc',            'FR', "Développement");
 ___('submenu_admin_doc_snippets',   'EN', "Code snippets");
 ___('submenu_admin_doc_snippets',   'FR', "Modèles de code");
+___('submenu_admin_doc_functions',  'EN', "Functions list");
+___('submenu_admin_doc_functions',  'FR', "Liste de fonctions");
+___('submenu_admin_doc',            'EN', "Dev tools");
+___('submenu_admin_doc',            'FR', "Développement");
 ___('submenu_admin_doc_css',        'EN', "CSS palette");
 ___('submenu_admin_doc_css',        'FR', "Palette CSS");
 ___('submenu_admin_doc_js',         'EN', "JavaScript toolbox");
 ___('submenu_admin_doc_js',         'FR', "Outils JavaScript");
-___('submenu_admin_doc_functions',  'EN', "Functions list");
-___('submenu_admin_doc_functions',  'FR', "Liste de fonctions");
-___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
-___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
 ___('submenu_admin_doc_workflow',   'EN', "Development workflow");
 ___('submenu_admin_doc_workflow',   'FR', "Workflow de développement");
+___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
+___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
 
 ___('submenu_admin_local_fixtures', 'EN', "Local dev: Fixtures");
 ___('submenu_admin_local_fixtures', 'FR', "Dev local : Fixtures");
@@ -1149,8 +1191,6 @@ ___('footer_copyright', 'FR', "&copy; NoBleme.com : 2005 - {{1}}");
 /*********************************************************************************************************************/
 
 // Login form
-___('login_form_title',         'EN', "Login");
-___('login_form_title',         'FR', "Connexion");
 ___('login_form_form_remember', 'EN', "Stay logged in");
 ___('login_form_form_remember', 'FR', "Maintenir la connexion");
 ___('login_form_form_register', 'EN', "REGISTER");

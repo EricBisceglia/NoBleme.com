@@ -636,6 +636,66 @@ sudo systemctl enable anope.service
   </p>
 
   <h5 class="bigpadding_top">
+    Cron
+  </h5>
+
+  <p class="smallpadding_bot">
+    Install and enable cronie.
+  </p>
+
+  <pre>sudo dnf install cronie cronie-anacron
+sudo systemctl start crond.service
+sudo systemctl status crond.service
+sudo systemctl enable crond.service</pre>
+
+  <h5 class="bigpadding_top">
+    Automated MySQL backups
+  </h5>
+
+  <p class="smallpadding_bot">
+    Install zip.
+  </p>
+
+  <pre>sudo dnf install zip</pre>
+
+  <p class="smallpadding_bot">
+    Create and test a shell script for automated backups - edit the variables as necessary.
+  </p>
+
+  <div class="smallpadding_bot">
+    <pre>mkdir /var/mysql-backups/
+sudo nano /usr/bin/mysql-backup.sh
+sudo chmod u+r+x /usr/bin/mysql-backup.sh
+/usr/bin/mysql-backup.sh</pre>
+  </div>
+
+  <pre># Variables
+backupfolder=/var/mysql-backups
+user=your_system_user
+password=your_mysql_password
+keep_backup_days=30
+
+# Determine file names
+sqlfile=$backupfolder/mysql-backup-$(date +%y-%m-%d-%H-%M).sql
+zipfile=$backupfolder/mysql-backup-$(date +%y-%m-%d-%H-%M).zip
+
+# Create and compress backup
+sudo mysqldump -u $user -p$password --all-databases > $sqlfile
+zip $zipfile $sqlfile
+rm $sqlfile
+
+# Delete old backups
+find $backupfolder -mtime +$keep_backup_days -delete</pre>
+
+  <p class="smallpadding_bot">
+    Make the script run daily through a cronjob.
+  </p>
+
+  <pre>sudo nano /etc/crontab
+
+0 3 * * * root /usr/bin/mysql-backup.sh</pre>
+
+  <h5 class="bigpadding_top">
     Testing
   </h5>
 

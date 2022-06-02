@@ -43,8 +43,6 @@ EOT
 
 
 // Introduction
-___('compendium_index_title',   'EN', "Compendium");
-___('compendium_index_title',   'FR', "Compendium");
 ___('compendium_index_subitle', 'EN', "Documenting 21st century culture");
 ___('compendium_index_subitle', 'FR', "Documentation du 21ème siècle");
 ___('compendium_index_intro_1', 'EN', <<<EOT
@@ -88,8 +86,6 @@ ___('compendium_index_recent_type',     'EN', "Page type:");
 ___('compendium_index_recent_type',     'FR', "Thème :");
 ___('compendium_index_recent_reworked', 'EN', "Reworked");
 ___('compendium_index_recent_reworked', 'FR', "Modifié");
-___('compendium_index_recent_created',  'EN', "Created");
-___('compendium_index_recent_created',  'FR', "Publié");
 
 
 
@@ -114,10 +110,6 @@ ___('compendium_page_type',       'EN', "Page type");
 ___('compendium_page_type',       'FR', "Thème");
 ___('compendium_page_era',        'EN', "Era");
 ___('compendium_page_era',        'FR', "Période");
-___('compendium_page_category',   'EN', "Category");
-___('compendium_page_category',   'FR', "Catégorie");
-___('compendium_page_category+',  'EN', "Categories");
-___('compendium_page_category+',  'FR', "Catégories");
 ___('compendium_page_appeared',   'EN', "First appearance");
 ___('compendium_page_appeared',   'FR', "Première apparition");
 ___('compendium_page_modified',   'EN', "Page last modified {{1}}");
@@ -134,8 +126,6 @@ ___('compendium_page_gross',      'FR', "Cette page inclut du contenu dégueulas
 
 
 // Footer
-___('compendium_page_list',         'EN', "List of all pages");
-___('compendium_page_list',         'FR', "Liste des pages");
 ___('compendium_page_pageviews',    'EN', "{{1}} pageview");
 ___('compendium_page_pageviews',    'FR', "Page vue {{1}} fois");
 ___('compendium_page_pageviews+',   'EN', "{{1}} pageviews");
@@ -232,8 +222,6 @@ ___('compendium_page_new_no_title',     'EN', "The page must have a title in at 
 ___('compendium_page_new_no_title',     'FR', "La page doit avoir un titre dans au moins une langue");
 ___('compendium_page_new_bad_redirect', 'EN', "Redirection points to a non existing page URL");
 ___('compendium_page_new_bad_redirect', 'FR', "Redirection vers une adresse de page non existante");
-___('compendium_page_new_preview',      'EN', "Preview");
-___('compendium_page_new_preview',      'FR', "Prévisualisation");
 
 
 // Publish a draft
@@ -369,8 +357,6 @@ EOT
 // Table
 ___('compendium_list_title',    'EN', "Page title");
 ___('compendium_list_title',    'FR', "Titre de la page");
-___('compendium_list_theme',    'EN', "Theme");
-___('compendium_list_theme',    'FR', "Thème");
 ___('compendium_list_created',  'EN', "Page created");
 ___('compendium_list_created',  'FR', "Page créé");
 ___('compendium_list_appeared', 'EN', "Appeared");
@@ -406,8 +392,6 @@ ___('compendium_list_admin_missing',          'EN', "No title in this language")
 ___('compendium_list_admin_missing',          'FR', "Pas de titre dans cette langue");
 ___('compendium_list_admin_no_title',         'EN', "This page does not have a title");
 ___('compendium_list_admin_no_title',         'FR', "Cette page n'a pas de titre");
-___('compendium_list_admin_theme_no',         'EN', "None");
-___('compendium_list_admin_theme_no',         'FR', "Aucun");
 ___('compendium_list_admin_categories',       'EN', "Cat.");
 ___('compendium_list_admin_categories',       'FR', "Cat.");
 ___('compendium_list_admin_categories_no',    'EN', "Uncategorized");
@@ -418,20 +402,12 @@ ___('compendium_list_admin_category_count',   'EN', "Page has {{1}} category");
 ___('compendium_list_admin_category_count',   'FR', "La page a {{1}} catégorie");
 ___('compendium_list_admin_category_count+',  'EN', "Page has {{1}} categories");
 ___('compendium_list_admin_category_count+',  'FR', "La page a {{1}} catégories");
-___('compendium_list_admin_era_no',           'EN', "None");
-___('compendium_list_admin_era_no',           'FR', "Aucune");
 ___('compendium_list_admin_appeared',         'EN', "App.");
 ___('compendium_list_admin_appeared',         'FR', "App.");
 ___('compendium_list_admin_peak',             'EN', "Peak");
 ___('compendium_list_admin_peak',             'FR', "Pic");
-___('compendium_list_admin_views',            'EN', "Views");
-___('compendium_list_admin_views',            'FR', "Vues");
-___('compendium_list_admin_language',         'EN', "Lang.");
-___('compendium_list_admin_language',         'FR', "Lang.");
 ___('compendium_list_admin_monolingual',      'EN', "Monolingual");
 ___('compendium_list_admin_monolingual',      'FR', "Monolangue");
-___('compendium_list_admin_bilingual',        'EN', "Bilingual");
-___('compendium_list_admin_bilingual',        'FR', "Bilingue");
 ___('compendium_list_admin_nsfw',             'EN', "NSFW");
 ___('compendium_list_admin_nsfw',             'FR', "NSFW");
 ___('compendium_list_admin_safe',             'EN', "Safe");
@@ -452,8 +428,6 @@ ___('compendium_list_admin_finished',         'EN', "Finished");
 ___('compendium_list_admin_finished',         'FR', "Complet");
 ___('compendium_list_admin_draft',            'EN', "Draft");
 ___('compendium_list_admin_draft',            'FR', "Brouillon");
-___('compendium_list_admin_deleted',          'EN', "Deleted");
-___('compendium_list_admin_deleted',          'FR', "Supprimé");
 
 
 
@@ -505,8 +479,6 @@ EOT
 
 
 // Footer
-___('compendium_image_compendium',  'EN', "21st century compendium");
-___('compendium_image_compendium',  'FR', "Compendium du 21ème siècle");
 ___('compendium_image_random',      'EN', "Another random image");
 ___('compendium_image_random',      'FR', "Autre image au hasard");
 
@@ -518,8 +490,6 @@ ___('compendium_image_list_refresh',    'EN', "Recalculate all image usage data"
 ___('compendium_image_list_refresh',    'FR', "Recalculer les données d'utilisation de toutes les images");
 ___('compendium_image_list_warning',    'EN', "Recalculating all image usage data could be a long and intensive process, are you sure you want to do this?");
 ___('compendium_image_list_warning',    'FR', "Recalculer toutes les données d\'utilisation des images peut être un processus long et intensif, tenez-vous réellement à le faire ?");
-___('compendium_image_list_copy',       'EN', "Copy");
-___('compendium_image_list_copy',       'FR', "Copier");
 ___('compendium_image_list_name',       'EN', "File name");
 ___('compendium_image_list_name',       'FR', "Nom du fichier");
 ___('compendium_image_list_tags',       'EN', "Tags");
@@ -530,8 +500,6 @@ ___('compendium_image_list_used_fr',    'EN', "Usage (french)");
 ___('compendium_image_list_used_fr',    'FR', "Utilisation (français)");
 ___('compendium_image_list_uploaded',   'EN', "Uploaded");
 ___('compendium_image_list_uploaded',   'FR', "Date");
-___('compendium_image_list_caption',    'EN', "Text");
-___('compendium_image_list_caption',    'FR', "Texte");
 ___('compendium_image_list_nsfw',       'EN', "NSFW image");
 ___('compendium_image_list_nsfw',       'FR', "Image NSFW");
 ___('compendium_image_list_notdeleted', 'EN', "Not deleted");
@@ -609,8 +577,6 @@ ___('compendium_missing_admin_menu',    'EN', "Missing");
 ___('compendium_missing_admin_menu',    'FR', "Manquant");
 ___('compendium_missing_title',         'EN', "Missing pages");
 ___('compendium_missing_title',         'FR', "Pages manquantes");
-___('compendium_missing_page',          'EN', "Title");
-___('compendium_missing_page',          'FR', "Titre");
 ___('compendium_missing_priority',      'EN', "Prio.");
 ___('compendium_missing_priority',      'FR', "Prio.");
 ___('compendium_missing_priority_full', 'EN', "Prioritary missing page");
@@ -623,6 +589,8 @@ ___('compendium_missing_notes',         'EN', "Notes");
 ___('compendium_missing_notes',         'FR', "Notes");
 ___('compendium_missing_no_notes',      'EN', "No notes");
 ___('compendium_missing_no_notes',      'FR', "Pas de notes");
+___('compendium_missing_linked',        'EN', "Linked");
+___('compendium_missing_linked',        'FR', "Liée");
 ___('compendium_missing_documented',    'EN', "Documented");
 ___('compendium_missing_documented',    'FR', "Documenté");
 ___('compendium_missing_undocumented',  'EN', "Undocumented");
@@ -636,8 +604,6 @@ ___('compendium_missing_delete',        'FR', "Confirmer la suppression de cette
 
 
 // Missing page
-___('compendium_missing_page_title',  'EN', "Missing page");
-___('compendium_missing_page_title',  'FR', "Page manquante");
 ___('compendium_missing_page_links',  'EN', "Dead link to this missing page:");
 ___('compendium_missing_page_links',  'FR', "Lien mort vers cette page manquante :");
 ___('compendium_missing_page_links+', 'EN', "Dead links to this missing page:");
@@ -682,8 +648,6 @@ ___('compendium_missing_edit_deleted',  'FR', "Cette page manquante n'existe pas
 // Era list: Header
 ___('compendium_eras_title',    'EN', "Eras");
 ___('compendium_eras_title',    'FR', "Périodes");
-___('compendium_eras_subtitle', 'EN', "21st century culture");
-___('compendium_eras_subtitle', 'FR', "Culture du 21ème siècle");
 ___('compendium_eras_summary',  'EN', <<<EOT
 This page is about a {{link|pages/compendium/cultural_era_list|cultural era}}, an arbitrary way to separate {{link|pages/compendium/page_type_list|meme}} history into time periods.
 EOT
@@ -817,8 +781,6 @@ ___('compendium_era_delete_ok',         'FR', "La période a bien été supprim�
 /*********************************************************************************************************************/
 
 // Category list: Header
-___('compendium_categories_title',    'EN', "Categories");
-___('compendium_categories_title',    'FR', "Catégories");
 ___('compendium_categories_intro',    'EN', <<<EOT
 This {{link|pages/compendium/index|compendium}} is full of varied content. In order to keep everything organized, some pages are categorized as belonging to one or more category. All the categories used to classify compendium pages are listed in the table below, along with the number of pages belonging to each category. If you are looking to browse specific types of content, then click on a category's name to learn more about it and see a list of all pages belonging to it.
 EOT
@@ -856,8 +818,6 @@ EOT
 
 
 // Category administration
-___('compendium_category_admin_order',          'EN', "Order");
-___('compendium_category_admin_order',          'FR', "Ordre");
 ___('compendium_category_admin_uncategorized',  'EN', "Uncategorized pages");
 ___('compendium_category_admin_uncategorized',  'FR', "Pages non catégorisées");
 
@@ -904,8 +864,6 @@ ___('compendium_category_delete_ok',          'FR', "La catégorie a bien été 
 /*********************************************************************************************************************/
 
 // Types list: Header
-___('compendium_types_title',   'EN', "Page types");
-___('compendium_types_title',   'FR', "Thématiques");
 ___('compendium_types_intro_1', 'EN', <<<EOT
 In this {{link|pages/compendium/index|compendium}}, various different types of contents are covered. Some of you might be looking solely for the light hearted entertainment of memes, while others will desire a deep dive into more serious sociocultural topics. In order to let you find the contents you are looking for, each page is assigned a <span class="italics">type</span>.
 EOT
@@ -953,8 +911,6 @@ EOT
 // Type administration
 ___('compendium_type_admin_short',  'EN', "Page type");
 ___('compendium_type_admin_short',  'FR', "Thématique");
-___('compendium_type_admin_long',   'EN', "Full name");
-___('compendium_type_admin_long',   'FR', "Nom complet");
 ___('compendium_type_admin_none',   'EN', "No type");
 ___('compendium_type_admin_none',   'FR', "Sans thématique");
 

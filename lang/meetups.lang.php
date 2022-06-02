@@ -34,12 +34,8 @@ EOT
 // Meetups list
 ___('meetups_list_date',      'EN', "Meetup date");
 ___('meetups_list_date',      'FR', "Date de l'IRL");
-___('meetups_list_location',  'EN', "Location");
-___('meetups_list_location',  'FR', "Lieu");
 ___('meetups_list_attendees', 'EN', "Attendees");
 ___('meetups_list_attendees', 'FR', "Personnes");
-___('meetups_list_bilingual', 'EN', "Bilingual");
-___('meetups_list_bilingual', 'FR', "Bilingue");
 ___('meetups_list_count',     'EN', "{{1}} NoBleme real life meetups");
 ___('meetups_list_count',     'FR', "{{1}} rencontres IRL NoBlemeuses");
 ___('meetups_list_none',      'EN', "No real life meetups have been found");
@@ -134,8 +130,6 @@ ___('meetups_attendees_add_submit',   'FR', "Ajouter une personne");
 // Edit an attendee
 ___('meetups_attendees_edit_submit',        'EN', "Edit attendee details");
 ___('meetups_attendees_edit_submit',        'FR', "Modifier les informations");
-___('meetups_attendees_edit_hide',          'EN', "Close this form");
-___('meetups_attendees_edit_hide',          'FR', "Fermer ce formulaire");
 ___('meetups_attendees_edit_error_id',      'EN', "The attendee does not exist or has been deleted.");
 ___('meetups_attendees_edit_error_id',      'FR', "La personne n'existe pas ou a été supprimée.");
 ___('meetups_attendees_edit_error_meetup',  'EN', "The meetup does not exist or has been deleted.");

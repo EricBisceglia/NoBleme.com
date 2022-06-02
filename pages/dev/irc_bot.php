@@ -394,7 +394,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <th>
                 <select class="table_search" id="dev_irc_bot_history_sent" name="dev_irc_bot_history_sent">
                   <option value="-1"><?=__('all')?></option>
-                  <option value="0"<?=$irc_bot_history_search_sent_0?>><?=__('irc_bot_history_sent')?></option>
+                  <option value="0"<?=$irc_bot_history_search_sent_0?>><?=string_change_case(__('sent+'), 'initials')?></option>
                   <option value="1"<?=$irc_bot_history_search_sent_1?>><?=string_change_case(__('error+'), 'initials')?></option>
                 </select>
               </th>

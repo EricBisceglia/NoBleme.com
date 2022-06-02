@@ -113,7 +113,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php if($profile_data['lang_en'] || $profile_data['lang_fr']) { ?>
     <div class="profile_info_box_<?=$mode?>">
-      <span class="bold"><?=__('users_list_languages')?></span><br>
+      <span class="bold"><?=string_change_case(__('language+'), 'initials')?></span><br>
       <div class="tinypadding_bot">
         <?php if($profile_data['lang_en']) { ?>
         <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle profile_flag" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
@@ -159,7 +159,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php if($profile_data['birthday']) { ?>
     <div class="profile_info_box_<?=$mode?>">
-      <span class="bold"><?=__('users_profile_birthday')?></span><br>
+      <span class="bold"><?=string_change_case(__('birthday'), 'initials')?></span><br>
       <?=$profile_data['birthday']?>
     </div>
     <?php } ?>

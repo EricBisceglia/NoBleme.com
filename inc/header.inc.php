@@ -635,7 +635,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/compendium/page_type_list', __('submenu_pages_compendium_types'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/compendium/category_list', __('submenu_pages_compendium_categories'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/compendium/category_list', string_change_case(__('category+'), 'initials'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/compendium/cultural_era_list', __('submenu_pages_compendium_eras'), 'header_submenu_link', 1, $path);?>
@@ -656,7 +656,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/politics/contramanifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/politics/contrapolitics', __('submenu_pages_politics_join'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/politics/contrapolitics', __('submenu_pages_politics_faq'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 
@@ -669,7 +669,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
         <div class="header_submenu_column">
           <div class="header_submenu_title">
-            <?=__('submenu_nobleme_users')?>
+            <?=__('user+')?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
@@ -826,7 +826,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <div class="width_30 bigpadding_top hugepadding_bot">
 
           <h1 class="align_center padding_bot header_login_form_title">
-            <?=__('login_form_title')?>
+            <?=string_change_case(__('login'), 'initials')?>
           </h1>
 
           <h5 id="login_form_error" class="align_center bigpadding_bot padding_top underlined dowrap hidden">
@@ -851,7 +851,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
                 <label class="label_inline login_form_text" for="login_form_remember"><?=__('login_form_form_remember')?></label>
               </div>
 
-              <input type="submit" class="button_chain" value="<?=__('login_form_title')?>">
+              <input type="submit" class="button_chain" value="<?=string_change_case(__('login'), 'initials')?>">
 
               <button type="button" onclick="window.location = '<?=$path?>pages/account/register';"><?=__('login_form_form_register')?></button>
 
@@ -967,7 +967,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
         <div class="header_submenu_column">
           <div class="header_submenu_title">
-            <?=__('submenu_admin_stats')?>
+            <?=__('stats')?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/admin/stats_metrics', __('submenu_admin_metrics'), 'header_submenu_link', 1, $path);?>
@@ -976,7 +976,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/admin/stats_views', __('submenu_admin_pageviews'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/admin/stats_users', __('submenu_admin_stats_users'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/admin/stats_users', string_change_case(__('user_acc+'), 'initials'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/admin/stats_guests', __('submenu_admin_stats_guests'), 'header_submenu_link', 1, $path);?>
@@ -991,19 +991,19 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/dev/doc_snippets', __('submenu_admin_doc_snippets'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('pages/dev/doc_functions', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('pages/dev/doc_css_palette', __('submenu_admin_doc_css'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/doc_js_toolbox', __('submenu_admin_doc_js'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/dev/doc_functions', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/dev/doc_workflow', __('submenu_admin_doc_workflow'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/translations', __('submenu_admin_doc_duplicates'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/dev/doc_workflow', __('submenu_admin_doc_workflow'), 'header_submenu_link', 1, $path);?>
           </div>
           <?php if($GLOBALS['dev_mode']) { ?>
           <div class="header_submenu_item">

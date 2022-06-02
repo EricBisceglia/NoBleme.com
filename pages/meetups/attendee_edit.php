@@ -92,7 +92,7 @@ $attendee_locked = (is_array($attendee_data) && $attendee_data['lock']) ? ' chec
       <button class="light white_hover text_dark text_black_hover" onclick="meetups_attendee_edit('<?=$attendee_data['meetup_id']?>', '<?=$attendee_id?>');"><?=__('meetups_attendees_edit_submit')?></button>
     </div>
     <div class="flex">
-      <button class="dark black_hover text_light text_white_hover" onclick="meetups_attendee_edit_hide();"><?=__('meetups_attendees_edit_hide')?></button>
+      <button class="dark black_hover text_light text_white_hover" onclick="meetups_attendee_edit_hide();"><?=__('close_form')?></button>
     </div>
   </div>
 

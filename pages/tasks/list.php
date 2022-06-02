@@ -109,7 +109,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th>
-          <?=__('tasks_list_description')?>
+          <?=__('description')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "tasks_list_search('description');")?>
         </th>
 
@@ -119,7 +119,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th>
-          <?=__('tasks_list_created')?>
+          <?=__('opened')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "tasks_list_search('created');")?>
         </th>
 
@@ -129,7 +129,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th class="desktop">
-          <?=__('tasks_list_category')?>
+          <?=__('category')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "tasks_list_search('category');")?>
         </th>
 

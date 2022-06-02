@@ -48,7 +48,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__('compendium_index_title')?>
+    <?=__('submenu_pages_compendium')?>
     <?php if($is_admin) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add')?>
     <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/admin_notes')?>
@@ -89,7 +89,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if($compendium_pages_list[$i]['type_id']) { ?>
     <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
     <?php } ?>
-    <span class=""><?=__('compendium_index_recent_created', spaces_after: 1).$compendium_pages_list[$i]['created']?></span>
+    <span class=""><?=string_change_case(__('published', spaces_after: 1), 'initials').$compendium_pages_list[$i]['created']?></span>
     <?php if($compendium_pages_list[$i]['edited']) { ?>
     <br>
     <span class=""><?=__('compendium_index_recent_reworked', spaces_after: 1).$compendium_pages_list[$i]['edited']?></span><br>

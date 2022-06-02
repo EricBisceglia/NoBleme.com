@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <input class="indiv"type="text" id="account_settings_email" name="account_settings_email" value="<?=$account_email?>">
 
       <div class="smallpadding_top">
-        <input type="submit" name="account_settings_email_submit" value="<?=__('account_email_submit')?>">
+        <input type="submit" name="account_settings_email_submit" value="<?=__('submenu_user_edit_email')?>">
       </div>
 
     </fieldset>

@@ -176,7 +176,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <div class="smallpadding_bot<?=$admin_ban_hide_type?>">
         <label for="admin_ban_add_type"><?=__('admin_ban_add_type')?></label>
         <select class="indiv align_left" id="admin_ban_add_type" name="admin_ban_add_type" onchange="admin_ban_add_swap_form()">
-          <option value="user"<?=$admin_ban_add_type_selector['user']?>><?=__('admin_ban_add_type_user')?></option>
+          <option value="user"<?=$admin_ban_add_type_selector['user']?>><?=string_change_case(__('account'), 'initials')?></option>
           <option value="ip"<?=$admin_ban_add_type_selector['ip']?>><?=__('admin_ban_add_type_ip')?></option>
         </select>
       </div>
@@ -448,7 +448,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <th colspan="2">
             <select class="table_search" name="admin_ban_logs_search_status" id="admin_ban_logs_search_status" onchange="admin_ban_search_logs()">
               <option value="-1">&nbsp;</option>
-              <option value="1"><?=__('admin_ban_logs_status_banned')?></option>
+              <option value="1"><?=__('admin_ban_list_title')?></option>
               <option value="0"><?=__('admin_ban_logs_status_free')?></option>
             </select>
           </th>

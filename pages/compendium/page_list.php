@@ -74,7 +74,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 bigpadding_bot">
 
   <h1>
-    <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium'), 'noglow')?>
     <?php if($is_admin) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add')?>
     <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/page_list_admin')?>
@@ -105,7 +105,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('title');")?>
         </th>
         <th>
-          <?=__('compendium_list_theme')?>
+          <?=__('theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('theme');")?>
         </th>
         <th>
@@ -206,12 +206,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <?php if(!$compendium_pages_list[$i]['fulltitle'] && !$compendium_pages_list[$i]['summary']) { ?>
-        <td class="align_left<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur(); unblur_element('compendium_list_link_<?=$compendium_pages_list[$i]['id']?>');">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur();', id: 'compendium_list_link_'.$compendium_pages_list[$i]['id'])?>
+        <td class="align_left<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur(this); unblur_element('compendium_list_link_<?=$compendium_pages_list[$i]['id']?>');">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur(this);', id: 'compendium_list_link_'.$compendium_pages_list[$i]['id'])?>
         </td>
         <?php } else { ?>
-        <td class="tooltip_container tooltip_desktop<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur(); unblur_element('compendium_list_link_<?=$compendium_pages_list[$i]['id']?>');">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur();', id: 'compendium_list_link_'.$compendium_pages_list[$i]['id'])?>
+        <td class="tooltip_container tooltip_desktop<?=$compendium_pages_list[$i]['blur']?>" onmouseover="unblur(this); unblur_element('compendium_list_link_<?=$compendium_pages_list[$i]['id']?>');">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'], onmouseover: 'unblur(this);', id: 'compendium_list_link_'.$compendium_pages_list[$i]['id'])?>
           <div class="tooltip dowrap">
             <h5>
               <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'noglow')?>

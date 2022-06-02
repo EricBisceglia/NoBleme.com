@@ -141,12 +141,12 @@ hr   { height: 3px;                                                 } }
 .align_left     { text-align: left;               }
 .align_right    { text-align: right;              }
 .align_desktop  { text-align: justify;            }
-@media (max-width: 992px)                         {
-.align_desktop  { text-align: left;             } }
 .valign_top     { vertical-align: top;            }
 .valign_middle  { vertical-align: middle;         }
 .valign_bottom  { vertical-align: bottom;         }
 .valign_table   { display: block; margin: 0 auto; }
+@media (max-width: 992px)                         {
+.align_desktop  { text-align: left;             } }
 
 /**************************************************** VISIBILITY *****************************************************/
 

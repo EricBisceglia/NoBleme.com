@@ -101,7 +101,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__('tasks_roadmap_task')?>
           </th>
           <th class="desktop">
-            <?=__('tasks_list_created')?>
+            <?=__('opened')?>
           </th>
           <th class="desktop">
             <?=__('tasks_list_solved')?>

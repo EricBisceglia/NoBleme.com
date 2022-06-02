@@ -129,9 +129,11 @@ function user_get( ?int $user_id = NULL ) : mixed
   $temp               = ($lang == 'FR' && $duser['u_active_fr']) ? $duser['u_active_fr'] : $duser['u_active_en'];
   $data['lastpage']   = sanitize_output($temp);
   $data['lasturl']    = sanitize_output($duser['u_active_url']);
-  $temp               = ($duser['u_lastaction']) ? time_since($duser['u_lastaction']) : __('users_profile_noaction');
+  $temp               = string_change_case(__('none_f'), 'initials');
+  $temp               = ($duser['u_lastaction']) ? time_since($duser['u_lastaction']) : $temp;
   $data['lastaction'] = sanitize_output($temp);
-  $data['email']      = ($duser['u_mail']) ? sanitize_output($duser['u_mail']) : __('users_profile_noaction');
+  $temp               = string_change_case(__('none_f'), 'initials');
+  $data['email']      = ($duser['u_mail']) ? sanitize_output($duser['u_mail']) : $temp;
 
   // Return the array
   return $data;

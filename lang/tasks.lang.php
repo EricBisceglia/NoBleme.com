@@ -34,18 +34,12 @@ EOT
 
 
 // List: Titles
-___('tasks_list_status',      'EN', "Status");
-___('tasks_list_status',      'FR', "État");
-___('tasks_list_description', 'EN', "Description");
-___('tasks_list_description', 'FR', "Description");
-___('tasks_list_created',     'EN', "Created");
-___('tasks_list_created',     'FR', "Création");
-___('tasks_list_reporter',    'EN', "Reporter");
-___('tasks_list_reporter',    'FR', "Ouvert par");
-___('tasks_list_category',    'EN', "Category");
-___('tasks_list_category',    'FR', "Catégorie");
-___('tasks_list_goal',        'EN', "Goal");
-___('tasks_list_goal',        'FR', "Objectif");
+___('tasks_list_status',    'EN', "Status");
+___('tasks_list_status',    'FR', "État");
+___('tasks_list_reporter',  'EN', "Reporter");
+___('tasks_list_reporter',  'FR', "Ouvert par");
+___('tasks_list_goal',      'EN', "Goal");
+___('tasks_list_goal',      'FR', "Objectif");
 
 
 // List: Count
@@ -258,12 +252,8 @@ ___('tasks_add_error_title',  'FR', "La tâche doit avoir un titre en français 
 // Approve a task proposal
 ___('tasks_approve_title',      'EN', "Approve a task proposal");
 ___('tasks_approve_title',      'FR', "Accepter une proposition de tâche");
-___('tasks_approve_icon',       'EN', "Approve task proposal");
-___('tasks_approve_icon',       'FR', "Approuver la proposition de tâche");
 ___('tasks_approve_impossible', 'EN', "This task has already been approved or rejected");
 ___('tasks_approve_impossible', 'FR', "Cette tâche a déjà été approuvée ou rejetée");
-___('tasks_approve_subtitle',   'EN', "Task proposal by");
-___('tasks_approve_subtitle',   'FR', "Proposition par");
 ___('tasks_approve_submit',     'EN', "Approve task proposal");
 ___('tasks_approve_submit',     'FR', "Approuver la proposition");
 
@@ -368,15 +358,11 @@ ___('tasks_categories_title_fr',  'EN', "Category title in french");
 ___('tasks_categories_title_fr',  'FR', "Nom de la catégorie en français");
 ___('tasks_categories_edit',      'EN', "Edit category");
 ___('tasks_categories_edit',      'FR', "Modifier la catégorie");
-___('tasks_categories_close',     'EN', "Close this form");
-___('tasks_categories_close',     'FR', "Fermer ce formulaire");
 ___('tasks_categories_delete',    'EN', "Confirm the irreversible deletion of this task category");
 ___('tasks_categories_delete',    'FR', "Confirmer la suppression irréversible de cette catégorie de tâches");
 
 
 // Manage milestones
-___('tasks_milestones_order',     'EN', "Order");
-___('tasks_milestones_order',     'FR', "Classement");
 ___('tasks_milestones_title_en',  'EN', "Milestone title in english");
 ___('tasks_milestones_title_en',  'FR', "Nom de l'objectif en anglais");
 ___('tasks_milestones_title_fr',  'EN', "Milestone title in french");

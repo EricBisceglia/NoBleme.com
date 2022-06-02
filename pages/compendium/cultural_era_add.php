@@ -185,7 +185,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 padding_bot padding_top">
 
   <h1>
-    <?=__('compendium_index_title')?>
+    <?=__('submenu_pages_compendium')?>
   </h1>
 
   <h5>
@@ -219,7 +219,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 padding_top">
 
   <h1>
-    <?=__('compendium_index_title')?>
+    <?=__('submenu_pages_compendium')?>
   </h1>
 
   <h5>

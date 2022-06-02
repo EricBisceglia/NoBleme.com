@@ -90,7 +90,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
 
     <?php if($is_moderator) { ?>
-    <?=__icon('user_confirm', href: 'pages/nobleme/activity?mod', alt: 'X', title: __('activity_title_modlogs'));?>
+    <?=__icon('user_confirm', href: 'pages/nobleme/activity?mod', alt: 'X', title: __('submenu_admin_modlogs'));?>
     <?php } ?>
 
   </h1>
@@ -99,7 +99,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1 class="align_center padding_bot">
 
-    <?=__link('pages/nobleme/activity', __('activity_title_modlogs'), 'noglow')?>
+    <?=__link('pages/nobleme/activity', __('submenu_admin_modlogs'), 'noglow')?>
 
     <?php if($is_admin) { ?>
     <?=__icon('delete', alt: 'X', title: __('activity_icon_deleted'), onclick: "activity_submit_menus('".$logs_url."', 1);")?>
@@ -135,11 +135,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <select class="inh small activity_type" id="activity_type" onchange="activity_submit_menus('<?=$logs_url?>');">
       <option value="all"><?=__('activity_type_all')?></option>
-      <option value="users"><?=__('activity_type_users')?></option>
+      <option value="users"><?=string_change_case(__('user_acc+'), 'initials')?></option>
       <option value="meetups"><?=__('activity_type_meetups')?></option>
       <?php if(!$activity_modlogs) { ?>
-      <option value="quotes"><?=__('activity_type_quotes')?></option>
-      <option value="compendium"><?=__('activity_type_compendium')?></option>
+      <option value="quotes"><?=__('submenu_social_quotes')?></option>
+      <option value="compendium"><?=__('submenu_pages_compendium')?></option>
       <?php } else { ?>
       <option value="irc"><?=__('activity_type_irc')?></option>
       <?php } ?>

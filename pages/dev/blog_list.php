@@ -68,7 +68,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr class="uppercase">
 
         <th>
-          <?=__('dev_blog_table_title')?>
+          <?=__('title')?>
         </th>
 
         <th>
@@ -81,12 +81,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($is_admin) { ?>
 
         <th>
-          <?=__('dev_blog_table_views')?>
+          <?=__('view+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', href: 'pages/dev/blog_list?views')?>
         </th>
 
         <th>
-          <?=__('dev_blog_table_lang')?>
+          <?=__('language+')?>
         </th>
 
         <?php } ?>

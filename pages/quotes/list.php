@@ -241,7 +241,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quotes_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
         <?php } else { ?>
         <?php if($quotes_deleted || $quotes_list[$i]['deleted']) { ?>
-        <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'), onclick: "quotes_restore(".$quotes_list[$i]['id'].");")?>
+        <?=__icon('refresh', is_small: true, alt: 'R', title: string_change_case(__('undelete'), 'initials'), onclick: "quotes_restore(".$quotes_list[$i]['id'].");")?>
         <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quotes_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
         <?php } else { ?>
         <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: "quotes_delete('".$quotes_list[$i]['id']."');")?>
@@ -256,7 +256,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <?php if($quotes_list[$i]['nsfw'] && !$adult_settings) { ?>
-      <span class="blur" onmouseover="unblur();"><?=$quotes_list[$i]['body']?></span>
+      <span class="blur" onmouseover="unblur(this);"><?=$quotes_list[$i]['body']?></span>
       <?php } else { ?>
       <?=$quotes_list[$i]['body']?>
       <?php } ?>
