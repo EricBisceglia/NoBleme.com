@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 bigpadding_bot">
 
   <h1>
-    <?=__('submenu_admin_stats_users')?>
+    <?=string_change_case(__('user_acc+'), 'initials')?>
   </h1>
 
   <p>
@@ -112,7 +112,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('visits');")?>
         </th>
         <th class="desktop">
-          <?=__('admin_stats_users_created')?>
+          <?=__('created')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('created');")?>
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('rcreated');")?>
         </th>
@@ -131,7 +131,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('action');")?>
         </th>
         <th>
-          <?=__('admin_stats_users_language')?>
+          <?=__('lang.')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('language');")?>
         </th>
         <th class="desktop">
@@ -139,7 +139,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('speaks');")?>
         </th>
         <th>
-          <?=__('admin_stats_guests_theme')?>
+          <?=__('theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('theme');")?>
         </th>
         <th class="desktop">
@@ -151,7 +151,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('admin_stats_users_profile')?>
         </th>
         <th>
-          <?=__('admin_stats_users_settings')?>
+          <?=__('settings')?>
         </th>
       </tr>
 
@@ -205,7 +205,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <option value="0">&nbsp;</option>
             <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
             <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
-            <option value="Both"><?=__('admin_stats_users_bilingual')?></option>
+            <option value="Both"><?=string_change_case(__('bilingual'), 'initials')?></option>
             <option value="None"><?=string_change_case(__('none'), 'initials')?></option>
           </select>
         </th>
@@ -235,9 +235,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <option value="empty"><?=__('admin_stats_users_empty')?></option>
             <option value="filled"><?=__('admin_stats_users_filled')?></option>
             <option value="complete"><?=__('admin_stats_users_complete')?>
-            <option value="speaks"><?=__('admin_stats_users_spoken')?></option>
-            <option value="birthday"><?=__('admin_stats_users_has_birthday')?></option>
-            <option value="location"><?=__('admin_stats_users_location')?></option>
+            <option value="speaks"><?=string_change_case(__('language+'), 'initials')?></option>
+            <option value="birthday"><?=string_change_case(__('birthday'), 'initials')?></option>
+            <option value="location"><?=string_change_case(__('location'), 'initials')?></option>
             <option value="pronouns"><?=__('admin_stats_users_pronouns')?></option>
             <option value="text"><?=__('admin_stats_users_profile_text')?></option>
           </select>
@@ -350,13 +350,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } else { ?>
           <span class="text_red" title="<?=__('admin_stats_users_speaks')?>">&cross;</span>
           <?php } if($users_data[$i]['birthday']) { ?>
-          <span class="text_green" title="<?=__('admin_stats_users_has_birthday')?>">&check;</span>
+          <span class="text_green" title="<?=string_change_case(__('birthday'), 'initials')?>">&check;</span>
           <?php } else { ?>
-          <span class="text_red" title="<?=__('admin_stats_users_has_birthday')?>">&cross;</span>
+          <span class="text_red" title="<?=string_change_case(__('birthday'), 'initials')?>">&cross;</span>
           <?php } if($users_data[$i]['location']) { ?>
-          <span class="text_green" title="<?=__('admin_stats_users_location')?>">&check;</span>
+          <span class="text_green" title="<?=string_change_case(__('location'), 'initials')?>">&check;</span>
           <?php } else { ?>
-          <span class="text_red" title="<?=__('admin_stats_users_location')?>">&cross;</span>
+          <span class="text_red" title="<?=string_change_case(__('location'), 'initials')?>">&cross;</span>
           <?php } if($users_data[$i]['pronouns']) { ?>
           <span class="text_green" title="<?=__('admin_stats_users_pronouns')?>">&check;</span>
           <?php } else { ?>
@@ -372,13 +372,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } else { ?>
             <span class="text_red">&cross;</span> <?=__('admin_stats_users_speaks')?><br>
             <?php } if($users_data[$i]['birthday']) { ?>
-            <span class="text_green">&check;</span> <?=__('admin_stats_users_has_birthday')?><br>
+            <span class="text_green">&check;</span> <?=string_change_case(__('birthday'), 'initials')?><br>
             <?php } else { ?>
-            <span class="text_red">&cross;</span> <?=__('admin_stats_users_has_birthday')?><br>
+            <span class="text_red">&cross;</span> <?=string_change_case(__('birthday'), 'initials')?><br>
             <?php } if($users_data[$i]['location']) { ?>
-            <span class="text_green">&check;</span> <?=__('admin_stats_users_location')?><br>
+            <span class="text_green">&check;</span> <?=string_change_case(__('location'), 'initials')?><br>
             <?php } else { ?>
-            <span class="text_red">&cross;</span> <?=__('admin_stats_users_location')?><br>
+            <span class="text_red">&cross;</span> <?=string_change_case(__('location'), 'initials')?><br>
             <?php } if($users_data[$i]['pronouns']) { ?>
             <span class="text_green">&check;</span> <?=__('admin_stats_users_pronouns')?><br>
             <?php } else { ?>

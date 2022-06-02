@@ -45,7 +45,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h1>
 
   <h5>
-    <?=__link('pages/compendium/index', __('compendium_eras_subtitle'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'noglow')?>
   </h5>
 
   <p>

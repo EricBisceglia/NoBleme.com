@@ -375,9 +375,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="padding_top">
     <?=__link('#', $compendium_new_title_en, 'big bold noglow forced_link', is_internal: false)?><br>
-    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('#', __('compendium_page_new_preview'), is_internal: false)?></span><br>
-    <span class=""><?=__('compendium_index_recent_reworked').__(':', spaces_after: 1).__('compendium_page_new_preview')?></span><br>
-    <span class=""><?=__('compendium_index_recent_created').__(':', spaces_after: 1).__('compendium_page_new_preview')?></span>
+    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?></span><br>
+    <span class=""><?=__('compendium_index_recent_reworked').__(':', spaces_after: 1).string_change_case(__('preview_2'), 'initials')?></span><br>
+    <span class=""><?=string_change_case(__('published', spaces_after: 1), 'initials').__(':', spaces_after: 1).string_change_case(__('preview_2'), 'initials')?></span>
   </p>
 
   <p class="tinypadding_top">
@@ -394,9 +394,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="padding_top">
     <?=__link('#', $compendium_new_title_fr, 'big bold noglow forced_link', is_internal: false)?><br>
-    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('#', __('compendium_page_new_preview'), is_internal: false)?></span><br>
-    <span class=""><?=__('compendium_index_recent_reworked').__(':', spaces_after: 1).__('compendium_page_new_preview')?></span><br>
-    <span class=""><?=__('compendium_index_recent_created').__(':', spaces_after: 1).__('compendium_page_new_preview')?></span>
+    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?></span><br>
+    <span class=""><?=__('compendium_index_recent_reworked').__(':', spaces_after: 1).string_change_case(__('preview_2'), 'initials')?></span><br>
+    <span class=""><?=string_change_case(__('published', spaces_after: 1), 'initials').__(':', spaces_after: 1).string_change_case(__('preview_2'), 'initials')?></span>
   </p>
 
   <p class="tinypadding_top">
@@ -417,19 +417,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="tinypadding_top padding_bot">
     <span class="bold"><?=__('compendium_page_type').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
     <span class="bold"><?=__('compendium_page_era').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
-    <span class="bold"><?=__('compendium_page_category').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <span class="bold"><?=string_change_case(__('category'), 'initials').__(':')?></span>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
     <span class="bold"><?=__('compendium_page_appeared').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
     <span class="bold"><?=__('compendium_list_peak').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
   </p>
 
   <?php if($compendium_new_nsfw) { ?>
@@ -496,19 +496,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="tinypadding_top padding_bot">
     <span class="bold"><?=__('compendium_page_type').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
     <span class="bold"><?=__('compendium_page_era').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
-    <span class="bold"><?=__('compendium_page_category').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <span class="bold"><?=string_change_case(__('category'), 'initials').__(':')?></span>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
     <span class="bold"><?=__('compendium_page_appeared').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
     <br>
     <span class="bold"><?=__('compendium_list_peak').__(':')?></span>
-    <?=__link('#', __('compendium_page_new_preview'), is_internal: false)?>
+    <?=__link('#', string_change_case(__('preview_2'), 'initials'), is_internal: false)?>
   </p>
 
   <?php if($compendium_new_nsfw) { ?>

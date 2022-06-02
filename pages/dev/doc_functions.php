@@ -84,7 +84,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="sanitization"<?=$dev_functions_selected['sanitization']?>><?=__('dev_functions_selector_sanitization')?></option>
         <option value="strings"<?=$dev_functions_selected['strings']?>><?=__('dev_functions_selector_strings')?></option>
         <option value="unsorted"<?=$dev_functions_selected['unsorted']?>><?=__('dev_functions_selector_unsorted')?></option>
-        <option value="users"<?=$dev_functions_selected['users']?>><?=__('dev_functions_selector_users')?></option>
+        <option value="users"<?=$dev_functions_selected['users']?>><?=string_change_case(__('user+'), 'initials')?></option>
         <option value="website"<?=$dev_functions_selected['website']?>><?=__('dev_functions_selector_website')?></option>
       </select>
     </h5>

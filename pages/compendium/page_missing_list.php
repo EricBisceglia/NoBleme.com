@@ -92,11 +92,11 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('url');")?>
         </th>
         <th>
-          <?=__('compendium_missing_page')?>
+          <?=__('title')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('title');")?>
         </th>
         <th class="desktop">
-          <?=__('compendium_list_theme')?>
+          <?=__('theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('type');")?>
         </th>
         <th class="desktop">
@@ -108,7 +108,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('notes');")?>
         </th>
         <th>
-          <?=__('compendium_missing_links')?>
+          <?=__('link+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_missing_list_search('links');")?>
         </th>
         <th>

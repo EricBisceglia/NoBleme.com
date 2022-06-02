@@ -89,7 +89,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </th>
 
           <th>
-            <?=__('users_inbox_sent')?>
+            <?=__('sent')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('sent');")?>
             <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('rsent');")?>
           </th>

@@ -120,7 +120,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           [i][/i]
         </td>
         <td class="bold nowrap">
-          <?=__('bbcodes_italics')?>
+          <?=__('italics')?>
         </td>
         <td class="padding_top padding_bot">
           <?=__('bbcodes_doc_italics')?><br>

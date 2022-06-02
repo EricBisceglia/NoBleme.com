@@ -653,7 +653,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr class="bold uppercase spaced noflow">
         <th>
-          <?=__('irc_faq_symbols_name')?>
+          <?=__('title')?>
         </th>
         <th>
           <?=__('irc_faq_symbols_symbol')?>
@@ -731,7 +731,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_center bold noflow">
-          <?=__('irc_faq_symbols_admin')?>
+          <?=string_change_case(__('admin'), 'initials')?>
         </td>
         <td class="align_center bold noflow">
           &
@@ -1231,13 +1231,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__('irc_channels_name')?>
           </th>
           <th>
-            <?=__('irc_channels_type')?>
+            <?=__('type')?>
           </th>
           <th>
-            <?=__('irc_channels_language')?>
+            <?=__('language')?>
           </th>
           <th>
-            <?=__('irc_channels_desc')?>
+            <?=__('description')?>
           </th>
           <?php if($is_moderator) { ?>
           <th>

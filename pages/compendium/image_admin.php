@@ -215,7 +215,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
       <tr class="uppercase">
         <th>
-          <?=__('compendium_image_list_copy')?>
+          <?=__('copy')?>
         </th>
         <th>
           <?=__('compendium_image_list_name')?>
@@ -238,11 +238,11 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('date');")?>
         </th>
         <th>
-          <?=__('compendium_list_admin_views')?>
+          <?=__('view+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('views');")?>
         </th>
         <th>
-          <?=__('compendium_image_list_caption')?>
+          <?=__('text')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('caption');")?>
         </th>
         <th>
@@ -299,7 +299,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <option value="">&nbsp;</option>
             <option value="none"><?=string_change_case(__('none'), 'initials')?></option>
             <option value="monolingual"><?=__('compendium_list_admin_monolingual')?></option>
-            <option value="bilingual"><?=__('compendium_list_admin_bilingual')?></option>
+            <option value="bilingual"><?=string_change_case(__('bilingual'), 'initials')?></option>
             <option value="french"><?=string_change_case(__('french'), 'initials')?></option>
             <option value="english"><?=string_change_case(__('english'), 'initials')?></option>
           </select>
@@ -320,7 +320,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <select class="table_search" name="compendium_images_search_deleted" id="compendium_images_search_deleted" onchange="compendium_image_list_search();">
             <option value="0">&nbsp;</option>
             <option value="1"><?=__('compendium_image_list_notdeleted')?></option>
-            <option value="2"><?=__('compendium_list_admin_deleted')?></option>
+            <option value="2"><?=string_change_case(__('deleted'), 'initials')?></option>
           </select>
         </th>
 

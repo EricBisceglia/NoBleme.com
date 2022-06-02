@@ -37,7 +37,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <h5 class="bigpadding_top">
-    <?=__('privacy_data_title')?>
+    <?=__('submenu_nobleme_personal_data')?>
   </h5>
 
   <p>

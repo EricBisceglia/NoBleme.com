@@ -88,7 +88,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           &nbsp;
         </th>
         <th class="background">
-          <?=__('admin_metrics_queries')?>
+          <?=__('query+')?>
         </th>
         <th class="background">
           <?=__('admin_metrics_load')?>
@@ -190,17 +190,17 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th>
-          <?=__('admin_metrics_activity')?>
+          <?=__('activity')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('activity');")?>
         </th>
 
         <th>
-          <?=__('admin_metrics_views')?>
+          <?=__('view+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('views');")?>
         </th>
 
         <th>
-          <?=__('admin_metrics_queries')?>
+          <?=__('query+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('queries');")?>
         </th>
 
@@ -297,7 +297,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$admin_metrics[$i]['load']?>
         </td>
         <td>
-          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer spaced', alt: 'R', title: __('admin_metrics_table_reset'), onclick: "admin_metrics_reset('".__('admin_metrics_table_reset_warning')."', ".$admin_metrics[$i]['id'].");")?>
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer spaced', alt: 'R', title: string_change_case(__('reset'), 'initials'), onclick: "admin_metrics_reset('".__('admin_metrics_table_reset_warning')."', ".$admin_metrics[$i]['id'].");")?>
         </td>
       </tr>
 

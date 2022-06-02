@@ -121,7 +121,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
                 <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('date');")?>
               </th>
               <th>
-                <?=__('dev_scheduler_task_description')?>
+                <?=__('description')?>
                 <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('description');")?>
               </th>
               <th>

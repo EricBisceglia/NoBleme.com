@@ -783,6 +783,10 @@ function dev_duplicate_translations_list( $ok_list = array() ) : array
   foreach($ok_list as $name)
     unset($translations[$name]);
 
+  // Make translations case insensitive
+  foreach($translations as $id => $value)
+    $translations[$id] = string_change_case($value, 'initials');
+
   // Look for duplicates in the global translations array
   $result = array_unique($translations);
   $result = array_diff($translations, array_diff($result, array_diff_assoc($translations, $result)));

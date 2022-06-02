@@ -98,7 +98,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if(!$devblog_data['deleted']) { ?>
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_confirm')."');", identifier: 'devblog_delete_icon')?>
     <?php } else { ?>
-    <?=__icon('refresh', alt: 'R', title: __('dev_blog_restore_icon'), onclick: "dev_blogs_restore($blog_id, '".__('dev_blogs_restore_confirm')."');", identifier: 'devblog_restore_icon')?>
+    <?=__icon('refresh', alt: 'R', title: string_change_case(__('undelete'), 'initials'), onclick: "dev_blogs_restore($blog_id, '".__('dev_blogs_restore_confirm')."');", identifier: 'devblog_restore_icon')?>
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_hard_confirm')."', 1);", identifier: 'devblog_delete_icon')?>
     <?php } ?>
     <?php } ?>

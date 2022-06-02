@@ -81,8 +81,6 @@ ___('quotes_approve',           'EN', "Approve");
 ___('quotes_approve',           'FR', "Approuver");
 ___('quotes_deny',              'EN', "Reject");
 ___('quotes_deny',              'FR', "Refuser");
-___('quotes_restore',           'EN', "Undelete");
-___('quotes_restore',           'FR', "Restaurer");
 ___('quotes_hard_delete',       'EN', "Hard deletion");
 ___('quotes_hard_delete',       'FR', "Suppression définitive");
 ___('quotes_another',           'EN', "Show me another random quote");
@@ -102,8 +100,6 @@ ___('quotes_unapproved',        'FR', "Cette citation est en attente d'approbati
 /*********************************************************************************************************************/
 
 // Header
-___('quotes_add_subtitle',  'EN', "Submit a quote proposal");
-___('quotes_add_subtitle',  'FR', "Proposer une citation");
 ___('quotes_add_intro_1',   'EN', <<<EOT
 If you witness a funny conversation or monologue on NoBleme and think that it would fit well within our {{link|pages/quotes/list|quote database}}, you can submit it as a quote proposal here. It will then be added to a queue that our {{link|pages/users/admins|administrators}} will review, and will eventually be approved or rejected. Once a decision has been taken, you will recieve a private message informing you of the fate of your proposal.
 EOT
@@ -159,14 +155,10 @@ ___('quotes_add_empty',   'FR', "Votre proposition de citation ne peut pas être
 /*********************************************************************************************************************/
 
 // Quote contents
-___('quotes_edit_body',       'EN', "Contents");
-___('quotes_edit_body',       'FR', "Contenu");
 ___('quotes_edit_submitted',  'EN', "Submitted by");
 ___('quotes_edit_submitted',  'FR', "Proposée par");
 ___('quotes_edit_date',       'EN', "Date (YYYY-MM-DD)");
 ___('quotes_edit_date',       'FR', "Date (YYYY-MM-DD)");
-___('quotes_edit_language',   'EN', "Language");
-___('quotes_edit_language',   'FR', "Langue");
 ___('quotes_edit_nsfw',       'EN', "NSFW contents (blurred)");
 ___('quotes_edit_nsfw',       'FR', "Contenu vulgaire (floutée)");
 ___('quotes_edit_submit',     'EN', "Edit quote");

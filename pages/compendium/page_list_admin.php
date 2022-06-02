@@ -112,7 +112,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('redirect');")?>
         </th>
         <th>
-          <?=__('compendium_list_theme')?>
+          <?=__('theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('theme');")?>
         </th>
         <th>
@@ -132,15 +132,15 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('peak');")?>
         </th>
         <th>
-          <?=__('compendium_index_recent_created')?>
+          <?=string_change_case(__('created', spaces_after: 1), 'initials')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('created');")?>
         </th>
         <th>
-          <?=__('compendium_list_admin_views')?>
+          <?=__('view+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('pageviews');")?>
         </th>
         <th>
-          <?=__('compendium_list_admin_language')?>
+          <?=__('lang.')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('language');")?>
         </th>
         <th>
@@ -192,7 +192,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <select class="table_search" name="compendium_search_type" id="compendium_search_type" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
-            <option value="-1"><?=__('compendium_list_admin_theme_no')?></option>
+            <option value="-1"><?=string_change_case(__('none'), 'initials')?></option>
             <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
             <option value="<?=$compendium_types_list[$i]['id']?>"><?=$compendium_types_list[$i]['name']?></option>
             <?php } ?>
@@ -213,7 +213,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <select class="table_search" name="compendium_search_era" id="compendium_search_era" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
-            <option value="-1"><?=__('compendium_list_admin_era_no')?></option>
+            <option value="-1"><?=string_change_case(__('none_f'), 'initials')?></option>
             <?php for($i = 0; $i < $compendium_eras_list['rows']; $i++) { ?>
             <option value="<?=$compendium_eras_list[$i]['id']?>"><?=$compendium_eras_list[$i]['short']?></option>
             <?php } ?>
@@ -259,7 +259,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <select class="table_search" name="compendium_search_language" id="compendium_search_language" onchange="compendium_admin_list_search();">
             <option value="">&nbsp;</option>
             <option value="monolingual"><?=__('compendium_list_admin_monolingual')?></option>
-            <option value="bilingual"><?=__('compendium_list_admin_bilingual')?></option>
+            <option value="bilingual"><?=string_change_case(__('bilingual'), 'initials')?></option>
             <option value="english"><?=string_change_case(__('english'), 'initials')?></option>
             <option value="french"><?=string_change_case(__('french'), 'initials')?></option>
           </select>
@@ -282,7 +282,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
             <option value="">&nbsp;</option>
             <option value="finished"><?=__('compendium_list_admin_finished')?></option>
             <option value="draft"><?=__('compendium_list_admin_draft')?></option>
-            <option value="deleted"><?=__('compendium_list_admin_deleted')?></option>
+            <option value="deleted"><?=string_change_case(__('deleted'), 'initials')?></option>
           </select>
         </th>
 

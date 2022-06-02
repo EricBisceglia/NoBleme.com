@@ -209,11 +209,11 @@ function user_create_account( string  $username               ,
 
   // Error: No username specified
   if(!$username)
-    return __('users_register_error_no_username');
+    return __('login_form_error_no_username');
 
   // Error: No password specified
   if(!$password)
-    return __('users_register_error_no_password');
+    return __('login_form_error_no_password');
 
   // Incorrect email (no error)
   if(!filter_var($email, FILTER_VALIDATE_EMAIL))

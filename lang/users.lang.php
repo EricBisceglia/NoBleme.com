@@ -105,8 +105,6 @@ EOD
 // Table
 ___('users_list_registered',  "EN", "Registered");
 ___('users_list_registered',  "FR", "Création");
-___('users_list_languages',   "EN", "Languages");
-___('users_list_languages',   "FR", "Langues");
 ___('users_list_active',      "EN", "Actively used");
 ___('users_list_active',      "FR", "Activement utilisés");
 ___('users_list_count',       "EN", "{{1}} NoBleme user account");
@@ -148,11 +146,6 @@ ___('users_admins_admins',  'FR', <<<EOT
 <span class="text_red bold">L'administration</span> gère les aspects technique du site : elle possède les mêmes pouvoirs que la modération, et peut également gérer le contenu des pages, fermer le site lors des maintenances techniques, etc.
 EOT
 );
-
-
-// Table
-___('users_admins_title', "EN", "Title");
-___('users_admins_title', "FR", "Titre");
 
 
 
@@ -197,8 +190,6 @@ ___('users_profile_age',        'EN', "Age");
 ___('users_profile_age',        'FR', "Âge");
 ___('users_profile_age_years',  'EN', "{{1}} years old");
 ___('users_profile_age_years',  'FR', "{{1}} ans");
-___('users_profile_birthday',   'EN', "Birthday");
-___('users_profile_birthday',   'FR', "Anniversaire");
 
 
 // Admin info
@@ -214,8 +205,6 @@ ___('users_profile_page',     'EN', "Last visited page");
 ___('users_profile_page',     'FR', "Dernière page visitée");
 ___('users_profile_action',   'EN', "Latest action");
 ___('users_profile_action',   'FR', "Dernière action");
-___('users_profile_noaction', 'EN', "None");
-___('users_profile_noaction', 'FR', "Aucune");
 
 
 
@@ -303,8 +292,6 @@ ___('users_profile_delete_selection', 'EN', "Selection");
 ___('users_profile_delete_selection', 'FR', "Sélection");
 ___('users_profile_delete_field',     'EN', "Field");
 ___('users_profile_delete_field',     'FR', "Champ");
-___('users_profile_delete_contents',  'EN', "Contents");
-___('users_profile_delete_contents',  'FR', "Contenu");
 ___('users_profile_delete_text',      'EN', "Custom text");
 ___('users_profile_delete_text',      'FR', "Texte libre");
 

@@ -86,7 +86,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h2>
 
   <h5 class="bigpadding_top padding_bot">
-    <?=__('tasks_approve_subtitle', spaces_after: 1).__link('pages/users/'.$task_details['creator_id'], $task_details['creator']).__(':')?>
+    <?=__('tasks_edit_author', spaces_after: 1).__link('pages/users/'.$task_details['creator_id'], $task_details['creator']).__(':')?>
   </h5>
 
   <pre id="task_reject_body" onclick="to_clipboard('', 'task_reject_body', 1);"><?=$task_details['body_proposal']?>

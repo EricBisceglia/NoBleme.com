@@ -39,114 +39,89 @@ foreach(scandir($directory) as $filename)
 }
 
 // Assemble a list of strings which are allowed to be duplicates
-$duplicate_ok_list = array( 'account_email_submit'              ,
-                            'account_password_confirm'          ,
-                            'account_password_submit'           ,
-                            'activity_title_modlogs'            ,
-                            'activity_type_compendium'          ,
-                            'activity_type_dev'                 ,
-                            'activity_type_meetups'             ,
-                            'activity_type_quotes'              ,
-                            'activity_type_users'               ,
-                            'admin_ban_delete_ban_reason'       ,
-                            'admin_ban_delete_unban_reason_en'  ,
-                            'admin_ban_delete_unban_reason_fr'  ,
-                            'admin_ban_list_length'             ,
-                            'admin_ban_logs_status_banned'      ,
-                            'admin_metrics_count_search+'       ,
-                            'admin_metrics_target'              ,
-                            'admin_metrics_views'               ,
-                            'admin_password_new'                ,
-                            'admin_rights_submit'               ,
-                            'admin_stats_guests_theme'          ,
-                            'admin_stats_guests_visits'         ,
-                            'admin_stats_users_complete'        ,
-                            'admin_stats_users_created'         ,
-                            'admin_stats_users_has_birthday'    ,
-                            'admin_stats_users_language'        ,
-                            'admin_stats_users_location'        ,
-                            'admin_stats_users_partial+'        ,
-                            'admin_stats_users_profile_text'    ,
-                            'admin_stats_users_spoken'          ,
-                            'administrator'                     ,
-                            'compendium_categories_title'       ,
-                            'compendium_category_edit_submit'   ,
-                            'compendium_era_admin_name'         ,
-                            'compendium_era_edit_submit'        ,
-                            'compendium_eras_entries'           ,
-                            'compendium_eras_subtitle'          ,
-                            'compendium_eras_title'             ,
-                            'compendium_index_title'            ,
-                            'compendium_list_admin_bilingual'   ,
-                            'compendium_list_admin_menu'        ,
-                            'compendium_list_admin_url'         ,
-                            'compendium_list_created'           ,
-                            'compendium_list_theme'             ,
-                            'compendium_missing_page'           ,
-                            'compendium_page_category+'         ,
-                            'compendium_page_delete_title'      ,
-                            'compendium_page_draft_submit'      ,
-                            'compendium_page_edit_submit'       ,
-                            'compendium_page_list'              ,
-                            'compendium_type_admin_short'       ,
-                            'compendium_type_edit_submit'       ,
-                            'compendium_type_subtitle'          ,
-                            'compendium_types_title'            ,
-                            'dev_blog_table_lang'               ,
-                            'dev_functions_selector_users'      ,
-                            'dev_js_toolbox_title'              ,
-                            'dev_palette_selector_text'         ,
-                            'dev_translations_value'            ,
-                            'dev_scheduler_task_description'    ,
-                            'discord_webhook_message_admin'     ,
-                            'irc_bot_history_sent'              ,
-                            'irc_bot_message_send'              ,
-                            'irc_channels_language'             ,
-                            'irc_faq_symbols_name'              ,
-                            'login_form_error_no_password'      ,
-                            'login_form_error_no_username'      ,
-                            'meetups_attendees_edit_hide'       ,
-                            'meetups_list_bilingual'            ,
-                            'meetups_new_details'               ,
-                            'meetups_organize_title'            ,
-                            'modify'                            ,
-                            'month+'                            ,
-                            'month_short_5'                     ,
-                            'month_short_6'                     ,
-                            'month_short_7'                     ,
-                            'month_short_8'                     ,
-                            'nobleme_home_statement_title'      ,
-                            'privacy_data_title'                ,
-                            'quotes_add'                        ,
-                            'quotes_add_subtitle'               ,
-                            'quotes_restore'                    ,
-                            'quotes_subtitle'                   ,
-                            'quotes_users_empty'                ,
-                            'submenu_admin_stats_users'         ,
-                            'submenu_nobleme_dev'               ,
-                            'tasks_add_milestone'               ,
-                            'tasks_approve_submit'              ,
-                            'tasks_categories_edit'             ,
-                            'tasks_edit_author'                 ,
-                            'tasks_list_category'               ,
-                            'tasks_list_count_finished+'        ,
-                            'tasks_list_created'                ,
-                            'tasks_list_count_finished_short'   ,
-                            'tasks_list_description'            ,
-                            'tasks_list_uncategorized'          ,
-                            'tasks_milestones_order'            ,
-                            'tasks_reject_submit'               ,
-                            'tasks_roadmap_title'               ,
-                            'times'                             ,
-                            'users_admins_title'                ,
-                            'users_list_registered'             ,
-                            'users_mail_chain_unread'           ,
-                            'users_message_admins_del_title'    ,
-                            'users_message_error_nick_short'    ,
-                            'users_message_error_nick_long'     ,
-                            'users_profile_delete_contents'     ,
-                            'users_profile_edit_submit'         ,
-                            'users_profile_pronouns'            );
+$duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in english only
+                            'account_password_new'              , # Nuance in english only
+                            'activity_type_dev'                 , # Acceptable redundancy
+                            'admin_ban_list_length'             , # Short/long versions
+                            'admin_ban_delete_ban_reason'       , # With/without line break
+                            'admin_ban_delete_unban_reason_en'  , # Nuance in english only
+                            'admin_ban_delete_unban_reason_fr'  , # Nuance in english only
+                            'admin_metrics_count_search+'       , # Nuance in english only
+                            'admin_metrics_page'                , # Nuance in french only
+                            'admin_metrics_warning'             , # Nuance in french only
+                            'admin_rights_submit'               , # Nuance in english only
+                            'admin_stats_users_complete'        , # Acceptable redundancy
+                            'admin_stats_users_partial+'        , # Nuance in french only
+                            'admin_stats_users_profile_text'    , # Nuance in english only
+                            'admin_stats_users_pronouns'        , # Acceptable redundancy
+                            'administration'                    , # Nuance in english only
+                            'at_date'                           , # Nuance in english only
+                            'compendium_admin_notes_url'        , # Nuance in english only
+                            'compendium_category_edit_submit'   , # Nuance in english only
+                            'compendium_era_edit_submit'        , # Nuance in english only
+                            'compendium_eras_entries'           , # Nuance in english only
+                            'compendium_faq_question_12'        , # Nuance in english only
+                            'compendium_image_list_uploaded'    , # Nuance in english only
+                            'compendium_list_admin_menu'        , # Nuance in english only
+                            'compendium_list_created'           , # Nuance in french only
+                            'compendium_page_delete_submit'     , # Nuance in english only
+                            'compendium_page_draft_submit'      , # Nuance in english only
+                            'compendium_page_edit_submit'       , # Nuance in english only
+                            'compendium_page_pageviews+'        , # Nuance in english only
+                            'compendium_page_type'              , # Nuance in french only
+                            'compendium_type_edit_submit'       , # Nuance in english only
+                            'compendium_type_subtitle'          , # Nuance in french only
+                            'discord_webhook_message_admin'     , # Nuance in french only
+                            'irc_bot_message_send'              , # Acceptable redundancy
+                            'irc_faq_symbols_user'              , # Acceptable redundancy
+                            'meetups_details_title'             , # Nuance in french only
+                            'meetups_organize_title'            , # Nuance in english only
+                            'modify'                            , # Nuance in english only
+                            'month+'                            , # Redundant on purpose
+                            'month_1'                           , # Redundant on purpose
+                            'month_2'                           , # Redundant on purpose
+                            'month_3'                           , # Redundant on purpose
+                            'month_4'                           , # Redundant on purpose
+                            'month_5'                           , # Redundant on purpose
+                            'month_6'                           , # Redundant on purpose
+                            'month_7'                           , # Redundant on purpose
+                            'month_8'                           , # Redundant on purpose
+                            'month_9'                           , # Redundant on purpose
+                            'month_10'                          , # Redundant on purpose
+                            'month_11'                          , # Redundant on purpose
+                            'month_12'                          , # Redundant on purpose
+                            'month_short_5'                     , # Short/long versions
+                            'month_short_6'                     , # Short/long versions
+                            'month_short_7'                     , # Short/long versions
+                            'month_short_8'                     , # Short/long versions
+                            'none_f'                            , # Nuance in french only
+                            'preview_2'                         , # Nuance in french only
+                            'quotes_subtitle'                   , # Nuance in english only
+                            'quotes_users_empty'                , # Acceptable redundancy
+                            'sent+'                             , # Nuance in french only
+                            'submenu_admin_doc'                 , # Nuance in english only
+                            'submenu_admin_stats_guests'        , # Nuance in english only
+                            'submenu_nobleme_roadmap'           , # Nuance in english only
+                            'submenu_pages_compendium_eras'     , # Nuance in english only
+                            'submenu_social_meetups'            , # Nuance in english only
+                            'submenu_social_quotes_submit'      , # Nuance in english only
+                            'tasks_add_milestone'               , # Nuance in english only
+                            'tasks_categories_edit'             , # Acceptable redundancy
+                            'tasks_list_count_finished'         , # Nuance in french only
+                            'tasks_list_count_finished_short'   , # Nuance in french only
+                            'tasks_list_goal'                   , # Nuance in english only
+                            'tasks_list_uncategorized'          , # Acceptable redundancy
+                            'tasks_reject_submit'               , # Nuance in french only
+                            'time_indicator_en'                 , # Redundant on purpose
+                            'times'                             , # Redundant on purpose
+                            'undelete'                          , # Nuance in english only
+                            'user+'                             , # Nuance in french only
+                            'user_acc+'                         , # Nuance in french only
+                            'users_mail_chain_unread'           , # Nuance in english only
+                            'users_message_admins_name_del'     , # Nuance in english only
+                            'users_message_error_nick_long'     , # Nuance in english only
+                            'users_message_error_nick_short'    , # Nuance in english only
+                            'users_profile_edit_submit'        ); # Nuance in english only
 
 // Look for duplicate translations in the current language
 $duplicate_translations = dev_duplicate_translations_list($duplicate_ok_list);
@@ -174,7 +149,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('dev_translations_name')?>
         </th>
         <th class="align_left">
-          <?=__('dev_translations_value')?>
+          <?=__('contents')?>
         </th>
       </tr>
 

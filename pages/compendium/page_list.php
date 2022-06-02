@@ -74,7 +74,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50 bigpadding_bot">
 
   <h1>
-    <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium'), 'noglow')?>
     <?php if($is_admin) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add')?>
     <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/page_list_admin')?>
@@ -105,7 +105,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('title');")?>
         </th>
         <th>
-          <?=__('compendium_list_theme')?>
+          <?=__('theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('theme');")?>
         </th>
         <th>

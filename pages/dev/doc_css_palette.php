@@ -90,7 +90,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="popins"<?=$dev_palette_selected['popins']?>><?=__('dev_palette_selector_popins')?></option>
         <option value="spacing"<?=$dev_palette_selected['spacing']?>><?=__('dev_palette_selector_spacing')?></option>
         <option value="tables"<?=$dev_palette_selected['tables']?>><?=__('dev_palette_selector_tables')?></option>
-        <option value="text"<?=$dev_palette_selected['text']?>><?=__('dev_palette_selector_text')?></option>
+        <option value="text"<?=$dev_palette_selected['text']?>><?=string_change_case(__('text'), 'initials')?></option>
         <option value="tooltips"<?=$dev_palette_selected['tooltips']?>><?=__('dev_palette_selector_tooltips')?></option>
       </select>
     </h5>

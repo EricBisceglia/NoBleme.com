@@ -104,7 +104,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__icon('link', is_small: true, alt: 'v', title: __('link'), title_case: 'initials', onclick: "admin_views_search('url');")?>
           </th>
           <th class="black text_white">
-            <?=__('admin_metrics_views')?>
+            <?=__('view+')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('views');", use_light: true)?>
           </th>
           <th colspan="2">
@@ -117,7 +117,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('oldviews');")?>
           </th>
           <th>
-            <?=__('admin_metrics_activity')?>
+            <?=__('activity')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('activity');")?>
             <?=__icon('sort_up', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('ractivity');")?>
             <?=__icon('link', is_small: true, alt: 'v', title: __('link'), title_case: 'initials', onclick: "admin_views_search('uactivity');")?>

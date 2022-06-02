@@ -93,7 +93,7 @@ $task_milestones = tasks_milestones_list();
     <tr class="uppercase">
 
       <th>
-        <?=__('tasks_milestones_order')?>
+        <?=__('order')?>
       </th>
 
       <th>
@@ -160,7 +160,7 @@ $task_milestones = tasks_milestones_list();
       <td colspan="4">
 
       <div class="padding_top smallpadding_bot">
-        <label for="tasks_milestones_edit_order_<?=$task_milestones[$i]['id']?>"><?=__('tasks_milestones_order')?></label>
+        <label for="tasks_milestones_edit_order_<?=$task_milestones[$i]['id']?>"><?=string_change_case(__('order'), 'initials')?></label>
         <input type="text" class="intable light text_dark" id="tasks_milestones_edit_order_<?=$task_milestones[$i]['id']?>" name="tasks_milestones_edit_order_<?=$task_milestones[$i]['id']?>" value="<?=$task_milestones[$i]['order']?>">
       </div>
 
@@ -186,7 +186,7 @@ $task_milestones = tasks_milestones_list();
 
       <div class="smallpadding_top padding_bot">
         <input type="submit" class="light text_dark spaced" name="tasks_milestones_edit_submit_<?=$task_milestones[$i]['id']?>" value="<?=__('tasks_milestones_edit')?>" onclick="tasks_milestones_edit('<?=$task_milestones[$i]['id']?>');">
-        <input type="submit" class="black text_white spaced" name="tasks_milestones_edit_close_<?=$task_milestones[$i]['id']?>" value="<?=__('tasks_categories_close')?>" onclick="tasks_milestones_edit_form('<?=$task_milestones[$i]['id']?>');">
+        <input type="submit" class="black text_white spaced" name="tasks_milestones_edit_close_<?=$task_milestones[$i]['id']?>" value="<?=__('close_form')?>" onclick="tasks_milestones_edit_form('<?=$task_milestones[$i]['id']?>');">
       </div>
 
       </td>

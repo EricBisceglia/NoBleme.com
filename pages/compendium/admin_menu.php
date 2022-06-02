@@ -44,10 +44,10 @@ $compendium_admin_menu['missing']     = isset($compendium_admin_menu['missing'])
           <?=__('compendium_image_list_title')?>
         </option>
         <option value="page_type_admin"<?=$compendium_admin_menu['page_types']?>>
-          <?=__('compendium_types_title')?>
+          <?=__('submenu_pages_compendium_types')?>
         </option>
         <option value="category_admin"<?=$compendium_admin_menu['categories']?>>
-          <?=__('compendium_categories_title')?>
+          <?=string_change_case(__('category+'), 'initials')?>
         </option>
         <option value="cultural_era_admin"<?=$compendium_admin_menu['eras']?>>
           <?=__('compendium_eras_title')?>

@@ -20,8 +20,6 @@ ___('admin_metrics_reset_warning',  'FR', "Confirmer la suppression irréversibl
 
 
 // Metrics: Table
-___('admin_metrics_queries',        'EN', "Queries");
-___('admin_metrics_queries',        'FR', "Requêtes");
 ___('admin_metrics_load',           'EN', "Load");
 ___('admin_metrics_load',           'FR', "Charge");
 ___('admin_metrics_minimum',        'EN', "Minimum");
@@ -38,10 +36,6 @@ ___('admin_metrics_maximum',        'EN', "Maximum");
 ___('admin_metrics_maximum',        'FR', "Maximum");
 ___('admin_metrics_page',           'EN', "Page URL");
 ___('admin_metrics_page',           'FR', "URL de la page");
-___('admin_metrics_activity',       'EN', "Activity");
-___('admin_metrics_activity',       'FR', "Activité");
-___('admin_metrics_views',          'EN', "Views");
-___('admin_metrics_views',          'FR', "Vues");
 ___('admin_metrics_count',          'EN', "Stats based on {{1}} page metric");
 ___('admin_metrics_count',          'FR', "Statistiques issues des performances d'une seule page");
 ___('admin_metrics_count+',         'EN', "Stats based on {{1}} page metrics");
@@ -53,8 +47,6 @@ ___('admin_metrics_count_search+',  'FR', "Performances de {{1}} sur {{2}} pages
 
 
 // Metrics: Table actions
-___('admin_metrics_table_reset',          'EN', "Reset");
-___('admin_metrics_table_reset',          'FR', "Remettre à zéro");
 ___('admin_metrics_table_reset_warning',  'EN', "Confirm the irreversible deletion of this page\'s metrics");
 ___('admin_metrics_table_reset_warning',  'FR', "Confirmer la suppression irréversible des indicateurs de cette page");
 
@@ -177,8 +169,6 @@ ___('admin_stats_guests_identity',    'EN', "Identity");
 ___('admin_stats_guests_identity',    'FR', "Identité");
 ___('admin_stats_guests_visits',      'EN', "Visits");
 ___('admin_stats_guests_visits',      'FR', "Visites");
-___('admin_stats_guests_theme',       'EN', "Theme");
-___('admin_stats_guests_theme',       'FR', "Thème");
 ___('admin_stats_guests_theme_light', 'EN', "Light");
 ___('admin_stats_guests_theme_light', 'FR', "Clair");
 ___('admin_stats_guests_theme_dark',  'EN', "Dark");
@@ -229,26 +219,18 @@ EOT
 
 
 // Table
-___('admin_stats_users_created',      'EN', "Created");
-___('admin_stats_users_created',      'FR', "Crée");
-___('admin_stats_users_language',     'EN', "Lang.");
-___('admin_stats_users_language',     'FR', "Lang.");
 ___('admin_stats_users_speaks',       'EN', "Speaks");
 ___('admin_stats_users_speaks',       'FR', "Parle");
 ___('admin_stats_users_birthday',     'EN', "B.day");
 ___('admin_stats_users_birthday',     'FR', "Anniv.");
 ___('admin_stats_users_profile',      'EN', "Profile");
 ___('admin_stats_users_profile',      'FR', "Profil");
-___('admin_stats_users_settings',     'EN', "Settings");
-___('admin_stats_users_settings',     'FR', "Réglages");
 ___('admin_stats_users_count',        'EN', "{{1}} users registered on the website");
 ___('admin_stats_users_count',        'FR', "{{1}} comptes crées sur le site");
 ___('admin_stats_users_partial',      'EN', "{{1}} user out of {{2}} shown ({{3}})");
 ___('admin_stats_users_partial',      'FR', "{{1}} compte sur {{2}} affiché ({{3}})");
 ___('admin_stats_users_partial+',     'EN', "{{1}} user out of {{2}} shown ({{3}})");
 ___('admin_stats_users_partial+',     'FR', "{{1}} comptes sur {{2}} affichés ({{3}})");
-___('admin_stats_users_bilingual',    'EN', "Bilingual");
-___('admin_stats_users_bilingual',    'FR', "Bilingue");
 ___('admin_stats_users_empty',        'EN', "Empty");
 ___('admin_stats_users_empty',        'FR', "Vide");
 ___('admin_stats_users_filled',       'EN', "Filled");
@@ -259,12 +241,6 @@ ___('admin_stats_users_action',       'EN', "Happened");
 ___('admin_stats_users_action',       'FR', "A agi");
 ___('admin_stats_users_noaction',     'EN', "Never");
 ___('admin_stats_users_noaction',     'FR', "Jamais");
-___('admin_stats_users_spoken',       'EN', "Languages");
-___('admin_stats_users_spoken',       'FR', "Langues");
-___('admin_stats_users_has_birthday', 'EN', "Birthday");
-___('admin_stats_users_has_birthday', 'FR', "Anniversaire");
-___('admin_stats_users_location',     'EN', "Location");
-___('admin_stats_users_location',     'FR', "Lieu");
 ___('admin_stats_users_pronouns',     'EN', "Pronouns");
 ___('admin_stats_users_pronouns',     'FR', "Pronoms");
 ___('admin_stats_users_profile_text', 'EN', "Profile text");

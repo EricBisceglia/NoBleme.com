@@ -108,7 +108,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('language');")?>
           </th>
           <th>
-            <?=__('admin_stats_guests_theme')?>
+            <?=__('theme')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('theme');")?>
           </th>
         </tr>

@@ -125,7 +125,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h2>
 
   <h5 class="bigpadding_top padding_bot">
-    <?=__('tasks_approve_subtitle', spaces_after: 1).__link('pages/users/'.$task_details['creator_id'], $task_details['creator']).__(':')?>
+    <?=__('tasks_edit_author', spaces_after: 1).__link('pages/users/'.$task_details['creator_id'], $task_details['creator']).__(':')?>
   </h5>
 
   <pre id="task_approve_body" onclick="to_clipboard('', 'task_approve_body', 1);"><?=$task_details['body_proposal']?>
@@ -177,7 +177,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <div class="tasks_edit_category">
 
-          <label for="tasks_approve_category"><?=__('tasks_list_category')?></label>
+          <label for="tasks_approve_category"><?=string_change_case(__('category'), 'initials')?></label>
           <select class="indiv align_left" id="tasks_approve_category" name="tasks_approve_category">
             <option value="0" selected>&nbsp;</option>
             <?php for($i = 0; $i < $tasks_categories['rows']; $i++) { ?>

@@ -25,7 +25,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__('politics_faq_title')?>
+    <?=__('submenu_pages_politics_faq')?>
   </h1>
 
   <h5 class="bigpadding_top">

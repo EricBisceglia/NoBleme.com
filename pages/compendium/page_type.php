@@ -60,7 +60,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium'), 'noglow')?>
   </h1>
 
   <h5>

@@ -65,13 +65,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?=__('username')?>
           </th>
           <th>
-            <?=__('users_admins_title')?>
+            <?=__('title')?>
           </th>
           <th>
             <?=__('users_online_activity')?>
           </th>
           <th>
-            <?=__('users_list_languages')?>
+            <?=string_change_case(__('language+'), 'initials')?>
           </th>
         </tr>
 

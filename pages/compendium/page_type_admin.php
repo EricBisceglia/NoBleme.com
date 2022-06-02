@@ -62,7 +62,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 <div class="width_50 padding_top">
 
   <h2 class="align_center">
-    <?=__link('pages/compendium/page_type_list', __('compendium_types_title'), 'noglow')?>
+    <?=__link('pages/compendium/page_type_list', __('submenu_pages_compendium_types'), 'noglow')?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_type_add')?>
   </h2>
 
@@ -75,13 +75,13 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
       <tr class="uppercase">
         <th>
-          <?=__('compendium_category_admin_order')?>
+          <?=__('order')?>
         </th>
         <th>
           <?=__('compendium_type_admin_short')?>
         </th>
         <th>
-          <?=__('compendium_type_admin_long')?>
+          <?=__('compendium_era_admin_name')?>
         </th>
         <th>
           <?=__('compendium_eras_entries')?>
