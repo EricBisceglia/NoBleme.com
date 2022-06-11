@@ -15,7 +15,7 @@ $page_title_fr    = "Statistiques des citations";
 $page_description = "Statistics generated from NoBleme's quote database";
 
 // Extra JS
-$js = array('common/toggle', 'common/section_selector');
+$js = array('common/toggle', 'common/selector');
 
 
 

@@ -35,7 +35,7 @@ $js  = array('dev/doc', 'common/editor', 'common/highlight', 'common/preview', '
 // Display the correct js toolbox entry
 
 // Prepare a list of all js toolbox entries
-$dev_jstools_selection = array('clipboard', 'editor', 'fetch', 'highlight', 'preview', 'toggle', 'unblur');
+$dev_jstools_selection = array('clipboard', 'editor', 'fetch', 'highlight', 'preview', 'section_selector', 'toggle', 'unblur');
 
 // Prepare the CSS for each js toolbox entry
 foreach($dev_jstools_selection as $dev_jstools_selection_name)
@@ -83,6 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="fetch"<?=$dev_jstools_selected['fetch']?>>fetch.js</option>
         <option value="highlight"<?=$dev_jstools_selected['highlight']?>>highlight.js</option>
         <option value="preview"<?=$dev_jstools_selected['preview']?>>preview.js</option>
+        <option value="section_selector"<?=$dev_jstools_selected['section_selector']?>>selector.js</option>
         <option value="toggle"<?=$dev_jstools_selected['toggle']?>>toggle.js</option>
         <option value="unblur"<?=$dev_jstools_selected['unblur']?>>unblur.js</option>
       </select>
@@ -222,6 +223,62 @@ fetch_page(fetched_page_url, 'replaced_element_id', postdata);</pre>
 &lt;textarea id="target_id" onkeyup="preview_bbcodes('target_id', 'output_id');">&lt;?=__('target_id')?>&lt;/textarea>
 
 &lt;div id="output_id">&lt;/div></pre>
+
+</div>
+
+
+
+
+<?php /******************************************** SECTION SELECTOR **********************************************/ ?>
+
+<div class="width_70 padding_top dev_jstools_section<?=$dev_jstools_hide['section_selector']?>" id="dev_jstools_section_selector">
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_selector_include" onclick="to_clipboard('', 'dev_js_toolbox_selector_include', 1);">$js = array('common/toggle', 'common/selector');</pre>
+  </div>
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_selector_setup" onclick="to_clipboard('', 'dev_js_toolbox_selector_setup', 1);">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Page section selector
+
+// Define the dropdown menu entries
+$pagename_selector_entries = array( '1' ,
+                                    '2' );
+
+// Define the default dropdown menu entry
+$pagename_selector_default = '1';
+
+// Initialize the page section selector data
+$pagename_selector = page_section_selector(           $pagename_selector_entries  ,
+                                            default:  $pagename_selector_default  );</pre>
+  </div>
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_selector_menu" onclick="to_clipboard('', 'dev_js_toolbox_selector_menu', 1);">&lt;div class="padding_bot align_center section_selector_container">
+
+&lt;fieldset>
+  &lt;h5>
+    &lt;?=__('title')?>
+    &lt;select class="inh" id="pagename_selector" onchange="page_section_selector('pagename', '&lt;?=$pagename_selector_default?>');">
+      &lt;option value="1"&lt;?=$pagename_selector['menu']['1']?>>&lt;?=__('title')?>&lt;/option>
+    &lt;/select>
+  &lt;/h5>
+&lt;/fieldset>
+
+&lt;/div>
+
+&lt;hr></pre>
+  </div>
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_selector_section" onclick="to_clipboard('', 'dev_js_toolbox_selector_section', 1);">&lt;?php /************************************************ SECTION ***************************************************/ ?>
+
+&lt;div class="width_50 padding_top pagename_section&lt;?=$pagename_selector['hide']['1']?>" id="pagename_1">
+
+  &lt;?=__('title')?>
+
+&lt;/div></pre>
+  </div>
 
 </div>
 
