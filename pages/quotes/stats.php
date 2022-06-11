@@ -30,11 +30,13 @@ $js = array('common/toggle', 'common/selector');
 // Page section selector
 
 // Define the dropdown menu entries
-$quotes_selector_entries = array( 'users' ,
-                                  'years' );
+$quotes_selector_entries = array( 'overall'   ,
+                                  'featured'  ,
+                                  'years'     ,
+                                  'submitted' );
 
 // Define the default dropdown menu entry
-$quotes_selector_default = 'users';
+$quotes_selector_default = 'overall';
 
 // Initialize the page section selector data
 $quotes_selector = page_section_selector(           $quotes_selector_entries  ,
@@ -53,10 +55,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <fieldset>
     <h5>
-      <?=__('quotes_stats_selector')?>
+      <?=__('quotes_stats_selector_title').__(':')?>
       <select class="inh" id="quotes_stats_selector" onchange="page_section_selector('quotes_stats', '<?=$quotes_selector_default?>');">
-        <option value="users"<?=$quotes_selector['menu']['users']?>><?=string_change_case(__('user+'), 'initials')?></option>
-        <option value="years"<?=$quotes_selector['menu']['years']?>><?=string_change_case(__('year+'), 'initials')?></option>
+        <option value="overall"<?=$quotes_selector['menu']['overall']?>><?=__('quotes_stats_selector_overall')?></option>
+        <option value="featured"<?=$quotes_selector['menu']['featured']?>><?=__('quotes_stats_selector_featured')?></option>
+        <option value="years"<?=$quotes_selector['menu']['years']?>><?=__('quotes_stats_selector_years')?></option>
+        <option value="submitted"<?=$quotes_selector['menu']['submitted']?>><?=__('quotes_stats_selector_submitted')?></option>
       </select>
     </h5>
   </fieldset>
@@ -68,22 +72,44 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
-<?php /************************************************* USERS ****************************************************/ ?>
+<?php /************************************************ OVERALL ***************************************************/ ?>
 
-<div class="width_60 padding_top quotes_stats_section<?=$quotes_selector['hide']['users']?>" id="quotes_stats_users">
+<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['overall']?>" id="quotes_stats_overall">
 
-  <?=string_change_case(__('user+'), 'initials')?>
+  <?=__('quotes_stats_selector_overall')?>
 
 </div>
 
 
 
 
-<?php /************************************************* USERS ****************************************************/ ?>
+<?php /************************************************ FEATURED **************************************************/ ?>
 
-<div class="width_60 padding_top quotes_stats_section<?=$quotes_selector['hide']['years']?>" id="quotes_stats_years">
+<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['featured']?>" id="quotes_stats_featured">
 
-  <?=string_change_case(__('year+'), 'initials')?>
+  <?=__('quotes_stats_selector_featured')?>
+
+</div>
+
+
+
+
+<?php /************************************************** YEARS ***************************************************/ ?>
+
+<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['years']?>" id="quotes_stats_years">
+
+  <?=__('quotes_stats_selector_years')?>
+
+</div>
+
+
+
+
+<?php /************************************************ SUBMITTED *************************************************/ ?>
+
+<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['submitted']?>" id="quotes_stats_submitted">
+
+  <?=__('quotes_stats_selector_submitted')?>
 
 </div>
 

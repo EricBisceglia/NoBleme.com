@@ -639,16 +639,16 @@ $last_query = sql_check_query_id();
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                       4.1.x                                                       */
+/*                                                       4.3.x                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Store a copy of the page count in compendium pages and images
+// Store user stats in the database
 
-if($last_query < 35)
+if($last_query < 36)
 {
-  sql_create_field('compendium_pages', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'redirection_fr');
-  sql_create_field('compendium_images', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'tags');
-  sql_update_query_id(35);
+  sql_create_field('users_stats', 'quotes_featured', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
+  sql_create_field('users_stats', 'quotes_submitted', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_featured');
+  sql_update_query_id(36);
 }

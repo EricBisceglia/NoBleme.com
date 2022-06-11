@@ -259,6 +259,14 @@ ___('quotes_users_exists',  'FR', "Ce compte est déjà lié à cette citation")
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Selector
-___('quotes_stats_selector',  'EN', "Quotes statistics by");
-___('quotes_stats_selector',  'FR', "Stats des citations par");
+// Page section selector
+___('quotes_stats_selector_title',      'EN', "Quote database statistics");
+___('quotes_stats_selector_title',      'FR', "Stats des citations");
+___('quotes_stats_selector_overall',    'EN', "Overall stats");
+___('quotes_stats_selector_overall',    'FR', "Stats globales");
+___('quotes_stats_selector_featured',   'EN', "Featured users");
+___('quotes_stats_selector_featured',   'FR', "Personnes citées");
+___('quotes_stats_selector_years',      'EN', "Timeline");
+___('quotes_stats_selector_years',      'FR', "Ligne temporelle");
+___('quotes_stats_selector_submitted',  'EN', "Contributors");
+___('quotes_stats_selector_submitted',  'FR', "Contributions");

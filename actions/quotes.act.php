@@ -8,22 +8,25 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  quotes_get                    Returns data related to a quote.                                                   */
-/*  quotes_get_linked_users       Returns a list of users linked to a quote.                                         */
-/*  quotes_get_random_id          Returns a random quote ID.                                                         */
-/*  quotes_list                   Returns a list of quotes.                                                          */
-/*  quotes_add                    Creates a new unvalidated quote proposal.                                          */
-/*  quotes_edit                   Modifies an existing quote.                                                        */
-/*  quotes_delete                 Deletes a quote.                                                                   */
-/*  quotes_restore                Restores a soft deleted quote.                                                     */
+/*  quotes_get                      Returns data related to a quote.                                                 */
+/*  quotes_get_linked_users         Returns a list of users linked to a quote.                                       */
+/*  quotes_get_random_id            Returns a random quote ID.                                                       */
+/*  quotes_list                     Returns a list of quotes.                                                        */
+/*  quotes_add                      Creates a new unvalidated quote proposal.                                        */
+/*  quotes_edit                     Modifies an existing quote.                                                      */
+/*  quotes_delete                   Deletes a quote.                                                                 */
+/*  quotes_restore                  Restores a soft deleted quote.                                                   */
 /*                                                                                                                   */
-/*  quotes_approve                Approve a quote awaiting admin validation.                                         */
-/*  quotes_reject                 Reject a quote awaiting admin validation.                                          */
+/*  quotes_approve                  Approve a quote awaiting admin validation.                                       */
+/*  quotes_reject                   Reject a quote awaiting admin validation.                                        */
 /*                                                                                                                   */
-/*  quotes_link_user              Links a user to an existing quote.                                                 */
-/*  quotes_unlink_user            Unlinks a user from an existing quote.                                             */
+/*  quotes_link_user                Links a user to an existing quote.                                               */
+/*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
 /*                                                                                                                   */
-/*  user_setting_quotes           Returns the quote related settings of the current user.                            */
+/*  quotes_user_recalculate_stats   Recalculates quote database statistics for a specific user.                      */
+/*  quotes_recalculate_all_stats    Recalculates global quote database statistics.                                   */
+/*                                                                                                                   */
+/*  user_setting_quotes             Returns the quote related settings of the current user.                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -388,6 +391,9 @@ function quotes_edit( int   $quote_id   ,
     $username = user_get_username();
     irc_bot_send_message("A quote has been modified by $username: ".$GLOBALS['website_url']."pages/quotes/".$quote_id, 'admin');
   }
+
+  // Recalculate the quote submitter's stats
+  quotes_user_recalculate_stats($quote_data['submitter_id']);
 }
 
 
@@ -420,19 +426,34 @@ function quotes_delete( int   $quote_id             ,
   if(!database_row_exists('quotes', $quote_id))
     return __('quotes_delete_error');
 
+  // Fetch more data on the quote
+  $quote_data = quotes_get($quote_id);
+
+  // Fetch the users linked to the quote
+  $quote_users = quotes_get_linked_users($quote_id);
+
   // Hard delete the quote if requested
   if($hard_delete)
-  {
     query(" DELETE FROM quotes
             WHERE       quotes.id = '$quote_id' ");
-    return __('quotes_delete_hard_ok');
-  }
 
   // Soft delete the quote
   query(" UPDATE  quotes
           SET     quotes.is_deleted = 1
           WHERE   quotes.id         = '$quote_id' ");
-  return __('quotes_delete_ok');
+
+  // Recalculate the quote submitter's stats
+  quotes_user_recalculate_stats($quote_data['submitter_id']);
+
+  // Recalculate the linked users' stats
+  for($i = 0; $i < $quote_users['rows']; $i++)
+    quotes_user_recalculate_stats($quote_users[$i]['id']);
+
+  // Return that the quote was properly deleted
+  if($hard_delete)
+    return __('quotes_delete_hard_ok');
+  else
+    return __('quotes_delete_ok');
 }
 
 
@@ -467,6 +488,21 @@ function quotes_restore( int $quote_id ) : string
   query(" UPDATE  quotes
           SET     quotes.is_deleted = 0
           WHERE   quotes.id         = '$quote_id' ");
+
+  // Fetch more data on the quote
+  $quote_data = quotes_get($quote_id);
+
+  // Recalculate the quote submitter's stats
+  quotes_user_recalculate_stats($quote_data['submitter_id']);
+
+  // Fetch the users linked to the quote
+  $quote_users = quotes_get_linked_users($quote_id);
+
+  // Recalculate the linked users' stats
+  for($i = 0; $i < $quote_users['rows']; $i++)
+    quotes_user_recalculate_stats($quote_users[$i]['id']);
+
+  // Return that the quote was restored
   return __('quotes_restore_ok');
 }
 
@@ -566,6 +602,19 @@ EOT;
     discord_send_message("A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
   else if($dquote['q_lang'] == 'FR')
     discord_send_message("A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
+
+  // Fetch more data on the quote
+  $quote_data = quotes_get($quote_id);
+
+  // Recalculate the quote submitter's stats
+  quotes_user_recalculate_stats($quote_data['submitter_id']);
+
+  // Fetch the users linked to the quote
+  $quote_users = quotes_get_linked_users($quote_id);
+
+  // Recalculate the linked users' stats
+  for($i = 0; $i < $quote_users['rows']; $i++)
+    quotes_user_recalculate_stats($quote_users[$i]['id']);
 
   // All went well
   return NULL;
@@ -740,6 +789,9 @@ function quotes_link_user(  int     $quote_id ,
           SET         quotes_users.fk_quotes  = '$quote_id' ,
                       quotes_users.fk_users   = '$user_id'  ");
 
+  // Recalculate the linked users' stats
+  quotes_user_recalculate_stats($user_id);
+
   // ALl went well
   return NULL;
 }
@@ -778,6 +830,78 @@ function quotes_unlink_user(  int     $quote_id ,
   query(" DELETE FROM quotes_users
           WHERE       quotes_users.fk_quotes  = '$quote_id'
           AND         quotes_users.fk_users   = '$user_id' ");
+
+   // Recalculate the linked users' stats
+   quotes_user_recalculate_stats($user_id);
+}
+
+
+
+
+/**
+ * Recalculates quote database statistics for a specific user.
+ *
+ * @param   int   $user_id  The user's id.
+ *
+ * @return  void
+ */
+
+function quotes_user_recalculate_stats( int $user_id )
+{
+  // Sanitize the user's id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Check if the user exists
+  if(!$user_id || !database_row_exists('users', $user_id))
+    return;
+
+  // Count the quotes in which the user is involved
+  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
+                                        FROM      quotes_users
+                                        LEFT JOIN quotes
+                                        ON        quotes_users.fk_quotes  = quotes.id
+                                        WHERE     quotes_users.fk_users   = '$user_id'
+                                        AND       quotes.is_deleted       = 0
+                                        AND       quotes.admin_validation = 1 "));
+  $involved_count = sanitize($dquotes['q_count'], 'int', 0);
+
+  // Count the quotes submitted by the user
+  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
+                                        FROM      quotes
+                                        WHERE     quotes.fk_users_submitter = '$user_id'
+                                        AND       quotes.is_deleted         = 0
+                                        AND       quotes.admin_validation   = 1 "));
+  $submitted_count = sanitize($dquotes['q_count'], 'int', 0);
+
+  // Update the user's stats
+  query(" UPDATE  users_stats
+          SET     users_stats.quotes_featured   = '$involved_count' ,
+                  users_stats.quotes_submitted  = '$submitted_count'
+          WHERE   users_stats.fk_users          = '$user_id'        ");
+}
+
+
+
+
+/**
+ * Recalculates global quote database statistics.
+ *
+ * @return  void
+ */
+
+function quotes_recalculate_all_stats()
+{
+  // Fetch every user id
+  $qusers = query(" SELECT    users.id AS 'u_id'
+                    FROM      users
+                    ORDER BY  users.id ASC ");
+
+  // Loop through the users and recalculate their individual quote database statistics
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    $user_id = sanitize($dusers['u_id'], 'int', 0);
+    quotes_user_recalculate_stats($user_id);
+  }
 }
 
 

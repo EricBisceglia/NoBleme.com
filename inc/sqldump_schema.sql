@@ -532,6 +532,8 @@ DROP TABLE IF EXISTS `users_stats`;
 CREATE TABLE IF NOT EXISTS `users_stats` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_featured` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_submitted` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
