@@ -948,6 +948,9 @@ function page_section_selector( array   $entries  ,
       $selected = $entry;
   }
 
+  // Add the selected menu entry to the returned data
+  $data['selected'] = $selected;
+
   // Loop once again through the menu entries in order to prepare the data
   foreach($entries as $entry)
   {

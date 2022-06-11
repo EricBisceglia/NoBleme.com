@@ -1,7 +1,5 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  irc_bot_action_selector           Displays the selected bot action.                                              */
-/*                                                                                                                   */
 /*  irc_bot_start                     Starts the IRC bot.                                                            */
 /*  irc_bot_stop                      Stops the IRC bot.                                                             */
 /*                                                                                                                   */
@@ -14,36 +12,6 @@
 /*  irc_bot_delete_history_entry      Triggers the deletion of an entry from the IRC bot's message history.          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-
-/**
- * Displays the selected bot action.
- *
- * @returns {void}
- */
-
-function irc_bot_action_selector()
-{
-  // Fetch the value of the irc bot action selector
-  page_name = document.getElementById('irc_bot_action_selector').value;
-
-  // Hide all irc bot actions
-  toggle_class_oneway('irc_bot_section', 0);
-
-  // Display the requested irc bot actions
-  toggle_element_oneway('irc_bot_' + page_name, 1);
-
-  // If the main irc bot action is being selected, remove all URL parameters
-  if(page_name == 'full')
-    history.pushState({}, null, 'irc_bot');
-
-  // Otherwise, set the currently selected section as an URL parameter
-  else
-    history.pushState({}, null, 'irc_bot?' + page_name);
-}
-
-
-
 
 /**
  * Starts the IRC bot.

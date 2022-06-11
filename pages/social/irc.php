@@ -16,7 +16,7 @@ $page_description = "NoBleme's primary communication method, our real time IRC c
 
 // Extra CSS & JS
 $css  = array('irc');
-$js   = array('social/irc', 'common/toggle');
+$js   = array('social/irc', 'common/toggle', 'common/selector');
 
 
 
@@ -28,36 +28,27 @@ $js   = array('social/irc', 'common/toggle');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Display the correct FAQ section
+// Page section selector
 
-// Prepare a list of all FAQ sections
-$irc_faq_sections = array('main', 'why', 'browser', 'client', 'bouncer', 'guide', 'commands', 'nickserv', 'chanserv', 'bots', 'channels');
+// Define the dropdown menu entries
+$irc_faq_selector_entries = array(  'main'      ,
+                                    'why'       ,
+                                    'browser'   ,
+                                    'client'    ,
+                                    'bouncer'   ,
+                                    'guide'     ,
+                                    'commands'  ,
+                                    'nickserv'  ,
+                                    'chanserv'  ,
+                                    'bots'      ,
+                                    'channels'  );
 
-// Prepare the CSS for each FAQ section
-foreach($irc_faq_sections as $irc_faq_section_name)
-{
-  // If a FAQ section is selected, display it and select the correct dropdown menu entry
-  if(!isset($irc_faq_section_is_selected) && isset($_GET[$irc_faq_section_name]))
-  {
-    $irc_faq_section_is_selected              = true;
-    $irc_faq_hide[$irc_faq_section_name]      = '';
-    $irc_faq_selected[$irc_faq_section_name]  = ' selected';
-  }
+// Define the default dropdown menu entry
+$irc_faq_selector_default = 'main';
 
-  // Hide every other FAQ section
-  else
-  {
-    $irc_faq_hide[$irc_faq_section_name]      = ' hidden';
-    $irc_faq_selected[$irc_faq_section_name]  = '';
-  }
-}
-
-// If no FAQ section is selected, select the main one by default
-if(!isset($irc_faq_section_is_selected))
-{
-  $irc_faq_hide['main']     = '';
-  $irc_faq_selected['main'] = ' selected';
-}
+// Initialize the page section selector data
+$irc_faq_selector = page_section_selector(            $irc_faq_selector_entries  ,
+                                            default:  $irc_faq_selector_default  );
 
 // Prepare a suffix for the page titles
 $irc_faq_page_name_suffix = ($GLOBALS['dev_mode']) ? ' | Devmode' : ' | NoBleme';
@@ -135,18 +126,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <form method="POST">
     <fieldset>
       <h5 class="smallpadding_bot">
-        <select class="inh align_left" id="irc_faq_section_selector" onchange="irc_faq_display_section();">
-          <option value="main"<?=$irc_faq_selected['main']?>><?=__('irc_faq_select_main')?></option>
-          <option value="why"<?=$irc_faq_selected['why']?>><?=__('irc_faq_select_why')?></option>
-          <option value="browser"<?=$irc_faq_selected['browser']?>><?=__('irc_faq_select_browser')?></option>
-          <option value="client"<?=$irc_faq_selected['client']?>><?=__('irc_faq_select_client')?></option>
-          <option value="bouncer"<?=$irc_faq_selected['bouncer']?>><?=__('irc_faq_select_bouncer')?></option>
-          <option value="guide"<?=$irc_faq_selected['guide']?>><?=__('irc_faq_select_guide')?></option>
-          <option value="commands"<?=$irc_faq_selected['commands']?>><?=__('irc_faq_select_commands')?></option>
-          <option value="nickserv"<?=$irc_faq_selected['nickserv']?>><?=__('irc_faq_select_nickserv')?></option>
-          <option value="chanserv"<?=$irc_faq_selected['chanserv']?>><?=__('irc_faq_select_chanserv')?></option>
-          <option value="bots"<?=$irc_faq_selected['bots']?>><?=__('irc_faq_select_bots')?></option>
-          <option value="channels"<?=$irc_faq_selected['channels']?>><?=__('irc_faq_select_channels')?></option>
+        <select class="inh align_left" id="irc_faq_selector" onchange="page_section_selector('irc_faq', '<?=$irc_faq_selector_default?>', true, true);">
+          <option value="main"<?=$irc_faq_selector['menu']['main']?>><?=__('irc_faq_select_main')?></option>
+          <option value="why"<?=$irc_faq_selector['menu']['why']?>><?=__('irc_faq_select_why')?></option>
+          <option value="browser"<?=$irc_faq_selector['menu']['browser']?>><?=__('irc_faq_select_browser')?></option>
+          <option value="client"<?=$irc_faq_selector['menu']['client']?>><?=__('irc_faq_select_client')?></option>
+          <option value="bouncer"<?=$irc_faq_selector['menu']['bouncer']?>><?=__('irc_faq_select_bouncer')?></option>
+          <option value="guide"<?=$irc_faq_selector['menu']['guide']?>><?=__('irc_faq_select_guide')?></option>
+          <option value="commands"<?=$irc_faq_selector['menu']['commands']?>><?=__('irc_faq_select_commands')?></option>
+          <option value="nickserv"<?=$irc_faq_selector['menu']['nickserv']?>><?=__('irc_faq_select_nickserv')?></option>
+          <option value="chanserv"<?=$irc_faq_selector['menu']['chanserv']?>><?=__('irc_faq_select_chanserv')?></option>
+          <option value="bots"<?=$irc_faq_selector['menu']['bots']?>><?=__('irc_faq_select_bots')?></option>
+          <option value="channels"<?=$irc_faq_selector['menu']['channels']?>><?=__('irc_faq_select_channels')?></option>
         </select>
       </h5>
     </fieldset>
@@ -172,7 +163,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ MAIN ****************************************************/ ?>
 
-<div class="width_50 irc_faq_section<?=$irc_faq_hide['main']?>" id="irc_faq_main">
+<div class="width_50 irc_faq_section<?=$irc_faq_selector['hide']['main']?>" id="irc_faq_main">
 
   <p>
     <?=__('irc_faq_main_body')?>
@@ -294,7 +285,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ WHY IRC ***************************************************/ ?>
 
-<div class="width_50 irc_faq_section<?=$irc_faq_hide['why']?>" id="irc_faq_why">
+<div class="width_50 irc_faq_section<?=$irc_faq_selector['hide']['why']?>" id="irc_faq_why">
 
   <p>
     <?=__('irc_faq_why_body_1')?>
@@ -383,7 +374,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php if($kiwiirc_hide_embed) { ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['browser']?>" id="irc_faq_browser">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['browser']?>" id="irc_faq_browser">
 
   <p>
     <?=__('irc_faq_browser_body')?>
@@ -393,7 +384,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else { ?>
 
-<div class="width_70 padding_top irc_faq_section<?=$irc_faq_hide['browser']?>" id="irc_faq_browser">
+<div class="width_70 padding_top irc_faq_section<?=$irc_faq_selector['hide']['browser']?>" id="irc_faq_browser">
 
   <?php if($lang == 'EN') { ?>
   <iframe src="https://kiwiirc.com/nextclient/?settings=d88c482df59c1ae0cca6627751a32973" class="indiv irc_client_iframe"></iframe>
@@ -410,7 +401,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* CLIENT ***************************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['client']?>" id="irc_faq_client">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['client']?>" id="irc_faq_client">
 
   <p>
     <?=__('irc_faq_client_body_1')?>
@@ -517,7 +508,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ BOUNCER ***************************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['bouncer']?>" id="irc_faq_bouncer">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['bouncer']?>" id="irc_faq_bouncer">
 
   <p>
     <?=__('irc_faq_bouncer_body_1')?>
@@ -574,7 +565,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /****************************************** VOCABULARY & SYMBOLS ********************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['guide']?>" id="irc_faq_guide">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['guide']?>" id="irc_faq_guide">
 
   <h5 id="server"><?=__('irc_faq_vocabulary_title_1')?></h5>
   <p class="tinypadding_top padding_bot">
@@ -769,7 +760,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ COMMANDS **************************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['commands']?>" id="irc_faq_commands">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['commands']?>" id="irc_faq_commands">
 
   <p>
     <?=__('irc_faq_commands_body_1')?>
@@ -855,7 +846,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ NICKSERV **************************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['nickserv']?>" id="irc_faq_nickserv">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['nickserv']?>" id="irc_faq_nickserv">
 
   <p>
     <?=__('irc_faq_nickserv_body_1')?>
@@ -911,7 +902,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ CHANSERV **************************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['chanserv']?>" id="irc_faq_chanserv">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['chanserv']?>" id="irc_faq_chanserv">
 
   <p>
     <?=__('irc_faq_chanserv_body_1')?>
@@ -1143,7 +1134,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************** BOTS ****************************************************/ ?>
 
-<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['bots']?>" id="irc_faq_bots">
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_selector['hide']['bots']?>" id="irc_faq_bots">
 
   <p>
     <?=__('irc_faq_bots_body_1')?>
@@ -1204,7 +1195,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ CHANNELS **************************************************/ ?>
 
-<div class="width_60 padding_top irc_faq_section<?=$irc_faq_hide['channels']?>" id="irc_faq_channels">
+<div class="width_60 padding_top irc_faq_section<?=$irc_faq_selector['hide']['channels']?>" id="irc_faq_channels">
 
   <p>
     <?=__('irc_channels_header_1')?>

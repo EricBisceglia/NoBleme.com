@@ -20,7 +20,7 @@ $page_title_fr    = "Liste des fonctions";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('dev/doc', 'common/toggle');
+$js   = array('common/toggle', 'common/selector');
 
 
 
@@ -32,36 +32,24 @@ $js   = array('dev/doc', 'common/toggle');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Display the correct function list entry
+// Page section selector
 
-// Prepare a list of all function list entries
-$dev_functions_selection = array('database', 'dates', 'numbers', 'sanitization', 'strings', 'unsorted', 'users', 'website');
+// Define the dropdown menu entries
+$functions_selector_entries = array(  'database'      ,
+                                      'dates'         ,
+                                      'numbers'       ,
+                                      'sanitization'  ,
+                                      'strings'       ,
+                                      'unsorted'      ,
+                                      'users'         ,
+                                      'website'       );
 
-// Prepare the CSS for each function list entry
-foreach($dev_functions_selection as $dev_functions_selection_name)
-{
-  // If a function list entry is selected, display it and select the correct dropdown menu entry
-  if(!isset($dev_functions_is_selected) && isset($_GET[$dev_functions_selection_name]))
-  {
-    $dev_functions_is_selected                            = true;
-    $dev_functions_hide[$dev_functions_selection_name]      = '';
-    $dev_functions_selected[$dev_functions_selection_name]  = ' selected';
-  }
+// Define the default dropdown menu entry
+$functions_selector_default = 'unsorted';
 
-  // Hide every other function list entry
-  else
-  {
-    $dev_functions_hide[$dev_functions_selection_name]      = ' hidden';
-    $dev_functions_selected[$dev_functions_selection_name]  = '';
-  }
-}
-
-// If no function list entry is selected, select the main one by default
-if(!isset($dev_functions_is_selected))
-{
-  $dev_functions_hide['unsorted']     = '';
-  $dev_functions_selected['unsorted'] = ' selected';
-}
+// Initialize the page section selector data
+$functions_selector = page_section_selector(            $functions_selector_entries  ,
+                                              default:  $functions_selector_default  );
 
 
 
@@ -72,20 +60,20 @@ if(!isset($dev_functions_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="padding_bot align_center dev_doc_selector">
+<div class="padding_bot align_center section_selector_container">
 
   <fieldset>
     <h5>
       <?=__('dev_functions_list_title')?>
-      <select class="inh" id="dev_functions_type_selector" onchange="dev_functions_type_selector();">
-        <option value="database"<?=$dev_functions_selected['database']?>><?=__('dev_functions_selector_database')?></option>
-        <option value="dates"<?=$dev_functions_selected['dates']?>><?=__('dev_functions_selector_dates')?></option>
-        <option value="numbers"<?=$dev_functions_selected['numbers']?>><?=__('dev_functions_selector_numbers')?></option>
-        <option value="sanitization"<?=$dev_functions_selected['sanitization']?>><?=__('dev_functions_selector_sanitization')?></option>
-        <option value="strings"<?=$dev_functions_selected['strings']?>><?=__('dev_functions_selector_strings')?></option>
-        <option value="unsorted"<?=$dev_functions_selected['unsorted']?>><?=__('dev_functions_selector_unsorted')?></option>
-        <option value="users"<?=$dev_functions_selected['users']?>><?=string_change_case(__('user+'), 'initials')?></option>
-        <option value="website"<?=$dev_functions_selected['website']?>><?=__('dev_functions_selector_website')?></option>
+      <select class="inh" id="dev_functions_selector" onchange="page_section_selector('dev_functions', '<?=$functions_selector_default?>');">
+        <option value="database"<?=$functions_selector['menu']['database']?>><?=__('dev_functions_selector_database')?></option>
+        <option value="dates"<?=$functions_selector['menu']['dates']?>><?=__('dev_functions_selector_dates')?></option>
+        <option value="numbers"<?=$functions_selector['menu']['numbers']?>><?=__('dev_functions_selector_numbers')?></option>
+        <option value="sanitization"<?=$functions_selector['menu']['sanitization']?>><?=__('dev_functions_selector_sanitization')?></option>
+        <option value="strings"<?=$functions_selector['menu']['strings']?>><?=__('dev_functions_selector_strings')?></option>
+        <option value="unsorted"<?=$functions_selector['menu']['unsorted']?>><?=__('dev_functions_selector_unsorted')?></option>
+        <option value="users"<?=$functions_selector['menu']['users']?>><?=string_change_case(__('user+'), 'initials')?></option>
+        <option value="website"<?=$functions_selector['menu']['website']?>><?=__('dev_functions_selector_website')?></option>
       </select>
     </h5>
   </fieldset>
@@ -99,7 +87,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ DATABASE **************************************************/ ?>
 
-<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['database']?>" id="dev_functions_database">
+<div class="width_50 padding_top dev_functions_section<?=$functions_selector['hide']['database']?>" id="dev_functions_database">
 
   <h2 class="align_center padding_bot">
     Queries
@@ -385,7 +373,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* DATES ****************************************************/ ?>
 
-<div class="padding_top dev_functions_section<?=$dev_functions_hide['dates']?>" id="dev_functions_dates">
+<div class="padding_top dev_functions_section<?=$functions_selector['hide']['dates']?>" id="dev_functions_dates">
 
   <div class="width_50">
 
@@ -508,7 +496,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ NUMBERS ***************************************************/ ?>
 
-<div class="width_70 padding_top dev_functions_section<?=$dev_functions_hide['numbers']?>" id="dev_functions_numbers">
+<div class="width_70 padding_top dev_functions_section<?=$functions_selector['hide']['numbers']?>" id="dev_functions_numbers">
 
   <h2 class="align_center padding_bot">
     Number formats
@@ -624,7 +612,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /********************************************** SANITIZATION ************************************************/ ?>
 
-<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['sanitization']?>" id="dev_functions_sanitization">
+<div class="width_50 padding_top dev_functions_section<?=$functions_selector['hide']['sanitization']?>" id="dev_functions_sanitization">
 
   <h2 class="align_center padding_bot">
     Input (for MySQL usage)
@@ -727,7 +715,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ STRINGS ***************************************************/ ?>
 
-<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['strings']?>" id="dev_functions_strings">
+<div class="width_50 padding_top dev_functions_section<?=$functions_selector['hide']['strings']?>" id="dev_functions_strings">
 
   <h2 class="align_center padding_bot">
     String manipulation
@@ -909,7 +897,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ UNSORTED **************************************************/ ?>
 
-<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['unsorted']?>" id="dev_functions_unsorted">
+<div class="width_50 padding_top dev_functions_section<?=$functions_selector['hide']['unsorted']?>" id="dev_functions_unsorted">
 
   <h2 class="align_center padding_bot">
     Errors
@@ -1089,7 +1077,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* USERS ****************************************************/ ?>
 
-<div class="width_50 padding_top dev_functions_section<?=$dev_functions_hide['users']?>" id="dev_functions_users">
+<div class="width_50 padding_top dev_functions_section<?=$functions_selector['hide']['users']?>" id="dev_functions_users">
 
   <h2 class="align_center padding_bot">
     User info
@@ -1405,7 +1393,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ WEBSITE ***************************************************/ ?>
 
-<div class="width_60 padding_top dev_functions_section<?=$dev_functions_hide['website']?>" id="dev_functions_website">
+<div class="width_60 padding_top dev_functions_section<?=$functions_selector['hide']['website']?>" id="dev_functions_website">
 
   <h2 class="align_center padding_bot">
     Utilities

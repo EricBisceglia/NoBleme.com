@@ -20,7 +20,7 @@ $page_title_fr    = "Workflow de développement";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('dev/doc', 'common/toggle');
+$js   = array('common/toggle', 'common/selector');
 
 
 
@@ -32,36 +32,22 @@ $js   = array('dev/doc', 'common/toggle');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Display the correct workflow reminder entry
+// Page section selector
 
-// Prepare a list of all workflow reminders
-$dev_workflow_selection = array('git', 'tags', 'server_maintenance', 'server_issues', 'server_setup', 'aliases');
+// Define the dropdown menu entries
+$workflow_selector_entries = array( 'git'                 ,
+                                    'tags'                ,
+                                    'server_maintenance'  ,
+                                    'server_issues'       ,
+                                    'server_setup'        ,
+                                    'aliases'             );
 
-// Prepare the CSS for each workflow reminder
-foreach($dev_workflow_selection as $dev_workflow_selection_name)
-{
-  // If a workflow reminders is selected, display it and select the correct dropdown menu entry
-  if(!isset($dev_workflow_is_selected) && isset($_GET[$dev_workflow_selection_name]))
-  {
-    $dev_workflow_is_selected                             = true;
-    $dev_workflow_hide[$dev_workflow_selection_name]      = '';
-    $dev_workflow_selected[$dev_workflow_selection_name]  = ' selected';
-  }
+// Define the default dropdown menu entry
+$workflow_selector_default = 'git';
 
-  // Hide every other workflow reminders
-  else
-  {
-    $dev_workflow_hide[$dev_workflow_selection_name]      = ' hidden';
-    $dev_workflow_selected[$dev_workflow_selection_name]  = '';
-  }
-}
-
-// If no workflow reminders is selected, select the main one by default
-if(!isset($dev_workflow_is_selected))
-{
-  $dev_workflow_hide['git']     = '';
-  $dev_workflow_selected['git'] = ' selected';
-}
+// Initialize the page section selector data
+$workflow_selector = page_section_selector(           $workflow_selector_entries  ,
+                                            default:  $workflow_selector_default  );
 
 
 
@@ -72,18 +58,18 @@ if(!isset($dev_workflow_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="padding_bot align_center dev_doc_selector">
+<div class="padding_bot align_center section_selector_container">
 
   <fieldset>
     <h5>
       <?=__('submenu_admin_doc_workflow').__(':')?>
-      <select class="inh" id="dev_workflow_selector" onchange="dev_workflow_selector();">
-        <option value="git"<?=$dev_workflow_selected['git']?>><?=__('dev_workflow_selector_git')?></option>
-        <option value="tags"<?=$dev_workflow_selected['tags']?>><?=__('dev_workflow_selector_tags')?></option>
-        <option value="server_maintenance"<?=$dev_workflow_selected['server_maintenance']?>><?=__('dev_workflow_selector_server_maintenance')?></option>
-        <option value="server_issues"<?=$dev_workflow_selected['server_issues']?>><?=__('dev_workflow_selector_server_issues')?></option>
-        <option value="server_setup"<?=$dev_workflow_selected['server_setup']?>><?=__('dev_workflow_selector_server_setup')?></option>
-        <option value="aliases"<?=$dev_workflow_selected['aliases']?>><?=__('dev_workflow_selector_aliases')?></option>
+      <select class="inh" id="dev_workflow_selector" onchange="page_section_selector('dev_workflow', '<?=$workflow_selector_default?>');">
+        <option value="git"<?=$workflow_selector['menu']['git']?>><?=__('dev_workflow_selector_git')?></option>
+        <option value="tags"<?=$workflow_selector['menu']['tags']?>><?=__('dev_workflow_selector_tags')?></option>
+        <option value="server_maintenance"<?=$workflow_selector['menu']['server_maintenance']?>><?=__('dev_workflow_selector_server_maintenance')?></option>
+        <option value="server_issues"<?=$workflow_selector['menu']['server_issues']?>><?=__('dev_workflow_selector_server_issues')?></option>
+        <option value="server_setup"<?=$workflow_selector['menu']['server_setup']?>><?=__('dev_workflow_selector_server_setup')?></option>
+        <option value="aliases"<?=$workflow_selector['menu']['aliases']?>><?=__('dev_workflow_selector_aliases')?></option>
       </select>
     </h5>
   </fieldset>
@@ -97,7 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /********************************************** GIT WORKFLOW ************************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['git']?>" id="dev_workflow_git">
+<div class="width_50 padding_top dev_workflow_section<?=$workflow_selector['hide']['git']?>" id="dev_workflow_git">
 
   <h5>
     Preliminary checks
@@ -209,7 +195,7 @@ gitlog</pre>
 
 <?php /******************************************* TAGS AND VERSIONS **********************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['tags']?>" id="dev_workflow_tags">
+<div class="width_50 padding_top dev_workflow_section<?=$workflow_selector['hide']['tags']?>" id="dev_workflow_tags">
 
   <h5>
     Should I release a new version?
@@ -261,7 +247,7 @@ gitlog</pre>
 
 <?php /******************************************* SERVER MAINTENANCE *********************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_maintenance']?>" id="dev_workflow_server_maintenance">
+<div class="width_50 padding_top dev_workflow_section<?=$workflow_selector['hide']['server_maintenance']?>" id="dev_workflow_server_maintenance">
 
   <h5>
     Manual MySQL backup
@@ -280,7 +266,7 @@ gitlog</pre>
 
 <?php /********************************************* SERVER ISSUES ************************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_issues']?>" id="dev_workflow_server_issues">
+<div class="width_50 padding_top dev_workflow_section<?=$workflow_selector['hide']['server_issues']?>" id="dev_workflow_server_issues">
 
   <h5>
     SSH key warning
@@ -299,7 +285,7 @@ gitlog</pre>
 
 <?php /********************************************** SERVER SETUP ************************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['server_setup']?>" id="dev_workflow_server_setup">
+<div class="width_50 padding_top dev_workflow_section<?=$workflow_selector['hide']['server_setup']?>" id="dev_workflow_server_setup">
 
   <h5>
     Foreword
@@ -733,7 +719,7 @@ find $backupfolder -mtime +$keep_backup_days -delete</pre>
 
 <?php /************************************************* ALIASES **************************************************/ ?>
 
-<div class="width_50 padding_top dev_workflow_section<?=$dev_workflow_hide['aliases']?>" id="dev_workflow_aliases">
+<div class="width_50 padding_top dev_workflow_section<?=$workflow_selector['hide']['aliases']?>" id="dev_workflow_aliases">
 
   <h5>
     Git aliases
