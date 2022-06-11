@@ -249,3 +249,16 @@ ___('quotes_users_error',   'EN', "This account does not exist");
 ___('quotes_users_error',   'FR', "Ce compte n'existe pas");
 ___('quotes_users_exists',  'EN', "This account has already been linked to this quote");
 ___('quotes_users_exists',  'FR', "Ce compte est déjà lié à cette citation");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Selector
+___('quotes_stats_selector',  'EN', "Quotes statistics by");
+___('quotes_stats_selector',  'FR', "Stats des citations par");

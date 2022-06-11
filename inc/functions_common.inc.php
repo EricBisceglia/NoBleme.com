@@ -32,7 +32,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  string_remove_accents               Removes accentuated latin characters from a string.                          */
 /*  string_increment                    Increments the last character of a string.                                   */
 /*                                                                                                                   */
-/*  date_better_strftime                Improves the strftime function.                                              */
 /*  date_french_ordinal                 Returns the french ordinal value of a number.                                */
 /*  date_to_text                        Transforms a MySQL date or a timestamp into a plaintext date.                */
 /*  date_to_ddmmyy                      Converts a mysql date to the DD/MM/YY format.                                */
@@ -43,6 +42,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  search_string_context               Searches for a string in a text, along with the words surrounding said string*/
 /*  string_wrap_in_html_tags            Wraps HTML tags around every occurence of a string in a text.                */
+/*                                                                                                                   */
+/*  page_section_selector               Initializes the use of a page section selector.                              */
 /*                                                                                                                   */
 /*  private_message_send                Sends a private message to a user.                                           */
 /*                                                                                                                   */
@@ -557,33 +558,9 @@ function string_increment( string $string ) : string
 /*********************************************************************************************************************/
 
 /**
- * Improves the strftime function.
- *
- * The default PHP strftime function does not allow for ordinal suffixes when converting dates to text, let's fix this!
- *
- * @param   string  $format     The string used to format your date.
- * @param   int     $timestamp  The timestamp being formatted.
- *
- * @return  string              The formatted output.
- */
-
-function date_better_strftime(  string  $format     ,
-                                int     $timestamp  ) : string
-{
-  // Add an extra parameter to strftime using the date standard function
-  $format = str_replace('%O', date('S', $timestamp), $format);
-
-  // Return the formatted output
-  return strftime($format, $timestamp);
-}
-
-
-
-
-/**
  * Returns the french ordinal value of a number.
  *
- * Because date is not locale aware and strftime lacks some functionalities, we'll need to do some extra work here...
+ * Because date is not locale aware, we'll need to do some extra work here...
  * If we want ordinal numbers in dates in both french and english, we'll need to be able to return french ordinals.
  *
  * @param   int     $timestamp  The timestamp of the date to ordinalize.
@@ -936,6 +913,51 @@ function string_wrap_in_html_tags(  string  $search     ,
 
   // Use a regex to do the trick and return the result
   return stripslashes(preg_replace("/($search)/i", "$open_tag$1$close_tag", $text));
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    PAGE LAYOUT                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Initializes the use of a page section selector.
+ *
+ * @param   array   $entries  The list of all menu entries.
+ * @param   string  $default  The menu entry to use when none is being selected.
+ *
+ * @return  array             An array of data ready for use in assembling a page section selector.
+ */
+
+function page_section_selector( array   $entries  ,
+                                string  $default  ) : array
+{
+  // Initialize the return array and the selected entry
+  $data     = array();
+  $selected = '';
+
+  // Loop through the menu entries in order to find whether a selection is being made
+  foreach($entries as $entry)
+  {
+    // Check whether the menu entry is being selected
+    if(isset($_GET[$entry]))
+      $selected = $entry;
+  }
+
+  // Loop once again through the menu entries in order to prepare the data
+  foreach($entries as $entry)
+  {
+    // Define which dropdown menu entry should be selected and which page sections should be hidden
+    $data['menu'][$entry] = ($selected == $entry || (!$selected && $entry == $default)) ? ' selected' : '';
+    $data['hide'][$entry] = ($selected == $entry || (!$selected && $entry == $default)) ? '' : ' hidden';
+  }
+
+  // Return the assembled data
+  return $data;
 }
 
 

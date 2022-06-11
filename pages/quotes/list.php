@@ -118,6 +118,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php if(!$quote_id) { ?>
   <h1>
     <?=__('submenu_social_quotes')?>
+    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/quotes/stats")?>
     <?=__icon('add', alt: '+', title: __('quotes_add'), href: "pages/quotes/submit")?>
     <?php if($is_admin) { ?>
     <?php if($quotes_waitlist) { ?>
