@@ -45,6 +45,22 @@ $quotes_selector = page_section_selector(           $quotes_selector_entries  ,
 
 
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Recalculate all stats
+
+if(isset($_GET['recalculate']) && user_is_administrator())
+{
+  // Recalculate the stats
+  quotes_recalculate_all_stats();
+
+  // Reload the page in its default state
+  exit(header("Location: ".$path."pages/quotes/stats"));
+}
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -55,13 +71,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <fieldset>
     <h5>
+
       <?=__('quotes_stats_selector_title').__(':')?>
+
       <select class="inh" id="quotes_stats_selector" onchange="page_section_selector('quotes_stats', '<?=$quotes_selector_default?>');">
         <option value="overall"<?=$quotes_selector['menu']['overall']?>><?=__('quotes_stats_selector_overall')?></option>
         <option value="featured"<?=$quotes_selector['menu']['featured']?>><?=__('quotes_stats_selector_featured')?></option>
         <option value="years"<?=$quotes_selector['menu']['years']?>><?=__('quotes_stats_selector_years')?></option>
         <option value="submitted"<?=$quotes_selector['menu']['submitted']?>><?=__('quotes_stats_selector_submitted')?></option>
       </select>
+
+      <?php if($is_admin) { ?>
+      <?=__icon('refresh', alt: 'R', title: __('quotes_stats_recalculate_button'), title_case: 'initials', class: 'valign_middle pointer spaced_left', href: 'pages/quotes/stats?recalculate', confirm: __('quotes_stats_recalculate_alert'))?>
+      <?php } ?>
+
     </h5>
   </fieldset>
 

@@ -270,3 +270,10 @@ ___('quotes_stats_selector_years',      'EN', "Timeline");
 ___('quotes_stats_selector_years',      'FR', "Ligne temporelle");
 ___('quotes_stats_selector_submitted',  'EN', "Contributors");
 ___('quotes_stats_selector_submitted',  'FR', "Contributions");
+
+
+// Recalculate all stats
+___('quotes_stats_recalculate_button',  'EN', "Recalculate all quote database statistics");
+___('quotes_stats_recalculate_button',  'FR', "Recalculer toutes les statistiques des citations");
+___('quotes_stats_recalculate_alert',   'EN', "Are you sure you wish to recalculate all quote database statistics?");
+___('quotes_stats_recalculate_alert',   'FR', "Confirmer que vous tenez à recalculer toutes les statistiques des citations");
