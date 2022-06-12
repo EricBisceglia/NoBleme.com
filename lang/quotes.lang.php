@@ -277,3 +277,22 @@ ___('quotes_stats_recalculate_button',  'EN', "Recalculate all quote database st
 ___('quotes_stats_recalculate_button',  'FR', "Recalculer toutes les statistiques des citations");
 ___('quotes_stats_recalculate_alert',   'EN', "Are you sure you wish to recalculate all quote database statistics?");
 ___('quotes_stats_recalculate_alert',   'FR', "Confirmer que vous tenez à recalculer toutes les statistiques des citations");
+
+
+// Overall stats
+___('quotes_stats_overall_summary',       'EN', "There are currently <span class=\"bold\">{{1}}</span> quotes in {{link|pages/quotes/|NoBleme's quote database}}.");
+___('quotes_stats_overall_summary',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> {{link|pages/quotes/|citations sur NoBleme}}.");
+___('quotes_stats_overall_lang_en',       'EN', "<span class=\"bold\">{{1}}</span> quotes ({{2}}) are in english.");
+___('quotes_stats_overall_lang_en',       'FR', "<span class=\"bold\">{{1}}</span> citations ({{2}}) sont en anglais.");
+___('quotes_stats_overall_lang_fr',       'EN', "<span class=\"bold\">{{1}}</span> quotes ({{2}}) are in french.");
+___('quotes_stats_overall_lang_fr',       'FR', "<span class=\"bold\">{{1}}</span> citations ({{2}}) sont en français.");
+___('quotes_stats_overall_nsfw',          'EN', "<span class=\"bold\">{{1}}</span> quotes ({{2}}) contain crude or sensitive content.");
+___('quotes_stats_overall_nsfw',          'FR', "<span class=\"bold\">{{1}}</span> citations ({{2}}) contiennent des propos vulgaires ou sensibles.");
+___('quotes_stats_overall_deleted',       'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposals}} have been rejected ({{2}} of all quote proposals).");
+___('quotes_stats_overall_deleted',       'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|propositions de citation}} ont été refusées ({{2}} de toutes les propositions).");
+___('quotes_stats_overall_unvalidated',   'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposal}} is currently unvalidated, awaiting administrative review.");
+___('quotes_stats_overall_unvalidated',   'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|proposition de citation}} est actuellement en attente d'approbation administrative.");
+___('quotes_stats_overall_unvalidated+',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposals}} are currently unvalidated, awaiting administrative review.");
+___('quotes_stats_overall_unvalidated+',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|propositions de citations}} sont actuellement en attente d'approbation administrative.");
+___('quotes_stats_overall_more',          'EN', "You can find more stats about {{link|pages/quotes/|NoBleme's quote database}} by using the dropdown menu at the top.");
+___('quotes_stats_overall_more',          'FR', "Vous trouverez d'autres stats sur les {{link|pages/quotes/|citations}} en utilisant le menu déroulant en haut de la page.");

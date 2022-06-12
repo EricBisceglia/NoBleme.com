@@ -3,9 +3,11 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';    # Core
-include_once './../../actions/quotes.act.php';  # Actions
-include_once './../../lang/quotes.lang.php';    # Translations
+include_once './../../inc/includes.inc.php';              # Core
+include_once './../../inc/functions_numbers.inc.php';     # Number formatting
+include_once './../../inc/functions_mathematics.inc.php'; # Mathematics
+include_once './../../actions/quotes.act.php';            # Actions
+include_once './../../lang/quotes.lang.php';              # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -61,6 +63,16 @@ if(isset($_GET['recalculate']) && user_is_administrator())
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch stats
+
+// Overall stats
+$quotes_stats = quotes_stats();
+
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -99,7 +111,30 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['overall']?>" id="quotes_stats_overall">
 
-  <?=__('quotes_stats_selector_overall')?>
+  <p class="align_center big padding_bot">
+    <?=__('quotes_stats_overall_summary', preset_values: array($quotes_stats['total']))?>
+  </p>
+
+  <p class="align_center">
+    <?=__('quotes_stats_overall_lang_en', preset_values: array($quotes_stats['total_en'], $quotes_stats['percent_en']))?><br>
+    <?=__('quotes_stats_overall_lang_fr', preset_values: array($quotes_stats['total_fr'], $quotes_stats['percent_fr']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('quotes_stats_overall_nsfw', preset_values: array($quotes_stats['total_nsfw'], $quotes_stats['percent_nsfw']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('quotes_stats_overall_deleted', preset_values: array($quotes_stats['deleted'], $quotes_stats['percent_del']))?>
+  </p>
+
+  <p class="align_center">
+    <?=__('quotes_stats_overall_unvalidated', amount: $quotes_stats['unvalidated'], preset_values: array($quotes_stats['unvalidated']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('quotes_stats_overall_more')?>
+  </p>
 
 </div>
 
@@ -110,7 +145,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['featured']?>" id="quotes_stats_featured">
 
-  <?=__('quotes_stats_selector_featured')?>
+  &nbsp;
 
 </div>
 
@@ -121,7 +156,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['years']?>" id="quotes_stats_years">
 
-  <?=__('quotes_stats_selector_years')?>
+  &nbsp;
 
 </div>
 
@@ -132,7 +167,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['submitted']?>" id="quotes_stats_submitted">
 
-  <?=__('quotes_stats_selector_submitted')?>
+  &nbsp;
 
 </div>
 

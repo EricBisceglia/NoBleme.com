@@ -23,6 +23,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  quotes_link_user                Links a user to an existing quote.                                               */
 /*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
 /*                                                                                                                   */
+/*  quotes_stats                    Returns stats related to quotes.                                                 */
+/*                                                                                                                   */
 /*  quotes_user_recalculate_stats   Recalculates quote database statistics for a specific user.                      */
 /*  quotes_recalculate_all_stats    Recalculates global quote database statistics.                                   */
 /*                                                                                                                   */
@@ -833,6 +835,67 @@ function quotes_unlink_user(  int     $quote_id ,
 
    // Recalculate the linked users' stats
    quotes_user_recalculate_stats($user_id);
+}
+
+
+
+
+/**
+ * Returns stats related to quotes.
+ *
+ * @return  array   An array of stats related to quotes.
+ */
+
+function quotes_stats() : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the total number of quotes
+  $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)            AS 'q_total'    ,
+                                                SUM(  CASE WHEN
+                                                      quotes.language LIKE 'EN' THEN 1
+                                                      ELSE 0 END)   AS 'q_total_en' ,
+                                                SUM(  CASE WHEN
+                                                      quotes.language LIKE 'FR' THEN 1
+                                                      ELSE 0 END)   AS 'q_total_fr' ,
+                                                SUM(quotes.is_nsfw) AS 'q_total_nsfw'
+                                        FROM    quotes
+                                        WHERE   quotes.is_deleted       = 0
+                                        AND     quotes.admin_validation = 1 "));
+
+  // Add some stats to the return array
+  $data['total']        = $dquotes['q_total'];
+  $data['total_en']     = $dquotes['q_total_en'];
+  $temp                 = maths_percentage_of($dquotes['q_total_en'], $dquotes['q_total']);
+  $data['percent_en']   = number_display_format($temp, 'percentage');
+  $data['total_fr']     = $dquotes['q_total_fr'];
+  $temp                 = maths_percentage_of($dquotes['q_total_fr'], $dquotes['q_total']);
+  $data['percent_fr']   = number_display_format($temp, 'percentage');
+  $data['total_nsfw']   = $dquotes['q_total_nsfw'];
+  $temp                 = maths_percentage_of($dquotes['q_total_nsfw'], $dquotes['q_total']);
+  $data['percent_nsfw'] = number_display_format($temp, 'percentage');
+
+  // Fetch all quotes, included unvalidated and deleted
+  $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)                AS 'q_total'          ,
+                                                SUM(quotes.is_deleted)  AS 'q_total_deleted'  ,
+                                                SUM(  CASE WHEN
+                                                      quotes.admin_validation = 0 THEN 1
+                                                      ELSE 0 END)       AS 'q_total_unvalidated'
+                                        FROM    quotes "));
+
+  // Add some stats to the return array
+  $data['deleted']      = $dquotes['q_total_deleted'];
+  $temp                 = maths_percentage_of($dquotes['q_total_deleted'], $dquotes['q_total']);
+  $data['percent_del']  = number_display_format($temp, 'percentage');
+  $data['unvalidated']  = $dquotes['q_total_unvalidated'];
+
+  // Return the stats
+  return $data;
 }
 
 
