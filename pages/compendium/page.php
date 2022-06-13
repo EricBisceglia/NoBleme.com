@@ -67,7 +67,10 @@ else
   $page_title_en   .= "Compendium: Missing page";
   $page_title_fr   .= "Compendium : Page manquante";
   unset($hide_footer);
-  $compendium_random_image = compendium_images_get_random();
+
+  // Fetch a random image to go with the missing page text
+  $compendium_random_image      = compendium_images_get_random();
+  $compendium_random_image_data = compendium_images_get(file_name: $compendium_random_image);
 }
 
 
@@ -260,9 +263,17 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <div class="align_center">
+
     <a class="noglow" href="<?=$path?>pages/compendium/image?name=<?=$compendium_random_image?>">
       <img src="<?=$path?>img/compendium/<?=$compendium_random_image?>" alt="<?=$compendium_random_image?>">
     </a>
+
+    <?php if($compendium_random_image_data['body']) { ?>
+    <div class="padding_top align_center">
+      <?=$compendium_random_image_data['body']?>
+    </div>
+    <?php } ?>
+
   </div>
 
 </div>
