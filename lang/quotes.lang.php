@@ -296,3 +296,18 @@ ___('quotes_stats_overall_unvalidated+',  'EN', "<span class=\"bold\">{{1}}</spa
 ___('quotes_stats_overall_unvalidated+',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|propositions de citations}} sont actuellement en attente d'approbation administrative.");
 ___('quotes_stats_overall_more',          'EN', "You can find more stats about {{link|pages/quotes/|NoBleme's quote database}} by using the dropdown menu at the top.");
 ___('quotes_stats_overall_more',          'FR', "Vous trouverez d'autres stats sur les {{link|pages/quotes/|citations}} en utilisant le menu déroulant en haut de la page.");
+
+
+// Featured users
+___('quotes_stats_users_quotes',      'EN', "Quotes<br>featured");
+___('quotes_stats_users_quotes',      'FR', "Nombre de<br>citations");
+___('quotes_stats_users_quotes_en',   'EN', "English<br>quotes");
+___('quotes_stats_users_quotes_en',   'FR', "Citations<br>anglaises");
+___('quotes_stats_users_quotes_fr',   'EN', "French<br>quotes");
+___('quotes_stats_users_quotes_fr',   'FR', "Citations<br>françaises");
+___('quotes_stats_users_quotes_nsfw', 'EN', "Crude<br>quotes");
+___('quotes_stats_users_quotes_nsfw', 'FR', "Citations<br>vulgaires");
+___('quotes_stats_users_quotes_old',  'EN', "Oldest<br>quote");
+___('quotes_stats_users_quotes_old',  'FR', "Première<br>citation");
+___('quotes_stats_users_quotes_new',  'EN', "Newest<br>quote");
+___('quotes_stats_users_quotes_new',  'FR', "Dernière<br>citation");

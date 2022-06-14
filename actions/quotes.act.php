@@ -811,7 +811,7 @@ function quotes_link_user(  int     $quote_id ,
  */
 
 function quotes_unlink_user(  int     $quote_id ,
-                              string  $user_id ) : void
+                              string  $user_id  ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -894,6 +894,46 @@ function quotes_stats() : array
   $data['percent_del']  = number_display_format($temp, 'percentage');
   $data['unvalidated']  = $dquotes['q_total_unvalidated'];
 
+  // Fetch user stats
+  $qquotes = query("  SELECT    users.id                        AS 'u_id'               ,
+                                users.username                  AS 'u_nick'             ,
+                                users_stats.quotes              AS 'us_quotes'          ,
+                                users_stats.quotes_en           AS 'us_quotes_en'       ,
+                                users_stats.quotes_fr           AS 'us_quotes_fr'       ,
+                                users_stats.quotes_nsfw         AS 'us_quotes_nsfw'     ,
+                                users_stats.quotes_oldest_id    AS 'us_quotes_old_id'   ,
+                                users_stats.quotes_oldest_date  AS 'us_quotes_old_date' ,
+                                users_stats.quotes_newest_id    AS 'us_quotes_new_id'   ,
+                                users_stats.quotes_newest_date  AS 'us_quotes_new_date'
+                      FROM      users_stats
+                      LEFT JOIN users ON users_stats.fk_users = users.id
+                      WHERE     users_stats.quotes > 0
+                      ORDER BY  users_stats.quotes  DESC  ,
+                                users.username      ASC   ");
+
+  // Loop through user stats and add its data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qquotes); $i++)
+  {
+    $data['users_id_'.$i]           = sanitize_output($row['u_id']);
+    $data['users_nick_'.$i]         = sanitize_output($row['u_nick']);
+    $data['users_quotes_'.$i]       = sanitize_output($row['us_quotes']);
+    $data['users_quotes_en_'.$i]    = $row['us_quotes_en'] ? (sanitize_output($row['us_quotes_en'])) : '';
+    $data['users_quotes_fr_'.$i]    = $row['us_quotes_fr'] ? (sanitize_output($row['us_quotes_fr'])) : '';
+    $data['users_quotes_nsfw_'.$i]  = $row['us_quotes_nsfw'] ? (sanitize_output($row['us_quotes_nsfw'])) : '';
+    $temp                           = maths_percentage_of($row['us_quotes_nsfw'], $row['us_quotes']);
+    $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['users_quotes_nsfw_'.$i] .= $row['us_quotes_nsfw'] ? ' ('.$temp.')' : '';
+    $data['users_qold_id_'.$i]      = sanitize_output($row['us_quotes_old_id']);
+    $temp                           = ($row['us_quotes_old_date']) ? date('Y', $row['us_quotes_old_date']) : '< 2012';
+    $data['users_qold_date_'.$i]    = sanitize_output($temp);
+    $data['users_qnew_id_'.$i]      = sanitize_output($row['us_quotes_new_id']);
+    $temp                           = ($row['us_quotes_new_date']) ? date('Y', $row['us_quotes_new_date']) : '< 2012';
+    $data['users_qnew_date_'.$i]    = sanitize_output($temp);
+  }
+
+  // Add the amount of user stats to the return array
+  $data['users_count'] = $i;
+
   // Return the stats
   return $data;
 }
@@ -919,14 +959,58 @@ function quotes_user_recalculate_stats( int $user_id )
     return;
 
   // Count the quotes in which the user is involved
-  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
+  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*)            AS 'q_count'    ,
+                                                  SUM(  CASE WHEN
+                                                        quotes.language LIKE 'EN' THEN 1
+                                                        ELSE 0 END)   AS 'q_count_en' ,
+                                                  SUM(  CASE WHEN
+                                                        quotes.language LIKE 'FR' THEN 1
+                                                        ELSE 0 END)   AS 'q_count_fr' ,
+                                                  SUM(quotes.is_nsfw) AS 'q_count_nsfw'
                                         FROM      quotes_users
                                         LEFT JOIN quotes
                                         ON        quotes_users.fk_quotes  = quotes.id
                                         WHERE     quotes_users.fk_users   = '$user_id'
                                         AND       quotes.is_deleted       = 0
                                         AND       quotes.admin_validation = 1 "));
-  $involved_count = sanitize($dquotes['q_count'], 'int', 0);
+
+  // Sanitize the quote involvement stats
+  $quotes_count       = sanitize($dquotes['q_count'], 'int', 0);
+  $quotes_count_en    = sanitize($dquotes['q_count_en'], 'int', 0);
+  $quotes_count_fr    = sanitize($dquotes['q_count_fr'], 'int', 0);
+  $quotes_count_nsfw  = sanitize($dquotes['q_count_nsfw'], 'int', 0);
+
+  // Find the user's oldest quote
+  $dquotes = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id' ,
+                                                  quotes.submitted_at AS 'q_date'
+                                        FROM      quotes_users
+                                        LEFT JOIN quotes
+                                        ON        quotes_users.fk_quotes  = quotes.id
+                                        WHERE     quotes_users.fk_users   = '$user_id'
+                                        AND       quotes.is_deleted       = 0
+                                        AND       quotes.admin_validation = 1
+                                        ORDER BY  quotes.submitted_at     ASC
+                                        LIMIT     1 "));
+
+  // Sanitize the oldest quote stats
+  $oldest_id    = isset($dquotes['q_id']) ? sanitize($dquotes['q_id'], 'int', 0) : 0;
+  $oldest_date  = isset($dquotes['q_id']) ? sanitize($dquotes['q_date'], 'int', 0) : 0;
+
+  // Find the user's newest quote
+  $dquotes = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id' ,
+                                                  quotes.submitted_at AS 'q_date'
+                                        FROM      quotes_users
+                                        LEFT JOIN quotes
+                                        ON        quotes_users.fk_quotes  = quotes.id
+                                        WHERE     quotes_users.fk_users   = '$user_id'
+                                        AND       quotes.is_deleted       = 0
+                                        AND       quotes.admin_validation = 1
+                                        ORDER BY  quotes.submitted_at     DESC
+                                        LIMIT     1 "));
+
+  // Sanitize the newest quote stats
+  $newest_id    = isset($dquotes['q_id']) ? sanitize($dquotes['q_id'], 'int', 0) : 0;
+  $newest_date  = isset($dquotes['q_id']) ? sanitize($dquotes['q_date'], 'int', 0) : 0;
 
   // Count the quotes submitted by the user
   $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
@@ -934,13 +1018,22 @@ function quotes_user_recalculate_stats( int $user_id )
                                         WHERE     quotes.fk_users_submitter = '$user_id'
                                         AND       quotes.is_deleted         = 0
                                         AND       quotes.admin_validation   = 1 "));
+
+  // Sanitize the quote submission stats
   $submitted_count = sanitize($dquotes['q_count'], 'int', 0);
 
-  // Update the user's stats
+  // Update the user's quotes stats
   query(" UPDATE  users_stats
-          SET     users_stats.quotes_featured   = '$involved_count' ,
-                  users_stats.quotes_submitted  = '$submitted_count'
-          WHERE   users_stats.fk_users          = '$user_id'        ");
+          SET     users_stats.quotes              = '$quotes_count'       ,
+                  users_stats.quotes_en           = '$quotes_count_en'    ,
+                  users_stats.quotes_fr           = '$quotes_count_fr'    ,
+                  users_stats.quotes_nsfw         = '$quotes_count_nsfw'  ,
+                  users_stats.quotes_oldest_id    = '$oldest_id'          ,
+                  users_stats.quotes_oldest_date  = '$oldest_date'        ,
+                  users_stats.quotes_newest_id    = '$newest_id'          ,
+                  users_stats.quotes_newest_date  = '$newest_date'        ,
+                  users_stats.quotes_submitted    = '$submitted_count'
+          WHERE   users_stats.fk_users            = '$user_id'            ");
 }
 
 

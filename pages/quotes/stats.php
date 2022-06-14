@@ -72,7 +72,6 @@ $quotes_stats = quotes_stats();
 
 
 
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -84,7 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <fieldset>
     <h5>
 
-      <?=__('quotes_stats_selector_title').__(':')?>
+      <?=__link('pages/quotes/', __('quotes_stats_selector_title').__(':'), style: 'noglow')?>
 
       <select class="inh" id="quotes_stats_selector" onchange="page_section_selector('quotes_stats', '<?=$quotes_selector_default?>');">
         <option value="overall"<?=$quotes_selector['menu']['overall']?>><?=__('quotes_stats_selector_overall')?></option>
@@ -143,9 +142,96 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ FEATURED **************************************************/ ?>
 
-<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['featured']?>" id="quotes_stats_featured">
+<div class="width_60 padding_top autoscroll quotes_stats_section<?=$quotes_selector['hide']['featured']?>" id="quotes_stats_featured">
 
-  &nbsp;
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_en')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_fr')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_nsfw')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_old')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_new')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $quotes_stats['users_count']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('pages/users/'.$quotes_stats['users_id_'.$i], $quotes_stats['users_nick_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$quotes_stats['users_quotes_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['users_quotes_en_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['users_quotes_fr_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['users_quotes_nsfw_'.$i]?>
+        </td>
+
+        <?php if($quotes_stats['users_quotes_'.$i] > 1) { ?>
+
+        <td>
+          <?=__link('pages/quotes/'.$quotes_stats['users_qold_id_'.$i], $quotes_stats['users_qold_date_'.$i])?>
+        </td>
+
+        <td>
+          <?=__link('pages/quotes/'.$quotes_stats['users_qnew_id_'.$i], $quotes_stats['users_qnew_date_'.$i])?>
+        </td>
+
+        <?php } else { ?>
+
+        <td colspan="2">
+          <?=__link('pages/quotes/'.$quotes_stats['users_qold_id_'.$i], $quotes_stats['users_qold_date_'.$i])?>
+        </td>
+
+        <?php } ?>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 

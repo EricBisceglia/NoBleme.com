@@ -644,11 +644,20 @@ $last_query = sql_check_query_id();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Store user stats in the database
+// Store quotes stats in the database
 
 if($last_query < 36)
 {
-  sql_create_field('users_stats', 'quotes_featured', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
-  sql_create_field('users_stats', 'quotes_submitted', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_featured');
+  sql_create_field('users_stats', 'quotes', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
+  sql_create_field('users_stats', 'quotes_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes');
+  sql_create_field('users_stats', 'quotes_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_en');
+  sql_create_field('users_stats', 'quotes_nsfw', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_fr');
+  sql_create_field('users_stats', 'quotes_oldest_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_nsfw');
+  sql_create_field('users_stats', 'quotes_oldest_date', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_oldest_id');
+  sql_create_field('users_stats', 'quotes_newest_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_oldest_date');
+  sql_create_field('users_stats', 'quotes_newest_date', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_newest_id');
+  sql_create_field('users_stats', 'quotes_submitted', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_newest_date');
+  sql_create_index('users_stats', 'index_quotes', 'quotes');
+
   sql_update_query_id(36);
 }

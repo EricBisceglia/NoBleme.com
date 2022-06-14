@@ -532,10 +532,18 @@ DROP TABLE IF EXISTS `users_stats`;
 CREATE TABLE IF NOT EXISTS `users_stats` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
-  `quotes_featured` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_en` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_fr` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_nsfw` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_oldest_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_oldest_date` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_newest_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_newest_date` int UNSIGNED NOT NULL DEFAULT '0',
   `quotes_submitted` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `index_user` (`fk_users`)
+  KEY `index_user` (`fk_users`),
+  KEY `index_quotes` (`quotes`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_tokens`;
