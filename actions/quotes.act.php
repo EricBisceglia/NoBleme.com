@@ -911,6 +911,16 @@ function quotes_stats() : array
                       ORDER BY  users_stats.quotes  DESC  ,
                                 users.username      ASC   ");
 
+  // Define the starting year for the data by fetching the oldest quote with a timestamp
+  $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
+                                        FROM    quotes
+                                        WHERE   quotes.is_deleted       = 0
+                                        AND     quotes.admin_validation = 1
+                                        AND     quotes.submitted_at     > 0 "));
+
+  // Add the oldest quote's year to the return array
+  $data['oldest_year'] = date('Y', $dquotes['q_oldest']);
+
   // Loop through user stats and add its data to the return array
   for($i = 0; $row = mysqli_fetch_array($qquotes); $i++)
   {
@@ -924,15 +934,50 @@ function quotes_stats() : array
     $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
     $data['users_quotes_nsfw_'.$i] .= $row['us_quotes_nsfw'] ? ' ('.$temp.')' : '';
     $data['users_qold_id_'.$i]      = sanitize_output($row['us_quotes_old_id']);
-    $temp                           = ($row['us_quotes_old_date']) ? date('Y', $row['us_quotes_old_date']) : '< 2012';
+    $temp                           = '< '.$data['oldest_year'];
+    $temp                           = ($row['us_quotes_old_date']) ? date('Y', $row['us_quotes_old_date']) : $temp;
     $data['users_qold_date_'.$i]    = sanitize_output($temp);
     $data['users_qnew_id_'.$i]      = sanitize_output($row['us_quotes_new_id']);
-    $temp                           = ($row['us_quotes_new_date']) ? date('Y', $row['us_quotes_new_date']) : '< 2012';
+    $temp                           = '< '.$data['oldest_year'];
+    $temp                           = ($row['us_quotes_new_date']) ? date('Y', $row['us_quotes_new_date']) : $temp;
     $data['users_qnew_date_'.$i]    = sanitize_output($temp);
   }
 
   // Add the amount of user stats to the return array
   $data['users_count'] = $i;
+
+  // Fetch quotes by years
+  $qquotes = query("  SELECT    quotes.submitted_at                       AS 'q_time'     ,
+                                YEAR(FROM_UNIXTIME(quotes.submitted_at))  AS 'q_year'     ,
+                                COUNT(*)                                  AS 'q_count'    ,
+                                SUM(  CASE WHEN
+                                      quotes.language LIKE 'EN' THEN 1
+                                      ELSE 0 END)                         AS 'q_count_en' ,
+                                SUM(  CASE WHEN
+                                      quotes.language LIKE 'FR' THEN 1
+                                      ELSE 0 END)                         AS 'q_count_fr'
+                      FROM      quotes
+                      WHERE     quotes.admin_validation = 1
+                      AND       quotes.is_deleted       = 0
+                      GROUP BY  q_year
+                      ORDER BY  q_year ");
+
+  // Add quote data over time to the return data
+  while($dquotes = mysqli_fetch_array($qquotes))
+  {
+    $year                           = ($dquotes['q_year'] >= $data['oldest_year']) ? $dquotes['q_year'] : 0;
+    $data['years_count_'.$year]     = ($dquotes['q_count']) ? sanitize_output($dquotes['q_count']) : '';
+    $data['years_count_en_'.$year]  = ($dquotes['q_count_en']) ? sanitize_output($dquotes['q_count_en']) : '';
+    $data['years_count_fr_'.$year]  = ($dquotes['q_count_fr']) ? sanitize_output($dquotes['q_count_fr']) : '';
+  }
+
+  // Ensure every year has an entry until the current one
+  for($i = $data['oldest_year']; $i < date('Y'); $i++)
+  {
+    $data['years_count_'.$i]    ??= '';
+    $data['years_count_en_'.$i] ??= '';
+    $data['years_count_fr_'.$i] ??= '';
+  }
 
   // Return the stats
   return $data;
@@ -989,7 +1034,8 @@ function quotes_user_recalculate_stats( int $user_id )
                                         WHERE     quotes_users.fk_users   = '$user_id'
                                         AND       quotes.is_deleted       = 0
                                         AND       quotes.admin_validation = 1
-                                        ORDER BY  quotes.submitted_at     ASC
+                                        ORDER BY  quotes.submitted_at     ASC ,
+                                                  quotes.id               ASC
                                         LIMIT     1 "));
 
   // Sanitize the oldest quote stats
@@ -1005,7 +1051,8 @@ function quotes_user_recalculate_stats( int $user_id )
                                         WHERE     quotes_users.fk_users   = '$user_id'
                                         AND       quotes.is_deleted       = 0
                                         AND       quotes.admin_validation = 1
-                                        ORDER BY  quotes.submitted_at     DESC
+                                        ORDER BY  quotes.submitted_at     DESC ,
+                                                  quotes.id               DESC
                                         LIMIT     1 "));
 
   // Sanitize the newest quote stats

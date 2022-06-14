@@ -311,3 +311,8 @@ ___('quotes_stats_users_quotes_old',  'EN', "Oldest<br>quote");
 ___('quotes_stats_users_quotes_old',  'FR', "Première<br>citation");
 ___('quotes_stats_users_quotes_new',  'EN', "Newest<br>quote");
 ___('quotes_stats_users_quotes_new',  'FR', "Dernière<br>citation");
+
+
+// Timeline
+___('quotes_stats_years_quotes',  'EN', "Quotes<br>that year");
+___('quotes_stats_years_quotes',  'FR', "Citations<br>de l'année");

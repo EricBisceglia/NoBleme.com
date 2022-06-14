@@ -240,9 +240,82 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************** YEARS ***************************************************/ ?>
 
-<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['years']?>" id="quotes_stats_years">
+<div class="width_30 padding_top autoscroll quotes_stats_section<?=$quotes_selector['hide']['years']?>" id="quotes_stats_years">
 
-  &nbsp;
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('year')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_years_quotes')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_en')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_users_quotes_fr')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = date('Y'); $i >= $quotes_stats['oldest_year']; $i--) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=$i?>
+        </td>
+
+        <td class="bold">
+          <?=$quotes_stats['years_count_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['years_count_en_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['years_count_fr_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+      <tr>
+
+        <td class="bold">
+          < <?=$quotes_stats['oldest_year']?>
+        </td>
+
+        <td class="bold">
+          <?=$quotes_stats['years_count_0']?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['years_count_en_0']?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['years_count_fr_0']?>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
 
 </div>
 
@@ -251,7 +324,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ SUBMITTED *************************************************/ ?>
 
-<div class="width_50 padding_top quotes_stats_section<?=$quotes_selector['hide']['submitted']?>" id="quotes_stats_submitted">
+<div class="width_50 padding_top autoscroll quotes_stats_section<?=$quotes_selector['hide']['submitted']?>" id="quotes_stats_submitted">
 
   &nbsp;
 
