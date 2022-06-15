@@ -541,9 +541,11 @@ CREATE TABLE IF NOT EXISTS `users_stats` (
   `quotes_newest_id` int UNSIGNED NOT NULL DEFAULT '0',
   `quotes_newest_date` int UNSIGNED NOT NULL DEFAULT '0',
   `quotes_submitted` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_approved` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`),
-  KEY `index_quotes` (`quotes`)
+  KEY `index_quotes` (`quotes`),
+  KEY `index_quotes_approved` (`quotes_approved`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_tokens`;

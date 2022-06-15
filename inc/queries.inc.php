@@ -657,7 +657,9 @@ if($last_query < 36)
   sql_create_field('users_stats', 'quotes_newest_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_oldest_date');
   sql_create_field('users_stats', 'quotes_newest_date', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_newest_id');
   sql_create_field('users_stats', 'quotes_submitted', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_newest_date');
+  sql_create_field('users_stats', 'quotes_approved', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_submitted');
   sql_create_index('users_stats', 'index_quotes', 'quotes');
+  sql_create_index('users_stats', 'index_quotes_approved', 'quotes_approved');
 
   sql_update_query_id(36);
 }

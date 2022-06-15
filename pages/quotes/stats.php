@@ -324,9 +324,62 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ SUBMITTED *************************************************/ ?>
 
-<div class="width_50 padding_top autoscroll quotes_stats_section<?=$quotes_selector['hide']['submitted']?>" id="quotes_stats_submitted">
+<div class="width_40 padding_top autoscroll quotes_stats_section<?=$quotes_selector['hide']['submitted']?>" id="quotes_stats_submitted">
 
-  &nbsp;
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_contrib_approved')?>
+        </th>
+
+        <th>
+          <?=__link('pages/quotes/submit', __('quotes_stats_contrib_submitted'))?>
+        </th>
+
+        <th>
+          <?=__('quotes_stats_contrib_percentage')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $quotes_stats['contrib_count']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('pages/users/'.$quotes_stats['contrib_id_'.$i], $quotes_stats['contrib_nick_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$quotes_stats['contrib_approved_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['contrib_submitted_'.$i]?>
+        </td>
+
+        <td>
+          <?=$quotes_stats['contrib_percentage_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 

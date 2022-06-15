@@ -341,6 +341,9 @@ EOT;
     irc_bot_send_message("Quote proposal #$quote_id has been made by $submitter_nick: ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
   }
 
+  // Recalculate the linked users' stats
+  quotes_user_recalculate_stats($submitter_id);
+
   // Return the new quote's id
   return $quote_id;
 }
@@ -894,6 +897,16 @@ function quotes_stats() : array
   $data['percent_del']  = number_display_format($temp, 'percentage');
   $data['unvalidated']  = $dquotes['q_total_unvalidated'];
 
+  // Define the starting year for the data by fetching the oldest quote with a timestamp
+  $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
+                                        FROM    quotes
+                                        WHERE   quotes.is_deleted       = 0
+                                        AND     quotes.admin_validation = 1
+                                        AND     quotes.submitted_at     > 0 "));
+
+  // Add the oldest quote's year to the return array
+  $data['oldest_year'] = date('Y', $dquotes['q_oldest']);
+
   // Fetch user stats
   $qquotes = query("  SELECT    users.id                        AS 'u_id'               ,
                                 users.username                  AS 'u_nick'             ,
@@ -910,16 +923,6 @@ function quotes_stats() : array
                       WHERE     users_stats.quotes > 0
                       ORDER BY  users_stats.quotes  DESC  ,
                                 users.username      ASC   ");
-
-  // Define the starting year for the data by fetching the oldest quote with a timestamp
-  $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
-                                        FROM    quotes
-                                        WHERE   quotes.is_deleted       = 0
-                                        AND     quotes.admin_validation = 1
-                                        AND     quotes.submitted_at     > 0 "));
-
-  // Add the oldest quote's year to the return array
-  $data['oldest_year'] = date('Y', $dquotes['q_oldest']);
 
   // Loop through user stats and add its data to the return array
   for($i = 0; $row = mysqli_fetch_array($qquotes); $i++)
@@ -978,6 +981,32 @@ function quotes_stats() : array
     $data['years_count_en_'.$i] ??= '';
     $data['years_count_fr_'.$i] ??= '';
   }
+
+  // Fetch contributor stats
+  $qquotes = query("  SELECT    users.id                      AS 'u_id'         ,
+                                users.username                AS 'u_nick'       ,
+                                users_stats.quotes_submitted  AS 'us_submitted' ,
+                                users_stats.quotes_approved   AS 'us_approved'
+                      FROM      users_stats
+                      LEFT JOIN users ON users_stats.fk_users = users.id
+                      WHERE     users_stats.quotes_submitted  > 0
+                      ORDER BY  users_stats.quotes_approved   DESC  ,
+                                users_stats.quotes_submitted  DESC  ,
+                                users.username                ASC   ");
+
+  // Loop through user stats and add its data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qquotes); $i++)
+  {
+    $data['contrib_id_'.$i]         = sanitize_output($row['u_id']);
+    $data['contrib_nick_'.$i]       = sanitize_output($row['u_nick']);
+    $data['contrib_submitted_'.$i]  = sanitize_output($row['us_submitted']);
+    $data['contrib_approved_'.$i]   = ($row['us_approved']) ? sanitize_output($row['us_approved']) : '';
+    $temp                           = maths_percentage_of($row['us_approved'], $row['us_submitted']);
+    $data['contrib_percentage_'.$i] = sanitize_output(number_display_format($temp, 'percentage'));
+  }
+
+  // Add the amount of user stats to the return array
+  $data['contrib_count'] = $i;
 
   // Return the stats
   return $data;
@@ -1062,12 +1091,20 @@ function quotes_user_recalculate_stats( int $user_id )
   // Count the quotes submitted by the user
   $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
                                         FROM      quotes
+                                        WHERE     quotes.fk_users_submitter = '$user_id' "));
+
+  // Sanitize the quote submission stats
+  $submitted_count = sanitize($dquotes['q_count'], 'int', 0);
+
+  // Count the quotes submitted and approved by the user
+  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
+                                        FROM      quotes
                                         WHERE     quotes.fk_users_submitter = '$user_id'
                                         AND       quotes.is_deleted         = 0
                                         AND       quotes.admin_validation   = 1 "));
 
   // Sanitize the quote submission stats
-  $submitted_count = sanitize($dquotes['q_count'], 'int', 0);
+  $approved_count = sanitize($dquotes['q_count'], 'int', 0);
 
   // Update the user's quotes stats
   query(" UPDATE  users_stats
@@ -1079,7 +1116,8 @@ function quotes_user_recalculate_stats( int $user_id )
                   users_stats.quotes_oldest_date  = '$oldest_date'        ,
                   users_stats.quotes_newest_id    = '$newest_id'          ,
                   users_stats.quotes_newest_date  = '$newest_date'        ,
-                  users_stats.quotes_submitted    = '$submitted_count'
+                  users_stats.quotes_submitted    = '$submitted_count'    ,
+                  users_stats.quotes_approved     = '$approved_count'
           WHERE   users_stats.fk_users            = '$user_id'            ");
 }
 

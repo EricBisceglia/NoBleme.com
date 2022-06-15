@@ -299,8 +299,8 @@ ___('quotes_stats_overall_more',          'FR', "Vous trouverez d'autres stats s
 
 
 // Featured users
-___('quotes_stats_users_quotes',      'EN', "Quotes<br>featured");
-___('quotes_stats_users_quotes',      'FR', "Nombre de<br>citations");
+___('quotes_stats_users_quotes',      'EN', "Quotes");
+___('quotes_stats_users_quotes',      'FR', "Citations");
 ___('quotes_stats_users_quotes_en',   'EN', "English<br>quotes");
 ___('quotes_stats_users_quotes_en',   'FR', "Citations<br>anglaises");
 ___('quotes_stats_users_quotes_fr',   'EN', "French<br>quotes");
@@ -316,3 +316,12 @@ ___('quotes_stats_users_quotes_new',  'FR', "Dernière<br>citation");
 // Timeline
 ___('quotes_stats_years_quotes',  'EN', "Quotes<br>that year");
 ___('quotes_stats_years_quotes',  'FR', "Citations<br>de l'année");
+
+
+// Contributors
+___('quotes_stats_contrib_submitted',   'EN', "Quote<br>proposals");
+___('quotes_stats_contrib_submitted',   'FR', "Propositions<br>de citations");
+___('quotes_stats_contrib_approved',    'EN', "Quotes<br>approved");
+___('quotes_stats_contrib_approved',    'FR', "Citations<br>approuvées");
+___('quotes_stats_contrib_percentage',  'EN', "Proposals<br>approved");
+___('quotes_stats_contrib_percentage',  'FR', "Propositions<br>approuvées");
