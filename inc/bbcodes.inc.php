@@ -258,7 +258,7 @@ function nbcodes( string  $message                                              
   $blurring2  = ($nsfw_settings < 2) ? 'class="nbcode_blur_2"' : '';
   $blurring3  = ($nsfw_settings < 1) ? ' nbcode_blur_3' : '';
   $blurring4  = ($nsfw_settings < 1) ? ' class="nbcode_blur_3"' : '';
-  $unblur     = ($nsfw_settings < 2) ? ' onmouseover="unblur();"' : '';
+  $unblur     = ($nsfw_settings < 2) ? ' onmouseover="unblur(this);"' : '';
 
 
   /*******************************************************************************************************************/
