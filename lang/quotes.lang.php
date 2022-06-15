@@ -73,6 +73,12 @@ ___('quotes_count',             'EN', "NoBleme's {{1}} quote:");
 ___('quotes_count',             'FR', "{{1}} citation NoBlemeuse :");
 ___('quotes_count+',            'EN', "NoBleme's {{1}} quotes:");
 ___('quotes_count+',            'FR', "{{1}} citations NoBlemeuses :");
+___('quotes_count_filtered',    'EN', "{{1}} quote from {{2}}");
+___('quotes_count_filtered',    'FR', "{{1}} citation de {{2}}");
+___('quotes_count_filtered+',   'EN', "{{1}} quotes from {{2}}");
+___('quotes_count_filtered+',   'FR', "{{1}} citations de {{2}}");
+___('quotes_count_undated',     'EN', "an unknown date before {{1}}");
+___('quotes_count_undated',     'FR', "date inconnue avant {{1}}");
 ___('quotes_id',                'EN', "Quote #{{1}}");
 ___('quotes_id',                'FR', "Citation #{{1}}");
 ___('quotes_nodate',            'EN', "Quote date unknown (before 2012)");
@@ -296,8 +302,8 @@ ___('quotes_stats_overall_unvalidated',   'EN', "<span class=\"bold\">{{1}}</spa
 ___('quotes_stats_overall_unvalidated',   'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|proposition de citation}} est actuellement en attente d'approbation administrative.");
 ___('quotes_stats_overall_unvalidated+',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposals}} are currently unvalidated, awaiting administrative review.");
 ___('quotes_stats_overall_unvalidated+',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|propositions de citations}} sont actuellement en attente d'approbation administrative.");
-___('quotes_stats_overall_more',          'EN', "You can find more stats about {{link|pages/quotes/|NoBleme's quote database}} by using the dropdown menu at the top.");
-___('quotes_stats_overall_more',          'FR', "Vous trouverez d'autres stats sur les {{link|pages/quotes/|citations}} en utilisant le menu déroulant en haut de la page.");
+___('quotes_stats_overall_more',          'EN', "You can find more stats about NoBleme's quote database by using the dropdown menu at the top.");
+___('quotes_stats_overall_more',          'FR', "Vous trouverez d'autres stats sur les citations en utilisant le menu déroulant en haut de la page.");
 
 
 // Featured users

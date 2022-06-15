@@ -24,6 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
 /*                                                                                                                   */
 /*  quotes_stats                    Returns stats related to quotes.                                                 */
+/*  quotes_get_oldest_year          Returns the year in which the oldest quote took place.                           */
 /*                                                                                                                   */
 /*  quotes_user_recalculate_stats   Recalculates quote database statistics for a specific user.                      */
 /*  quotes_recalculate_all_stats    Recalculates global quote database statistics.                                   */
@@ -196,7 +197,9 @@ function quotes_list( ?array  $search         = array() ,
   $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Prepare the search parameters
-  $search_body = (isset($search['body'])) ? sanitize($search['body']) : '';
+  $search_body = (isset($search['body'])) ? sanitize($search['body'], 'string')   : '';
+  $search_user = (isset($search['user'])) ? sanitize($search['user'], 'int', 0)   : 0;
+  $search_year = (isset($search['year'])) ? sanitize($search['year'], 'int', -1)  : 0;
 
   // Fetch the quotes
   $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'       ,
@@ -215,36 +218,42 @@ function quotes_list( ?array  $search         = array() ,
 
   // Show a single quote
   if($quote_id && $is_admin)
-    $qquotes .= " AND       quotes.id               = '$quote_id'       ";
+    $qquotes .= " AND       quotes.id               = '$quote_id' ";
   else if($quote_id)
     $qquotes .= " AND       quotes.id               = '$quote_id'
                   AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0                 ";
+                  AND       quotes.is_deleted       = 0 ";
 
   // View quotes awaiting validation
   else if($is_admin && $show_waitlist)
-    $qquotes .= " AND       quotes.admin_validation = 0                 ";
+    $qquotes .= " AND       quotes.admin_validation = 0 ";
 
   // View deleted quotes
   else if($is_admin && $show_deleted)
-    $qquotes .= " AND       quotes.is_deleted       = 1                 ";
+    $qquotes .= " AND       quotes.is_deleted = 1 ";
 
   // Normal view
   else
     $qquotes .= " AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0                 ";
+                  AND       quotes.is_deleted       = 0 ";
 
   // Filter the quotes by language
   if($lang_en && !$lang_fr && !$quote_id)
-    $qquotes .= " AND       quotes.language      LIKE 'EN'              ";
+    $qquotes .= " AND       quotes.language  LIKE 'EN'  ";
   if($lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       quotes.language      LIKE 'FR'              ";
+    $qquotes .= " AND       quotes.language  LIKE 'FR'  ";
   if(!$lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       1                       = 0                 ";
+    $qquotes .= " AND       1                   = 0     ";
 
   // Search parameters
   if($search_body)
-    $qquotes .= " AND       quotes.body          LIKE '%$search_body%'  ";
+    $qquotes .= " AND       quotes.body                            LIKE '%$search_body%'  ";
+  if($search_user)
+    $qquotes .= " AND       quotes_users.fk_users                     = '$search_user'    ";
+  if($search_year == -1)
+    $qquotes .= " AND       quotes.submitted_at                       = 0                 ";
+  else if($search_year)
+    $qquotes .= " AND       YEAR(FROM_UNIXTIME(quotes.submitted_at))  = '$search_year'    ";
 
   // Finish the query
   $qquotes .= "   GROUP BY  quotes.id
@@ -865,6 +874,9 @@ function quotes_stats() : array
   // Initialize the return array
   $data = array();
 
+  // Add the oldest quote's year to the return array
+  $data['oldest_year'] = quotes_get_oldest_year();
+
   // Fetch the total number of quotes
   $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)            AS 'q_total'    ,
                                                 SUM(  CASE WHEN
@@ -903,16 +915,6 @@ function quotes_stats() : array
   $temp                 = maths_percentage_of($dquotes['q_total_deleted'], $dquotes['q_total']);
   $data['percent_del']  = number_display_format($temp, 'percentage');
   $data['unvalidated']  = $dquotes['q_total_unvalidated'];
-
-  // Define the starting year for the data by fetching the oldest quote with a timestamp
-  $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
-                                        FROM    quotes
-                                        WHERE   quotes.is_deleted       = 0
-                                        AND     quotes.admin_validation = 1
-                                        AND     quotes.submitted_at     > 0 "));
-
-  // Add the oldest quote's year to the return array
-  $data['oldest_year'] = date('Y', $dquotes['q_oldest']);
 
   // Fetch user stats
   $qquotes = query("  SELECT    users.id                        AS 'u_id'               ,
@@ -1019,6 +1021,25 @@ function quotes_stats() : array
   return $data;
 }
 
+
+/**
+ * Returns the year in which the oldest quote took place.
+ *
+ * @return  int   The oldest quote's year.
+ */
+
+function quotes_get_oldest_year() : int
+{
+  // Look up the oldest quote
+  $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
+                                        FROM    quotes
+                                        WHERE   quotes.is_deleted       = 0
+                                        AND     quotes.admin_validation = 1
+                                        AND     quotes.submitted_at     > 0 "));
+
+  // Return its year
+  return date('Y', $dquotes['q_oldest']);
+}
 
 
 

@@ -73,16 +73,34 @@ $quotes_waitlist  = (form_fetch_element('quotes_waitlist')) ? true : $quotes_wai
 $quotes_deleted   = form_fetch_element('deleted', element_exists: true, request_type: 'GET');
 $quotes_deleted   = (form_fetch_element('quotes_deleted')) ? true : $quotes_deleted;
 
+// Look for a set user id
+$quotes_user_id = form_fetch_element('user', request_type: 'GET', default_value: 0);
+
+// Look for a set year
+$quotes_year = form_fetch_element('year', request_type: 'GET', default_value: 0);
+
 // Prepare the search settings
 $quotes_search = array( 'lang_en' => $quotes_settings['show_en']              ,
                         'lang_fr' => $quotes_settings['show_fr']              ,
-                        'body'    => form_fetch_element('quotes_search_body') );
+                        'body'    => form_fetch_element('quotes_search_body') ,
+                        'user'    => $quotes_user_id                          ,
+                        'year'    => $quotes_year                             );
 
 // Fetch relevant quotes
 $quotes_list = quotes_list( $quotes_search    ,
                             $quote_id         ,
                             $quotes_waitlist  ,
                             $quotes_deleted   );
+
+// Define whether quotes are being filtered
+if($quotes_user_id)
+  $quotes_filter = sanitize_output(user_get_username((int)$quotes_user_id));
+else if($quotes_year == -1)
+  $quotes_filter = __('quotes_count_undated', preset_values: array(quotes_get_oldest_year()));
+else if($quotes_year)
+  $quotes_filter = sanitize_output((int)$quotes_year);
+else
+  $quotes_filter = '';
 
 // Redirect if a single quote is requested but doesn't exist
 if($quote_id && !$quotes_list['rows'])
@@ -116,7 +134,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <?php if(!$quote_id) { ?>
+  <?php if(!$quote_id && !$quotes_filter) { ?>
   <h1>
     <?=__('submenu_social_quotes')?>
     <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/quotes/stats")?>
@@ -176,7 +194,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php } ?>
 
-    <?php } if(!$quote_id) { ?>
+    <?php } if(!$quote_id && !$quotes_filter) { ?>
 
     <h5 class="bigpadding_top smallpadding_bot">
       <?php if($is_admin && $quotes_waitlist) { ?>
@@ -188,6 +206,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } else { ?>
       <?=__('quotes_none')?>
       <?php } ?>
+    </h5>
+
+    <?php } else if($quotes_filter) { ?>
+
+    <h1 class="smallpadding_bot">
+      <?=__link('pages/quotes/', __('submenu_social_quotes'), style: 'noglow')?>
+    </h1>
+
+    <h5>
+      <?=__('quotes_count_filtered', $quotes_list['rows'], preset_values: array($quotes_list['rows'], $quotes_filter))?>
     </h5>
 
     <?php } ?>

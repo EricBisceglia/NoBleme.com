@@ -188,7 +188,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td>
-          <?=__link('pages/users/'.$quotes_stats['users_id_'.$i], $quotes_stats['users_nick_'.$i])?>
+          <?=__link('pages/quotes/list?user='.$quotes_stats['users_id_'.$i], $quotes_stats['users_nick_'.$i])?>
         </td>
 
         <td class="bold">
@@ -274,7 +274,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td class="bold">
-          <?=$i?>
+          <?=__link('pages/quotes/list?year='.$i, $i)?>
         </td>
 
         <td class="bold">
@@ -296,7 +296,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td class="bold">
-          < <?=$quotes_stats['oldest_year']?>
+          <?=__link('pages/quotes/list?year=-1', '< '.$quotes_stats['oldest_year'])?>
         </td>
 
         <td class="bold">
