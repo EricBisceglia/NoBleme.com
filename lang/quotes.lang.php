@@ -42,10 +42,12 @@ EOT
 
 
 // Form
-___('quotes_languages',       'EN', "Show quotes in the following languages (this setting will be saved)");
-___('quotes_languages',       'FR', "Afficher les citations dans les langues suivantes (ce réglage sera enregistré)");
-___('quotes_languages_guest', 'EN', "Show quotes in the following languages");
-___('quotes_languages_guest', 'FR', "Afficher les citations dans les langues suivantes");
+___('quotes_languages',       'EN', "Show quotes in the following languages (this setting will be saved):");
+___('quotes_languages',       'FR', "Afficher les citations dans les langues suivantes (ce réglage sera enregistré) :");
+___('quotes_languages_guest', 'EN', "Show quotes in the following languages:");
+___('quotes_languages_guest', 'FR', "Afficher les citations dans les langues suivantes :");
+___('quotes_search_label',    'EN', "Search quotes:");
+___('quotes_search_label',    'FR', "Chercher parmi les citations :");
 
 
 // List

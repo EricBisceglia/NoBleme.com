@@ -74,8 +74,9 @@ $quotes_deleted   = form_fetch_element('deleted', element_exists: true, request_
 $quotes_deleted   = (form_fetch_element('quotes_deleted')) ? true : $quotes_deleted;
 
 // Prepare the search settings
-$quotes_search = array( 'lang_en' => $quotes_settings['show_en']  ,
-                        'lang_fr' => $quotes_settings['show_fr']  );
+$quotes_search = array( 'lang_en' => $quotes_settings['show_en']              ,
+                        'lang_fr' => $quotes_settings['show_fr']              ,
+                        'body'    => form_fetch_element('quotes_search_body') );
 
 // Fetch relevant quotes
 $quotes_list = quotes_list( $quotes_search    ,
@@ -159,20 +160,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__('quotes_languages_guest')?>
       <?php } ?>
     </label>
-    <input type="checkbox" id="quotes_lang_en" name="quotes_lang_en" onclick="quotes_set_language();"<?=$lang_en_checked?>>
+    <input type="checkbox" id="quotes_lang_en" name="quotes_lang_en" onclick="quotes_search();"<?=$lang_en_checked?>>
     <label class="label_inline" for="quotes_lang_en"><?=string_change_case(__('english'), 'initials')?></label><br>
-    <input type="checkbox" id="quotes_lang_fr" name="quotes_lang_fr" onclick="quotes_set_language();"<?=$lang_fr_checked?>>
+    <input type="checkbox" id="quotes_lang_fr" name="quotes_lang_fr" onclick="quotes_search();"<?=$lang_fr_checked?>>
     <label class="label_inline" for="quotes_lang_fr"><?=string_change_case(__('french'), 'initials')?></label>
+
+    <div class="smallpadding_top">
+      <label for="quotes_search_body"><?=__('quotes_search_label')?></label>
+      <input type="text" id="quotes_search_body" name="quotes_search_body" value="" onkeyup="quotes_search()">
+    </div>
 
   </fieldset>
 
-  <div id="quotes_list_body">
+  <div class="smallpadding_top" id="quotes_list_body">
 
     <?php } ?>
 
     <?php } if(!$quote_id) { ?>
 
-    <h5 class="bigpadding_top">
+    <h5 class="bigpadding_top smallpadding_bot">
       <?php if($is_admin && $quotes_waitlist) { ?>
       <?=__('quotes_count_waitlist', $quotes_list['rows'], preset_values: array($quotes_list['rows']))?>
       <?php } else if($is_admin && $quotes_deleted) { ?>

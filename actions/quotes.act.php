@@ -195,6 +195,9 @@ function quotes_list( ?array  $search         = array() ,
   $lang_en    = (isset($search['lang_en']) && $search['lang_en']);
   $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
 
+  // Prepare the search parameters
+  $search_body = (isset($search['body'])) ? sanitize($search['body']) : '';
+
   // Fetch the quotes
   $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'       ,
                             quotes.submitted_at                                                     AS 'q_date'     ,
@@ -212,32 +215,36 @@ function quotes_list( ?array  $search         = array() ,
 
   // Show a single quote
   if($quote_id && $is_admin)
-    $qquotes .= " AND       quotes.id               = '$quote_id' ";
+    $qquotes .= " AND       quotes.id               = '$quote_id'       ";
   else if($quote_id)
     $qquotes .= " AND       quotes.id               = '$quote_id'
                   AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0           ";
+                  AND       quotes.is_deleted       = 0                 ";
 
   // View quotes awaiting validation
   else if($is_admin && $show_waitlist)
-    $qquotes .= " AND       quotes.admin_validation = 0           ";
+    $qquotes .= " AND       quotes.admin_validation = 0                 ";
 
   // View deleted quotes
   else if($is_admin && $show_deleted)
-    $qquotes .= " AND       quotes.is_deleted       = 1           ";
+    $qquotes .= " AND       quotes.is_deleted       = 1                 ";
 
   // Normal view
   else
     $qquotes .= " AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0 ";
+                  AND       quotes.is_deleted       = 0                 ";
 
   // Filter the quotes by language
   if($lang_en && !$lang_fr && !$quote_id)
-    $qquotes .= " AND       quotes.language      LIKE 'EN'          ";
+    $qquotes .= " AND       quotes.language      LIKE 'EN'              ";
   if($lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       quotes.language      LIKE 'FR'          ";
+    $qquotes .= " AND       quotes.language      LIKE 'FR'              ";
   if(!$lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       1                       = 0             ";
+    $qquotes .= " AND       1                       = 0                 ";
+
+  // Search parameters
+  if($search_body)
+    $qquotes .= " AND       quotes.body          LIKE '%$search_body%'  ";
 
   // Finish the query
   $qquotes .= "   GROUP BY  quotes.id
