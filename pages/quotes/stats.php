@@ -85,7 +85,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?=__link('pages/quotes/', __('quotes_stats_selector_title').__(':'), style: 'noglow')?>
 
-      <select class="inh" id="quotes_stats_selector" onchange="page_section_selector('quotes_stats', '<?=$quotes_selector_default?>');">
+      <select class="inh align_left" id="quotes_stats_selector" onchange="page_section_selector('quotes_stats', '<?=$quotes_selector_default?>');">
         <option value="overall"<?=$quotes_selector['menu']['overall']?>><?=__('quotes_stats_selector_overall')?></option>
         <option value="featured"<?=$quotes_selector['menu']['featured']?>><?=__('quotes_stats_selector_featured')?></option>
         <option value="years"<?=$quotes_selector['menu']['years']?>><?=__('quotes_stats_selector_years')?></option>

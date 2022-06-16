@@ -658,8 +658,31 @@ if($last_query < 36)
   sql_create_field('users_stats', 'quotes_newest_date', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_newest_id');
   sql_create_field('users_stats', 'quotes_submitted', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_newest_date');
   sql_create_field('users_stats', 'quotes_approved', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_submitted');
+
   sql_create_index('users_stats', 'index_quotes', 'quotes');
   sql_create_index('users_stats', 'index_quotes_approved', 'quotes_approved');
 
   sql_update_query_id(36);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Store meetups stats in the database
+
+if($last_query < 37)
+{
+  sql_create_field('users_stats', 'meetups', 'INT UNSIGNED NOT NULL DEFAULT 0', 'quotes_approved');
+  sql_create_field('users_stats', 'meetups_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups');
+  sql_create_field('users_stats', 'meetups_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_en');
+  sql_create_field('users_stats', 'meetups_bilingual', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_fr');
+  sql_create_field('users_stats', 'meetups_oldest_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_bilingual');
+  sql_create_field('users_stats', 'meetups_oldest_date', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_oldest_id');
+  sql_create_field('users_stats', 'meetups_newest_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_oldest_date');
+  sql_create_field('users_stats', 'meetups_newest_date', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_newest_id');
+
+  sql_create_index('users_stats', 'index_meetups', 'meetups');
+
+  sql_update_query_id(37);
 }

@@ -368,3 +368,31 @@ ___('meetups_organize_plan_body_5', 'FR', <<<EOT
 Nous sommes toujours à la recherche d'opportunités pour organiser des rencontres IRL, faites-nous signe si vous pensez que nous devrions en organiser une !
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page section selector
+___('meetups_selector_title',           'EN', "Real life meetups statistics");
+___('meetups_selector_title',           'FR', "Stats des rencontres IRL");
+___('meetups_stats_selector_overall',   'EN', "Overall stats");
+___('meetups_stats_selector_overall',   'FR', "Stats globales");
+___('meetups_stats_selector_people',    'EN', "Attendees");
+___('meetups_stats_selector_people',    'FR', "Personnes présentes");
+___('meetups_stats_selector_locations', 'EN', "Locations");
+___('meetups_stats_selector_locations', 'FR', "Lieux des rencontres");
+___('meetups_stats_selector_years',     'EN', "Timeline");
+___('meetups_stats_selector_years',     'FR', "Ligne temporelle");
+
+
+// Recalculate all stats
+___('meetups_stats_recalculate_button', 'EN', "Recalculate all real life meetups statistics");
+___('meetups_stats_recalculate_button', 'FR', "Recalculer toutes les statistiques des rencontres IRL");
+___('meetups_stats_recalculate_alert',  'EN', "Are you sure you wish to recalculate all real life meetups statistics?");
+___('meetups_stats_recalculate_alert',  'FR', "Confirmer que vous tenez à recalculer toutes les statistiques des rencontres IRL");

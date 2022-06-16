@@ -26,6 +26,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_list_years                  Fetches the years at which meetups happened.                                 */
 /*  meetups_get_max_attendees           Fetches the highest number of attendees in a meetup.                         */
 /*                                                                                                                   */
+/*  meetups_user_recalculate_stats      Recalculates meetups statistics for a specific user.                         */
+/*  meetups_recalculate_all_stats       Recalculates meetups statistics.                                             */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -437,6 +440,16 @@ function meetups_edit(  int   $meetup_id  ,
     }
   }
 
+  // Fetch all meetup attendees
+  $meetup_users = meetups_attendees_list($meetup_id);
+
+  // Recalculate stats for all users in the meetup
+  for($i = 0; $i < $meetup_users['rows']; $i++)
+  {
+    if($meetup_users[$i]['user_id'])
+      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+  }
+
   // All went well
   return NULL;
 }
@@ -482,6 +495,9 @@ function meetups_delete( int $meetup_id ) : void
   if($meetup_deleted)
     return;
 
+  // Fetch all meetup attendees
+  $meetup_users = meetups_attendees_list($meetup_id);
+
   // Soft delete the meetup
   query(" UPDATE  meetups
           SET     meetups.is_deleted  = 1
@@ -523,6 +539,13 @@ function meetups_delete( int $meetup_id ) : void
     $discord_message .= PHP_EOL."La rencontre IRL du $meetup_date_fr a été annulée";
     $discord_message .= PHP_EOL."<".$GLOBALS['website_url']."pages/meetups/list>";
     discord_send_message($discord_message, 'main');
+  }
+
+  // Recalculate stats for all users in the meetup
+  for($i = 0; $i < $meetup_users['rows']; $i++)
+  {
+    if($meetup_users[$i]['user_id'])
+      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
   }
 
   // End the function so that the js awaiting a callback doesn't get hung up
@@ -613,6 +636,16 @@ function meetups_restore( int $meetup_id ) : void
     discord_send_message($discord_message, 'main');
   }
 
+  // Fetch all meetup attendees
+  $meetup_users = meetups_attendees_list($meetup_id);
+
+  // Recalculate stats for all users in the meetup
+  for($i = 0; $i < $meetup_users['rows']; $i++)
+  {
+    if($meetup_users[$i]['user_id'])
+      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+  }
+
   // End the function so that the js awaiting a callback doesn't get hung up
   return;
 }
@@ -645,6 +678,9 @@ function meetups_hard_delete( int $meetup_id ) : void
                                         FROM    meetups
                                         WHERE   meetups.id = '$meetup_id' "));
 
+  // Fetch all meetup attendees
+  $meetup_users = meetups_attendees_list($meetup_id);
+
   // Hard delete the meetup
   query(" DELETE FROM meetups
           WHERE       meetups.id = '$meetup_id' ");
@@ -658,6 +694,13 @@ function meetups_hard_delete( int $meetup_id ) : void
                         is_moderators_only: true        ,
                         activity_id:        $meetup_id  ,
                         global_type_wipe:   true        );
+
+  // Recalculate stats for all users in the meetup
+  for($i = 0; $i < $meetup_users['rows']; $i++)
+  {
+    if($meetup_users[$i]['user_id'])
+      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+  }
 
   // End the function so that the js awaiting a callback doesn't get hung up
   return;
@@ -918,6 +961,10 @@ function meetups_attendees_add( int   $meetup_id  ,
     $discord_message .= PHP_EOL."<".$GLOBALS['website_url']."pages/meetups/".$meetup_id.">";
     discord_send_message($discord_message, 'main');
   }
+
+  // Recalculate the user's meetup stats if they have an account
+  if($account_id)
+    meetups_user_recalculate_stats($account_id);
 }
 
 
@@ -962,6 +1009,7 @@ function meetups_attendees_edit(  int   $attendee_id  ,
   // Fetch data on the attendee and the meetup they are attending
   $dattendee = mysqli_fetch_array(query(" SELECT    meetups.id                          AS 'm_id'         ,
                                                     meetups.event_date                  AS 'm_date'       ,
+                                                    users.id                            AS 'u_id'         ,
                                                     users.username                      AS 'u_account'    ,
                                                     meetups_people.username             AS 'p_nickname'   ,
                                                     meetups_people.attendance_confirmed AS 'p_lock'       ,
@@ -976,6 +1024,7 @@ function meetups_attendees_edit(  int   $attendee_id  ,
   $meetup_id      = sanitize($dattendee['m_id'], 'int', 0);
   $meetup_date    = $dattendee['m_date'];
   $meetup_date_en = date_to_text($dattendee['m_date'], lang: 'EN');
+  $old_user_id    = sanitize($dattendee['u_id'], 'int', 0);
   $old_account    = sanitize($dattendee['u_account'], 'string');
   $old_nickname   = sanitize($dattendee['p_nickname'], 'string');
   $old_extra_en   = sanitize($dattendee['p_extra_en'], 'string');
@@ -1062,6 +1111,12 @@ function meetups_attendees_edit(  int   $attendee_id  ,
     irc_bot_send_message("$mod_username has edited $username's details in the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
   if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has edited $username's details in the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+
+  // Recalculate the user's meetup stats if they have an account
+  if($old_user_id)
+    meetups_user_recalculate_stats($old_user_id);
+  if($account_id)
+    meetups_user_recalculate_stats($account_id);
 }
 
 
@@ -1095,6 +1150,7 @@ function meetups_attendees_delete( int $attendee_id ) : mixed
                                                     meetups.is_deleted                  AS 'm_deleted'    ,
                                                     meetups.event_date                  AS 'm_date'       ,
                                                     meetups.languages                   AS 'm_lang'       ,
+                                                    users.id                            AS 'u_id'         ,
                                                     users.username                      AS 'u_account'    ,
                                                     meetups_people.username             AS 'p_nickname'   ,
                                                     meetups_people.attendance_confirmed AS 'p_lock'       ,
@@ -1113,6 +1169,7 @@ function meetups_attendees_delete( int $attendee_id ) : mixed
   $meetup_date_fr = date_to_text($dattendee['m_date'], lang: 'FR');
   $meetup_lang    = $dattendee['m_lang'];
   $account        = sanitize($dattendee['u_account'], 'string');
+  $account_id     = sanitize($dattendee['u_id'], 'int', 0);
   $nickname       = sanitize($dattendee['p_nickname'], 'string');
   $username       = ($nickname) ? $nickname : $account;
   $username_raw   = ($dattendee['p_nickname']) ? $dattendee['p_nickname'] : $dattendee['u_account'];
@@ -1182,6 +1239,10 @@ function meetups_attendees_delete( int $attendee_id ) : mixed
     $discord_message .= PHP_EOL."<".$GLOBALS['website_url']."pages/meetups/".$meetup_id.">";
     discord_send_message($discord_message, 'main');
   }
+
+  // Recalculate the user's meetup stats if they have an account
+  if($account_id)
+    meetups_user_recalculate_stats($account_id);
 
   // All went well
   return NULL;
@@ -1262,4 +1323,120 @@ function meetups_get_max_attendees() : int
 
   // Return the result
   return $dmeetups['m_max'];
+}
+
+
+
+
+/**
+ * Recalculates meetups statistics for a specific user.
+ *
+ * @param   int   $user_id  The user's id.
+ *
+ * @return  void
+ */
+
+function meetups_user_recalculate_stats( int $user_id )
+{
+  // Sanitize the user's id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Check if the user exists
+  if(!$user_id || !database_row_exists('users', $user_id))
+    return;
+
+  // Count the meetups in which the user was present
+  $dmeetups = mysqli_fetch_array(query("  SELECT    COUNT(*)              AS 'm_count'    ,
+                                                    SUM(CASE  WHEN meetups.languages LIKE 'EN' THEN 1
+                                                              ELSE 0 END) AS 'm_count_en' ,
+                                                    SUM(CASE  WHEN meetups.languages LIKE 'FR' THEN 1
+                                                              ELSE 0 END) AS 'm_count_fr' ,
+                                                    SUM(CASE  WHEN  meetups.languages LIKE 'ENFR' THEN 1
+                                                              WHEN  meetups.languages LIKE 'FREN' THEN 1
+                                                              ELSE 0 END) AS 'm_count_bi'
+                                          FROM      meetups_people
+                                          LEFT JOIN meetups
+                                          ON        meetups_people.fk_meetups           = meetups.id
+                                          WHERE     meetups_people.fk_users             = '$user_id'
+                                          AND       meetups_people.attendance_confirmed = 1
+                                          AND       meetups.is_deleted                  = 0
+                                          AND       meetups.event_date                  < CURDATE() "));
+
+  // Sanitize the user involvement stats
+  $meetups_count            = sanitize($dmeetups['m_count'], 'int', 0);
+  $meetups_count_en         = sanitize($dmeetups['m_count_en'], 'int', 0);
+  $meetups_count_fr         = sanitize($dmeetups['m_count_fr'], 'int', 0);
+  $meetups_count_bilingual  = sanitize($dmeetups['m_count_bi'], 'int', 0);
+
+  // Find the user's oldest meetup
+  $dmeetups = mysqli_fetch_array(query("  SELECT    meetups.id          AS 'm_id' ,
+                                                    meetups.event_date  AS 'm_date'
+                                          FROM      meetups_people
+                                          LEFT JOIN meetups
+                                          ON        meetups_people.fk_meetups           = meetups.id
+                                          WHERE     meetups_people.fk_users             = '$user_id'
+                                          AND       meetups_people.attendance_confirmed = 1
+                                          AND       meetups.is_deleted                  = 0
+                                          AND       meetups.event_date                  < CURDATE()
+                                          ORDER BY  meetups.event_date  ASC ,
+                                                    meetups.id          ASC
+                                          LIMIT     1 "));
+
+  // Sanitize the oldest meetup stats
+  $oldest_id    = isset($dmeetups['m_id']) ? sanitize($dmeetups['m_id'], 'int', 0)    : 0;
+  $oldest_date  = isset($dmeetups['m_id']) ? sanitize($dmeetups['m_date'], 'int', 0)  : 0;
+
+  // Find the user's newest meetup
+  $dmeetups = mysqli_fetch_array(query("  SELECT    meetups.id          AS 'm_id' ,
+                                                    meetups.event_date  AS 'm_date'
+                                          FROM      meetups_people
+                                          LEFT JOIN meetups
+                                          ON        meetups_people.fk_meetups           = meetups.id
+                                          WHERE     meetups_people.fk_users             = '$user_id'
+                                          AND       meetups_people.attendance_confirmed = 1
+                                          AND       meetups.is_deleted                  = 0
+                                          AND       meetups.event_date                  < CURDATE()
+                                          ORDER BY  meetups.event_date  DESC ,
+                                                    meetups.id          DESC
+                                          LIMIT     1 "));
+
+  // Sanitize the newest meetup stats
+  $newest_id    = isset($dmeetups['m_id']) ? sanitize($dmeetups['m_id'], 'int', 0)    : 0;
+  $newest_date  = isset($dmeetups['m_id']) ? sanitize($dmeetups['m_date'], 'int', 0)  : 0;
+
+  // Update the user's meetups stats
+  query(" UPDATE  users_stats
+          SET     users_stats.meetups             = '$meetups_count'            ,
+                  users_stats.meetups_en          = '$meetups_count_en'         ,
+                  users_stats.meetups_fr          = '$meetups_count_fr'         ,
+                  users_stats.meetups_bilingual   = '$meetups_count_bilingual'  ,
+                  users_stats.meetups_oldest_id   = '$oldest_id'                ,
+                  users_stats.meetups_oldest_date = '$oldest_date'              ,
+                  users_stats.meetups_newest_id   = '$newest_id'                ,
+                  users_stats.meetups_newest_date = '$newest_date'
+          WHERE   users_stats.fk_users            = '$user_id'                  ");
+}
+
+
+
+
+/**
+ * Recalculates meetups statistics.
+ *
+ * @return  void
+ */
+
+function meetups_recalculate_all_stats()
+{
+  // Fetch every user id
+  $qusers = query(" SELECT    users.id AS 'u_id'
+                    FROM      users
+                    ORDER BY  users.id ASC ");
+
+  // Loop through the users and recalculate their individual meetups statistics
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    $user_id = sanitize($dusers['u_id'], 'int', 0);
+    meetups_user_recalculate_stats($user_id);
+  }
 }
