@@ -26,6 +26,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_list_years                  Fetches the years at which meetups happened.                                 */
 /*  meetups_get_max_attendees           Fetches the highest number of attendees in a meetup.                         */
 /*                                                                                                                   */
+/*  meetups_stats                       Returns stats related to meetups.                                            */
+/*                                                                                                                   */
 /*  meetups_user_recalculate_stats      Recalculates meetups statistics for a specific user.                         */
 /*  meetups_recalculate_all_stats       Recalculates meetups statistics.                                             */
 /*                                                                                                                   */
@@ -1323,6 +1325,78 @@ function meetups_get_max_attendees() : int
 
   // Return the result
   return $dmeetups['m_max'];
+}
+
+
+
+
+
+/**
+ * Returns stats related to meetups.
+ *
+ * @return  array   An array of stats related to meetups.
+ */
+
+function meetups_stats() : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the total number of finished meetups
+  $dmeetups = mysqli_fetch_array(query("  SELECT  COUNT(*)                AS 'm_total'    ,
+                                                  SUM(CASE  WHEN meetups.languages LIKE 'EN' THEN 1
+                                                            ELSE 0 END)   AS 'm_total_en' ,
+                                                  SUM(CASE  WHEN meetups.languages LIKE 'FR' THEN 1
+                                                            ELSE 0 END)   AS 'm_total_fr' ,
+                                                  SUM(CASE  WHEN meetups.languages LIKE 'ENFR' THEN 1
+                                                            WHEN meetups.languages LIKE 'FREN' THEN 1
+                                                            ELSE 0 END)   AS 'm_total_bi'
+                                          FROM    meetups
+                                          WHERE   meetups.is_deleted  = 0
+                                          AND     meetups.event_date  < CURDATE()  "));
+
+  // Add some stats to the return array
+  $data['total']        = sanitize_output($dmeetups['m_total']);
+  $data['total_en']     = sanitize_output($dmeetups['m_total_en']);
+  $temp                 = maths_percentage_of($dmeetups['m_total_en'], $dmeetups['m_total']);
+  $data['percent_en']   = sanitize_output(number_display_format($temp, 'percentage'));
+  $data['total_fr']     = sanitize_output($dmeetups['m_total_fr']);
+  $temp                 = maths_percentage_of($dmeetups['m_total_fr'], $dmeetups['m_total']);
+  $data['percent_fr']   = sanitize_output(number_display_format($temp, 'percentage'));
+  $data['total_bi']     = sanitize_output($dmeetups['m_total_bi']);
+  $temp                 = maths_percentage_of($dmeetups['m_total_bi'], $dmeetups['m_total']);
+  $data['percent_bi']   = sanitize_output(number_display_format($temp, 'percentage'));
+
+  // Fetch the number of future meetups
+  $dmeetups = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'm_total'
+                                          FROM    meetups
+                                          WHERE   meetups.is_deleted = 0
+                                          AND     meetups.event_date >= CURDATE() "));
+
+  // Add future meetups to the return array
+  $data['future'] = sanitize_output($dmeetups['m_total']);
+
+  // Fetch the meetup with most attendees
+  $dmeetups = mysqli_fetch_array(query("  SELECT    meetups.id              AS 'm_id'     ,
+                                                    meetups.attendee_count  AS 'm_count'  ,
+                                                    meetups.event_date      AS 'm_date'
+                                          FROM      meetups
+                                          WHERE     meetups.is_deleted = 0
+                                          ORDER BY  meetups.attendee_count  DESC ,
+                                                    meetups.event_date      DESC
+                                          LIMIT     1 "));
+
+  // Add the biggest meetup to the return array
+  $data['biggest_id']     = sanitize_output($dmeetups['m_id']);
+  $data['biggest_count']  = sanitize_output($dmeetups['m_count']);
+  $data['biggest_date']   = sanitize_output(date_to_text($dmeetups['m_date'], strip_day: true));
+
+  // Return the stats
+  return $data;
 }
 
 

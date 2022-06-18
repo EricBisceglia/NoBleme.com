@@ -63,6 +63,15 @@ if(isset($_GET['recalculate']) && user_is_administrator())
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch stats
+
+// Overall stats
+$meetups_stats = meetups_stats();
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -101,7 +110,30 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top meetups_stats_section<?=$meetups_selector['hide']['overall']?>" id="meetups_stats_overall">
 
-  &nbsp;
+  <p class="align_center big padding_bot">
+    <?=__('meetups_stats_overall_summary', amount: $meetups_stats['total'], preset_values: array($meetups_stats['total']))?>
+  </p>
+
+  <p class="align_center">
+    <?=__('meetups_stats_overall_lang_bilingual', amount: $meetups_stats['total_bi'], preset_values: array($meetups_stats['total_bi'], $meetups_stats['percent_bi']))?>
+  </p>
+
+  <p class="align_center padding_bot">
+    <?=__('meetups_stats_overall_lang_en', amount: $meetups_stats['total_en'], preset_values: array($meetups_stats['total_en'], $meetups_stats['percent_en']))?><br>
+    <?=__('meetups_stats_overall_lang_fr', amount: $meetups_stats['total_fr'], preset_values: array($meetups_stats['total_fr'], $meetups_stats['percent_fr']))?>
+  </p>
+
+  <p class="align_center padding_bot">
+    <?=__('meetups_stats_overall_future', amount: $meetups_stats['future'], preset_values: array($meetups_stats['future']))?>
+  </p>
+
+  <p class="align_center">
+    <?=__('meetups_stats_overall_biggest', preset_values: array($meetups_stats['biggest_id'], $meetups_stats['biggest_count'], $meetups_stats['biggest_date']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('meetups_stats_overall_more')?>
+  </p>
 
 </div>
 
