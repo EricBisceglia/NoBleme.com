@@ -984,7 +984,7 @@ function quotes_stats() : array
   }
 
   // Ensure every year has an entry until the current one
-  for($i = $data['oldest_year']; $i < date('Y'); $i++)
+  for($i = $data['oldest_year']; $i <= date('Y'); $i++)
   {
     $data['years_count_'.$i]    ??= '';
     $data['years_count_en_'.$i] ??= '';

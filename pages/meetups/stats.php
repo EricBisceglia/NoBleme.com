@@ -239,7 +239,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ LOCATIONS *************************************************/ ?>
 
-<div class="width_60 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['locations']?>" id="meetups_stats_locations">
+<div class="width_30 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['locations']?>" id="meetups_stats_locations">
 
   &nbsp;
 
@@ -250,9 +250,70 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************** YEARS ***************************************************/ ?>
 
-<div class="width_30 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['years']?>" id="meetups_stats_years">
+<div class="width_40 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['years']?>" id="meetups_stats_years">
 
-  &nbsp;
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('year')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_years_meetups')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_bi')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_en')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_fr')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = date('Y'); $i >= $meetups_stats['oldest_year']; $i--) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=$i?>
+        </td>
+
+        <td class="bold">
+          <?=$meetups_stats['years_count_'.$i]?>
+        </td>
+
+        <td>
+          <?=$meetups_stats['years_count_bi_'.$i]?>
+        </td>
+
+        <td>
+          <?=$meetups_stats['years_count_en_'.$i]?>
+        </td>
+
+        <td>
+          <?=$meetups_stats['years_count_fr_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 

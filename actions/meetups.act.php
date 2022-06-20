@@ -1430,6 +1430,48 @@ function meetups_stats() : array
   // Add the amount of user stats to the return array
   $data['users_count'] = $i;
 
+  // Fetch meetups by years
+  $qmeetups = query("  SELECT   meetups.event_date        AS 'm_date'     ,
+                                YEAR(meetups.event_date)  AS 'm_year'     ,
+                                COUNT(*)                  AS 'm_count'    ,
+                                SUM(CASE  WHEN meetups.languages LIKE 'EN' THEN 1
+                                          ELSE 0 END)     AS 'm_count_en' ,
+                                SUM(CASE  WHEN meetups.languages LIKE 'FR' THEN 1
+                                          ELSE 0 END)     AS 'm_count_fr' ,
+                                SUM(CASE  WHEN meetups.languages LIKE 'ENFR' THEN 1
+                                          WHEN meetups.languages LIKE 'FREN' THEN 1
+                                          ELSE 0 END)     AS 'm_count_bi'
+                      FROM      meetups
+                      WHERE     meetups.is_deleted  = 0
+                      GROUP BY  m_year
+                      ORDER BY  m_year ASC ");
+
+  // Prepare to identify the oldest meetup year
+  $oldest_year = date('Y');
+
+  // Add meetups data over time to the return data
+  while($dmeetups = mysqli_fetch_array($qmeetups))
+  {
+    $year                           = $dmeetups['m_year'];
+    $oldest_year                    = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['years_count_'.$year]     = ($dmeetups['m_count']) ? sanitize_output($dmeetups['m_count']) : '';
+    $data['years_count_bi_'.$year]  = ($dmeetups['m_count_bi']) ? sanitize_output($dmeetups['m_count_bi']) : '';
+    $data['years_count_en_'.$year]  = ($dmeetups['m_count_en']) ? sanitize_output($dmeetups['m_count_en']) : '';
+    $data['years_count_fr_'.$year]  = ($dmeetups['m_count_fr']) ? sanitize_output($dmeetups['m_count_fr']) : '';
+  }
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+  {
+    $data['years_count_'.$i]    ??= '';
+    $data['years_count_bi_'.$i] ??= '';
+    $data['years_count_en_'.$i] ??= '';
+    $data['years_count_fr_'.$i] ??= '';
+  }
+
+  // Add the oldest year to the return data
+  $data['oldest_year'] = $oldest_year;
+
   // Return the stats
   return $data;
 }

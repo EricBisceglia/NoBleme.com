@@ -438,3 +438,8 @@ ___('meetups_stats_users_meetups_old',  'EN', "Oldest<br>meetup");
 ___('meetups_stats_users_meetups_old',  'FR', "Première<br>IRL");
 ___('meetups_stats_users_meetups_new',  'EN', "Newest<br>meetup");
 ___('meetups_stats_users_meetups_new',  'FR', "Dernière<br>IRL");
+
+
+// Timeline
+___('meetups_stats_years_meetups',  'EN', "Meetups<br>that year");
+___('meetups_stats_years_meetups',  'FR', "Nombre d'IRL<br>dans l'année");
