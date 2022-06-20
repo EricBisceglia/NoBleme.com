@@ -1430,6 +1430,25 @@ function meetups_stats() : array
   // Add the amount of user stats to the return array
   $data['users_count'] = $i;
 
+  // Fetch meetups by location
+  $qmeetups = query("  SELECT   meetups.location    AS 'm_location' ,
+                                COUNT(*)            AS 'm_count'
+                      FROM      meetups
+                      WHERE     meetups.is_deleted  = 0
+                      GROUP BY  meetups.location
+                      ORDER BY  COUNT(*)          DESC  ,
+                                meetups.location  ASC   ");
+
+  // Loop through location stats and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qmeetups); $i++)
+  {
+    $data['locations_name_'.$i]   = sanitize_output($row['m_location']);
+    $data['locatouns_count_'.$i]  = sanitize_output($row['m_count']);
+  }
+
+  // Add the amount of location stats to the return array
+  $data['locations_count'] = $i;
+
   // Fetch meetups by years
   $qmeetups = query("  SELECT   meetups.event_date        AS 'm_date'     ,
                                 YEAR(meetups.event_date)  AS 'm_year'     ,
@@ -1460,6 +1479,9 @@ function meetups_stats() : array
     $data['years_count_fr_'.$year]  = ($dmeetups['m_count_fr']) ? sanitize_output($dmeetups['m_count_fr']) : '';
   }
 
+  // Add the oldest year to the return data
+  $data['oldest_year'] = $oldest_year;
+
   // Ensure every year has an entry until the current one
   for($i = $oldest_year; $i <= date('Y'); $i++)
   {
@@ -1468,9 +1490,6 @@ function meetups_stats() : array
     $data['years_count_en_'.$i] ??= '';
     $data['years_count_fr_'.$i] ??= '';
   }
-
-  // Add the oldest year to the return data
-  $data['oldest_year'] = $oldest_year;
 
   // Return the stats
   return $data;

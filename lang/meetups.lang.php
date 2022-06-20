@@ -440,6 +440,11 @@ ___('meetups_stats_users_meetups_new',  'EN', "Newest<br>meetup");
 ___('meetups_stats_users_meetups_new',  'FR', "Dernière<br>IRL");
 
 
+// Location
+___('meetups_stats_location_meetups', 'EN', "Number of<br>meetups");
+___('meetups_stats_location_meetups', 'FR', "Nombre de<br>rencontres IRL");
+
+
 // Timeline
 ___('meetups_stats_years_meetups',  'EN', "Meetups<br>that year");
 ___('meetups_stats_years_meetups',  'FR', "Nombre d'IRL<br>dans l'année");

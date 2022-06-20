@@ -878,14 +878,12 @@ function quotes_stats() : array
   $data['oldest_year'] = quotes_get_oldest_year();
 
   // Fetch the total number of quotes
-  $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)            AS 'q_total'    ,
-                                                SUM(  CASE WHEN
-                                                      quotes.language LIKE 'EN' THEN 1
-                                                      ELSE 0 END)   AS 'q_total_en' ,
-                                                SUM(  CASE WHEN
-                                                      quotes.language LIKE 'FR' THEN 1
-                                                      ELSE 0 END)   AS 'q_total_fr' ,
-                                                SUM(quotes.is_nsfw) AS 'q_total_nsfw'
+  $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)              AS 'q_total'    ,
+                                                SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
+                                                          ELSE 0 END) AS 'q_total_en' ,
+                                                SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
+                                                          ELSE 0 END) AS 'q_total_fr' ,
+                                                SUM(quotes.is_nsfw)   AS 'q_total_nsfw'
                                         FROM    quotes
                                         WHERE   quotes.is_deleted       = 0
                                         AND     quotes.admin_validation = 1 "));
@@ -905,9 +903,8 @@ function quotes_stats() : array
   // Fetch all quotes, included unvalidated and deleted
   $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)                AS 'q_total'          ,
                                                 SUM(quotes.is_deleted)  AS 'q_total_deleted'  ,
-                                                SUM(  CASE WHEN
-                                                      quotes.admin_validation = 0 THEN 1
-                                                      ELSE 0 END)       AS 'q_total_unvalidated'
+                                                SUM(CASE  WHEN quotes.admin_validation = 0 THEN 1
+                                                          ELSE 0 END)   AS 'q_total_unvalidated'
                                         FROM    quotes "));
 
   // Add some stats to the return array
@@ -962,12 +959,10 @@ function quotes_stats() : array
   $qquotes = query("  SELECT    quotes.submitted_at                       AS 'q_time'     ,
                                 YEAR(FROM_UNIXTIME(quotes.submitted_at))  AS 'q_year'     ,
                                 COUNT(*)                                  AS 'q_count'    ,
-                                SUM(  CASE WHEN
-                                      quotes.language LIKE 'EN' THEN 1
-                                      ELSE 0 END)                         AS 'q_count_en' ,
-                                SUM(  CASE WHEN
-                                      quotes.language LIKE 'FR' THEN 1
-                                      ELSE 0 END)                         AS 'q_count_fr'
+                                SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
+                                          ELSE 0 END)                     AS 'q_count_en' ,
+                                SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
+                                          ELSE 0 END)                     AS 'q_count_fr'
                       FROM      quotes
                       WHERE     quotes.admin_validation = 1
                       AND       quotes.is_deleted       = 0
@@ -1061,14 +1056,12 @@ function quotes_user_recalculate_stats( int $user_id )
     return;
 
   // Count the quotes in which the user is involved
-  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*)            AS 'q_count'    ,
-                                                  SUM(  CASE WHEN
-                                                        quotes.language LIKE 'EN' THEN 1
-                                                        ELSE 0 END)   AS 'q_count_en' ,
-                                                  SUM(  CASE WHEN
-                                                        quotes.language LIKE 'FR' THEN 1
-                                                        ELSE 0 END)   AS 'q_count_fr' ,
-                                                  SUM(quotes.is_nsfw) AS 'q_count_nsfw'
+  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*)              AS 'q_count'    ,
+                                                  SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
+                                                            ELSE 0 END) AS 'q_count_en' ,
+                                                  SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
+                                                            ELSE 0 END) AS 'q_count_fr' ,
+                                                  SUM(quotes.is_nsfw)   AS 'q_count_nsfw'
                                         FROM      quotes_users
                                         LEFT JOIN quotes
                                         ON        quotes_users.fk_quotes  = quotes.id

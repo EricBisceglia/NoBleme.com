@@ -143,7 +143,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_60 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['people']?>" id="meetups_stats_people">
 
-    <table>
+  <table>
 
     <thead class="uppercase">
 
@@ -241,7 +241,44 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_30 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['locations']?>" id="meetups_stats_locations">
 
-  &nbsp;
+   <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('location')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_location_meetups')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $meetups_stats['locations_count']; $i++) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=$meetups_stats['locations_name_'.$i]?>
+        </td>
+
+        <td class="bold">
+          <?=$meetups_stats['locatouns_count_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 
