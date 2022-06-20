@@ -64,9 +64,8 @@ if(isset($_GET['recalculate']) && user_is_administrator())
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch stats
+// Fetch meetup stats
 
-// Overall stats
 $meetups_stats = meetups_stats();
 
 
@@ -144,7 +143,94 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_60 padding_top autoscroll meetups_stats_section<?=$meetups_selector['hide']['people']?>" id="meetups_stats_people">
 
-  &nbsp;
+    <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__link('pages/meetups/list', __('meetups_stats_users_meetups'))?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_bi')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_en')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_fr')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_old')?>
+        </th>
+
+        <th>
+          <?=__('meetups_stats_users_meetups_new')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $meetups_stats['users_count']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('pages/users/'.$meetups_stats['users_id_'.$i], $meetups_stats['users_nick_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$meetups_stats['users_meetups_'.$i]?>
+        </td>
+
+        <td>
+          <?=$meetups_stats['users_meetups_bi_'.$i]?>
+        </td>
+
+        <td>
+          <?=$meetups_stats['users_meetups_en_'.$i]?>
+        </td>
+
+        <td>
+          <?=$meetups_stats['users_meetups_fr_'.$i]?>
+        </td>
+
+        <?php if($meetups_stats['users_meetups_'.$i] > 1) { ?>
+
+        <td>
+          <?=__link('pages/meetups/'.$meetups_stats['users_mold_id_'.$i], $meetups_stats['users_mold_date_'.$i])?>
+        </td>
+
+        <td>
+          <?=__link('pages/meetups/'.$meetups_stats['users_mnew_id_'.$i], $meetups_stats['users_mnew_date_'.$i])?>
+        </td>
+
+        <?php } else { ?>
+
+        <td colspan="2">
+          <?=__link('pages/meetups/'.$meetups_stats['users_mold_id_'.$i], $meetups_stats['users_mold_date_'.$i])?>
+        </td>
+
+        <?php } ?>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 

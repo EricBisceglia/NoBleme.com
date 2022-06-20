@@ -423,3 +423,18 @@ ___('meetups_stats_overall_biggest',          'EN', "The {{link|pages/meetups/{{
 ___('meetups_stats_overall_biggest',          'FR', "La {{link|pages/meetups/{{1}}|plus grande rencontre IRL}} à regroupé {{2}} personnes le {{3}}.");
 ___('meetups_stats_overall_more',             'EN', "You can find more stats about NoBleme's real life meetups by using the dropdown menu at the top.");
 ___('meetups_stats_overall_more',             'FR', "Vous trouverez d'autres stats sur les rencontres IRL en utilisant le menu déroulant en haut de la page.");
+
+
+// Attendees
+___('meetups_stats_users_meetups',      'EN', "NoBleme<br>Meetups");
+___('meetups_stats_users_meetups',      'FR', "Rencontres<br>IRL NoBleme");
+___('meetups_stats_users_meetups_bi',   'EN', "Bilingual<br>meetups");
+___('meetups_stats_users_meetups_bi',   'FR', "IRL<br>bilingues");
+___('meetups_stats_users_meetups_en',   'EN', "English<br>meetups");
+___('meetups_stats_users_meetups_en',   'FR', "IRL<br>anglophones");
+___('meetups_stats_users_meetups_fr',   'EN', "French<br>meetups");
+___('meetups_stats_users_meetups_fr',   'FR', "IRL<br>francophones");
+___('meetups_stats_users_meetups_old',  'EN', "Oldest<br>meetup");
+___('meetups_stats_users_meetups_old',  'FR', "Première<br>IRL");
+___('meetups_stats_users_meetups_new',  'EN', "Newest<br>meetup");
+___('meetups_stats_users_meetups_new',  'FR', "Dernière<br>IRL");

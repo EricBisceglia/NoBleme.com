@@ -1395,6 +1395,41 @@ function meetups_stats() : array
   $data['biggest_count']  = sanitize_output($dmeetups['m_count']);
   $data['biggest_date']   = sanitize_output(date_to_text($dmeetups['m_date'], strip_day: true));
 
+  // Fetch user stats
+  $qmeetups = query("   SELECT    users.id                        AS 'u_id'                 ,
+                                  users.username                  AS 'u_nick'               ,
+                                  users_stats.meetups             AS 'us_meetups'           ,
+                                  users_stats.meetups_en          AS 'us_meetups_en'        ,
+                                  users_stats.meetups_fr          AS 'us_meetups_fr'        ,
+                                  users_stats.meetups_bilingual   AS 'us_meetups_bi'        ,
+                                  users_stats.meetups_oldest_id   AS 'us_meetups_old_id'    ,
+                                  users_stats.meetups_oldest_date AS 'us_meetups_old_date'  ,
+                                  users_stats.meetups_newest_id   AS 'us_meetups_new_id'    ,
+                                  users_stats.meetups_newest_date AS 'us_meetups_new_date'
+                        FROM      users_stats
+                        LEFT JOIN users ON users_stats.fk_users = users.id
+                        WHERE     users_stats.meetups > 0
+                        ORDER BY  users_stats.meetups DESC  ,
+                                  users.username      ASC   ");
+
+  // Loop through user stats and add its data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qmeetups); $i++)
+  {
+    $data['users_id_'.$i]         = sanitize_output($row['u_id']);
+    $data['users_nick_'.$i]       = sanitize_output($row['u_nick']);
+    $data['users_meetups_'.$i]    = sanitize_output($row['us_meetups']);
+    $data['users_meetups_bi_'.$i] = $row['us_meetups_bi'] ? (sanitize_output($row['us_meetups_bi'])) : '';
+    $data['users_meetups_en_'.$i] = $row['us_meetups_en'] ? (sanitize_output($row['us_meetups_en'])) : '';
+    $data['users_meetups_fr_'.$i] = $row['us_meetups_fr'] ? (sanitize_output($row['us_meetups_fr'])) : '';
+    $data['users_mold_id_'.$i]    = sanitize_output($row['us_meetups_old_id']);
+    $data['users_mold_date_'.$i]  = sanitize_output($row['us_meetups_old_date']);
+    $data['users_mnew_id_'.$i]    = sanitize_output($row['us_meetups_new_id']);
+    $data['users_mnew_date_'.$i]  = sanitize_output($row['us_meetups_new_date']);
+  }
+
+  // Add the amount of user stats to the return array
+  $data['users_count'] = $i;
+
   // Return the stats
   return $data;
 }
@@ -1489,6 +1524,7 @@ function meetups_user_recalculate_stats( int $user_id )
                   users_stats.meetups_newest_id   = '$newest_id'                ,
                   users_stats.meetups_newest_date = '$newest_date'
           WHERE   users_stats.fk_users            = '$user_id'                  ");
+
 }
 
 
