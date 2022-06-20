@@ -25,6 +25,7 @@ function meetups_list_search( sort_data = null )
   postdata += '&meetups_list_language='     + fetch_sanitize_id('meetups_list_language');
   postdata += '&meetups_list_location='     + fetch_sanitize_id('meetups_list_location');
   postdata += '&meetups_list_attendees='    + fetch_sanitize_id('meetups_list_attendees');
+  postdata += '&meetups_search_attendee='   + fetch_sanitize_id('meetups_search_attendee');
   postdata += '&meetups_list_search=1';
 
   // Submit the search

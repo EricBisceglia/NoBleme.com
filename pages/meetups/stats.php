@@ -187,7 +187,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td>
-          <?=__link('pages/users/'.$meetups_stats['users_id_'.$i], $meetups_stats['users_nick_'.$i])?>
+          <?=__link('pages/meetups/list?attendee='.$meetups_stats['users_id_'.$i], $meetups_stats['users_nick_'.$i])?>
         </td>
 
         <td class="bold">
@@ -265,7 +265,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td class="bold">
-          <?=$meetups_stats['locations_name_'.$i]?>
+          <?=__link('pages/meetups/list?location='.$meetups_stats['locations_name_'.$i], $meetups_stats['locations_name_'.$i])?>
         </td>
 
         <td class="bold">
@@ -325,7 +325,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td class="bold">
-          <?=$i?>
+          <?=__link('pages/meetups/list?year='.$i, $i)?>
         </td>
 
         <td class="bold">

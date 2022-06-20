@@ -29,6 +29,22 @@ ___('meetups_list_body_2',  'FR', <<<EOT
 Cliquez sur une ligne du tableau ci-dessous pour afficher plus de détails au sujet de l'IRL, incluant comment la rejoindre s'il s'agit d'une future IRL.
 EOT
 );
+___('meetups_list_body_3',  'EN', <<<EOT
+Only meetups attended by {{link|pages/users/{{1}}|{{2}}}} are shown.
+EOT
+);
+___('meetups_list_body_3',  'FR', <<<EOT
+Seules les IRL contenant {{link|pages/users/{{1}}|{{2}}}} sont affichées.
+EOT
+);
+___('meetups_list_body_4',  'EN', <<<EOT
+{{link|pages/meetups/list|Click here to view all meetups}}.
+EOT
+);
+___('meetups_list_body_4',  'FR', <<<EOT
+{{link|pages/meetups/list|Cliquez ici pour voir toutes les rencontres IRL}}.
+EOT
+);
 
 
 // Meetups list

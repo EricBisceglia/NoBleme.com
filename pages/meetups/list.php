@@ -35,11 +35,24 @@ $meetups_list_search_status = form_fetch_element('meetups_list_search', element_
 // Fetch the search order
 $meetups_list_search_order = form_fetch_element('meetups_list_search_order', 'date');
 
+// Look for a set year
+$meetups_search_date = ($meetups_list_search_status) ? form_fetch_element('meetups_list_date') : form_fetch_element('year', request_type: 'GET');
+
+// Look for a set location
+$meetups_search_location = ($meetups_list_search_status) ? form_fetch_element('meetups_list_location') : form_fetch_element('location', request_type: 'GET');
+
+// Look for a set attendee
+if(isset($_GET['attendee']))
+  $meetups_search_attendee = (int)form_fetch_element('attendee', request_type: 'GET', default_value: 0);
+else
+  $meetups_search_attendee = form_fetch_element('meetups_search_attendee');
+
 // Assemble the search array
-$meetups_list_search = array( 'date'      => form_fetch_element('meetups_list_date')      ,
+$meetups_list_search = array( 'date'      => $meetups_search_date                         ,
                               'lang'      => form_fetch_element('meetups_list_language')  ,
-                              'location'  => form_fetch_element('meetups_list_location')  ,
-                              'people'    => form_fetch_element('meetups_list_attendees') );
+                              'location'  => $meetups_search_location                     ,
+                              'people'    => form_fetch_element('meetups_list_attendees') ,
+                              'attendee'  => $meetups_search_attendee                     );
 
 // Fetch the meetups list
 $meetups_list = meetups_list( $meetups_list_search_order  ,
@@ -50,6 +63,23 @@ $meetup_years = meetups_list_years();
 
 // Look up the most attended meetup's attendee count
 $meetups_max_attendees = meetups_get_max_attendees();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Meetup years selector menu
+
+// Prepare the default option
+$meetups_date_selected  = (is_null($meetups_search_date)) ? ' selected' : '';
+$meetups_dates_list     = '<option value="0"'.$meetups_date_selected.'>&nbsp;</option>';
+
+// Loop through the years and select the correct one if requested
+for($i = 0; $i < $meetup_years['rows']; $i++)
+{
+  $meetups_date_selected  = ($meetups_search_date == $meetup_years[$i]['year']) ? ' selected' : '';
+  $meetups_dates_list    .= '<option value="'.$meetup_years[$i]['year'].'"'.$meetups_date_selected.'>'.$meetup_years[$i]['year'].'</option>';
+}
 
 
 
@@ -74,14 +104,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('meetups_list_body_1')?>
   </p>
 
+  <?php if($meetups_search_attendee && $meetups_list['attendee']) { ?>
+
+  <p>
+    <?=__('meetups_list_body_2')?>
+  </p>
+
+  <p class="bold padding_top">
+    <?=__('meetups_list_body_3', preset_values: array($meetups_search_attendee, $meetups_list['attendee']))?>
+  </p>
+
+  <p class="bigpadding_bot">
+    <?=__('meetups_list_body_4')?>
+  </p>
+
+  <?php } else { ?>
+
   <p class="bigpadding_bot">
     <?=__('meetups_list_body_2')?>
   </p>
+
+  <?php } ?>
 
   <form method="POST">
     <fieldset>
 
     <input type="hidden" name="meetups_list_search_order" id="meetups_list_search_order" value="<?=$meetups_list_search_order?>">
+    <input type="hidden" name="meetups_search_attendee" id="meetups_search_attendee" value="<?=$meetups_search_attendee?>">
 
       <div class="autoscroll">
         <table>
@@ -114,10 +163,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
               <th>
                 <select class="table_search" name="meetups_list_date" id="meetups_list_date" onchange="meetups_list_search()">
-                  <option value="0" selected>&nbsp;</option>
-                  <?php for($i = 0; $i < $meetup_years['rows']; $i++) { ?>
-                  <option value="<?=$meetup_years[$i]['year']?>"><?=$meetup_years[$i]['year']?></option>
-                  <?php } ?>
+                  <?=$meetups_dates_list?>
                 </select>
               </th>
 
@@ -125,19 +171,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
                 <select class="table_search" name="meetups_list_language" id="meetups_list_language" onchange="meetups_list_search()">
                   <option value="0">&nbsp;</option>
                   <?php if($lang == 'EN') { ?>
-                  <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
                   <option value="ENFR"><?=string_change_case(__('bilingual'), 'initials')?></option>
+                  <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
                   <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
                   <?php } else { ?>
-                  <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
                   <option value="FREN"><?=string_change_case(__('bilingual'), 'initials')?></option>
+                  <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
                   <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
                   <?php } ?>
                 </select>
               </th>
 
               <th>
-                <input type="text" class="table_search" name="meetups_list_location" id="meetups_list_location" value="" size="1" onkeyup="meetups_list_search();">
+                <input type="text" class="table_search" name="meetups_list_location" id="meetups_list_location" value="<?=$meetups_search_location?>" size="1" onkeyup="meetups_list_search();">
               </th>
 
               <th>
