@@ -83,10 +83,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__link('pages/meetups/list', __('meetups_selector_title').__(':'), style: 'noglow')?>
 
       <select class="inh align_left" id="meetups_stats_selector" onchange="page_section_selector('meetups_stats', '<?=$meetups_selector_default?>');">
-        <option value="overall"<?=$meetups_selector['menu']['overall']?>><?=__('meetups_stats_selector_overall')?></option>
+        <option value="overall"<?=$meetups_selector['menu']['overall']?>><?=__('stats_overall')?></option>
         <option value="people"<?=$meetups_selector['menu']['people']?>><?=__('meetups_stats_selector_people')?></option>
         <option value="locations"<?=$meetups_selector['menu']['locations']?>><?=__('meetups_stats_selector_locations')?></option>
-        <option value="years"<?=$meetups_selector['menu']['years']?>><?=__('meetups_stats_selector_years')?></option>
+        <option value="years"<?=$meetups_selector['menu']['years']?>><?=__('stats_timeline')?></option>
       </select>
 
       <?php if($is_admin) { ?>

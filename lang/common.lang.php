@@ -534,8 +534,8 @@ ___('year_short',   'FR', "a");
 
 
 // Generic user related terms
-___('account',    'EN', "account");
-___('account',    'FR', "compte");
+___('account',        'EN', "account");
+___('account',        'FR', "compte");
 ___('activity',       'EN', "activity");
 ___('activity',       'FR', "activité");
 ___('admin',          'EN', "admin");
@@ -564,6 +564,13 @@ ___('user_acc+',      'EN', "users");
 ___('user_acc+',      'FR', "comptes");
 ___('username',       'EN', "username");
 ___('username',       'FR', "pseudonyme");
+
+
+// Stats pages
+___('stats_overall',  'EN', "Overall stats");
+___('stats_overall',  'FR', "Stats globales");
+___('stats_timeline', 'EN', "Timeline");
+___('stats_timeline', 'FR', "Ligne temporelle");
 
 
 

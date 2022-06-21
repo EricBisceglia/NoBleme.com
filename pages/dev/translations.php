@@ -73,9 +73,11 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'compendium_type_subtitle'          , # Nuance in french only
                             'discord_webhook_message_admin'     , # Nuance in french only
                             'irc_bot_message_send'              , # Acceptable redundancy
+                            'irc_faq_select_guide'              , # Nuance in french only
                             'irc_faq_symbols_user'              , # Acceptable redundancy
                             'meetups_details_title'             , # Nuance in french only
                             'meetups_organize_title'            , # Nuance in english only
+                            'meetups_stats_selector_people'     , # Nuance in english only
                             'modify'                            , # Nuance in english only
                             'month+'                            , # Redundant on purpose
                             'month_1'                           , # Redundant on purpose
@@ -104,6 +106,7 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'submenu_nobleme_roadmap'           , # Nuance in english only
                             'submenu_pages_compendium_eras'     , # Nuance in english only
                             'submenu_social_meetups'            , # Nuance in english only
+                            'submenu_social_quotes'             , # Acceptable redundancy
                             'submenu_social_quotes_submit'      , # Nuance in english only
                             'tasks_add_milestone'               , # Nuance in english only
                             'tasks_categories_edit'             , # Acceptable redundancy
