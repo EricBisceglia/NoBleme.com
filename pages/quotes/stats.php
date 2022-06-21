@@ -273,7 +273,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td class="bold">
+          <?php if($quotes_stats['years_count_'.$i]) { ?>
           <?=__link('pages/quotes/list?year='.$i, $i)?>
+          <?php } else { ?>
+          <?=$i?>
+          <?php } ?>
         </td>
 
         <td class="bold">

@@ -3,11 +3,9 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';              # Core
-include_once './../../inc/functions_numbers.inc.php';     # Number formatting
-include_once './../../inc/functions_mathematics.inc.php'; # Mathematics
-include_once './../../actions/meetups.act.php';           # Actions
-include_once './../../lang/meetups.lang.php';             # Translations
+include_once './../../inc/includes.inc.php';    # Core
+include_once './../../actions/meetups.act.php'; # Actions
+include_once './../../lang/meetups.lang.php';   # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -114,12 +112,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <p class="align_center">
-    <?=__('meetups_stats_overall_lang_bilingual', amount: $meetups_stats['total_bi'], preset_values: array($meetups_stats['total_bi'], $meetups_stats['percent_bi']))?>
+    <?=__('meetups_stats_overall_lang_bilingual', amount: $meetups_stats['total_bi'], preset_values: array($meetups_stats['total_bi'],))?>
   </p>
 
   <p class="align_center padding_bot">
-    <?=__('meetups_stats_overall_lang_en', amount: $meetups_stats['total_en'], preset_values: array($meetups_stats['total_en'], $meetups_stats['percent_en']))?><br>
-    <?=__('meetups_stats_overall_lang_fr', amount: $meetups_stats['total_fr'], preset_values: array($meetups_stats['total_fr'], $meetups_stats['percent_fr']))?>
+    <?=__('meetups_stats_overall_lang_en', amount: $meetups_stats['total_en'], preset_values: array($meetups_stats['total_en']))?><br>
+    <?=__('meetups_stats_overall_lang_fr', amount: $meetups_stats['total_fr'], preset_values: array($meetups_stats['total_fr']))?>
   </p>
 
   <p class="align_center padding_bot">
@@ -325,7 +323,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td class="bold">
+          <?php if($meetups_stats['years_count_'.$i]) { ?>
           <?=__link('pages/meetups/list?year='.$i, $i)?>
+          <?php } else { ?>
+          <?=$i?>
+          <?php } ?>
         </td>
 
         <td class="bold">

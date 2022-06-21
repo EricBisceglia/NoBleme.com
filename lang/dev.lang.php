@@ -222,6 +222,8 @@ ___('dev_workflow_selector_aliases',            'FR', "Alias");
 // Devblog list: Header
 ___('dev_blog_title',     'EN', "Devblog");
 ___('dev_blog_title',     'FR', "Devblog");
+___('dev_blog_title+',    'EN', "Devblogs");
+___('dev_blog_title+',    'FR', "Devblogs");
 ___('dev_blog_subtitle',  'EN', "Updates on NoBleme");
 ___('dev_blog_subtitle',  'FR', "Nouvelles de NoBleme");
 ___('dev_blog_intro',     'EN', <<<EOT
@@ -232,6 +234,10 @@ ___('dev_blog_intro',     'FR', <<<EOT
 Ces blogs servent de plateforme à {{link|pages/users/1|Bad}} dans le but de partager des nouvelles sur le développement de NoBleme, de parler du passé ou du futur du site, ou de discuter de NoBleme en général.
 EOT
 );
+___('dev_blog_filtered',  'EN', "Only devblogs from {{1}} are shown.");
+___('dev_blog_filtered',  'FR', "Seuls les devblogs de {{1}} sont affichés.");
+___('dev_blog_see_all',   'EN', "Click here to see all devblogs");
+___('dev_blog_see_all',   'FR', "Cliquez ici pour voir tous les devblogs");
 
 
 // Devblog list: Table
@@ -305,6 +311,11 @@ ___('dev_blog_delete_hard_confirm', 'EN', "Confirm the irreversible permanent de
 ___('dev_blog_delete_hard_confirm', 'FR', "Confirmer la suppression définitive et irréversible de ce devblog");
 ___('dev_blog_delete_hard_ok',      'EN', "This devblog has been hard deleted");
 ___('dev_blog_delete_hard_ok',      'FR', "Ce devblog a été définitivement supprimé");
+
+
+// Devblog: Stats
+___('dev_blog_stats_subtitle', 'EN', "Stats: Timeline");
+___('dev_blog_stats_subtitle', 'FR', "Stats : Ligne temporelle");
 
 
 

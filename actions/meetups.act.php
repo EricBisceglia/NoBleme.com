@@ -1361,10 +1361,6 @@ function meetups_get_max_attendees() : int
 
 function meetups_stats() : array
 {
-  // Check if the required files have been included
-  require_included_file('functions_numbers.inc.php');
-  require_included_file('functions_mathematics.inc.php');
-
   // Initialize the return array
   $data = array();
 
@@ -1382,16 +1378,10 @@ function meetups_stats() : array
                                           AND     meetups.event_date  < CURDATE()  "));
 
   // Add some stats to the return array
-  $data['total']        = sanitize_output($dmeetups['m_total']);
-  $data['total_en']     = sanitize_output($dmeetups['m_total_en']);
-  $temp                 = maths_percentage_of($dmeetups['m_total_en'], $dmeetups['m_total']);
-  $data['percent_en']   = sanitize_output(number_display_format($temp, 'percentage'));
-  $data['total_fr']     = sanitize_output($dmeetups['m_total_fr']);
-  $temp                 = maths_percentage_of($dmeetups['m_total_fr'], $dmeetups['m_total']);
-  $data['percent_fr']   = sanitize_output(number_display_format($temp, 'percentage'));
-  $data['total_bi']     = sanitize_output($dmeetups['m_total_bi']);
-  $temp                 = maths_percentage_of($dmeetups['m_total_bi'], $dmeetups['m_total']);
-  $data['percent_bi']   = sanitize_output(number_display_format($temp, 'percentage'));
+  $data['total']    = sanitize_output($dmeetups['m_total']);
+  $data['total_en'] = sanitize_output($dmeetups['m_total_en']);
+  $data['total_fr'] = sanitize_output($dmeetups['m_total_fr']);
+  $data['total_bi'] = sanitize_output($dmeetups['m_total_bi']);
 
   // Fetch the number of future meetups
   $dmeetups = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'm_total'

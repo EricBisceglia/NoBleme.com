@@ -29,8 +29,12 @@ $page_description = "Blogs containing updates on NoBleme's development over the 
 // Check if the list should be sorted by views
 $blogs_sort = ($is_admin && isset($_GET['views'])) ? 'views' : '';
 
+// Check if the list should be filtered for a year
+$blogs_year = (isset($_GET['year'])) ? (int)form_fetch_element('year', request_type: 'GET') : 0;
+
 // Fetch the devblogs
-$devblogs = dev_blogs_list($blogs_sort);
+$devblogs = dev_blogs_list( $blogs_sort ,
+                            $blogs_year );
 
 
 
@@ -49,6 +53,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__('dev_blog_title')?>
+    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/dev/blog_stats")?>
     <?php if($is_admin) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/dev/blog_add')?>
     <?php } ?>
@@ -58,9 +63,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('dev_blog_subtitle')?>
   </h5>
 
+  <?php if($blogs_year) { ?>
+
+  <p class="smallpadding_bot">
+    <?=__('dev_blog_intro')?>
+  </p>
+
+  <p class="bold">
+    <?=__('dev_blog_filtered', preset_values: array($blogs_year))?>
+  </p>
+
+  <p class="bigpadding_bot">
+    <?=__link('pages/dev/blog_list', __('dev_blog_see_all'))?>
+  </p>
+
+  <?php } else { ?>
+
   <p class="bigpadding_bot">
     <?=__('dev_blog_intro')?>
   </p>
+
+  <?php } ?>
 
   <table>
     <thead>
