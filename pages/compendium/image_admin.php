@@ -347,8 +347,8 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <tr id="compendium_image_admin_row_<?=$compendium_images_list[$i]['id']?>">
 
         <td class="align_center nowrap">
-          <?=__icon('copy', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'C', title: __('copy'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].");")?>
-          <?=__icon('image', is_small: true, class: 'valign_middle pointer', alt: 'P', title: __('image'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].", 1);")?>
+          <?=__icon('copy', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'C', title: __('compendium_image_list_copy'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].");")?>
+          <?=__icon('image', is_small: true, class: 'valign_middle pointer', alt: 'P', title: __('compendium_image_list_gallery'), title_case: 'initials', onclick: "compendium_image_list_clipboard('".$compendium_images_list[$i]['fullname']."', ".$compendium_images_list[$i]['blur'].", 1);")?>
         </td>
 
         <td class="align_left tooltip_container tooltip_desktop"  id="compendium_image_list_preview_cell_<?=$compendium_images_list[$i]['id']?>" onmouseover="compendium_image_list_preview('<?=$compendium_images_list[$i]['id']?>', '<?=$compendium_images_list[$i]['fullname']?>', '<?=$path?>');">
