@@ -256,6 +256,7 @@ function nbcodes( string  $message                                              
 
   $blurring   = ($nsfw_settings < 2) ? 'class="nbcode_blur"' : '';
   $blurring2  = ($nsfw_settings < 2) ? 'class="nbcode_blur_2"' : '';
+  $blurring2b = ($nsfw_settings < 2) ? ' nbcode_blur_2' : '';
   $blurring3  = ($nsfw_settings < 1) ? ' nbcode_blur_3' : '';
   $blurring4  = ($nsfw_settings < 1) ? ' class="nbcode_blur_3"' : '';
   $unblur     = ($nsfw_settings < 2) ? ' onmouseover="unblur(this);"' : '';
@@ -449,10 +450,10 @@ function nbcodes( string  $message                                              
   // [gallery-nsfw:image.png|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.$unblur.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
+  $message = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents'.$blurring2b.'"'.$unblur.' loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[gallery-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.$unblur.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
+  $message = preg_replace('/\[gallery-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents'.$blurring2b.'"'.$unblur.' loading="lazy"></div></a></div>', $message);
 
 
   /*******************************************************************************************************************/
