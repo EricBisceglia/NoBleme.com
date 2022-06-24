@@ -44,11 +44,15 @@ $js   = array('compendium/list', 'compendium/admin');
 // Fetch the sorting order
 $compendium_pages_sort_order = form_fetch_element('compendium_pages_search_order', 'url');
 
+// Give default values to preselected search form elements
+$compendium_pages_search_redirect = form_fetch_element('compendium_search_redirect', default_value: -1);
+$compendium_pages_search_wip      = form_fetch_element('compendium_search_wip', default_value: 'finished');
+
 // Assemble the search query
 $compendium_pages_list_search = array(  'url'             => form_fetch_element('compendium_search_url')          ,
                                         'translation'     => form_fetch_element('compendium_search_translation')  ,
                                         'title'           => form_fetch_element('compendium_search_title')        ,
-                                        'redirect'        => form_fetch_element('compendium_search_redirect')     ,
+                                        'redirect'        => $compendium_pages_search_redirect                    ,
                                         'redirname'       => form_fetch_element('compendium_search_redirname')    ,
                                         'type'            => form_fetch_element('compendium_search_type')         ,
                                         'category'        => form_fetch_element('compendium_search_category')     ,
@@ -58,7 +62,7 @@ $compendium_pages_list_search = array(  'url'             => form_fetch_element(
                                         'created'         => form_fetch_element('compendium_search_created')      ,
                                         'language'        => form_fetch_element('compendium_search_language')     ,
                                         'nsfw_admin'      => form_fetch_element('compendium_search_nsfw')         ,
-                                        'wip'             => form_fetch_element('compendium_search_wip')          ,
+                                        'wip'             => $compendium_pages_search_wip                         ,
                                         'join_categories' => 1                                                    );
 
 // Fetch the pages
@@ -180,7 +184,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th class="compendium_admin_search_big">
           <select class="table_search" name="compendium_search_redirect" id="compendium_search_redirect" onchange="compendium_admin_list_search();">
             <option value="0">&nbsp;</option>
-            <option value="-1"><?=__('compendium_list_admin_redirect_no')?></option>
+            <option value="-1" selected><?=__('compendium_list_admin_redirect_no')?></option>
             <option value="1"><?=__('compendium_list_admin_redirect_yes')?></option>
           </select>
         </th>
@@ -280,7 +284,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th class="compendium_admin_search_small">
           <select class="table_search" name="compendium_search_wip" id="compendium_search_wip" onchange="compendium_admin_list_search();">
             <option value="">&nbsp;</option>
-            <option value="finished"><?=__('compendium_list_admin_finished')?></option>
+            <option value="finished" selected><?=__('compendium_list_admin_finished')?></option>
             <option value="draft"><?=__('compendium_list_admin_draft')?></option>
             <option value="deleted"><?=string_change_case(__('deleted'), 'initials')?></option>
           </select>
