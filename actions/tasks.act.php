@@ -1427,6 +1427,9 @@ function tasks_stats() : array
   // Initialize the return array
   $data = array();
 
+  // Fetch the user's language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
   // Fetch the total number of tasks
   $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*)                AS 't_total'  ,
                                         SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
@@ -1434,7 +1437,8 @@ function tasks_stats() : array
                                         FROM    dev_tasks
                                         WHERE   dev_tasks.is_deleted        = 0
                                         AND     dev_tasks.admin_validation  = 1
-                                        AND     dev_tasks.is_public         = 1 "));
+                                        AND     dev_tasks.is_public         = 1
+                                        AND     dev_tasks.title_$lang      != '' "));
 
   // Add some stats to the return array
   $data['total']            = sanitize_output($dtasks['t_total']);
@@ -1444,6 +1448,58 @@ function tasks_stats() : array
   $data['unsolved']         = sanitize_output($dtasks['t_total'] - $dtasks['t_solved']);
   $temp                     = maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']), $dtasks['t_total']);
   $data['percent_unsolved'] = number_display_format($temp, 'percentage', 1);
+
+  // Fetch opened tasks by year
+  $qtasks = query(" SELECT    YEAR(FROM_UNIXTIME(dev_tasks.created_at)) AS 't_year' ,
+                              COUNT(*)                                  AS 't_count'
+                    FROM      dev_tasks
+                    WHERE     dev_tasks.is_deleted        = 0
+                    AND       dev_tasks.admin_validation  = 1
+                    AND       dev_tasks.is_public         = 1
+                    AND       dev_tasks.title_$lang      != ''
+                    GROUP BY  t_year
+                    ORDER BY  t_year ASC ");
+
+  // Prepare to identify the oldest task's year
+  $oldest_year = date('Y');
+
+  // Add created task data over time to the return data
+  while($dtasks = mysqli_fetch_array($qtasks))
+  {
+    $year                   = $dtasks['t_year'];
+    $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['created_'.$year] = ($dtasks['t_count']) ? sanitize_output($dtasks['t_count']) : '';
+  }
+
+  // Fetch solved tasks by year
+  $qtasks = query(" SELECT    YEAR(FROM_UNIXTIME(dev_tasks.finished_at))  AS 't_year' ,
+                              COUNT(*)                                    AS 't_count'
+                    FROM      dev_tasks
+                    WHERE     dev_tasks.is_deleted        = 0
+                    AND       dev_tasks.admin_validation  = 1
+                    AND       dev_tasks.is_public         = 1
+                    AND       dev_tasks.title_$lang      != ''
+                    AND       dev_tasks.finished_at       > 0
+                    GROUP BY  t_year
+                    ORDER BY  t_year ASC ");
+
+  // Add solved task data over time to the return data
+  while($dtasks = mysqli_fetch_array($qtasks))
+  {
+    $year                   = $dtasks['t_year'];
+    $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['solved_'.$year]  = ($dtasks['t_count']) ? sanitize_output($dtasks['t_count']) : '';
+  }
+
+  // Add the oldest year to the return data
+  $data['oldest_year'] = $oldest_year;
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+  {
+    $data['created_'.$i] ??= '';
+    $data['solved_'.$i] ??= '';
+  }
 
   // Return the stats
   return $data;

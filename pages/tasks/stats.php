@@ -89,11 +89,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <select class="inh align_left" id="tasks_stats_selector" onchange="page_section_selector('tasks_stats', '<?=$tasks_selector_default?>');">
         <option value="overall"<?=$tasks_selector['menu']['overall']?>><?=__('stats_overall')?></option>
         <option value="years"<?=$tasks_selector['menu']['years']?>><?=__('stats_timeline')?></option>
-        <option value="years"<?=$tasks_selector['menu']['milestones']?>><?=__('tasks_stats_selector_milestones')?></option>
-        <option value="years"<?=$tasks_selector['menu']['categories']?>><?=__('tasks_stats_selector_categories')?></option>
-        <option value="years"<?=$tasks_selector['menu']['priority']?>><?=__('tasks_stats_selector_priority')?></option>
-        <option value="years"<?=$tasks_selector['menu']['velocity']?>><?=__('tasks_stats_selector_velocity')?></option>
-        <option value="years"<?=$tasks_selector['menu']['contributors']?>><?=__('tasks_stats_selector_submitted')?></option>
+        <option value="milestones"<?=$tasks_selector['menu']['milestones']?>><?=__('tasks_stats_selector_milestones')?></option>
+        <option value="categories"<?=$tasks_selector['menu']['categories']?>><?=__('tasks_stats_selector_categories')?></option>
+        <option value="priority"<?=$tasks_selector['menu']['priority']?>><?=__('tasks_stats_selector_priority')?></option>
+        <option value="velocity"<?=$tasks_selector['menu']['velocity']?>><?=__('tasks_stats_selector_velocity')?></option>
+        <option value="contributors"<?=$tasks_selector['menu']['contributors']?>><?=__('tasks_stats_selector_submitted')?></option>
       </select>
 
       <?php if($is_admin) { ?>
@@ -122,6 +122,62 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('tasks_stats_overall_unsolved', preset_values: array($tasks_stats['unsolved'], $tasks_stats['percent_unsolved']))?><br>
     <?=__('tasks_stats_overall_solved', preset_values: array($tasks_stats['solved'], $tasks_stats['percent_solved']))?>
   </p>
+
+</div>
+
+
+
+
+<?php /************************************************ TIMELINE **************************************************/ ?>
+
+<div class="width_30 padding_top tasks_stats_section<?=$tasks_selector['hide']['years']?>" id="tasks_stats_years">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('year')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_years_created')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_years_solved')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = date('Y'); $i >= $tasks_stats['oldest_year']; $i--) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=$i?>
+        </td>
+
+        <td class="bold">
+          <?=$tasks_stats['created_'.$i]?>
+        </td>
+
+        <td class="bold">
+          <?=$tasks_stats['solved_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 

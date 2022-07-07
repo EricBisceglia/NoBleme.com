@@ -465,3 +465,10 @@ ___('tasks_stats_overall_unsolved', 'EN', "<span class=\"bold\">{{1}}</span> tas
 ___('tasks_stats_overall_unsolved', 'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) sont toujours ouvertes, en attente d'une résolution.");
 ___('tasks_stats_overall_solved',   'EN', "<span class=\"bold\">{{1}}</span> tasks ({{2}}) have been solved.");
 ___('tasks_stats_overall_solved',   'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) ont été résolues.");
+
+
+// Timeline
+___('tasks_stats_years_created',  'EN', "Tasks<br>created");
+___('tasks_stats_years_created',  'FR', "Tâches<br>ouvertes");
+___('tasks_stats_years_solved',   'EN', "Tasks<br>solved");
+___('tasks_stats_years_solved',   'FR', "Tâches<br>résolues");
