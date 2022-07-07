@@ -550,11 +550,14 @@ CREATE TABLE IF NOT EXISTS `users_stats` (
   `meetups_oldest_date` int UNSIGNED NOT NULL DEFAULT '0',
   `meetups_newest_id` int UNSIGNED NOT NULL DEFAULT '0',
   `meetups_newest_date` int UNSIGNED NOT NULL DEFAULT '0',
+  `tasks_submitted` int UNSIGNED NOT NULL DEFAULT '0',
+  `tasks_solved` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`),
   KEY `index_quotes` (`quotes`),
   KEY `index_quotes_approved` (`quotes_approved`),
-  KEY `index_meetups` (`meetups`)
+  KEY `index_meetups` (`meetups`),
+  KEY `index_tasks_submitted` (`tasks_submitted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_tokens`;

@@ -426,3 +426,42 @@ ___('tasks_proposal_flood',   'EN', "Your proposal has not been sent. In order t
 ___('tasks_proposal_flood',   'FR', "Votre proposition n'a pas été envoyée. Afin d'éviter le flood, vous devez attendre avant de pouvoir effectuer une autre action sur le site");
 ___('tasks_proposal_sent',    'EN', "Your proposal has been submitted. Thank you!");
 ___('tasks_proposal_sent',    'FR', "Votre proposition a été envoyée. Merci !");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page section selector
+___('tasks_stats_selector_title',       'EN', "Tasks statistics");
+___('tasks_stats_selector_title',       'FR', "Stats des tâches");
+___('tasks_stats_selector_milestones',  'EN', "Milestones");
+___('tasks_stats_selector_milestones',  'FR', "Objectifs");
+___('tasks_stats_selector_categories',  'EN', "Categories");
+___('tasks_stats_selector_categories',  'FR', "Catégories");
+___('tasks_stats_selector_priority',    'EN', "Priority");
+___('tasks_stats_selector_priority',    'FR', "Importance");
+___('tasks_stats_selector_velocity',    'EN', "Velocity");
+___('tasks_stats_selector_velocity',    'FR', "Vélocité");
+___('tasks_stats_selector_submitted',   'EN', "Contributors");
+___('tasks_stats_selector_submitted',   'FR', "Contributions");
+
+
+// Recalculate all stats
+___('tasks_stats_recalculate_button', 'EN', "Recalculate all tasks statistics");
+___('tasks_stats_recalculate_button', 'FR', "Recalculer toutes les statistiques des tâches");
+___('tasks_stats_recalculate_alert',  'EN', "Are you sure you wish to recalculate all tasks statistics?");
+___('tasks_stats_recalculate_alert',  'FR', "Confirmer que vous tenez à recalculer toutes les statistiques des tâches");
+
+
+// Overall stats
+___('tasks_stats_overall_summary',  'EN', "There are <span class=\"bold\">{{1}}</span> tasks on the {{link|pages/tasks/list|to-do list}}.");
+___('tasks_stats_overall_summary',  'FR', "Il y a <span class=\"bold\">{{1}}</span> tâches sur la {{link|pages/tasks/list|liste des tâches}}.");
+___('tasks_stats_overall_unsolved', 'EN', "<span class=\"bold\">{{1}}</span> tasks ({{2}}) are still open and waiting for a resolution.");
+___('tasks_stats_overall_unsolved', 'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) sont toujours ouvertes, en attente d'une résolution.");
+___('tasks_stats_overall_solved',   'EN', "<span class=\"bold\">{{1}}</span> tasks ({{2}}) have been solved.");
+___('tasks_stats_overall_solved',   'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) ont été résolues.");

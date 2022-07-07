@@ -1017,6 +1017,8 @@ function quotes_stats() : array
 }
 
 
+
+
 /**
  * Returns the year in which the oldest quote took place.
  *
@@ -1035,6 +1037,7 @@ function quotes_get_oldest_year() : int
   // Return its year
   return date('Y', $dquotes['q_oldest']);
 }
+
 
 
 

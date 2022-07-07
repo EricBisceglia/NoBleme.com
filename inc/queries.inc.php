@@ -686,3 +686,19 @@ if($last_query < 37)
 
   sql_update_query_id(37);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Store tasks stats in the database
+
+if($last_query < 38)
+{
+  sql_create_field('users_stats', 'tasks_submitted', 'INT UNSIGNED NOT NULL DEFAULT 0', 'meetups_newest_date');
+  sql_create_field('users_stats', 'tasks_solved', 'INT UNSIGNED NOT NULL DEFAULT 0', 'tasks_submitted');
+
+  sql_create_index('users_stats', 'index_tasks_submitted', 'tasks_submitted');
+
+  sql_update_query_id(38);
+}

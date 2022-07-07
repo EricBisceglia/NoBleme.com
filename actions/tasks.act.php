@@ -8,27 +8,32 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  tasks_get                 Returns data related to a task.                                                        */
-/*  tasks_list                Fetches a list of tasks.                                                               */
-/*  tasks_add                 Creates a new task.                                                                    */
-/*  tasks_propose             Creates a new unvalidated task proposal.                                               */
-/*  tasks_approve             Approves an unvalidated task proposal.                                                 */
-/*  tasks_reject              Rejects and hard deletes an unvalidated task proposal.                                 */
-/*  tasks_solve               Marks a task as solved.                                                                */
-/*  tasks_edit                Modifies an existing task.                                                             */
-/*  tasks_delete              Soft deletes an existing task.                                                         */
-/*  tasks_restore             Restores a deleted task.                                                               */
-/*  tasks_delete_hard         Hard deletes a deleted task.                                                           */
+/*  tasks_get                       Returns data related to a task.                                                  */
+/*  tasks_list                      Fetches a list of tasks.                                                         */
+/*  tasks_add                       Creates a new task.                                                              */
+/*  tasks_propose                   Creates a new unvalidated task proposal.                                         */
+/*  tasks_approve                   Approves an unvalidated task proposal.                                           */
+/*  tasks_reject                    Rejects and hard deletes an unvalidated task proposal.                           */
+/*  tasks_solve                     Marks a task as solved.                                                          */
+/*  tasks_edit                      Modifies an existing task.                                                       */
+/*  tasks_delete                    Soft deletes an existing task.                                                   */
+/*  tasks_restore                   Restores a deleted task.                                                         */
+/*  tasks_delete_hard               Hard deletes a deleted task.                                                     */
 /*                                                                                                                   */
-/*  tasks_categories_list     Fetches a list of task categories.                                                     */
-/*  tasks_categories_add      Creates a new task category.                                                           */
-/*  tasks_categories_edit     Modifies a task category.                                                              */
-/*  tasks_categories_delete   Deletes a task category.                                                               */
+/*  tasks_categories_list           Fetches a list of task categories.                                               */
+/*  tasks_categories_add            Creates a new task category.                                                     */
+/*  tasks_categories_edit           Modifies a task category.                                                        */
+/*  tasks_categories_delete         Deletes a task category.                                                         */
 /*                                                                                                                   */
-/*  tasks_milestones_list     Fetches a list of task milestones.                                                     */
-/*  tasks_milestones_add      Creates a new task milestone.                                                          */
-/*  tasks_milestones_edit     Modifies a task milestone.                                                             */
-/*  tasks_milestones_delete   Deletes a task milestone.                                                              */
+/*  tasks_milestones_list           Fetches a list of task milestones.                                               */
+/*  tasks_milestones_add            Creates a new task milestone.                                                    */
+/*  tasks_milestones_edit           Modifies a task milestone.                                                       */
+/*  tasks_milestones_delete         Deletes a task milestone.                                                        */
+/*                                                                                                                   */
+/*  tasks_stats                     Returns stats related to tasks.                                                  */
+/*                                                                                                                   */
+/*  tasks_user_recalculate_stats    Recalculates tasks statistics for a specific user.                               */
+/*  tasks_recalculate_all_stats     Recalculates global tasks statistics.                                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -459,6 +464,9 @@ function tasks_add( array $contents ) : mixed
   if($task_title_en)
     irc_bot_send_message("A new task has been added to the to-do list by $admin_username : $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
 
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($user_id);
+
   // Return the task's id
   return $task_id;
 }
@@ -632,6 +640,9 @@ EOT;
                           sender: 0               ,
                           true_sender: $admin_id  ,
                           hide_admin_mail: true   );
+
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($user_id);
 
   // If the task is private or must be created silently, stop here and return null
   if($task_private || $task_silent)
@@ -840,6 +851,9 @@ function tasks_solve( int     $task_id              ,
       irc_bot_send_message("Patch link: $source", 'dev');
   }
 
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($task_data['creator_id']);
+
   // If stealthy mode is requested or the author is the one currently approving the task, stop here
   if($is_stealthy || $task_data['creator_id'] == user_get_id())
     return null;
@@ -949,6 +963,9 @@ function tasks_edit(  int     $task_id  ,
                       $query_solved
           WHERE       dev_tasks.id                        = '$task_id'        ");
 
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($task_author);
+
   // All went well, return null
   return null;
 }
@@ -992,6 +1009,9 @@ function tasks_delete( int $task_id ) : void
   log_activity_delete(  'dev_task'                  ,
                         activity_id:      $task_id  ,
                         global_type_wipe: true      );
+
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($task_data['creator_id']);
 }
 
 
@@ -1024,6 +1044,9 @@ function tasks_restore( int $task_id ) : void
   query(" UPDATE  dev_tasks
           SET     dev_tasks.is_deleted  = 0
           WHERE   dev_tasks.id          = '$task_id' ");
+
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($task_data['creator_id']);
 }
 
 
@@ -1059,6 +1082,9 @@ function tasks_delete_hard( int $task_id ) : void
   // Hard delete the task
   query(" DELETE FROM dev_tasks
           WHERE       dev_tasks.id = '$task_id' ");
+
+  // Recalculate stats for the task's submitter
+  tasks_user_recalculate_stats($task_data['creator_id']);
 }
 
 
@@ -1381,4 +1407,109 @@ function tasks_milestones_delete( int $milestone_id = 0 ) : void
 
   // IRC bot message
   irc_bot_send_message("$admin_name deleted the task milestone named \"$milestone_name\" - $task_count task(s) were linked to it and are not roadmapped anymore - ".$GLOBALS['website_url']."pages/tasks/list", 'admin');
+}
+
+
+
+
+/**
+ * Returns stats related to tasks.
+ *
+ * @return  array   An array of stats related to tasks.
+ */
+
+function tasks_stats() : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the total number of tasks
+  $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*)                AS 't_total'  ,
+                                        SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
+                                                            ELSE 0 END) AS 't_solved'
+                                        FROM    dev_tasks
+                                        WHERE   dev_tasks.is_deleted        = 0
+                                        AND     dev_tasks.admin_validation  = 1
+                                        AND     dev_tasks.is_public         = 1 "));
+
+  // Add some stats to the return array
+  $data['total']            = sanitize_output($dtasks['t_total']);
+  $data['solved']           = sanitize_output($dtasks['t_solved']);
+  $temp                     = maths_percentage_of($dtasks['t_solved'], $dtasks['t_total']);
+  $data['percent_solved']   = number_display_format($temp, 'percentage', 1);
+  $data['unsolved']         = sanitize_output($dtasks['t_total'] - $dtasks['t_solved']);
+  $temp                     = maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']), $dtasks['t_total']);
+  $data['percent_unsolved'] = number_display_format($temp, 'percentage', 1);
+
+  // Return the stats
+  return $data;
+}
+
+
+
+
+/**
+ * Recalculates tasks statistics for a specific user.
+ *
+ * @param   int   $user_id  The user's id.
+ *
+ * @return  void
+ */
+
+function tasks_user_recalculate_stats( int $user_id )
+{
+  // Sanitize the user's id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Check if the user exists
+  if(!$user_id || !database_row_exists('users', $user_id))
+    return;
+
+  // Count the tasks submitted by the user
+  $dtasks = mysqli_fetch_array(query("  SELECT    COUNT(*)              AS 't_count'    ,
+                                                  SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
+                                                            ELSE 0 END) AS 't_count_solved'
+                                        FROM      dev_tasks
+                                        WHERE     dev_tasks.fk_users          = '$user_id'
+                                        AND       dev_tasks.is_deleted        = 0
+                                        AND       dev_tasks.admin_validation  = 1
+                                        AND       dev_tasks.is_public         = 1 "));
+
+  // Sanitize the contributions stats
+  $tasks_count    = sanitize($dtasks['t_count'], 'int', 0);
+  $tasks_count_en = sanitize($dtasks['t_count_solved'], 'int', 0);
+
+  // Update the user's tasks stats
+  query(" UPDATE  users_stats
+          SET     users_stats.tasks_submitted = '$tasks_count'    ,
+                  users_stats.tasks_solved    = '$tasks_count_en'
+          WHERE   users_stats.fk_users        = '$user_id'        ");
+}
+
+
+
+
+/**
+ * Recalculates global tasks statistics.
+ *
+ * @return  void
+ */
+
+function tasks_recalculate_all_stats()
+{
+  // Fetch every user id
+  $qusers = query(" SELECT    users.id AS 'u_id'
+                    FROM      users
+                    ORDER BY  users.id ASC ");
+
+  // Loop through the users and recalculate their individual tasks statistics
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    $user_id = sanitize($dusers['u_id'], 'int', 0);
+    tasks_user_recalculate_stats($user_id);
+  }
 }
