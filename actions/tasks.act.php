@@ -340,6 +340,7 @@ function tasks_list(  string  $sort_by    = 'status'  ,
     $data[$i]['author']     = sanitize_output($row['t_author']);
     $data[$i]['category']   = sanitize_output($row['t_category']);
     $data[$i]['milestone']  = sanitize_output($row['t_milestone']);
+    $data[$i]['goal_id']    = sanitize_output($row['t_milestone_id']);
     $data[$i]['goal_body']  = bbcodes(sanitize_output($row['t_milestone_body'], preserve_line_breaks: true));
     $data[$i]['nolang_en']  = (!$row['t_title_en']);
     $data[$i]['nolang_fr']  = (!$row['t_title_fr']);
@@ -1421,6 +1422,7 @@ function tasks_milestones_delete( int $milestone_id = 0 ) : void
 function tasks_stats() : array
 {
   // Check if the required files have been included
+  require_included_file('bbcodes.inc.php');
   require_included_file('functions_numbers.inc.php');
   require_included_file('functions_mathematics.inc.php');
 
@@ -1500,6 +1502,41 @@ function tasks_stats() : array
     $data['created_'.$i] ??= '';
     $data['solved_'.$i] ??= '';
   }
+
+  // Fetch milestones
+  $qmilestones = query("  SELECT    dev_tasks.fk_dev_tasks_milestones           AS 'tm_id'        ,
+                                    dev_tasks_milestones.title_$lang            AS 'tm_title'     ,
+                                    dev_tasks_milestones.summary_$lang          AS 'tm_body'      ,
+                                    SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
+                                              ELSE 0 END)                       AS 'tm_solved'    ,
+                                    SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 0
+                                              ELSE 1 END)                       AS 'tm_unsolved'  ,
+                                    MIN(CASE  WHEN dev_tasks.finished_at = 0 THEN NULL
+                                              ELSE dev_tasks.finished_at END )  AS 'tm_date'
+                          FROM      dev_tasks
+                          LEFT JOIN dev_tasks_milestones ON dev_tasks.fk_dev_tasks_milestones = dev_tasks_milestones.id
+                          WHERE     dev_tasks_milestones.id     > 0
+                          AND       dev_tasks.is_deleted        = 0
+                          AND       dev_tasks.admin_validation  = 1
+                          AND       dev_tasks.is_public         = 1
+                          AND       dev_tasks.title_$lang      != ''
+                          GROUP BY  tm_id
+                          ORDER BY  dev_tasks_milestones.sorting_order DESC ");
+
+  // Loop through milestones and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
+  {
+    $data['milestone_id_'.$i]       = sanitize_output($row['tm_id']);
+    $data['milestone_title_'.$i]    = sanitize_output($row['tm_title']);
+    $data['milestone_body_'.$i]     = bbcodes(sanitize_output($row['tm_body'], preserve_line_breaks: true));
+    $temp                           = (isset($row['tm_date'])) ? date_to_text($row['tm_date'], strip_day: 1) : '-';
+    $data['milestone_date_'.$i]     = sanitize_output($temp);
+    $data['milestone_solved_'.$i]   = $row['tm_solved'] ? sanitize_output($row['tm_solved']) : '&nbsp';
+    $data['milestone_unsolved_'.$i] = $row['tm_unsolved'] ? sanitize_output($row['tm_unsolved']) : '&nbsp';
+  }
+
+  // Add the number of milestones to the return array
+  $data['milestone_count'] = $i;
 
   // Return the stats
   return $data;

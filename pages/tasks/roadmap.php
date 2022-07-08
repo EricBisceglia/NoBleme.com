@@ -79,7 +79,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-  <div class="width_50 padding_top bigpadding_bot">
+  <div class="width_50 padding_top bigpadding_bot" id="milestone_<?=$task_list[$i]['goal_id']?>">
 
   <h4 class="smallpadding_top align_center">
     <?=$task_list[$i]['milestone']?>

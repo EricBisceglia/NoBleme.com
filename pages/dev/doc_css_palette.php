@@ -2379,6 +2379,23 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   &lt;/div>
 &lt;/div></pre>
 
+  <div class="padding_bot padding_top">
+    <div class="tooltip_container">
+      &lt;div class="tooltip_container tooltip_desktop"><br>
+      Hover me, this will work on desktop but not on mobile.
+      <div class="tooltip">
+        &lt;div class="tooltip">
+      </div>
+    </div>
+  </div>
+
+  <pre class="dev_pre_code" id="dev_palette_tooltip_desktop" onclick="to_clipboard('', 'dev_palette_tooltip_desktop', 1);">&lt;div class="tooltip_container tooltip_desktop">
+  Text
+  &lt;div class="tooltip">
+    Tooltip
+  &lt;/div>
+&lt;/div></pre>
+
 </div>
 
 <?php /***************************************************************************************************************/
