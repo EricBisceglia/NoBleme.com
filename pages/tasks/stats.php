@@ -185,6 +185,96 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 
+<?php /*********************************************** CATEGORIES *************************************************/ ?>
+
+<div class="width_50 padding_top tasks_stats_section<?=$tasks_selector['hide']['categories']?>" id="tasks_stats_categories">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('category')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_categories_tasks')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_milestones_unsolved')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_categories_oldest')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_categories_newest')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $tasks_stats['category_count']; $i++) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?php if($tasks_stats['category_id_'.$i]) { ?>
+          <?=$tasks_stats['category_name_'.$i]?>
+          <?php } else { ?>
+          <?=__('tasks_stats_categories_none')?>
+          <?php } ?>
+        </td>
+
+        <td class="bold">
+          <?=$tasks_stats['category_count_'.$i]?>
+        </td>
+
+        <td>
+          <?php if($tasks_stats['category_punsolved_'.$i]) { ?>
+          <span class="bold"><?=$tasks_stats['category_unsolved_'.$i]?></span> (<?=$tasks_stats['category_punsolved_'.$i]?>)
+          <?php } else { ?>
+          <?=$tasks_stats['category_unsolved_'.$i]?>
+          <?php } ?>
+        </td>
+
+        <?php if($tasks_stats['category_oldest_'.$i] == $tasks_stats['category_newest_'.$i]) { ?>
+
+        <td colspan="2">
+          <?=$tasks_stats['category_oldest_'.$i]?>
+        </td>
+
+        <?php } else { ?>
+
+        <td>
+          <?=$tasks_stats['category_oldest_'.$i]?>
+        </td>
+
+        <td>
+          <?=$tasks_stats['category_newest_'.$i]?>
+        </td>
+
+        <?php } ?>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
 <?php /*********************************************** MILESTONES *************************************************/ ?>
 
 <div class="width_40 padding_top tasks_stats_section<?=$tasks_selector['hide']['milestones']?>" id="tasks_stats_milestones">
@@ -241,11 +331,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$tasks_stats['milestone_date_'.$i]?>
         </td>
 
-        <td>
+        <td class="bold">
           <?=$tasks_stats['milestone_unsolved_'.$i]?>
         </td>
 
-        <td>
+        <td class="bold">
           <?=$tasks_stats['milestone_solved_'.$i]?>
         </td>
 

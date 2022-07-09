@@ -1503,6 +1503,41 @@ function tasks_stats() : array
     $data['solved_'.$i] ??= '';
   }
 
+  // Fetch categories
+  $qcategories = query("  SELECT    dev_tasks.fk_dev_tasks_categories               AS 'tc_id'        ,
+                                    dev_tasks_categories.title_$lang                AS 'tc_title'     ,
+                                    COUNT(*)                                        AS 'tc_count'     ,
+                                    SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 0
+                                              ELSE 1 END)                           AS 'tc_unsolved'  ,
+                                    MIN(YEAR(FROM_UNIXTIME(dev_tasks.created_at)))  AS 'tc_oldest'    ,
+                                    MAX(YEAR(FROM_UNIXTIME(dev_tasks.created_at)))  AS 'tc_newest'
+                          FROM      dev_tasks
+                          LEFT JOIN dev_tasks_categories ON dev_tasks.fk_dev_tasks_categories = dev_tasks_categories.id
+                          WHERE     dev_tasks.is_deleted        = 0
+                          AND       dev_tasks.admin_validation  = 1
+                          AND       dev_tasks.is_public         = 1
+                          AND       dev_tasks.title_$lang      != ''
+                          GROUP BY  tc_id
+                          ORDER BY  tc_count  DESC  ,
+                                    tc_title  ASC   ");
+
+  // Loop through categories and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  {
+    $data['category_id_'.$i]        = sanitize_output($row['tc_id']);
+    $data['category_name_'.$i]      = sanitize_output($row['tc_title']);
+    $data['category_count_'.$i]     = sanitize_output($row['tc_count']);
+    $data['category_unsolved_'.$i]  = ($row['tc_unsolved']) ? sanitize_output($row['tc_unsolved']) : '&nbsp;';
+    $temp                           = maths_percentage_of($row['tc_unsolved'], $row['tc_count']);
+    $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['category_punsolved_'.$i] = ($row['tc_unsolved']) ? $temp : '';
+    $data['category_oldest_'.$i]    = ($row['tc_oldest']) ? sanitize_output($row['tc_oldest']) : '&nbsp;';
+    $data['category_newest_'.$i]    = ($row['tc_newest']) ? sanitize_output($row['tc_newest']) : '&nbsp;';
+  }
+
+  // Add the number of categories to the return array
+  $data['category_count'] = $i;
+
   // Fetch milestones
   $qmilestones = query("  SELECT    dev_tasks.fk_dev_tasks_milestones           AS 'tm_id'        ,
                                     dev_tasks_milestones.title_$lang            AS 'tm_title'     ,
