@@ -1435,7 +1435,9 @@ function tasks_stats() : array
   // Fetch the total number of tasks
   $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*)                AS 't_total'  ,
                                         SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
-                                                            ELSE 0 END) AS 't_solved'
+                                                  ELSE 0 END)           AS 't_solved' ,
+                                        SUM(CASE  WHEN dev_tasks.source_code_link = '' THEN 0
+                                                  ELSE 1 END)           AS 't_source'
                                         FROM    dev_tasks
                                         WHERE   dev_tasks.is_deleted        = 0
                                         AND     dev_tasks.admin_validation  = 1
@@ -1450,6 +1452,9 @@ function tasks_stats() : array
   $data['unsolved']         = sanitize_output($dtasks['t_total'] - $dtasks['t_solved']);
   $temp                     = maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']), $dtasks['t_total']);
   $data['percent_unsolved'] = number_display_format($temp, 'percentage', 1);
+  $data['sourced']          = sanitize_output($dtasks['t_source']);
+  $temp                     = maths_percentage_of($dtasks['t_source'], $dtasks['t_solved']);
+  $data['percent_sourced']  = number_display_format($temp, 'percentage', 1);
 
   // Fetch opened tasks by year
   $qtasks = query(" SELECT    YEAR(FROM_UNIXTIME(dev_tasks.created_at)) AS 't_year' ,
@@ -1572,6 +1577,32 @@ function tasks_stats() : array
 
   // Add the number of milestones to the return array
   $data['milestone_count'] = $i;
+
+  // Fetch tasks by priority levels
+  $qtasks = query(" SELECT    COUNT(*)                  AS 't_count'    ,
+                              dev_tasks.priority_level  AS 't_priority' ,
+                              SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 0
+                                        ELSE 1 END)     AS 't_unsolved'
+                    FROM      dev_tasks
+                    WHERE     dev_tasks.is_deleted        = 0
+                    AND       dev_tasks.admin_validation  = 1
+                    AND       dev_tasks.is_public         = 1
+                    AND       dev_tasks.title_$lang      != ''
+                    GROUP BY  dev_tasks.priority_level
+                    ORDER BY  dev_tasks.priority_level  DESC");
+
+  // Loop through priority levels and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qtasks); $i++)
+  {
+    $data['priority_level_'.$i]   = sanitize_output($row['t_priority']);
+    $data['priority_count_'.$i]   = sanitize_output($row['t_count']);
+    $temp                         = maths_percentage_of($row['t_count'], $data['total']);
+    $data['priority_percent_'.$i] = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['priority_open_'.$i]    = ($row['t_unsolved']) ? sanitize_output($row['t_unsolved']) : '&nbsp;';
+  }
+
+  // Add the number of priority levels to the return array
+  $data['priority_count'] = $i;
 
   // Return the stats
   return $data;

@@ -443,6 +443,8 @@ ___('tasks_stats_selector_categories',  'EN', "Categories");
 ___('tasks_stats_selector_categories',  'FR', "Catégories");
 ___('tasks_stats_selector_milestones',  'EN', "Milestones");
 ___('tasks_stats_selector_milestones',  'FR', "Objectifs");
+___('tasks_stats_selector_priority',    'EN', "Priority levels");
+___('tasks_stats_selector_priority',    'FR', "Importance");
 ___('tasks_stats_selector_submitted',   'EN', "Contributors");
 ___('tasks_stats_selector_submitted',   'FR', "Contributions");
 
@@ -457,10 +459,14 @@ ___('tasks_stats_recalculate_alert',  'FR', "Confirmer que vous tenez à recalcu
 // Overall stats
 ___('tasks_stats_overall_summary',    'EN', "There are <span class=\"bold\">{{1}}</span> tasks on the {{link|pages/tasks/list|to-do list}}.");
 ___('tasks_stats_overall_summary',    'FR', "Il y a <span class=\"bold\">{{1}}</span> tâches sur la {{link|pages/tasks/list|liste des tâches}}.");
-___('tasks_stats_overall_unsolved',   'EN', "<span class=\"bold\">{{1}}</span> tasks ({{2}}) are still open and waiting for a resolution.");
-___('tasks_stats_overall_unsolved',   'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) sont toujours ouvertes, en attente d'une résolution.");
 ___('tasks_stats_overall_solved',     'EN', "<span class=\"bold\">{{1}}</span> tasks ({{2}}) have been solved.");
 ___('tasks_stats_overall_solved',     'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) ont été résolues.");
+___('tasks_stats_overall_unsolved',   'EN', "<span class=\"bold\">{{1}}</span> tasks ({{2}}) are still open and waiting for a resolution.");
+___('tasks_stats_overall_unsolved',   'FR', "<span class=\"bold\">{{1}}</span> tâches ({{2}}) sont toujours ouvertes, en attente d'une résolution.");
+___('tasks_stats_overall_sourced',    'EN', "<span class=\"bold\">{{1}}</span> ({{2}}) solved tasks include a link to the {{link|pages/doc/dev|source code}} of the fix.");
+___('tasks_stats_overall_sourced',    'FR', "<span class=\"bold\">{{1}}</span> ({{2}}) tâches résolues incluent un lien vers le {{link|pages/doc/dev|code source}} du correctif.");
+___('tasks_stats_overall_categories', 'EN', "<span class=\"bold\">{{1}}</span> categories are used to sort the tasks.");
+___('tasks_stats_overall_categories', 'FR', "<span class=\"bold\">{{1}}</span> catégories servent a trier les tâches.");
 ___('tasks_stats_overall_milestones', 'EN', "<span class=\"bold\">{{1}}</span> milestones have been created for the {{link|pages/tasks/roadmap|roadmap}}.");
 ___('tasks_stats_overall_milestones', 'FR', "<span class=\"bold\">{{1}}</span> objectifs ont été crées pour le {{link|pages/tasks/roadmap|plan de route}}.");
 
@@ -490,3 +496,10 @@ ___('tasks_stats_milestones_unsolved',  'EN', "Unsolved<br>tasks");
 ___('tasks_stats_milestones_unsolved',  'FR', "Tâches non<br>résolues");
 ___('tasks_stats_milestones_solved',    'EN', "Solved<br>tasks");
 ___('tasks_stats_milestones_solved',    'FR', "Tâches<br>résolues");
+
+
+// Priority levels
+___('tasks_stats_priority_level', 'EN', "Task<br>priority");
+___('tasks_stats_priority_level', 'FR', "Importance<br>de la tâche");
+___('tasks_stats_priority_total', 'EN', "Total<br>tasks");
+___('tasks_stats_priority_total', 'FR', "Nombre<br>de tâches");

@@ -17,8 +17,9 @@ $page_title_en    = "Tasks statistics";
 $page_title_fr    = "Statistiques des tâches";
 $page_description = "Statistics generated from the tasks in NoBleme's to-do list";
 
-// Extra JS
-$js = array('common/toggle', 'common/selector');
+// Extra CSS & JS
+$css  = array('tasks');
+$js   = array('common/toggle', 'common/selector');
 
 
 
@@ -37,6 +38,7 @@ $tasks_selector_entries = array(  'overall'       ,
                                   'years'         ,
                                   'categories'    ,
                                   'milestones'    ,
+                                  'priority'      ,
                                   'contributors'  );
 
 // Define the default dropdown menu entry
@@ -90,6 +92,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="years"<?=$tasks_selector['menu']['years']?>><?=__('stats_timeline')?></option>
         <option value="categories"<?=$tasks_selector['menu']['categories']?>><?=__('tasks_stats_selector_categories')?></option>
         <option value="milestones"<?=$tasks_selector['menu']['milestones']?>><?=__('tasks_stats_selector_milestones')?></option>
+        <option value="priority"<?=$tasks_selector['menu']['priority']?>><?=__('tasks_stats_selector_priority')?></option>
         <option value="contributors"<?=$tasks_selector['menu']['contributors']?>><?=__('tasks_stats_selector_submitted')?></option>
       </select>
 
@@ -116,11 +119,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <p class="align_center padding_bot">
-    <?=__('tasks_stats_overall_unsolved', preset_values: array($tasks_stats['unsolved'], $tasks_stats['percent_unsolved']))?><br>
-    <?=__('tasks_stats_overall_solved', preset_values: array($tasks_stats['solved'], $tasks_stats['percent_solved']))?>
+  <?=__('tasks_stats_overall_solved', preset_values: array($tasks_stats['solved'], $tasks_stats['percent_solved']))?><br>
+  <?=__('tasks_stats_overall_unsolved', preset_values: array($tasks_stats['unsolved'], $tasks_stats['percent_unsolved']))?>
+  </p>
+
+  <p class="align_center padding_bot">
+    <?=__('tasks_stats_overall_sourced', preset_values: array($tasks_stats['sourced'], $tasks_stats['percent_sourced']))?>
   </p>
 
   <p class="align_center">
+    <?=__('tasks_stats_overall_categories', preset_values: array($tasks_stats['category_count']))?><br>
     <?=__('tasks_stats_overall_milestones', preset_values: array($tasks_stats['milestone_count']))?>
   </p>
 
@@ -337,6 +345,62 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td class="bold">
           <?=$tasks_stats['milestone_solved_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
+<?php /********************************************* PRIORITY LEVELS **********************************************/ ?>
+
+<div class="width_30 padding_top tasks_stats_section<?=$tasks_selector['hide']['priority']?>" id="tasks_stats_priority">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('tasks_stats_priority_level')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_priority_total')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_milestones_unsolved')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center">
+
+      <?php for($i = 0; $i < $tasks_stats['priority_count']; $i++) { ?>
+
+      <tr class="task_status_<?=$tasks_stats['priority_level_'.$i]?> bold text_dark light_hover">
+
+        <td>
+          <?=__('tasks_list_state_'.$tasks_stats['priority_level_'.$i])?>
+        </td>
+
+        <td>
+          <span class="bold"><?=$tasks_stats['priority_count_'.$i]?></span> (<?=$tasks_stats['priority_percent_'.$i]?>)
+        </td>
+
+        <td>
+          <?=$tasks_stats['priority_open_'.$i]?>
         </td>
 
       </tr>
