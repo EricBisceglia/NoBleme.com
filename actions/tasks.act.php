@@ -1604,6 +1604,32 @@ function tasks_stats() : array
   // Add the number of priority levels to the return array
   $data['priority_count'] = $i;
 
+  // Fetch contributors
+  $qusers = query(" SELECT    users_stats.tasks_submitted AS 'us_tasks'   ,
+                              users_stats.tasks_solved    AS 'us_solved'  ,
+                              users.id                    AS 'u_id'       ,
+                              users.username              AS 'u_nick'
+                    FROM      users_stats
+                    LEFT JOIN users ON users_stats.fk_users = users.id
+                    WHERE     users_stats.tasks_submitted > 0
+                    ORDER BY  users_stats.tasks_submitted DESC  ,
+                              users.username              ASC   ");
+
+  // Loop through contributors and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['contrib_id_'.$i]     = sanitize_output($row['u_id']);
+    $data['contrib_nick_'.$i]   = sanitize_output($row['u_nick']);
+    $data['contrib_tasks_'.$i]  = sanitize_output($row['us_tasks']);
+    $temp                       = $row['us_tasks'] - $row['us_solved'];
+    $data['contrib_open_'.$i]   = ($temp) ? sanitize_output($temp) : '&nbsp;';
+    $temp                       = ($temp) ? maths_percentage_of($temp, $row['us_tasks']) : '';
+    $data['contrib_popen_'.$i]  = ($temp) ? sanitize_output('('.number_display_format($temp, 'percentage').')') : '';
+  }
+
+  // ADd the number of contributors to the return array
+  $data['contrib_count'] = $i;
+
   // Return the stats
   return $data;
 }

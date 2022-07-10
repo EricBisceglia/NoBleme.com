@@ -503,3 +503,8 @@ ___('tasks_stats_priority_level', 'EN', "Task<br>priority");
 ___('tasks_stats_priority_level', 'FR', "Importance<br>de la tâche");
 ___('tasks_stats_priority_total', 'EN', "Total<br>tasks");
 ___('tasks_stats_priority_total', 'FR', "Nombre<br>de tâches");
+
+
+// Contributors
+___('tasks_stats_contrib_count',  'EN', "Task<br>proposals");
+___('tasks_stats_contrib_count',  'FR', "Tâches<br>proposées");

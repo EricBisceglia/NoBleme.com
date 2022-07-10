@@ -414,6 +414,61 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 </div>
 
 
+
+
+<?php /********************************************** CONTRIBUTORS ************************************************/ ?>
+
+<div class="width_30 padding_top tasks_stats_section<?=$tasks_selector['hide']['contributors']?>" id="tasks_stats_contributors">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_contrib_count')?>
+        </th>
+
+        <th>
+          <?=__('tasks_stats_milestones_unsolved')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $tasks_stats['contrib_count']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('pages/users/'.$tasks_stats['contrib_id_'.$i], $tasks_stats['contrib_nick_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$tasks_stats['contrib_tasks_'.$i]?>
+        </td>
+
+        <td>
+          <span class="bold"><?=$tasks_stats['contrib_open_'.$i]?></span> <?=$tasks_stats['contrib_popen_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
