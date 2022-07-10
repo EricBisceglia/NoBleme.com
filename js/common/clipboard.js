@@ -21,6 +21,8 @@ function to_clipboard(  contents                  ,
   contents = contents.replace(/&gt;/gi, ">");
   contents = contents.replace(/&amp;/gi, "&");
   contents = contents.replace(/&times;/gi, "×");
+  contents = contents.replace(/&nbsp;/gi, " ");
+  contents = contents.replace(/<br>/gi, "");
 
   // Prepare a temporary textarea and place the contents in it
   var temparea    = document.createElement('textarea');
