@@ -54,6 +54,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__('submenu_nobleme_userlist')?>
+    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/users/stats")?>
   </h1>
 
   <p>

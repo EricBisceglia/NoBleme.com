@@ -36,10 +36,10 @@ $js = array('admin/stats');
 /*********************************************************************************************************************/
 
 // Fetch total guest count
-$guests_total_count = user_guests_count();
+$guests_total_count = users_guests_count();
 
 // Fetch guest storage length
-$guests_storage_length = user_guests_storage_length();
+$guests_storage_length = users_guests_storage_length();
 
 // Fetch the search data
 $guests_search_data = array(  'identity'  => form_fetch_element('stats_guests_search_identity') ,

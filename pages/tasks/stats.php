@@ -132,6 +132,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('tasks_stats_overall_milestones', preset_values: array($tasks_stats['milestone_count']))?>
   </p>
 
+  <p class="align_center bigpadding_top">
+    <?=__('tasks_stats_overall_more')?>
+  </p>
+
 </div>
 
 

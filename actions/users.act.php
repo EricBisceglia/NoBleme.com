@@ -21,9 +21,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  user_autocomplete_username          Autocompletes a username.                                                    */
 /*                                                                                                                   */
-/*  user_total_count                    Returns the number of users stored in the database.                          */
-/*  user_guests_count                   Returns the number of guests stored in the database.                         */
-/*  user_guests_storage_length          Returns for how long guests are currently being stored in the database.      */
+/*  users_total_count                   Returns the number of users stored in the database.                          */
+/*  users_guests_count                  Returns the number of guests stored in the database.                         */
+/*  users_guests_storage_length         Returns for how long guests are currently being stored in the database.      */
+/*                                                                                                                   */
+/*  users_stats                         Returns stats related to users.                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -876,7 +878,7 @@ function user_autocomplete_username(  string  $input        ,
  * @return  int   The number of users.
  */
 
-function user_total_count() : int
+function users_total_count() : int
 {
   // Fetch the user count
   $duser = mysqli_fetch_array(query(" SELECT  COUNT(*) AS 'u_count'
@@ -895,7 +897,7 @@ function user_total_count() : int
  * @return  int   The number of guests.
  */
 
-function user_guests_count() : int
+function users_guests_count() : int
 {
   // Fetch the guest count
   $dguest = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'g_count'
@@ -914,7 +916,7 @@ function user_guests_count() : int
  * @return  int   The number of days for which the oldest guest has been stored in the database.
  */
 
-function user_guests_storage_length() : int
+function users_guests_storage_length() : int
 {
   // Fetch the oldest guest
   $dguest = mysqli_fetch_array(query("  SELECT    users_guests.last_visited_at AS 'g_date'
@@ -928,4 +930,38 @@ function user_guests_storage_length() : int
 
   // Return the delay
   return $delay;
+}
+
+
+
+
+/**
+ * Returns stats related to users.
+ *
+ * @return  array   An array of stats related to users.
+ */
+
+function users_stats() : array
+{
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the total number of users
+  $dusers = mysqli_fetch_array(query("  SELECT  COUNT(*)                    AS 'u_total'    ,
+                                                SUM(users.is_deleted)       AS 'u_deleted'  ,
+                                                SUM(users.is_administrator) AS 'u_admin'    ,
+                                                SUM(users.is_moderator)     AS 'u_mod'      ,
+                                                SUM(CASE  WHEN  users.is_banned_until > 0 THEN  1
+                                                          ELSE  0 END)      AS 'u_banned'
+                                        FROM    users "));
+
+  // Add some stats to the return array
+  $data['total']    = sanitize_output($dusers['u_total']);
+  $data['banned']   = sanitize_output($dusers['u_banned']);
+  $data['deleted']  = sanitize_output($dusers['u_deleted']);
+  $data['admins']   = sanitize_output($dusers['u_admin']);
+  $data['mods']     = sanitize_output($dusers['u_mod']);
+
+  // Return the stats
+  return $data;
 }

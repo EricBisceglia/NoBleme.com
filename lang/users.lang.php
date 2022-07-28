@@ -334,3 +334,45 @@ Une partie de votre [url={{1}}pages/users/{{2}}]profil public[/url] a été supp
 Dans le futur, assurez-vous que le contenu personnalisable de votre profil public respecte le [url={{1}}pages/doc/coc]code de conduite de NoBleme[/url].
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page section selector
+___('users_stats_selector_title',         'EN', "Users statistics");
+___('users_stats_selector_title',         'FR', "Stats des comptes");
+___('users_stats_selector_contributions', 'EN', "Contributions");
+___('users_stats_selector_contributions', 'FR', "Contributions");
+___('users_stats_selector_birthdays',     'EN', "Birthdays");
+___('users_stats_selector_birthdays',     'FR', "Anniversaires");
+___('users_stats_selector_anniversaries', 'EN', "Anniversaries");
+___('users_stats_selector_anniversaries', 'FR', "Âge des comptes");
+
+
+// Overall stats
+___('users_stats_overall_summary',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/list|accounts}} have been registered on NoBleme.");
+___('users_stats_overall_summary',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/users/list|comptes}} ont été créés sur NoBleme.");
+___('users_stats_overall_admins+',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|administrators}} manage the website.");
+___('users_stats_overall_admins+',  'FR', "<span class=\"bold\">{{1}}</span> comptes d'{{link|pages/users/admins|administration}} gèrent le site.");
+___('users_stats_overall_admins',   'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|administrator}} manages the website.");
+___('users_stats_overall_admins',   'FR', "<span class=\"bold\">{{1}}</span> compte d'{{link|pages/users/admins|administration}} gère le site.");
+___('users_stats_overall_mods+',    'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|moderators}} manage the website's contents.");
+___('users_stats_overall_mods+',    'FR', "<span class=\"bold\">{{1}}</span> comptes de {{link|pages/users/admins|modération}} gèrent les contenus du site.");
+___('users_stats_overall_mods',     'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|moderator}} manages the website's contents.");
+___('users_stats_overall_mods',     'FR', "<span class=\"bold\">{{1}}</span> compte de {{link|pages/users/admins|modération}} gère les contenus du site.");
+___('users_stats_overall_banned+',  'EN', "<span class=\"bold\">{{1}}</span> accounts are currently banned.");
+___('users_stats_overall_banned+',  'FR', "<span class=\"bold\">{{1}}</span> comptes sont actuellement bannis.");
+___('users_stats_overall_banned',   'EN', "<span class=\"bold\">{{1}}</span> account is currently banned.");
+___('users_stats_overall_banned',   'FR', "<span class=\"bold\">{{1}}</span> compte est actuellement banni.");
+___('users_stats_overall_deleted+', 'EN', "<span class=\"bold\">{{1}}</span> accounts have been deleted.");
+___('users_stats_overall_deleted+', 'FR', "<span class=\"bold\">{{1}}</span> comptes ont été supprimés.");
+___('users_stats_overall_deleted',  'EN', "<span class=\"bold\">{{1}}</span> account has been deleted.");
+___('users_stats_overall_deleted',  'FR', "<span class=\"bold\">{{1}}</span> compte a été supprimé.");
+___('users_stats_overall_more',     'EN', " You can find more stats about NoBleme's users by using the dropdown menu at the top.");
+___('users_stats_overall_more',     'FR', " Vous trouverez d'autres stats sur les comptes en utilisant le menu déroulant en haut de la page. ");

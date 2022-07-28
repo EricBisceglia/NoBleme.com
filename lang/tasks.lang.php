@@ -469,6 +469,8 @@ ___('tasks_stats_overall_categories', 'EN', "<span class=\"bold\">{{1}}</span> c
 ___('tasks_stats_overall_categories', 'FR', "<span class=\"bold\">{{1}}</span> catégories servent a trier les tâches.");
 ___('tasks_stats_overall_milestones', 'EN', "<span class=\"bold\">{{1}}</span> milestones have been created for the {{link|pages/tasks/roadmap|roadmap}}.");
 ___('tasks_stats_overall_milestones', 'FR', "<span class=\"bold\">{{1}}</span> objectifs ont été crées pour le {{link|pages/tasks/roadmap|plan de route}}.");
+___('tasks_stats_overall_more',       'EN', " You can find more stats about NoBleme's tasks by using the dropdown menu at the top.");
+___('tasks_stats_overall_more',       'FR', " Vous trouverez d'autres stats sur les tâches en utilisant le menu déroulant en haut de la page. ");
 
 
 // Timeline
