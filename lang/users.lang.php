@@ -376,3 +376,8 @@ ___('users_stats_overall_deleted',  'EN', "<span class=\"bold\">{{1}}</span> acc
 ___('users_stats_overall_deleted',  'FR', "<span class=\"bold\">{{1}}</span> compte a été supprimé.");
 ___('users_stats_overall_more',     'EN', " You can find more stats about NoBleme's users by using the dropdown menu at the top.");
 ___('users_stats_overall_more',     'FR', " Vous trouverez d'autres stats sur les comptes en utilisant le menu déroulant en haut de la page. ");
+
+
+// Timeline
+___('users_stats_years_created',  'EN', "Accounts<br>created");
+___('users_stats_years_created',  'FR', "Comptes<br>créés");

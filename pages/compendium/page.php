@@ -252,6 +252,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__('compendium_page_missing_title')?>
+    <?php if($is_admin) { ?>
+    <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/page_missing_list')?>
+    <?php } ?>
   </h1>
 
   <p class="bold">

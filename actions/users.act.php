@@ -962,6 +962,32 @@ function users_stats() : array
   $data['admins']   = sanitize_output($dusers['u_admin']);
   $data['mods']     = sanitize_output($dusers['u_mod']);
 
+  // Fetch account creations by year
+  $qusers = query(" SELECT    YEAR(FROM_UNIXTIME(users_profile.created_at)) AS 'up_created' ,
+                              COUNT(*)                                      AS 'up_count'
+                    FROM      users_profile
+                    WHERE     users_profile.created_at > 0
+                    GROUP BY  up_created
+                    ORDER BY  up_created ASC ");
+
+  // Prepare to identify the oldest account creation year
+  $oldest_year = date('Y');
+
+  // Add account creation data over time to the return data
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    $year                   = $dusers['up_created'];
+    $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['created_'.$year] = ($dusers['up_count']) ? sanitize_output($dusers['up_count']) : '-';
+  }
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+    $data['created_'.$i] ??= '-';
+
+  // Add the oldest account creation year to the return data
+  $data['oldest_account'] = $oldest_year;
+
   // Return the stats
   return $data;
 }

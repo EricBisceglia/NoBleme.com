@@ -110,6 +110,53 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_stats_overall_more')?>
   </p>
 
+</div>
+
+
+
+
+<?php /************************************************ TIMELINE **************************************************/ ?>
+
+<div class="width_30 padding_top users_stats_section<?=$users_selector['hide']['years']?>" id="users_stats_years">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('year')?>
+        </th>
+
+        <th>
+          <?=__('users_stats_years_created')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = date('Y'); $i >= $users_stats['oldest_account']; $i--) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=$i?>
+        </td>
+
+        <td class="bold">
+          <?=$users_stats['created_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
 
 </div>
 
