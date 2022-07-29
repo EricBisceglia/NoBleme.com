@@ -590,8 +590,12 @@ ___('ordinal_2_en', 'EN', "nd");
 ___('ordinal_2_en', 'FR', "nd");
 ___('ordinal_3_en', 'EN', "rd");
 ___('ordinal_3_en', 'FR', "rd");
+___('ordinal_0_fr', 'EN', "ème");
+___('ordinal_0_fr', 'FR', "ème");
 ___('ordinal_1_fr', 'EN', "er");
 ___('ordinal_1_fr', 'FR', "er");
+___('ordinal_2_fr', 'EN', "nd");
+___('ordinal_2_fr', 'FR', "nd");
 
 
 // Bilingual time indicator

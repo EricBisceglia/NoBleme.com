@@ -13,6 +13,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  number_display_format       Changes the formatting of a number.                                                  */
 /*  number_styling              Returns a styling depending on whether the number is positive, zero, or negative.    */
 /*                                                                                                                   */
+/*  number_ordinal              Returns the ordinal value of a number.                                               */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -112,4 +114,44 @@ function number_styling(  mixed $number                   ,
     return 'negative';
   else
     return 'neutral';
+}
+
+
+
+
+/**
+ * Returns the ordinal value of a number.
+ *
+ * @param   int     $number   The number for which we desire an ordinal value.
+ *
+ * @return  string            The ordinal value of the number.
+ */
+
+function number_ordinal( int $number )
+{
+  // Fetch the user's language
+  $lang = user_get_language();
+
+  // Grab the last digit of the number
+  $last_digit = $number % 10;
+
+  // Figure out the ordinal in french
+  if($lang == 'FR')
+  {
+    $ordinal = __('ordinal_0_fr');
+    $ordinal = ($number == 1) ? __('ordinal_1_fr') : $ordinal;
+    $ordinal = ($number == 2) ? __('ordinal_2_fr') : $ordinal;
+  }
+
+  // Figure out the ordinal in english
+  else
+  {
+    $ordinal = __('ordinal_0_en');
+    $ordinal = (($last_digit % 10) == 1) ? __('ordinal_1_en') : $ordinal;
+    $ordinal = (($last_digit % 10) == 2) ? __('ordinal_2_en') : $ordinal;
+    $ordinal = (($last_digit % 10) == 3) ? __('ordinal_3_en') : $ordinal;
+  }
+
+  // Return the ordinal
+  return $ordinal;
 }

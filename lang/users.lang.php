@@ -392,3 +392,14 @@ ___('users_stats_contrib_quotes_a', 'EN', "Quotes<br>approved");
 ___('users_stats_contrib_quotes_a', 'FR', "Citations<br>approuvées");
 ___('users_stats_contrib_tasks',    'EN', "Tasks<br>opened");
 ___('users_stats_contrib_tasks',    'FR', "Tâches<br>crées");
+
+
+// Anniversaries
+___('users_stats_anniv_date',   'EN', "Account<br>registration");
+___('users_stats_anniv_date',   'FR', "Création<br>du compte");
+___('users_stats_anniv_age',    'EN', "Account<br>anniversary");
+___('users_stats_anniv_age',    'FR', "Anniversaire<br>du compte");
+___('users_stats_anniv_days',   'EN', "Days to<br>anniversary");
+___('users_stats_anniv_days',   'FR', "Jours avant<br>anniversaire");
+___('users_stats_anniv_today',  'EN', "🎉");
+___('users_stats_anniv_today',  'FR', "🎉");

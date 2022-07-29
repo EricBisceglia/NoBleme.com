@@ -943,6 +943,10 @@ function users_guests_storage_length() : int
 
 function users_stats() : array
 {
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_time.inc.php');
+
   // Initialize the return array
   $data = array();
 
@@ -1017,6 +1021,37 @@ function users_stats() : array
 
   // Add the number of contributors to the return array
   $data['contrib_count'] = $i;
+
+  // Fetch anniversaries
+  $qusers = query(" SELECT    users_profile.created_at                AS 'up_date'  ,
+                              FROM_UNIXTIME(users_profile.created_at) AS 'up_anniv' ,
+                              ( TIMESTAMPDIFF(YEAR, FROM_UNIXTIME(users_profile.created_at), CURDATE())
+                              + 1 )                                   AS 'up_years' ,
+                              DATE_ADD(FROM_UNIXTIME(users_profile.created_at) ,
+                              INTERVAL YEAR(FROM_DAYS(DATEDIFF(CURDATE(), FROM_UNIXTIME(users_profile.created_at))-1))
+                              + 1 YEAR)                               AS 'up_days'  ,
+                              users.id                                AS 'u_id'     ,
+                              users.username                          AS 'u_nick'
+                    FROM      users_profile
+                    LEFT JOIN users ON users_profile.fk_users = users.id
+                    ORDER BY  CONCAT(SUBSTR(up_anniv, 6) < SUBSTR(CURDATE(), 6), SUBSTR(up_anniv, 6)) ASC
+                    LIMIT     100 ");
+
+  // Loop through anniversaries and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['anniv_id_'.$i]       = sanitize_output($row['u_id']);
+    $data['anniv_nick_'.$i]     = sanitize_output($row['u_nick']);
+    $data['anniv_years_'.$i]    = sanitize_output($row['up_years'].number_ordinal($row['up_years']));
+    $data['anniv_date_'.$i]     = sanitize_output(date_to_text($row['up_date'], strip_day: 1));
+    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_days'], 0, 10));
+    $data['anniv_days_'.$i]     = ($temp) ? sanitize_output($temp) : 0;
+    $data['anniv_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
+    $data['anniv_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
+  }
+
+  // Add the number of anniversaries to the return array
+  $data['anniv_count'] = $i;
 
   // Return the stats
   return $data;

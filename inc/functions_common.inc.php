@@ -32,7 +32,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  string_remove_accents               Removes accentuated latin characters from a string.                          */
 /*  string_increment                    Increments the last character of a string.                                   */
 /*                                                                                                                   */
-/*  date_french_ordinal                 Returns the french ordinal value of a number.                                */
 /*  date_to_text                        Transforms a MySQL date or a timestamp into a plaintext date.                */
 /*  date_to_ddmmyy                      Converts a mysql date to the DD/MM/YY format.                                */
 /*  date_to_mysql                       Converts a date to the mysql date format.                                    */
@@ -556,32 +555,6 @@ function string_increment( string $string ) : string
 /*                                             DATE FORMAT MANIPULATION                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-/**
- * Returns the french ordinal value of a number.
- *
- * Because date is not locale aware, we'll need to do some extra work here...
- * If we want ordinal numbers in dates in both french and english, we'll need to be able to return french ordinals.
- *
- * @param   int     $timestamp  The timestamp of the date to ordinalize.
- *
- * @return  string              The formatted output.
- */
-
-function date_french_ordinal( int $timestamp ) : string
-{
-  // Get the full day from the timestamp
-  $full_day = date('d', $timestamp);
-
-  // If the full day is 1, return an ordinal. Else, don't. French is simple with dates, isn't it?
-  if($full_day == 1)
-    return 'er';
-  else
-    return '';
-}
-
-
-
 
 /**
  * Transforms a MySQL date or a timestamp into a plaintext date.

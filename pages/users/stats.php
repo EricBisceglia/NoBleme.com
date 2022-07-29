@@ -3,9 +3,11 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/users.act.php'; # Actions
-include_once './../../lang/users.lang.php';   # Translations
+include_once './../../inc/includes.inc.php';          # Core
+include_once './../../inc/functions_numbers.inc.php'; # Number formatting
+include_once './../../inc/functions_time.inc.php';    # Time management
+include_once './../../actions/users.act.php';         # Actions
+include_once './../../lang/users.lang.php';           # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -33,8 +35,8 @@ $js = array('common/toggle', 'common/selector');
 $users_selector_entries = array(  'overall'       ,
                                   'years'         ,
                                   'contributions' ,
-                                  'birthdays'     ,
-                                  'anniversaries' );
+                                  'anniversaries' ,
+                                  'birthdays'     );
 
 // Define the default dropdown menu entry
 $users_selector_default = 'overall';
@@ -71,8 +73,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="overall"<?=$users_selector['menu']['overall']?>><?=__('stats_overall')?></option>
         <option value="years"<?=$users_selector['menu']['years']?>><?=__('stats_timeline')?></option>
         <option value="contributions"<?=$users_selector['menu']['contributions']?>><?=__('users_stats_selector_contributions')?></option>
-        <option value="birthdays"<?=$users_selector['menu']['birthdays']?>><?=__('users_stats_selector_birthdays')?></option>
         <option value="anniversaries"<?=$users_selector['menu']['anniversaries']?>><?=__('users_stats_selector_anniversaries')?></option>
+        <option value="birthdays"<?=$users_selector['menu']['birthdays']?>><?=__('users_stats_selector_birthdays')?></option>
       </select>
 
     </h5>
@@ -220,6 +222,74 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td>
           <?=$users_stats['contrib_tasks_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
+<?php /********************************************** ANNIVERSARIES ***********************************************/ ?>
+
+<div class="width_50 padding_top users_stats_section<?=$users_selector['hide']['anniversaries']?>" id="users_stats_anniversaries">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__('users_stats_anniv_age')?>
+        </th>
+
+        <th>
+          <?=__('users_stats_anniv_date')?>
+        </th>
+
+        <th>
+          <?=__('users_stats_anniv_days')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $users_stats['anniv_count']; $i++) { ?>
+
+      <tr<?=$users_stats['anniv_css_row_'.$i]?>>
+
+        <td>
+          <?=__link('pages/users/'.$users_stats['anniv_id_'.$i], $users_stats['anniv_nick_'.$i], style: $users_stats['anniv_css_link_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$users_stats['anniv_years_'.$i]?>
+        </td>
+
+        <td>
+          <?=$users_stats['anniv_date_'.$i]?>
+        </td>
+
+        <td>
+          <?php if($users_stats['anniv_days_'.$i]) { ?>
+          <?=$users_stats['anniv_days_'.$i]?>
+          <?php } else { ?>
+          <?=__('users_stats_anniv_today')?>
+          <?php } ?>
         </td>
 
       </tr>
