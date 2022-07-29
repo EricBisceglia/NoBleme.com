@@ -317,6 +317,11 @@ ___(':', 'EN', ":");
 ___(':', 'FR', " :");
 
 
+// Emojis
+___('emoji_tada', 'EN', "🎉");
+___('emoji_tada', 'FR', "🎉");
+
+
 // Buttons and labels
 ___('add',        'EN', "add");
 ___('add',        'FR', "créer");
@@ -529,6 +534,10 @@ ___('year',         'EN', "year");
 ___('year+',        'EN', "years");
 ___('year',         'FR', "année");
 ___('year+',        'FR', "années");
+___('year_age',     'EN', "year");
+___('year_age+',    'EN', "years");
+___('year_age',     'FR', "an");
+___('year_age+',    'FR', "ans");
 ___('year_short',   'EN', "y");
 ___('year_short',   'FR', "a");
 

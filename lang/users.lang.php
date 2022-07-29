@@ -349,11 +349,10 @@ ___('users_stats_selector_title',         'EN', "Users statistics");
 ___('users_stats_selector_title',         'FR', "Stats des comptes");
 ___('users_stats_selector_contributions', 'EN', "Contributions");
 ___('users_stats_selector_contributions', 'FR', "Contributions");
+___('users_stats_selector_anniversaries', 'EN', "Anniversaries");
+___('users_stats_selector_anniversaries', 'FR', "Comptiversaires");
 ___('users_stats_selector_birthdays',     'EN', "Birthdays");
 ___('users_stats_selector_birthdays',     'FR', "Anniversaires");
-___('users_stats_selector_anniversaries', 'EN', "Anniversaries");
-___('users_stats_selector_anniversaries', 'FR', "Âge des comptes");
-
 
 // Overall stats
 ___('users_stats_overall_summary',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/list|accounts}} have been registered on NoBleme.");
@@ -401,5 +400,10 @@ ___('users_stats_anniv_age',    'EN', "Account<br>anniversary");
 ___('users_stats_anniv_age',    'FR', "Anniversaire<br>du compte");
 ___('users_stats_anniv_days',   'EN', "Days to<br>anniversary");
 ___('users_stats_anniv_days',   'FR', "Jours avant<br>anniversaire");
-___('users_stats_anniv_today',  'EN', "🎉");
-___('users_stats_anniv_today',  'FR', "🎉");
+
+
+// Birthdays
+___('users_stats_birth_age',    'EN', "Upcoming age");
+___('users_stats_birth_age',    'FR', "Anniversaire");
+___('users_stats_birth_date',   'EN', "Birth date");
+___('users_stats_birth_date',   'FR', "Date de<br>naissance");

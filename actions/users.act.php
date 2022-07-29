@@ -1029,7 +1029,7 @@ function users_stats() : array
                               + 1 )                                   AS 'up_years' ,
                               DATE_ADD(FROM_UNIXTIME(users_profile.created_at) ,
                               INTERVAL YEAR(FROM_DAYS(DATEDIFF(CURDATE(), FROM_UNIXTIME(users_profile.created_at))-1))
-                              + 1 YEAR)                               AS 'up_days'  ,
+                              + 1 YEAR)                               AS 'up_next'  ,
                               users.id                                AS 'u_id'     ,
                               users.username                          AS 'u_nick'
                     FROM      users_profile
@@ -1044,14 +1044,53 @@ function users_stats() : array
     $data['anniv_nick_'.$i]     = sanitize_output($row['u_nick']);
     $data['anniv_years_'.$i]    = sanitize_output($row['up_years'].number_ordinal($row['up_years']));
     $data['anniv_date_'.$i]     = sanitize_output(date_to_text($row['up_date'], strip_day: 1));
-    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_days'], 0, 10));
-    $data['anniv_days_'.$i]     = ($temp) ? sanitize_output($temp) : 0;
+    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
+    $data['anniv_days_'.$i]     = ($temp) ? sanitize_output($temp) : __('emoji_tada');
     $data['anniv_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
     $data['anniv_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
   }
 
   // Add the number of anniversaries to the return array
   $data['anniv_count'] = $i;
+
+  // Fetch birthdays
+  $qusers = query(" SELECT    users_profile.birthday                  AS 'up_birthday'  ,
+                              YEAR(users_profile.birthday)            AS 'up_year'      ,
+                              ( TIMESTAMPDIFF(YEAR, users_profile.birthday, CURDATE())
+                              + 1 )                                   AS 'up_years'     ,
+                              DATE_ADD(users_profile.birthday ,
+                              INTERVAL YEAR(FROM_DAYS(DATEDIFF(CURDATE(), users_profile.birthday)-1))
+                              + 1 YEAR)                               AS 'up_next'      ,
+                              users.id                                AS 'u_id'         ,
+                              users.username                          AS 'u_nick'
+                    FROM      users_profile
+                    LEFT JOIN users ON users_profile.fk_users = users.id
+                    WHERE     users_profile.birthday        != '0000-00-00'
+                    AND       YEAR(users_profile.birthday)  <  YEAR(CURDATE())
+                    AND       MONTH(users_profile.birthday) > 0
+                    AND       DAY(users_profile.birthday)   > 0
+                    ORDER BY  CONCAT(SUBSTR(up_birthday, 6) < SUBSTR(CURDATE(), 6), SUBSTR(up_birthday, 6)) ASC
+                    LIMIT     10 ");
+
+  // Loop through birthdays and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['birth_id_'.$i]       = sanitize_output($row['u_id']);
+    $data['birth_nick_'.$i]     = sanitize_output($row['u_nick']);
+    $temp                       = ($row['up_next'] == date('Y-m-d', time())) ? ($row['up_years']-1) : $row['up_years'];
+    $temp                       = $temp.__('year_age', amount: $temp, spaces_before: 1);
+    $data['birth_years_'.$i]    = ($row['up_year']) ? sanitize_output($temp) : '?';
+    $temp                       = date_to_text($row['up_birthday'], strip_day: true, strip_year: true).' ????';
+    $temp                       = ($row['up_year']) ? date_to_text($row['up_birthday'], strip_day: true) : $temp;
+    $data['birth_date_'.$i]     = sanitize_output($temp);
+    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
+    $data['birth_days_'.$i]     = ($temp) ? sanitize_output($temp) : __('emoji_tada');
+    $data['birth_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
+    $data['birth_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
+  }
+
+  // Add the number of birthdays to the return array
+  $data['birth_count'] = $i;
 
   // Return the stats
   return $data;

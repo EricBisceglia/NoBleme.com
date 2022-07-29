@@ -285,11 +285,71 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
-          <?php if($users_stats['anniv_days_'.$i]) { ?>
           <?=$users_stats['anniv_days_'.$i]?>
-          <?php } else { ?>
-          <?=__('users_stats_anniv_today')?>
-          <?php } ?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
+<?php /************************************************ BIRTHDAYS *************************************************/ ?>
+
+<div class="width_50 padding_top users_stats_section<?=$users_selector['hide']['birthdays']?>" id="users_stats_birthdays">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__('users_stats_birth_age')?>
+        </th>
+
+        <th>
+          <?=__link('pages/users/profile_edit', __('users_stats_birth_date'))?>
+        </th>
+
+        <th>
+          <?=__('users_stats_anniv_days')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $users_stats['birth_count']; $i++) { ?>
+
+      <tr<?=$users_stats['birth_css_row_'.$i]?>>
+
+        <td>
+          <?=__link('pages/users/'.$users_stats['birth_id_'.$i], $users_stats['birth_nick_'.$i], style: $users_stats['birth_css_link_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$users_stats['birth_years_'.$i]?>
+        </td>
+
+        <td>
+          <?=$users_stats['birth_date_'.$i]?>
+        </td>
+
+        <td>
+          <?=$users_stats['birth_days_'.$i]?>
         </td>
 
       </tr>
