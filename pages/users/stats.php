@@ -160,6 +160,78 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+
+
+
+<?php /********************************************** CONTRIBUTORS ************************************************/ ?>
+
+<div class="width_50 padding_top users_stats_section<?=$users_selector['hide']['contributions']?>" id="users_stats_contributions">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('username')?>
+        </th>
+
+        <th>
+          <?=__('users_stats_contrib_total')?>
+        </th>
+
+        <th>
+          <?=__link('pages/quotes/stats?submitted', __('users_stats_contrib_quotes_s'))?>
+        </th>
+
+        <th>
+          <?=__link('pages/quotes/stats?submitted', __('users_stats_contrib_quotes_a'))?>
+        </th>
+
+        <th>
+          <?=__link('pages/tasks/stats?contributors', __('users_stats_contrib_tasks'))?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $users_stats['contrib_count']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('pages/users/'.$users_stats['contrib_id_'.$i], $users_stats['contrib_nick_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$users_stats['contrib_total_'.$i]?>
+        </td>
+
+        <td>
+          <?=$users_stats['contrib_quotes_s_'.$i]?>
+        </td>
+
+        <td>
+          <?=$users_stats['contrib_quotes_a_'.$i]?>
+        </td>
+
+        <td>
+          <?=$users_stats['contrib_tasks_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */

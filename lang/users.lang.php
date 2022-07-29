@@ -381,3 +381,14 @@ ___('users_stats_overall_more',     'FR', " Vous trouverez d'autres stats sur le
 // Timeline
 ___('users_stats_years_created',  'EN', "Accounts<br>created");
 ___('users_stats_years_created',  'FR', "Comptes<br>créés");
+
+
+// Contributions
+___('users_stats_contrib_total',    'EN', "Contribution<br>score");
+___('users_stats_contrib_total',    'FR', "Nombre de<br>contributions");
+___('users_stats_contrib_quotes_s', 'EN', "Quotes<br>submitted");
+___('users_stats_contrib_quotes_s', 'FR', "Citations<br>proposées");
+___('users_stats_contrib_quotes_a', 'EN', "Quotes<br>approved");
+___('users_stats_contrib_quotes_a', 'FR', "Citations<br>approuvées");
+___('users_stats_contrib_tasks',    'EN', "Tasks<br>opened");
+___('users_stats_contrib_tasks',    'FR', "Tâches<br>crées");

@@ -988,6 +988,36 @@ function users_stats() : array
   // Add the oldest account creation year to the return data
   $data['oldest_account'] = $oldest_year;
 
+  // Fetch user contributions
+  $qusers = query(" SELECT    SUM(  users_stats.quotes_approved
+                                  + users_stats.tasks_submitted ) AS 'us_contrib'   ,
+                              users_stats.quotes_submitted        AS 'us_quotes_s'  ,
+                              users_stats.quotes_approved         AS 'us_quotes_a'  ,
+                              users_stats.tasks_submitted         AS 'us_tasks'     ,
+                              users.id                            AS 'u_id'         ,
+                              users.username                      AS 'u_nick'
+                    FROM      users_stats
+                    LEFT JOIN users ON users_stats.fk_users = users.id
+                    WHERE     ( users_stats.quotes_approved
+                              + users_stats.tasks_submitted ) > 0
+                    GROUP BY  users_stats.fk_users
+                    ORDER BY  us_contrib      DESC  ,
+                              users.username  ASC   ");
+
+  // Loop through contributions and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['contrib_id_'.$i]       = sanitize_output($row['u_id']);
+    $data['contrib_nick_'.$i]     = sanitize_output($row['u_nick']);
+    $data['contrib_total_'.$i]    = sanitize_output($row['us_contrib']);
+    $data['contrib_quotes_s_'.$i] = ($row['us_quotes_s']) ? sanitize_output($row['us_quotes_s']) : '';
+    $data['contrib_quotes_a_'.$i] = ($row['us_quotes_a']) ? sanitize_output($row['us_quotes_a']) : '';
+    $data['contrib_tasks_'.$i]    = ($row['us_tasks']) ? sanitize_output($row['us_tasks']) : '';
+  }
+
+  // Add the number of contributors to the return array
+  $data['contrib_count'] = $i;
+
   // Return the stats
   return $data;
 }
