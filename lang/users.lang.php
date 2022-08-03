@@ -384,13 +384,13 @@ ___('users_stats_years_created',  'FR', "Comptes<br>créés");
 
 // Contributions
 ___('users_stats_contrib_total',    'EN', "Contribution<br>score");
-___('users_stats_contrib_total',    'FR', "Nombre de<br>contributions");
+___('users_stats_contrib_total',    'FR', "Score des<br>contributions");
 ___('users_stats_contrib_quotes_s', 'EN', "Quotes<br>submitted");
 ___('users_stats_contrib_quotes_s', 'FR', "Citations<br>proposées");
 ___('users_stats_contrib_quotes_a', 'EN', "Quotes<br>approved");
 ___('users_stats_contrib_quotes_a', 'FR', "Citations<br>approuvées");
-___('users_stats_contrib_tasks',    'EN', "Tasks<br>opened");
-___('users_stats_contrib_tasks',    'FR', "Tâches<br>crées");
+___('users_stats_contrib_tasks',    'EN', "Task<br>proposals");
+___('users_stats_contrib_tasks',    'FR', "Tâches<br>proposées");
 
 
 // Anniversaries
