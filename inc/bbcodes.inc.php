@@ -571,14 +571,14 @@ function nbcodes( string  $message                                              
   // [copypasta=unique_id]Some text[/copypasta]
 
   // Handle this with a regex
-  $message = preg_replace('/\[copypasta\=(.*?)\](.*?)\[\/copypasta\]/is','<pre onclick="to_clipboard(\' \', \'copypasta_$1\', true);" class="monospace spaced dowrap nbcode_copypasta" id="copypasta_$1">$2</pre>', $message);
+  $message = preg_replace('/\[copypasta\=(.*?)\](.*?)\[\/copypasta\]/is','<pre class="monospace spaced dowrap nbcode_copypasta" id="copypasta_$1">$2</pre>', $message);
 
 
   /*******************************************************************************************************************/
   // [copypasta-nsfw=unique_id]Some text[/copypasta-nsfw]
 
   // Handle this with a regex
-  $message = preg_replace('/\[copypasta-nsfw\=(.*?)\](.*?)\[\/copypasta-nsfw\]/is','<pre onclick="to_clipboard(\' \', \'copypasta_$1\', true);" class="monospace spaced dowrap nbcode_copypasta'.$blurring3.'"'.$unblur.' id="copypasta_$1">$2</pre>', $message);
+  $message = preg_replace('/\[copypasta-nsfw\=(.*?)\](.*?)\[\/copypasta-nsfw\]/is','<pre class="monospace spaced dowrap nbcode_copypasta'.$blurring3.'"'.$unblur.' id="copypasta_$1">$2</pre>', $message);
 
 
   /*******************************************************************************************************************/
