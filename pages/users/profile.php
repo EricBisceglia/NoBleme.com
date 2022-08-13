@@ -145,7 +145,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php if(!$profile_data['hideact']) { ?>
     <div class="profile_info_box_<?=$mode?>">
-      <span class="bold"><?=__('users_profile_activity')?></span><br>
+      <span class="bold"><?=__('users_profile_visit')?></span><br>
       <?=$profile_data['activity']?>
     </div>
     <?php } ?>
@@ -166,7 +166,44 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   </div>
 
-  <?php if($is_moderator && $profile_id) { ?>
+  <?php if($profile_data['contribs']) { ?>
+
+  <div class="profile_box_<?=$mode?> profile_info">
+
+    <div class="profile_info_box_<?=$mode?> glow_dark text_red bold">
+      <?=__('users_profile_activity')?>
+    </div>
+
+    <?php if($profile_data['quotes'] || $profile_data['quotes_app']) { ?>
+
+    <div class="profile_info_box_<?=$mode?>">
+      <span class="bold"><?=__('submenu_social_quotes_list')?></span><br>
+      <?php if($profile_data['quotes']) { ?>
+      <?=__link('pages/quotes/list?user='.$profile_data['id'], __('users_profile_quotes', amount: $profile_data['quotes'], preset_values: array($profile_data['quotes'])))?><br>
+      <?php } if($profile_data['quotes_app']) { ?>
+        <?=__link('pages/quotes/stats?submitted', __('users_profile_quotesub', amount: $profile_data['quotes_app'], preset_values: array($profile_data['quotes_app'])))?>
+      <?php } ?>
+    </div>
+
+    <?php } if($profile_data['meetups']) { ?>
+
+    <div class="profile_info_box_<?=$mode?>">
+      <span class="bold"><?=__('submenu_social_meetups')?></span><br>
+      <?=__link('pages/meetups/list?attendee='.$profile_data['id'], __('users_profile_meetups', amount: $profile_data['meetups'], preset_values: array($profile_data['meetups'])))?>
+    </div>
+
+    <?php } if($profile_data['tasks']) { ?>
+
+    <div class="profile_info_box_<?=$mode?>">
+      <span class="bold"><?=__('submenu_nobleme_todolist')?></span><br>
+      <?=__link('pages/tasks/stats?contributors', __('users_profile_tasksub', amount: $profile_data['tasks'], preset_values: array($profile_data['tasks'])))?>
+    </div>
+
+    <?php } ?>
+
+  </div>
+
+  <?php } if($is_moderator && $profile_id) { ?>
 
   <div class="profile_box_<?=$mode?> profile_info profile_admin">
 

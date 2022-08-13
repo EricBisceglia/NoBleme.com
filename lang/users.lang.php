@@ -184,12 +184,33 @@ ___('users_profile_country',    'EN', "Country / Location");
 ___('users_profile_country',    'FR', "Pays / Localisation");
 ___('users_profile_created',    'EN', "Account registration");
 ___('users_profile_created',    'FR', "Création du compte");
-___('users_profile_activity',   'EN', "Latest visit");
-___('users_profile_activity',   'FR', "Dernière visite");
+___('users_profile_visit',      'EN', "Latest visit");
+___('users_profile_visit',      'FR', "Dernière visite");
 ___('users_profile_age',        'EN', "Age");
 ___('users_profile_age',        'FR', "Âge");
 ___('users_profile_age_years',  'EN', "{{1}} years old");
 ___('users_profile_age_years',  'FR', "{{1}} ans");
+
+
+// Website activity
+___('users_profile_activity',   'EN', "Activity on NoBleme");
+___('users_profile_activity',   'FR', "Activité sur NoBleme");
+___('users_profile_quotes',     'EN', "Appears in {{1}} quote");
+___('users_profile_quotes+',    'EN', "Appears in {{1}} quotes");
+___('users_profile_quotes',     'FR', "Apparaît dans {{1}} citation");
+___('users_profile_quotes+',    'FR', "Apparaît dans {{1}} citations");
+___('users_profile_quotesub',   'EN', "Contributed {{1}} quote");
+___('users_profile_quotesub+',  'EN', "Contributed {{1}} quotes");
+___('users_profile_quotesub',   'FR', "A contribué {{1}} citation");
+___('users_profile_quotesub+',  'FR', "A contribué {{1}} citations");
+___('users_profile_meetups',    'EN', "Attended {{1}} meetup");
+___('users_profile_meetups+',   'EN', "Attended {{1}} meetups");
+___('users_profile_meetups',    'FR', "A participé à {{1}} rencontre IRL");
+___('users_profile_meetups+',   'FR', "A participé à {{1}} rencontres IRL");
+___('users_profile_tasksub',    'EN', "Submitted {{1}} task");
+___('users_profile_tasksub+',   'EN', "Submitted {{1}} tasks");
+___('users_profile_tasksub',    'FR', "A proposé {{1}} tâche");
+___('users_profile_tasksub+',   'FR', "A proposé {{1}} tâches");
 
 
 // Admin info

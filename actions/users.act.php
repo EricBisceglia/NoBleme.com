@@ -83,10 +83,15 @@ function user_get( ?int $user_id = NULL ) : mixed
                                                 users_profile.profile_text_en     AS 'u_text_en'      ,
                                                 users_profile.profile_text_fr     AS 'u_text_fr'      ,
                                                 users_profile.email_address       AS 'u_mail'         ,
-                                                users_settings.hide_from_activity AS 'u_hideact'
+                                                users_settings.hide_from_activity AS 'u_hideact'      ,
+                                                users_stats.quotes                AS 'us_quotes'      ,
+                                                users_stats.quotes_approved       AS 'us_quotes_app'  ,
+                                                users_stats.meetups               AS 'us_meetups'     ,
+                                                users_stats.tasks_submitted       AS 'us_tasks_sub'
                                       FROM      users
                                       LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
                                       LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+                                      LEFT JOIN users_stats     ON users_stats.fk_users     = users.id
                                       WHERE     users.id = '$user_id' "));
 
   // Get the current user's language
@@ -136,6 +141,11 @@ function user_get( ?int $user_id = NULL ) : mixed
   $data['lastaction'] = sanitize_output($temp);
   $temp               = string_change_case(__('none_f'), 'initials');
   $data['email']      = ($duser['u_mail']) ? sanitize_output($duser['u_mail']) : $temp;
+  $data['quotes']     = sanitize_output($duser['us_quotes']);
+  $data['quotes_app'] = sanitize_output($duser['us_quotes_app']);
+  $data['meetups']    = sanitize_output($duser['us_meetups']);
+  $data['tasks']      = sanitize_output($duser['us_tasks_sub']);
+  $data['contribs']   = $duser['us_quotes'] + $duser['us_quotes_app'] + $duser['us_meetups'] + $duser['us_tasks_sub'];
 
   // Return the array
   return $data;
