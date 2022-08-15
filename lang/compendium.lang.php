@@ -1029,6 +1029,31 @@ ___('compendium_admin_notes_url',         'FR', "Liens");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Overall stats
+___('compendium_stats_overall_pages',       'EN', "There are currently <span class=\"bold\">{{1}}</span> pages in the {{link|pages/compendium/index|21st century compendium}}.");
+___('compendium_stats_overall_pages',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> pages dans le {{link|pages/compendium/index|compendium du 21ème siècle}}.");
+___('compendium_stats_overall_nsfw',        'EN', "<span class=\"bold\">{{1}}</span> page ({{2}}) is marked as not safe for work.");
+___('compendium_stats_overall_nsfw+',       'EN', "<span class=\"bold\">{{1}}</span> pages ({{2}}) are marked as not safe for work.");
+___('compendium_stats_overall_nsfw',        'FR', "<span class=\"bold\">{{1}}</span> page ({{2}}) couvre un sujet non approprié pour lecture sur un lieu de travail.");
+___('compendium_stats_overall_nsfw+',       'FR', "<span class=\"bold\">{{1}}</span> pages ({{2}}) couvrent des sujets non appropriés pour lecture sur un lieu de travail.");
+___('compendium_stats_overall_gross',       'EN', "<span class=\"bold\">{{1}}</span> page ({{2}}) contains gross contents.");
+___('compendium_stats_overall_gross+',      'EN', "<span class=\"bold\">{{1}}</span> pages ({{2}}) contain gross contents.");
+___('compendium_stats_overall_gross',       'FR', "<span class=\"bold\">{{1}}</span> page ({{2}}) inclut du contenus dégueulasse et/ou gore.");
+___('compendium_stats_overall_gross+',      'FR', "<span class=\"bold\">{{1}}</span> pages ({{2}}) incluent des contenus dégueulasses et/ou gores.");
+___('compendium_stats_overall_offensive',   'EN', "<span class=\"bold\">{{1}}</span> page ({{2}}) covers an offensive topic.");
+___('compendium_stats_overall_offensive+',  'EN', "<span class=\"bold\">{{1}}</span> pages ({{2}}) cover offensive topics.");
+___('compendium_stats_overall_offensive',   'FR', "<span class=\"bold\">{{1}}</span> page ({{2}}) documente un sujet offensant.");
+___('compendium_stats_overall_offensive+',  'FR', "<span class=\"bold\">{{1}}</span> pages ({{2}}) documentent des sujets offensants.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                 MISSION STATEMENT                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

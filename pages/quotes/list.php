@@ -96,7 +96,7 @@ $quotes_list = quotes_list( $quotes_search    ,
 if($quotes_user_id)
   $quotes_filter = sanitize_output(user_get_username((int)$quotes_user_id));
 else if($quotes_year == -1)
-  $quotes_filter = __('quotes_count_undated', preset_values: array(quotes_get_oldest_year()));
+  $quotes_filter = __('quotes_count_undated', preset_values: array(quotes_stats_get_oldest_year()));
 else if($quotes_year)
   $quotes_filter = sanitize_output((int)$quotes_year);
 else

@@ -30,7 +30,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
 /*  compendium_images_assemble_links          Lists all compendium pages containing an image in a usable format.     */
 /*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
-/*  compendium_pages_update_pageviews         Updates the pageview count for an existing compendium image.           */
+/*  compendium_images_update_pageviews        Updates the pageview count for an existing compendium image.           */
 /*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
 /*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
@@ -68,6 +68,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_list_years              Fetches the years in which compendium images have been uploaded.       */
 /*  compendium_appearance_list_years          Fetches the years at which compendium content has appeared.            */
 /*  compendium_peak_list_years                Fetches the years at which compendium content has peaked.              */
+/*                                                                                                                   */
+/*  compendium_stats_list                     Returns stats related to the compendium.                               */
 /*                                                                                                                   */
 /*  compendium_format_url                     Formats a compendium page url.                                         */
 /*  compendium_format_title                   Formats a compendium page title.                                       */
@@ -4207,6 +4209,54 @@ function compendium_peak_list_years(bool $admin_view = false) : array
   $data['rows'] = $i;
 
   // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns stats related to the compendium.
+ *
+ * @return  array   An array of stats related to the compendium.
+ */
+
+function compendium_stats_list() : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the user's language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the total number of pages
+  $dpages = mysqli_fetch_array(query("  SELECT  COUNT(*)                            AS 'cp_total'     ,
+                                                SUM(compendium_pages.is_nsfw)       AS 'cp_nsfw'      ,
+                                                SUM(compendium_pages.is_gross)      AS 'cp_gross'     ,
+                                                SUM(compendium_pages.is_offensive)  AS 'cp_offensive'
+                                        FROM    compendium_pages
+                                        WHERE   compendium_pages.is_deleted         = 0
+                                        AND     compendium_pages.is_draft           = 0
+                                        AND     compendium_pages.redirection_$lang  = ''
+                                        AND     compendium_pages.title_$lang       != '' "));
+
+  // Add some stats to the return array
+  $data['pages']      = sanitize_output($dpages['cp_total']);
+  $data['nsfw']       = sanitize_output($dpages['cp_nsfw']);
+  $temp               = maths_percentage_of($dpages['cp_nsfw'], $dpages['cp_total']);
+  $data['nsfwp']      = number_display_format($temp, 'percentage');
+  $data['gross']      = sanitize_output($dpages['cp_gross']);
+  $temp               = maths_percentage_of($dpages['cp_gross'], $dpages['cp_total']);
+  $data['grossp']     = number_display_format($temp, 'percentage');
+  $data['offensive']  = sanitize_output($dpages['cp_offensive']);
+  $temp               = maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']);
+  $data['offensivep'] = number_display_format($temp, 'percentage');
+
+  // Return the stats
   return $data;
 }
 

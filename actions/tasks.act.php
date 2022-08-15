@@ -30,10 +30,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_milestones_edit           Modifies a task milestone.                                                       */
 /*  tasks_milestones_delete         Deletes a task milestone.                                                        */
 /*                                                                                                                   */
-/*  tasks_stats                     Returns stats related to tasks.                                                  */
-/*                                                                                                                   */
-/*  tasks_user_recalculate_stats    Recalculates tasks statistics for a specific user.                               */
-/*  tasks_recalculate_all_stats     Recalculates global tasks statistics.                                            */
+/*  tasks_stats_list                Returns stats related to tasks.                                                  */
+/*  tasks_stats_recalculate_user    Recalculates tasks statistics for a specific user.                               */
+/*  tasks_stats_recalculate_all     Recalculates global tasks statistics.                                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -466,7 +465,7 @@ function tasks_add( array $contents ) : mixed
     irc_bot_send_message("A new task has been added to the to-do list by $admin_username : $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($user_id);
+  tasks_stats_recalculate_user($user_id);
 
   // Return the task's id
   return $task_id;
@@ -643,7 +642,7 @@ EOT;
                           hide_admin_mail: true   );
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($user_id);
+  tasks_stats_recalculate_user($user_id);
 
   // If the task is private or must be created silently, stop here and return null
   if($task_private || $task_silent)
@@ -853,7 +852,7 @@ function tasks_solve( int     $task_id              ,
   }
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($task_data['creator_id']);
+  tasks_stats_recalculate_user($task_data['creator_id']);
 
   // If stealthy mode is requested or the author is the one currently approving the task, stop here
   if($is_stealthy || $task_data['creator_id'] == user_get_id())
@@ -965,7 +964,7 @@ function tasks_edit(  int     $task_id  ,
           WHERE       dev_tasks.id                        = '$task_id'        ");
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($task_author);
+  tasks_stats_recalculate_user($task_author);
 
   // All went well, return null
   return null;
@@ -1012,7 +1011,7 @@ function tasks_delete( int $task_id ) : void
                         global_type_wipe: true      );
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($task_data['creator_id']);
+  tasks_stats_recalculate_user($task_data['creator_id']);
 }
 
 
@@ -1047,7 +1046,7 @@ function tasks_restore( int $task_id ) : void
           WHERE   dev_tasks.id          = '$task_id' ");
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($task_data['creator_id']);
+  tasks_stats_recalculate_user($task_data['creator_id']);
 }
 
 
@@ -1085,7 +1084,7 @@ function tasks_delete_hard( int $task_id ) : void
           WHERE       dev_tasks.id = '$task_id' ");
 
   // Recalculate stats for the task's submitter
-  tasks_user_recalculate_stats($task_data['creator_id']);
+  tasks_stats_recalculate_user($task_data['creator_id']);
 }
 
 
@@ -1419,7 +1418,7 @@ function tasks_milestones_delete( int $milestone_id = 0 ) : void
  * @return  array   An array of stats related to tasks.
  */
 
-function tasks_stats() : array
+function tasks_stats_list() : array
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
@@ -1645,7 +1644,7 @@ function tasks_stats() : array
  * @return  void
  */
 
-function tasks_user_recalculate_stats( int $user_id )
+function tasks_stats_recalculate_user( int $user_id )
 {
   // Sanitize the user's id
   $user_id = sanitize($user_id, 'int', 0);
@@ -1684,7 +1683,7 @@ function tasks_user_recalculate_stats( int $user_id )
  * @return  void
  */
 
-function tasks_recalculate_all_stats()
+function tasks_stats_recalculate_all()
 {
   // Fetch every user id
   $qusers = query(" SELECT    users.id AS 'u_id'
@@ -1695,6 +1694,6 @@ function tasks_recalculate_all_stats()
   while($dusers = mysqli_fetch_array($qusers))
   {
     $user_id = sanitize($dusers['u_id'], 'int', 0);
-    tasks_user_recalculate_stats($user_id);
+    tasks_stats_recalculate_user($user_id);
   }
 }

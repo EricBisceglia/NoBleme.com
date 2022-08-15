@@ -23,11 +23,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  quotes_link_user                Links a user to an existing quote.                                               */
 /*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
 /*                                                                                                                   */
-/*  quotes_stats                    Returns stats related to quotes.                                                 */
-/*  quotes_get_oldest_year          Returns the year in which the oldest quote took place.                           */
-/*                                                                                                                   */
-/*  quotes_user_recalculate_stats   Recalculates quote database statistics for a specific user.                      */
-/*  quotes_recalculate_all_stats    Recalculates global quote database statistics.                                   */
+/*  quotes_stats_list               Returns stats related to quotes.                                                 */
+/*  quotes_stats_get_oldest_year    Returns the year in which the oldest quote took place.                           */
+/*  quotes_stats_recalculate_user   Recalculates quote database statistics for a specific user.                      */
+/*  quotes_stats_recalculate_all    Recalculates global quote database statistics.                                   */
 /*                                                                                                                   */
 /*  user_setting_quotes             Returns the quote related settings of the current user.                          */
 /*                                                                                                                   */
@@ -358,7 +357,7 @@ EOT;
   }
 
   // Recalculate the linked users' stats
-  quotes_user_recalculate_stats($submitter_id);
+  quotes_stats_recalculate_user($submitter_id);
 
   // Return the new quote's id
   return $quote_id;
@@ -414,7 +413,7 @@ function quotes_edit( int   $quote_id   ,
   }
 
   // Recalculate the quote submitter's stats
-  quotes_user_recalculate_stats($quote_data['submitter_id']);
+  quotes_stats_recalculate_user($quote_data['submitter_id']);
 }
 
 
@@ -464,11 +463,11 @@ function quotes_delete( int   $quote_id             ,
           WHERE   quotes.id         = '$quote_id' ");
 
   // Recalculate the quote submitter's stats
-  quotes_user_recalculate_stats($quote_data['submitter_id']);
+  quotes_stats_recalculate_user($quote_data['submitter_id']);
 
   // Recalculate the linked users' stats
   for($i = 0; $i < $quote_users['rows']; $i++)
-    quotes_user_recalculate_stats($quote_users[$i]['id']);
+    quotes_stats_recalculate_user($quote_users[$i]['id']);
 
   // Return that the quote was properly deleted
   if($hard_delete)
@@ -514,14 +513,14 @@ function quotes_restore( int $quote_id ) : string
   $quote_data = quotes_get($quote_id);
 
   // Recalculate the quote submitter's stats
-  quotes_user_recalculate_stats($quote_data['submitter_id']);
+  quotes_stats_recalculate_user($quote_data['submitter_id']);
 
   // Fetch the users linked to the quote
   $quote_users = quotes_get_linked_users($quote_id);
 
   // Recalculate the linked users' stats
   for($i = 0; $i < $quote_users['rows']; $i++)
-    quotes_user_recalculate_stats($quote_users[$i]['id']);
+    quotes_stats_recalculate_user($quote_users[$i]['id']);
 
   // Return that the quote was restored
   return __('quotes_restore_ok');
@@ -628,14 +627,14 @@ EOT;
   $quote_data = quotes_get($quote_id);
 
   // Recalculate the quote submitter's stats
-  quotes_user_recalculate_stats($quote_data['submitter_id']);
+  quotes_stats_recalculate_user($quote_data['submitter_id']);
 
   // Fetch the users linked to the quote
   $quote_users = quotes_get_linked_users($quote_id);
 
   // Recalculate the linked users' stats
   for($i = 0; $i < $quote_users['rows']; $i++)
-    quotes_user_recalculate_stats($quote_users[$i]['id']);
+    quotes_stats_recalculate_user($quote_users[$i]['id']);
 
   // All went well
   return NULL;
@@ -811,7 +810,7 @@ function quotes_link_user(  int     $quote_id ,
                       quotes_users.fk_users   = '$user_id'  ");
 
   // Recalculate the linked users' stats
-  quotes_user_recalculate_stats($user_id);
+  quotes_stats_recalculate_user($user_id);
 
   // ALl went well
   return NULL;
@@ -853,7 +852,7 @@ function quotes_unlink_user(  int     $quote_id ,
           AND         quotes_users.fk_users   = '$user_id' ");
 
    // Recalculate the linked users' stats
-   quotes_user_recalculate_stats($user_id);
+   quotes_stats_recalculate_user($user_id);
 }
 
 
@@ -865,7 +864,7 @@ function quotes_unlink_user(  int     $quote_id ,
  * @return  array   An array of stats related to quotes.
  */
 
-function quotes_stats() : array
+function quotes_stats_list() : array
 {
   // Check if the required files have been included
   require_included_file('functions_numbers.inc.php');
@@ -875,7 +874,7 @@ function quotes_stats() : array
   $data = array();
 
   // Add the oldest quote's year to the return array
-  $data['oldest_year'] = quotes_get_oldest_year();
+  $data['oldest_year'] = quotes_stats_get_oldest_year();
 
   // Fetch the total number of quotes
   $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)              AS 'q_total'    ,
@@ -1025,7 +1024,7 @@ function quotes_stats() : array
  * @return  int   The oldest quote's year.
  */
 
-function quotes_get_oldest_year() : int
+function quotes_stats_get_oldest_year() : int
 {
   // Look up the oldest quote
   $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
@@ -1049,7 +1048,7 @@ function quotes_get_oldest_year() : int
  * @return  void
  */
 
-function quotes_user_recalculate_stats( int $user_id )
+function quotes_stats_recalculate_user( int $user_id )
 {
   // Sanitize the user's id
   $user_id = sanitize($user_id, 'int', 0);
@@ -1154,7 +1153,7 @@ function quotes_user_recalculate_stats( int $user_id )
  * @return  void
  */
 
-function quotes_recalculate_all_stats()
+function quotes_stats_recalculate_all()
 {
   // Fetch every user id
   $qusers = query(" SELECT    users.id AS 'u_id'
@@ -1165,7 +1164,7 @@ function quotes_recalculate_all_stats()
   while($dusers = mysqli_fetch_array($qusers))
   {
     $user_id = sanitize($dusers['u_id'], 'int', 0);
-    quotes_user_recalculate_stats($user_id);
+    quotes_stats_recalculate_user($user_id);
   }
 }
 

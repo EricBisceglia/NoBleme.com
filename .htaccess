@@ -26,6 +26,7 @@ RewriteCond %{THE_REQUEST} !/image [NC]
 RewriteCond %{THE_REQUEST} !/mission_statement [NC]
 RewriteCond %{THE_REQUEST} !/page_ [NC]
 RewriteCond %{THE_REQUEST} !/random_ [NC]
+RewriteCond %{THE_REQUEST} !/stats [NC]
 RewriteRule ^pages/compendium/(.*)$ pages/compendium/page.php?page=$1 [QSA,NC]
 
 # Actively get rid of .php extension

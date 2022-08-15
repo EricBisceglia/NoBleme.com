@@ -26,10 +26,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_list_years                  Fetches the years at which meetups happened.                                 */
 /*  meetups_get_max_attendees           Fetches the highest number of attendees in a meetup.                         */
 /*                                                                                                                   */
-/*  meetups_stats                       Returns stats related to meetups.                                            */
-/*                                                                                                                   */
-/*  meetups_user_recalculate_stats      Recalculates meetups statistics for a specific user.                         */
-/*  meetups_recalculate_all_stats       Recalculates meetups statistics.                                             */
+/*  meetups_stats_list                  Returns stats related to meetups.                                            */
+/*  meetups_stats_recalculate_user      Recalculates meetups statistics for a specific user.                         */
+/*  meetups_stats_recalculate_all       Recalculates meetups statistics.                                             */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -471,7 +470,7 @@ function meetups_edit(  int   $meetup_id  ,
   for($i = 0; $i < $meetup_users['rows']; $i++)
   {
     if($meetup_users[$i]['user_id'])
-      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+      meetups_stats_recalculate_user($meetup_users[$i]['user_id']);
   }
 
   // All went well
@@ -569,7 +568,7 @@ function meetups_delete( int $meetup_id ) : void
   for($i = 0; $i < $meetup_users['rows']; $i++)
   {
     if($meetup_users[$i]['user_id'])
-      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+      meetups_stats_recalculate_user($meetup_users[$i]['user_id']);
   }
 
   // End the function so that the js awaiting a callback doesn't get hung up
@@ -667,7 +666,7 @@ function meetups_restore( int $meetup_id ) : void
   for($i = 0; $i < $meetup_users['rows']; $i++)
   {
     if($meetup_users[$i]['user_id'])
-      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+      meetups_stats_recalculate_user($meetup_users[$i]['user_id']);
   }
 
   // End the function so that the js awaiting a callback doesn't get hung up
@@ -723,7 +722,7 @@ function meetups_hard_delete( int $meetup_id ) : void
   for($i = 0; $i < $meetup_users['rows']; $i++)
   {
     if($meetup_users[$i]['user_id'])
-      meetups_user_recalculate_stats($meetup_users[$i]['user_id']);
+      meetups_stats_recalculate_user($meetup_users[$i]['user_id']);
   }
 
   // End the function so that the js awaiting a callback doesn't get hung up
@@ -988,7 +987,7 @@ function meetups_attendees_add( int   $meetup_id  ,
 
   // Recalculate the user's meetup stats if they have an account
   if($account_id)
-    meetups_user_recalculate_stats($account_id);
+    meetups_stats_recalculate_user($account_id);
 }
 
 
@@ -1138,9 +1137,9 @@ function meetups_attendees_edit(  int   $attendee_id  ,
 
   // Recalculate the user's meetup stats if they have an account
   if($old_user_id)
-    meetups_user_recalculate_stats($old_user_id);
+    meetups_stats_recalculate_user($old_user_id);
   if($account_id)
-    meetups_user_recalculate_stats($account_id);
+    meetups_stats_recalculate_user($account_id);
 }
 
 
@@ -1266,7 +1265,7 @@ function meetups_attendees_delete( int $attendee_id ) : mixed
 
   // Recalculate the user's meetup stats if they have an account
   if($account_id)
-    meetups_user_recalculate_stats($account_id);
+    meetups_stats_recalculate_user($account_id);
 
   // All went well
   return NULL;
@@ -1359,7 +1358,7 @@ function meetups_get_max_attendees() : int
  * @return  array   An array of stats related to meetups.
  */
 
-function meetups_stats() : array
+function meetups_stats_list() : array
 {
   // Initialize the return array
   $data = array();
@@ -1518,7 +1517,7 @@ function meetups_stats() : array
  * @return  void
  */
 
-function meetups_user_recalculate_stats( int $user_id )
+function meetups_stats_recalculate_user( int $user_id )
 {
   // Sanitize the user's id
   $user_id = sanitize($user_id, 'int', 0);
@@ -1609,7 +1608,7 @@ function meetups_user_recalculate_stats( int $user_id )
  * @return  void
  */
 
-function meetups_recalculate_all_stats()
+function meetups_stats_recalculate_all()
 {
   // Fetch every user id
   $qusers = query(" SELECT    users.id AS 'u_id'
@@ -1620,6 +1619,6 @@ function meetups_recalculate_all_stats()
   while($dusers = mysqli_fetch_array($qusers))
   {
     $user_id = sanitize($dusers['u_id'], 'int', 0);
-    meetups_user_recalculate_stats($user_id);
+    meetups_stats_recalculate_user($user_id);
   }
 }

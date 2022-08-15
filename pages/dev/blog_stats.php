@@ -26,7 +26,7 @@ $page_description = "Statistics generated from NoBleme's development blogs";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch devblog stats
 
-$dev_blogs_stats = dev_blogs_stats();
+$dev_blogs_stats = dev_blogs_stats_list();
 
 
 

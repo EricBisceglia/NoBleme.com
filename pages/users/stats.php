@@ -51,7 +51,7 @@ $users_selector = page_section_selector(           $users_selector_entries  ,
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch users stats
 
-$users_stats = users_stats();
+$users_stats = users_stats_list();
 
 
 

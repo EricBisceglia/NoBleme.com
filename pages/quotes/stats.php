@@ -54,7 +54,7 @@ $quotes_selector = page_section_selector(           $quotes_selector_entries  ,
 if(isset($_GET['recalculate']) && user_is_administrator())
 {
   // Recalculate the stats
-  quotes_recalculate_all_stats();
+  quotes_stats_recalculate_all();
 
   // Reload the page in its default state
   exit(header("Location: ".$path."pages/quotes/stats"));
@@ -66,7 +66,7 @@ if(isset($_GET['recalculate']) && user_is_administrator())
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch quote stats
 
-$quotes_stats = quotes_stats();
+$quotes_stats = quotes_stats_list();
 
 
 

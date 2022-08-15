@@ -52,7 +52,7 @@ $meetups_selector = page_section_selector(            $meetups_selector_entries 
 if(isset($_GET['recalculate']) && user_is_administrator())
 {
   // Recalculate the stats
-  meetups_recalculate_all_stats();
+  meetups_stats_recalculate_all();
 
   // Reload the page in its default state
   exit(header("Location: ".$path."pages/meetups/stats"));
@@ -64,7 +64,7 @@ if(isset($_GET['recalculate']) && user_is_administrator())
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch meetup stats
 
-$meetups_stats = meetups_stats();
+$meetups_stats = meetups_stats_list();
 
 
 

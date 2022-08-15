@@ -57,7 +57,7 @@ $tasks_selector = page_section_selector(           $tasks_selector_entries  ,
 if(isset($_GET['recalculate']) && user_is_administrator())
 {
   // Recalculate the stats
-  tasks_recalculate_all_stats();
+  tasks_stats_recalculate_all();
 
   // Reload the page in its default state
   exit(header("Location: ".$path."pages/tasks/stats"));
@@ -69,7 +69,7 @@ if(isset($_GET['recalculate']) && user_is_administrator())
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch tasks stats
 
-$tasks_stats = tasks_stats();
+$tasks_stats = tasks_stats_list();
 
 
 

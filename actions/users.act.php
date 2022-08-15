@@ -25,7 +25,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  users_guests_count                  Returns the number of guests stored in the database.                         */
 /*  users_guests_storage_length         Returns for how long guests are currently being stored in the database.      */
 /*                                                                                                                   */
-/*  users_stats                         Returns stats related to users.                                              */
+/*  users_stats_list                    Returns stats related to users.                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -951,7 +951,7 @@ function users_guests_storage_length() : int
  * @return  array   An array of stats related to users.
  */
 
-function users_stats() : array
+function users_stats_list() : array
 {
   // Check if the required files have been included
   require_included_file('functions_numbers.inc.php');

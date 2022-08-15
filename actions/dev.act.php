@@ -24,7 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_blogs_edit                      Modifies an existing devblog.                                                */
 /*  dev_blogs_delete                    Deletes an existing devblog.                                                 */
 /*  dev_blogs_restore                   Restores a soft deleted devblog.                                             */
-/*  dev_blogs_stats                     Returns stats related to devblogs.                                           */
+/*  dev_blogs_stats_list                Returns stats related to devblogs.                                           */
 /*                                                                                                                   */
 /*  dev_duplicate_translations_list     Looks for duplicate translations in the global translation array.            */
 /*                                                                                                                   */
@@ -780,7 +780,7 @@ function dev_blogs_restore(int $blog_id) : mixed
  * @return  array   An array of stats related to devblogs.
  */
 
-function dev_blogs_stats() : array
+function dev_blogs_stats_list() : array
 {
   // Initialize the return array
   $data = array();
