@@ -34,11 +34,12 @@ $js = array('common/toggle', 'common/selector');
 
 // Define the dropdown menu entries
 $compendium_selector_entries = array( 'overall'     ,
-                                      'years'       ,
                                       'types'       ,
-                                      'eras'        ,
                                       'categories'  ,
-                                      'missing'     );
+                                      'eras'        ,
+                                      'missing'     ,
+                                      'page_years'  ,
+                                      'image_years' );
 
 // Define the default dropdown menu entry
 $compendium_selector_default = 'overall';
@@ -73,11 +74,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <select class="inh align_left" id="compendium_stats_selector" onchange="page_section_selector('compendium_stats', '<?=$compendium_selector_default?>');">
         <option value="overall"<?=$compendium_selector['menu']['overall']?>><?=__('stats_overall')?></option>
-        <option value="years"<?=$compendium_selector['menu']['years']?>><?=__('stats_timeline')?></option>
         <option value="types"<?=$compendium_selector['menu']['types']?>><?=__('submenu_pages_compendium_types')?></option>
-        <option value="eras"<?=$compendium_selector['menu']['eras']?>><?=__('submenu_pages_compendium_eras')?></option>
         <option value="categories"<?=$compendium_selector['menu']['categories']?>><?=string_change_case(__('category+'), 'initials')?></option>
+        <option value="eras"<?=$compendium_selector['menu']['eras']?>><?=__('submenu_pages_compendium_eras')?></option>
         <option value="missing"<?=$compendium_selector['menu']['missing']?>><?=__('compendium_missing_title')?></option>
+        <option value="page_years"<?=$compendium_selector['menu']['page_years']?>><?=__('compendium_stats_selector_page_years')?></option>
+        <option value="image_years"<?=$compendium_selector['menu']['image_years']?>><?=__('compendium_stats_selector_image_years')?></option>
       </select>
 
     </h5>
@@ -99,14 +101,100 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <p class="align_center">
+    <?=__('compendium_stats_overall_types', preset_values: array($compendium_stats['types_count']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
     <?=__('compendium_stats_overall_nsfw', amount: $compendium_stats['nsfw'], preset_values: array($compendium_stats['nsfw'], $compendium_stats['nsfwp']))?><br>
     <?=__('compendium_stats_overall_gross', amount: $compendium_stats['gross'], preset_values: array($compendium_stats['gross'], $compendium_stats['grossp']))?><br>
     <?=__('compendium_stats_overall_offensive', amount: $compendium_stats['offensive'], preset_values: array($compendium_stats['offensive'], $compendium_stats['offensivep']))?>
   </p>
 
+  <p class="align_center bigpadding_top">
+    <?=__('compendium_stats_overall_more')?>
+  </p>
+
 </div>
 
 
+
+
+<?php /************************************************ PAGE TYPES ************************************************/ ?>
+
+<div class="width_50 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['types']?>" id="compendium_stats_types">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('compendium_type_admin_short')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_count')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_percentage')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_nsfw')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_gross')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_offensive')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $compendium_stats['types_count']; $i++) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=__link('pages/compendium/page_type?type='.$compendium_stats['types_id_'.$i], $compendium_stats['types_name_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$compendium_stats['types_pages_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['types_pagesp_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['types_nsfw_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['types_gross_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['types_off_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

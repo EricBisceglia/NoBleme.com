@@ -1033,6 +1033,13 @@ ___('compendium_admin_notes_url',         'FR', "Liens");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Page section selector
+___('compendium_stats_selector_page_years',   'EN', "Page activity");
+___('compendium_stats_selector_page_years',   'FR', "Activité des pages");
+___('compendium_stats_selector_image_years',  'EN', "Image activity");
+___('compendium_stats_selector_image_years',  'FR', "Activité des images");
+
+
 // Overall stats
 ___('compendium_stats_overall_pages',       'EN', "There are currently <span class=\"bold\">{{1}}</span> pages in the {{link|pages/compendium/index|21st century compendium}}.");
 ___('compendium_stats_overall_pages',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> pages dans le {{link|pages/compendium/index|compendium du 21ème siècle}}.");
@@ -1048,6 +1055,23 @@ ___('compendium_stats_overall_offensive',   'EN', "<span class=\"bold\">{{1}}</s
 ___('compendium_stats_overall_offensive+',  'EN', "<span class=\"bold\">{{1}}</span> pages ({{2}}) cover offensive topics.");
 ___('compendium_stats_overall_offensive',   'FR', "<span class=\"bold\">{{1}}</span> page ({{2}}) documente un sujet offensant.");
 ___('compendium_stats_overall_offensive+',  'FR', "<span class=\"bold\">{{1}}</span> pages ({{2}}) documentent des sujets offensants.");
+___('compendium_stats_overall_types',       'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?types|page types}} are used to classify content.");
+___('compendium_stats_overall_types',       'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?types|thématiques}} servent à classer le contenu.");
+___('compendium_stats_overall_more',        'EN', "You can find more stats about the compendium by using the dropdown menu at the top.");
+___('compendium_stats_overall_more',        'FR', "Vous trouverez d'autres stats sur le compendium en utilisant le menu déroulant en haut de la page.");
+
+
+// Page types
+___('compendium_stats_types_count',       'EN', "Number<br>of pages");
+___('compendium_stats_types_count',       'FR', "Nombre<br>de pages");
+___('compendium_stats_types_percentage',  'EN', "Share<br>of pages");
+___('compendium_stats_types_percentage',  'FR', "Part des<br>pages");
+___('compendium_stats_types_nsfw',        'EN', "{{link|pages/compendium/nsfw|NSFW}}<br>entries");
+___('compendium_stats_types_nsfw',        'FR', "Contenus<br>{{link|pages/compendium/nsfw|NSFW}}");
+___('compendium_stats_types_gross',       'EN', "Gross<br>entries");
+___('compendium_stats_types_gross',       'FR', "Contenus<br>dégueulasses");
+___('compendium_stats_types_offensive',   'EN', "Offensive<br>entries");
+___('compendium_stats_types_offensive',   'FR', "Contenus<br>offensants");
 
 
 

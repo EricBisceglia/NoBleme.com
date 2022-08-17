@@ -4256,6 +4256,70 @@ function compendium_stats_list() : array
   $temp               = maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']);
   $data['offensivep'] = number_display_format($temp, 'percentage');
 
+  // Create a temporary array to store page type stats
+  $type_stats = array();
+
+  // Fetch page type stats
+  $dpages = query(" SELECT    COUNT(compendium_pages.id)            AS 'cp_count'   ,
+                              compendium_pages.fk_compendium_types  AS 'cp_type_id' ,
+                              SUM(compendium_pages.is_nsfw)         AS 'cp_nsfw'    ,
+                              SUM(compendium_pages.is_gross)        AS 'cp_gross'   ,
+                              SUM(compendium_pages.is_offensive)    AS 'cp_offensive'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.fk_compendium_types  > 0
+                    AND       compendium_pages.is_deleted           = 0
+                    AND       compendium_pages.is_draft             = 0
+                    AND       compendium_pages.redirection_$lang    = ''
+                    AND       compendium_pages.title_$lang         != ''
+                    GROUP BY  compendium_pages.fk_compendium_types ");
+
+  // Loop through page type stats and add their data to the temporary array
+  while($row = mysqli_fetch_array($dpages))
+  {
+    $type_stats['pages_'.$row['cp_type_id']]  = sanitize_output($row['cp_count']);
+    $type_stats['nsfw_'.$row['cp_type_id']]   = sanitize_output($row['cp_nsfw']);
+    $type_stats['gross_'.$row['cp_type_id']]  = sanitize_output($row['cp_gross']);
+    $type_stats['off_'.$row['cp_type_id']]    = sanitize_output($row['cp_offensive']);
+  }
+
+  // Fetch page types
+  $qtypes = query(" SELECT    compendium_types.id         AS 'ct_id'  ,
+                              compendium_types.name_$lang AS 'ct_name'
+                    FROM      compendium_types
+                    ORDER BY  compendium_types.display_order ASC ");
+
+  // Loop page types and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+  {
+    $data['types_id_'.$i]     = sanitize_output($row['ct_id']);
+    $data['types_name_'.$i]   = sanitize_output($row['ct_name']);
+    $data['types_pages_'.$i]  = ($type_stats['pages_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_pages_'.$i], $data['pages']);
+    $data['types_pagesp_'.$i] = number_display_format($temp, 'percentage');
+    $data['types_nsfw_'.$i]   = ($type_stats['nsfw_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_nsfw_'.$i], $data['types_pages_'.$i]);
+    $temp                     = $data['types_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['types_nsfw_'.$i]   = ($data['types_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['types_gross_'.$i]  = ($type_stats['gross_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_gross_'.$i], $data['types_pages_'.$i]);
+    $temp                     = $data['types_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['types_gross_'.$i]  = ($data['types_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['types_off_'.$i]    = ($type_stats['off_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_off_'.$i], $data['types_pages_'.$i]);
+    $temp                     = $data['types_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['types_off_'.$i]    = ($data['types_off_'.$i]) ? $temp : '&nbsp;';
+  }
+
+  // Add the amount of page types to the return array
+  $data['types_count'] = $i;
+
+  // Loop through the page types once again in order to adjust their output
+  for($i = 0; $i < $data['types_count']; $i++)
+  {
+    $data['types_pagesp_'.$i] = ($data['types_pages_'.$i]) ? $data['types_pagesp_'.$i] : '&nbsp;';
+    $data['types_pages_'.$i]  = ($data['types_pages_'.$i]) ?: '&nbsp;';
+  }
+
   // Return the stats
   return $data;
 }
