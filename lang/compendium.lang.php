@@ -1034,15 +1034,23 @@ ___('compendium_admin_notes_url',         'FR', "Liens");
 /*********************************************************************************************************************/
 
 // Page section selector
-___('compendium_stats_selector_page_years',   'EN', "Page activity");
-___('compendium_stats_selector_page_years',   'FR', "Activité des pages");
-___('compendium_stats_selector_image_years',  'EN', "Image activity");
-___('compendium_stats_selector_image_years',  'FR', "Activité des images");
+___('compendium_stats_selector_page_popular',   'EN', "Popular pages");
+___('compendium_stats_selector_page_popular',   'FR', "Pages populaires");
+___('compendium_stats_selector_image_popular',  'EN', "Popular images");
+___('compendium_stats_selector_image_popular',  'FR', "Images populaires");
+___('compendium_stats_selector_page_years',     'EN', "Page activity");
+___('compendium_stats_selector_page_years',     'FR', "Activité des pages");
+___('compendium_stats_selector_image_years',    'EN', "Image activity");
+___('compendium_stats_selector_image_years',    'FR', "Activité des images");
 
 
 // Overall stats
 ___('compendium_stats_overall_pages',       'EN', "There are currently <span class=\"bold\">{{1}}</span> pages in the {{link|pages/compendium/index|21st century compendium}}.");
 ___('compendium_stats_overall_pages',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> pages dans le {{link|pages/compendium/index|compendium du 21ème siècle}}.");
+___('compendium_stats_overall_types',       'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?types|page types}} are used to classify content.");
+___('compendium_stats_overall_types',       'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?types|thématiques}} servent à classer le contenu.");
+___('compendium_stats_overall_categories',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?categories|categories}} are used to sort content.");
+___('compendium_stats_overall_categories',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?categories|catégories}} servent à trier le contenu.");
 ___('compendium_stats_overall_nsfw',        'EN', "<span class=\"bold\">{{1}}</span> page ({{2}}) is marked as not safe for work.");
 ___('compendium_stats_overall_nsfw+',       'EN', "<span class=\"bold\">{{1}}</span> pages ({{2}}) are marked as not safe for work.");
 ___('compendium_stats_overall_nsfw',        'FR', "<span class=\"bold\">{{1}}</span> page ({{2}}) couvre un sujet non approprié pour lecture sur un lieu de travail.");
@@ -1055,8 +1063,10 @@ ___('compendium_stats_overall_offensive',   'EN', "<span class=\"bold\">{{1}}</s
 ___('compendium_stats_overall_offensive+',  'EN', "<span class=\"bold\">{{1}}</span> pages ({{2}}) cover offensive topics.");
 ___('compendium_stats_overall_offensive',   'FR', "<span class=\"bold\">{{1}}</span> page ({{2}}) documente un sujet offensant.");
 ___('compendium_stats_overall_offensive+',  'FR', "<span class=\"bold\">{{1}}</span> pages ({{2}}) documentent des sujets offensants.");
-___('compendium_stats_overall_types',       'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?types|page types}} are used to classify content.");
-___('compendium_stats_overall_types',       'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/compendium/stats?types|thématiques}} servent à classer le contenu.");
+___('compendium_stats_overall_pageviews',   'EN', "The compendium's pages have been read <span class=\"bold\">{{1}}</span> times.");
+___('compendium_stats_overall_pageviews',   'FR', "Les pages du compendium ont été lues <span class=\"bold\">{{1}}</span> fois.");
+___('compendium_stats_overall_imageviews',  'EN', "The compendium's images have been viewed <span class=\"bold\">{{1}}</span> times.");
+___('compendium_stats_overall_imageviews',  'FR', "Les images du compendium ont été vues <span class=\"bold\">{{1}}</span> fois.");
 ___('compendium_stats_overall_more',        'EN', "You can find more stats about the compendium by using the dropdown menu at the top.");
 ___('compendium_stats_overall_more',        'FR', "Vous trouverez d'autres stats sur le compendium en utilisant le menu déroulant en haut de la page.");
 
@@ -1072,6 +1082,11 @@ ___('compendium_stats_types_gross',       'EN', "Gross<br>entries");
 ___('compendium_stats_types_gross',       'FR', "Contenus<br>dégueulasses");
 ___('compendium_stats_types_offensive',   'EN', "Offensive<br>entries");
 ___('compendium_stats_types_offensive',   'FR', "Contenus<br>offensants");
+
+
+// Categories
+___('compendium_stats_category',  'EN', "Category");
+___('compendium_stats_category',  'FR', "Catégorie");
 
 
 

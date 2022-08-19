@@ -4256,6 +4256,20 @@ function compendium_stats_list() : array
   $temp               = maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']);
   $data['offensivep'] = number_display_format($temp, 'percentage');
 
+  // Fetch total page views
+  $dpages = mysqli_fetch_array(query("  SELECT  SUM(compendium_pages.view_count) AS 'cp_views'
+                                        FROM    compendium_pages "));
+
+  // Add total page views to the return array
+  $data['pageviews'] = sanitize_output(number_display_format($dpages['cp_views'], 'number'));
+
+  // Fetch total image views
+  $dimages = mysqli_fetch_array(query(" SELECT  SUM(compendium_images.view_count) AS 'ci_views'
+                                        FROM    compendium_images "));
+
+  // Add total image views to the return array
+  $data['imageviews'] = sanitize_output(number_display_format($dimages['ci_views'], 'number'));
+
   // Create a temporary array to store page type stats
   $type_stats = array();
 
@@ -4318,6 +4332,70 @@ function compendium_stats_list() : array
   {
     $data['types_pagesp_'.$i] = ($data['types_pages_'.$i]) ? $data['types_pagesp_'.$i] : '&nbsp;';
     $data['types_pages_'.$i]  = ($data['types_pages_'.$i]) ?: '&nbsp;';
+  }
+
+  // Create a temporary array to store category stats
+  $category_stats = array();
+
+  // Fetch category stats
+  $dpages = query(" SELECT    COUNT(compendium_pages_categories.id)                 AS 'cc_count'   ,
+                              compendium_pages_categories.fk_compendium_categories  AS 'cc_cat_id'  ,
+                              SUM(compendium_pages.is_nsfw)                         AS 'cc_nsfw'    ,
+                              SUM(compendium_pages.is_gross)                        AS 'cc_gross'   ,
+                              SUM(compendium_pages.is_offensive)                    AS 'cc_offensive'
+                    FROM      compendium_pages_categories
+                    LEFT JOIN compendium_pages ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id
+                    WHERE     compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
+                    AND       compendium_pages.redirection_$lang  = ''
+                    AND       compendium_pages.title_$lang       != ''
+                    GROUP BY  compendium_pages_categories.fk_compendium_categories ");
+
+  // Loop through category stats and add their data to the temporary array
+  while($row = mysqli_fetch_array($dpages))
+  {
+    $category_stats['pages_'.$row['cc_cat_id']] = sanitize_output($row['cc_count']);
+    $category_stats['nsfw_'.$row['cc_cat_id']]  = sanitize_output($row['cc_nsfw']);
+    $category_stats['gross_'.$row['cc_cat_id']] = sanitize_output($row['cc_gross']);
+    $category_stats['off_'.$row['cc_cat_id']]   = sanitize_output($row['cc_offensive']);
+  }
+
+  // Fetch categories
+  $qcategories = query("  SELECT    compendium_categories.id          AS 'cc_id'  ,
+                                    compendium_categories.name_$lang  AS 'cc_name'
+                          FROM      compendium_categories
+                          ORDER BY  compendium_categories.display_order ASC ");
+
+  // Loop categories and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  {
+    $data['cat_id_'.$i]     = sanitize_output($row['cc_id']);
+    $data['cat_name_'.$i]   = sanitize_output($row['cc_name']);
+    $data['cat_pages_'.$i]  = ($category_stats['pages_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_pages_'.$i], $data['pages']);
+    $data['cat_pagesp_'.$i] = number_display_format($temp, 'percentage');
+    $data['cat_nsfw_'.$i]   = ($category_stats['nsfw_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_nsfw_'.$i], $data['cat_pages_'.$i]);
+    $temp                   = $data['cat_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['cat_nsfw_'.$i]   = ($data['cat_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_gross_'.$i]  = ($category_stats['gross_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_gross_'.$i], $data['cat_pages_'.$i]);
+    $temp                   = $data['cat_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['cat_gross_'.$i]  = ($data['cat_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_off_'.$i]    = ($category_stats['off_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_off_'.$i], $data['cat_pages_'.$i]);
+    $temp                   = $data['cat_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['cat_off_'.$i]    = ($data['cat_off_'.$i]) ? $temp : '&nbsp;';
+  }
+
+  // Add the amount of categories to the return array
+  $data['cat_count'] = $i;
+
+  // Loop through the categories once again in order to adjust their output
+  for($i = 0; $i < $data['cat_count']; $i++)
+  {
+    $data['cat_pagesp_'.$i] = ($data['cat_pages_'.$i]) ? $data['cat_pagesp_'.$i] : '&nbsp;';
+    $data['cat_pages_'.$i]  = ($data['cat_pages_'.$i]) ?: '&nbsp;';
   }
 
   // Return the stats

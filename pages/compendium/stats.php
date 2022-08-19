@@ -33,13 +33,15 @@ $js = array('common/toggle', 'common/selector');
 // Page section selector
 
 // Define the dropdown menu entries
-$compendium_selector_entries = array( 'overall'     ,
-                                      'types'       ,
-                                      'categories'  ,
-                                      'eras'        ,
-                                      'missing'     ,
-                                      'page_years'  ,
-                                      'image_years' );
+$compendium_selector_entries = array( 'overall'       ,
+                                      'types'         ,
+                                      'categories'    ,
+                                      'eras'          ,
+                                      'missing'       ,
+                                      'top_pages'     ,
+                                      'top_images'    ,
+                                      'years_pages'   ,
+                                      'years_images'  );
 
 // Define the default dropdown menu entry
 $compendium_selector_default = 'overall';
@@ -78,8 +80,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="categories"<?=$compendium_selector['menu']['categories']?>><?=string_change_case(__('category+'), 'initials')?></option>
         <option value="eras"<?=$compendium_selector['menu']['eras']?>><?=__('submenu_pages_compendium_eras')?></option>
         <option value="missing"<?=$compendium_selector['menu']['missing']?>><?=__('compendium_missing_title')?></option>
-        <option value="page_years"<?=$compendium_selector['menu']['page_years']?>><?=__('compendium_stats_selector_page_years')?></option>
-        <option value="image_years"<?=$compendium_selector['menu']['image_years']?>><?=__('compendium_stats_selector_image_years')?></option>
+        <option value="page_years"<?=$compendium_selector['menu']['top_pages']?>><?=__('compendium_stats_selector_page_popular')?></option>
+        <option value="image_years"<?=$compendium_selector['menu']['top_images']?>><?=__('compendium_stats_selector_image_popular')?></option>
+        <option value="page_years"<?=$compendium_selector['menu']['years_pages']?>><?=__('compendium_stats_selector_page_years')?></option>
+        <option value="image_years"<?=$compendium_selector['menu']['years_images']?>><?=__('compendium_stats_selector_image_years')?></option>
       </select>
 
     </h5>
@@ -101,13 +105,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <p class="align_center">
-    <?=__('compendium_stats_overall_types', preset_values: array($compendium_stats['types_count']))?>
+    <?=__('compendium_stats_overall_types', preset_values: array($compendium_stats['types_count']))?><br>
+    <?=__('compendium_stats_overall_categories', preset_values: array($compendium_stats['cat_count']))?>
   </p>
 
   <p class="align_center bigpadding_top">
     <?=__('compendium_stats_overall_nsfw', amount: $compendium_stats['nsfw'], preset_values: array($compendium_stats['nsfw'], $compendium_stats['nsfwp']))?><br>
     <?=__('compendium_stats_overall_gross', amount: $compendium_stats['gross'], preset_values: array($compendium_stats['gross'], $compendium_stats['grossp']))?><br>
     <?=__('compendium_stats_overall_offensive', amount: $compendium_stats['offensive'], preset_values: array($compendium_stats['offensive'], $compendium_stats['offensivep']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('compendium_stats_overall_pageviews', preset_values: array($compendium_stats['pageviews']))?><br>
+    <?=__('compendium_stats_overall_imageviews', preset_values: array($compendium_stats['imageviews']))?>
   </p>
 
   <p class="align_center bigpadding_top">
@@ -184,6 +194,86 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td>
           <?=$compendium_stats['types_off_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
+<?php /************************************************ CATEGORIES ************************************************/ ?>
+
+<div class="width_50 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['categories']?>" id="compendium_stats_categories">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('compendium_stats_category')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_count')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_percentage')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_nsfw')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_gross')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_offensive')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $compendium_stats['cat_count']; $i++) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=__link('pages/compendium/category?id='.$compendium_stats['cat_id_'.$i], $compendium_stats['cat_name_'.$i])?>
+        </td>
+
+        <td class="bold">
+          <?=$compendium_stats['cat_pages_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['cat_pagesp_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['cat_nsfw_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['cat_gross_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['cat_off_'.$i]?>
         </td>
 
       </tr>
