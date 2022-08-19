@@ -106,7 +106,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="align_center">
     <?=__('compendium_stats_overall_types', preset_values: array($compendium_stats['types_count']))?><br>
-    <?=__('compendium_stats_overall_categories', preset_values: array($compendium_stats['cat_count']))?>
+    <?=__('compendium_stats_overall_categories', preset_values: array($compendium_stats['cat_count']))?><br>
+    <?=__('compendium_stats_overall_eras', preset_values: array($compendium_stats['eras_count']))?>
   </p>
 
   <p class="align_center bigpadding_top">
@@ -133,14 +134,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['types']?>" id="compendium_stats_types">
 
-  <table>
+  <table class="nowrap">
 
     <thead class="uppercase">
 
       <tr>
 
         <th>
-          <?=__('compendium_type_admin_short')?>
+          <?=__link('pages/compendium/page_type_list', __('compendium_type_admin_short'))?>
         </th>
 
         <th>
@@ -213,22 +214,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['categories']?>" id="compendium_stats_categories">
 
-  <table>
+  <table class="nowrap">
 
     <thead class="uppercase">
 
       <tr>
 
         <th>
-          <?=__('compendium_stats_category')?>
+          <?=__link('pages/compendium/category_list', __('compendium_stats_category'))?>
         </th>
 
         <th>
           <?=__('compendium_stats_types_count')?>
-        </th>
-
-        <th>
-          <?=__('compendium_stats_types_percentage')?>
         </th>
 
         <th>
@@ -261,10 +258,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
-          <?=$compendium_stats['cat_pagesp_'.$i]?>
-        </td>
-
-        <td>
           <?=$compendium_stats['cat_nsfw_'.$i]?>
         </td>
 
@@ -274,6 +267,94 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td>
           <?=$compendium_stats['cat_off_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
+<?php /********************************************** CULTURAL ERAS ***********************************************/ ?>
+
+<div class="width_60 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['eras']?>" id="compendium_stats_eras">
+
+  <table class="nowrap">
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__link('pages/compendium/cultural_era_list', __('compendium_eras_name'))?>
+        </th>
+
+        <th>
+          <?=__('compendium_eras_start')?>
+        </th>
+
+        <th>
+          <?=__('compendium_eras_end')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_count')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_nsfw')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_gross')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_types_offensive')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = 0; $i < $compendium_stats['eras_count']; $i++) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=__link('pages/compendium/cultural_era?era='.$compendium_stats['eras_id_'.$i], $compendium_stats['eras_name_'.$i])?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['eras_start_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['eras_end_'.$i]?>
+        </td>
+
+        <td class="bold">
+          <?=$compendium_stats['eras_pages_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['eras_nsfw_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['eras_gross_'.$i]?>
+        </td>
+
+        <td>
+          <?=$compendium_stats['eras_off_'.$i]?>
         </td>
 
       </tr>
