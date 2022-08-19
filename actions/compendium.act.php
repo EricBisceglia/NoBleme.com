@@ -4256,6 +4256,26 @@ function compendium_stats_list() : array
   $temp               = maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']);
   $data['offensivep'] = number_display_format($temp, 'percentage');
 
+  // Fetch the total number of images
+  $dimages = mysqli_fetch_array(query(" SELECT  COUNT(*)                            AS 'ci_total' ,
+                                                SUM(compendium_images.is_nsfw)      AS 'ci_nsfw'      ,
+                                                SUM(compendium_images.is_gross)     AS 'ci_gross'     ,
+                                                SUM(compendium_images.is_offensive) AS 'ci_offensive'
+                                        FROM    compendium_images
+                                        WHERE   compendium_images.is_deleted = 0 "));
+
+  // Add some stats to the return array
+  $data['images']       = sanitize_output($dimages['ci_total']);
+  $data['insfw']        = sanitize_output($dimages['ci_nsfw']);
+  $temp                 = maths_percentage_of($dimages['ci_nsfw'], $dimages['ci_total']);
+  $data['insfwp']       = number_display_format($temp, 'percentage');
+  $data['igross']       = sanitize_output($dimages['ci_gross']);
+  $temp                 = maths_percentage_of($dimages['ci_gross'], $dimages['ci_total']);
+  $data['igrossp']      = number_display_format($temp, 'percentage');
+  $data['ioffensive']   = sanitize_output($dimages['ci_offensive']);
+  $temp                 = maths_percentage_of($dimages['ci_offensive'], $dimages['ci_total']);
+  $data['ioffensivep']  = number_display_format($temp, 'percentage');
+
   // Fetch total page views
   $dpages = mysqli_fetch_array(query("  SELECT  SUM(compendium_pages.view_count) AS 'cp_views'
                                         FROM    compendium_pages "));
@@ -4456,6 +4476,65 @@ function compendium_stats_list() : array
   // Loop through the cultural eras once again in order to adjust their output
   for($i = 0; $i < $data['eras_count']; $i++)
     $data['eras_pages_'.$i]   = ($data['eras_pages_'.$i]) ?: '&nbsp;';
+
+  // Prepare a variable used to find the oldest page or image creation year
+  $oldest_year = date('Y');
+
+  // Fetch pages by publication year
+  $qpages = query(" SELECT    compendium_pages.created_at                       AS 'cp_time'  ,
+                              YEAR(FROM_UNIXTIME(compendium_pages.created_at))  AS 'cp_year'  ,
+                              COUNT(*)                                          AS 'cp_count'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
+                    AND       compendium_pages.redirection_$lang  = ''
+                    AND       compendium_pages.title_$lang       != ''
+                    AND       compendium_pages.created_at         > 0
+                    GROUP BY  cp_year
+                    ORDER BY  cp_year ");
+
+  // Add page data over time to the return data
+  while($dpages = mysqli_fetch_array($qpages))
+  {
+    $year                       = ($dpages['cp_year']);
+    $oldest_year                = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['years_pages_'.$year] = ($dpages['cp_count']) ? sanitize_output($dpages['cp_count']) : '';
+  }
+
+  // Fetch images by publication year
+  $qimages = query("  SELECT    compendium_images.uploaded_at                       AS 'ci_time'  ,
+                                YEAR(FROM_UNIXTIME(compendium_images.uploaded_at))  AS 'ci_year'  ,
+                                COUNT(*)                                            AS 'ci_count'
+                      FROM      compendium_images
+                      WHERE     compendium_images.is_deleted  = 0
+                      AND       compendium_images.uploaded_at > 0
+                      GROUP BY  ci_year
+                      ORDER BY  ci_year ");
+
+  // Initialize image data for the oldest year
+  $data['years_images_'.$oldest_year] = 0;
+
+  // Add image data over time to the return data
+  while($dimages = mysqli_fetch_array($qimages))
+  {
+    $year                         = $dimages['ci_year'];
+    $data['years_images_'.$year]  = ($dimages['ci_count']) ? sanitize_output($dimages['ci_count']) : '';
+    if($year <= $oldest_year)
+      $data['years_images_'.$oldest_year] += $dimages['ci_count'];
+  }
+
+  // Sanitize image data for the oldest year
+  $data['years_images_'.$oldest_year] = sanitize_output($data['years_images_'.$oldest_year]);
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+  {
+    $data['years_pages_'.$i]  ??= '';
+    $data['years_images_'.$i] ??= '';
+  }
+
+  // Add the oldest year to the return data
+  $data['oldest_year'] = $oldest_year;
 
   // Return the stats
   return $data;

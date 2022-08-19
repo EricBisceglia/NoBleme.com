@@ -37,11 +37,7 @@ $compendium_selector_entries = array( 'overall'       ,
                                       'types'         ,
                                       'categories'    ,
                                       'eras'          ,
-                                      'missing'       ,
-                                      'top_pages'     ,
-                                      'top_images'    ,
-                                      'years_pages'   ,
-                                      'years_images'  );
+                                      'years'         );
 
 // Define the default dropdown menu entry
 $compendium_selector_default = 'overall';
@@ -79,11 +75,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="types"<?=$compendium_selector['menu']['types']?>><?=__('submenu_pages_compendium_types')?></option>
         <option value="categories"<?=$compendium_selector['menu']['categories']?>><?=string_change_case(__('category+'), 'initials')?></option>
         <option value="eras"<?=$compendium_selector['menu']['eras']?>><?=__('submenu_pages_compendium_eras')?></option>
-        <option value="missing"<?=$compendium_selector['menu']['missing']?>><?=__('compendium_missing_title')?></option>
-        <option value="page_years"<?=$compendium_selector['menu']['top_pages']?>><?=__('compendium_stats_selector_page_popular')?></option>
-        <option value="image_years"<?=$compendium_selector['menu']['top_images']?>><?=__('compendium_stats_selector_image_popular')?></option>
-        <option value="page_years"<?=$compendium_selector['menu']['years_pages']?>><?=__('compendium_stats_selector_page_years')?></option>
-        <option value="image_years"<?=$compendium_selector['menu']['years_images']?>><?=__('compendium_stats_selector_image_years')?></option>
+        <option value="years"<?=$compendium_selector['menu']['years']?>><?=__('stats_timeline')?></option>
       </select>
 
     </h5>
@@ -100,25 +92,38 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50 padding_top compendium_stats_section<?=$compendium_selector['hide']['overall']?>" id="compendium_stats_overall">
 
-  <p class="align_center big padding_bot">
+  <p class="align_center big">
     <?=__('compendium_stats_overall_pages', preset_values: array($compendium_stats['pages']))?>
   </p>
 
-  <p class="align_center">
-    <?=__('compendium_stats_overall_types', preset_values: array($compendium_stats['types_count']))?><br>
-    <?=__('compendium_stats_overall_categories', preset_values: array($compendium_stats['cat_count']))?><br>
-    <?=__('compendium_stats_overall_eras', preset_values: array($compendium_stats['eras_count']))?>
-  </p>
-
-  <p class="align_center bigpadding_top">
+  <p class="align_center padding_top">
     <?=__('compendium_stats_overall_nsfw', amount: $compendium_stats['nsfw'], preset_values: array($compendium_stats['nsfw'], $compendium_stats['nsfwp']))?><br>
     <?=__('compendium_stats_overall_gross', amount: $compendium_stats['gross'], preset_values: array($compendium_stats['gross'], $compendium_stats['grossp']))?><br>
     <?=__('compendium_stats_overall_offensive', amount: $compendium_stats['offensive'], preset_values: array($compendium_stats['offensive'], $compendium_stats['offensivep']))?>
   </p>
 
   <p class="align_center bigpadding_top">
-    <?=__('compendium_stats_overall_pageviews', preset_values: array($compendium_stats['pageviews']))?><br>
+    <?=__('compendium_stats_overall_images', preset_values: array($compendium_stats['images']))?>
+  </p>
+
+  <p class="align_center padding_top">
+    <?=__('compendium_stats_overall_insfw', amount: $compendium_stats['insfw'], preset_values: array($compendium_stats['insfw'], $compendium_stats['insfwp']))?><br>
+    <?=__('compendium_stats_overall_igross', amount: $compendium_stats['igross'], preset_values: array($compendium_stats['igross'], $compendium_stats['igrossp']))?><br>
+    <?=__('compendium_stats_overall_ioffensive', amount: $compendium_stats['ioffensive'], preset_values: array($compendium_stats['ioffensive'], $compendium_stats['ioffensivep']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('compendium_stats_overall_pageviews', preset_values: array($compendium_stats['pageviews']))?>
+  </p>
+
+  <p class="align_center">
     <?=__('compendium_stats_overall_imageviews', preset_values: array($compendium_stats['imageviews']))?>
+  </p>
+
+  <p class="align_center bigpadding_top">
+    <?=__('compendium_stats_overall_types', preset_values: array($compendium_stats['types_count']))?><br>
+    <?=__('compendium_stats_overall_categories', preset_values: array($compendium_stats['cat_count']))?><br>
+    <?=__('compendium_stats_overall_eras', preset_values: array($compendium_stats['eras_count']))?>
   </p>
 
   <p class="align_center bigpadding_top">
@@ -355,6 +360,63 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td>
           <?=$compendium_stats['eras_off_'.$i]?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+
+
+
+<?php /************************************************ TIMELINE **************************************************/ ?>
+
+<div class="width_30 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['years']?>" id="compendium_stats_years">
+
+  <table>
+
+    <thead class="uppercase">
+
+      <tr>
+
+        <th>
+          <?=__('year')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_timeline_pages')?>
+        </th>
+
+        <th>
+          <?=__('compendium_stats_timeline_images')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = date('Y'); $i >= $compendium_stats['oldest_year']; $i--) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?=$i?>
+        </td>
+
+        <td class="bold">
+          <?=$compendium_stats['years_pages_'.$i]?>
+        </td>
+
+        <td class="bold">
+          <?=$compendium_stats['years_images_'.$i]?>
         </td>
 
       </tr>
