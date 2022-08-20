@@ -144,7 +144,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if($task_details['category']) { ?>
     <br><?=__('tasks_full_category', spaces_after: 1)?><span class="bold"><?=$task_details['category']?></span>
     <?php } if($task_details['milestone']) { ?>
-    <br><?=__('tasks_full_milestone', spaces_after: 1)?><span class="bold"><?=__link('pages/tasks/roadmap', $task_details['milestone'])?></span>
+    <br><?=__('tasks_full_milestone', spaces_after: 1)?><span class="bold"><?=__link('pages/tasks/roadmap#milestone_'.$task_details['milestone_id'], $task_details['milestone'])?></span>
     <?php } ?>
 
   </p>
