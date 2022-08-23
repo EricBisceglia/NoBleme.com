@@ -62,7 +62,7 @@ function tasks_list_details( task_id )
   postdata = 'task_id=' + fetch_sanitize(task_id);
 
   // Fetch the task details
-  fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
+  fetch_page('task_details', 'tasks_list_' + task_id, postdata);
 }
 
 
@@ -86,7 +86,7 @@ function tasks_list_details( task_id )
 
   // Trigger the deletion
   if(confirm(message))
-    fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
+    fetch_page('task_details', 'tasks_list_' + task_id, postdata);
 }
 
 
@@ -110,7 +110,7 @@ function tasks_list_details( task_id )
 
   // Trigger the restoration
   if(confirm(message))
-    fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
+    fetch_page('task_details', 'tasks_list_' + task_id, postdata);
 }
 
 
@@ -134,5 +134,5 @@ function tasks_list_details( task_id )
 
   // Trigger the hard deletion
   if(confirm(message))
-    fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
+    fetch_page('task_details', 'tasks_list_' + task_id, postdata);
 }
