@@ -39,7 +39,7 @@ function fetch_page(  target_page             ,
   {
     // Replace the target element with a load bar if necessary
     if(show_load_bar && !append_content)
-    document.getElementById(target_element).innerHTML = '<div class="align_center intable">Loading...<br><img src="'+path+'img/common/loading.gif" alt="Loading..."></div>';
+      document.getElementById(target_element).innerHTML = '<div class="align_center intable">Loading...<br><img src="'+path+'img/common/loading.gif" alt="Loading..."></div>';
 
     // Fetch the desired page, include headers to show it's postdata, and put the postdata in the body
     fetch(target_page, {

@@ -24,6 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_blogs_edit                      Modifies an existing devblog.                                                */
 /*  dev_blogs_delete                    Deletes an existing devblog.                                                 */
 /*  dev_blogs_restore                   Restores a soft deleted devblog.                                             */
+/*  dev_blogs_stats_list                Returns stats related to devblogs.                                           */
 /*                                                                                                                   */
 /*  dev_duplicate_translations_list     Looks for duplicate translations in the global translation array.            */
 /*                                                                                                                   */
@@ -480,11 +481,13 @@ function dev_blogs_get( int $blog_id ) : mixed
  * Returns a list of devblogs.
  *
  * @param   string  $sort   (OPTIONAL)  The value on which to sort the data.
+ * @param   string  $year   (OPTIONAL)  Only show devblogs from a specific year.
  *
  * @return  array                       An array containing data about devblogs, sorted in reverse chronological order.
  */
 
-function dev_blogs_list( string $sort = '' ) : array
+function dev_blogs_list(  string  $sort = ''  ,
+                          int     $year = 0   ) : array
 {
   // Fetch the user's language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'));
@@ -495,6 +498,10 @@ function dev_blogs_list( string $sort = '' ) : array
   // Decide whether to show deleted content
   $show_deleted = (!$is_admin) ? " AND dev_blogs.is_deleted = 0 "     : ' ';
   $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang != '' "  : ' ';
+
+  // Filter by year if necessary
+  $year = sanitize($year, 'int', 0);
+  $filter_year = ($year) ? " AND YEAR(FROM_UNIXTIME(dev_blogs.posted_at)) = '$year' ": ' ';
 
   // Sort the content if necessary
   $order_by = " dev_blogs.posted_at DESC ";
@@ -513,6 +520,7 @@ function dev_blogs_list( string $sort = '' ) : array
                     WHERE     1 = 1
                               $show_lang
                               $show_deleted
+                              $filter_year
                     ORDER BY  $order_by ");
 
   // Prepare the data
@@ -761,6 +769,55 @@ function dev_blogs_restore(int $blog_id) : mixed
 
   // All went well
   return NULL;
+}
+
+
+
+
+/**
+ * Returns stats related to devblogs.
+ *
+ * @return  array   An array of stats related to devblogs.
+ */
+
+function dev_blogs_stats_list() : array
+{
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the user's language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch devblogs by years
+  $qdevblogs = query("  SELECT    dev_blogs.posted_at                       AS 'd_date'     ,
+                                  YEAR(FROM_UNIXTIME(dev_blogs.posted_at))  AS 'd_year'     ,
+                                  COUNT(*)                                  AS 'd_count'
+                        FROM      dev_blogs
+                        WHERE     dev_blogs.is_deleted    = 0
+                        AND       dev_blogs.title_$lang  != ''
+                        GROUP BY  d_year
+                        ORDER BY  d_year ASC ");
+
+  // Prepare to identify the oldest devblog year
+  $oldest_year = date('Y');
+
+  // Add devblog data over time to the return data
+  while($ddevblogs = mysqli_fetch_array($qdevblogs))
+  {
+    $year                 = $ddevblogs['d_year'];
+    $oldest_year          = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['count_'.$year] = ($ddevblogs['d_count']) ? sanitize_output($ddevblogs['d_count']) : '';
+  }
+
+  // Add the oldest year to the return data
+  $data['oldest_year'] = $oldest_year;
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+    $data['count_'.$i] ??= '';
+
+  // Return the stats
+  return $data;
 }
 
 

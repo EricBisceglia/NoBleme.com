@@ -22,7 +22,7 @@ $page_title_fr    = "Palette CSS";
 
 // Extra CSS & JS
 $css = array('dev');
-$js  = array('dev/doc', 'common/toggle');
+$js  = array('common/toggle', 'common/selector');
 
 
 
@@ -34,36 +34,28 @@ $js  = array('dev/doc', 'common/toggle');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Display the correct css palette entry
+// Page section selector
 
-// Prepare a list of all css palette entry options
-$dev_palette_selection = array('bbcodes', 'colors', 'default', 'divs', 'forms', 'grids', 'icons', 'popins', 'spacing', 'tables', 'text', 'tooltips');
+// Define the dropdown menu entries
+$palette_selector_entries = array(  'bbcodes'   ,
+                                    'colors'    ,
+                                    'default'   ,
+                                    'divs'      ,
+                                    'forms'     ,
+                                    'grids'     ,
+                                    'icons'     ,
+                                    'popins'    ,
+                                    'spacing'   ,
+                                    'tables'    ,
+                                    'text'      ,
+                                    'tooltips'  );
 
-// Prepare the CSS for each css palette entry
-foreach($dev_palette_selection as $dev_palette_selection_name)
-{
-  // If a css palette entry is selected, display it and select the correct dropdown menu entry
-  if(!isset($dev_palette_is_selected) && isset($_GET[$dev_palette_selection_name]))
-  {
-    $dev_palette_is_selected                            = true;
-    $dev_palette_hide[$dev_palette_selection_name]      = '';
-    $dev_palette_selected[$dev_palette_selection_name]  = ' selected';
-  }
+// Define the default dropdown menu entry
+$palette_selector_default = 'default';
 
-  // Hide every other css palette entry
-  else
-  {
-    $dev_palette_hide[$dev_palette_selection_name]      = ' hidden';
-    $dev_palette_selected[$dev_palette_selection_name]  = '';
-  }
-}
-
-// If no css palette entry is selected, select the main one by default
-if(!isset($dev_palette_is_selected))
-{
-  $dev_palette_hide['default']      = '';
-  $dev_palette_selected['default']  = ' selected';
-}
+// Initialize the page section selector data
+$palette_selector = page_section_selector(            $palette_selector_entries  ,
+                                            default:  $palette_selector_default  );
 
 
 
@@ -74,24 +66,24 @@ if(!isset($dev_palette_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="padding_bot align_center dev_doc_selector">
+<div class="padding_bot align_center section_selector_container">
 
   <fieldset>
     <h5>
       <?=__('submenu_admin_doc_css').__(':')?>
-      <select class="inh" id="dev_palette_selector" onchange="dev_palette_selector();">
-        <option value="bbcodes"<?=$dev_palette_selected['bbcodes']?>><?=__('bbcodes')?></option>
-        <option value="colors"<?=$dev_palette_selected['colors']?>><?=__('dev_palette_selector_colors')?></option>
-        <option value="default"<?=$dev_palette_selected['default']?>><?=__('dev_palette_selector_default')?></option>
-        <option value="divs"<?=$dev_palette_selected['divs']?>><?=__('dev_palette_selector_divs')?></option>
-        <option value="forms"<?=$dev_palette_selected['forms']?>><?=__('dev_palette_selector_forms')?></option>
-        <option value="grids"<?=$dev_palette_selected['grids']?>><?=__('dev_palette_selector_grids')?></option>
-        <option value="icons"<?=$dev_palette_selected['icons']?>><?=__('dev_palette_selector_icons')?></option>
-        <option value="popins"<?=$dev_palette_selected['popins']?>><?=__('dev_palette_selector_popins')?></option>
-        <option value="spacing"<?=$dev_palette_selected['spacing']?>><?=__('dev_palette_selector_spacing')?></option>
-        <option value="tables"<?=$dev_palette_selected['tables']?>><?=__('dev_palette_selector_tables')?></option>
-        <option value="text"<?=$dev_palette_selected['text']?>><?=string_change_case(__('text'), 'initials')?></option>
-        <option value="tooltips"<?=$dev_palette_selected['tooltips']?>><?=__('dev_palette_selector_tooltips')?></option>
+      <select class="inh" id="dev_palette_selector" onchange="page_section_selector('dev_palette', '<?=$palette_selector_default?>');">
+        <option value="bbcodes"<?=$palette_selector['menu']['bbcodes']?>><?=__('bbcodes')?></option>
+        <option value="colors"<?=$palette_selector['menu']['colors']?>><?=__('dev_palette_selector_colors')?></option>
+        <option value="default"<?=$palette_selector['menu']['default']?>><?=__('dev_palette_selector_default')?></option>
+        <option value="divs"<?=$palette_selector['menu']['divs']?>><?=__('dev_palette_selector_divs')?></option>
+        <option value="forms"<?=$palette_selector['menu']['forms']?>><?=__('dev_palette_selector_forms')?></option>
+        <option value="grids"<?=$palette_selector['menu']['grids']?>><?=__('dev_palette_selector_grids')?></option>
+        <option value="icons"<?=$palette_selector['menu']['icons']?>><?=__('dev_palette_selector_icons')?></option>
+        <option value="popins"<?=$palette_selector['menu']['popins']?>><?=__('dev_palette_selector_popins')?></option>
+        <option value="spacing"<?=$palette_selector['menu']['spacing']?>><?=__('dev_palette_selector_spacing')?></option>
+        <option value="tables"<?=$palette_selector['menu']['tables']?>><?=__('dev_palette_selector_tables')?></option>
+        <option value="text"<?=$palette_selector['menu']['text']?>><?=string_change_case(__('text'), 'initials')?></option>
+        <option value="tooltips"<?=$palette_selector['menu']['tooltips']?>><?=__('dev_palette_selector_tooltips')?></option>
       </select>
     </h5>
   </fieldset>
@@ -105,7 +97,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* BBCODES **************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['bbcodes']?>" id="dev_palette_bbcodes">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['bbcodes']?>" id="dev_palette_bbcodes">
 
   <div class="width_30 padding_bot">
 
@@ -253,7 +245,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* COLORS ***************************************************/ ?>
 
-<div class="width_50 padding_top dev_palette_section<?=$dev_palette_hide['colors']?>" id="dev_palette_colors">
+<div class="width_50 padding_top dev_palette_section<?=$palette_selector['hide']['colors']?>" id="dev_palette_colors">
 
   <table class="noresize">
     <tbody class="align_center dark">
@@ -421,7 +413,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* DEFAULT **************************************************/ ?>
 
-<div class="dev_palette_section<?=$dev_palette_hide['default']?>" id="dev_palette_default">
+<div class="dev_palette_section<?=$palette_selector['hide']['default']?>" id="dev_palette_default">
 
   <div class="width_50">
 
@@ -527,7 +519,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <?php /************************************************** DIVS ****************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['divs']?>" id="dev_palette_divs">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['divs']?>" id="dev_palette_divs">
 
   <div class="width_30 padding_bot">
 
@@ -636,7 +628,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <?php /************************************************* FORMS ****************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['forms']?>" id="dev_palette_forms">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['forms']?>" id="dev_palette_forms">
 
   <div class="width_50 padding_bot">
 
@@ -817,7 +809,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************* GRIDS ****************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['grids']?>" id="dev_palette_grids">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['grids']?>" id="dev_palette_grids">
 
   <div class="width_50 padding_bot">
     <div class="align_center dev_div_border bold">
@@ -919,7 +911,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************* ICONS ****************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['icons']?>" id="dev_palette_icons">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['icons']?>" id="dev_palette_icons">
 
   <div class="width_50 padding_bot">
 
@@ -1330,7 +1322,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************* POPINS ***************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['popins']?>" id="dev_palette_popins">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['popins']?>" id="dev_palette_popins">
 
   <div class="width_30">
 
@@ -1363,7 +1355,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************ SPACING ***************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['spacing']?>" id="dev_palette_spacing">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['spacing']?>" id="dev_palette_spacing">
 
   <div class="width_30">
 
@@ -1530,7 +1522,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************* TABLES ***************************************************/ ?>
 
-<div class="padding_top dev_palette_section<?=$dev_palette_hide['tables']?>" id="dev_palette_tables">
+<div class="padding_top dev_palette_section<?=$palette_selector['hide']['tables']?>" id="dev_palette_tables">
 
   <div class="width_50 bigpadding_bot">
 
@@ -2281,7 +2273,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************** TEXT ****************************************************/ ?>
 
-<div class="width_30 padding_top dev_palette_section<?=$dev_palette_hide['text']?>" id="dev_palette_text">
+<div class="width_30 padding_top dev_palette_section<?=$palette_selector['hide']['text']?>" id="dev_palette_text">
 
   <p class="align_center">
     <span class="smallest">.smallest text</span><br>
@@ -2354,7 +2346,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php /************************************************ TOOLTIPS **************************************************/ ?>
 
-<div class="width_30 padding_top dev_palette_section<?=$dev_palette_hide['tooltips']?>" id="dev_palette_tooltips">
+<div class="width_30 padding_top dev_palette_section<?=$palette_selector['hide']['tooltips']?>" id="dev_palette_tooltips">
 
   <div class="padding_bot">
     <div class="tooltip_container">
@@ -2381,6 +2373,23 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </div>
 
   <pre class="dev_pre_code" id="dev_palette_tooltip" onclick="to_clipboard('', 'dev_palette_tooltip', 1);">&lt;div class="tooltip_container">
+  Text
+  &lt;div class="tooltip">
+    Tooltip
+  &lt;/div>
+&lt;/div></pre>
+
+  <div class="padding_bot padding_top">
+    <div class="tooltip_container">
+      &lt;div class="tooltip_container tooltip_desktop"><br>
+      Hover me, this will work on desktop but not on mobile.
+      <div class="tooltip">
+        &lt;div class="tooltip">
+      </div>
+    </div>
+  </div>
+
+  <pre class="dev_pre_code" id="dev_palette_tooltip_desktop" onclick="to_clipboard('', 'dev_palette_tooltip_desktop', 1);">&lt;div class="tooltip_container tooltip_desktop">
   Text
   &lt;div class="tooltip">
     Tooltip

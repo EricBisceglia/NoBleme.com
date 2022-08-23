@@ -29,6 +29,22 @@ ___('meetups_list_body_2',  'FR', <<<EOT
 Cliquez sur une ligne du tableau ci-dessous pour afficher plus de détails au sujet de l'IRL, incluant comment la rejoindre s'il s'agit d'une future IRL.
 EOT
 );
+___('meetups_list_body_3',  'EN', <<<EOT
+Only meetups attended by {{link|pages/users/{{1}}|{{2}}}} are shown.
+EOT
+);
+___('meetups_list_body_3',  'FR', <<<EOT
+Seules les IRL contenant {{link|pages/users/{{1}}|{{2}}}} sont affichées.
+EOT
+);
+___('meetups_list_body_4',  'EN', <<<EOT
+{{link|pages/meetups/list|Click here to view all meetups}}.
+EOT
+);
+___('meetups_list_body_4',  'FR', <<<EOT
+{{link|pages/meetups/list|Cliquez ici pour voir toutes les rencontres IRL}}.
+EOT
+);
 
 
 // Meetups list
@@ -368,3 +384,79 @@ ___('meetups_organize_plan_body_5', 'FR', <<<EOT
 Nous sommes toujours à la recherche d'opportunités pour organiser des rencontres IRL, faites-nous signe si vous pensez que nous devrions en organiser une !
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page section selector
+___('meetups_selector_title',           'EN', "Real life meetups statistics");
+___('meetups_selector_title',           'FR', "Stats des rencontres IRL");
+___('meetups_stats_selector_people',    'EN', "Attendees");
+___('meetups_stats_selector_people',    'FR', "Personnes présentes");
+___('meetups_stats_selector_locations', 'EN', "Locations");
+___('meetups_stats_selector_locations', 'FR', "Lieux des rencontres");
+
+
+// Recalculate all stats
+___('meetups_stats_recalculate_button', 'EN', "Recalculate all real life meetups statistics");
+___('meetups_stats_recalculate_button', 'FR', "Recalculer toutes les statistiques des rencontres IRL");
+___('meetups_stats_recalculate_alert',  'EN', "Are you sure you wish to recalculate all real life meetups statistics?");
+___('meetups_stats_recalculate_alert',  'FR', "Confirmer que vous tenez à recalculer toutes les statistiques des rencontres IRL");
+
+
+// Overall stats
+___('meetups_stats_overall_summary',          'EN', "There has been <span class=\"bold\">{{1}}</span> {{link|pages/meetups/list|real life meetup}} in NoBleme's history.");
+___('meetups_stats_overall_summary',          'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/meetups/list|rencontre IRL}} a été organisée sur NoBleme à ce jour.");
+___('meetups_stats_overall_summary+',         'EN', "There have been <span class=\"bold\">{{1}}</span> {{link|pages/meetups/list|real life meetups}} in NoBleme's history.");
+___('meetups_stats_overall_summary+',         'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/meetups/list|rencontres IRL}} ont été organisées sur NoBleme à ce jour.");
+___('meetups_stats_overall_lang_bilingual',   'EN', "<span class=\"bold\">{{1}}</span> meetup were bilingual and had no main language.");
+___('meetups_stats_overall_lang_bilingual',   'FR', "<span class=\"bold\">{{1}}</span> rencontre IRL était bilingue et n'avait pas de langue principale.");
+___('meetups_stats_overall_lang_bilingual+',  'EN', "<span class=\"bold\">{{1}}</span> meetups were bilingual and had no main language.");
+___('meetups_stats_overall_lang_bilingual+',  'FR', "<span class=\"bold\">{{1}}</span> rencontres IRL étaient bilingues et n'avaient pas de langue principale.");
+___('meetups_stats_overall_lang_en',          'EN', "English was the main language of <span class=\"bold\">{{1}}</span> meetup.");
+___('meetups_stats_overall_lang_en',          'FR', "L'anglais était la langue principale d'<span class=\"bold\">{{1}}</span> rencontre IRL.");
+___('meetups_stats_overall_lang_en+',         'EN', "English was the main language of <span class=\"bold\">{{1}}</span> meetups.");
+___('meetups_stats_overall_lang_en+',         'FR', "L'anglais était la langue principale de <span class=\"bold\">{{1}}</span> rencontres IRL.");
+___('meetups_stats_overall_lang_fr',          'EN', "French was the main language of <span class=\"bold\">{{1}}</span> meetup.");
+___('meetups_stats_overall_lang_fr',          'FR', "Le français était la langue principale d'<span class=\"bold\">{{1}}</span> rencontre IRL.");
+___('meetups_stats_overall_lang_fr+',         'EN', "French was the main language of <span class=\"bold\">{{1}}</span> meetups.");
+___('meetups_stats_overall_lang_fr+',         'FR', "Le français était la langue principale de <span class=\"bold\">{{1}}</span> rencontres IRL.");
+___('meetups_stats_overall_future',           'EN', "<span class=\"bold\">{{1}}</span> future meetups is currently planned.");
+___('meetups_stats_overall_future',           'FR', "<span class=\"bold\">{{1}}</span> rencontre IRL future est actuellement prévue.");
+___('meetups_stats_overall_future+',          'EN', "<span class=\"bold\">{{1}}</span> future meetups are currently planned.");
+___('meetups_stats_overall_future+',          'FR', "<span class=\"bold\">{{1}}</span> rencontres IRL futures sont actuellement prévues.");
+___('meetups_stats_overall_biggest',          'EN', "The {{link|pages/meetups/{{1}}|biggest meetup so far}} was attended by {{2}} people on {{3}}.");
+___('meetups_stats_overall_biggest',          'FR', "La {{link|pages/meetups/{{1}}|plus grande rencontre IRL}} à regroupé {{2}} personnes le {{3}}.");
+___('meetups_stats_overall_more',             'EN', "You can find more stats about NoBleme's real life meetups by using the dropdown menu at the top.");
+___('meetups_stats_overall_more',             'FR', "Vous trouverez d'autres stats sur les rencontres IRL en utilisant le menu déroulant en haut de la page.");
+
+
+// Attendees
+___('meetups_stats_users_meetups',      'EN', "NoBleme<br>Meetups");
+___('meetups_stats_users_meetups',      'FR', "Rencontres<br>IRL NoBleme");
+___('meetups_stats_users_meetups_bi',   'EN', "Bilingual<br>meetups");
+___('meetups_stats_users_meetups_bi',   'FR', "IRL<br>bilingues");
+___('meetups_stats_users_meetups_en',   'EN', "English<br>meetups");
+___('meetups_stats_users_meetups_en',   'FR', "IRL<br>anglophones");
+___('meetups_stats_users_meetups_fr',   'EN', "French<br>meetups");
+___('meetups_stats_users_meetups_fr',   'FR', "IRL<br>francophones");
+___('meetups_stats_users_meetups_old',  'EN', "Oldest<br>meetup");
+___('meetups_stats_users_meetups_old',  'FR', "Première<br>IRL");
+___('meetups_stats_users_meetups_new',  'EN', "Newest<br>meetup");
+___('meetups_stats_users_meetups_new',  'FR', "Dernière<br>IRL");
+
+
+// Location
+___('meetups_stats_location_meetups', 'EN', "Number of<br>meetups");
+___('meetups_stats_location_meetups', 'FR', "Nombre de<br>rencontres IRL");
+
+
+// Timeline
+___('meetups_stats_years_meetups',  'EN', "Meetups<br>that year");
+___('meetups_stats_years_meetups',  'FR', "Nombre d'IRL<br>dans l'année");

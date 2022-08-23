@@ -37,7 +37,7 @@ $css  = array('admin');
 /*********************************************************************************************************************/
 
 // Fetch total user count
-$users_total_count = user_total_count();
+$users_total_count = users_total_count();
 
 // Fetch birth years
 $user_birth_years = user_get_birth_years();

@@ -42,10 +42,12 @@ EOT
 
 
 // Form
-___('quotes_languages',       'EN', "Show quotes in the following languages (this setting will be saved)");
-___('quotes_languages',       'FR', "Afficher les citations dans les langues suivantes (ce réglage sera enregistré)");
-___('quotes_languages_guest', 'EN', "Show quotes in the following languages");
-___('quotes_languages_guest', 'FR', "Afficher les citations dans les langues suivantes");
+___('quotes_languages',       'EN', "Show quotes in the following languages (this setting will be saved):");
+___('quotes_languages',       'FR', "Afficher les citations dans les langues suivantes (ce réglage sera enregistré) :");
+___('quotes_languages_guest', 'EN', "Show quotes in the following languages:");
+___('quotes_languages_guest', 'FR', "Afficher les citations dans les langues suivantes :");
+___('quotes_search_label',    'EN', "Search quotes:");
+___('quotes_search_label',    'FR', "Chercher parmi les citations :");
 
 
 // List
@@ -71,6 +73,12 @@ ___('quotes_count',             'EN', "NoBleme's {{1}} quote:");
 ___('quotes_count',             'FR', "{{1}} citation NoBlemeuse :");
 ___('quotes_count+',            'EN', "NoBleme's {{1}} quotes:");
 ___('quotes_count+',            'FR', "{{1}} citations NoBlemeuses :");
+___('quotes_count_filtered',    'EN', "{{1}} quote from {{2}}");
+___('quotes_count_filtered',    'FR', "{{1}} citation de {{2}}");
+___('quotes_count_filtered+',   'EN', "{{1}} quotes from {{2}}");
+___('quotes_count_filtered+',   'FR', "{{1}} citations de {{2}}");
+___('quotes_count_undated',     'EN', "an unknown date before {{1}}");
+___('quotes_count_undated',     'FR', "date inconnue avant {{1}}");
 ___('quotes_id',                'EN', "Quote #{{1}}");
 ___('quotes_id',                'FR', "Citation #{{1}}");
 ___('quotes_nodate',            'EN', "Quote date unknown (before 2012)");
@@ -249,3 +257,75 @@ ___('quotes_users_error',   'EN', "This account does not exist");
 ___('quotes_users_error',   'FR', "Ce compte n'existe pas");
 ___('quotes_users_exists',  'EN', "This account has already been linked to this quote");
 ___('quotes_users_exists',  'FR', "Ce compte est déjà lié à cette citation");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page section selector
+___('quotes_stats_selector_title',      'EN', "Quote database statistics");
+___('quotes_stats_selector_title',      'FR', "Stats des citations");
+___('quotes_stats_selector_featured',   'EN', "Featured users");
+___('quotes_stats_selector_featured',   'FR', "Personnes citées");
+___('quotes_stats_selector_submitted',  'EN', "Contributors");
+___('quotes_stats_selector_submitted',  'FR', "Contributions");
+
+
+// Recalculate all stats
+___('quotes_stats_recalculate_button',  'EN', "Recalculate all quote database statistics");
+___('quotes_stats_recalculate_button',  'FR', "Recalculer toutes les statistiques des citations");
+___('quotes_stats_recalculate_alert',   'EN', "Are you sure you wish to recalculate all quote database statistics?");
+___('quotes_stats_recalculate_alert',   'FR', "Confirmer que vous tenez à recalculer toutes les statistiques des citations");
+
+
+// Overall stats
+___('quotes_stats_overall_summary',       'EN', "There are currently <span class=\"bold\">{{1}}</span> quotes in {{link|pages/quotes/|NoBleme's quote database}}.");
+___('quotes_stats_overall_summary',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> {{link|pages/quotes/|citations sur NoBleme}}.");
+___('quotes_stats_overall_lang_en',       'EN', "<span class=\"bold\">{{1}}</span> quotes ({{2}}) are in english.");
+___('quotes_stats_overall_lang_en',       'FR', "<span class=\"bold\">{{1}}</span> citations ({{2}}) sont en anglais.");
+___('quotes_stats_overall_lang_fr',       'EN', "<span class=\"bold\">{{1}}</span> quotes ({{2}}) are in french.");
+___('quotes_stats_overall_lang_fr',       'FR', "<span class=\"bold\">{{1}}</span> citations ({{2}}) sont en français.");
+___('quotes_stats_overall_nsfw',          'EN', "<span class=\"bold\">{{1}}</span> quotes ({{2}}) contain crude or sensitive content.");
+___('quotes_stats_overall_nsfw',          'FR', "<span class=\"bold\">{{1}}</span> citations ({{2}}) contiennent des propos vulgaires ou sensibles.");
+___('quotes_stats_overall_deleted',       'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposals}} have been rejected ({{2}} of all quote proposals).");
+___('quotes_stats_overall_deleted',       'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|propositions de citation}} ont été refusées ({{2}} de toutes les propositions).");
+___('quotes_stats_overall_unvalidated',   'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposal}} is currently unvalidated, awaiting administrative review.");
+___('quotes_stats_overall_unvalidated',   'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|proposition de citation}} est actuellement en attente d'approbation administrative.");
+___('quotes_stats_overall_unvalidated+',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|quote proposals}} are currently unvalidated, awaiting administrative review.");
+___('quotes_stats_overall_unvalidated+',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/quotes/submit|propositions de citations}} sont actuellement en attente d'approbation administrative.");
+___('quotes_stats_overall_more',          'EN', "You can find more stats about NoBleme's quote database by using the dropdown menu at the top.");
+___('quotes_stats_overall_more',          'FR', "Vous trouverez d'autres stats sur les citations en utilisant le menu déroulant en haut de la page.");
+
+
+// Featured users
+___('quotes_stats_users_quotes',      'EN', "Quotes");
+___('quotes_stats_users_quotes',      'FR', "Citations");
+___('quotes_stats_users_quotes_en',   'EN', "English<br>quotes");
+___('quotes_stats_users_quotes_en',   'FR', "Citations<br>anglaises");
+___('quotes_stats_users_quotes_fr',   'EN', "French<br>quotes");
+___('quotes_stats_users_quotes_fr',   'FR', "Citations<br>françaises");
+___('quotes_stats_users_quotes_nsfw', 'EN', "Crude<br>quotes");
+___('quotes_stats_users_quotes_nsfw', 'FR', "Citations<br>vulgaires");
+___('quotes_stats_users_quotes_old',  'EN', "Oldest<br>quote");
+___('quotes_stats_users_quotes_old',  'FR', "Première<br>citation");
+___('quotes_stats_users_quotes_new',  'EN', "Newest<br>quote");
+___('quotes_stats_users_quotes_new',  'FR', "Dernière<br>citation");
+
+
+// Timeline
+___('quotes_stats_years_quotes',  'EN', "Quotes<br>that year");
+___('quotes_stats_years_quotes',  'FR', "Citations<br>de l'année");
+
+
+// Contributors
+___('quotes_stats_contrib_submitted',   'EN', "Quote<br>proposals");
+___('quotes_stats_contrib_submitted',   'FR', "Propositions<br>de citations");
+___('quotes_stats_contrib_approved',    'EN', "Quotes<br>approved");
+___('quotes_stats_contrib_approved',    'FR', "Citations<br>approuvées");
+___('quotes_stats_contrib_percentage',  'EN', "Proposals<br>approved");
+___('quotes_stats_contrib_percentage',  'FR', "Propositions<br>approuvées");

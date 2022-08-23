@@ -4,6 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';    # Core
+include_once './../../inc/bbcodes.inc.php';     # BBCodes
 include_once './../../actions/meetups.act.php'; # Actions
 include_once './../../lang/meetups.lang.php';   # Translations
 

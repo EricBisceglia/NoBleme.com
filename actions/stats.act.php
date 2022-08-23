@@ -649,7 +649,7 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   }
 
   // Fetch the total guest count
-  $total_users = user_total_count();
+  $total_users = users_total_count();
 
   // Calculate more stats
   $data['percent_users']    = number_display_format(maths_percentage_of($i, $total_users), 'percentage', decimals: 1);
@@ -806,7 +806,7 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   }
 
   // Fetch the total guest count
-  $total_guests = user_guests_count();
+  $total_guests = users_guests_count();
 
   // Calculate more stats
   $data['percent_guests']   = number_display_format(maths_percentage_of($i, $total_guests), 'percentage', decimals: 1);

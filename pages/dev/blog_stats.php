@@ -3,16 +3,16 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';        # Core
-include_once './../../actions/compendium.act.php';  # Actions
-include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/includes.inc.php';  # Core
+include_once './../../actions/dev.act.php';   # Actions
+include_once './../../lang/dev.lang.php';     # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/category_list";
-$page_title_en    = "Compendium categories";
-$page_title_fr    = "Compendium : Catégories";
-$page_description = "Categorizations used to filter pages within NoBleme's 21st century culture compendium";
+$page_url         = "pages/dev/blog_stats";
+$page_title_en    = "Devblog statistics";
+$page_title_fr    = "Statistiques des blogs de développement";
+$page_description = "Statistics generated from NoBleme's development blogs";
 
 
 
@@ -23,8 +23,10 @@ $page_description = "Categorizations used to filter pages within NoBleme's 21st 
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Fetch a list of categories
-$compendium_categories_list = compendium_categories_list();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch devblog stats
+
+$dev_blogs_stats = dev_blogs_stats_list();
 
 
 
@@ -38,46 +40,46 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_30">
 
   <h1>
-    <?=__link('pages/compendium/index', string_change_case(__('category+'), 'initials'), 'noglow')?>
-    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/compendium/stats?categories")?>
-    <?php if($is_admin) { ?>
-    <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/category_admin')?>
-    <?php } ?>
+    <?=__link('pages/dev/blog_list', __('dev_blog_title+'), 'noglow')?>
   </h1>
 
-  <h5>
-    <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'noglow')?>
+  <h5 class="padding_bot">
+    <?=__link('pages/dev/blog_list', __('dev_blog_stats_subtitle'), 'noglow')?>
   </h5>
 
-  <p class="bigpadding_bot">
-    <?=__('compendium_categories_intro')?>
-  </p>
-
   <table>
-    <thead>
 
-      <tr class="uppercase">
-        <th>
-          <?=string_change_case(__('category'), 'initials')?>
-        </th>
-        <th>
-          <?=__('compendium_eras_entries')?>
-        </th>
-      </tr>
-
-    </thead>
-    <tbody class="altc align_center">
-
-      <?php for($i = 0; $i < $compendium_categories_list['rows']; $i++) { ?>
+    <thead class="uppercase">
 
       <tr>
 
-        <td>
-          <?=__link('pages/compendium/category?id='.$compendium_categories_list[$i]['id'], $compendium_categories_list[$i]['name'])?>
+        <th>
+          <?=__('year')?>
+        </th>
+
+        <th>
+          <?=__('dev_blog_title+')?>
+        </th>
+
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+      <?php for($i = date('Y'); $i >= $dev_blogs_stats['oldest_year']; $i--) { ?>
+
+      <tr>
+
+        <td class="bold">
+          <?php if($dev_blogs_stats['count_'.$i]) { ?>
+          <?=__link('pages/dev/blog_list?year='.$i, $i)?>
+          <?php } else { ?>
+          <?=$i?>
+          <?php } ?>
         </td>
 
-        <td>
-          <?=$compendium_categories_list[$i]['count']?>
+        <td class="bold">
+          <?=$dev_blogs_stats['count_'.$i]?>
         </td>
 
       </tr>
@@ -85,9 +87,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
     </tbody>
+
   </table>
 
 </div>
+
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

@@ -184,12 +184,33 @@ ___('users_profile_country',    'EN', "Country / Location");
 ___('users_profile_country',    'FR', "Pays / Localisation");
 ___('users_profile_created',    'EN', "Account registration");
 ___('users_profile_created',    'FR', "Création du compte");
-___('users_profile_activity',   'EN', "Latest visit");
-___('users_profile_activity',   'FR', "Dernière visite");
+___('users_profile_visit',      'EN', "Latest visit");
+___('users_profile_visit',      'FR', "Dernière visite");
 ___('users_profile_age',        'EN', "Age");
 ___('users_profile_age',        'FR', "Âge");
 ___('users_profile_age_years',  'EN', "{{1}} years old");
 ___('users_profile_age_years',  'FR', "{{1}} ans");
+
+
+// Website activity
+___('users_profile_activity',   'EN', "Activity on NoBleme");
+___('users_profile_activity',   'FR', "Activité sur NoBleme");
+___('users_profile_quotes',     'EN', "Appears in {{1}} quote");
+___('users_profile_quotes+',    'EN', "Appears in {{1}} quotes");
+___('users_profile_quotes',     'FR', "Apparaît dans {{1}} citation");
+___('users_profile_quotes+',    'FR', "Apparaît dans {{1}} citations");
+___('users_profile_quotesub',   'EN', "Contributed {{1}} quote");
+___('users_profile_quotesub+',  'EN', "Contributed {{1}} quotes");
+___('users_profile_quotesub',   'FR', "A contribué {{1}} citation");
+___('users_profile_quotesub+',  'FR', "A contribué {{1}} citations");
+___('users_profile_meetups',    'EN', "Attended {{1}} meetup");
+___('users_profile_meetups+',   'EN', "Attended {{1}} meetups");
+___('users_profile_meetups',    'FR', "A participé à {{1}} rencontre IRL");
+___('users_profile_meetups+',   'FR', "A participé à {{1}} rencontres IRL");
+___('users_profile_tasksub',    'EN', "Submitted {{1}} task");
+___('users_profile_tasksub+',   'EN', "Submitted {{1}} tasks");
+___('users_profile_tasksub',    'FR', "A proposé {{1}} tâche");
+___('users_profile_tasksub+',   'FR', "A proposé {{1}} tâches");
 
 
 // Admin info
@@ -334,3 +355,76 @@ Une partie de votre [url={{1}}pages/users/{{2}}]profil public[/url] a été supp
 Dans le futur, assurez-vous que le contenu personnalisable de votre profil public respecte le [url={{1}}pages/doc/coc]code de conduite de NoBleme[/url].
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page section selector
+___('users_stats_selector_title',         'EN', "Users statistics");
+___('users_stats_selector_title',         'FR', "Stats des comptes");
+___('users_stats_selector_contributions', 'EN', "Contributions");
+___('users_stats_selector_contributions', 'FR', "Contributions");
+___('users_stats_selector_anniversaries', 'EN', "Anniversaries");
+___('users_stats_selector_anniversaries', 'FR', "Comptiversaires");
+___('users_stats_selector_birthdays',     'EN', "Birthdays");
+___('users_stats_selector_birthdays',     'FR', "Anniversaires");
+
+// Overall stats
+___('users_stats_overall_summary',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/list|accounts}} have been registered on NoBleme.");
+___('users_stats_overall_summary',  'FR', "<span class=\"bold\">{{1}}</span> {{link|pages/users/list|comptes}} ont été créés sur NoBleme.");
+___('users_stats_overall_admins+',  'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|administrators}} manage the website.");
+___('users_stats_overall_admins+',  'FR', "<span class=\"bold\">{{1}}</span> comptes d'{{link|pages/users/admins|administration}} gèrent le site.");
+___('users_stats_overall_admins',   'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|administrator}} manages the website.");
+___('users_stats_overall_admins',   'FR', "<span class=\"bold\">{{1}}</span> compte d'{{link|pages/users/admins|administration}} gère le site.");
+___('users_stats_overall_mods+',    'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|moderators}} manage the website's contents.");
+___('users_stats_overall_mods+',    'FR', "<span class=\"bold\">{{1}}</span> comptes de {{link|pages/users/admins|modération}} gèrent les contenus du site.");
+___('users_stats_overall_mods',     'EN', "<span class=\"bold\">{{1}}</span> {{link|pages/users/admins|moderator}} manages the website's contents.");
+___('users_stats_overall_mods',     'FR', "<span class=\"bold\">{{1}}</span> compte de {{link|pages/users/admins|modération}} gère les contenus du site.");
+___('users_stats_overall_banned+',  'EN', "<span class=\"bold\">{{1}}</span> accounts are currently banned.");
+___('users_stats_overall_banned+',  'FR', "<span class=\"bold\">{{1}}</span> comptes sont actuellement bannis.");
+___('users_stats_overall_banned',   'EN', "<span class=\"bold\">{{1}}</span> account is currently banned.");
+___('users_stats_overall_banned',   'FR', "<span class=\"bold\">{{1}}</span> compte est actuellement banni.");
+___('users_stats_overall_deleted+', 'EN', "<span class=\"bold\">{{1}}</span> accounts have been deleted.");
+___('users_stats_overall_deleted+', 'FR', "<span class=\"bold\">{{1}}</span> comptes ont été supprimés.");
+___('users_stats_overall_deleted',  'EN', "<span class=\"bold\">{{1}}</span> account has been deleted.");
+___('users_stats_overall_deleted',  'FR', "<span class=\"bold\">{{1}}</span> compte a été supprimé.");
+___('users_stats_overall_more',     'EN', " You can find more stats about NoBleme's users by using the dropdown menu at the top.");
+___('users_stats_overall_more',     'FR', " Vous trouverez d'autres stats sur les comptes en utilisant le menu déroulant en haut de la page. ");
+
+
+// Timeline
+___('users_stats_years_created',  'EN', "Accounts<br>created");
+___('users_stats_years_created',  'FR', "Comptes<br>créés");
+
+
+// Contributions
+___('users_stats_contrib_total',    'EN', "Contribution<br>score");
+___('users_stats_contrib_total',    'FR', "Score des<br>contributions");
+___('users_stats_contrib_quotes_s', 'EN', "Quotes<br>submitted");
+___('users_stats_contrib_quotes_s', 'FR', "Citations<br>proposées");
+___('users_stats_contrib_quotes_a', 'EN', "Quotes<br>approved");
+___('users_stats_contrib_quotes_a', 'FR', "Citations<br>approuvées");
+___('users_stats_contrib_tasks',    'EN', "Task<br>proposals");
+___('users_stats_contrib_tasks',    'FR', "Tâches<br>proposées");
+
+
+// Anniversaries
+___('users_stats_anniv_date',   'EN', "Account<br>registration");
+___('users_stats_anniv_date',   'FR', "Création<br>du compte");
+___('users_stats_anniv_age',    'EN', "Account<br>anniversary");
+___('users_stats_anniv_age',    'FR', "Anniversaire<br>du compte");
+___('users_stats_anniv_days',   'EN', "Days to<br>anniversary");
+___('users_stats_anniv_days',   'FR', "Jours avant<br>anniversaire");
+
+
+// Birthdays
+___('users_stats_birth_age',    'EN', "Upcoming age");
+___('users_stats_birth_age',    'FR', "Anniversaire");
+___('users_stats_birth_date',   'EN', "Birth date");
+___('users_stats_birth_date',   'FR', "Date de<br>naissance");

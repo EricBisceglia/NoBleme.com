@@ -5,7 +5,7 @@
 /*                                                                                                                   */
 /*  quotes_approve                Triggers the approval of a quote awaiting admin validation.                        */
 /*                                                                                                                   */
-/*  quotes_set_language           Submits a language change to the user's quotes settings.                           */
+/*  quotes_search                 Searches for content within the quote database.                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -89,18 +89,19 @@ function quotes_approve(  quote_id        ,
 
 
 /**
- * Submits a language change to the user's quotes settings.
+ * Searches for content within the quote database.
  *
  * @returns {void}
  */
 
-function quotes_set_language()
+function quotes_search()
 {
   // Assemble the postdata
-  postdata  = 'quotes_lang_en='   + fetch_sanitize(document.getElementById('quotes_lang_en').checked);
-  postdata += '&quotes_lang_fr='  + fetch_sanitize(document.getElementById('quotes_lang_fr').checked);
-  postdata += '&quotes_waitlist=' + fetch_sanitize_id('quotes_waitlist');
-  postdata += '&quotes_deleted='  + fetch_sanitize_id('quotes_deleted');
+  postdata  = 'quotes_lang_en='       + fetch_sanitize(document.getElementById('quotes_lang_en').checked);
+  postdata += '&quotes_lang_fr='      + fetch_sanitize(document.getElementById('quotes_lang_fr').checked);
+  postdata += '&quotes_search_body='  + fetch_sanitize_id('quotes_search_body');
+  postdata += '&quotes_waitlist='     + fetch_sanitize_id('quotes_waitlist');
+  postdata += '&quotes_deleted='      + fetch_sanitize_id('quotes_deleted');
 
   // Submit the change request
   fetch_page('list', 'quotes_list_body', postdata);

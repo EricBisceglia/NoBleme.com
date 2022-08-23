@@ -73,15 +73,34 @@ $quotes_waitlist  = (form_fetch_element('quotes_waitlist')) ? true : $quotes_wai
 $quotes_deleted   = form_fetch_element('deleted', element_exists: true, request_type: 'GET');
 $quotes_deleted   = (form_fetch_element('quotes_deleted')) ? true : $quotes_deleted;
 
+// Look for a set user id
+$quotes_user_id = form_fetch_element('user', request_type: 'GET', default_value: 0);
+
+// Look for a set year
+$quotes_year = form_fetch_element('year', request_type: 'GET', default_value: 0);
+
 // Prepare the search settings
-$quotes_search = array( 'lang_en' => $quotes_settings['show_en']  ,
-                        'lang_fr' => $quotes_settings['show_fr']  );
+$quotes_search = array( 'lang_en' => $quotes_settings['show_en']              ,
+                        'lang_fr' => $quotes_settings['show_fr']              ,
+                        'body'    => form_fetch_element('quotes_search_body') ,
+                        'user'    => $quotes_user_id                          ,
+                        'year'    => $quotes_year                             );
 
 // Fetch relevant quotes
 $quotes_list = quotes_list( $quotes_search    ,
                             $quote_id         ,
                             $quotes_waitlist  ,
                             $quotes_deleted   );
+
+// Define whether quotes are being filtered
+if($quotes_user_id)
+  $quotes_filter = sanitize_output(user_get_username((int)$quotes_user_id));
+else if($quotes_year == -1)
+  $quotes_filter = __('quotes_count_undated', preset_values: array(quotes_stats_get_oldest_year()));
+else if($quotes_year)
+  $quotes_filter = sanitize_output((int)$quotes_year);
+else
+  $quotes_filter = '';
 
 // Redirect if a single quote is requested but doesn't exist
 if($quote_id && !$quotes_list['rows'])
@@ -115,9 +134,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <?php if(!$quote_id) { ?>
+  <?php if(!$quote_id && !$quotes_filter) { ?>
   <h1>
     <?=__('submenu_social_quotes')?>
+    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/quotes/stats")?>
     <?=__icon('add', alt: '+', title: __('quotes_add'), href: "pages/quotes/submit")?>
     <?php if($is_admin) { ?>
     <?php if($quotes_waitlist) { ?>
@@ -158,20 +178,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__('quotes_languages_guest')?>
       <?php } ?>
     </label>
-    <input type="checkbox" id="quotes_lang_en" name="quotes_lang_en" onclick="quotes_set_language();"<?=$lang_en_checked?>>
+    <input type="checkbox" id="quotes_lang_en" name="quotes_lang_en" onclick="quotes_search();"<?=$lang_en_checked?>>
     <label class="label_inline" for="quotes_lang_en"><?=string_change_case(__('english'), 'initials')?></label><br>
-    <input type="checkbox" id="quotes_lang_fr" name="quotes_lang_fr" onclick="quotes_set_language();"<?=$lang_fr_checked?>>
+    <input type="checkbox" id="quotes_lang_fr" name="quotes_lang_fr" onclick="quotes_search();"<?=$lang_fr_checked?>>
     <label class="label_inline" for="quotes_lang_fr"><?=string_change_case(__('french'), 'initials')?></label>
+
+    <div class="smallpadding_top">
+      <label for="quotes_search_body"><?=__('quotes_search_label')?></label>
+      <input type="text" id="quotes_search_body" name="quotes_search_body" value="" onkeyup="quotes_search()">
+    </div>
 
   </fieldset>
 
-  <div id="quotes_list_body">
+  <div class="smallpadding_top" id="quotes_list_body">
 
     <?php } ?>
 
-    <?php } if(!$quote_id) { ?>
+    <?php } if(!$quote_id && !$quotes_filter) { ?>
 
-    <h5 class="bigpadding_top">
+    <h5 class="bigpadding_top smallpadding_bot">
       <?php if($is_admin && $quotes_waitlist) { ?>
       <?=__('quotes_count_waitlist', $quotes_list['rows'], preset_values: array($quotes_list['rows']))?>
       <?php } else if($is_admin && $quotes_deleted) { ?>
@@ -181,6 +206,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } else { ?>
       <?=__('quotes_none')?>
       <?php } ?>
+    </h5>
+
+    <?php } else if($quotes_filter) { ?>
+
+    <h1 class="smallpadding_bot">
+      <?=__link('pages/quotes/', __('submenu_social_quotes'), style: 'noglow')?>
+    </h1>
+
+    <h5>
+      <?=__('quotes_count_filtered', $quotes_list['rows'], preset_values: array($quotes_list['rows'], $quotes_filter))?>
     </h5>
 
     <?php } ?>

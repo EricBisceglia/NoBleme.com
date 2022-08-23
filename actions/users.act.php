@@ -21,9 +21,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  user_autocomplete_username          Autocompletes a username.                                                    */
 /*                                                                                                                   */
-/*  user_total_count                    Returns the number of users stored in the database.                          */
-/*  user_guests_count                   Returns the number of guests stored in the database.                         */
-/*  user_guests_storage_length          Returns for how long guests are currently being stored in the database.      */
+/*  users_total_count                   Returns the number of users stored in the database.                          */
+/*  users_guests_count                  Returns the number of guests stored in the database.                         */
+/*  users_guests_storage_length         Returns for how long guests are currently being stored in the database.      */
+/*                                                                                                                   */
+/*  users_stats_list                    Returns stats related to users.                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -81,10 +83,15 @@ function user_get( ?int $user_id = NULL ) : mixed
                                                 users_profile.profile_text_en     AS 'u_text_en'      ,
                                                 users_profile.profile_text_fr     AS 'u_text_fr'      ,
                                                 users_profile.email_address       AS 'u_mail'         ,
-                                                users_settings.hide_from_activity AS 'u_hideact'
+                                                users_settings.hide_from_activity AS 'u_hideact'      ,
+                                                users_stats.quotes                AS 'us_quotes'      ,
+                                                users_stats.quotes_approved       AS 'us_quotes_app'  ,
+                                                users_stats.meetups               AS 'us_meetups'     ,
+                                                users_stats.tasks_submitted       AS 'us_tasks_sub'
                                       FROM      users
                                       LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
                                       LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+                                      LEFT JOIN users_stats     ON users_stats.fk_users     = users.id
                                       WHERE     users.id = '$user_id' "));
 
   // Get the current user's language
@@ -134,6 +141,11 @@ function user_get( ?int $user_id = NULL ) : mixed
   $data['lastaction'] = sanitize_output($temp);
   $temp               = string_change_case(__('none_f'), 'initials');
   $data['email']      = ($duser['u_mail']) ? sanitize_output($duser['u_mail']) : $temp;
+  $data['quotes']     = sanitize_output($duser['us_quotes']);
+  $data['quotes_app'] = sanitize_output($duser['us_quotes_app']);
+  $data['meetups']    = sanitize_output($duser['us_meetups']);
+  $data['tasks']      = sanitize_output($duser['us_tasks_sub']);
+  $data['contribs']   = $duser['us_quotes'] + $duser['us_quotes_app'] + $duser['us_meetups'] + $duser['us_tasks_sub'];
 
   // Return the array
   return $data;
@@ -876,7 +888,7 @@ function user_autocomplete_username(  string  $input        ,
  * @return  int   The number of users.
  */
 
-function user_total_count() : int
+function users_total_count() : int
 {
   // Fetch the user count
   $duser = mysqli_fetch_array(query(" SELECT  COUNT(*) AS 'u_count'
@@ -895,7 +907,7 @@ function user_total_count() : int
  * @return  int   The number of guests.
  */
 
-function user_guests_count() : int
+function users_guests_count() : int
 {
   // Fetch the guest count
   $dguest = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'g_count'
@@ -914,7 +926,7 @@ function user_guests_count() : int
  * @return  int   The number of days for which the oldest guest has been stored in the database.
  */
 
-function user_guests_storage_length() : int
+function users_guests_storage_length() : int
 {
   // Fetch the oldest guest
   $dguest = mysqli_fetch_array(query("  SELECT    users_guests.last_visited_at AS 'g_date'
@@ -928,4 +940,168 @@ function user_guests_storage_length() : int
 
   // Return the delay
   return $delay;
+}
+
+
+
+
+/**
+ * Returns stats related to users.
+ *
+ * @return  array   An array of stats related to users.
+ */
+
+function users_stats_list() : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_time.inc.php');
+
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the total number of users
+  $dusers = mysqli_fetch_array(query("  SELECT  COUNT(*)                    AS 'u_total'    ,
+                                                SUM(users.is_deleted)       AS 'u_deleted'  ,
+                                                SUM(users.is_administrator) AS 'u_admin'    ,
+                                                SUM(users.is_moderator)     AS 'u_mod'      ,
+                                                SUM(CASE  WHEN  users.is_banned_until > 0 THEN  1
+                                                          ELSE  0 END)      AS 'u_banned'
+                                        FROM    users "));
+
+  // Add some stats to the return array
+  $data['total']    = sanitize_output($dusers['u_total']);
+  $data['banned']   = sanitize_output($dusers['u_banned']);
+  $data['deleted']  = sanitize_output($dusers['u_deleted']);
+  $data['admins']   = sanitize_output($dusers['u_admin']);
+  $data['mods']     = sanitize_output($dusers['u_mod']);
+
+  // Fetch account creations by year
+  $qusers = query(" SELECT    YEAR(FROM_UNIXTIME(users_profile.created_at)) AS 'up_created' ,
+                              COUNT(*)                                      AS 'up_count'
+                    FROM      users_profile
+                    WHERE     users_profile.created_at > 0
+                    GROUP BY  up_created
+                    ORDER BY  up_created ASC ");
+
+  // Prepare to identify the oldest account creation year
+  $oldest_year = date('Y');
+
+  // Add account creation data over time to the return data
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    $year                   = $dusers['up_created'];
+    $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['created_'.$year] = ($dusers['up_count']) ? sanitize_output($dusers['up_count']) : '-';
+  }
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+    $data['created_'.$i] ??= '-';
+
+  // Add the oldest account creation year to the return data
+  $data['oldest_account'] = $oldest_year;
+
+  // Fetch user contributions
+  $qusers = query(" SELECT    SUM(  users_stats.quotes_approved
+                                  + users_stats.tasks_submitted ) AS 'us_contrib'   ,
+                              users_stats.quotes_submitted        AS 'us_quotes_s'  ,
+                              users_stats.quotes_approved         AS 'us_quotes_a'  ,
+                              users_stats.tasks_submitted         AS 'us_tasks'     ,
+                              users.id                            AS 'u_id'         ,
+                              users.username                      AS 'u_nick'
+                    FROM      users_stats
+                    LEFT JOIN users ON users_stats.fk_users = users.id
+                    WHERE     ( users_stats.quotes_approved
+                              + users_stats.tasks_submitted ) > 0
+                    GROUP BY  users_stats.fk_users
+                    ORDER BY  us_contrib      DESC  ,
+                              users.username  ASC   ");
+
+  // Loop through contributions and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['contrib_id_'.$i]       = sanitize_output($row['u_id']);
+    $data['contrib_nick_'.$i]     = sanitize_output($row['u_nick']);
+    $data['contrib_total_'.$i]    = sanitize_output($row['us_contrib']);
+    $data['contrib_quotes_s_'.$i] = ($row['us_quotes_s']) ? sanitize_output($row['us_quotes_s']) : '';
+    $data['contrib_quotes_a_'.$i] = ($row['us_quotes_a']) ? sanitize_output($row['us_quotes_a']) : '';
+    $data['contrib_tasks_'.$i]    = ($row['us_tasks']) ? sanitize_output($row['us_tasks']) : '';
+  }
+
+  // Add the number of contributors to the return array
+  $data['contrib_count'] = $i;
+
+  // Fetch anniversaries
+  $qusers = query(" SELECT    users_profile.created_at                AS 'up_date'  ,
+                              FROM_UNIXTIME(users_profile.created_at) AS 'up_anniv' ,
+                              ( TIMESTAMPDIFF(YEAR, FROM_UNIXTIME(users_profile.created_at), CURDATE())
+                              + 1 )                                   AS 'up_years' ,
+                              DATE_ADD(FROM_UNIXTIME(users_profile.created_at) ,
+                              INTERVAL YEAR(FROM_DAYS(DATEDIFF(CURDATE(), FROM_UNIXTIME(users_profile.created_at))-1))
+                              + 1 YEAR)                               AS 'up_next'  ,
+                              users.id                                AS 'u_id'     ,
+                              users.username                          AS 'u_nick'
+                    FROM      users_profile
+                    LEFT JOIN users ON users_profile.fk_users = users.id
+                    ORDER BY  CONCAT(SUBSTR(up_anniv, 6) < SUBSTR(CURDATE(), 6), SUBSTR(up_anniv, 6)) ASC
+                    LIMIT     100 ");
+
+  // Loop through anniversaries and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['anniv_id_'.$i]       = sanitize_output($row['u_id']);
+    $data['anniv_nick_'.$i]     = sanitize_output($row['u_nick']);
+    $data['anniv_years_'.$i]    = sanitize_output($row['up_years'].number_ordinal($row['up_years']));
+    $data['anniv_date_'.$i]     = sanitize_output(date_to_text($row['up_date'], strip_day: 1));
+    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
+    $data['anniv_days_'.$i]     = ($temp) ? sanitize_output($temp) : __('emoji_tada');
+    $data['anniv_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
+    $data['anniv_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
+  }
+
+  // Add the number of anniversaries to the return array
+  $data['anniv_count'] = $i;
+
+  // Fetch birthdays
+  $qusers = query(" SELECT    users_profile.birthday                  AS 'up_birthday'  ,
+                              YEAR(users_profile.birthday)            AS 'up_year'      ,
+                              ( TIMESTAMPDIFF(YEAR, users_profile.birthday, CURDATE())
+                              + 1 )                                   AS 'up_years'     ,
+                              DATE_ADD(users_profile.birthday ,
+                              INTERVAL YEAR(FROM_DAYS(DATEDIFF(CURDATE(), users_profile.birthday)-1))
+                              + 1 YEAR)                               AS 'up_next'      ,
+                              users.id                                AS 'u_id'         ,
+                              users.username                          AS 'u_nick'
+                    FROM      users_profile
+                    LEFT JOIN users ON users_profile.fk_users = users.id
+                    WHERE     users_profile.birthday        != '0000-00-00'
+                    AND       YEAR(users_profile.birthday)  <  YEAR(CURDATE())
+                    AND       MONTH(users_profile.birthday) > 0
+                    AND       DAY(users_profile.birthday)   > 0
+                    ORDER BY  CONCAT(SUBSTR(up_birthday, 6) < SUBSTR(CURDATE(), 6), SUBSTR(up_birthday, 6)) ASC
+                    LIMIT     10 ");
+
+  // Loop through birthdays and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data['birth_id_'.$i]       = sanitize_output($row['u_id']);
+    $data['birth_nick_'.$i]     = sanitize_output($row['u_nick']);
+    $temp                       = ($row['up_next'] == date('Y-m-d', time())) ? ($row['up_years']-1) : $row['up_years'];
+    $temp                       = $temp.__('year_age', amount: $temp, spaces_before: 1);
+    $data['birth_years_'.$i]    = ($row['up_year']) ? sanitize_output($temp) : '?';
+    $temp                       = date_to_text($row['up_birthday'], strip_day: true, strip_year: true).' ????';
+    $temp                       = ($row['up_year']) ? date_to_text($row['up_birthday'], strip_day: true) : $temp;
+    $data['birth_date_'.$i]     = sanitize_output($temp);
+    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
+    $data['birth_days_'.$i]     = ($temp) ? sanitize_output($temp) : __('emoji_tada');
+    $data['birth_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
+    $data['birth_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
+  }
+
+  // Add the number of birthdays to the return array
+  $data['birth_count'] = $i;
+
+  // Return the stats
+  return $data;
 }

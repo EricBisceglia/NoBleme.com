@@ -532,8 +532,32 @@ DROP TABLE IF EXISTS `users_stats`;
 CREATE TABLE IF NOT EXISTS `users_stats` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_en` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_fr` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_nsfw` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_oldest_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_oldest_date` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_newest_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_newest_date` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_submitted` int UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_approved` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_en` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_fr` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_bilingual` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_oldest_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_oldest_date` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_newest_id` int UNSIGNED NOT NULL DEFAULT '0',
+  `meetups_newest_date` int UNSIGNED NOT NULL DEFAULT '0',
+  `tasks_submitted` int UNSIGNED NOT NULL DEFAULT '0',
+  `tasks_solved` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `index_user` (`fk_users`)
+  KEY `index_user` (`fk_users`),
+  KEY `index_quotes` (`quotes`),
+  KEY `index_quotes_approved` (`quotes_approved`),
+  KEY `index_meetups` (`meetups`),
+  KEY `index_tasks_submitted` (`tasks_submitted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_tokens`;

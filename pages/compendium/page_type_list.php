@@ -39,6 +39,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__link('pages/compendium/index', __('submenu_pages_compendium_types'), 'noglow')?>
+    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/compendium/stats?types")?>
     <?php if($is_admin) { ?>
     <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/page_type_admin')?>
     <?php } ?>

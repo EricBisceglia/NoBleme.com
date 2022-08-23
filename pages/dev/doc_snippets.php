@@ -20,7 +20,7 @@ $page_title_fr  = "Modèles de code";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('dev/doc', 'common/toggle');
+$js   = array('common/toggle', 'common/selector');
 
 
 
@@ -32,36 +32,21 @@ $js   = array('dev/doc', 'common/toggle');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Display the correct code snippets
+// Page section selector
 
-// Prepare a list of all snippet options
-$dev_snippet_selection = array('full', 'fetched', 'blocks', 'action', 'act_elements');
+// Define the dropdown menu entries
+$snippets_selector_entries = array( 'full'          ,
+                                    'fetched'       ,
+                                    'blocks'        ,
+                                    'action'        ,
+                                    'act_elements'  );
 
-// Prepare the CSS for each snippet
-foreach($dev_snippet_selection as $dev_snippet_selection_name)
-{
-  // If a snippet is selected, display it and select the correct dropdown menu entry
-  if(!isset($dev_snippet_is_selected) && isset($_GET[$dev_snippet_selection_name]))
-  {
-    $dev_snippet_is_selected                            = true;
-    $dev_snippet_hide[$dev_snippet_selection_name]      = '';
-    $dev_snippet_selected[$dev_snippet_selection_name]  = ' selected';
-  }
+// Define the default dropdown menu entry
+$snippets_selector_default = 'full';
 
-  // Hide every other snippet
-  else
-  {
-    $dev_snippet_hide[$dev_snippet_selection_name]      = ' hidden';
-    $dev_snippet_selected[$dev_snippet_selection_name]  = '';
-  }
-}
-
-// If no snippet is selected, select the main one by default
-if(!isset($dev_snippet_is_selected))
-{
-  $dev_snippet_hide['full']     = '';
-  $dev_snippet_selected['full'] = ' selected';
-}
+// Initialize the page section selector data
+$snippets_selector = page_section_selector(           $snippets_selector_entries  ,
+                                            default:  $snippets_selector_default  );
 
 
 
@@ -72,17 +57,17 @@ if(!isset($dev_snippet_is_selected))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="padding_bot align_center dev_doc_selector">
+<div class="padding_bot align_center section_selector_container">
 
   <fieldset>
     <h5>
       <?=__('dev_snippets_title')?>
-      <select class="inh" id="dev_snippet_selector" onchange="dev_snippet_selector();">
-        <option value="full"<?=$dev_snippet_selected['full']?>><?=__('dev_snippets_selector_full')?></option>
-        <option value="fetched"<?=$dev_snippet_selected['fetched']?>><?=__('dev_snippets_selector_fetched')?></option>
-        <option value="blocks"<?=$dev_snippet_selected['blocks']?>><?=__('dev_snippets_selector_blocks')?></option>
-        <option value="action"<?=$dev_snippet_selected['action']?>><?=__('dev_snippets_selector_action')?></option>
-        <option value="act_elements"<?=$dev_snippet_selected['act_elements']?>><?=__('dev_snippets_selector_act_elements')?></option>
+      <select class="inh" id="dev_snippets_selector" onchange="page_section_selector('dev_snippets', '<?=$snippets_selector_default?>');">
+        <option value="full"<?=$snippets_selector['menu']['full']?>><?=__('dev_snippets_selector_full')?></option>
+        <option value="fetched"<?=$snippets_selector['menu']['fetched']?>><?=__('dev_snippets_selector_fetched')?></option>
+        <option value="blocks"<?=$snippets_selector['menu']['blocks']?>><?=__('dev_snippets_selector_blocks')?></option>
+        <option value="action"<?=$snippets_selector['menu']['action']?>><?=__('dev_snippets_selector_action')?></option>
+        <option value="act_elements"<?=$snippets_selector['menu']['act_elements']?>><?=__('dev_snippets_selector_act_elements')?></option>
       </select>
     </h5>
   </fieldset>
@@ -96,7 +81,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************** FULL ****************************************************/ ?>
 
-<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['full']?>" id="dev_snippets_full">
+<div class="width_60 padding_top dev_snippets_section<?=$snippets_selector['hide']['full']?>" id="dev_snippets_full">
 
   <pre class="small" id="dev_snippets_full_standard" onclick="to_clipboard('', 'dev_snippets_full_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -174,7 +159,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ FETCHED ***************************************************/ ?>
 
-<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['fetched']?>" id="dev_snippets_fetched">
+<div class="width_60 padding_top dev_snippets_section<?=$snippets_selector['hide']['fetched']?>" id="dev_snippets_fetched">
 
   <pre class="small" id="dev_snippets_fetched_standard" onclick="to_clipboard('', 'dev_snippets_fetched_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -221,7 +206,7 @@ user_restrict_to_guests();
 
 <?php /************************************************* BLOCKS ***************************************************/ ?>
 
-<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['blocks']?>" id="dev_snippets_blocks">
+<div class="width_60 padding_top dev_snippets_section<?=$snippets_selector['hide']['blocks']?>" id="dev_snippets_blocks">
 
   <div class="padding_bot">
     <pre class="small" id="dev_snippets_blocks_comments" onclick="to_clipboard('', 'dev_snippets_blocks_comments', 1);">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,7 +260,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************* ACTIONS **************************************************/ ?>
 
-<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['action']?>" id="dev_snippets_action">
+<div class="width_60 padding_top dev_snippets_section<?=$snippets_selector['hide']['action']?>" id="dev_snippets_action">
 
   <pre class="small" id="dev_snippets_action_template" onclick="to_clipboard('', 'dev_snippets_action_template', 1);">/**
  * Description.
@@ -344,7 +329,7 @@ function user_authenticate( int     $variable_name          ,
 
 <?php /********************************************* ACTION ELEMENTS **********************************************/ ?>
 
-<div class="width_60 padding_top dev_snippets_section<?=$dev_snippet_hide['act_elements']?>" id="dev_snippets_act_elements">
+<div class="width_60 padding_top dev_snippets_section<?=$snippets_selector['hide']['act_elements']?>" id="dev_snippets_act_elements">
 
   <div class="padding_bot">
     <pre class="small" id="dev_snippets_action_require" onclick="to_clipboard('', 'dev_snippets_action_require', 1);">// Check if the required files have been included

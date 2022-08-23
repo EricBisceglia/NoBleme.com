@@ -30,7 +30,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_recalculate_all_links   Recalculates all compendium image links.                               */
 /*  compendium_images_assemble_links          Lists all compendium pages containing an image in a usable format.     */
 /*  compendium_images_assemble_tags           Transforms compendium image tags into a usable format.                 */
-/*  compendium_pages_update_pageviews         Updates the pageview count for an existing compendium image.           */
+/*  compendium_images_update_pageviews        Updates the pageview count for an existing compendium image.           */
 /*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
 /*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
@@ -68,6 +68,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_list_years              Fetches the years in which compendium images have been uploaded.       */
 /*  compendium_appearance_list_years          Fetches the years at which compendium content has appeared.            */
 /*  compendium_peak_list_years                Fetches the years at which compendium content has peaked.              */
+/*                                                                                                                   */
+/*  compendium_stats_list                     Returns stats related to the compendium.                               */
 /*                                                                                                                   */
 /*  compendium_format_url                     Formats a compendium page url.                                         */
 /*  compendium_format_title                   Formats a compendium page title.                                       */
@@ -4207,6 +4209,334 @@ function compendium_peak_list_years(bool $admin_view = false) : array
   $data['rows'] = $i;
 
   // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns stats related to the compendium.
+ *
+ * @return  array   An array of stats related to the compendium.
+ */
+
+function compendium_stats_list() : array
+{
+  // Check if the required files have been included
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+
+  // Initialize the return array
+  $data = array();
+
+  // Fetch the user's language
+  $lang = string_change_case(user_get_language(), 'lowercase');
+
+  // Fetch the total number of pages
+  $dpages = mysqli_fetch_array(query("  SELECT  COUNT(*)                            AS 'cp_total'     ,
+                                                SUM(compendium_pages.is_nsfw)       AS 'cp_nsfw'      ,
+                                                SUM(compendium_pages.is_gross)      AS 'cp_gross'     ,
+                                                SUM(compendium_pages.is_offensive)  AS 'cp_offensive'
+                                        FROM    compendium_pages
+                                        WHERE   compendium_pages.is_deleted         = 0
+                                        AND     compendium_pages.is_draft           = 0
+                                        AND     compendium_pages.redirection_$lang  = ''
+                                        AND     compendium_pages.title_$lang       != '' "));
+
+  // Add some stats to the return array
+  $data['pages']      = sanitize_output($dpages['cp_total']);
+  $data['nsfw']       = sanitize_output($dpages['cp_nsfw']);
+  $temp               = maths_percentage_of($dpages['cp_nsfw'], $dpages['cp_total']);
+  $data['nsfwp']      = number_display_format($temp, 'percentage');
+  $data['gross']      = sanitize_output($dpages['cp_gross']);
+  $temp               = maths_percentage_of($dpages['cp_gross'], $dpages['cp_total']);
+  $data['grossp']     = number_display_format($temp, 'percentage');
+  $data['offensive']  = sanitize_output($dpages['cp_offensive']);
+  $temp               = maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']);
+  $data['offensivep'] = number_display_format($temp, 'percentage');
+
+  // Fetch the total number of images
+  $dimages = mysqli_fetch_array(query(" SELECT  COUNT(*)                            AS 'ci_total' ,
+                                                SUM(compendium_images.is_nsfw)      AS 'ci_nsfw'      ,
+                                                SUM(compendium_images.is_gross)     AS 'ci_gross'     ,
+                                                SUM(compendium_images.is_offensive) AS 'ci_offensive'
+                                        FROM    compendium_images
+                                        WHERE   compendium_images.is_deleted = 0 "));
+
+  // Add some stats to the return array
+  $data['images']       = sanitize_output($dimages['ci_total']);
+  $data['insfw']        = sanitize_output($dimages['ci_nsfw']);
+  $temp                 = maths_percentage_of($dimages['ci_nsfw'], $dimages['ci_total']);
+  $data['insfwp']       = number_display_format($temp, 'percentage');
+  $data['igross']       = sanitize_output($dimages['ci_gross']);
+  $temp                 = maths_percentage_of($dimages['ci_gross'], $dimages['ci_total']);
+  $data['igrossp']      = number_display_format($temp, 'percentage');
+  $data['ioffensive']   = sanitize_output($dimages['ci_offensive']);
+  $temp                 = maths_percentage_of($dimages['ci_offensive'], $dimages['ci_total']);
+  $data['ioffensivep']  = number_display_format($temp, 'percentage');
+
+  // Fetch total page views
+  $dpages = mysqli_fetch_array(query("  SELECT  SUM(compendium_pages.view_count) AS 'cp_views'
+                                        FROM    compendium_pages "));
+
+  // Add total page views to the return array
+  $data['pageviews'] = sanitize_output(number_display_format($dpages['cp_views'], 'number'));
+
+  // Fetch total image views
+  $dimages = mysqli_fetch_array(query(" SELECT  SUM(compendium_images.view_count) AS 'ci_views'
+                                        FROM    compendium_images "));
+
+  // Add total image views to the return array
+  $data['imageviews'] = sanitize_output(number_display_format($dimages['ci_views'], 'number'));
+
+  // Create a temporary array to store page type stats
+  $type_stats = array();
+
+  // Fetch page type stats
+  $dpages = query(" SELECT    COUNT(compendium_pages.id)            AS 'cp_count'   ,
+                              compendium_pages.fk_compendium_types  AS 'cp_type_id' ,
+                              SUM(compendium_pages.is_nsfw)         AS 'cp_nsfw'    ,
+                              SUM(compendium_pages.is_gross)        AS 'cp_gross'   ,
+                              SUM(compendium_pages.is_offensive)    AS 'cp_offensive'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.fk_compendium_types  > 0
+                    AND       compendium_pages.is_deleted           = 0
+                    AND       compendium_pages.is_draft             = 0
+                    AND       compendium_pages.redirection_$lang    = ''
+                    AND       compendium_pages.title_$lang         != ''
+                    GROUP BY  compendium_pages.fk_compendium_types ");
+
+  // Loop through page type stats and add their data to the temporary array
+  while($row = mysqli_fetch_array($dpages))
+  {
+    $type_stats['pages_'.$row['cp_type_id']]  = sanitize_output($row['cp_count']);
+    $type_stats['nsfw_'.$row['cp_type_id']]   = sanitize_output($row['cp_nsfw']);
+    $type_stats['gross_'.$row['cp_type_id']]  = sanitize_output($row['cp_gross']);
+    $type_stats['off_'.$row['cp_type_id']]    = sanitize_output($row['cp_offensive']);
+  }
+
+  // Fetch page types
+  $qtypes = query(" SELECT    compendium_types.id         AS 'ct_id'  ,
+                              compendium_types.name_$lang AS 'ct_name'
+                    FROM      compendium_types
+                    ORDER BY  compendium_types.display_order ASC ");
+
+  // Loop through page types and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+  {
+    $data['types_id_'.$i]     = sanitize_output($row['ct_id']);
+    $data['types_name_'.$i]   = sanitize_output($row['ct_name']);
+    $data['types_pages_'.$i]  = ($type_stats['pages_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_pages_'.$i], $data['pages']);
+    $data['types_pagesp_'.$i] = number_display_format($temp, 'percentage');
+    $data['types_nsfw_'.$i]   = ($type_stats['nsfw_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_nsfw_'.$i], $data['types_pages_'.$i]);
+    $temp                     = $data['types_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['types_nsfw_'.$i]   = ($data['types_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['types_gross_'.$i]  = ($type_stats['gross_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_gross_'.$i], $data['types_pages_'.$i]);
+    $temp                     = $data['types_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['types_gross_'.$i]  = ($data['types_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['types_off_'.$i]    = ($type_stats['off_'.$row['ct_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['types_off_'.$i], $data['types_pages_'.$i]);
+    $temp                     = $data['types_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['types_off_'.$i]    = ($data['types_off_'.$i]) ? $temp : '&nbsp;';
+  }
+
+  // Add the amount of page types to the return array
+  $data['types_count'] = $i;
+
+  // Loop through the page types once again in order to adjust their output
+  for($i = 0; $i < $data['types_count']; $i++)
+  {
+    $data['types_pagesp_'.$i] = ($data['types_pages_'.$i]) ? $data['types_pagesp_'.$i] : '&nbsp;';
+    $data['types_pages_'.$i]  = ($data['types_pages_'.$i]) ?: '&nbsp;';
+  }
+
+  // Create a temporary array to store category stats
+  $category_stats = array();
+
+  // Fetch category stats
+  $dpages = query(" SELECT    COUNT(compendium_pages_categories.id)                 AS 'cp_count'   ,
+                              compendium_pages_categories.fk_compendium_categories  AS 'cp_cat_id'  ,
+                              SUM(compendium_pages.is_nsfw)                         AS 'cp_nsfw'    ,
+                              SUM(compendium_pages.is_gross)                        AS 'cp_gross'   ,
+                              SUM(compendium_pages.is_offensive)                    AS 'cp_offensive'
+                    FROM      compendium_pages_categories
+                    LEFT JOIN compendium_pages ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id
+                    WHERE     compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
+                    AND       compendium_pages.redirection_$lang  = ''
+                    AND       compendium_pages.title_$lang       != ''
+                    GROUP BY  compendium_pages_categories.fk_compendium_categories ");
+
+  // Loop through category stats and add their data to the temporary array
+  while($row = mysqli_fetch_array($dpages))
+  {
+    $category_stats['pages_'.$row['cp_cat_id']] = sanitize_output($row['cp_count']);
+    $category_stats['nsfw_'.$row['cp_cat_id']]  = sanitize_output($row['cp_nsfw']);
+    $category_stats['gross_'.$row['cp_cat_id']] = sanitize_output($row['cp_gross']);
+    $category_stats['off_'.$row['cp_cat_id']]   = sanitize_output($row['cp_offensive']);
+  }
+
+  // Fetch categories
+  $qcategories = query("  SELECT    compendium_categories.id          AS 'cc_id'  ,
+                                    compendium_categories.name_$lang  AS 'cc_name'
+                          FROM      compendium_categories
+                          ORDER BY  compendium_categories.display_order ASC ");
+
+  // Loop through categories and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  {
+    $data['cat_id_'.$i]     = sanitize_output($row['cc_id']);
+    $data['cat_name_'.$i]   = sanitize_output($row['cc_name']);
+    $data['cat_pages_'.$i]  = ($category_stats['pages_'.$row['cc_id']]) ?? 0;
+    $data['cat_nsfw_'.$i]   = ($category_stats['nsfw_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_nsfw_'.$i], $data['cat_pages_'.$i]);
+    $temp                   = $data['cat_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['cat_nsfw_'.$i]   = ($data['cat_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_gross_'.$i]  = ($category_stats['gross_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_gross_'.$i], $data['cat_pages_'.$i]);
+    $temp                   = $data['cat_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['cat_gross_'.$i]  = ($data['cat_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_off_'.$i]    = ($category_stats['off_'.$row['cc_id']]) ?? 0;
+    $temp                   = maths_percentage_of($data['cat_off_'.$i], $data['cat_pages_'.$i]);
+    $temp                   = $data['cat_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['cat_off_'.$i]    = ($data['cat_off_'.$i]) ? $temp : '&nbsp;';
+  }
+
+  // Add the amount of categories to the return array
+  $data['cat_count'] = $i;
+
+  // Loop through the categories once again in order to adjust their output
+  for($i = 0; $i < $data['cat_count']; $i++)
+    $data['cat_pages_'.$i]  = ($data['cat_pages_'.$i]) ?: '&nbsp;';
+
+  // Create a temporary array to store cultural era stats
+  $era_stats = array();
+
+  // Fetch cultural era stats
+  $dpages = query(" SELECT    COUNT(compendium_pages.id)          AS 'cp_count'   ,
+                              compendium_pages.fk_compendium_eras AS 'cp_era_id'  ,
+                              SUM(compendium_pages.is_nsfw)       AS 'cp_nsfw'    ,
+                              SUM(compendium_pages.is_gross)      AS 'cp_gross'   ,
+                              SUM(compendium_pages.is_offensive)  AS 'cp_offensive'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.fk_compendium_eras > 0
+                    AND       compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
+                    AND       compendium_pages.redirection_$lang  = ''
+                    AND       compendium_pages.title_$lang       != ''
+                    GROUP BY  compendium_pages.fk_compendium_eras ");
+
+  // Loop through cultural era stats and add their data to the temporary array
+  while($row = mysqli_fetch_array($dpages))
+  {
+    $era_stats['pages_'.$row['cp_era_id']]  = sanitize_output($row['cp_count']);
+    $era_stats['nsfw_'.$row['cp_era_id']]   = sanitize_output($row['cp_nsfw']);
+    $era_stats['gross_'.$row['cp_era_id']]  = sanitize_output($row['cp_gross']);
+    $era_stats['off_'.$row['cp_era_id']]    = sanitize_output($row['cp_offensive']);
+  }
+
+  // Fetch cultural eras
+  $qeras = query("  SELECT    compendium_eras.id          AS 'ce_id'    ,
+                              compendium_eras.name_$lang  AS 'ce_name'  ,
+                              compendium_eras.year_start  AS 'ce_start' ,
+                              compendium_eras.year_end    AS 'ce_end'
+                    FROM      compendium_eras
+                    ORDER BY  compendium_eras.year_start  ASC  ,
+                              compendium_eras.year_end    ASC ");
+
+  // Loop through cultural eras and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
+  {
+    $data['eras_id_'.$i]      = sanitize_output($row['ce_id']);
+    $data['eras_name_'.$i]    = sanitize_output($row['ce_name']);
+    $data['eras_start_'.$i]   = ($row['ce_start']) ? sanitize_output($row['ce_start']) : '-';
+    $data['eras_end_'.$i]     = ($row['ce_end']) ? sanitize_output($row['ce_end']) : '-';
+    $data['eras_pages_'.$i]   = ($era_stats['pages_'.$row['ce_id']]) ?? 0;
+    $data['eras_nsfw_'.$i]    = ($era_stats['nsfw_'.$row['ce_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['eras_nsfw_'.$i], $data['eras_pages_'.$i]);
+    $temp                     = $data['eras_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['eras_nsfw_'.$i]    = ($data['eras_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['eras_gross_'.$i]   = ($era_stats['gross_'.$row['ce_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['eras_gross_'.$i], $data['eras_pages_'.$i]);
+    $temp                     = $data['eras_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['eras_gross_'.$i]   = ($data['eras_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['eras_off_'.$i]     = ($era_stats['off_'.$row['ce_id']]) ?? 0;
+    $temp                     = maths_percentage_of($data['eras_off_'.$i], $data['eras_pages_'.$i]);
+    $temp                     = $data['eras_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
+    $data['eras_off_'.$i]     = ($data['eras_off_'.$i]) ? $temp : '&nbsp;';
+  }
+
+  // Add the amount of cultural eras to the return array
+  $data['eras_count'] = $i;
+
+  // Loop through the cultural eras once again in order to adjust their output
+  for($i = 0; $i < $data['eras_count']; $i++)
+    $data['eras_pages_'.$i]   = ($data['eras_pages_'.$i]) ?: '&nbsp;';
+
+  // Prepare a variable used to find the oldest page or image creation year
+  $oldest_year = date('Y');
+
+  // Fetch pages by publication year
+  $qpages = query(" SELECT    compendium_pages.created_at                       AS 'cp_time'  ,
+                              YEAR(FROM_UNIXTIME(compendium_pages.created_at))  AS 'cp_year'  ,
+                              COUNT(*)                                          AS 'cp_count'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
+                    AND       compendium_pages.redirection_$lang  = ''
+                    AND       compendium_pages.title_$lang       != ''
+                    AND       compendium_pages.created_at         > 0
+                    GROUP BY  cp_year
+                    ORDER BY  cp_year ");
+
+  // Add page data over time to the return data
+  while($dpages = mysqli_fetch_array($qpages))
+  {
+    $year                       = ($dpages['cp_year']);
+    $oldest_year                = ($year < $oldest_year) ? $year : $oldest_year;
+    $data['years_pages_'.$year] = ($dpages['cp_count']) ? sanitize_output($dpages['cp_count']) : '';
+  }
+
+  // Fetch images by publication year
+  $qimages = query("  SELECT    compendium_images.uploaded_at                       AS 'ci_time'  ,
+                                YEAR(FROM_UNIXTIME(compendium_images.uploaded_at))  AS 'ci_year'  ,
+                                COUNT(*)                                            AS 'ci_count'
+                      FROM      compendium_images
+                      WHERE     compendium_images.is_deleted  = 0
+                      AND       compendium_images.uploaded_at > 0
+                      GROUP BY  ci_year
+                      ORDER BY  ci_year ");
+
+  // Initialize image data for the oldest year
+  $data['years_images_'.$oldest_year] = 0;
+
+  // Add image data over time to the return data
+  while($dimages = mysqli_fetch_array($qimages))
+  {
+    $year                         = $dimages['ci_year'];
+    $data['years_images_'.$year]  = ($dimages['ci_count']) ? sanitize_output($dimages['ci_count']) : '';
+    if($year <= $oldest_year)
+      $data['years_images_'.$oldest_year] += $dimages['ci_count'];
+  }
+
+  // Sanitize image data for the oldest year
+  $data['years_images_'.$oldest_year] = sanitize_output($data['years_images_'.$oldest_year]);
+
+  // Ensure every year has an entry until the current one
+  for($i = $oldest_year; $i <= date('Y'); $i++)
+  {
+    $data['years_pages_'.$i]  ??= '';
+    $data['years_images_'.$i] ??= '';
+  }
+
+  // Add the oldest year to the return data
+  $data['oldest_year'] = $oldest_year;
+
+  // Return the stats
   return $data;
 }
 

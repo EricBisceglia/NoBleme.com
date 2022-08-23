@@ -51,6 +51,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__link('pages/tasks/list', __('tasks_roadmap_title'), 'noglow')?>
+    <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/quotes/stats")?>
     <?php if($is_admin) { ?>
       <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/tasks/add')?>
       <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', onclick: "tasks_milestones_popin();")?>
@@ -78,7 +79,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-  <div class="width_50 padding_top bigpadding_bot">
+  <div class="width_50 padding_top bigpadding_bot" id="milestone_<?=$task_list[$i]['goal_id']?>">
 
   <h4 class="smallpadding_top align_center">
     <?=$task_list[$i]['milestone']?>

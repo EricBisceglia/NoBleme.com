@@ -317,6 +317,11 @@ ___(':', 'EN', ":");
 ___(':', 'FR', " :");
 
 
+// Emojis
+___('emoji_tada', 'EN', "🎉");
+___('emoji_tada', 'FR', "🎉");
+
+
 // Buttons and labels
 ___('add',        'EN', "add");
 ___('add',        'FR', "créer");
@@ -373,7 +378,9 @@ ___('settings',   'FR', "réglages");
 ___('star',       'EN', "star");
 ___('star',       'FR', "étoile");
 ___('stats',      'EN', "stats");
-___('stats',      'FR', "statistiques");
+___('stats',      'FR', "stats");
+___('statistics', 'EN', "statistics");
+___('statistics', 'FR', "statistiques");
 ___('submit',     'EN', "submit");
 ___('submit',     'FR', "envoyer");
 ___('undelete',   'EN', "undelete");
@@ -527,13 +534,17 @@ ___('year',         'EN', "year");
 ___('year+',        'EN', "years");
 ___('year',         'FR', "année");
 ___('year+',        'FR', "années");
+___('year_age',     'EN', "year");
+___('year_age+',    'EN', "years");
+___('year_age',     'FR', "an");
+___('year_age+',    'FR', "ans");
 ___('year_short',   'EN', "y");
 ___('year_short',   'FR', "a");
 
 
 // Generic user related terms
-___('account',    'EN', "account");
-___('account',    'FR', "compte");
+___('account',        'EN', "account");
+___('account',        'FR', "compte");
 ___('activity',       'EN', "activity");
 ___('activity',       'FR', "activité");
 ___('admin',          'EN', "admin");
@@ -564,6 +575,13 @@ ___('username',       'EN', "username");
 ___('username',       'FR', "pseudonyme");
 
 
+// Stats pages
+___('stats_overall',  'EN', "Overall stats");
+___('stats_overall',  'FR', "Stats globales");
+___('stats_timeline', 'EN', "Timeline");
+___('stats_timeline', 'FR', "Ligne temporelle");
+
+
 
 
 /*********************************************************************************************************************/
@@ -581,8 +599,12 @@ ___('ordinal_2_en', 'EN', "nd");
 ___('ordinal_2_en', 'FR', "nd");
 ___('ordinal_3_en', 'EN', "rd");
 ___('ordinal_3_en', 'FR', "rd");
+___('ordinal_0_fr', 'EN', "ème");
+___('ordinal_0_fr', 'FR', "ème");
 ___('ordinal_1_fr', 'EN', "er");
 ___('ordinal_1_fr', 'FR', "er");
+___('ordinal_2_fr', 'EN', "nd");
+___('ordinal_2_fr', 'FR', "nd");
 
 
 // Bilingual time indicator
