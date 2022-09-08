@@ -9,11 +9,12 @@ hr                      { background-color: #EEEEEE;                  }
 
 /*************************************************** TEXT STYLING ****************************************************/
 
-.blur           { text-shadow: 0 0 10px #121212;  }
-.blur:hover     { color: #121212;                 }
-.glow_dark      { filter: none;                   }
-.bigglow_dark   { filter: none;                   }
-.hugeglow_dark  { filter: none;                   }
+.blur                 { text-shadow: 0 0 10px #121212;  }
+.blur:hover           { color: #121212;                 }
+.glow_dark            { filter: none;                   }
+.bigglow_dark         { filter: none;                   }
+.hugeglow_dark        { filter: none;                   }
+.glowhover_dark:hover { filter: none;                   }
 
 /**************************************************** PAGE LAYOUT ****************************************************/
 

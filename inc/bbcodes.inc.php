@@ -312,11 +312,16 @@ function nbcodes( string  $message                                              
   $i = 0;
   foreach($results[0] as $pattern)
   {
-    // Prepare a different style depending on whether the page exists or not in the compendium
-    $temp = (in_array(string_change_case(html_entity_decode(str_replace(' ', '_', $results[1][$i]), ENT_QUOTES), 'lowercase'), $page_list)) ? '' : 'nbcode_dead_link noglow';
+    // Assemble the link
+    $link = rawurlencode(str_replace(' ', '_', $results[1][$i]));
 
-    // Replace the NBcode with its HTML counterpart
-    $message = str_replace($pattern, '<a class="'.$temp.'" href="'.$path.'pages/compendium/'.rawurlencode(str_replace(' ', '_', $results[1][$i])).'">'.$results[2][$i].'</a>', $message);
+    // If the page exists within the compendium, make it a proper link
+    if(in_array(string_change_case(html_entity_decode(str_replace(' ', '_', $results[1][$i]), ENT_QUOTES), 'lowercase'), $page_list))
+      $message = str_replace($pattern, '<a href="'.$path.'pages/compendium/'.$link.'">'.$results[2][$i].'</a>', $message);
+
+    // Otherwise, make it a dead link
+    else
+      $message = str_replace($pattern, '<a class="nbcode_dead_link noglow" href="'.$path.'pages/compendium/'.$link.'">'.$results[2][$i].'</a>', $message);
 
     // Don't forget to increment the result being treated between each iteration of the loop
     $i++;
