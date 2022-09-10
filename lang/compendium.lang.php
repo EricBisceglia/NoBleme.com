@@ -174,6 +174,8 @@ ___('compendium_page_new_redirect_en',  'EN', "Redirection (english)");
 ___('compendium_page_new_redirect_en',  'FR', "Redirection (anglais)");
 ___('compendium_page_new_redirect_fr',  'EN', "Redirection (french)");
 ___('compendium_page_new_redirect_fr',  'FR', "Redirection (français)");
+___('compendium_page_new_redirect_ext', 'EN', "Redirect to a NoBleme page URL instead of a compendium page");
+___('compendium_page_new_redirect_ext', 'FR', "Rediriger vers l'URL d'une page de NoBleme au lieu d'une page du compendium");
 ___('compendium_page_new_summary_en',   'EN', "Page summary (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_page_new_summary_en',   'FR', "Résumé de la page (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_page_new_summary_fr',   'EN', "Page summary (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");

@@ -51,7 +51,12 @@ $compendium_page_data = compendium_pages_get( page_url: $compendium_page_url );
 
 // Redirect if needed
 if(isset($compendium_page_data['redirect']))
-  exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
+{
+  if($compendium_page_data['redir_ext'])
+    exit(header('Location: '.$path.$compendium_page_data['redirect']));
+  else
+    exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
+}
 
 // Update the page summary
 if($compendium_page_data)
