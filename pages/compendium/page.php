@@ -140,7 +140,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } ?>
 
   <<?=$compendium_page_data['title_size']?>>
+
+    <?php if($compendium_page_data['blur_title']) { ?>
+    <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow blur bigblur', onmouseover: 'unblur(this);')?>
+    <?php } else { ?>
     <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow')?>
+    <?php } ?>
+
     <?php if($is_admin) { ?>
     <?php if(!$compendium_page_data['draft']) { ?>
     <?=__icon('link', alt: 'L', title: __('link'), title_case: 'initials', href: 'pages/compendium/page_social_media?id='.$compendium_page_data['id'])?>
@@ -153,6 +159,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
     <?=__icon('delete', class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/page_delete?id='.$compendium_page_data['id'])?>
     <?php } ?>
+
   </<?=$compendium_page_data['title_size']?>>
 
   <p class="tinypadding_top padding_bot">

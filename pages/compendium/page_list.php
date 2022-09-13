@@ -88,7 +88,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p>
     <?=__('compendium_list_intro')?>
-    <?php if($user_settings_nsfw < 2) { ?>
+    <?php if($user_settings_nsfw < 1) { ?>
     <?=__('compendium_list_blur')?>
     <?php } ?>
   </p>

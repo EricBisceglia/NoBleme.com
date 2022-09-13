@@ -121,6 +121,7 @@ hr   { height: 3px;                                                 } }
                         transition: 2s text-shadow linear;          }
 .blur:hover           { text-shadow: none; color: #CACACA           ;
                         transition: 2s text-shadow linear;          }
+.bigblur              { text-shadow: 0 0 25px #CACACA;              }
 .smallglow            { filter: drop-shadow(0 0 3px #B00B1E);       }
 .glow                 { filter: drop-shadow(0 0 5px #B00B1E);       }
 .glow_dark            { filter: drop-shadow(0 0 5px #B00B1E);       }
