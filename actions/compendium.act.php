@@ -176,8 +176,6 @@ function compendium_pages_get(  int     $page_id  = 0     ,
     return NULL;
   if(!$is_admin && $dpage['p_draft'])
     return NULL;
-  if(!$is_admin && !$dpage['p_title'] && !$dpage['p_redirect'])
-    return NULL;
 
   // Assemble an array with the data
   $page_id            = sanitize($dpage['p_id'], 'int', 0);

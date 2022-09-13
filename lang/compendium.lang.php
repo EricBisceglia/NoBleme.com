@@ -101,8 +101,10 @@ ___('compendium_page_deleted',  'EN', "This page has been soft deleted. It is no
 ___('compendium_page_deleted',  'FR', "Cette page a été supprimée de façon non définitive. Elle n'est pas visible par le public.");
 ___('compendium_page_draft',    'EN', "This page is an unpublished draft. It is not viewable by the general public.");
 ___('compendium_page_draft',    'FR', "Cette page est un brouillon non publié. Elle n'est pas visible par le public.");
-___('compendium_page_no_page',  'EN', "This page has no title in the current language. It is not viewable by the general public.");
-___('compendium_page_no_page',  'FR', "Cette page n'a pas de titre dans la langue actuelle. Elle n'est pas visible par le public.");
+___('compendium_page_no_page',  'EN', "This page has no title in the current language. It will not be listed to the general public.");
+___('compendium_page_no_page',  'FR', "Cette page n'a pas de titre dans la langue actuelle. Elle n'est pas listée publiquement.");
+___('compendium_page_no_lang',  'EN', "This page has not been translated to the language you are currently using to browse the website.");
+___('compendium_page_no_lang',  'FR', "Cette page n'a pas été traduite dans la langue que vous utilisez actuellement sur le site.");
 
 
 // Header

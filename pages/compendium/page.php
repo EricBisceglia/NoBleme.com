@@ -111,6 +111,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php if($compendium_page_data) { ?>
 
+<?php if(!$compendium_page_data['no_page'] || $is_admin) { ?>
+
 <div class="width_50">
 
   <?php if($compendium_page_data['deleted']) { ?>
@@ -250,6 +252,24 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </div>
   </div>
 </div>
+
+<?php } else { ?>
+
+<div class="width_50">
+
+  <h1 class="padding_bot">
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium'), 'noglow')?>
+  </h1>
+
+  <div class="smallpadding_top">
+    <h5 class="uppercase orange text_white bold spaced align_center">
+      <?=__('compendium_page_no_lang')?>
+    </h5>
+  </div>
+
+</div>
+
+<?php } ?>
 
 <?php } else { ?>
 
