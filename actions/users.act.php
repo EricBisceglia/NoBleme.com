@@ -414,7 +414,7 @@ function user_list( string  $sort_by          = ''      ,
     $data[$i]['total_ban']  = ($row['u_total_ip_ban']);
     if($is_activity)
     {
-      $temp                 = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
+      $temp                 = ($row['data_type'] == 'user') ? ' bold text_blue noglow' : ' noglow';
       $temp                 = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
       $temp                 = ($row['u_admin']) ? ' bold text_red' : $temp;
     }

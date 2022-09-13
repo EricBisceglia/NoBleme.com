@@ -185,7 +185,7 @@ function bbcodes( string  $message ) : string
 
   // Same thing but with a parameter describing the spoiler's contents
   while(preg_match('/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is',$message))
-    $message = preg_replace("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">$1 : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">$2</div></div></div></div>", $message);
+    $message = preg_replace_callback("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", function ($matches) { $title = htmlentities($matches[1]); return "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".$title." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".$title." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".$matches[1]." : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">".$matches[2]."</div></div></div></div>"; },  $message);
 
 
   /*******************************************************************************************************************/
@@ -312,11 +312,16 @@ function nbcodes( string  $message                                              
   $i = 0;
   foreach($results[0] as $pattern)
   {
-    // Prepare a different style depending on whether the page exists or not in the compendium
-    $temp = (in_array(string_change_case(html_entity_decode(str_replace(' ', '_', $results[1][$i]), ENT_QUOTES), 'lowercase'), $page_list)) ? '' : 'nbcode_dead_link noglow';
+    // Assemble the link
+    $link = rawurlencode(str_replace(' ', '_', $results[1][$i]));
 
-    // Replace the NBcode with its HTML counterpart
-    $message = str_replace($pattern, '<a class="'.$temp.'" href="'.$path.'pages/compendium/'.rawurlencode(str_replace(' ', '_', $results[1][$i])).'">'.$results[2][$i].'</a>', $message);
+    // If the page exists within the compendium, make it a proper link
+    if(in_array(string_change_case(html_entity_decode(str_replace(' ', '_', $results[1][$i]), ENT_QUOTES), 'lowercase'), $page_list))
+      $message = str_replace($pattern, '<a href="'.$path.'pages/compendium/'.$link.'">'.$results[2][$i].'</a>', $message);
+
+    // Otherwise, make it a dead link
+    else
+      $message = str_replace($pattern, '<a class="nbcode_dead_link noglow" href="'.$path.'pages/compendium/'.$link.'">'.$results[2][$i].'</a>', $message);
 
     // Don't forget to increment the result being treated between each iteration of the loop
     $i++;

@@ -45,8 +45,9 @@ $compendium_new_url = isset($_POST['compendium_new_url']) ? form_fetch_element('
 $compendium_new_url           = compendium_format_url($compendium_new_url);
 $compendium_new_title_en      = compendium_format_title(form_fetch_element('compendium_new_title_en'));
 $compendium_new_title_fr      = compendium_format_title(form_fetch_element('compendium_new_title_fr'));
-$compendium_new_redirect_en   = compendium_format_url(form_fetch_element('compendium_new_redirect_en'));
-$compendium_new_redirect_fr   = compendium_format_url(form_fetch_element('compendium_new_redirect_fr'));
+$compendium_new_redirect_en   = form_fetch_element('compendium_new_redirect_en');
+$compendium_new_redirect_fr   = form_fetch_element('compendium_new_redirect_fr');
+$compendium_new_redirect_ext  = form_fetch_element('compendium_new_redirect_ext', element_exists: true);
 $compendium_new_summary_en    = form_fetch_element('compendium_new_summary_en');
 $compendium_new_summary_fr    = form_fetch_element('compendium_new_summary_fr');
 $compendium_new_body_en       = form_fetch_element('compendium_new_body_en');
@@ -64,6 +65,13 @@ $compendium_new_era           = form_fetch_element('compendium_new_era');
 $compendium_new_admin_notes   = form_fetch_element('compendium_new_admin_notes');
 $compendium_new_admin_urls    = form_fetch_element('compendium_new_admin_urls');
 
+// Format redirections if they point towards a compendium page
+if(!$compendium_new_redirect_ext)
+{
+  $compendium_new_redirect_en = compendium_format_url($compendium_new_redirect_en);
+  $compendium_new_redirect_fr = compendium_format_url($compendium_new_redirect_fr);
+}
+
 // Fetch the categories list
 $compendium_categories_list = compendium_categories_list();
 
@@ -80,6 +88,7 @@ if(isset($_POST['compendium_new_submit']))
                                 'title_fr'      => $compendium_new_title_fr     ,
                                 'redirect_en'   => $compendium_new_redirect_en  ,
                                 'redirect_fr'   => $compendium_new_redirect_fr  ,
+                                'redirect_ext'  => $compendium_new_redirect_ext ,
                                 'summary_en'    => $compendium_new_summary_en   ,
                                 'summary_fr'    => $compendium_new_summary_fr   ,
                                 'body_en'       => $compendium_new_body_en      ,
@@ -140,10 +149,11 @@ for($i = 1; $i <= 12; $i++)
   $compendium_new_peak_month_select[$i]   = ($compendium_new_peak_month == $i)    ? ' selected' : '';
 
 // Keep the proper checkboxes checked
-$compendium_new_nsfw_title_checkbox = ($compendium_new_nsfw_title)  ? ' checked' : '';
-$compendium_new_nsfw_checkbox       = ($compendium_new_nsfw)        ? ' checked' : '';
-$compendium_new_gross_checkbox      = ($compendium_new_gross)       ? ' checked' : '';
-$compendium_new_offensive_checkbox  = ($compendium_new_offensive)   ? ' checked' : '';
+$compendium_new_redirect_ext_checkbox = ($compendium_new_redirect_ext)  ? ' checked' : '';
+$compendium_new_nsfw_title_checkbox   = ($compendium_new_nsfw_title)    ? ' checked' : '';
+$compendium_new_nsfw_checkbox         = ($compendium_new_nsfw)          ? ' checked' : '';
+$compendium_new_gross_checkbox        = ($compendium_new_gross)         ? ' checked' : '';
+$compendium_new_offensive_checkbox    = ($compendium_new_offensive)     ? ' checked' : '';
 
 // Fetch the page types list
 $compendium_types_list = compendium_types_list();
@@ -215,16 +225,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </div>
           </div>
 
-          <div class="smallpadding_top">
-            <label for="compendium_new_summary_en"><?=__('compendium_page_new_summary_en')?></label>
-            <textarea class="indiv compendium_admin_summary" id="compendium_new_summary_en" name="compendium_new_summary_en"><?=$compendium_new_summary_en?></textarea>
-          </div>
-
-          <div class="smallpadding_top">
-            <label for="compendium_new_body_en"><?=__('compendium_page_new_body_en')?></label>
-            <textarea class="indiv compendium_admin_editor" id="compendium_new_body_en" name="compendium_new_body_en"><?=$compendium_new_body_en?></textarea>
-          </div>
-
         </div>
         <div class="flex spaced_left">
 
@@ -240,6 +240,30 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               </datalist>
             </div>
           </div>
+
+        </div>
+      </div>
+
+      <div class="smallpadding_top">
+        <input type="checkbox" id="compendium_new_redirect_ext" name="compendium_new_redirect_ext"<?=$compendium_new_redirect_ext_checkbox?>>
+        <label class="label_inline" for="compendium_new_redirect_ext"><?=__('compendium_page_new_redirect_ext')?></label><br>
+      </div>
+
+      <div class="flexcontainer">
+        <div class="flex spaced_right">
+
+          <div class="smallpadding_top">
+            <label for="compendium_new_summary_en"><?=__('compendium_page_new_summary_en')?></label>
+            <textarea class="indiv compendium_admin_summary" id="compendium_new_summary_en" name="compendium_new_summary_en"><?=$compendium_new_summary_en?></textarea>
+          </div>
+
+          <div class="smallpadding_top">
+            <label for="compendium_new_body_en"><?=__('compendium_page_new_body_en')?></label>
+            <textarea class="indiv compendium_admin_editor" id="compendium_new_body_en" name="compendium_new_body_en"><?=$compendium_new_body_en?></textarea>
+          </div>
+
+        </div>
+        <div class="flex spaced_left">
 
           <div class="smallpadding_top">
             <label for="compendium_new_summary_fr"><?=__('compendium_page_new_summary_fr')?></label>

@@ -54,6 +54,7 @@ $compendium_edit_title_en     = $compendium_page_data['title_en'];
 $compendium_edit_title_fr     = $compendium_page_data['title_fr'];
 $compendium_edit_redirect_en  = $compendium_page_data['redir_en'];
 $compendium_edit_redirect_fr  = $compendium_page_data['redir_fr'];
+$compendium_edit_redirect_ext = $compendium_page_data['redir_ext'];
 $compendium_edit_summary_en   = $compendium_page_data['summary_en'];
 $compendium_edit_summary_fr   = $compendium_page_data['summary_fr'];
 $compendium_edit_body_en      = $compendium_page_data['body_en'];
@@ -94,6 +95,7 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_title_fr     = compendium_format_title(form_fetch_element('compendium_edit_title_fr'));
   $compendium_edit_redirect_en  = form_fetch_element('compendium_edit_redirect_en');
   $compendium_edit_redirect_fr  = form_fetch_element('compendium_edit_redirect_fr');
+  $compendium_edit_redirect_ext = form_fetch_element('compendium_edit_redirect_ext', element_exists: true);
   $compendium_edit_summary_en   = form_fetch_element('compendium_edit_summary_en');
   $compendium_edit_summary_fr   = form_fetch_element('compendium_edit_summary_fr');
   $compendium_edit_body_en      = form_fetch_element('compendium_edit_body_en');
@@ -118,6 +120,13 @@ if(isset($_POST['compendium_edit_preview']) || isset($_POST['compendium_edit_sub
   $compendium_edit_irc          = form_fetch_element('compendium_edit_irc', element_exists: true);
   $compendium_edit_discord      = form_fetch_element('compendium_edit_discord', element_exists: true);
 
+  // Format redirections if they point towards a compendium page
+  if(!$compendium_edit_redirect_ext)
+  {
+    $compendium_edit_redirect_en  = compendium_format_url($compendium_edit_redirect_en);
+    $compendium_edit_redirect_fr  = compendium_format_url($compendium_edit_redirect_fr);
+  }
+
   // Update the selected categories aswell
   for($i = 0; $i < $compendium_categories_list['rows']; $i++)
   $compendium_edit_category[$compendium_categories_list[$i]['id']] = form_fetch_element('compendium_edit_category_'.$compendium_categories_list[$i]['id'], element_exists: true);
@@ -138,6 +147,7 @@ if(isset($_POST['compendium_edit_submit']))
                                   'title_fr'      => $compendium_edit_title_fr      ,
                                   'redirect_en'   => $compendium_edit_redirect_en   ,
                                   'redirect_fr'   => $compendium_edit_redirect_fr   ,
+                                  'redirect_ext'  => $compendium_edit_redirect_ext  ,
                                   'summary_en'    => $compendium_edit_summary_en    ,
                                   'summary_fr'    => $compendium_edit_summary_fr    ,
                                   'body_en'       => $compendium_edit_body_en       ,
@@ -236,15 +246,16 @@ for($i = 0; $i < $compendium_categories_list['rows']; $i++)
 $compendium_edit_category_checkbox[$i] = ($compendium_edit_category[$compendium_categories_list[$i]['id']] == $compendium_categories_list[$i]['id']) ? ' checked' : '';
 
 // Keep the proper checkboxes checked
-$compendium_edit_nsfw_title_checkbox  = ($compendium_edit_nsfw_title) ? ' checked' : '';
-$compendium_edit_nsfw_checkbox        = ($compendium_edit_nsfw)       ? ' checked' : '';
-$compendium_edit_gross_checkbox       = ($compendium_edit_gross)      ? ' checked' : '';
-$compendium_edit_offensive_checkbox   = ($compendium_edit_offensive)  ? ' checked' : '';
-$compendium_edit_silent_checkbox      = ($compendium_edit_silent)     ? ' checked' : '';
-$compendium_edit_major_checkbox       = ($compendium_edit_major)      ? ' checked' : '';
-$compendium_edit_activity_checkbox    = ($compendium_edit_activity)   ? ' checked' : '';
-$compendium_edit_irc_checkbox         = ($compendium_edit_irc)        ? ' checked' : '';
-$compendium_edit_discord_checkbox     = ($compendium_edit_discord)    ? ' checked' : '';
+$compendium_edit_redirect_ext_checkbox  = ($compendium_edit_redirect_ext) ? ' checked' : '';
+$compendium_edit_nsfw_title_checkbox    = ($compendium_edit_nsfw_title)   ? ' checked' : '';
+$compendium_edit_nsfw_checkbox          = ($compendium_edit_nsfw)         ? ' checked' : '';
+$compendium_edit_gross_checkbox         = ($compendium_edit_gross)        ? ' checked' : '';
+$compendium_edit_offensive_checkbox     = ($compendium_edit_offensive)    ? ' checked' : '';
+$compendium_edit_silent_checkbox        = ($compendium_edit_silent)       ? ' checked' : '';
+$compendium_edit_major_checkbox         = ($compendium_edit_major)        ? ' checked' : '';
+$compendium_edit_activity_checkbox      = ($compendium_edit_activity)     ? ' checked' : '';
+$compendium_edit_irc_checkbox           = ($compendium_edit_irc)          ? ' checked' : '';
+$compendium_edit_discord_checkbox       = ($compendium_edit_discord)      ? ' checked' : '';
 
 
 
@@ -297,6 +308,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </div>
           </div>
 
+        </div>
+        <div class="flex spaced_left">
+
+        <label for="compendium_edit_title_fr"><?=__('compendium_page_new_title_fr')?></label>
+          <input type="text" class="indiv" id="compendium_edit_title_fr" name="compendium_edit_title_fr" value="<?=$compendium_edit_title_fr?>">
+
+          <div class="smallpadding_top">
+            <label for="compendium_edit_redirect_fr"><?=__('compendium_page_new_redirect_fr')?></label>
+            <input type="text" class="indiv" id="compendium_edit_redirect_fr" name="compendium_edit_redirect_fr" value="<?=$compendium_edit_redirect_fr?>" autocomplete="off" list="compendium_redirect_fr_list" onkeyup="compendium_autocomplete_url('compendium_edit_redirect_fr', 'compendium_redirect_fr_list_parent', 'compendium_redirect_fr_list', true);">
+            <div id="compendium_redirect_fr_list_parent">
+              <datalist id="compendium_redirect_fr_list">
+                <option value=" ">&nbsp;</option>
+              </datalist>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="smallpadding_top">
+        <input type="checkbox" id="compendium_edit_redirect_ext" name="compendium_edit_redirect_ext"<?=$compendium_edit_redirect_ext_checkbox?>>
+        <label class="label_inline" for="compendium_edit_redirect_ext"><?=__('compendium_page_new_redirect_ext')?></label><br>
+      </div>
+
+      <div class="flexcontainer ">
+        <div class="flex spaced_right">
+
           <div class="smallpadding_top">
             <label for="compendium_edit_summary_en"><?=__('compendium_page_new_summary_en')?></label>
             <textarea class="indiv compendium_admin_summary" id="compendium_edit_summary_en" name="compendium_edit_summary_en"><?=$compendium_edit_summary_en?></textarea>
@@ -309,19 +347,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         </div>
         <div class="flex spaced_left">
-
-          <label for="compendium_edit_title_fr"><?=__('compendium_page_new_title_fr')?></label>
-          <input type="text" class="indiv" id="compendium_edit_title_fr" name="compendium_edit_title_fr" value="<?=$compendium_edit_title_fr?>">
-
-          <div class="smallpadding_top">
-            <label for="compendium_edit_redirect_fr"><?=__('compendium_page_new_redirect_fr')?></label>
-            <input type="text" class="indiv" id="compendium_edit_redirect_fr" name="compendium_edit_redirect_fr" value="<?=$compendium_edit_redirect_fr?>" autocomplete="off" list="compendium_redirect_fr_list" onkeyup="compendium_autocomplete_url('compendium_edit_redirect_fr', 'compendium_redirect_fr_list_parent', 'compendium_redirect_fr_list', true);">
-            <div id="compendium_redirect_fr_list_parent">
-              <datalist id="compendium_redirect_fr_list">
-                <option value=" ">&nbsp;</option>
-              </datalist>
-            </div>
-          </div>
 
           <div class="smallpadding_top">
             <label for="compendium_edit_summary_fr"><?=__('compendium_page_new_summary_fr')?></label>

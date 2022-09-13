@@ -698,8 +698,8 @@ ___('doc_bts_stack_intro',    'EN', "Here is the exhaustive list of all applicat
 ___('doc_bts_stack_intro',    'FR', "Voici la liste exhaustive des applications, services, et technologies utilisés dans le processus de développement, de maintenance, et d'administration de NoBleme :");
 ___('doc_bts_stack_domain',   'EN', "The domain name (nobleme.com) is registered on {{external|https://www.ovh.com/|OVH}}");
 ___('doc_bts_stack_domain',   'FR', "Le nom de domaine (nobleme.com) est enregistré sur {{external|https://www.ovh.com/|OVH}}");
-___('doc_bts_stack_server',   'EN', "The web server is hosted by {{external|https://www.ovh.com/|OVH}} and runs {{external|https://en.wikipedia.org/wiki/Debian|Debian GNU/Linux}}");
-___('doc_bts_stack_server',   'FR', "Le serveur est hébergé chez {{external|https://www.ovh.com/|OVH}} et utilise {{external|https://fr.wikipedia.org/wiki/Debian|Debian GNU/Linux}}");
+___('doc_bts_stack_server',   'EN', "The web server is hosted by {{external|https://www.ovh.com/|OVH}} and runs {{external|https://en.wikipedia.org/wiki/Fedora_Linux|Fedora Linux}}");
+___('doc_bts_stack_server',   'FR', "Le serveur est hébergé chez {{external|https://www.ovh.com/|OVH}} et utilise {{external|https://fr.wikipedia.org/wiki/Fedora_Linux|Fedora Linux}}");
 ___('doc_bts_stack_http',     'EN', "Web pages are delivered by an {{external|https://en.wikipedia.org/wiki/Apache_HTTP_Server|Apache HTTP server}}");
 ___('doc_bts_stack_http',     'FR', "Les pages du site sont servies par un {{external|https://fr.wikipedia.org/wiki/Apache_HTTP_Server|serveur HTTP Apache}}");
 ___('doc_bts_stack_database', 'EN', "The website's database uses {{external|https://en.wikipedia.org/wiki/MySQL|MySQL}}");

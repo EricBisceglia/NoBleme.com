@@ -10,6 +10,7 @@ function unblur(target_id)
 {
   // Remove the blur filter
   target_id.classList.remove('blur');
+  target_id.classList.remove('bigblur');
   target_id.classList.remove('nbcode_blur');
   target_id.classList.remove('nbcode_blur_2');
   target_id.classList.remove('nbcode_blur_3');
@@ -31,6 +32,7 @@ function unblur_element(element_id)
 {
   // Remove the blur filter
   document.getElementById(element_id).classList.remove('blur');
+  document.getElementById(element_id).classList.remove('bigblur');
   document.getElementById(element_id).classList.remove('nbcode_blur');
   document.getElementById(element_id).classList.remove('nbcode_blur_2');
   document.getElementById(element_id).classList.remove('nbcode_blur_3');

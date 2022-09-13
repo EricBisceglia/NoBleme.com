@@ -27,7 +27,7 @@ ___('users_online_header_colors', 'EN', <<<EOD
 <p class="nopadding">In order to tell them apart from each other, users are color coded:</p>
 <ul class="nopadding">
   <li>Guests do not have any specific formatting.</li>
-  <li>{{link|pages/users/list|Registered users}} appear in <span class="bold">bold</span>.</li>
+  <li>{{link|pages/users/list|Registered users}} appear in <span class="text_blue bold">blue</span>.</li>
   <li>{{link|pages/users/admins|Moderators}} appear in <span class="text_orange bold">orange</span>.</li>
   <li>{{link|pages/users/admins|Administrators}} appear in <span class="text_red glow bold">red</span>.</li>
 </ul>
@@ -37,7 +37,7 @@ ___('users_online_header_colors', 'FR', <<<EOD
 <p class="nopadding">Le code couleur suivant est appliqué afin de simplifier la lecture :</p>
 <ul class="nopadding">
   <li>Les personnes sans compte n'ont pas de formattage spécifique.</li>
-  <li>{{link|pages/users/list|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
+  <li>{{link|pages/users/list|Les membres du site}} apparaissent en <span class="text_blue bold">bleu</span>.</li>
   <li>{{link|pages/users/admins|La modération}} apparait en <span class="text_orange bold">orange.</span></li>
   <li>{{link|pages/users/admins|L'administration}} apparait en <span class="text_red glow_dark bold">rouge.</span></li>
 </ul>

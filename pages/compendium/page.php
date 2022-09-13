@@ -51,7 +51,12 @@ $compendium_page_data = compendium_pages_get( page_url: $compendium_page_url );
 
 // Redirect if needed
 if(isset($compendium_page_data['redirect']))
-  exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
+{
+  if($compendium_page_data['redir_ext'])
+    exit(header('Location: '.$path.$compendium_page_data['redirect']));
+  else
+    exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
+}
 
 // Update the page summary
 if($compendium_page_data)
@@ -106,6 +111,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php if($compendium_page_data) { ?>
 
+<?php if(!$compendium_page_data['no_page'] || $is_admin) { ?>
+
 <div class="width_50">
 
   <?php if($compendium_page_data['deleted']) { ?>
@@ -133,7 +140,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } ?>
 
   <<?=$compendium_page_data['title_size']?>>
+
+    <?php if($compendium_page_data['blur_title']) { ?>
+    <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow blur bigblur', onmouseover: 'unblur(this);')?>
+    <?php } else { ?>
     <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow')?>
+    <?php } ?>
+
     <?php if($is_admin) { ?>
     <?php if(!$compendium_page_data['draft']) { ?>
     <?=__icon('link', alt: 'L', title: __('link'), title_case: 'initials', href: 'pages/compendium/page_social_media?id='.$compendium_page_data['id'])?>
@@ -146,6 +159,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
     <?=__icon('delete', class: 'valign_middle pointer', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/compendium/page_delete?id='.$compendium_page_data['id'])?>
     <?php } ?>
+
   </<?=$compendium_page_data['title_size']?>>
 
   <p class="tinypadding_top padding_bot">
@@ -245,6 +259,24 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </div>
   </div>
 </div>
+
+<?php } else { ?>
+
+<div class="width_50">
+
+  <h1 class="padding_bot">
+    <?=__link('pages/compendium/index', __('submenu_pages_compendium'), 'noglow')?>
+  </h1>
+
+  <div class="smallpadding_top">
+    <h5 class="uppercase orange text_white bold spaced align_center">
+      <?=__('compendium_page_no_lang')?>
+    </h5>
+  </div>
+
+</div>
+
+<?php } ?>
 
 <?php } else { ?>
 

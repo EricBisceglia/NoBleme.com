@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   `title_fr` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `redirection_en` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `redirection_fr` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_external_redirection` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `view_count` int UNSIGNED NOT NULL DEFAULT '0',
   `year_appeared` smallint UNSIGNED NOT NULL DEFAULT '0',
   `month_appeared` tinyint UNSIGNED NOT NULL DEFAULT '0',

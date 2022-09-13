@@ -702,3 +702,16 @@ if($last_query < 38)
 
   sql_update_query_id(38);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Redirect to non-compendium URLs
+
+if($last_query < 39)
+{
+  sql_create_field('compendium_pages', 'is_external_redirection', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'redirection_fr');
+
+  sql_update_query_id(39);
+}

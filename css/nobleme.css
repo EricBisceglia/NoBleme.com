@@ -103,36 +103,38 @@ hr   { height: 3px;                                                 } }
 
 /*************************************************** TEXT STYLING ****************************************************/
 
-.bold             { font-weight: bold; letter-spacing: 0.05rem; }
-.notbold          { font-weight: normal;                        }
-.uppercase        { text-transform: uppercase;                  }
-.italics          { font-style: italic;                         }
-.underlined       { text-decoration: underline;                 }
-.strikethrough    { text-decoration: line-through;              }
-.small            { font-size: 75%;                             }
-.smaller          { font-size: 50%;                             }
-.smallest         { font-size: 25%;                             }
-.big              { font-size: 125%;                            }
-.bigger           { font-size: 150%;                            }
-.biggest          { font-size: 200%;                            }
-.monospace        { font-family: monospace; font-size: 120%;    }
-.blur             { text-shadow: 0 0 10px #CACACA               ;
-                    color: rgba(255,255,255,0)                  ;
-                    transition: 2s text-shadow linear;          }
-.blur:hover       { text-shadow: none; color: #CACACA           ;
-                    transition: 2s text-shadow linear;          }
-.smallglow        { filter: drop-shadow(0 0 3px #B00B1E);       }
-.glow             { filter: drop-shadow(0 0 5px #B00B1E);       }
-.glow_dark        { filter: drop-shadow(0 0 5px #B00B1E);       }
-.glowhover:hover  { filter: drop-shadow(0 0 5px #B00B1E);       }
-.bigglow          { filter: drop-shadow(0 0 10px #B00B1E);      }
-.bigglow_dark     { filter: drop-shadow(0 0 10px #B00B1E);      }
-.hugeglow         { filter: drop-shadow(0 0 15px #B00B1E);      }
-.hugeglow_dark    { filter: drop-shadow(0 0 15px #B00B1E);      }
-.noglow           { filter: none;                               }
-.pointer          { cursor: pointer;                            }
+.bold                 { font-weight: bold; letter-spacing: 0.05rem; }
+.notbold              { font-weight: normal;                        }
+.uppercase            { text-transform: uppercase;                  }
+.italics              { font-style: italic;                         }
+.underlined           { text-decoration: underline;                 }
+.strikethrough        { text-decoration: line-through;              }
+.small                { font-size: 75%;                             }
+.smaller              { font-size: 50%;                             }
+.smallest             { font-size: 25%;                             }
+.big                  { font-size: 125%;                            }
+.bigger               { font-size: 150%;                            }
+.biggest              { font-size: 200%;                            }
+.monospace            { font-family: monospace; font-size: 120%;    }
+.blur                 { text-shadow: 0 0 10px #CACACA               ;
+                        color: rgba(255,255,255,0)                  ;
+                        transition: 2s text-shadow linear;          }
+.blur:hover           { text-shadow: none; color: #CACACA           ;
+                        transition: 2s text-shadow linear;          }
+.bigblur              { text-shadow: 0 0 25px #CACACA;              }
+.smallglow            { filter: drop-shadow(0 0 3px #B00B1E);       }
+.glow                 { filter: drop-shadow(0 0 5px #B00B1E);       }
+.glow_dark            { filter: drop-shadow(0 0 5px #B00B1E);       }
+.glowhover:hover      { filter: drop-shadow(0 0 5px #B00B1E);       }
+.glowhover_dark:hover { filter: drop-shadow(0 0 5px #B00B1E);       }
+.bigglow              { filter: drop-shadow(0 0 10px #B00B1E);      }
+.bigglow_dark         { filter: drop-shadow(0 0 10px #B00B1E);      }
+.hugeglow             { filter: drop-shadow(0 0 15px #B00B1E);      }
+.hugeglow_dark        { filter: drop-shadow(0 0 15px #B00B1E);      }
+.noglow               { filter: none;                               }
+.pointer              { cursor: pointer;                            }
 @media (max-width: 992px)                                       {
-.monospace        { font-size: 100%;                          } }
+.monospace            { font-size: 100%;                          } }
 
 /***************************************************** ALIGNMENT *****************************************************/
 
@@ -486,8 +488,8 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 .nbcode_blur_2:hover      { filter: none;                                                                 }
 .nbcode_blur_3            { filter: blur(5px);                                                            }
 .nbcode_blur_3:hover      { filter: none;                                                                 }
-.nbcode_dead_link         { color: #0069C0;                                                               }
-.nbcode_dead_link:hover   { color: #673AB7;                                                               }
+.nbcode_dead_link         { color: #C66900;                                                               }
+.nbcode_dead_link:hover   { color: #C66900;                                                               }
 .nbcode_link_icon         { vertical-align: middle; padding-left: 0.2rem; padding-bottom: 0.3rem;         }
 .nbcode_floater           { text-align: justify; text-align-last: center; max-width: 20.0rem              ;
                             font-size: 80%; border-radius: 0.2rem; border: 1px solid #232323              ;
