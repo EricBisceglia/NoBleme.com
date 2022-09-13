@@ -253,24 +253,24 @@ function tasks_list(  string  $sort_by    = 'status'  ,
 
   // Sort the data
   if($sort_by == 'id')
-    $qtasks .= "  ORDER BY    dev_tasks.id                      ASC     ";
+    $qtasks .= "  ORDER BY    dev_tasks.id                        ASC     ";
   else if($sort_by == 'description')
-    $qtasks .= "  ORDER BY    dev_tasks.title_$lang             ASC     ";
+    $qtasks .= "  ORDER BY    dev_tasks.title_$lang               ASC     ";
   else if($sort_by == 'created')
-    $qtasks .= "  ORDER BY    dev_tasks.created_at              DESC    ";
+    $qtasks .= "  ORDER BY    dev_tasks.created_at                DESC    ";
   else if($sort_by == 'reporter')
-    $qtasks .= "  ORDER BY    users.username                    ASC     ,
-                              dev_tasks.finished_at             != ''   ,
-                              dev_tasks.finished_at             DESC    ,
-                              dev_tasks.priority_level          DESC    ,
-                              dev_tasks.created_at              DESC    ";
+    $qtasks .= "  ORDER BY    users.username                      ASC     ,
+                              dev_tasks.finished_at               != ''   ,
+                              dev_tasks.finished_at               DESC    ,
+                              dev_tasks.priority_level            DESC    ,
+                              dev_tasks.created_at                DESC    ";
   else if($sort_by == 'category')
-    $qtasks .= "  ORDER BY    dev_tasks_categories.id           IS NULL ,
-                              dev_tasks_categories.title_$lang  ASC     ,
-                              dev_tasks.finished_at             != ''   ,
-                              dev_tasks.finished_at             DESC    ,
-                              dev_tasks.priority_level          DESC    ,
-                              dev_tasks.created_at              DESC    ";
+    $qtasks .= "  ORDER BY    dev_tasks_categories.id             IS NULL ,
+                              dev_tasks_categories.title_$lang    ASC     ,
+                              dev_tasks.finished_at               != ''   ,
+                              dev_tasks.finished_at               DESC    ,
+                              dev_tasks.priority_level            DESC    ,
+                              dev_tasks.created_at                DESC    ";
   else if($sort_by == 'goal')
     $qtasks .= "  ORDER BY    dev_tasks.finished_at               != ''   ,
                               dev_tasks_milestones.id             IS NULL ,
@@ -286,21 +286,20 @@ function tasks_list(  string  $sort_by    = 'status'  ,
                               dev_tasks.priority_level            DESC    ,
                               dev_tasks.created_at                DESC    ";
   else if($sort_by == 'admin')
+    $qtasks .= "  ORDER BY    dev_tasks.admin_validation          ASC     ,
+                              dev_tasks.is_deleted                DESC    ,
+                              dev_tasks.finished_at               > 0     ,
+                              dev_tasks.is_public                 ASC     ,
+                              dev_tasks.priority_level            DESC    ,
+                              dev_tasks.finished_at               DESC    ,
+                              dev_tasks.created_at                DESC    ";
+  else
     $qtasks .= "  ORDER BY    dev_tasks.admin_validation          = 1     ,
-                              dev_tasks.is_deleted                = 1     ,
-                              dev_tasks.title_en                  != ''   ,
-                              dev_tasks.title_fr                  != ''   ,
+                              dev_tasks.is_deleted                != ''   ,
                               dev_tasks.finished_at               != ''   ,
                               dev_tasks.finished_at               DESC    ,
                               dev_tasks.priority_level            DESC    ,
                               dev_tasks.created_at                DESC    ";
-  else
-    $qtasks .= "  ORDER BY    dev_tasks.admin_validation        = 1     ,
-                              dev_tasks.is_deleted              != ''   ,
-                              dev_tasks.finished_at             != ''   ,
-                              dev_tasks.finished_at             DESC    ,
-                              dev_tasks.priority_level          DESC    ,
-                              dev_tasks.created_at              DESC    ";
 
   // Run the query
   $qtasks = query($qtasks);
