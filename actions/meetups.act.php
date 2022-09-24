@@ -255,6 +255,15 @@ function meetups_add( array $contents ) : mixed
   // Fetch the newly created meetup's id
   $meetup_id = query_id();
 
+  // Scheduled task
+  $meetup_end_date  = strtotime(date('Y-m-d H:i:s', strtotime("+1 day +1 hour +1 minute", strtotime($meetup_date))));
+  $meetup_end_name  = $meetup_date.' '.$meetup_location;
+  schedule_task(  action_type:        'meetups_end'     ,
+                  action_id:          $meetup_id        ,
+                  action_planned_at:  $meetup_end_date  ,
+                  action_description: $meetup_end_name  ,
+                  sanitize_data:      true              );
+
   // Fetch the username of the moderator creating the meetup
   $mod_username = user_get_username();
 
@@ -274,9 +283,9 @@ function meetups_add( array $contents ) : mixed
                 activity_summary_fr:  $meetup_date    ,
                 moderator_username:   $mod_username   );
 
-  // Plain text meetup dates and location
-  $meetup_date_en   = date_to_text($meetup_date, lang: 'EN');
-  $meetup_date_fr   = date_to_text($meetup_date, lang: 'FR');
+  // Plain text meetup dates
+  $meetup_date_en = date_to_text($meetup_date, lang: 'EN');
+  $meetup_date_fr = date_to_text($meetup_date, lang: 'FR');
 
   // IRC bot message
   if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
@@ -391,6 +400,18 @@ function meetups_edit(  int   $meetup_id  ,
                   meetups.details_en  = '$meetup_details_en'  ,
                   meetups.details_fr  = '$meetup_details_fr'
           WHERE   meetups.id          = '$meetup_id'          ");
+
+  // Scheduled task
+  if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  {
+    $meetup_end_date  = strtotime(date('Y-m-d H:i:s', strtotime("+1 day +1 hour +1 minute", strtotime($meetup_date))));
+    $meetup_end_name  = $meetup_date.' '.$meetup_location;
+    schedule_task_update( action_type:        'meetups_end'     ,
+                          action_id:          $meetup_id        ,
+                          action_planned_at:  $meetup_end_date  ,
+                          action_description: $meetup_end_name  ,
+                          sanitize_data:      true              );
+  }
 
   // Fetch the username of the moderator creating the meetup
   $mod_username = user_get_username();
@@ -717,6 +738,10 @@ function meetups_hard_delete( int $meetup_id ) : void
                         is_moderators_only: true        ,
                         activity_id:        $meetup_id  ,
                         global_type_wipe:   true        );
+
+  // Delete all related scheduled tasks
+  schedule_task_delete( action_type:  'meetups_end' ,
+                        action_id:    $meetup_id    );
 
   // Recalculate stats for all users in the meetup
   for($i = 0; $i < $meetup_users['rows']; $i++)
@@ -1347,7 +1372,6 @@ function meetups_get_max_attendees() : int
   // Return the result
   return $dmeetups['m_max'];
 }
-
 
 
 
