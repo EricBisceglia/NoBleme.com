@@ -233,7 +233,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     //***************************************************************************************************************//
     // End an IP ban after it has expired
 
-    if($scheduler_type == 'users_unban_ip')
+    else if($scheduler_type == 'users_unban_ip')
     {
       // Only proceed if the IP ban actually exists
       if(database_row_exists('system_ip_bans', $scheduler_action_id))
@@ -259,6 +259,34 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
         // Scheduler log
         $scheduler_log = "The IP address has been unbanned";
+      }
+    }
+
+
+
+
+    //***************************************************************************************************************//
+    //                                                    MEETUPS                                                    //
+    //***************************************************************************************************************//
+    // Recalculate a meetup's stats once it's over
+
+    else if($scheduler_type == 'meetups_end')
+    {
+      // Only proceed if the meetup actually exists
+      if(database_row_exists('meetups', $scheduler_action_id))
+      {
+        // Include meetup related actions
+        include_once $path.'./actions/meetups.act.php';
+
+        // Fetch all users that took part in the meetup
+        $qmeetups = query(" SELECT  meetups_people.fk_users AS 'mp_uid'
+                            FROM    meetups_people
+                            WHERE   meetups_people.fk_meetups = '$scheduler_action_id'
+                            AND     meetups_people.fk_users   > 0 ");
+
+        // Update the meetup stats of each user
+        while($dmeetup = mysqli_fetch_array($qmeetups))
+          meetups_stats_recalculate_user($dmeetup['mp_uid']);
       }
     }
 
