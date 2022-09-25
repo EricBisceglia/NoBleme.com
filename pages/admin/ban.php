@@ -389,7 +389,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-<div class="width_90 smallpadding_top autoscroll" id="logs">
+<div class="width_100 smallpadding_top autoscroll" id="logs">
 
   <h2 class="align_center padding_top bigpadding_bot">
     <?=__('admin_ban_logs_title')?>
