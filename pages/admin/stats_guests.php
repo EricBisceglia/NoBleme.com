@@ -60,7 +60,7 @@ $guests_data = stats_guests_list( form_fetch_element('stats_guests_sort', 'activ
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_60">
+<div class="width_70">
 
   <h1>
     <?=__('submenu_admin_stats_guests')?>
@@ -80,7 +80,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('admin_stats_guests_themes_light', amount: $guests_data['sum_light'], preset_values: array($guests_data['sum_light'], $guests_data['percent_light']))?>
   </p>
 
-  <div class="autoscroll">
+  <div class="autoscroll nowrap">
     <table>
       <thead>
 
