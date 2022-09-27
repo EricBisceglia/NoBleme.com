@@ -70,7 +70,7 @@ $activity_page_fr = (isset($page_title_fr) && !isset($hidden_activity)) ? $page_
 /*********************************************************************************************************************/
 
 // Check whether a website update is in progress
-$website_closed = $system_variables['update_in_progress'];
+$website_closed = $system_variables['website_is_closed'];
 
 // If yes, close the website to anyone who's not an admin
 if($website_closed  && !$is_admin)
@@ -955,13 +955,13 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/dev/close_website', __('submenu_admin_close'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/dev/queries', __('submenu_admin_sql'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/dev/scheduler', __('submenu_admin_scheduler'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/versions', __('submenu_admin_versions'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
-            <?=__link('pages/dev/scheduler', __('submenu_admin_scheduler'), 'header_submenu_link', 1, $path);?>
+            <?=__link('pages/dev/queries', __('submenu_admin_sql'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
 

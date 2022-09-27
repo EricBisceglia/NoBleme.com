@@ -715,3 +715,21 @@ if($last_query < 39)
 
   sql_update_query_id(39);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Rework system variables
+
+if($last_query < 40)
+{
+  sql_create_field('system_variables', 'registrations_are_closed', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'last_pageview_check');
+
+  sql_rename_field('system_variables', 'update_in_progress', 'website_is_closed', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+
+  sql_change_field_type('system_variables', 'irc_bot_is_silenced', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_change_field_type('system_variables', 'discord_is_silenced', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+
+  sql_update_query_id(40);
+}

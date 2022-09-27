@@ -84,7 +84,7 @@ function dev_toggle_website_status( bool $website_is_closed ) : void
   $new_status = ($website_is_closed) ? 0 : 1;
 
   // Toggle the website status
-  system_variable_update('update_in_progress', $new_status, 'int');
+  system_variable_update('website_is_closed', $new_status, 'int');
 }
 
 
