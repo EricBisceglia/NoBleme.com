@@ -65,32 +65,6 @@ function dev_doc_icon_to_clipboard( string  $name                               
 
 
 /**
- * Toggles the website's status between open and closed.
- *
- * @param   bool  $website_is_closed  Whether an update is currently in progress
- *
- * @return  void
- */
-
-function dev_toggle_website_status( bool $website_is_closed ) : void
-{
-  // Require administrator rights to run this action
-  user_restrict_to_administrators();
-
-  // Sanitize the data
-  $website_is_closed = sanitize($website_is_closed, 'int', 0, 1);
-
-  // Determine the required new value
-  $new_status = ($website_is_closed) ? 0 : 1;
-
-  // Toggle the website status
-  system_variable_update('website_is_closed', $new_status, 'int');
-}
-
-
-
-
-/**
  * Returns elements related to a version number.
  *
  * @param   int         $version_id The version number's id.

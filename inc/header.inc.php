@@ -474,7 +474,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
     <?php if($website_closed) { ?>
 
     <div class="header_infobar">
-      <?=__link('pages/dev/close_website', __('website_closed'), 'header_infobar_link', 1, $path);?>
+      <?=__link('pages/dev/settings', __('website_closed'), 'header_infobar_link', 1, $path);?>
     </div>
 
     <?php } ?>
@@ -946,13 +946,13 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__('submenu_admin_website')?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('pages/dev/settings', __('submenu_admin_settings'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('pages/dev/irc_bot', __('submenu_admin_ircbot'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/discord', __('submenu_admin_discord'), 'header_submenu_link', 1, $path);?>
-          </div>
-          <div class="header_submenu_item">
-            <?=__link('pages/dev/close_website', __('submenu_admin_close'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/dev/scheduler', __('submenu_admin_scheduler'), 'header_submenu_link', 1, $path);?>
