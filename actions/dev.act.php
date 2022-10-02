@@ -8,61 +8,25 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  dev_doc_icon_to_clipboard           Generates the source code of an icon, ready for pasting to the clipboard.    */
+/*  dev_versions_get                      Returns elements related to a version number.                              */
+/*  dev_versions_list                     Returns the website's version numbering history.                           */
+/*  dev_versions_create                   Releases a new version of the website.                                     */
+/*  dev_versions_edit                     Edits an entry in the website's version numbering history.                 */
+/*  dev_versions_delete                   Deletes an entry in the website's version numbering history.               */
 /*                                                                                                                   */
-/*  dev_toggle_website_status           Toggles the website's status between open and closed.                        */
+/*  dev_blogs_get                         Returns elements related to a devblog.                                     */
+/*  dev_blogs_list                        Returns a list of devblogs.                                                */
+/*  dev_blogs_add                         Creates a new devblog.                                                     */
+/*  dev_blogs_edit                        Modifies an existing devblog.                                              */
+/*  dev_blogs_delete                      Deletes an existing devblog.                                               */
+/*  dev_blogs_restore                     Restores a soft deleted devblog.                                           */
+/*  dev_blogs_stats_list                  Returns stats related to devblogs.                                         */
 /*                                                                                                                   */
-/*  dev_versions_get                    Returns elements related to a version number.                                */
-/*  dev_versions_list                   Returns the website's version numbering history.                             */
-/*  dev_versions_create                 Releases a new version of the website.                                       */
-/*  dev_versions_edit                   Edits an entry in the website's version numbering history.                   */
-/*  dev_versions_delete                 Deletes an entry in the website's version numbering history.                 */
+/*  dev_doc_icon_to_clipboard             Generates the source code of an icon, ready for pasting to the clipboard.  */
 /*                                                                                                                   */
-/*  dev_blogs_get                       Returns elements related to a devblog.                                       */
-/*  dev_blogs_list                      Returns a list of devblogs.                                                  */
-/*  dev_blogs_add                       Creates a new devblog.                                                       */
-/*  dev_blogs_edit                      Modifies an existing devblog.                                                */
-/*  dev_blogs_delete                    Deletes an existing devblog.                                                 */
-/*  dev_blogs_restore                   Restores a soft deleted devblog.                                             */
-/*  dev_blogs_stats_list                Returns stats related to devblogs.                                           */
-/*                                                                                                                   */
-/*  dev_duplicate_translations_list     Looks for duplicate translations in the global translation array.            */
+/*  dev_duplicate_translations_list       Looks for duplicate translations in the global translation array.          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-
-/**
- * Generates the source code of an icon, ready for pasting to the clipboard.
- *
- * @param   string  $name                                 The name of the icon.
- * @param   string  $title                                The translation which will be used for the image's title.
- * @param   bool    $title_is_a_translation   (OPTIONAL)  Whether the title is the entered string or a translation.
- * @param   string  $alt_text                 (OPTIONAL)  The alt text for the icon.
- * @param   string  $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
- *
- * @return  string                                        The source code ready to be sent to the clipboard.
- */
-
-function dev_doc_icon_to_clipboard( string  $name                               ,
-                                    string  $title                  = ''        ,
-                                    bool    $title_is_a_translation = false     ,
-                                    string  $alt_text               = 'X'       ,
-                                    string  $size                   = 'normal'  ) : string
-{
-  // Prepare the data
-  $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
-  $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
-  $small    = ($size == 'small') ? ', is_small: true' : '';
-
-  // Assemble the string
-  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");
-
-  // Return the assembled string
-  return $icon;
-}
-
-
-
 
 /**
  * Returns elements related to a version number.
@@ -792,6 +756,39 @@ function dev_blogs_stats_list() : array
 
   // Return the stats
   return $data;
+}
+
+
+
+
+/**
+ * Generates the source code of an icon, ready for pasting to the clipboard.
+ *
+ * @param   string  $name                                 The name of the icon.
+ * @param   string  $title                                The translation which will be used for the image's title.
+ * @param   bool    $title_is_a_translation   (OPTIONAL)  Whether the title is the entered string or a translation.
+ * @param   string  $alt_text                 (OPTIONAL)  The alt text for the icon.
+ * @param   string  $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
+ *
+ * @return  string                                        The source code ready to be sent to the clipboard.
+ */
+
+function dev_doc_icon_to_clipboard( string  $name                               ,
+                                    string  $title                  = ''        ,
+                                    bool    $title_is_a_translation = false     ,
+                                    string  $alt_text               = 'X'       ,
+                                    string  $size                   = 'normal'  ) : string
+{
+  // Prepare the data
+  $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
+  $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
+  $small    = ($size == 'small') ? ', is_small: true' : '';
+
+  // Assemble the string
+  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");
+
+  // Return the assembled string
+  return $icon;
 }
 
 

@@ -473,7 +473,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
     <?php if($website_closed) { ?>
 
-    <div class="header_infobar">
+    <div class="header_infobar" id="header_topmenu_closed">
       <?=__link('pages/dev/settings', __('website_closed'), 'header_infobar_link', 1, $path);?>
     </div>
 

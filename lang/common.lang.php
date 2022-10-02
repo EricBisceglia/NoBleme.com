@@ -400,6 +400,8 @@ ___('category',     'EN', "category");
 ___('category',     'FR', "catégorie");
 ___('category+',    'EN', "categories");
 ___('category+',    'FR', "catégories");
+___('closed',       'EN', "closed");
+___('closed',       'FR', "fermé");
 ___('contents',     'EN', "contents");
 ___('contents',     'FR', "contenu");
 ___('created',      'EN', "created");

@@ -8,6 +8,23 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  WEBSITE SETTINGS                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Website state
+___('dev_settings_state_title',   'EN', "Website state");
+___('dev_settings_state_title',   'FR', "État du site");
+___('dev_settings_state_open',    'EN', "The website is currently open.");
+___('dev_settings_state_open',    'FR', "Le site est actuellement ouvert.");
+___('dev_settings_state_closed',  'EN', "The website is currently closed.");
+___('dev_settings_state_closed',  'FR', "Le site est actuellement fermé.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      QUERIES                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
