@@ -8,87 +8,30 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  dev_doc_icon_to_clipboard           Generates the source code of an icon, ready for pasting to the clipboard.    */
+/*  dev_versions_get                      Returns elements related to a version number.                              */
+/*  dev_versions_list                     Returns the website's version numbering history.                           */
+/*  dev_versions_create                   Releases a new version of the website.                                     */
+/*  dev_versions_edit                     Edits an entry in the website's version numbering history.                 */
+/*  dev_versions_delete                   Deletes an entry in the website's version numbering history.               */
 /*                                                                                                                   */
-/*  dev_toggle_website_status           Toggles the website's status between open and closed.                        */
+/*  dev_blogs_get                         Returns elements related to a devblog.                                     */
+/*  dev_blogs_list                        Returns a list of devblogs.                                                */
+/*  dev_blogs_add                         Creates a new devblog.                                                     */
+/*  dev_blogs_edit                        Modifies an existing devblog.                                              */
+/*  dev_blogs_delete                      Deletes an existing devblog.                                               */
+/*  dev_blogs_restore                     Restores a soft deleted devblog.                                           */
+/*  dev_blogs_stats_list                  Returns stats related to devblogs.                                         */
 /*                                                                                                                   */
-/*  dev_versions_get                    Returns elements related to a version number.                                */
-/*  dev_versions_list                   Returns the website's version numbering history.                             */
-/*  dev_versions_create                 Releases a new version of the website.                                       */
-/*  dev_versions_edit                   Edits an entry in the website's version numbering history.                   */
-/*  dev_versions_delete                 Deletes an entry in the website's version numbering history.                 */
+/*  dev_settings_website_open             Opens the website.                                                         */
+/*  dev_settings_website_close            Closes the website.                                                        */
+/*  dev_settings_registrations_open       Allows the creation of new accounts.                                       */
+/*  dev_settings_registrations_close      Forbids the creation of new accounts.                                      */
 /*                                                                                                                   */
-/*  dev_blogs_get                       Returns elements related to a devblog.                                       */
-/*  dev_blogs_list                      Returns a list of devblogs.                                                  */
-/*  dev_blogs_add                       Creates a new devblog.                                                       */
-/*  dev_blogs_edit                      Modifies an existing devblog.                                                */
-/*  dev_blogs_delete                    Deletes an existing devblog.                                                 */
-/*  dev_blogs_restore                   Restores a soft deleted devblog.                                             */
-/*  dev_blogs_stats_list                Returns stats related to devblogs.                                           */
+/*  dev_doc_icon_to_clipboard             Generates the source code of an icon, ready for pasting to the clipboard.  */
 /*                                                                                                                   */
-/*  dev_duplicate_translations_list     Looks for duplicate translations in the global translation array.            */
+/*  dev_duplicate_translations_list       Looks for duplicate translations in the global translation array.          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-
-/**
- * Generates the source code of an icon, ready for pasting to the clipboard.
- *
- * @param   string  $name                                 The name of the icon.
- * @param   string  $title                                The translation which will be used for the image's title.
- * @param   bool    $title_is_a_translation   (OPTIONAL)  Whether the title is the entered string or a translation.
- * @param   string  $alt_text                 (OPTIONAL)  The alt text for the icon.
- * @param   string  $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
- *
- * @return  string                                        The source code ready to be sent to the clipboard.
- */
-
-function dev_doc_icon_to_clipboard( string  $name                               ,
-                                    string  $title                  = ''        ,
-                                    bool    $title_is_a_translation = false     ,
-                                    string  $alt_text               = 'X'       ,
-                                    string  $size                   = 'normal'  ) : string
-{
-  // Prepare the data
-  $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
-  $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
-  $small    = ($size == 'small') ? ', is_small: true' : '';
-
-  // Assemble the string
-  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");
-
-  // Return the assembled string
-  return $icon;
-}
-
-
-
-
-/**
- * Toggles the website's status between open and closed.
- *
- * @param   bool  $website_is_closed  Whether an update is currently in progress
- *
- * @return  void
- */
-
-function dev_toggle_website_status( bool $website_is_closed ) : void
-{
-  // Require administrator rights to run this action
-  user_restrict_to_administrators();
-
-  // Sanitize the data
-  $website_is_closed = sanitize($website_is_closed, 'int', 0, 1);
-
-  // Determine the required new value
-  $new_status = ($website_is_closed) ? 0 : 1;
-
-  // Toggle the website status
-  system_variable_update('update_in_progress', $new_status, 'int');
-}
-
-
-
 
 /**
  * Returns elements related to a version number.
@@ -818,6 +761,137 @@ function dev_blogs_stats_list() : array
 
   // Return the stats
   return $data;
+}
+
+
+
+
+/**
+ * Opens the website.
+ *
+ * @return void
+ */
+
+function dev_settings_website_open()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Open the website
+  system_variable_update('website_is_closed', 0, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("The website has been opened by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+}
+
+
+
+
+/**
+ * Closes the website.
+ *
+ * @return void
+ */
+
+function dev_settings_website_close()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Open the website
+  system_variable_update('website_is_closed', 1, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("The website has been closed by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+}
+
+
+
+
+/**
+ * Allows the creation of new accounts.
+ *
+ * @return void
+ */
+
+function dev_settings_registrations_open()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Enable new account registration
+  system_variable_update('registrations_are_closed', 0, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("Account registration has been turned back on by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+  irc_bot_send_message("Account registration has been turned back on. It is once again possible to create new accounts on NoBleme.", 'mod');
+}
+
+
+
+
+/**
+ * Forbids the creation of new accounts.
+ *
+ * @return void
+ */
+
+function dev_settings_registrations_close()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Disable new account registration
+  system_variable_update('registrations_are_closed', 1, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("Account registration has been turned off by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+  irc_bot_send_message("Account registration has been turned off. This temporary security measure means no new accounts can be registered on NoBleme for now.", 'mod');
+}
+
+
+
+
+/**
+ * Generates the source code of an icon, ready for pasting to the clipboard.
+ *
+ * @param   string  $name                                 The name of the icon.
+ * @param   string  $title                                The translation which will be used for the image's title.
+ * @param   bool    $title_is_a_translation   (OPTIONAL)  Whether the title is the entered string or a translation.
+ * @param   string  $alt_text                 (OPTIONAL)  The alt text for the icon.
+ * @param   string  $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
+ *
+ * @return  string                                        The source code ready to be sent to the clipboard.
+ */
+
+function dev_doc_icon_to_clipboard( string  $name                               ,
+                                    string  $title                  = ''        ,
+                                    bool    $title_is_a_translation = false     ,
+                                    string  $alt_text               = 'X'       ,
+                                    string  $size                   = 'normal'  ) : string
+{
+  // Prepare the data
+  $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
+  $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
+  $small    = ($size == 'small') ? ', is_small: true' : '';
+
+  // Assemble the string
+  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");
+
+  // Return the assembled string
+  return $icon;
 }
 
 

@@ -4,20 +4,14 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/dev.act.php';   # Actions
-include_once './../../lang/dev.lang.php';     # Translations
-
-// Limit page access rights
-user_restrict_to_administrators();
-
-// Hide the page from who's online
-$hidden_activity = 1;
+include_once './../../lang/account.lang.php'; # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/dev/close_website";
-$page_title_en    = "Close the website";
-$page_title_fr    = "Fermer le site";
+$page_url         = "pages/account/register_closed";
+$page_title_en    = "Registrations are closed";
+$page_title_fr    = "Les inscriptions sont fermées";
+$page_description = "Registering a new NoBleme account is currently impossible.";
 
 
 
@@ -28,12 +22,11 @@ $page_title_fr    = "Fermer le site";
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Toggle the website's status between open and closed
-if(isset($_POST['dev_toggle_website_status']))
-  dev_toggle_website_status($system_variables['update_in_progress']);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Check if account creation is currently allowed
 
-// Update the system variables array entry so that the header knows of the new status
-$system_variables['update_in_progress'] = system_variable_fetch('update_in_progress');
+if(!system_variable_fetch('registrations_are_closed'))
+  header("location: ./register");
 
 
 
@@ -42,19 +35,25 @@ $system_variables['update_in_progress'] = system_variable_fetch('update_in_progr
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+/****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_50 padding_bot">
 
-  <h1 class="padding_top align_center hugepadding_bot">
-    <?=__('dev_close_website_title')?>
+  <h1>
+    <?=__('users_register_title')?>
   </h1>
 
-  <form method="POST" class="bigpadding_bot">
-    <fieldset class="align_center">
-      <input class="bigbutton" type="submit" name="dev_toggle_website_status" value="<?=__('dev_close_website_button')?>">
-    </fieldset>
-  </form>
+  <h5>
+    <?=__('users_closed_subtitle')?>
+  </h5>
+
+  <p>
+    <?=__('users_closed_body_1')?>
+  </p>
+
+  <p>
+    <?=__('users_closed_body_2')?>
+  </p>
 
 </div>
 
@@ -62,4 +61,4 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
-/*****************************************************************************/ include './../../inc/footer.inc.php'; }
+/*******************************************************************************/ include './../../inc/footer.inc.php';

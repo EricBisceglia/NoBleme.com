@@ -394,13 +394,14 @@ CREATE TABLE IF NOT EXISTS `system_scheduler` (
 
 DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
-  `update_in_progress` int UNSIGNED NOT NULL,
+  `website_is_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `latest_query_id` smallint UNSIGNED NOT NULL DEFAULT '0',
   `last_scheduler_execution` int UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int UNSIGNED NOT NULL DEFAULT '0',
-  `irc_bot_is_silenced` smallint UNSIGNED NOT NULL DEFAULT '0',
-  `discord_is_silenced` smallint UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`update_in_progress`)
+  `registrations_are_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `irc_bot_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `discord_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`website_is_closed`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `system_versions`;

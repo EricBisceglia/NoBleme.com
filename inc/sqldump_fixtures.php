@@ -245,10 +245,7 @@ function fixtures_query_id() : int
 
 // Set global variables
 query(" INSERT INTO system_variables
-        SET         system_variables.update_in_progress       = 0   ,
-                    system_variables.latest_query_id          = 31  ,
-                    system_variables.last_scheduler_execution = 0   ,
-                    system_variables.last_pageview_check      = 0   ");
+        SET         system_variables.latest_query_id = 255 ");
 
 
 

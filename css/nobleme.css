@@ -196,7 +196,7 @@ hr   { height: 3px;                                                 } }
 
 /******************************************* CONTENT WIDTH (DESKTOP ONLY) ********************************************/
 
-@media (min-width: 993px) {
+@media (min-width: 993px)                         {
 .margin_auto { margin: auto;                      }
 .width_30    { margin: auto; max-width: 30rem;    }
 .width_40    { margin: auto; max-width: 40rem;    }

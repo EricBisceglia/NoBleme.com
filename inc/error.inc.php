@@ -46,7 +46,7 @@ function error_page( string $message ) : void
   $is_admin     = user_is_administrator();
 
   // Mock system variables that need to be there even in special circumstances
-  $system_variables = array('update_in_progress' => system_variable_fetch('update_in_progress'));
+  $system_variables = array('website_is_closed' => system_variable_fetch('website_is_closed'));
 
   // Inform the header that an error is being thrown
   $error_mode = 1;

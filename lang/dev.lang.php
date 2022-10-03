@@ -8,6 +8,31 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  WEBSITE SETTINGS                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Website state
+___('dev_settings_state_title',   'EN', "Website state");
+___('dev_settings_state_title',   'FR', "État du site");
+___('dev_settings_state_open',    'EN', "The website is currently open.");
+___('dev_settings_state_open',    'FR', "Le site est actuellement ouvert.");
+___('dev_settings_state_closed',  'EN', "The website is currently closed.");
+___('dev_settings_state_closed',  'FR', "Le site est actuellement fermé.");
+
+// Account registrations
+___('dev_settings_registration_title',  'EN', "Account registrations");
+___('dev_settings_registration_title',  'FR', "Création de comptes");
+___('dev_settings_registration_open',   'EN', "Creating a new account is currently possible.");
+___('dev_settings_registration_open',   'FR', "La création de nouveaux comptes est activée.");
+___('dev_settings_registration_closed', 'EN', "Creating a new account is currently impossible.");
+___('dev_settings_registration_closed', 'FR', "La création de nouveaux comptes est désactivée.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      QUERIES                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -15,21 +40,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // All's OK
 ___('dev_queries_ok', 'EN', "ALL QUERIES HAVE SUCCESSFULLY BEEN RAN");
 ___('dev_queries_ok', 'FR', "LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 CLOSE THE WEBSITE                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Close the website
-___('dev_close_website_title',  'EN', "Open / Close the website");
-___('dev_close_website_title',  'FR', "Ouvrir / Fermer le site");
-___('dev_close_website_button', 'EN', "Toggle");
-___('dev_close_website_button', 'FR', "Changer");
 
 
 

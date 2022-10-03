@@ -69,6 +69,8 @@ ___('users_register_form_submit',               'FR', "Créer mon compte");
 
 
 // Error messages
+___('users_register_error_closed',              'EN', "Registrations are currently closed, no new accounts can be created on the website.");
+___('users_register_error_closed',              'FR', "La création de comptes est fermée, il est actuellement impossible de créer de nouveaux comptes sur le site.");
 ___('users_register_error_passwords',           'EN', "You must enter the same password twice");
 ___('users_register_error_passwords',           'FR', "Vous devez saisir deux fois le même mot de passe");
 ___('users_register_error_password_length',     'EN', "Your password is too short (8 characters minimum)");
@@ -133,6 +135,34 @@ EOT
 );
 ___('users_welcome_body',   'FR', <<<EOT
 Votre compte a bien été crée. Vous pouvez maintenant utiliser le formulaire de connexion ci-dessus afin de vous connecter sur votre nouveau compte. Bienvenue dans la communauté NoBlemeuse !
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                CLOSED REGISTRATION                                                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+___('users_closed_subtitle',  'EN', "New account registrations are closed");
+___('users_closed_subtitle',  'FR', "La création de comptes est désactivée");
+___('users_closed_body_1',    'EN', <<<EOT
+It is currently impossible to create new accounts on NoBleme. This is a protective measure which can be activated for a variety of reasons, such as protecting the website from spammers.
+EOT
+);
+___('users_closed_body_1',    'FR', <<<EOT
+Il est actuellement impossible de créer un nouveau compte sur NoBleme. Cette mesure de protection peut être activée pour des raisons telles que protéger le site d'une attaque de spam ou de harcèlement.
+EOT
+);
+___('users_closed_body_2',    'EN', <<<EOT
+This is a temporary situation. Sorry for the inconvenience, please come back at a later date.
+EOT
+);
+___('users_closed_body_2',    'FR', <<<EOT
+Cette situation est temporaire. N'hésitez pas à revenir plus tard.
 EOT
 );
 

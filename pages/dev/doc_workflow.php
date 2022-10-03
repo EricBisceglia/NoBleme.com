@@ -181,7 +181,7 @@ gitlog</pre>
 
   <p>
     Make sure that the code has been deployed and tested, including <?=__link('https://nobleme.com/pages/dev/queries', "queries", is_internal: false, popup: true)?> if needed.<br>
-    You might want to <?=__link('https://nobleme.com/pages/dev/close_website', "close", is_internal: false, popup: true)?> then <?=__link('https://nobleme.com/pages/dev/close_website', "reopen", is_internal: false, popup: true)?> the website if your update contains major changes.
+    You might want to <?=__link('https://nobleme.com/pages/dev/settings', "close", is_internal: false, popup: true)?> then <?=__link('https://nobleme.com/pages/dev/settings', "reopen", is_internal: false, popup: true)?> the website if your update contains major changes.
   </p>
 
   <p>
