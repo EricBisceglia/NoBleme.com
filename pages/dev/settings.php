@@ -32,39 +32,49 @@ $js = array('common/toggle', 'dev/settings');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Update settings
+// Fetch current settings
 
-// Open the website
-if(isset($_POST['dev_settings_open_website']))
-  system_variable_update('website_is_closed', 0, 'int');
+// Website state
+$dev_settings_state = system_variable_fetch('website_is_closed');
 
-// Close the website
-if(isset($_POST['dev_settings_close_website']))
-  system_variable_update('website_is_closed', 1, 'int');
-
-// Enable new account registration
-if(isset($_POST['dev_settings_open_registrations']))
-  system_variable_update('registrations_are_closed', 0, 'int');
-
-// Disable new account registration
-if(isset($_POST['dev_settings_close_registrations']))
-  system_variable_update('registrations_are_closed', 1, 'int');
+// New account registration
+$dev_settings_registration = system_variable_fetch('registrations_are_closed');
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch current settings
+// Update settings
 
-// Fetch website status and prepare radio buttons and divs
-$dev_settings_state             = system_variable_fetch('website_is_closed');
+// Open the website
+if(isset($_POST['dev_settings_open_website']) && $dev_settings_state)
+  dev_settings_website_open();
+
+// Close the website
+if(isset($_POST['dev_settings_close_website']) && !$dev_settings_state)
+  dev_settings_website_close();
+
+// Enable new account registration
+if(isset($_POST['dev_settings_open_registrations']) && $dev_settings_registration)
+  dev_settings_registrations_open();
+
+// Disable new account registration
+if(isset($_POST['dev_settings_close_registrations']) && !$dev_settings_registration)
+  dev_settings_registrations_close();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Prepare form elements and divs visibility
+
+// Website state
 $dev_settings_state_open        = (!$dev_settings_state)  ? ' checked'  : '';
 $dev_settings_state_closed      = ($dev_settings_state)   ? ' checked'  : '';
 $dev_settings_state_open_div    = ($dev_settings_state)   ? ' hidden'   : '';
 $dev_settings_state_closed_div  = (!$dev_settings_state)  ? ' hidden'   : '';
 
-// Fetch new account registration status and prepare radio buttons and divs
-$dev_settings_registration            = system_variable_fetch('registrations_are_closed');
+// New account registration
 $dev_settings_registration_open       = (!$dev_settings_registration) ? ' checked'  : '';
 $dev_settings_registration_closed     = ($dev_settings_registration)  ? ' checked'  : '';
 $dev_settings_registration_open_div   = ($dev_settings_registration)  ? ' hidden'   : '';

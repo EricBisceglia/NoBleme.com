@@ -22,6 +22,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_blogs_restore                     Restores a soft deleted devblog.                                           */
 /*  dev_blogs_stats_list                  Returns stats related to devblogs.                                         */
 /*                                                                                                                   */
+/*  dev_settings_website_open             Opens the website.                                                         */
+/*  dev_settings_website_close            Closes the website.                                                        */
+/*  dev_settings_registrations_open       Allows the creation of new accounts.                                       */
+/*  dev_settings_registrations_close      Forbids the creation of new accounts.                                      */
+/*                                                                                                                   */
 /*  dev_doc_icon_to_clipboard             Generates the source code of an icon, ready for pasting to the clipboard.  */
 /*                                                                                                                   */
 /*  dev_duplicate_translations_list       Looks for duplicate translations in the global translation array.          */
@@ -756,6 +761,104 @@ function dev_blogs_stats_list() : array
 
   // Return the stats
   return $data;
+}
+
+
+
+
+/**
+ * Opens the website.
+ *
+ * @return void
+ */
+
+function dev_settings_website_open()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Open the website
+  system_variable_update('website_is_closed', 0, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("The website has been opened by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+}
+
+
+
+
+/**
+ * Closes the website.
+ *
+ * @return void
+ */
+
+function dev_settings_website_close()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Open the website
+  system_variable_update('website_is_closed', 1, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("The website has been closed by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+}
+
+
+
+
+/**
+ * Allows the creation of new accounts.
+ *
+ * @return void
+ */
+
+function dev_settings_registrations_open()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Enable new account registration
+  system_variable_update('registrations_are_closed', 0, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("Account registration has been turned back on by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+  irc_bot_send_message("Account registration has been turned back on. It is once again possible to create new accounts on NoBleme.", 'mod');
+}
+
+
+
+
+/**
+ * Forbids the creation of new accounts.
+ *
+ * @return void
+ */
+
+function dev_settings_registrations_close()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Disable new account registration
+  system_variable_update('registrations_are_closed', 1, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("Account registration has been turned off by ".$username ." - ".$GLOBALS['website_url']."pages/dev/settings", 'admin');
+  irc_bot_send_message("Account registration has been turned off. This temporary security measure means no new accounts can be registered on NoBleme for now.", 'mod');
 }
 
 
