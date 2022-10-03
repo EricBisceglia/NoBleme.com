@@ -42,16 +42,33 @@ if(isset($_POST['dev_settings_open_website']))
 if(isset($_POST['dev_settings_close_website']))
   system_variable_update('website_is_closed', 1, 'int');
 
+// Enable new account registration
+if(isset($_POST['dev_settings_open_registrations']))
+  system_variable_update('registrations_are_closed', 0, 'int');
+
+// Disable new account registration
+if(isset($_POST['dev_settings_close_registrations']))
+  system_variable_update('registrations_are_closed', 1, 'int');
+
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch current settings
 
-// Fetch website status and prepare radio buttons
-$dev_settings_state         = system_variable_fetch('website_is_closed');
-$dev_settings_state_open    = (!$dev_settings_state)  ? ' checked' : '';
-$dev_settings_state_closed  = ($dev_settings_state)   ? ' checked' : '';
+// Fetch website status and prepare radio buttons and divs
+$dev_settings_state             = system_variable_fetch('website_is_closed');
+$dev_settings_state_open        = (!$dev_settings_state)  ? ' checked'  : '';
+$dev_settings_state_closed      = ($dev_settings_state)   ? ' checked'  : '';
+$dev_settings_state_open_div    = ($dev_settings_state)   ? ' hidden'   : '';
+$dev_settings_state_closed_div  = (!$dev_settings_state)  ? ' hidden'   : '';
+
+// Fetch new account registration status and prepare radio buttons and divs
+$dev_settings_registration            = system_variable_fetch('registrations_are_closed');
+$dev_settings_registration_open       = (!$dev_settings_registration) ? ' checked'  : '';
+$dev_settings_registration_closed     = ($dev_settings_registration)  ? ' checked'  : '';
+$dev_settings_registration_open_div   = ($dev_settings_registration)  ? ' hidden'   : '';
+$dev_settings_registration_closed_div = (!$dev_settings_registration) ? ' hidden'   : '';
 
 
 
@@ -75,7 +92,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       &nbsp;
     </div>
 
-    <h5 class="padding_top"><?=__('dev_settings_state_title')?></h5>
+    <div class="bigpadding_top<?=$dev_settings_state_open_div?>" id="dev_settings_open_message">
+      <div class="uppercase align_center bigger spaced green text_white bold">
+        <?=__('dev_settings_state_open')?>
+      </div>
+    </div>
+
+    <div class="bigpadding_top<?=$dev_settings_state_closed_div?>" id="dev_settings_close_message">
+      <div class="uppercase align_center bigger spaced red text_white bold">
+        <?=__('dev_settings_state_closed')?>
+      </div>
+    </div>
+
+    <h5 class="smallpadding_top"><?=__('dev_settings_state_title')?></h5>
 
     <div class="smallpadding_top">
       <input type="radio" id="dev_settings_close_0" name="dev_settings_close[]" value="0" onclick="dev_settings_open()"<?=$dev_settings_state_open?>>
@@ -85,16 +114,26 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <label class="label_inline" for="dev_settings_close_1"><?=string_change_case(__('closed'), 'initials')?></label>
     </div>
 
-    <div class="smallpadding_top hidden" id="dev_settings_open_message">
+    <div class="bigpadding_top<?=$dev_settings_registration_open_div?>" id="dev_settings_registration_on_message">
       <div class="uppercase align_center bigger spaced green text_white bold">
-        <?=__('dev_settings_state_open')?>
+        <?=__('dev_settings_registration_open')?>
       </div>
     </div>
 
-    <div class="smallpadding_top hidden" id="dev_settings_close_message">
+    <div class="bigpadding_top<?=$dev_settings_registration_closed_div?>" id="dev_settings_registration_off_message">
       <div class="uppercase align_center bigger spaced red text_white bold">
-        <?=__('dev_settings_state_closed')?>
+        <?=__('dev_settings_registration_closed')?>
       </div>
+    </div>
+
+    <h5 class="smallpadding_top"><?=__('dev_settings_registration_title')?></h5>
+
+    <div class="smallpadding_top">
+      <input type="radio" id="dev_settings_registration_0" name="dev_settings_registration[]" value="0" onclick="dev_registrations_open()"<?=$dev_settings_registration_open?>>
+      <label class="label_inline" for="dev_settings_registration_0"><?=string_change_case(__('opened'), 'initials')?></label>
+      <br>
+      <input type="radio" id="dev_settings_registration_1" name="dev_settings_registration[]" value="1" onclick="dev_registrations_close()"<?=$dev_settings_registration_closed?>>
+      <label class="label_inline" for="dev_settings_registration_1"><?=string_change_case(__('closed'), 'initials')?></label>
     </div>
 
     </fieldset>

@@ -207,6 +207,10 @@ function user_create_account( string  $username               ,
   $email              = sanitize($email, 'string');
   $timestamp          = sanitize(time(), 'int', 0);
 
+  // Error: Registrations are closed
+  if(system_variable_fetch('registrations_are_closed'))
+    return __('users_register_error_closed');
+
   // Error: No username specified
   if(!$username)
     return __('login_form_error_no_username');

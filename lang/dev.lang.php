@@ -20,6 +20,14 @@ ___('dev_settings_state_open',    'FR', "Le site est actuellement ouvert.");
 ___('dev_settings_state_closed',  'EN', "The website is currently closed.");
 ___('dev_settings_state_closed',  'FR', "Le site est actuellement fermé.");
 
+// Account registrations
+___('dev_settings_registration_title',  'EN', "Account registrations");
+___('dev_settings_registration_title',  'FR', "Création de comptes");
+___('dev_settings_registration_open',   'EN', "Creating a new account is currently possible.");
+___('dev_settings_registration_open',   'FR', "La création de nouveaux comptes est activée.");
+___('dev_settings_registration_closed', 'EN', "Creating a new account is currently impossible.");
+___('dev_settings_registration_closed', 'FR', "La création de nouveaux comptes est désactivée.");
+
 
 
 
