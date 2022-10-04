@@ -26,12 +26,11 @@ function dev_settings_open()
   // Hide the website is closed banner
   toggle_element_oneway('dev_settings_close_message', false);
 
+  // Hide the header banner
+  toggle_element_oneway('header_topmenu_closed', false);
+
   // Open the website
   fetch_page('settings', 'dev_settings_dummy_div', 'dev_settings_open_website=1');
-
-  // Hide the header banner if it exists
-  if(document.getElementById('header_topmenu_closed'))
-    toggle_element_oneway('header_topmenu_closed', false);
 }
 
 
