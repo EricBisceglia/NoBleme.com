@@ -27,6 +27,10 @@ function toggle_element(  element_id              ,
   // Fetch the selected element
   var selected_element = document.getElementById(element_id);
 
+  // Stop here if does not exist
+  if(!selected_element)
+    return;
+
   // Check the current visibility state of the element
   var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
 
@@ -73,15 +77,16 @@ function toggle_class(  element_class           ,
 /**
  * Toggles the checked status of a checkbox.
  *
- * @param   {string}  checkbox_id   The checkbox whose visibility will be toggled.
+ * @param   {string}  checkbox_id   The checkbox which will get its status toggled.
  *
  * @returns {void}
  */
 
 function toggle_checkbox( checkbox_id )
 {
-  // Swap the checked status
-  document.getElementById(checkbox_id).click();
+  // Swap the checked status if the checkbox exist
+  if(document.getElementById(element_id))
+    document.getElementById(checkbox_id).click();
 }
 
 
@@ -101,13 +106,18 @@ function toggle_element_oneway( element_id                      ,
                                 will_be_made_visible            ,
                                 element_type          = 'block' )
 {
-  // Hide the requested element
-  if(!will_be_made_visible)
-    document.getElementById(element_id).style.display = 'none';
+  // Fetch the selected element
+  var selected_element = document.getElementById(element_id);
 
-  // Make the requested element visible
+  // Stop here if it does not exist
+  if(!selected_element)
+    return;
+
+  // Toggle the element's visibility in the requested way
+  if(!will_be_made_visible)
+    selected_element.style.display = 'none';
   else
-    document.getElementById(element_id).style.display = element_type;
+    selected_element.style.display = element_type;
 }
 
 
