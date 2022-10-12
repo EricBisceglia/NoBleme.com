@@ -56,6 +56,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_eras_edit                      Modifies an existing compendium era.                                   */
 /*  compendium_eras_delete                    Deletes an existing compendium era.                                    */
 /*                                                                                                                   */
+/*  compendium_search                         Returns the result of a search through all compendium content.         */
+/*                                                                                                                   */
 /*  compendium_page_history_get               Returns data related to an entry in a compendium page's history.       */
 /*  compendium_page_history_list              Returns data related to a compendium page's history entry.             */
 /*  compendium_page_history_edit              Modifies an existing compendium page's history entry.                  */
@@ -3836,6 +3838,152 @@ function compendium_eras_delete( int $era_id ) : mixed
 
   // All went well
   return NULL;
+}
+
+
+
+
+/**
+ * Returns the result of a search through all compendium content.
+ *
+ * @param   string      $search_query   The content being searched.
+ *
+ * @return  array|null                  An array containing search results, or NULL in case of an error.
+ */
+
+function compendium_search( string $search_query ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the search query
+  $search_query = sanitize($search_query, 'string');
+
+  // Stop here if the search query is less than 3 characters
+  if(mb_strlen($search_query) < 3)
+    return null;
+
+  // Fetch and sanitize the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Prepare an array for the search results
+  $search_results = array();
+
+  // Search compendium content for the query
+  $qsearch = query("  ( SELECT    'page_type'                       AS 'c_type'   ,
+                                  compendium_types.full_name_$lang  AS 'c_title'  ,
+                                  compendium_types.id               AS 'c_url'
+                        FROM      compendium_types
+                        WHERE     compendium_types.full_name_en   LIKE '%$search_query%'
+                        OR        compendium_types.full_name_fr   LIKE '%$search_query%'
+                        OR        compendium_types.description_en LIKE '%$search_query%'
+                        OR        compendium_types.description_fr LIKE '%$search_query%'
+                        ORDER BY  compendium_types.full_name_$lang ASC )
+
+                      UNION
+
+                      ( SELECT    'category'                        AS 'c_type'   ,
+                                  compendium_categories.name_$lang  AS 'c_title'  ,
+                                  compendium_categories.id          AS 'c_url'
+                        FROM      compendium_categories
+                        WHERE     compendium_categories.name_en         LIKE '%$search_query%'
+                        OR        compendium_categories.name_fr         LIKE '%$search_query%'
+                        OR        compendium_categories.description_en  LIKE '%$search_query%'
+                        OR        compendium_categories.description_fr  LIKE '%$search_query%'
+                        ORDER BY  compendium_categories.name_$lang ASC )
+
+                      UNION
+
+                      ( SELECT    'era'                       AS 'c_type'   ,
+                                  compendium_eras.name_$lang  AS 'c_title'  ,
+                                  compendium_eras.id          AS 'c_url'
+                        FROM      compendium_eras
+                        WHERE     compendium_eras.name_en         LIKE '%$search_query%'
+                        OR        compendium_eras.name_fr         LIKE '%$search_query%'
+                        OR        compendium_eras.description_en  LIKE '%$search_query%'
+                        OR        compendium_eras.description_fr  LIKE '%$search_query%'
+                        ORDER BY  compendium_eras.name_$lang ASC )
+
+                      UNION
+
+                      ( SELECT    'page'                        AS 'c_type'   ,
+                                  compendium_pages.title_$lang  AS 'c_title'  ,
+                                  compendium_pages.page_url     AS 'c_url'
+                        FROM      compendium_pages
+                        WHERE     compendium_pages.title_en       LIKE '%$search_query%'
+                        OR        compendium_pages.title_fr       LIKE '%$search_query%'
+                        OR        compendium_pages.definition_en  LIKE '%$search_query%'
+                        OR        compendium_pages.definition_fr  LIKE '%$search_query%'
+                        OR        compendium_pages.summary_en     LIKE '%$search_query%'
+                        OR        compendium_pages.summary_fr     LIKE '%$search_query%'
+                        ORDER BY  CONCAT(compendium_pages.title_$lang, compendium_pages.page_url) ASC )
+
+                      UNION
+
+                      ( SELECT    'missing'                   AS 'c_type'   ,
+                                  compendium_missing.page_url AS 'c_title'  ,
+                                  compendium_missing.id       AS 'c_url'
+                        FROM      compendium_missing
+                        WHERE     compendium_missing.page_url LIKE '%$search_query%'
+                        OR        compendium_missing.title    LIKE '%$search_query%'
+                        OR        compendium_missing.notes    LIKE '%$search_query%'
+                        ORDER BY  compendium_missing.page_url ASC )
+
+                      UNION
+
+                      ( SELECT    'image'                     AS 'c_type'   ,
+                                  compendium_images.file_name AS 'c_title'  ,
+                                  compendium_images.file_name AS 'c_url'
+                        FROM      compendium_images
+                        WHERE     compendium_images.file_name   LIKE '%$search_query%'
+                        OR        compendium_images.caption_en  LIKE '%$search_query%'
+                        OR        compendium_images.caption_fr  LIKE '%$search_query%'
+                        ORDER BY  compendium_images.file_name ASC ) ");
+
+  // Prepare and add the search results to the return array
+  for($i = 0; $row = mysqli_fetch_array($qsearch); $i++)
+  {
+    // Content type name
+    $search_results[$i]['type'] = match($row['c_type'])
+    {
+      'page_type' => __('compendium_type_admin_short')            ,
+      'category'  => __('compendium_stats_category')              ,
+      'era'       => __('compendium_page_era')                    ,
+      'page'      => __('compendium_admin_search_page')           ,
+      'missing'   => __('compendium_page_missing_title')          ,
+      'image'     => string_change_case(__('image'), 'initials')  ,
+      default     => '&nbsp;'                                     ,
+    };
+
+    // Assemble the content URLs
+    $search_results[$i]['url'] = match($row['c_type'])
+    {
+      'page_type' => 'pages/compendium/page_type?type='.$row['c_url']   ,
+      'category'  => 'pages/compendium/category?id='.$row['c_url']      ,
+      'era'       => 'pages/compendium/cultural_era?era='.$row['c_url'] ,
+      'page'      => 'pages/compendium/'.$row['c_url']                  ,
+      'missing'   => 'pages/compendium/page_missing?id='.$row['c_url']  ,
+      'image'     => 'pages/compendium/image?name='.$row['c_url']       ,
+      default     => 'pages/compendium/index'                           ,
+    };
+
+    // Content title
+    $search_results[$i]['title'] = match($row['c_type'])
+    {
+      'page'      => ($row['c_title']) ? $row['c_title'] : $row['c_url']  ,
+      default     => $row['c_title']                                      ,
+    };
+
+    // Sanitize the data
+    $search_results[$i]['type']   = sanitize_output($search_results[$i]['type']);
+    $search_results[$i]['title']  = sanitize_output(string_truncate($search_results[$i]['title'], 35, '...'));
+  }
+
+  // Add the search result count to the return array
+  $search_results['count'] = $i;
+
+  // Return the search results
+  return $search_results;
 }
 
 
