@@ -475,6 +475,8 @@ ___('restore',    'EN', "restore");
 ___('restore',    'FR', "restaurer");
 ___('search',     'EN', "search");
 ___('search',     'FR', "chercher");
+___('search2',    'EN', "search");
+___('search2',    'FR', "recherche");
 ___('sort',       'EN', "sort");
 ___('sort',       'FR', "trier");
 ___('message',    'EN', "message");

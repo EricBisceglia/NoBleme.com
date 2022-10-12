@@ -649,6 +649,33 @@ ___('compendium_missing_edit_deleted',  'FR', "Cette page manquante n'existe pas
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   ADMIN SEARCH                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('compendium_admin_search_title',  'EN', "Admin search");
+___('compendium_admin_search_title',  'FR', "Recherche admin");
+
+
+// Search form
+___('compendium_admin_search_label',  'EN', "Search query (at least 3 characters)");
+___('compendium_admin_search_label',  'FR', "Recherche à effectuer (au moins 3 caractères)");
+
+
+// Results table
+___('compendium_admin_search_results',  'EN', "{{1}} compendium element found");
+___('compendium_admin_search_results',  'FR', "{{1}} élément du compendium trouvé");
+___('compendium_admin_search_results+', 'EN', "{{1}} compendium elements found");
+___('compendium_admin_search_results+', 'FR', "{{1}} éléments du compendium trouvés");
+___('compendium_admin_search_page',     'EN', "Entry");
+___('compendium_admin_search_page',     'FR', "Page");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       ERAS                                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

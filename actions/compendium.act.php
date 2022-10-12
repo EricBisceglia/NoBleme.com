@@ -56,6 +56,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_eras_edit                      Modifies an existing compendium era.                                   */
 /*  compendium_eras_delete                    Deletes an existing compendium era.                                    */
 /*                                                                                                                   */
+/*  compendium_search                         Returns the result of a search through all compendium content.         */
+/*                                                                                                                   */
 /*  compendium_page_history_get               Returns data related to an entry in a compendium page's history.       */
 /*  compendium_page_history_list              Returns data related to a compendium page's history entry.             */
 /*  compendium_page_history_edit              Modifies an existing compendium page's history entry.                  */
@@ -3836,6 +3838,62 @@ function compendium_eras_delete( int $era_id ) : mixed
 
   // All went well
   return NULL;
+}
+
+
+
+
+/**
+ * Returns the result of a search through all compendium content.
+ *
+ * @param   string      $search_query   The content being searched.
+ *
+ * @return  array|null                  An array containing search results, or NULL in case of an error.
+ */
+
+function compendium_search( string $search_query ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the search query
+  $search_query = sanitize($search_query, 'string');
+
+  // Stop here if the search query is less than 3 characters
+  if(mb_strlen($search_query) < 3)
+    return null;
+
+  // Fetch and sanitize the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Prepare an array for the search results
+  $search_results = array();
+
+  // Search pages for the query
+  $qsearch = query("  SELECT    compendium_pages.id           AS 'c_id'     ,
+                                compendium_pages.title_$lang  AS 'c_title'  ,
+                                compendium_pages.page_url     AS 'c_url'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.definition_en  LIKE '%$search_query%'
+                      OR        compendium_pages.definition_fr  LIKE '%$search_query%'
+                      OR        compendium_pages.summary_en     LIKE '%$search_query%'
+                      OR        compendium_pages.summary_fr     LIKE '%$search_query%'
+                      ORDER BY  CONCAT(compendium_pages.title_$lang, compendium_pages.page_url) ASC ");
+
+  // Add the pages to the return array
+  for($i = 0; $row = mysqli_fetch_array($qsearch); $i++)
+  {
+    $search_results[$i]['type']   = sanitize_output(__('compendium_admin_search_page'));
+    $search_results[$i]['url']    = 'pages/compendium/'.$row['c_url'];
+    $temp                         = ($row['c_title']) ? $row['c_title'] : $row['c_url'];
+    $search_results[$i]['title']  = sanitize_output(string_truncate($temp, 40, '...'));
+  }
+
+  // Add the search result count to the return array
+  $search_results['count'] = $i;
+
+  // Return the search results
+  return $search_results;
 }
 
 
