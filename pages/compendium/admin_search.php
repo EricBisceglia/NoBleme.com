@@ -22,8 +22,9 @@ $page_title_fr    = "Compendium : recherche";
 // Compendium admin menu selection
 $compendium_admin_menu['search'] = 1;
 
-// Extra CSS
-$css = array('compendium');
+// Extra CSS & JS
+$css  = array('compendium');
+$js   = array('compendium/admin');
 
 
 
@@ -100,7 +101,16 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
       <?php for($i = 0; $i < $compendium_admin_search['count']; $i++) { ?>
 
+      <?php if($i < ($compendium_admin_search['count'] - 1) && $compendium_admin_search[$i]['type'] != $compendium_admin_search[$i+1]['type']) { ?>
+
+      <tr class="row_separator_dark">
+
+      <?php } else { ?>
+
       <tr>
+
+      <?php } ?>
+
         <td class="align_center">
           <?=$compendium_admin_search[$i]['type']?>
         </td>
