@@ -348,12 +348,16 @@ EOD
 
 
 // Message list
-___('admin_mail_list_select', 'EN', "Select an admin mail in the right column by clicking on it");
-___('admin_mail_list_select', 'FR', "Sélectionnez un courrier administratif dans la colonne de droite en cliquant dessus");
-___('admin_mail_list_search', 'EN', "Search through the messages:");
-___('admin_mail_list_search', 'FR', "Recherche dans les messages :");
-___('admin_mail_list_none',   'EN', "There are currently no private messages in the admin mail inbox.");
-___('admin_mail_list_none',   'FR', "Il n'y a actuellement aucun message privé dans la boîte de courrier administratif.");
+___('admin_mail_list_select',   'EN', "Select an admin mail in the right column by clicking on it");
+___('admin_mail_list_select',   'FR', "Sélectionnez un courrier administratif dans la colonne de droite en cliquant dessus");
+___('admin_mail_list_search',   'EN', "Search through the messages:");
+___('admin_mail_list_search',   'FR', "Recherche dans les messages :");
+___('admin_mail_list_read',     'EN', "Ignore all");
+___('admin_mail_list_read',     'FR', "Tout ignorer");
+___('admin_mail_list_confirm',  'EN', "Confirm that every unread admin mail should be marked as read.");
+___('admin_mail_list_confirm',  'FR', "Confirmez que tous les courriers administratifs non lus doivent être marqués comme lus.");
+___('admin_mail_list_none',     'EN', "There are currently no private messages in the admin mail inbox.");
+___('admin_mail_list_none',     'FR', "Il n'y a actuellement aucun message privé dans la boîte de courrier administratif.");
 
 
 // Message chain

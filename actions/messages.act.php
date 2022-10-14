@@ -22,6 +22,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  admin_mail_get                Fetches information about a private message sent to or by the administrative team. */
 /*  admin_mail_reply              Replies to an existing private message sent to the administrative team.            */
 /*  admin_mail_delete             Deletes a private message sent to or by the administrative team.                   */
+/*  admin_mail_read_all           Marks all unread admin mails as read.                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -1090,4 +1091,28 @@ function admin_mail_delete( int $message_id ) : mixed
 
   // All went well, return NULL
   return NULL;
+}
+
+
+
+
+/**
+ * Marks all unread admin mails as read.
+ *
+ * @return void
+ */
+
+function admin_mail_read_all()
+{
+  // Only administrators can read admin mail
+  user_restrict_to_administrators();
+
+  // Get current timestamp
+  $time = sanitize(time(), 'int', 0);
+
+  // Mark all unread admin mail as read
+  query(" UPDATE  users_private_messages
+          SET     users_private_messages.read_at              = '$time'
+          WHERE   users_private_messages.hide_from_admin_mail = 0
+          AND     users_private_messages.fk_users_recipient   = 0 ");
 }
