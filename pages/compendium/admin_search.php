@@ -47,6 +47,7 @@ $compendium_admin_search_query = sanitize_output(form_fetch_element('compendium_
 
 
 
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */

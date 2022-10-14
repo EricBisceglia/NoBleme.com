@@ -35,6 +35,15 @@ $css  = array('admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Mark all as read
+
+if(isset($_POST['admin_mail_read']))
+  admin_mail_read_all();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the admin mail
 
 $admin_mail = admin_mail_list(form_fetch_element('admin_mail_search', ''));
@@ -71,14 +80,28 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <div class="admin_mail_right_panel">
 
     <?php if(!$admin_mail['rows']) { ?>
+
     <div class="admin_mail_border admin_mail_right_entry text_red bold glow bigger">
       <?=__('admin_mail_list_none')?>
     </div>
+
     <?php } else { ?>
+
     <div class="admin_mail_border admin_mail_search">
       <label class="admin_mail_search_label"><?=__('admin_mail_list_search')?></label>
       <input class="table_search indiv" name="admin_mail_search" id="admin_mail_search" value="" onkeyup="admin_mail_search();">
     </div>
+
+    <?php if($admin_mail['unread'] > 1) { ?>
+    <div class="admin_mail_border admin_mail_read">
+      <form method="POST">
+        <fieldset>
+          <input type="submit" class="indiv align_center admin_mail_read_button" name="admin_mail_read" value="<?=__('admin_mail_list_read')?>" onclick="return confirm('<?=__('admin_mail_list_confirm')?>')">
+        </fieldset>
+      </form>
+    </div>
+
+    <?php } ?>
     <?php } ?>
 
     <div id="admin_mail_message_list">
