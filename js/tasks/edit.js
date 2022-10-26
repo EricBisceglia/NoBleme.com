@@ -202,11 +202,12 @@ function tasks_milestones_edit_form( milestone_id )
 function tasks_milestones_edit( milestone_id )
 {
   // Assemble the postdata
-  postdata  = 'task_milestone_edit_order='    + fetch_sanitize_id('tasks_milestones_edit_order_' + milestone_id);
-  postdata += '&task_milestone_edit_name_en=' + fetch_sanitize_id('tasks_milestones_edit_english_' + milestone_id);
-  postdata += '&task_milestone_edit_name_fr=' + fetch_sanitize_id('tasks_milestones_edit_french_' + milestone_id);
-  postdata += '&task_milestone_edit_body_en=' + fetch_sanitize_id('tasks_milestones_edit_body_en_' + milestone_id);
-  postdata += '&task_milestone_edit_body_fr=' + fetch_sanitize_id('tasks_milestones_edit_body_fr_' + milestone_id);
+  postdata  = 'task_milestone_edit_order='      + fetch_sanitize_id('tasks_milestones_edit_order_' + milestone_id);
+  postdata += '&task_milestone_edit_name_en='   + fetch_sanitize_id('tasks_milestones_edit_english_' + milestone_id);
+  postdata += '&task_milestone_edit_name_fr='   + fetch_sanitize_id('tasks_milestones_edit_french_' + milestone_id);
+  postdata += '&task_milestone_edit_body_en='   + fetch_sanitize_id('tasks_milestones_edit_body_en_' + milestone_id);
+  postdata += '&task_milestone_edit_body_fr='   + fetch_sanitize_id('tasks_milestones_edit_body_fr_' + milestone_id);
+  postdata += '&task_milestone_edit_archived='  + document.getElementById('tasks_milestones_edit_archived_' + milestone_id).checked;
   postdata += '&task_milestone_edit='         + fetch_sanitize(milestone_id);
 
   // Submit the modifications

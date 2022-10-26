@@ -1262,6 +1262,7 @@ function tasks_milestones_list() : array
 
   // Fetch the milestones
   $qmilestones  = " SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
+                              dev_tasks_milestones.is_archived    AS 'm_archived' ,
                               dev_tasks_milestones.title_en       AS 'm_title_en' ,
                               dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
                               dev_tasks_milestones.title_$lang    AS 'm_title'    ,
@@ -1278,6 +1279,8 @@ function tasks_milestones_list() : array
   for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['m_id']);
+    $data[$i]['archived'] = sanitize_output($row['m_archived']);
+    $data[$i]['carchive'] = ($row['m_archived']) ? ' checked' : '';
     $data[$i]['title']    = sanitize_output($row['m_title']);
     $data[$i]['title_en'] = sanitize_output($row['m_title_en']);
     $data[$i]['title_fr'] = sanitize_output($row['m_title_fr']);
@@ -1356,10 +1359,13 @@ function tasks_milestones_edit( int   $milestone_id = 0       ,
   $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
   $body_en  = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')  : '';
   $body_fr  = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')  : '';
+  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])           : 0;
+  $archived = ($archived == 'true')           ? 1                                         : 0;
 
   // Update the task milestone
   query(" UPDATE  dev_tasks_milestones
-          SET     dev_tasks_milestones.sorting_order  = '$order'    ,
+          SET     dev_tasks_milestones.is_archived    = '$archived' ,
+                  dev_tasks_milestones.sorting_order  = '$order'    ,
                   dev_tasks_milestones.title_en       = '$title_en' ,
                   dev_tasks_milestones.title_fr       = '$title_fr' ,
                   dev_tasks_milestones.summary_en     = '$body_en'  ,
