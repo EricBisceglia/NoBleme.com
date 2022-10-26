@@ -185,6 +185,7 @@ CREATE TABLE IF NOT EXISTS `dev_tasks` (
 DROP TABLE IF EXISTS `dev_tasks_categories`;
 CREATE TABLE IF NOT EXISTS `dev_tasks_categories` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `is_archived` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `title_en` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_fr` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -193,6 +194,7 @@ CREATE TABLE IF NOT EXISTS `dev_tasks_categories` (
 DROP TABLE IF EXISTS `dev_tasks_milestones`;
 CREATE TABLE IF NOT EXISTS `dev_tasks_milestones` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `is_archived` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `sorting_order` int UNSIGNED NOT NULL DEFAULT '0',
   `title_en` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_fr` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,

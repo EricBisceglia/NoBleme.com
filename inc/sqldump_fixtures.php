@@ -1191,13 +1191,15 @@ $random = mt_rand(10,20);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $archived = (mt_rand(0,5) < 5) ? 0 : 1;
   $title_en = ucfirst(fixtures_generate_data('string', 5, 15));
   $title_fr = ucfirst(fixtures_generate_data('string', 5, 15));
 
   // Generate the categories
   query(" INSERT INTO dev_tasks_categories
-          SET         dev_tasks_categories.title_en = '$title_en' ,
-                      dev_tasks_categories.title_fr = '$title_fr' ");
+          SET         dev_tasks_categories.is_archived  = '$archived' ,
+                      dev_tasks_categories.title_en     = '$title_en' ,
+                      dev_tasks_categories.title_fr     = '$title_fr' ");
 }
 
 // Output progress
@@ -1210,6 +1212,7 @@ $random = mt_rand(10,20);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $archived       = (mt_rand(0,3) < 3) ? 0 : 1;
   $title_en       = ucfirst(fixtures_generate_data('string', 5, 15));
   $title_fr       = ucfirst(fixtures_generate_data('string', 5, 15));
   $summary_en     = (mt_rand(0,4) < 4) ? '' : fixtures_generate_data('text', 1, 1);
@@ -1217,7 +1220,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the milestones
   query(" INSERT INTO dev_tasks_milestones
-          SET         dev_tasks_milestones.sorting_order  = '$i'          ,
+          SET         dev_tasks_milestones.is_archived    = '$archived'   ,
+                      dev_tasks_milestones.sorting_order  = '$i'          ,
                       dev_tasks_milestones.title_en       = '$title_en'   ,
                       dev_tasks_milestones.title_fr       = '$title_fr'   ,
                       dev_tasks_milestones.summary_en     = '$summary_en' ,
