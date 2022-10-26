@@ -136,17 +136,20 @@ function admin_users_search( sort_data = null )
     document.getElementById('stats_users_sort').value = sort_data;
 
   // Assemble the postdata
-  postdata  = 'stats_users_sort='             + fetch_sanitize_id('stats_users_sort');
-  postdata += '&stats_users_search_username=' + fetch_sanitize_id('stats_users_username');
-  postdata += '&stats_users_search_created='  + fetch_sanitize_id('stats_users_created');
-  postdata += '&stats_users_search_page='     + fetch_sanitize_id('stats_users_page');
-  postdata += '&stats_users_search_action='   + fetch_sanitize_id('stats_users_action');
-  postdata += '&stats_users_search_language=' + fetch_sanitize_id('stats_users_language');
-  postdata += '&stats_users_search_speaks='   + fetch_sanitize_id('stats_users_speaks');
-  postdata += '&stats_users_search_theme='    + fetch_sanitize_id('stats_users_theme');
-  postdata += '&stats_users_search_birthday=' + fetch_sanitize_id('stats_users_birthday');
-  postdata += '&stats_users_search_profile='  + fetch_sanitize_id('stats_users_profile');
-  postdata += '&stats_users_search_settings=' + fetch_sanitize_id('stats_users_settings');
+  postdata    = 'stats_users_sort='             + fetch_sanitize_id('stats_users_sort');
+  postdata   += '&stats_users_search_username=' + fetch_sanitize_id('stats_users_username');
+  postdata   += '&stats_users_search_created='  + fetch_sanitize_id('stats_users_created');
+  if(document.getElementById('stats_users_page'))
+    postdata += '&stats_users_search_page='     + fetch_sanitize_id('stats_users_page');
+  if(document.getElementById('stats_users_action'))
+    postdata += '&stats_users_search_action='   + fetch_sanitize_id('stats_users_action');
+  postdata   += '&stats_users_search_language=' + fetch_sanitize_id('stats_users_language');
+  postdata   += '&stats_users_search_speaks='   + fetch_sanitize_id('stats_users_speaks');
+  postdata   += '&stats_users_search_theme='    + fetch_sanitize_id('stats_users_theme');
+  if(document.getElementById('stats_users_birthday'))
+    postdata += '&stats_users_search_birthday=' + fetch_sanitize_id('stats_users_birthday');
+  postdata   += '&stats_users_search_profile='  + fetch_sanitize_id('stats_users_profile');
+  postdata   += '&stats_users_search_settings=' + fetch_sanitize_id('stats_users_settings');
 
   // Submit the search
   fetch_page('stats_users', 'stats_users_tbody', postdata);
@@ -170,11 +173,12 @@ function admin_guests_search( sort_data = null )
     document.getElementById('stats_guests_sort').value = sort_data;
 
   // Assemble the postdata
-  postdata  = 'stats_guests_sort='              + fetch_sanitize_id('stats_guests_sort');
-  postdata += '&stats_guests_search_identity='  + fetch_sanitize_id('stats_guests_identity');
-  postdata += '&stats_guests_search_page='      + fetch_sanitize_id('stats_guests_page');
-  postdata += '&stats_guests_search_language='  + fetch_sanitize_id('stats_guests_language');
-  postdata += '&stats_guests_search_theme='     + fetch_sanitize_id('stats_guests_theme');
+  postdata    = 'stats_guests_sort='              + fetch_sanitize_id('stats_guests_sort');
+  if(document.getElementById('stats_guests_identity'))
+    postdata += '&stats_guests_search_identity='  + fetch_sanitize_id('stats_guests_identity');
+  postdata   += '&stats_guests_search_page='      + fetch_sanitize_id('stats_guests_page');
+  postdata   += '&stats_guests_search_language='  + fetch_sanitize_id('stats_guests_language');
+  postdata   += '&stats_guests_search_theme='     + fetch_sanitize_id('stats_guests_theme');
 
   // Submit the search
   fetch_page('stats_guests', 'stats_guests_tbody', postdata);

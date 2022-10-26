@@ -402,7 +402,7 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   require_included_file('functions_numbers.inc.php');
 
   // Require special rights to run this action
-  user_restrict_to_administrators();
+  user_restrict_to_moderators();
 
   // Fetch current user's language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -697,10 +697,11 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   require_included_file('functions_numbers.inc.php');
 
   // Require special rights to run this action
-  user_restrict_to_administrators();
+  user_restrict_to_moderators();
 
-  // Fetch current user's language
-  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  // Fetch current user's language and access rights
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $is_admin = user_is_administrator();
 
   // Sanitize the search parameters
   $search_identity  = isset($search['identity'])  ? sanitize($search['identity'], 'string') : NULL;
@@ -709,22 +710,27 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   $search_theme     = isset($search['theme'])     ? sanitize($search['theme'], 'string')    : NULL;
 
   // Fetch the guest list
-  $qguests = "    SELECT    users_guests.ip_address               AS 'g_ip'     ,
-                            users_guests.current_language         AS 'g_lang'   ,
-                            users_guests.current_theme            AS 'g_theme'  ,
-                            users_guests.last_visited_at          AS 'g_visit'  ,
-                            users_guests.last_visited_page_$lang  AS 'g_page'   ,
-                            users_guests.last_visited_url         AS 'g_url'    ,
-                            users_guests.visited_page_count       AS 'g_visits' ,
-                            users.id                              AS 'u_id'     ,
-                            users.username                        AS 'u_nick'
+  $qguests = "    SELECT    users_guests.ip_address                   AS 'g_ip'     ,
+                            users_guests.current_language             AS 'g_lang'   ,
+                            users_guests.current_theme                AS 'g_theme'  ,
+                            users_guests.last_visited_at              AS 'g_visit'  ,
+                            users_guests.last_visited_page_$lang      AS 'g_page'   ,
+                            users_guests.last_visited_url             AS 'g_url'    ,
+                            users_guests.visited_page_count           AS 'g_visits' ,
+                            users_guests.randomly_assigned_name_$lang AS 'g_name'   ,
+                            users.id                                  AS 'u_id'     ,
+                            users.username                            AS 'u_nick'
                   FROM      users_guests
                   LEFT JOIN users
                   ON        users_guests.ip_address LIKE users.current_ip_address
                   WHERE     1 = 1 ";
 
+  // Only admins should see users in this list
+  if(!$is_admin)
+    $qguests .= " AND       users.id IS NULL ";
+
   // Search for data if requested
-  if($search_identity)
+  if($search_identity && $is_admin)
     $qguests .= " AND     ( users_guests.ip_address               LIKE '%$search_identity%'
                   OR        users.username                        LIKE '%$search_identity%' ) ";
   if($search_page)
@@ -743,7 +749,7 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   $qguests .= "   GROUP BY  users_guests.id ";
 
   // Sort the data as requested
-  if($sort_by == 'identity')
+  if($sort_by == 'identity' && $is_admin)
     $qguests .= " ORDER BY  users.id                IS NULL ,
                             users.username          ASC     ,
                             users_guests.ip_address ASC     ";
@@ -789,7 +795,8 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   {
     // Prepare the data
     $data[$i]['user_id']  = sanitize_output($row['u_id']);
-    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($row['g_ip']);
+    $temp                 = ($is_admin) ? $row['g_ip'] : string_truncate($row['g_name'], 30, '...');
+    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($temp);
     $data[$i]['ip']       = sanitize_output($row['g_ip']);
     $data[$i]['language'] = sanitize_output($row['g_lang']);
     $data[$i]['theme']    = sanitize_output($row['g_theme']);

@@ -12,7 +12,7 @@ include_once './../../actions/stats.act.php';             # Stats
 include_once './../../lang/stats.lang.php';               # Translations
 
 // Limit page access rights
-user_restrict_to_administrators();
+user_restrict_to_moderators();
 
 // Hide the page from who's online
 $hidden_activity = 1;
@@ -70,6 +70,7 @@ $users_data = stats_users_list( form_fetch_element('stats_users_sort', 'activity
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
+<?php if($is_admin) { ?>
 <div class="width_50 bigpadding_bot">
 
   <h1>
@@ -95,8 +96,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
 </div>
+<?php } ?>
 
+<?php if($is_admin) { ?>
 <div class="width_100 autoscroll">
+<?php } else { ?>
+<div class="width_70 autoscroll">
+<?php } ?>
+
+  <?php if($is_moderator && !$is_admin) { ?>
+  <h1 class="align_center hugepadding_bot">
+    <?=string_change_case(__('user_acc+'), 'initials')?>
+  </h1>
+  <?php } ?>
 
   <table>
     <thead>
@@ -107,10 +119,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('username');")?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('usertypes');")?>
         </th>
+        <?php if($is_admin) { ?>
         <th>
           <?=__('admin_stats_guests_visits')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('visits');")?>
         </th>
+        <?php } ?>
         <th class="desktop">
           <?=__('created')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('created');")?>
@@ -121,6 +135,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('activity');")?>
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('ractivity');")?>
         </th>
+        <?php if($is_admin) { ?>
         <th class="desktop">
           <?=__('page')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('page');")?>
@@ -130,6 +145,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('action')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('action');")?>
         </th>
+        <?php } ?>
         <th>
           <?=__('lang.')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('language');")?>
@@ -142,11 +158,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('theme');")?>
         </th>
+        <?php if($is_admin) { ?>
         <th class="desktop">
           <?=__('admin_stats_users_birthday')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('birthday');")?>
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "admin_users_search('rbirthday');")?>
         </th>
+        <?php } ?>
         <th>
           <?=__('admin_stats_users_profile')?>
         </th>
@@ -162,9 +180,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <input type="text" class="table_search" name="stats_users_username" id="stats_users_username" value="" size="1" onkeyup="admin_users_search();">
         </th>
 
+        <?php if($is_admin) { ?>
         <th>
           &nbsp;
         </th>
+        <?php } ?>
 
         <th class="desktop">
           <select class="table_search" name="stats_users_created" id="stats_users_created" onchange="admin_users_search();">
@@ -179,6 +199,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           &nbsp;
         </th>
 
+        <?php if($is_admin) { ?>
         <th class="desktop">
           <input type="text" class="table_search" name="stats_users_page" id="stats_users_page" value="" size="1" onkeyup="admin_users_search();">
         </th>
@@ -190,6 +211,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <option value="0"><?=__('admin_stats_users_noaction')?></option>
           </select>
         </th>
+        <?php } ?>
 
         <th>
           <select class="table_search" name="stats_users_language" id="stats_users_language" onchange="admin_users_search();">
@@ -219,6 +241,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </select>
         </th>
 
+        <?php if($is_admin) { ?>
         <th class="desktop">
           <select class="table_search" name="stats_users_birthday" id="stats_users_birthday" onchange="admin_users_search();">
             <option value="0">&nbsp;</option>
@@ -228,6 +251,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } ?>
           </select>
         </th>
+        <?php } ?>
 
         <th>
           <select class="table_search admin_stats_profile_dropdown" name="stats_users_profile" id="stats_users_profile" onchange="admin_users_search();">
@@ -265,7 +289,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
       <tr class="uppercase bold dark text_light">
+        <?php if($is_admin) { ?>
         <td colspan="12">
+        <?php } else { ?>
+        <td colspan="8">
+        <?php } ?>
           <?php if($users_data['rows'] == $users_total_count) { ?>
           <?=__('admin_stats_users_count', preset_values: array($users_data['rows']))?>
           <?php } else { ?>
@@ -282,9 +310,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__link('pages/users/'.$users_data[$i]['id'], $users_data[$i]['username'], style: $users_data[$i]['user_css'])?>
         </td>
 
+        <?php if($is_admin) { ?>
         <td>
           <?=$users_data[$i]['visits']?>
         </td>
+        <?php } ?>
 
         <td class="desktop">
           <?=$users_data[$i]['created']?>
@@ -294,6 +324,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$users_data[$i]['active']?>
         </td>
 
+        <?php if($is_admin) { ?>
         <td class="desktop">
           <?php if($users_data[$i]['url']) { ?>
           <?=__link($users_data[$i]['url'], $users_data[$i]['page'])?>
@@ -305,6 +336,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="desktop">
           <?=$users_data[$i]['action']?>
         </td>
+        <?php } ?>
 
         <td>
           <?php if($users_data[$i]['language'] == 'EN') { ?>
@@ -340,9 +372,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <?php } ?>
 
+        <?php if($is_admin) { ?>
         <td class="desktop">
           <?=$users_data[$i]['birthday']?>
         </td>
+        <?php } ?>
 
         <td class="pointer tooltip_container tooltip_desktop" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
           <?php if($users_data[$i]['speaks']) { ?>

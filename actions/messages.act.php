@@ -1108,11 +1108,11 @@ function admin_mail_read_all()
   user_restrict_to_administrators();
 
   // Get current timestamp
-  $time = sanitize(time(), 'int', 0);
+  $timestamp = sanitize(time(), 'int', 0);
 
   // Mark all unread admin mail as read
   query(" UPDATE  users_private_messages
-          SET     users_private_messages.read_at              = '$time'
+          SET     users_private_messages.read_at              = '$timestamp'
           WHERE   users_private_messages.hide_from_admin_mail = 0
           AND     users_private_messages.fk_users_recipient   = 0 ");
 }

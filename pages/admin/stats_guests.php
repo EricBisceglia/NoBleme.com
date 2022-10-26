@@ -12,7 +12,7 @@ include_once './../../actions/stats.act.php';             # Stats
 include_once './../../lang/stats.lang.php';               # Translations
 
 // Limit page access rights
-user_restrict_to_administrators();
+user_restrict_to_moderators();
 
 // Hide the page from who's online
 $hidden_activity = 1;
@@ -60,7 +60,13 @@ $guests_data = stats_guests_list( form_fetch_element('stats_guests_sort', 'activ
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
+<?php if($is_admin) { ?>
 <div class="width_70">
+<?php } else { ?>
+<div class="width_60">
+<?php } ?>
+
+  <?php if($is_admin) { ?>
 
   <h1>
     <?=__('submenu_admin_stats_guests')?>
@@ -80,6 +86,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('admin_stats_guests_themes_light', amount: $guests_data['sum_light'], preset_values: array($guests_data['sum_light'], $guests_data['percent_light']))?>
   </p>
 
+  <?php } else { ?>
+
+  <h1 class="align_center">
+    <?=__('submenu_admin_stats_guests')?>
+  </h1>
+
+  <p class="align_center hugepadding_bot">
+    <?=__('admin_stats_guests_storage', amount: $guests_storage_length, preset_values: array($guests_storage_length))?>
+  </p>
+
+  <?php } ?>
+
   <div class="autoscroll nowrap">
     <table>
       <thead>
@@ -87,12 +105,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="uppercase">
           <th>
             <?=__('admin_stats_guests_identity')?>
+            <?php if($is_admin) { ?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('identity');")?>
+            <?php } ?>
           </th>
+          <?php if($is_admin) { ?>
           <th>
             <?=__('admin_stats_guests_visits')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('visits');")?>
           </th>
+          <?php } ?>
           <th>
             <?=__('activity')?>
             <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('activity');")?>
@@ -115,14 +137,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <tr>
 
+          <?php if($is_admin) { ?>
           <th>
             <input type="hidden" name="stats_guests_sort" id="stats_guests_sort" disabled>
             <input type="text" class="table_search" name="stats_guests_identity" id="stats_guests_identity" value="" size="1" onkeyup="admin_guests_search();">
           </th>
+          <?php } else { ?>
+          <th>
+            <input type="hidden" name="stats_guests_sort" id="stats_guests_sort" disabled>
+          </th>
+          <?php } ?>
 
+          <?php if($is_admin) { ?>
           <th>
             &nbsp;
           </th>
+          <?php } ?>
 
           <th>
             &nbsp;
@@ -158,7 +188,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <tr class="uppercase bold dark text_light">
+          <?php if($is_admin) { ?>
           <td colspan="6">
+          <?php } else { ?>
+          <td colspan="5">
+          <?php } ?>
             <?php if($guests_data['rows'] == $guests_total_count) { ?>
             <?=__('admin_stats_guests_count', preset_values: array($guests_data['rows']))?>
             <?php } else { ?>
@@ -184,9 +218,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } ?>
 
+          <?php if($is_admin) { ?>
           <td>
             <?=$guests_data[$i]['visits']?>
           </td>
+          <?php } ?>
 
           <td>
             <?=$guests_data[$i]['active']?>
