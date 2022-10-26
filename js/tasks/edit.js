@@ -88,6 +88,7 @@ function tasks_categories_edit( category_id )
   // Assemble the postdata
   postdata =  'task_category_edit_name_en='   + fetch_sanitize_id('tasks_categories_edit_english_' + category_id);
   postdata += '&task_category_edit_name_fr='  + fetch_sanitize_id('tasks_categories_edit_french_' + category_id);
+  postdata += '&task_category_edit_archived=' + document.getElementById('tasks_categories_edit_archived_' + category_id).checked;
   postdata += '&task_category_edit='          + fetch_sanitize(category_id);
 
   // Submit the modifications

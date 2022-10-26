@@ -1102,6 +1102,7 @@ function tasks_categories_list() : array
 
   // Fetch the categories
   $qcategories  = " SELECT    dev_tasks_categories.id           AS 'c_id'       ,
+                              dev_tasks_categories.is_archived  AS 'c_archived' ,
                               dev_tasks_categories.title_en     AS 'c_title_en' ,
                               dev_tasks_categories.title_fr     AS 'c_title_fr' ,
                               dev_tasks_categories.title_$lang  AS 'c_title'
@@ -1115,6 +1116,8 @@ function tasks_categories_list() : array
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['c_id']);
+    $data[$i]['archived'] = sanitize_output($row['c_archived']);
+    $data[$i]['carchive'] = ($row['c_archived']) ? ' checked' : '';
     $data[$i]['title']    = sanitize_output($row['c_title']);
     $data[$i]['title_en'] = sanitize_output($row['c_title_en']);
     $data[$i]['title_fr'] = sanitize_output($row['c_title_fr']);
@@ -1183,14 +1186,17 @@ function tasks_categories_edit( int   $category_id  = 0       ,
     return;
 
   // Sanitize and prepare the data
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
+  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
+  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])               : 0;
+  $archived = ($archived == 'true')           ? 1                                             : 0;
 
   // Update the task category
   query(" UPDATE  dev_tasks_categories
-          SET     dev_tasks_categories.title_en = '$title_en' ,
-                  dev_tasks_categories.title_fr = '$title_fr'
-          WHERE   dev_tasks_categories.id       = '$category_id' ");
+          SET     dev_tasks_categories.is_archived  = '$archived' ,
+                  dev_tasks_categories.title_en     = '$title_en' ,
+                  dev_tasks_categories.title_fr     = '$title_fr'
+          WHERE   dev_tasks_categories.id           = '$category_id' ");
 }
 
 

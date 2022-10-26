@@ -352,10 +352,14 @@ ___('tasks_delete_hard_error',    'FR', "La tâche n'a pas pu être supprimée o
 /*********************************************************************************************************************/
 
 // Manage categories
+___('tasks_categories_archived',  'EN', "Archived");
+___('tasks_categories_archived',  'FR', "Archivé");
 ___('tasks_categories_title_en',  'EN', "Category title in english");
 ___('tasks_categories_title_en',  'FR', "Nom de la catégorie en anglais");
 ___('tasks_categories_title_fr',  'EN', "Category title in french");
 ___('tasks_categories_title_fr',  'FR', "Nom de la catégorie en français");
+___('tasks_categories_archive',   'EN', "Archived category (will not appear when creating new tasks)");
+___('tasks_categories_archive',   'FR', "Catégorie archivée (n'apparaitra pas à la création de nouvelles tâches)");
 ___('tasks_categories_edit',      'EN', "Edit category");
 ___('tasks_categories_edit',      'FR', "Modifier la catégorie");
 ___('tasks_categories_delete',    'EN', "Confirm the irreversible deletion of this task category");
