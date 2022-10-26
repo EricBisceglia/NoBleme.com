@@ -935,6 +935,14 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <div class="header_submenu_item">
             <?=__link('pages/admin/user_deactivate', __('submenu_admin_deactivate'), 'header_submenu_link', 1, $path);?>
           </div>
+          <?php } if($is_moderator && !$is_admin) { ?>
+          <div class="header_submenu_item">
+            <?=__link('pages/admin/stats_users', __('submenu_admin_account_settings'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
+            <?=__link('pages/admin/stats_guests', __('submenu_admin_guest_settings'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <?php } if($is_moderator) { ?>
           <div class="header_submenu_item">
             <?=__link('pages/admin/stats_doppelganger', __('submenu_admin_doppelganger'), 'header_submenu_link', 1, $path);?>
           </div>
