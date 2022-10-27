@@ -1092,13 +1092,18 @@ function tasks_delete_hard( int $task_id ) : void
 /**
  * Fetches a list of task categories.
  *
- * @return  array   An array containing task categories.
+ * @param   bool    $exclude_archived   Do not show archived categories.
+ *
+ * @return  array                       An array containing task categories.
  */
 
-function tasks_categories_list() : array
+function tasks_categories_list( bool $exclude_archived = false ) : array
 {
   // Get the user's current language and access rights
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Exclude archived categories if requested
+  $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_categories.is_archived = 0 ' : '';
 
   // Fetch the categories
   $qcategories  = " SELECT    dev_tasks_categories.id           AS 'c_id'       ,
@@ -1107,6 +1112,7 @@ function tasks_categories_list() : array
                               dev_tasks_categories.title_fr     AS 'c_title_fr' ,
                               dev_tasks_categories.title_$lang  AS 'c_title'
                     FROM      dev_tasks_categories
+                              $query_archived
                     ORDER BY  dev_tasks_categories.title_$lang  ASC ";
 
   // Run the query
@@ -1252,13 +1258,18 @@ function tasks_categories_delete( int $category_id = 0 ) : void
 /**
  * Fetches a list of task milestones.
  *
- * @return  array   An array containing task milestones.
+ * @param   bool    $exclude_archived   Excludes archived milestones.
+ *
+ * @return  array                       An array containing task milestones.
  */
 
-function tasks_milestones_list() : array
+function tasks_milestones_list( bool $exclude_archived = false ) : array
 {
   // Get the user's current language and access rights
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Exclude archived milestones if requested
+  $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_milestones.is_archived = 0 ' : '';
 
   // Fetch the milestones
   $qmilestones  = " SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
@@ -1270,6 +1281,7 @@ function tasks_milestones_list() : array
                               dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
                               dev_tasks_milestones.summary_fr     AS 'm_body_fr'
                     FROM      dev_tasks_milestones
+                              $query_archived
                     ORDER BY  dev_tasks_milestones.sorting_order DESC ";
 
   // Run the query
