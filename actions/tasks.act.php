@@ -1092,12 +1092,14 @@ function tasks_delete_hard( int $task_id ) : void
 /**
  * Fetches a list of task categories.
  *
- * @param   bool    $exclude_archived   Do not show archived categories.
+ * @param   bool    $exclude_archived   (OPTIONAL)  Do not show archived categories.
+ * @param   bool    $sort_by_archived   (OPTIONAL)  Active categories will appear below archived categories.
  *
- * @return  array                       An array containing task categories.
+ * @return  array                                   An array containing task categories.
  */
 
-function tasks_categories_list( bool $exclude_archived = false ) : array
+function tasks_categories_list( bool  $exclude_archived = false ,
+                                bool  $sort_by_archived = false ) : array
 {
   // Get the user's current language and access rights
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -1106,14 +1108,20 @@ function tasks_categories_list( bool $exclude_archived = false ) : array
   $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_categories.is_archived = 0 ' : '';
 
   // Fetch the categories
-  $qcategories  = " SELECT    dev_tasks_categories.id           AS 'c_id'       ,
-                              dev_tasks_categories.is_archived  AS 'c_archived' ,
-                              dev_tasks_categories.title_en     AS 'c_title_en' ,
-                              dev_tasks_categories.title_fr     AS 'c_title_fr' ,
-                              dev_tasks_categories.title_$lang  AS 'c_title'
-                    FROM      dev_tasks_categories
-                              $query_archived
-                    ORDER BY  dev_tasks_categories.title_$lang  ASC ";
+  $qcategories  = "   SELECT    dev_tasks_categories.id           AS 'c_id'       ,
+                                dev_tasks_categories.is_archived  AS 'c_archived' ,
+                                dev_tasks_categories.title_en     AS 'c_title_en' ,
+                                dev_tasks_categories.title_fr     AS 'c_title_fr' ,
+                                dev_tasks_categories.title_$lang  AS 'c_title'
+                      FROM      dev_tasks_categories
+                                $query_archived ";
+
+  // Sort the categories
+  if($sort_by_archived)
+    $qcategories .= " ORDER BY  dev_tasks_categories.is_archived  ASC ,
+                                dev_tasks_categories.title_$lang  ASC ";
+  else
+    $qcategories .= " ORDER BY  dev_tasks_categories.title_$lang  ASC ";
 
   // Run the query
   $qcategories = query($qcategories);

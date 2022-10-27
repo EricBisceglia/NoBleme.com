@@ -56,7 +56,7 @@ $tasks_rows_desktop = ($is_admin) ? 8 : 7;
 $tasks_rows_mobile  = 3;
 
 // Fetch task categories
-$tasks_categories_list = tasks_categories_list();
+$tasks_categories_list = tasks_categories_list(sort_by_archived: true);
 
 // Fetch task milestones
 $tasks_milestones_list = tasks_milestones_list();
@@ -193,6 +193,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <option value="0">&nbsp;</option>
             <option value="-1"><?=__('tasks_list_uncategorized')?></option>
             <?php for($i = 0; $i < $tasks_categories_list['rows']; $i++) { ?>
+            <?php if($i && $tasks_categories_list[$i]['archived'] != $tasks_categories_list[$i - 1]['archived']) { ?>
+            <option value="0">---</option>
+            <?php } ?>
             <option value="<?=$tasks_categories_list[$i]['id']?>"><?=$tasks_categories_list[$i]['title']?></option>
             <?php } ?>
           </select>

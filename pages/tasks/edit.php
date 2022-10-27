@@ -56,7 +56,7 @@ $page_title_en .= $task_id;
 $page_title_fr .= $task_id;
 
 // Fetch categories
-$tasks_categories = tasks_categories_list();
+$tasks_categories = tasks_categories_list(sort_by_archived: true);
 
 // Fetch milestones
 $tasks_milestones = tasks_milestones_list();
@@ -208,6 +208,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <select class="indiv align_left" id="tasks_edit_category" name="tasks_edit_category">
             <option value="0" selected>&nbsp;</option>
             <?php for($i = 0; $i < $tasks_categories['rows']; $i++) { ?>
+            <?php if($i && $tasks_categories[$i]['archived'] != $tasks_categories[$i - 1]['archived']) { ?>
+            <option value="0">---</option>
+            <?php } ?>
             <option value="<?=$tasks_categories[$i]['id']?>"<?=$tasks_edit_category_selected[$i]?>><?=$tasks_categories[$i]['title']?></option>
             <?php } ?>
           </select>
