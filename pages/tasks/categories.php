@@ -47,8 +47,9 @@ if(isset($_POST['task_category_edit']))
   $tasks_category_edit_id = (int)form_fetch_element('task_category_edit');
 
   // Prepare an array with the category data
-  $tasks_category_edit_data = array(  'title_en'  => form_fetch_element('task_category_edit_name_en') ,
-                                      'title_fr'  => form_fetch_element('task_category_edit_name_fr') );
+  $tasks_category_edit_data = array(  'title_en'  => form_fetch_element('task_category_edit_name_en')   ,
+                                      'title_fr'  => form_fetch_element('task_category_edit_name_fr')   ,
+                                      'archived'  => form_fetch_element('task_category_edit_archived')  );
 
   // Edit the task category
   tasks_categories_edit(  $tasks_category_edit_id   ,
@@ -97,6 +98,10 @@ $task_categories = tasks_categories_list();
       </th>
 
       <th>
+        <?=__('tasks_categories_archived')?>
+      </th>
+
+      <th>
         <?=__('action')?>
       </th>
 
@@ -110,6 +115,10 @@ $task_categories = tasks_categories_list();
 
       <th>
         <input type="text" class="table_search" name="tasks_categories_add_french" id="tasks_categories_add_french" value="" size="1">
+      </th>
+
+      <th>
+        &nbsp;
       </th>
 
       <th>
@@ -134,6 +143,14 @@ $task_categories = tasks_categories_list();
       </td>
 
       <td>
+        <?php if($task_categories[$i]['archived']) { ?>
+        <?=__icon('clock', is_small: true, alt: 'A', title: __('tasks_categories_archived'))?>
+        <?php } else { ?>
+        &nbsp;
+        <?php } ?>
+      </td>
+
+      <td>
         <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "tasks_categories_edit_form('".$task_categories[$i]['id']."');")?>
         <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "tasks_categories_delete('".$task_categories[$i]['id']."', '".__('tasks_categories_delete')."');")?>
       </td>
@@ -141,7 +158,7 @@ $task_categories = tasks_categories_list();
     </tr>
 
     <tr class="hidden" id="tasks_categories_edit_form_<?=$task_categories[$i]['id']?>">
-      <td colspan="3">
+      <td colspan="4">
 
       <div class="padding_top smallpadding_bot">
         <label for="tasks_categories_edit_english_<?=$task_categories[$i]['id']?>"><?=__('tasks_categories_title_en')?></label>
@@ -151,6 +168,11 @@ $task_categories = tasks_categories_list();
       <div class="smallpadding_bot">
         <label for="tasks_categories_edit_french_<?=$task_categories[$i]['id']?>"><?=__('tasks_categories_title_fr')?></label>
         <input type="text" class="intable light text_dark" id="tasks_categories_edit_french_<?=$task_categories[$i]['id']?>" name="tasks_categories_edit_french_<?=$task_categories[$i]['id']?>" value="<?=$task_categories[$i]['title_fr']?>">
+      </div>
+
+      <div class="tinypadding_top tinypadding_top">
+        <input type="checkbox" id="tasks_categories_edit_archived_<?=$task_categories[$i]['id']?>" name="tasks_categories_edit_archived_<?=$task_categories[$i]['id']?>"<?=$task_categories[$i]['carchive']?>>
+        <label class="label_inline" for="tasks_categories_edit_archived_<?=$task_categories[$i]['id']?>"><?=__('tasks_categories_archive')?></label>
       </div>
 
       <div class="smallpadding_top padding_bot">

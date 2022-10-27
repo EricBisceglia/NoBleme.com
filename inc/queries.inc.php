@@ -733,3 +733,18 @@ if($last_query < 40)
 
   sql_update_query_id(40);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tasks: Deactivate older categories and milestones
+
+if($last_query < 41)
+{
+  sql_create_field('dev_tasks_categories', 'is_archived', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('dev_tasks_milestones', 'is_archived', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_update_query_id(41);
+}

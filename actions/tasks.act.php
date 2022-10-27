@@ -1092,21 +1092,36 @@ function tasks_delete_hard( int $task_id ) : void
 /**
  * Fetches a list of task categories.
  *
- * @return  array   An array containing task categories.
+ * @param   bool    $exclude_archived   (OPTIONAL)  Do not show archived categories.
+ * @param   bool    $sort_by_archived   (OPTIONAL)  Active categories will appear below archived categories.
+ *
+ * @return  array                                   An array containing task categories.
  */
 
-function tasks_categories_list() : array
+function tasks_categories_list( bool  $exclude_archived = false ,
+                                bool  $sort_by_archived = false ) : array
 {
   // Get the user's current language and access rights
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
+  // Exclude archived categories if requested
+  $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_categories.is_archived = 0 ' : '';
+
   // Fetch the categories
-  $qcategories  = " SELECT    dev_tasks_categories.id           AS 'c_id'       ,
-                              dev_tasks_categories.title_en     AS 'c_title_en' ,
-                              dev_tasks_categories.title_fr     AS 'c_title_fr' ,
-                              dev_tasks_categories.title_$lang  AS 'c_title'
-                    FROM      dev_tasks_categories
-                    ORDER BY  dev_tasks_categories.title_$lang  ASC ";
+  $qcategories  = "   SELECT    dev_tasks_categories.id           AS 'c_id'       ,
+                                dev_tasks_categories.is_archived  AS 'c_archived' ,
+                                dev_tasks_categories.title_en     AS 'c_title_en' ,
+                                dev_tasks_categories.title_fr     AS 'c_title_fr' ,
+                                dev_tasks_categories.title_$lang  AS 'c_title'
+                      FROM      dev_tasks_categories
+                                $query_archived ";
+
+  // Sort the categories
+  if($sort_by_archived)
+    $qcategories .= " ORDER BY  dev_tasks_categories.is_archived  ASC ,
+                                dev_tasks_categories.title_$lang  ASC ";
+  else
+    $qcategories .= " ORDER BY  dev_tasks_categories.title_$lang  ASC ";
 
   // Run the query
   $qcategories = query($qcategories);
@@ -1115,6 +1130,8 @@ function tasks_categories_list() : array
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['c_id']);
+    $data[$i]['archived'] = sanitize_output($row['c_archived']);
+    $data[$i]['carchive'] = ($row['c_archived']) ? ' checked' : '';
     $data[$i]['title']    = sanitize_output($row['c_title']);
     $data[$i]['title_en'] = sanitize_output($row['c_title_en']);
     $data[$i]['title_fr'] = sanitize_output($row['c_title_fr']);
@@ -1183,14 +1200,17 @@ function tasks_categories_edit( int   $category_id  = 0       ,
     return;
 
   // Sanitize and prepare the data
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
+  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
+  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])               : 0;
+  $archived = ($archived == 'true')           ? 1                                             : 0;
 
   // Update the task category
   query(" UPDATE  dev_tasks_categories
-          SET     dev_tasks_categories.title_en = '$title_en' ,
-                  dev_tasks_categories.title_fr = '$title_fr'
-          WHERE   dev_tasks_categories.id       = '$category_id' ");
+          SET     dev_tasks_categories.is_archived  = '$archived' ,
+                  dev_tasks_categories.title_en     = '$title_en' ,
+                  dev_tasks_categories.title_fr     = '$title_fr'
+          WHERE   dev_tasks_categories.id           = '$category_id' ");
 }
 
 
@@ -1246,16 +1266,22 @@ function tasks_categories_delete( int $category_id = 0 ) : void
 /**
  * Fetches a list of task milestones.
  *
- * @return  array   An array containing task milestones.
+ * @param   bool    $exclude_archived   Excludes archived milestones.
+ *
+ * @return  array                       An array containing task milestones.
  */
 
-function tasks_milestones_list() : array
+function tasks_milestones_list( bool $exclude_archived = false ) : array
 {
   // Get the user's current language and access rights
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
+  // Exclude archived milestones if requested
+  $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_milestones.is_archived = 0 ' : '';
+
   // Fetch the milestones
   $qmilestones  = " SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
+                              dev_tasks_milestones.is_archived    AS 'm_archived' ,
                               dev_tasks_milestones.title_en       AS 'm_title_en' ,
                               dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
                               dev_tasks_milestones.title_$lang    AS 'm_title'    ,
@@ -1263,6 +1289,7 @@ function tasks_milestones_list() : array
                               dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
                               dev_tasks_milestones.summary_fr     AS 'm_body_fr'
                     FROM      dev_tasks_milestones
+                              $query_archived
                     ORDER BY  dev_tasks_milestones.sorting_order DESC ";
 
   // Run the query
@@ -1272,6 +1299,8 @@ function tasks_milestones_list() : array
   for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['m_id']);
+    $data[$i]['archived'] = sanitize_output($row['m_archived']);
+    $data[$i]['carchive'] = ($row['m_archived']) ? ' checked' : '';
     $data[$i]['title']    = sanitize_output($row['m_title']);
     $data[$i]['title_en'] = sanitize_output($row['m_title_en']);
     $data[$i]['title_fr'] = sanitize_output($row['m_title_fr']);
@@ -1350,10 +1379,13 @@ function tasks_milestones_edit( int   $milestone_id = 0       ,
   $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
   $body_en  = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')  : '';
   $body_fr  = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')  : '';
+  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])           : 0;
+  $archived = ($archived == 'true')           ? 1                                         : 0;
 
   // Update the task milestone
   query(" UPDATE  dev_tasks_milestones
-          SET     dev_tasks_milestones.sorting_order  = '$order'    ,
+          SET     dev_tasks_milestones.is_archived    = '$archived' ,
+                  dev_tasks_milestones.sorting_order  = '$order'    ,
                   dev_tasks_milestones.title_en       = '$title_en' ,
                   dev_tasks_milestones.title_fr       = '$title_fr' ,
                   dev_tasks_milestones.summary_en     = '$body_en'  ,

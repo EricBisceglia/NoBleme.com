@@ -52,7 +52,8 @@ if(isset($_POST['task_milestone_edit']))
                                       'title_en'  => form_fetch_element('task_milestone_edit_name_en')  ,
                                       'title_fr'  => form_fetch_element('task_milestone_edit_name_fr')  ,
                                       'body_en'   => form_fetch_element('task_milestone_edit_body_en')  ,
-                                      'body_fr'   => form_fetch_element('task_milestone_edit_body_fr')  );
+                                      'body_fr'   => form_fetch_element('task_milestone_edit_body_fr')  ,
+                                      'archived'  => form_fetch_element('task_milestone_edit_archived') );
 
   // Edit the task milestone
   tasks_milestones_edit(  $tasks_milestone_edit_id   ,
@@ -105,6 +106,10 @@ $task_milestones = tasks_milestones_list();
       </th>
 
       <th>
+        <?=__('tasks_categories_archived')?>
+      </th>
+
+      <th>
         <?=__('action')?>
       </th>
 
@@ -122,6 +127,10 @@ $task_milestones = tasks_milestones_list();
 
       <th>
         <input type="text" class="table_search" name="tasks_milestones_add_french" id="tasks_milestones_add_french" value="" size="1">
+      </th>
+
+      <th>
+        &nbsp;
       </th>
 
       <th>
@@ -150,6 +159,14 @@ $task_milestones = tasks_milestones_list();
       </td>
 
       <td>
+        <?php if($task_milestones[$i]['archived']) { ?>
+        <?=__icon('clock', is_small: true, alt: 'A', title: __('tasks_categories_archived'))?>
+        <?php } else { ?>
+        &nbsp;
+        <?php } ?>
+      </td>
+
+      <td>
         <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "tasks_milestones_edit_form('".$task_milestones[$i]['id']."');")?>
         <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "tasks_milestones_delete('".$task_milestones[$i]['id']."', '".__('tasks_milestones_delete')."');")?>
       </td>
@@ -157,7 +174,7 @@ $task_milestones = tasks_milestones_list();
     </tr>
 
     <tr class="hidden" id="tasks_milestones_edit_form_<?=$task_milestones[$i]['id']?>">
-      <td colspan="4">
+      <td colspan="5">
 
       <div class="padding_top smallpadding_bot">
         <label for="tasks_milestones_edit_order_<?=$task_milestones[$i]['id']?>"><?=string_change_case(__('order'), 'initials')?></label>
@@ -182,6 +199,11 @@ $task_milestones = tasks_milestones_list();
       <div class="smallpadding_bot">
         <label for="tasks_milestones_edit_body_fr_<?=$task_milestones[$i]['id']?>"><?=__('tasks_milestones_body_fr')?></label>
         <textarea class="intable light text_dark" id="tasks_milestones_edit_body_fr_<?=$task_milestones[$i]['id']?>" name="tasks_milestones_edit_body_fr_<?=$task_milestones[$i]['id']?>"><?=$task_milestones[$i]['body_fr']?></textarea>
+      </div>
+
+      <div class="tinypadding_top tinypadding_top">
+        <input type="checkbox" id="tasks_milestones_edit_archived_<?=$task_milestones[$i]['id']?>" name="tasks_milestones_edit_archived_<?=$task_milestones[$i]['id']?>"<?=$task_milestones[$i]['carchive']?>>
+        <label class="label_inline" for="tasks_milestones_edit_archived_<?=$task_milestones[$i]['id']?>"><?=__('tasks_milestones_archive')?></label>
       </div>
 
       <div class="smallpadding_top padding_bot">

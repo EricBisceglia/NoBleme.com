@@ -52,10 +52,10 @@ if($task_details['validated'])
   error_page(__('tasks_approve_impossible'));
 
 // Fetch categories
-$tasks_categories = tasks_categories_list();
+$tasks_categories = tasks_categories_list(exclude_archived: true);
 
 // Fetch milestones
-$tasks_milestones = tasks_milestones_list();
+$tasks_milestones = tasks_milestones_list(exclude_archived: true);
 
 
 
