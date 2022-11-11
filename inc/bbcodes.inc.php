@@ -235,11 +235,11 @@ function bbcodes( string  $message ) : string
  * @return  string                              The message, with NBCodes converted to HTML, ready for display.
  */
 
-function nbcodes( string  $message                                                                ,
-                  array   $page_list      = array()                                               ,
-                  array   $privacy_level  = array('youtube' => 0, 'trends' => 0, 'twitter' => 0)  ,
-                  int     $nsfw_settings  = 0                                                     ,
-                  string  $mode           = 'dark'                                                ) : string
+function nbcodes( string  $message                                                ,
+                  array   $page_list      = array()                               ,
+                  array   $privacy_level  = array('youtube' => 0, 'trends' => 0)  ,
+                  int     $nsfw_settings  = 0                                     ,
+                  string  $mode           = 'dark'                                ) : string
 {
   /*******************************************************************************************************************/
   // Run bbcodes on the data

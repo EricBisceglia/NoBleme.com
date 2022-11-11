@@ -136,11 +136,11 @@ NoBleme possède deux comptes officiels sur des sites tiers. Tout autre compte s
 EOT
 );
 ___('nobleme_follow_social_body_2', 'EN', <<<EOT
-{{external_popup|https://twitter.com/badnobleme|Our twitter account @badnobleme}} relays updates from the {{link|pages/compendium/index|21st century compendium}}, along with major NoBleme website and community news. It is a mostly automated account which will usually not engage in any conversations over Twitter.
+{{external_popup|https://hsnl.social/web/@NoBleme|Our Mastodon account @nobleme@hsnl.social}} relays updates from the {{link|pages/compendium/index|21st century compendium}}, along with major NoBleme website and community news. It is a mostly automated account which will usually not engage in any conversations.
 EOT
 );
 ___('nobleme_follow_social_body_2', 'FR', <<<EOT
-{{external_popup|https://twitter.com/badnobleme|Notre compte twitter @badnobleme}} partage l'activité du {{link|pages/compendium/index|compendium du 21ème siècle}}, ainsi que les nouvelles majeures concernant la communauté et le site. Le compte est automatisé, et n'a pas pour but de participer à des conversations sur Twitter.
+{{external_popup|https://hsnl.social/web/@NoBleme|Notre compte Mastodon @nobleme@hsnl.social}} partage l'activité du {{link|pages/compendium/index|compendium du 21ème siècle}}, ainsi que les nouvelles majeures concernant la communauté et le site. Le compte est automatisé, et n'a pas pour but de participer à des conversations.
 EOT
 );
 ___('nobleme_follow_social_body_3', 'EN', <<<EOT
@@ -634,8 +634,8 @@ EOT
 // NBRPG
 ___('nobleme_gaming_history_nbrpg_title',   'EN', "NoBlemeRPG");
 ___('nobleme_gaming_history_nbrpg_title',   'FR', "NoBlemeRPG");
-___('nobleme_gaming_history_nbrpg_image',   'EN', "Fan art drawn by good old {{external|https://twitter.com/chance_meeting|pins}}");
-___('nobleme_gaming_history_nbrpg_image',   'FR', "Illustration de fan-art réalisée par ce bon vieux {{external|https://twitter.com/chance_meeting|pins}}");
+___('nobleme_gaming_history_nbrpg_image',   'EN', "Fan art drawn by good old {{external|https://mastodon.social/@pins|pins}}");
+___('nobleme_gaming_history_nbrpg_image',   'FR', "Illustration de fan-art réalisée par ce bon vieux {{external|https://mastodon.social/@pins|pins}}");
 ___('nobleme_gaming_history_nbrpg_body_1',  'EN', <<<EOT
 For a whole decade, some of NoBleme's users regularly met on our {{link|pages/social/irc|IRC chat server}} to spend some evenings playing a text based {{external|https://en.wikipedia.org/wiki/Role-playing_game|roleplaying game}} called the NoBlemeRPG (or NBRPG for short). In this non linear game, a group of players, which changed every session, had to accomplish errands for a mysterious entity called the Oracle, evolving through a game universe in which literally every action imaginable was possible.
 EOT

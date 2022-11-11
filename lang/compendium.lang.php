@@ -1009,17 +1009,57 @@ ___('compendium_social_media_reddit_2', 'EN', "{{1}} / {{2}}");
 ___('compendium_social_media_reddit_2', 'FR', "{{1}} / {{2}}");
 
 
-// Twitter
-___('compendium_social_media_twitter',  'EN', "{{external_popup|https://twitter.com/compose/tweet|Twitter}}");
-___('compendium_social_media_twitter',  'FR', "{{external_popup|https://twitter.com/compose/tweet|Twitter}}");
-___('compendium_social_media_tweet_1',  'EN', "{{1}} ({{2}}) {{3}}");
-___('compendium_social_media_tweet_1',  'FR', "{{1}} ({{2}}) {{3}}");
-___('compendium_social_media_tweet_2',  'EN', "{{1}} / {{2}} ({{3}}) {{4}}");
-___('compendium_social_media_tweet_2',  'FR', "{{1}} / {{2}} ({{3}}) {{4}}");
-___('compendium_social_media_tweet_3',  'EN', "{{1}} {{2}}");
-___('compendium_social_media_tweet_3',  'FR', "{{1}} {{2}}");
-___('compendium_social_media_tweet_4',  'EN', "{{1}} / {{2}} {{3}}");
-___('compendium_social_media_tweet_4',  'FR', "{{1}} / {{2}} {{3}}");
+// Mastodon
+___('compendium_social_media_mastodon', 'EN', "{{external_popup|https://hsnl.social/web/home|Mastodon}}");
+___('compendium_social_media_mastodon', 'FR', "{{external_popup|https://hsnl.social/web/home|Mastodon}}");
+___('compendium_social_media_toot_1',   'EN', <<<EOT
+{{1}} ({{2}})
+
+{{3}}
+EOT
+);
+___('compendium_social_media_toot_1',   'FR', <<<EOT
+{{1}} ({{2}})
+
+{{3}}
+EOT
+);
+___('compendium_social_media_toot_2',   'EN', <<<EOT
+{{1}} / {{2}} ({{3}})
+
+{{4}}
+EOT
+);
+___('compendium_social_media_toot_2',   'FR', <<<EOT
+{{1}} / {{2}} ({{3}})
+
+{{4}}
+EOT
+);
+___('compendium_social_media_toot_3',   'EN', <<<EOT
+{{1}}
+
+{{2}}
+EOT
+);
+___('compendium_social_media_toot_3',   'FR', <<<EOT
+{{1}}
+
+{{2}}
+EOT
+);
+___('compendium_social_media_toot_4',   'EN', <<<EOT
+{{1}} / {{2}}
+
+{{3}}
+EOT
+);
+___('compendium_social_media_toot_4',   'FR', <<<EOT
+{{1}} / {{2}}
+
+{{3}}
+EOT
+);
 
 
 
@@ -1603,10 +1643,10 @@ Des messages automatisés sont envoyés sur le {{link|pages/social/irc|serveur d
 EOT
 );
 ___('compendium_faq_answer_15_3', 'EN', <<<EOT
-Most compendium updates are also relayed on the {{external_popup|https://twitter.com/badnobleme|@badnobleme Twitter}} and the {{external_popup|https://www.reddit.com/r/NoBleme/|r/nobleme subreddit}}.
+Most compendium updates are also relayed on the {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}} and the {{external_popup|https://www.reddit.com/r/NoBleme/|r/nobleme subreddit}}.
 EOT
 );
 ___('compendium_faq_answer_15_3', 'FR', <<<EOT
-La plupart des mises à jour du compendium sont également partagées sur le {{external_popup|https://twitter.com/badnobleme|Twitter @badnobleme}} et le {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
+La plupart des mises à jour du compendium sont également partagées sur le {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}} et le {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
 EOT
 );
