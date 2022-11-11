@@ -18,11 +18,11 @@ ___('social_others_title',    'FR', "NoBleme sur Internet");
 ___('social_others_subtitle', 'EN', "Official NoBleme communities and accounts");
 ___('social_others_subtitle', 'FR', "Communautés et comptes officiels NoBleme");
 ___('social_others_body_1',   'EN', <<<EOT
-As of right now, there are no official NoBleme communities or accounts outside of this website, our {{link|pages/social/irc|IRC chat server}}, the {{link|pages/social/discord|NoBleme Discord server}}, the {{external_popup|https://twitter.com/badnobleme|Twitter @badnobleme}}, and the {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
+As of right now, there are no official NoBleme communities or accounts outside of this website, our {{link|pages/social/irc|IRC chat server}}, the {{link|pages/social/discord|NoBleme Discord server}}, the {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}}, and the {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
 EOT
 );
 ___('social_others_body_1',   'FR', <<<EOT
-Il n'existe actuellement aucune communauté NoBleme officielle à l'exception de ce site, notre {{link|pages/social/irc|serveur de chat IRC}}, le {{link|pages/social/discord|serveur Discord NoBleme}}, le {{external_popup|https://twitter.com/badnobleme|Twitter @badnobleme}}, et le {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
+Il n'existe actuellement aucune communauté NoBleme officielle à l'exception de ce site, notre {{link|pages/social/irc|serveur de chat IRC}}, le {{link|pages/social/discord|serveur Discord NoBleme}}, le {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}}, et le {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
 EOT
 );
 ___('social_others_body_2',   'EN', <<<EOT
