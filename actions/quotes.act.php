@@ -340,9 +340,9 @@ function quotes_add( string $body ) : mixed
     // Prepare the admin mail
     $path       = root_path();
     $mail_body  = <<<EOT
-A new quote proposal has been made by [url=${path}pages/users/${submitter_id}]${submitter_nick}[/url] : [url=${path}pages/quotes/${quote_id}][Quote #${quote_id}][/url]
+A new quote proposal has been made by [url={$path}pages/users/{$submitter_id}]{$submitter_nick}[/url] : [url={$path}pages/quotes/{$quote_id}][Quote #{$quote_id}][/url]
 
-[quote=${submitter_nick}]${body_raw}[/quote]
+[quote={$submitter_nick}]{$body_raw}[/quote]
 EOT;
 
     // Send the admin mail
@@ -590,13 +590,13 @@ function quotes_approve(int $quote_id) : mixed
     // Prepare the message's body
     if($lang == 'FR')
       $message_body = <<<EOT
-Votre proposition de citation a été approuvée : [url=${path}pages/quotes/${quote_id}]Citation #${quote_id}[/url].
+Votre proposition de citation a été approuvée : [url={$path}pages/quotes/{$quote_id}]Citation #{$quote_id}[/url].
 
 Nous vous remercions pour votre participation à la collection de citations de NoBleme.
 EOT;
     else
       $message_body = <<<EOT
-Your quote proposal has been approved: [url=${path}pages/quotes/${quote_id}]Quote #${quote_id}[/url].
+Your quote proposal has been approved: [url={$path}pages/quotes/{$quote_id}]Quote #{$quote_id}[/url].
 
 Thank you for being a part of NoBleme's quote database. It is greatly appreciated.
 EOT;
@@ -721,11 +721,11 @@ Votre proposition de citation a été rejetée.
 
 Ce refus ne signifie pas que votre contribution n'est pas appréciée : dans une optique de faire primer la qualité sur la quantité, nous refusons un grand nombre de propositions. N'hésitez pas à soumettre d'autres propositions dans le futur. Nous vous remercions pour votre participation à la collection de citations de NoBleme.
 
-${reason}
+{$reason}
 
 Le contenu de votre proposition de citation était le suivant :
 
-[quote]${body}[/quote]
+[quote]{$body}[/quote]
 EOT;
     else
       $message_body = <<<EOT
@@ -733,11 +733,11 @@ Your quote proposal has been rejected.
 
 This refusal does not mean that we do not appreciate your contribution: our goal is to prioritize quality over quantity, therefore we reject a lot of quote proposals. Do not hesitate to submit more quote proposals in the future. Thank you for contributing to NoBleme's quote database. It is greatly appreciated.
 
-${reason}
+{$reason}
 
 Your proposal was the following:
 
-[quote]${body}[/quote]
+[quote]{$body}[/quote]
 EOT;
 
 

@@ -602,13 +602,13 @@ function tasks_approve( int   $task_id  ,
   // Prepare the message's body
   if($lang == 'FR')
     $message_body = <<<EOT
-[url=${path}pages/tasks/${task_id}]Votre proposition de tâche a été approuvée.[/url]
+[url={$path}pages/tasks/{$task_id}]Votre proposition de tâche a été approuvée.[/url]
 
 Nous vous remercions pour votre participation au développement de NoBleme.
 EOT;
   else
     $message_body = <<<EOT
-[url=${path}pages/tasks/${task_id}]Your task proposal has been approved.[/url]
+[url={$path}pages/tasks/{$task_id}]Your task proposal has been approved.[/url]
 
 Thank you for helping NoBleme's development.
 EOT;
@@ -616,7 +616,7 @@ EOT;
   // If the task is private, prepare a different message
   if($task_private && $lang == 'FR')
     $message_body = <<<EOT
-Une proposition de [url=${path}pages/tasks/list]tâche[/url] que vous avez fait récemment a été acceptée.
+Une proposition de [url={$path}pages/tasks/list]tâche[/url] que vous avez fait récemment a été acceptée.
 
 La tâche va rester privée pour le moment : soit elle est sensible pour la sécurité du site, soit il s'agit d'une idée qui sera meilleure sous la forme d'une surprise pour le reste des personnes utilisant le site.
 
@@ -624,7 +624,7 @@ Merci d'en conserver le secret. Nous vous remercions pour votre participation au
 EOT;
   else if($task_private)
     $message_body = <<<EOT
-You made a [url=${path}pages/tasks/list]task[/url] proposal which has been approved.
+You made a [url={$path}pages/tasks/list]task[/url] proposal which has been approved.
 
 The task will remain private for now: it is either too sensitive for the website's security, or is a great idea that would be better kept secret in order to surprise everyone else once it is done.
 
@@ -729,29 +729,29 @@ function tasks_reject(  int     $task_id            ,
   if($reason && $lang == 'FR')
     $reason = <<<EOT
 
-Votre proposition a été rejetée pour la raison suivante : ${reason}
+Votre proposition a été rejetée pour la raison suivante : {$reason}
 
 EOT;
   else if($reason)
     $reason = <<<EOT
 
-Your proposal has been rejected for the following reason: ${reason}
+Your proposal has been rejected for the following reason: {$reason}
 
 EOT;
 
   // Prepare the message's body
   if($lang == 'FR')
     $message_body = <<<EOT
-Vous avez fait une [url=${path}pages/tasks/proposal]proposition de tâche[/url], qui a été rejetée.
-${reason}
+Vous avez fait une [url={$path}pages/tasks/proposal]proposition de tâche[/url], qui a été rejetée.
+{$reason}
 Malgré ce rejet, nous vous encourageons à continuer à contribuer dans le futur en rapportant des bugs ou en proposant vos idées.
 
 Nous vous remercions pour votre participation au développement de NoBleme.
 EOT;
   else
     $message_body = <<<EOT
-You made a [url=${path}pages/tasks/proposal]task proposal[/url], which has been rejected.
-${reason}
+You made a [url={$path}pages/tasks/proposal]task proposal[/url], which has been rejected.
+{$reason}
 Despite this rejection, we encourage you to continue contributing to NoBleme in the future by reporting bugs or suggesting your ideas.
 
 Thank you for helping NoBleme's development.
@@ -869,13 +869,13 @@ function tasks_solve( int     $task_id              ,
   // Prepare the message's body
   if($lang == 'FR')
     $message_body = <<<EOT
-Une tâche que vous avez proposée a été résolue : [url=${path}pages/tasks/${task_id}]Tâche #${task_id}[/url].
+Une tâche que vous avez proposée a été résolue : [url={$path}pages/tasks/{$task_id}]Tâche #{$task_id}[/url].
 
 Nous vous remercions pour votre participation au développement de NoBleme.
 EOT;
   else
     $message_body = <<<EOT
-A task you opened has been solved: [url=${path}pages/tasks/${task_id}]Task #${task_id}[/url].
+A task you opened has been solved: [url={$path}pages/tasks/{$task_id}]Task #{$task_id}[/url].
 
 Thank you for helping NoBleme's development.
 EOT;
