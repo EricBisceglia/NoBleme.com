@@ -365,7 +365,7 @@ textarea                          { overflow: auto; box-sizing: inherit; min-hei
                                     border-radius: 5px; padding-top: 0.2rem; padding-bottom: 0.2rem             ;
                                     padding-left: 0.5rem; padding-right: 0.5rem;                                }
 button, [type="button"], [type="reset"], [type="submit"]
-                                  { -webkit-appearance: button; font-size: 120%; letter-spacing: 0.06rem        ;
+                                  { font-size: 120%; letter-spacing: 0.06rem                                    ;
                                     text-align: center; text-decoration: none; font-weight: bold                ;
                                     white-space: nowrap; text-transform: uppercase; padding-top: 0.4rem         ;
                                     padding-bottom: 0.4rem; padding-left: 1.0rem; padding-right: 1.0rem;        }
@@ -384,7 +384,7 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
 button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring
                                   { outline: 1px dotted ButtonText;                                             }
 [type="checkbox"], [type="radio"] { box-sizing: border-box;                                                     }
-::-webkit-file-upload-button      { -webkit-appearance: button; font: inherit;                                  }
+::-webkit-file-upload-button      { font: inherit;                                                              }
 input[type='file']                { background-color: var(--nobleme-dark); border: none                         ;
                                     color: var(--nobleme-light);                                                }
 input:not([type])                 { background-color: var(--nobleme-dark);                                      }
