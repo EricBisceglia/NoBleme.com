@@ -1,8 +1,8 @@
 /*************************************************** DOCUMENTATION ***************************************************/
 
-.dev_pre_code     { max-height: 12.5rem; overflow: auto; white-space: pre-wrap;           }
-.dev_div_border   { border: 1px dashed #B00B1E;                                           }
-.dev_div_spacing  { border: 1px dashed #B00B1E; display: inline-block; font-weight: bold; }
-.dev_td_valign    { height: 5.0rem; font-weight: bold;                                    }
-@media (min-width: 993px)                                                                 {
-.dev_doc_selector { margin-top: -2.3rem;                                                } }
+.dev_pre_code     { max-height: 12.5rem; overflow: auto; white-space: pre-wrap;                      }
+.dev_div_border   { border: 1px dashed var(--nobleme-red);                                           }
+.dev_div_spacing  { border: 1px dashed var(--nobleme-red); display: inline-block; font-weight: bold; }
+.dev_td_valign    { height: 5.0rem; font-weight: bold;                                               }
+@media (min-width: 993px)                                                                            {
+.dev_doc_selector { margin-top: -2.3rem;                                                           } }

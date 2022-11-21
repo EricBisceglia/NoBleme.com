@@ -1,12 +1,20 @@
+/**************************************************** VARIABLES ******************************************************/
+
+:root { --nobleme-bright-red: #FF0000; }
+
 /************************************************** PUBLIC PROFILES **************************************************/
 
 .profile_box_dark, .profile_box_light           { margin-top: 3.0rem; overflow-x: auto; border-radius: 10px;      }
-.profile_box_dark                               { border: 2px solid #FF0000; box-shadow: 0 0 15px #FF0000;        }
-.profile_box_light                              { border: 2px solid #CACACA; box-shadow: 0 0 15px #CACACA;        }
+.profile_box_dark                               { border: 2px solid var(--nobleme-bright-red)                     ;
+                                                  box-shadow: 0 0 15px var(--nobleme-bright-red);                 }
+.profile_box_light                              { border: 2px solid var(--nobleme-light)                          ;
+                                                  box-shadow: 0 0 15px var(--nobleme-light);                      }
 .profile_info_box_dark, .profile_info_box_light { text-align: center; padding-top: 0.4rem; padding-bottom: 0.4rem ;
                                                   padding-left: 0.5rem; padding-right: 0.5rem;                    }
-.profile_info_box_dark                          { border-bottom: 2px solid #FF0000; box-shadow: 0 0 8px #FF0000;  }
-.profile_info_box_light                         { border-bottom: 2px solid #CACACA; box-shadow: 0 0 8px #CACACA;  }
+.profile_info_box_dark                          { border-bottom: 2px solid var(--nobleme-bright-red)              ;
+                                                  box-shadow: 0 0 8px var(--nobleme-bright-red);                  }
+.profile_info_box_light                         { border-bottom: 2px solid var(--nobleme-light)                   ;
+                                                  box-shadow: 0 0 8px var(--nobleme-light);                       }
 .profile_admin                                  { margin-top: 4.0rem;                                             }
 .profile_text_cell                              { overflow-x: auto;                                               }
 .profile_text                                   { max-height: 12.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;

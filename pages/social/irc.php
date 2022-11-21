@@ -1247,7 +1247,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($is_moderator) { ?>
         <tr>
           <td colspan="5" class="align_center uppercase dark text_white bold">
-            <?=__link('pages/social/irc_channel_add', __('irc_channels_add'))?>
+            <?=__link('pages/social/irc_channel_add', __('irc_channels_add'), "bold text_white glow")?>
           </td>
         </tr>
         <?php } ?>
