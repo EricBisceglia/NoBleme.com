@@ -31,10 +31,5 @@ function unblur(target_id)
 function unblur_element(element_id)
 {
   // Remove the blur filter
-  document.getElementById(element_id).classList.remove('blur');
-  document.getElementById(element_id).classList.remove('bigblur');
-  document.getElementById(element_id).classList.remove('nbcode_blur');
-  document.getElementById(element_id).classList.remove('nbcode_blur_2');
-  document.getElementById(element_id).classList.remove('nbcode_blur_3');
-  document.getElementById(element_id).classList.remove('compendium_image_blur');
+  css_remove(element_id, ['blur', 'bigblur', 'nbcode_blur', 'nbcode_blur_2', 'nbcode_blur_3', 'compendium_image_blur']);
 }

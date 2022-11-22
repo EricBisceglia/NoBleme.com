@@ -160,14 +160,14 @@ function form_require_field(  element_id  ,
 {
   // In case the field has already been rejected by this function before, reset the label to its default value
   if(label_id)
-    document.getElementById(label_id).classList.remove('red');
+    css_remove(label_id, 'red');
 
   // Check whether the field is empty
   if(document.getElementById(element_id).value == "")
   {
     // If it is empty, change the styling of its associated label
     if(label_id)
-      document.getElementById(label_id).classList.add('red');
+      css_add(label_id, 'red');
 
     // Return 0 to show that it is not OK
     return 0;
