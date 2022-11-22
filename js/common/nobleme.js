@@ -24,6 +24,7 @@
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+
 /**
  * Sanitizes a string for use in postdata.
  *
@@ -163,8 +164,6 @@ function fetch_page(  target_page             ,
  *
  * @param   {string}  element_id  The ID of a form element that should not be empty.
  * @param   {string}  label_id    The ID of the label associated with said element.
- *
- * @example if(!form_require_field("my_field","my_field_label")) { return;}
  *
  * @returns {int}                 0 if the field is empty, 1 if the field is filled.
  */

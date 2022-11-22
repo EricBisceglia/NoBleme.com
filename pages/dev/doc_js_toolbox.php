@@ -35,14 +35,15 @@ $js  = array('common/editor', 'common/highlight', 'common/preview', 'common/sele
 // Page section selector
 
 // Define the dropdown menu entries
-$jstoolbox_selector_entries = array(  'clipboard'         ,
+$jstoolbox_selector_entries = array(  'fetch'             ,
+                                      'css'               ,
+                                      'forms'             ,
+                                      'clipboard'         ,
                                       'editor'            ,
-                                      'fetch'             ,
                                       'highlight'         ,
                                       'preview'           ,
                                       'section_selector'  ,
-                                      'toggle'            ,
-                                      'unblur'            );
+                                      'toggle'            ,);
 
 // Define the default dropdown menu entry
 $jstoolbox_selector_default = 'fetch';
@@ -66,14 +67,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <h5>
       <?=__('dev_js_toolbox_title')?>
       <select class="inh" id="dev_jstools_selector" onchange="page_section_selector('dev_jstools', '<?=$jstoolbox_selector_default?>');">
+        <option value="fetch"<?=$jstoolbox_selector['menu']['fetch']?>><?=__('dev_js_toolbox_fetch')?></option>
+        <option value="css"<?=$jstoolbox_selector['menu']['css']?>><?=__('dev_js_toolbox_css')?></option>
+        <option value="forms"<?=$jstoolbox_selector['menu']['forms']?>><?=__('dev_js_toolbox_forms')?></option>
         <option value="clipboard"<?=$jstoolbox_selector['menu']['clipboard']?>>clipoard.js</option>
         <option value="editor"<?=$jstoolbox_selector['menu']['editor']?>>editor.js</option>
-        <option value="fetch"<?=$jstoolbox_selector['menu']['fetch']?>>fetch.js</option>
         <option value="highlight"<?=$jstoolbox_selector['menu']['highlight']?>>highlight.js</option>
         <option value="preview"<?=$jstoolbox_selector['menu']['preview']?>>preview.js</option>
         <option value="section_selector"<?=$jstoolbox_selector['menu']['section_selector']?>>selector.js</option>
         <option value="toggle"<?=$jstoolbox_selector['menu']['toggle']?>>toggle.js</option>
-        <option value="unblur"<?=$jstoolbox_selector['menu']['unblur']?>>unblur.js</option>
       </select>
     </h5>
   </fieldset>
@@ -81,56 +83,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 </div>
 
 <hr>
-
-
-
-
-<?php /************************************************ CLIPBOARD *************************************************/ ?>
-
-<div class="width_40 padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['clipboard']?>" id="dev_jstools_clipboard">
-
-  <div class="padding_bot">
-    <pre id="dev_jstools_clipboard_test" onclick="to_clipboard('', 'dev_jstools_clipboard_test', 1);">Lorem clipboardum</pre>
-  </div>
-
-  <pre class="dev_pre_code" id="dev_js_toolbox_cliboard" onclick="to_clipboard('', 'dev_js_toolbox_cliboard', 1);">&lt;pre id="lorem_id" onclick="to_clipboard('', 'lorem_id', 1);">Lorem clipboardum&lt;/pre></pre>
-
-</div>
-
-
-
-
-<?php /************************************************* EDITOR ***************************************************/ ?>
-
-<div class="width_40 padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['editor']?>" id="dev_jstools_editor">
-
-  <div class="smallpadding_bot">
-    <?php
-    $editor_target_element  = 'dev_jstools_editor_in';
-    $preview_output         = 'dev_jstools_editor_out';
-    $preview_path           = $path;
-    include './../../inc/editor.inc.php';
-    ?>
-    <textarea id="dev_jstools_editor_in" onkeyup="preview_bbcodes('dev_jstools_editor_in', 'dev_jstools_editor_out');"><?=__('dev_jstools_editor_in')?></textarea>
-    <div class="smallpadding_top" id="dev_jstools_editor_out"></div>
-  </div>
-
-  <div class="padding_bot">
-    <pre class="dev_pre_code" id="dev_js_toolbox_editor_include" onclick="to_clipboard('', 'dev_js_toolbox_editor_include', 1);">$js = array('common/editor', 'common/preview');</pre>
-  </div>
-
-  <pre class="dev_pre_code" id="dev_js_toolbox_editor" onclick="to_clipboard('', 'dev_js_toolbox_editor', 1);">&lt;?php
-$editor_target_element  = 'target_id';
-$preview_output         = 'output_id';
-$preview_path           = $path;
-include './../../inc/editor.inc.php';
-?>
-
-&lt;textarea id="target_id" onkeyup="preview_bbcodes('target_id', 'output_id');">&lt;?=__('target_id')?>&lt;/textarea>
-
-&lt;div id="output_id">&lt;/div></pre>
-
-</div>
 
 
 
@@ -172,6 +124,143 @@ fetch_page(fetched_page_url, 'replaced_element_id', postdata);</pre>
   </div>
 
 </div>
+
+
+
+
+<?php /******************************************** CSS MANIPULATION **********************************************/ ?>
+
+<div class="width_40 padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['css']?>" id="dev_jstools_css">
+
+  <div class="padding_bot">
+    <button id="dev_js_toolbox_class_manipulation" disabled>Text</button>
+    <button onclick="css_add('dev_js_toolbox_class_manipulation', ['strikethrough', 'italics', 'glow']);">+</button>
+    <button onclick="css_remove('dev_js_toolbox_class_manipulation', ['strikethrough', 'italics', 'glow']);">-</button>
+  </div>
+
+  <div class="smallpadding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_css_add" onclick="to_clipboard('', 'dev_js_toolbox_css_add', 1);">css_add('element_name', 'class_name');</pre>
+  </div>
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_css_add_array" onclick="to_clipboard('', 'dev_js_toolbox_css_add_array', 1);">css_add('element_name', ['array', 'of', 'classes']);</pre>
+  </div>
+
+  <div class="smallpadding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_css_remove" onclick="to_clipboard('', 'dev_js_toolbox_css_remove', 1);">css_remove('element_name', 'class_name');</pre>
+  </div>
+
+  <div class="bigpadding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_css_remove_array" onclick="to_clipboard('', 'dev_js_toolbox_css_remove_array', 1);">css_remove('element_name', ['array', 'of', 'classes']);</pre>
+  </div>
+
+  <div class="padding_bot">
+    <button id="dev_jstools_unblur_button" class="blur" onmouseover="unblur(this);">Unblur</button>
+  </div>
+
+  <div class="smallpadding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_unblur_element" onclick="to_clipboard('', 'dev_js_toolbox_unblur_element', 1);">unblur_element('element_id');</pre>
+  </div>
+
+  <pre class="dev_pre_code" id="dev_js_toolbox_unblur" onclick="to_clipboard('', 'dev_js_toolbox_unblur', 1);">&lt;div class="blur" onmouseover="unblur(this)">Blurry&lt;/div></pre>
+
+</div>
+
+
+
+
+<?php /************************************************** FORMS ***************************************************/ ?>
+
+<div class="padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['forms']?>" id="dev_jstools_forms">
+
+  <div class="width_50">
+
+    <div class="smallpadding_bot">
+      <label for="dev_js_toolbox_require_field" id="dev_js_toolbox_require_field_label">Label</label>
+      <input id="dev_js_toolbox_require_field" name="dev_js_toolbox_require_field" class="indiv" type="text">
+    </div>
+
+    <div class="bigpadding_bot">
+      <button class="button" onclick="if(form_require_field('dev_js_toolbox_require_field', 'dev_js_toolbox_require_field_label')) { alert('OK!'); } else { alert('ERROR!'); };"><?=__('submit')?></button>
+    </div>
+
+    <div class="padding_bot">
+      <pre class="dev_pre_code" id="dev_js_toolbox_form_require_example" onclick="to_clipboard('', 'dev_js_toolbox_form_require_example', 1);">&lt;label for="form_input" id="form_input_label">&lt;?=__('label')?>&lt;/label>
+&lt;input id="form_input" name="form_input" class="indiv" type="text">
+
+&lt;button class="button" onclick="form_require_field('form_input', 'form_input_label');">&lt;?=__('submit')?>&lt;/button></pre>
+    </div>
+
+    <div class="bigpadding_bot">
+      <pre class="dev_pre_code" id="dev_js_toolbox_form_require" onclick="to_clipboard('', 'dev_js_toolbox_form_require', 1);">if(form_require_field('input_id', 'label_id'))
+  action;</pre>
+    </div>
+
+  </div>
+
+  <div class="width_60">
+    <pre>/**
+ * Ensures that a form element is properly filled.
+ *
+ * @param   {string}  element_id  The ID of a form element that should not be empty.
+ * @param   {string}  label_id    The ID of the label associated with said element.
+ *
+ * @returns {int}                 0 if the field is empty, 1 if the field is filled.
+ */</pre>
+  </div>
+
+</div>
+
+
+
+
+<?php /************************************************ CLIPBOARD *************************************************/ ?>
+
+<div class="width_40 padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['clipboard']?>" id="dev_jstools_clipboard">
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_editor_include" onclick="to_clipboard('', 'dev_js_toolbox_editor_include', 1);">$js = array('common/clipboard');</pre>
+  </div>
+
+  <pre class="dev_pre_code" id="dev_js_toolbox_cliboard" onclick="to_clipboard('', 'dev_js_toolbox_cliboard', 1);">&lt;pre id="lorem_id" onclick="to_clipboard('', 'lorem_id', 1);">Lorem clipboardum&lt;/pre></pre>
+
+</div>
+
+
+
+
+<?php /************************************************* EDITOR ***************************************************/ ?>
+
+<div class="width_40 padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['editor']?>" id="dev_jstools_editor">
+
+  <div class="smallpadding_bot">
+    <?php
+    $editor_target_element  = 'dev_jstools_editor_in';
+    $preview_output         = 'dev_jstools_editor_out';
+    $preview_path           = $path;
+    include './../../inc/editor.inc.php';
+    ?>
+    <textarea id="dev_jstools_editor_in" onkeyup="preview_bbcodes('dev_jstools_editor_in', 'dev_jstools_editor_out');">&nbsp;</textarea>
+    <div class="smallpadding_top" id="dev_jstools_editor_out"></div>
+  </div>
+
+  <div class="padding_bot">
+    <pre class="dev_pre_code" id="dev_js_toolbox_editor_include" onclick="to_clipboard('', 'dev_js_toolbox_editor_include', 1);">$js = array('common/editor', 'common/preview');</pre>
+  </div>
+
+  <pre class="dev_pre_code" id="dev_js_toolbox_editor" onclick="to_clipboard('', 'dev_js_toolbox_editor', 1);">&lt;?php
+$editor_target_element  = 'target_id';
+$preview_output         = 'output_id';
+$preview_path           = $path;
+include './../../inc/editor.inc.php';
+?>
+
+&lt;textarea id="target_id" onkeyup="preview_bbcodes('target_id', 'output_id');">&lt;?=__('target_id')?>&lt;/textarea>
+
+&lt;div id="output_id">&lt;/div></pre>
+
+</div>
+
 
 
 
@@ -297,25 +386,6 @@ toggle_class('class_id', 'table-row');
 
 // Toggle all elements of given class one way
 toggle_class_oneway('class_id', 1, 'table-row');</pre>
-</div>
-
-
-
-
-<?php /************************************************* UNBLUR ***************************************************/ ?>
-
-<div class="width_40 padding_top dev_jstools_section<?=$jstoolbox_selector['hide']['unblur']?>" id="dev_jstools_unblur">
-
-  <div class="padding_bot">
-    <button id="dev_jstools_unblur_button" class="blur" onmouseover="unblur(this);">Unblur</button>
-  </div>
-
-  <div class="padding_bot">
-    <pre class="dev_pre_code" id="dev_js_toolbox_unblur" onclick="to_clipboard('', 'dev_js_toolbox_unblur', 1);">&lt;div class="blur" onmouseover="unblur(this)">Blurry&lt;/div></pre>
-  </div>
-
-  <pre class="dev_pre_code" id="dev_js_toolbox_unblur_element" onclick="to_clipboard('', 'dev_js_toolbox_unblur_element', 1);">&lt;div id="unblur_id" class="blur" onmouseover="unblur_element('unblur_id')">Blurry&lt;/div></pre>
-
 </div>
 
 <?php /***************************************************************************************************************/

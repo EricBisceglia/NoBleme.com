@@ -185,6 +185,12 @@ ___('dev_palette_selector_tooltips',  'FR', "Infobulles");
 // JS toolbox selector
 ___('dev_js_toolbox_title', 'EN', "JavaScript toolbox:");
 ___('dev_js_toolbox_title', 'FR', "Boîte à outils JavaScript :");
+___('dev_js_toolbox_fetch', 'EN', "Asynchronous fetching");
+___('dev_js_toolbox_fetch', 'FR', "Fetch asynchrone");
+___('dev_js_toolbox_css',   'EN', "CSS manipulation");
+___('dev_js_toolbox_css',   'FR', "Manipulation CSS");
+___('dev_js_toolbox_forms', 'EN', "Form validation");
+___('dev_js_toolbox_forms', 'FR', "Validation de formulaires");
 
 
 // Functions list selector
