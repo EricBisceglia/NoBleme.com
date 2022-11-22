@@ -5,10 +5,9 @@
 /*  user_login_attempt              Attempts to log in a guest.                                                      */
 /*  user_login_attempt_process      Process a finished login attempt.                                                */
 /*                                                                                                                   */
-/*  popin_close                     Closes an open popin.                                                            */
-/*                                                                                                                   */
 /*********************************************************************************************************************/
-
+// Close the lost account access popin if it is open upon loading the page
+popin_close('popin_lost_access');
 
 /**
  * Toggles the visibility of a top menu.
@@ -126,41 +125,3 @@ function user_login_attempt_process()
   else
     document.getElementById('login_form_error').style.display = 'block';
 }
-
-
-
-
-/**
- * Closes an open popin.
- *
- * @param   {string}  popin_id  The id of the popin, or * to close all open popins
- *
- * @returns {void}
- */
-
-function popin_close(popin_id)
-{
-  // If the requested popin has been opened, close it
-  if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
-  {
-    // Get rid of the hash in the URL
-    location.hash = '#_';
-    history.replaceState({}, document.title, window.location.href.split('#')[0]);
-
-    // Scroll back to the top
-    var popin_scroll = document.getElementsByClassName('popin_body');
-    for(var i = 0; i < popin_scroll.length; i++)
-      popin_scroll[i].scrollTop = 0;
-  }
-}
-
-
-// Close all open popins upon pressing the escape key
-document.addEventListener("keydown", ({key}) => {
-  if (key === "Escape")
-    popin_close('*');
-})
-
-
-// Close the lost account access popin if it is open upon loading the page
-popin_close('popin_lost_access');
