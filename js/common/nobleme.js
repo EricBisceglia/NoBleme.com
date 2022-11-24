@@ -44,6 +44,7 @@
 
 function fetch_sanitize(data)
 {
+  // Return sanitized data
   return encodeURIComponent(data);
 }
 
@@ -60,8 +61,16 @@ function fetch_sanitize(data)
 
 function fetch_sanitize_id(element)
 {
-  if(document.getElementById(element))
-    return encodeURIComponent(document.getElementById(element).value);
+  // Attempt to identify the targetted element
+  element_tag   = document.getElementById(element)?.tagName.toLowerCase();
+  element_type  = document.getElementById(element)?.type.toLowerCase();
+
+  // If the element is a checkbox, return 1 or 0
+  if(element_tag == 'input' && (element_type == 'checkbox' || element_type == 'radio'))
+    return (document.getElementById(element)?.checked) ? 1 : 0;
+
+  // Otherwise, return the element's sanitized value
+  return encodeURIComponent(document.getElementById(element)?.value);
 }
 
 
@@ -187,15 +196,13 @@ function form_require_field(  element_id  ,
   // Check whether the field is empty
   if(document.getElementById(element_id).value == "")
   {
-    // If it is empty, change the styling of its associated label
+    // If it is empty, change the styling of its associated label and return 0
     if(label_id)
       css_add(label_id, 'red');
-
-    // Return 0 to show that it is not OK
     return 0;
   }
 
-  // All's good, return 1
+  // Otherwise all's good, return 1
   else
     return 1;
 }
@@ -397,6 +404,7 @@ function toggle_class_oneway( element_class                   ,
  *
  * @return  {bool}                Whether the element is currently visible.
  */
+
 function element_is_toggled( element_id )
 {
   // Fetch the selected element
