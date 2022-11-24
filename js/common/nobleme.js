@@ -5,22 +5,31 @@
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  fetch_sanitize          Sanitizes a string for use in postdata.                                                  */
-/*  fetch_sanitize_id       Sanitizes an element for use in postdata.                                                */
+/*  fetch_sanitize              Sanitizes a string for use in postdata.                                              */
+/*  fetch_sanitize_id           Sanitizes an element for use in postdata.                                            */
 /*                                                                                                                   */
-/*  fetch_page              Fetches content dynamically.                                                             */
+/*  fetch_page                  Fetches content dynamically.                                                         */
 /*                                                                                                                   */
-/*  form_require_field      Ensures that a form element is properly filled.                                          */
+/*  form_require_field          Ensures that a form element is properly filled.                                      */
 /*                                                                                                                   */
-/*  css_add                 Adds a CSS class to an element                                                           */
-/*  css_remove              Removes a CSS class from an element.                                                     */
+/*  css_add                     Adds a CSS class to an element                                                       */
+/*  css_remove                  Removes a CSS class from an element.                                                 */
 /*                                                                                                                   */
-/*  to_clipboard            Places some data in the user's clipboard.                                                */
+/*  toggle_element              Toggles the visibility state of an element.                                          */
+/*  toggle_class                Toggles the visibility state of all elements of a specific class.                    */
+/*  toggle_checkbox             Toggles the checked status of a checkbox.                                            */
 /*                                                                                                                   */
-/*  unblur                  Removes the blur filter from an element being triggered by an action.                    */
-/*  unblur_element          Removes the blur filter from a specific element.                                         */
+/*  toggle_element_oneway       Sets the visibility state of an element.                                             */
+/*  toggle_class_oneway         Sets the visibility state of all elements of a specific class.                       */
 /*                                                                                                                   */
-/*  popin_close             Closes an open popin.                                                                    */
+/*  element_is_toggled          Checks whether an element is currently visible or not.                               */
+/*                                                                                                                   */
+/*  to_clipboard                Places some data in the user's clipboard.                                            */
+/*                                                                                                                   */
+/*  unblur                      Removes the blur filter from an element being triggered by an action.                */
+/*  unblur_element              Removes the blur filter from a specific element.                                     */
+/*                                                                                                                   */
+/*  popin_close                 Closes an open popin.                                                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -237,6 +246,170 @@ function css_add( element_id  ,
   // Otherwise remove each class in the array from the element
   else
     class_name.forEach(class_add => document.getElementById(element_id)?.classList.remove(class_add));
+}
+
+
+
+
+/**
+ * Toggles the visibility state of an element.
+ *
+ * @param   {string}  element_id      The element whose visibility will be toggled.
+ * @param   {string}  [element_type]  The type of element (block, table-row, grid, etc.), defaults to 'block'
+ *
+ * @returns {void}
+ */
+
+function toggle_element(  element_id              ,
+                          element_type  = 'block' )
+{
+  // Fetch the selected element
+  var selected_element = document.getElementById(element_id);
+
+  // Stop here if does not exist
+  if(!selected_element)
+    return;
+
+  // Check the current visibility state of the element
+  var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
+
+  // Toggle it to the opposite visibility state
+  if(element_visibility == 'none')
+    selected_element.style.display = element_type;
+  else
+    selected_element.style.display = 'none';
+}
+
+
+
+
+/**
+ * Toggles the visibility state of all elements of a specific class.
+ *
+ * @param   {string}  element_class   The class whose visibility will be toggled.
+ * @param   {string}  [element_type]  The type of element (block, table-row, grid, etc.), defaults to 'block'
+ *
+ * @returns {void}
+ */
+
+function toggle_class(  element_class           ,
+                        element_type  = 'block' )
+{
+  // Fetch all elements with the selected class
+  var selected_class = document.getElementsByClassName(element_class);
+
+  // Check the current visibility state of the first element of the class
+  var first_element     = selected_class[0];
+  var class_visibility  = first_element.currentStyle ? first_element.currentStyle.display : getComputedStyle(first_element,null).display;
+
+  // Define the new visibility state to apply to the class
+  var new_visibility_state = class_visibility == 'none' ? element_type : 'none';
+
+  // Apply the changed visibility state to all elements of the class
+  for(var i = 0; i < selected_class.length; i++)
+    selected_class[i].style.display = new_visibility_state;
+}
+
+
+
+
+/**
+ * Toggles the checked status of a checkbox.
+ *
+ * @param   {string}  checkbox_id   The checkbox which will get its status toggled.
+ *
+ * @returns {void}
+ */
+
+function toggle_checkbox( checkbox_id )
+{
+  // Swap the checked status if the checkbox exist
+  if(document.getElementById(element_id))
+    document.getElementById(checkbox_id).click();
+}
+
+
+
+
+/**
+ * Sets the visibility state of an element.
+ *
+ * @param   {string}  element_id            The element whose visibility will be toggled.
+ * @param   {int}     will_be_made_visible  Whether the element will be hidden (0) or made visible (1).
+ * @param   {string}  [element_type]        The type of element (block, table-row, grid, etc.), defaults to 'block'
+ *
+ * @returns {void}
+ */
+
+function toggle_element_oneway( element_id                      ,
+                                will_be_made_visible            ,
+                                element_type          = 'block' )
+{
+  // Fetch the selected element
+  var selected_element = document.getElementById(element_id);
+
+  // Stop here if it does not exist
+  if(!selected_element)
+    return;
+
+  // Toggle the element's visibility in the requested way
+  if(!will_be_made_visible)
+    selected_element.style.display = 'none';
+  else
+    selected_element.style.display = element_type;
+}
+
+
+
+
+/**
+ * Sets the visibility state of all elements of a specific class.
+ *
+ * @param   {string}  element_class         The class whose visibility will be toggled.
+ * @param   {int}     will_be_made_visible  Whether the element will be hidden (0) or made visible (1).
+ * @param   {string}  [element_type]        The type of element (block, table-row, grid, etc.), defaults to 'block'
+ *
+ * @returns {void}
+ */
+
+function toggle_class_oneway( element_class                   ,
+                              will_be_made_visible            ,
+                              element_type          = 'block' )
+{
+  // Fetch all elements with the selected class
+  var selected_class = document.getElementsByClassName(element_class);
+
+  // Define the visibility state to apply
+  var visibility_state = (!will_be_made_visible) ? 'none' : element_type;
+
+  // Apply the changed visibility state to all elements of the class
+  for(var i = 0; i < selected_class.length; i++)
+    selected_class[i].style.display = visibility_state;
+}
+
+
+
+
+/**
+ * Checks whether an element is currently visible or not.
+ *
+ * @param   {string}  element_id  The element being checked.
+ *
+ * @return  {bool}                Whether the element is currently visible.
+ */
+function element_is_toggled( element_id )
+{
+  // Fetch the selected element
+  var selected_element = document.getElementById(element_id);
+
+  // Check the current visibility state of the element
+  var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
+
+  // Return the appropriate value
+  if(element_visibility == 'none')
+    return false;
+  else
+    return true;
 }
 
 

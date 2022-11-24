@@ -21,7 +21,7 @@ $page_title_en    = "New task";
 $page_title_fr    = "Nouvelle tâche";
 
 // Extra JS & CSS
-$js   = array('common/toggle', 'tasks/edit');
+$js   = array('tasks/edit');
 $css  = array('tasks');
 
 

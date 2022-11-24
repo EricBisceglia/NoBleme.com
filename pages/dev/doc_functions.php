@@ -20,7 +20,7 @@ $page_title_fr    = "Liste des fonctions";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('common/toggle', 'common/selector');
+$js   = array('common/selector');
 
 
 

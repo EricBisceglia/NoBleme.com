@@ -24,7 +24,6 @@ $page_description = "Delete a user's public profile";
 
 // Extra CSS
 $css = array('users');
-$js  = array('common/toggle');
 
 
 

@@ -17,7 +17,7 @@ $page_description = "An image used to illustrate NoBleme's 21st century culture 
 
 // Extra CSS & JS
 $css  = array('compendium');
-$js   = array('common/toggle', 'compendium/admin');
+$js   = array('compendium/admin');
 
 
 

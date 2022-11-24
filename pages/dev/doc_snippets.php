@@ -20,7 +20,7 @@ $page_title_fr  = "Modèles de code";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('common/toggle', 'common/selector');
+$js   = array('common/selector');
 
 
 

@@ -17,7 +17,7 @@ $page_title_fr    = "Statistiques des comptes";
 $page_description = "Statistics generated from NoBleme's registered users.";
 
 // Extra JS
-$js = array('common/toggle', 'common/selector');
+$js = array('common/selector');
 
 
 

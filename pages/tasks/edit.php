@@ -22,7 +22,7 @@ $page_title_en    = "Edit task #";
 $page_title_fr    = "Modifier la tâche #";
 
 // Extra JS & CSS
-$js   = array('common/toggle', 'users/autocomplete_username', 'tasks/edit');
+$js   = array('users/autocomplete_username', 'tasks/edit');
 $css  = array('tasks');
 
 

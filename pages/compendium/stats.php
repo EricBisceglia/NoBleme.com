@@ -18,7 +18,7 @@ $page_title_fr    = "Statistiques du compendium";
 $page_description = "Statistics generated from NoBleme's 21st century compendium, a documentation of popular culture in the Internet age";
 
 // Extra CSS & JS
-$js = array('common/toggle', 'common/selector');
+$js = array('common/selector');
 
 
 

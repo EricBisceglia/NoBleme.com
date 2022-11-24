@@ -19,7 +19,7 @@ $page_description = "Statistics generated from the tasks in NoBleme's to-do list
 
 // Extra CSS & JS
 $css  = array('tasks');
-$js   = array('common/toggle', 'common/selector');
+$js   = array('common/selector');
 
 
 

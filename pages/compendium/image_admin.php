@@ -27,7 +27,7 @@ $compendium_admin_menu['images'] = 1;
 
 // Extra CSS & JS
 $css  = array('compendium');
-$js   = array('common/toggle', 'compendium/list', 'compendium/admin');
+$js   = array('compendium/list', 'compendium/admin');
 
 
 

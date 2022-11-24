@@ -22,7 +22,7 @@ $page_title_en    = "Approve task";
 $page_title_fr    = "Approuver une tâche";
 
 // Extra JS & CSS
-$js   = array('common/toggle', 'tasks/edit');
+$js   = array('tasks/edit');
 $css  = array('tasks');
 
 
