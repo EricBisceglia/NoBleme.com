@@ -185,6 +185,24 @@ if element_is_toggled('element_id')
   </div>
 
   <div class="padding_bot">
+    <button id="dev_jstools_checkbox_button" onclick="checkbox_toggle('dev_jstools_checkbox_demo');">Check</button>
+    &nbsp;
+    <input type="checkbox" id="dev_jstools_checkbox_demo" name="dev_jstools_checkbox_demo">
+  </div>
+
+  <div class="smallpadding_bot">
+    <pre id="dev_jstools_checkbox_toggle" onclick="to_clipboard('', 'dev_jstools_checkbox_toggle', 1);">// Toggles the checked status of a checkbox
+checkbox_toggle('element_id', 'table-row');
+checkbox_toggle_oneway('element_id', 1, 'table-row');</pre>
+  </div>
+
+  <div class="bigpadding_bot">
+    <pre id="dev_jstools_checkbox_check" onclick="to_clipboard('', 'dev_jstools_checkbox_check', 1);">// Checks whether a checkbox is currently checked or unchecked.
+if(checkbox_is_checked(checkbox_id))
+  return;</pre>
+  </div>
+
+  <div class="padding_bot">
     <button id="dev_jstools_unblur_button" class="blur" onmouseover="unblur(this);">Unblur</button>
   </div>
 

@@ -7,7 +7,6 @@
 /*                                                                                                                   */
 /*  fetch_sanitize              Sanitizes a string for use in postdata.                                              */
 /*  fetch_sanitize_id           Sanitizes an element for use in postdata.                                            */
-/*                                                                                                                   */
 /*  fetch_page                  Fetches content dynamically.                                                         */
 /*                                                                                                                   */
 /*  form_require_field          Ensures that a form element is properly filled.                                      */
@@ -17,12 +16,13 @@
 /*                                                                                                                   */
 /*  toggle_element              Toggles the visibility state of an element.                                          */
 /*  toggle_class                Toggles the visibility state of all elements of a specific class.                    */
-/*  toggle_checkbox             Toggles the checked status of a checkbox.                                            */
-/*                                                                                                                   */
 /*  toggle_element_oneway       Sets the visibility state of an element.                                             */
 /*  toggle_class_oneway         Sets the visibility state of all elements of a specific class.                       */
-/*                                                                                                                   */
 /*  element_is_toggled          Checks whether an element is currently visible or not.                               */
+/*                                                                                                                   */
+/*  checkbox_toggle             Toggles the checked status of a checkbox.                                            */
+/*  checkbox_toggle_oneway      Sets the checked status of a checkbox.                                               */
+/*  checkbox_is_checked         Checks whether a checkbox is currently checked or unchecked.                         */
 /*                                                                                                                   */
 /*  to_clipboard                Places some data in the user's clipboard.                                            */
 /*                                                                                                                   */
@@ -321,24 +321,6 @@ function toggle_class(  element_class           ,
 
 
 /**
- * Toggles the checked status of a checkbox.
- *
- * @param   {string}  checkbox_id   The checkbox which will get its status toggled.
- *
- * @returns {void}
- */
-
-function toggle_checkbox( checkbox_id )
-{
-  // Swap the checked status if the checkbox exist
-  if(document.getElementById(element_id))
-    document.getElementById(checkbox_id).click();
-}
-
-
-
-
-/**
  * Sets the visibility state of an element.
  *
  * @param   {string}  element_id            The element whose visibility will be toggled.
@@ -418,6 +400,63 @@ function element_is_toggled( element_id )
     return false;
   else
     return true;
+}
+
+
+
+
+/**
+ * Toggles the checked status of a checkbox.
+ *
+ * @param   {string}  checkbox_id   The checkbox which will get its status toggled.
+ *
+ * @returns {void}
+ */
+
+function checkbox_toggle( checkbox_id )
+{
+  // Swap the checked status if the checkbox exist
+  if(document.getElementById(checkbox_id))
+    document.getElementById(checkbox_id).click();
+}
+
+
+
+
+/**
+ * Sets the checked status of a checkbox.
+ *
+ * @param   {string}  checkbox_id       The checkbox's id.
+ * @param   {int}     will_be_checked   Whether the checkbox should be checked (1) or unchecked (0).
+ *
+ * @returns {void}
+ */
+
+function checkbox_toggle_oneway(  checkbox_id     ,
+                                  will_be_checked )
+{
+  // Check or uncheck the checkbox
+  if(will_be_checked)
+    document.getElementById(checkbox_id).checked = true;
+  else
+    document.getElementById(checkbox_id).checked = false;
+}
+
+
+
+
+/**
+ * Checks whether a checkbox is currently checked or unchecked.
+ *
+ * @param   {string}  checkbox_id   The checkbox in question.
+ *
+ * @return  {bool}                  Whether the checkbox is currently checked.
+ */
+
+function checkbox_is_checked( checkbox_id )
+{
+  // Return the appropriate value
+  return (document.getElementById(checkbox_id)?.checked) ? true : false;
 }
 
 
@@ -529,25 +568,25 @@ function unblur_element(element_id)
  * @returns {void}
  */
 
- function popin_close(popin_id)
- {
-   // If the requested popin has been opened, close it
-   if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
-   {
-     // Get rid of the hash in the URL
-     location.hash = '#_';
-     history.replaceState({}, document.title, window.location.href.split('#')[0]);
+function popin_close(popin_id)
+{
+  // If the requested popin has been opened, close it
+  if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
+  {
+    // Get rid of the hash in the URL
+    location.hash = '#_';
+    history.replaceState({}, document.title, window.location.href.split('#')[0]);
 
-     // Scroll back to the top
-     var popin_scroll = document.getElementsByClassName('popin_body');
-     for(var i = 0; i < popin_scroll.length; i++)
-       popin_scroll[i].scrollTop = 0;
-   }
- }
+    // Scroll back to the top
+    var popin_scroll = document.getElementsByClassName('popin_body');
+    for(var i = 0; i < popin_scroll.length; i++)
+      popin_scroll[i].scrollTop = 0;
+  }
+}
 
 
- // Close all open popins upon pressing the escape key
- document.addEventListener("keydown", ({key}) => {
-   if (key === "Escape")
-     popin_close('*');
- })
+// Close all open popins upon pressing the escape key
+document.addEventListener("keydown", ({key}) => {
+  if (key === "Escape")
+    popin_close('*');
+})
