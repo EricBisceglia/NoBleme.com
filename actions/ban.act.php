@@ -951,54 +951,55 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
   $search_banner    = isset($search['banner'])    ? sanitize($search['banner'], 'string')     : NULL;
   $search_unbanner  = isset($search['unbanner'])  ? sanitize($search['unbanner'], 'string')   : NULL;
 
-  // Prepare the query to fetch the log list
-  $qlogs  = "   SELECT    logs_bans.id                AS 'l_id'         ,
-                          logs_bans.banned_ip_address AS 'l_ip'         ,
-                          logs_bans.banned_at         AS 'l_start'      ,
-                          logs_bans.banned_until      AS 'l_end'        ,
-                          logs_bans.unbanned_at       AS 'l_unban'      ,
-                          logs_bans.ban_reason_en     AS 'l_reason_en'  ,
-                          logs_bans.ban_reason_fr     AS 'l_reason_fr'  ,
-                          logs_bans.unban_reason_en   AS 'l_ureason_en' ,
-                          logs_bans.unban_reason_fr   AS 'l_ureason_fr' ,
-                          logs_bans.is_a_total_ip_ban AS 'l_total_ban'  ,
-                          users_banned.id             AS 'banned_id'    ,
-                          users_banned.username       AS 'banned_nick'  ,
-                          users_banner.id             AS 'banner_id'    ,
-                          users_banner.username       AS 'banner_nick'  ,
-                          users_unbanner.id           AS 'unbanner_id'  ,
-                          users_unbanner.username     AS 'unbanner_nick'
-                FROM      logs_bans
-                LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
-                LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
-                LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
-                WHERE     1 = 1 ";
+  // Determine which logs to show
+  $query_status = match($search_status)
+  {
+    0       => " AND logs_bans.unbanned_at > 0 "  ,
+    1       => " AND logs_bans.unbanned_at = 0 "  ,
+    default => ""                                 ,
+  };
 
-  // Search for data if requested
-  if($search_status == 0)
-    $qlogs .= " AND       logs_bans.unbanned_at         >     0                       ";
-  else if($search_status == 1)
-    $qlogs .= " AND       logs_bans.unbanned_at         =     0                       ";
-  if($search_username)
-    $qlogs .= " AND     ( users_banned.username         LIKE  '%$search_username%'
-                OR        logs_bans.banned_ip_address   LIKE  '%$search_username%' )  ";
-  if($search_banner)
-    $qlogs .= " AND       users_banner.username         LIKE  '%$search_banner%'      ";
-  if($search_unbanner)
-    $qlogs .= " AND       users_unbanner.username       LIKE  '%$search_unbanner%'    ";
+  // Search through the data
+  $query_search =   ($search_username)  ? " AND ( users_banned.username       LIKE '%$search_username%'
+                                            OR    logs_bans.banned_ip_address LIKE '%$search_username%' ) " : "";
+  $query_search .=  ($search_banner)    ? " AND   users_banner.username       LIKE '%$search_banner%'     " : "";
+  $query_search .=  ($search_unbanner)  ? " AND   users_unbanner.username     LIKE '%$search_unbanner%'   " : "";
 
-  // Sort the data as requested
-  if($sort_by == 'username')
-    $qlogs .= " ORDER BY  logs_bans.banned_ip_address != '' ,
-                          users_banned.username       ASC   ,
-                          logs_bans.banned_ip_address ASC   ";
-  else if($sort_by == 'unbanned')
-    $qlogs .= " ORDER BY  logs_bans.unbanned_at       DESC  ";
-  else
-    $qlogs .= " ORDER BY  logs_bans.banned_at         DESC  ";
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'username'  => " ORDER BY logs_bans.banned_ip_address != '' ,
+                              users_banned.username       ASC   ,
+                              logs_bans.banned_ip_address ASC   " ,
+    'unbanned'  => " ORDER BY logs_bans.unbanned_at       DESC  " ,
+    default     => " ORDER BY logs_bans.banned_at         DESC  " ,
+  };
 
-  // Execute the query
-  $qlogs = query($qlogs);
+  // Fetch the log list
+  $qlogs  = query("     SELECT    logs_bans.id                AS 'l_id'         ,
+                                  logs_bans.banned_ip_address AS 'l_ip'         ,
+                                  logs_bans.banned_at         AS 'l_start'      ,
+                                  logs_bans.banned_until      AS 'l_end'        ,
+                                  logs_bans.unbanned_at       AS 'l_unban'      ,
+                                  logs_bans.ban_reason_en     AS 'l_reason_en'  ,
+                                  logs_bans.ban_reason_fr     AS 'l_reason_fr'  ,
+                                  logs_bans.unban_reason_en   AS 'l_ureason_en' ,
+                                  logs_bans.unban_reason_fr   AS 'l_ureason_fr' ,
+                                  logs_bans.is_a_total_ip_ban AS 'l_total_ban'  ,
+                                  users_banned.id             AS 'banned_id'    ,
+                                  users_banned.username       AS 'banned_nick'  ,
+                                  users_banner.id             AS 'banner_id'    ,
+                                  users_banner.username       AS 'banner_nick'  ,
+                                  users_unbanner.id           AS 'unbanner_id'  ,
+                                  users_unbanner.username     AS 'unbanner_nick'
+                        FROM      logs_bans
+                        LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
+                        LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
+                        LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
+                        WHERE     1 = 1
+                                  $query_status
+                                  $query_search
+                                  $query_sort ");
 
   // Fetch the user's language
   $lang = user_get_language();

@@ -79,7 +79,18 @@ function sanitize(  mixed   $data                 ,
   }
 
   // Sanitize the data by trimming any trailing whitespace and removing any characters that could break MySQL
-  return trim(mysqli_real_escape_string($GLOBALS['db'], $data));
+  $data = trim(mysqli_real_escape_string($GLOBALS['db'], $data));
+
+  // Return the data with its expected type
+  switch ($type)
+  {
+    case "float":
+      return (float)$data;
+    case "int":
+      return (int)$data;
+    default:
+      return $data;
+  }
 }
 
 
