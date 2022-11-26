@@ -106,57 +106,40 @@ function activity_list( bool    $show_mod_logs  = false ,
   $amount  = (!$is_admin && $amount > 1000) ? 1000 : $amount;
   $deleted = (!$is_admin) ? 0 : $deleted;
 
-  // Initialize the returned array
-  $data = array();
-
-  // Fetch activity logs
-  $qlogs = "    SELECT    logs_activity.id                          AS 'l_id'         ,
-                          logs_activity.fk_users                    AS 'l_userid'     ,
-                          logs_activity.happened_at                 AS 'l_date'       ,
-                          logs_activity.activity_username           AS 'l_user'       ,
-                          logs_activity.activity_moderator_username AS 'l_mod_user'   ,
-                          logs_activity.activity_id                 AS 'l_actid'      ,
-                          logs_activity.activity_type               AS 'l_type'       ,
-                          logs_activity.activity_summary_en         AS 'l_summary_en' ,
-                          logs_activity.activity_summary_fr         AS 'l_summary_fr' ,
-                          logs_activity.activity_amount             AS 'l_amount'     ,
-                          logs_activity.moderation_reason           AS 'l_reason'     ,
-                          logs_activity_details.id                  AS 'l_details'
-                FROM      logs_activity
-                LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
-                WHERE     logs_activity.is_moderators_only      = '$modlogs'
-                AND       logs_activity.language             LIKE '%$lang%' ";
-
-  // Filter by log type
-  if($type == 'users')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'users_%' ";
-  else if($type == 'meetups')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'meetups_%' ";
-  else if($type == 'compendium')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'compendium_%' ";
-  else if($type == 'quotes')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'quotes_%' ";
-  else if($type == 'irc')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'irc_%' ";
-  else if($type == 'dev')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'dev_%' ";
+  // Log type filter
+  $search_type = ($type && $type != "all") ? " AND logs_activity.activity_type LIKE '".$type."_%' " : "";
 
   // Show deleted logs on request
-  if($deleted)
-    $qlogs .= " AND       logs_activity.is_deleted = 1 ";
-  else
-    $qlogs .= " AND       logs_activity.is_deleted = 0 ";
+  $search_deleted = ($deleted) ? " AND logs_activity.is_deleted = 1 " : " AND logs_activity.is_deleted = 0 ";
 
-  // Group and sort limit the results
-  $qlogs .= "   GROUP BY  logs_activity.id
-                ORDER BY  logs_activity.happened_at DESC ";
+  // Limit on the number of results
+  $limit = ($amount <= 1000) ? " LIMIT $amount " : "";
 
-  // Limit the results
-  if($amount <= 1000)
-    $qlogs .= " LIMIT     $amount ";
+  // Fetch activity logs
+  $qlogs = query("    SELECT    logs_activity.id                          AS 'l_id'         ,
+                                logs_activity.fk_users                    AS 'l_userid'     ,
+                                logs_activity.happened_at                 AS 'l_date'       ,
+                                logs_activity.activity_username           AS 'l_user'       ,
+                                logs_activity.activity_moderator_username AS 'l_mod_user'   ,
+                                logs_activity.activity_id                 AS 'l_actid'      ,
+                                logs_activity.activity_type               AS 'l_type'       ,
+                                logs_activity.activity_summary_en         AS 'l_summary_en' ,
+                                logs_activity.activity_summary_fr         AS 'l_summary_fr' ,
+                                logs_activity.activity_amount             AS 'l_amount'     ,
+                                logs_activity.moderation_reason           AS 'l_reason'     ,
+                                logs_activity_details.id                  AS 'l_details'
+                      FROM      logs_activity
+                      LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
+                      WHERE     logs_activity.is_moderators_only  =     '$modlogs'
+                      AND       logs_activity.language            LIKE  '%$lang%'
+                                $search_type
+                                $search_deleted
+                      GROUP BY  logs_activity.id
+                      ORDER BY  logs_activity.happened_at DESC
+                                $limit ");
 
-  // Run the query
-  $qlogs = query($qlogs);
+  // Initialize the returned array
+  $data = array();
 
   // Go through the rows of the query
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
