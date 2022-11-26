@@ -952,15 +952,15 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
   $search_unbanner  = isset($search['unbanner'])  ? sanitize($search['unbanner'], 'string')   : NULL;
 
   // Determine which logs to show
-  $query_status = match($search_status)
+  $query_search = match($search_status)
   {
-    0       => " AND logs_bans.unbanned_at > 0 "  ,
-    1       => " AND logs_bans.unbanned_at = 0 "  ,
-    default => ""                                 ,
+    0       => " WHERE logs_bans.unbanned_at > 0 "  ,
+    1       => " WHERE logs_bans.unbanned_at = 0 "  ,
+    default => " WHERE 1 = 1 "                      ,
   };
 
   // Search through the data
-  $query_search =   ($search_username)  ? " AND ( users_banned.username       LIKE '%$search_username%'
+  $query_search .=  ($search_username)  ? " AND ( users_banned.username       LIKE '%$search_username%'
                                             OR    logs_bans.banned_ip_address LIKE '%$search_username%' ) " : "";
   $query_search .=  ($search_banner)    ? " AND   users_banner.username       LIKE '%$search_banner%'     " : "";
   $query_search .=  ($search_unbanner)  ? " AND   users_unbanner.username     LIKE '%$search_unbanner%'   " : "";
@@ -996,8 +996,6 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
                         LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
                         LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
                         LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
-                        WHERE     1 = 1
-                                  $query_status
                                   $query_search
                                   $query_sort ");
 

@@ -400,9 +400,9 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Sanitize the search parameters
   $search_url         = isset($search['url'])         ? sanitize($search['url'], 'string')                  : '';
-  $search_translation = isset($search['translation']) ? sanitize($search['translation'], -2, 2)             : 0;
+  $search_translation = isset($search['translation']) ? sanitize($search['translation'], 'int', -2, 2)      : 0;
   $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
-  $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], -1, 1)                : 0;
+  $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], 'int', -1, 1)         : 0;
   $search_redirname   = isset($search['redirname'])   ? sanitize($search['redirname'], 'string')            : '';
   $search_nsfw        = isset($search['nsfw'])        ? sanitize($search['nsfw'], 'int', -1, 1)             : -1;
   $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
@@ -419,245 +419,249 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $search_wip         = isset($search['wip'])         ? sanitize($search['wip'], 'string')                  : '';
   $search_notes       = isset($search['notes'])       ? sanitize($search['notes'], 'int', 0, 1)             : 0;
 
-  // Join categories if required
-  $join_categories = ($search_category || isset($search['join_categories'])) ? " LEFT JOIN compendium_pages_categories ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id ": '';
-  $count_categories = ($join_categories) ? " , COUNT(compendium_pages_categories.id) AS 'pc_count' " : '';
-
-  // Fetch the pages
-  $qpages = "     SELECT    compendium_pages.id                 AS 'p_id'         ,
-                            compendium_pages.is_deleted         AS 'p_deleted'    ,
-                            compendium_pages.is_draft           AS 'p_draft'      ,
-                            compendium_pages.created_at         AS 'p_created'    ,
-                            compendium_pages.last_edited_at     AS 'p_edited'     ,
-                            compendium_pages.page_url           AS 'p_url'        ,
-                            compendium_pages.title_$lang        AS 'p_title'      ,
-                            compendium_pages.title_en           AS 'p_title_en'   ,
-                            compendium_pages.title_fr           AS 'p_title_fr'   ,
-                            compendium_pages.redirection_$lang  AS 'p_redirect'   ,
-                            compendium_pages.redirection_en     AS 'p_redir_en'   ,
-                            compendium_pages.redirection_fr     AS 'p_redir_fr'   ,
-                            compendium_pages.view_count         AS 'p_viewcount'  ,
-                            compendium_pages.year_appeared      AS 'p_app_year'   ,
-                            compendium_pages.month_appeared     AS 'p_app_month'  ,
-                            compendium_pages.year_peak          AS 'p_peak_year'  ,
-                            compendium_pages.month_peak         AS 'p_peak_month' ,
-                            compendium_pages.is_nsfw            AS 'p_nsfw'       ,
-                            compendium_pages.is_gross           AS 'p_gross'      ,
-                            compendium_pages.is_offensive       AS 'p_offensive'  ,
-                            compendium_pages.title_is_nsfw      AS 'p_nsfw_title' ,
-                            compendium_pages.summary_$lang      AS 'p_summary'    ,
-                            compendium_pages.admin_notes        AS 'p_notes'      ,
-                            compendium_pages.admin_urls         AS 'p_urlnotes'   ,
-                            compendium_eras.id                  AS 'pe_id'        ,
-                            compendium_eras.short_name_$lang    AS 'pe_name'      ,
-                            compendium_types.id                 AS 'pt_id'        ,
-                            compendium_types.name_$lang         AS 'pt_name'      ,
-                            compendium_types.full_name_$lang    AS 'pt_display'
-                            $count_categories
-                  FROM      compendium_pages
-                  LEFT JOIN compendium_types  ON    compendium_pages.fk_compendium_types  = compendium_types.id
-                  LEFT JOIN compendium_eras   ON    compendium_pages.fk_compendium_eras   = compendium_eras.id
-                            $join_categories
-                  WHERE     1 = 1 ";
-
-  // Do not show deleted pages or drafts to regular users
+  // Forbid some searches if the user is not an admin
   if(!$is_admin)
-    $qpages .= "  AND       compendium_pages.is_deleted = 0
-                  AND       compendium_pages.is_draft   = 0 ";
+  {
+    $search_url         = '';
+    $search_translation = 0;
+    $search_redirect    = 0;
+    $search_redirname   = '';
+    $search_language    = '';
+    $search_nsfw_admin  = '';
+    $search_wip         = '';
+    $search_notes       = 0;
+  }
 
-  // Do not show redirections so regular users
-  if(!$is_admin)
-    $qpages .= "  AND       compendium_pages.redirection_$lang = '' ";
+  // Do not show deleted pages, drafts, or redirections to regular users and only show them pages in their own language
+  $query_search = (!$is_admin) ? "  WHERE compendium_pages.is_deleted         = 0
+                                    AND   compendium_pages.is_draft           = 0
+                                    AND   compendium_pages.redirection_$lang  = ''
+                                    AND   compendium_pages.title_$lang       != '' " : " WHERE 1 = 1 ";
 
-  // Regular users should only see pages with a title matching their current language
-  if(!$is_admin)
-    $qpages .= "  AND       compendium_pages.title_$lang != '' ";
+  // Search through the data: Language
+  $query_search .= match($search_language)
+  {
+    'monolingual' => "  AND ( compendium_pages.title_en   = ''
+                        OR    compendium_pages.title_fr   = '' )  " ,
+    'bilingual'   => "  AND   compendium_pages.title_en  != ''
+                        AND   compendium_pages.title_fr  != ''    " ,
+    'english'     => "  AND   compendium_pages.title_en  != ''    " ,
+    'french'      => "  AND   compendium_pages.title_fr  != ''    " ,
+    default       => ""                                             ,
+  };
 
-  // Search the data
-  if($search_url && $is_admin)
-    $qpages .= "  AND       compendium_pages.page_url                             LIKE '%$search_url%'        ";
-  if($search_translation == -2 && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_en                             =     ''
-                  AND       compendium_pages.title_fr                             =     ''                    ";
-  else if($search_translation == -1 && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_$lang                          =     ''
-                  AND     ( compendium_pages.title_en                             !=    ''
-                  OR        compendium_pages.title_fr                             !=    '' )                  ";
-  else if($search_translation == 1 && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
-  else if($search_translation == 2 && $is_admin)
-    $qpages .= "  AND     ( compendium_pages.title_$lang                          !=    ''
-                  OR        compendium_pages.title_$otherlang                     !=    '' )                  ";
+  // Search through the data: Translations
+  $query_search .= match($search_translation)
+  {
+    -2      => "  AND   compendium_pages.title_en           = ''
+                  AND   compendium_pages.title_fr           = ''    " ,
+    -1      => "  AND   compendium_pages.title_$lang        = ''
+                  AND ( compendium_pages.title_en          != ''
+                  OR    compendium_pages.title_fr          != '' )  " ,
+    1       => "  AND   compendium_pages.title_$lang       != ''    " ,
+    2       => "  AND ( compendium_pages.title_$lang       != ''
+                  OR    compendium_pages.title_$otherlang  != '' )  " ,
+    default => ""                                                     ,
+  };
+
+  // Search through the data: Page title
   if($search_title == 'exists' && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
+    $query_search .= "  AND   compendium_pages.title_$lang      !=    '' ";
   else if($search_title)
-    $qpages .= "  AND       compendium_pages.title_$lang                          LIKE  '%$search_title%'
-                  OR      ( compendium_pages.title_$lang                          =     ''
-                  AND       compendium_pages.title_$otherlang                     LIKE  '%$search_title%' )   ";
-  if($search_redirect == -1 && $is_admin)
-    $qpages .= "  AND     ( compendium_pages.title_$lang                          !=    ''
-                  OR        compendium_pages.title_$otherlang                     !=    '' )
-                  AND       compendium_pages.redirection_$lang                    =     ''                    ";
-  else if($search_redirect == 1 && $is_admin)
-    $qpages .= "  AND     ( compendium_pages.redirection_$lang                    !=    ''
-                  OR        compendium_pages.title_$lang                          =     ''
-                  AND       compendium_pages.redirection_$otherlang               !=    '' )                  ";
-  if($search_redirname && $is_admin)
-    $qpages .= "  AND       compendium_pages.redirection_$lang                    LIKE  '%$search_redirname%' ";
-  if($search_nsfw > -1)
-    $qpages .= "  AND       compendium_pages.is_nsfw                              =     '$search_nsfw'        ";
-  if($search_gross > -1)
-    $qpages .= "  AND       compendium_pages.is_gross                             =     '$search_gross'       ";
-  if($search_offensive > -1)
-    $qpages .= "  AND       compendium_pages.is_offensive                         =     '$search_offensive'   ";
-  if($search_nsfw_title > -1)
-    $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     '$search_nsfw_title'  ";
-  if($search_type == -1)
-    $qpages .= "  AND       compendium_pages.fk_compendium_types                  = 0                         ";
-  else if($search_type)
-    $qpages .= "  AND       compendium_pages.fk_compendium_types                  =     '$search_type'        ";
-  if($search_era == -1)
-    $qpages .= "  AND       compendium_pages.fk_compendium_eras                   = 0                         ";
-  else if($search_era)
-    $qpages .= "  AND       compendium_pages.fk_compendium_eras                   =     '$search_era'         ";
-  if($search_category > 0)
-    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'    ";
-  else if($search_category == -1)
-    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  IS NULL                     ";
-  else if($search_category == -2)
-    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  IS NOT NULL                 ";
-  if($search_language == 'monolingual' && $is_admin)
-    $qpages .= "  AND     ( compendium_pages.title_en                             =     ''
-                  OR        compendium_pages.title_fr                             =     '' )                  ";
-  else if($search_language == 'bilingual' && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_en                             !=    ''
-                  AND       compendium_pages.title_fr                             !=    ''                    ";
-  else if($search_language == 'english' && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_en                             !=    ''                    ";
-  else if($search_language == 'french' && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_fr                             !=    ''                    ";
-  if($search_appeared)
-    $qpages .= "  AND       compendium_pages.year_appeared                        =     '$search_appeared'    ";
-  if($search_peaked)
-    $qpages .= "  AND       compendium_pages.year_peak                            =     '$search_peaked'      ";
-  if($search_created)
-    $qpages .= "  AND       YEAR(FROM_UNIXTIME(compendium_pages.created_at))      =     '$search_created'     ";
-  if($search_nsfw_admin == 'nsfw' && $is_admin)
-    $qpages .= "  AND     ( compendium_pages.title_is_nsfw                        =     1
-                  OR        compendium_pages.is_nsfw                              =     1
-                  OR        compendium_pages.is_gross                             =     1
-                  OR        compendium_pages.is_offensive                         =     1 )                   ";
-  else if($search_nsfw_admin == 'safe' && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     0
-                  AND       compendium_pages.is_nsfw                              =     0
-                  AND       compendium_pages.is_gross                             =     0
-                  AND       compendium_pages.is_offensive                         =     0                     ";
-  else if($search_nsfw_admin == 'title' && $is_admin)
-    $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     1                     ";
-  else if($search_nsfw_admin == 'page' && $is_admin)
-    $qpages .= "  AND       compendium_pages.is_nsfw                              =     1                     ";
-  else if($search_nsfw_admin == 'gross' && $is_admin)
-    $qpages .= "  AND       compendium_pages.is_gross                             =     1                     ";
-  else if($search_nsfw_admin == 'offensive' && $is_admin)
-    $qpages .= "  AND       compendium_pages.is_offensive                         =     1                     ";
-  if($search_wip == 'draft' && $is_admin)
-    $qpages .= "  AND       compendium_pages.is_draft                             =     1                     ";
-  else if($search_wip == 'deleted' && $is_admin)
-    $qpages .= "  AND       compendium_pages.is_deleted                           =     1                     ";
-  else if($search_wip == 'finished' && $is_admin)
-    $qpages .= "  AND       compendium_pages.is_draft                             =     0
-                  AND       compendium_pages.is_deleted                           =     0                     ";
-  if($search_notes && $is_admin)
-    $qpages .= "  AND     ( compendium_pages.admin_notes                          !=    ''
-                  OR        compendium_pages.admin_urls                           !=    '' )                  ";
+    $query_search .= "  AND   compendium_pages.title_$lang      LIKE  '%$search_title%'
+                        OR  ( compendium_pages.title_$lang      =     ''
+                        AND   compendium_pages.title_$otherlang LIKE  '%$search_title%' ) ";
 
-  // Avoid duplicates if categories are included
-  if($join_categories)
-    $qpages .= " GROUP BY compendium_pages.id ";
+  // Search through the data: Redirections
+  if($search_redirect == -1)
+    $query_search .= "  AND ( compendium_pages.title_$lang             != ''
+                        OR    compendium_pages.title_$otherlang        != '' )
+                        AND   compendium_pages.redirection_$lang        = '' ";
+  else if($search_redirect == 1)
+    $query_search .= "  AND ( compendium_pages.redirection_$lang       != ''
+                        OR    compendium_pages.title_$lang              = ''
+                        AND   compendium_pages.redirection_$otherlang  != '' ) ";
+  if($search_redirname)
+    $query_search .= "  AND   compendium_pages.redirection_$lang     LIKE '%$search_redirname%' ";
+
+  // Search through the data: Page types
+  if($search_type == -1)
+    $query_search .= " AND compendium_pages.fk_compendium_types  = 0               ";
+  else if($search_type)
+    $query_search .= " AND compendium_pages.fk_compendium_types  = '$search_type'  ";
+
+  // Search through the data: Cultural eras
+  if($search_era == -1)
+    $query_search .= " AND compendium_pages.fk_compendium_eras = 0             ";
+  else if($search_era)
+    $query_search .= " AND compendium_pages.fk_compendium_eras = '$search_era' ";
+
+  // Search through the data: Categories
+  if($search_category > 0)
+    $query_search .= " AND compendium_pages_categories.fk_compendium_categories  = '$search_category' ";
+  else if($search_category == -1)
+    $query_search .= " AND compendium_pages_categories.fk_compendium_categories  IS NULL              ";
+  else if($search_category == -2)
+    $query_search .= " AND compendium_pages_categories.fk_compendium_categories  IS NOT NULL          ";
+
+  // Search through the data: Content warnings
+  if($search_nsfw_admin == 'nsfw')
+    $query_search .= "  AND ( compendium_pages.title_is_nsfw  = 1
+                        OR    compendium_pages.is_nsfw        = 1
+                        OR    compendium_pages.is_gross       = 1
+                        OR    compendium_pages.is_offensive   = 1 ) ";
+  else if($search_nsfw_admin == 'safe')
+    $query_search .= "  AND   compendium_pages.title_is_nsfw  = 0
+                        AND   compendium_pages.is_nsfw        = 0
+                        AND   compendium_pages.is_gross       = 0
+                        AND   compendium_pages.is_offensive   = 0 ";
+  else if($search_nsfw_admin == 'title')
+    $query_search .= "  AND   compendium_pages.title_is_nsfw  = 1 ";
+  else if($search_nsfw_admin == 'page')
+    $query_search .= "  AND   compendium_pages.is_nsfw        = 1 ";
+  else if($search_nsfw_admin == 'gross')
+    $query_search .= "  AND   compendium_pages.is_gross       = 1 ";
+  else if($search_nsfw_admin == 'offensive')
+    $query_search .= "  AND   compendium_pages.is_offensive   = 1 ";
+
+  // Search through the data: Unpublished content
+  if($search_wip == 'draft')
+    $query_search .= "  AND compendium_pages.is_draft   = 1 ";
+  else if($search_wip == 'deleted')
+    $query_search .= "  AND compendium_pages.is_deleted = 1 ";
+  else if($search_wip == 'finished')
+    $query_search .= "  AND compendium_pages.is_draft   = 0
+                        AND compendium_pages.is_deleted = 0 ";
+
+  // Search through the data: Other searches
+  $query_search .= ($search_url)              ? " AND compendium_pages.page_url    LIKE '%$search_url%'       " : "";
+  $query_search .= ($search_nsfw > -1)        ? " AND compendium_pages.is_nsfw        = '$search_nsfw'        " : "";
+  $query_search .= ($search_gross > -1)       ? " AND compendium_pages.is_gross       = '$search_gross'       " : "";
+  $query_search .= ($search_offensive > -1)   ? " AND compendium_pages.is_offensive   = '$search_offensive'   " : "";
+  $query_search .= ($search_nsfw_title > -1)  ? " AND compendium_pages.title_is_nsfw  = '$search_nsfw_title'  " : "";
+  $query_search .= ($search_appeared)         ? " AND compendium_pages.year_appeared  = '$search_appeared'    " : "";
+  $query_search .= ($search_peaked)           ? " AND compendium_pages.year_peak      = '$search_peaked'      " : "";
+  $query_search .= ($search_created)          ? " AND
+                                     YEAR(FROM_UNIXTIME(compendium_pages.created_at)) = '$search_created'     " : "";
+  $query_search .= ($search_notes)            ? " AND ( compendium_pages.admin_notes != ''
+                                                  OR    compendium_pages.admin_urls  != '' )                  " : "";
+
+  // Forbid some sorting orders if the user is not an admin
+  $forbidden_sorts = array('url', 'redirect', 'categories', 'pageviews', 'language', 'nsfw', 'wip');
+  if(!$is_admin && in_array($sort_by, $forbidden_sorts))
+    $sort_by = '';
 
   // Sort the data
-  if($sort_by == 'url' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.page_url               ASC                 ";
-  else if($sort_by == 'title')
-    $qpages .= "  ORDER BY    compendium_pages.title_$lang            = ''                ,
-                              compendium_pages.title_$lang            ASC                 ,
-                              compendium_pages.title_$otherlang       = ''                ,
-                              compendium_pages.title_$otherlang       ASC                 ";
-  else if($sort_by == 'redirect' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.redirection_$lang      = ''                ,
-                              compendium_pages.redirection_$lang      ASC                 ,
-                              compendium_pages.redirection_$otherlang = ''                ,
-                              compendium_pages.redirection_$otherlang ASC                 ,
-                              compendium_pages.page_url               ASC                 ";
-  else if($sort_by == 'theme')
-    $qpages .= "  ORDER BY    compendium_types.id                     IS NULL             ,
-                              compendium_types.name_en                != 'meme'           ,
-                              compendium_types.name_en                != 'definition'     ,
-                              compendium_types.name_en                != 'sociocultural'  ,
-                              compendium_types.name_en                ASC                 ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'categories' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages_categories.id          IS NULL             ,
-                              COUNT(compendium_pages_categories.id)   DESC                ,
-                              compendium_pages.page_url               ASC                 ";
-  else if($sort_by == 'era')
-    $qpages .= "  ORDER BY    compendium_eras.id                      IS NULL             ,
-                              compendium_eras.year_start              DESC                ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'appeared')
-    $qpages .= "  ORDER BY    compendium_pages.year_appeared          DESC                ,
-                              compendium_pages.month_appeared         DESC                ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'appeared_desc')
-    $qpages .= "  ORDER BY    compendium_pages.year_appeared          = 0                 ,
-                              compendium_pages.year_appeared          ASC                 ,
-                              compendium_pages.month_appeared         ASC                 ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'peak')
-    $qpages .= "  ORDER BY    compendium_pages.year_peak              DESC                ,
-                              compendium_pages.month_peak             DESC                ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'peak_desc')
-    $qpages .= "  ORDER BY    compendium_pages.year_peak              = 0                 ,
-                              compendium_pages.year_peak              ASC                 ,
-                              compendium_pages.month_peak             ASC                 ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'created')
-    $qpages .= "  ORDER BY    compendium_pages.created_at             DESC                ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'pageviews')
-    $qpages .= "  ORDER BY    compendium_pages.view_count             DESC                ,
-                  GREATEST  ( compendium_pages.created_at                                 ,
-                              compendium_pages.last_edited_at )       DESC                ,
-                              compendium_pages.title_$lang            ASC                 ";
-  else if($sort_by == 'language' && $is_admin)
-    $qpages .= "  ORDER BY  ( compendium_pages.title_en               != ''
-                  AND         compendium_pages.title_fr               != '' )             ,
-                              compendium_pages.title_en               = ''                ,
-                              compendium_pages.title_fr               = ''                ,
-                              compendium_pages.page_url               ASC                 ";
-  else if($sort_by == 'nsfw' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.title_is_nsfw          = ''                ,
-                              compendium_pages.is_nsfw                = ''                ,
-                              compendium_pages.is_gross               = ''                ,
-                              compendium_pages.is_offensive           = ''                ,
-                              compendium_pages.page_url               ASC                 ";
-  else if($sort_by == 'wip' && $is_admin)
-    $qpages .= "  ORDER BY    compendium_pages.is_draft               = 0                 ,
-                              compendium_pages.is_deleted             = 0                 ,
-                              compendium_pages.page_url               ASC                 ";
-  else
-    $qpages .= "  ORDER BY
-                  GREATEST  ( compendium_pages.created_at                                 ,
-                              compendium_pages.last_edited_at )       DESC                ,
-                              compendium_pages.title_$lang            ASC                 ";
+  $query_sort = match($sort_by)
+  {
+    'url'           => "  ORDER BY    compendium_pages.page_url               ASC                 " ,
+    'title'         => "  ORDER BY    compendium_pages.title_$lang            = ''                ,
+                                      compendium_pages.title_$lang            ASC                 ,
+                                      compendium_pages.title_$otherlang       = ''                ,
+                                      compendium_pages.title_$otherlang       ASC                 " ,
+    'redirect'      => "  ORDER BY    compendium_pages.redirection_$lang      = ''                ,
+                                      compendium_pages.redirection_$lang      ASC                 ,
+                                      compendium_pages.redirection_$otherlang = ''                ,
+                                      compendium_pages.redirection_$otherlang ASC                 ,
+                                      compendium_pages.page_url               ASC                 " ,
+    'theme'         => "  ORDER BY    compendium_types.id                     IS NULL             ,
+                                      compendium_types.name_en                != 'meme'           ,
+                                      compendium_types.name_en                != 'definition'     ,
+                                      compendium_types.name_en                != 'sociocultural'  ,
+                                      compendium_types.name_en                ASC                 ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'categories'    => "  ORDER BY    compendium_pages_categories.id          IS NULL             ,
+                                      COUNT(compendium_pages_categories.id)   DESC                ,
+                                      compendium_pages.page_url               ASC                 " ,
+    'era'           => "  ORDER BY    compendium_eras.id                      IS NULL             ,
+                                      compendium_eras.year_start              DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'appeared'      => "  ORDER BY    compendium_pages.year_appeared          DESC                ,
+                                      compendium_pages.month_appeared         DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'appeared_desc' => "  ORDER BY    compendium_pages.year_appeared          = 0                 ,
+                                      compendium_pages.year_appeared          ASC                 ,
+                                      compendium_pages.month_appeared         ASC                 ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'peak'          => "  ORDER BY    compendium_pages.year_peak              DESC                ,
+                                      compendium_pages.month_peak             DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'peak_desc'     => "  ORDER BY    compendium_pages.year_peak              = 0                 ,
+                                      compendium_pages.year_peak              ASC                 ,
+                                      compendium_pages.month_peak             ASC                 ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'created'       => "  ORDER BY    compendium_pages.created_at             DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'pageviews'     => "  ORDER BY    compendium_pages.view_count             DESC                ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'language'      => "  ORDER BY  ( compendium_pages.title_en               != ''
+                          AND         compendium_pages.title_fr               != '' )             ,
+                                      compendium_pages.title_en               = ''                ,
+                                      compendium_pages.title_fr               = ''                ,
+                                      compendium_pages.page_url               ASC                 " ,
+    'nsfw'          => "  ORDER BY    compendium_pages.title_is_nsfw          = ''                ,
+                                      compendium_pages.is_nsfw                = ''                ,
+                                      compendium_pages.is_gross               = ''                ,
+                                      compendium_pages.is_offensive           = ''                ,
+                                      compendium_pages.page_url               ASC                 " ,
+    'wip'           => "  ORDER BY    compendium_pages.is_draft               = 0                 ,
+                                      compendium_pages.is_deleted             = 0                 ,
+                                      compendium_pages.page_url               ASC                 " ,
+    default         => "  ORDER BY
+                          GREATEST (  compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+  };
 
-  // Limit the amount of pages returned
-  if($limit)
-    $qpages .= "  LIMIT $limit ";
+  // Optionally limit the number of pages returned
+  $query_limit = ($limit) ? " LIMIT $limit " : "";
 
-  // Run the query
-  $qpages = query($qpages);
+  // Join categories if required
+  $join_categories  = ($search_category || isset($search['join_categories'])) ? " LEFT JOIN compendium_pages_categories ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id ": '';
+  $count_categories = ($join_categories) ? " , COUNT(compendium_pages_categories.id) AS 'pc_count' " : '';
+  $group_categories = ($join_categories) ? " GROUP BY compendium_pages.id " : '';
+
+  // Fetch the pages
+  $qpages = query(" SELECT    compendium_pages.id                 AS 'p_id'         ,
+                              compendium_pages.is_deleted         AS 'p_deleted'    ,
+                              compendium_pages.is_draft           AS 'p_draft'      ,
+                              compendium_pages.created_at         AS 'p_created'    ,
+                              compendium_pages.last_edited_at     AS 'p_edited'     ,
+                              compendium_pages.page_url           AS 'p_url'        ,
+                              compendium_pages.title_$lang        AS 'p_title'      ,
+                              compendium_pages.title_en           AS 'p_title_en'   ,
+                              compendium_pages.title_fr           AS 'p_title_fr'   ,
+                              compendium_pages.redirection_$lang  AS 'p_redirect'   ,
+                              compendium_pages.redirection_en     AS 'p_redir_en'   ,
+                              compendium_pages.redirection_fr     AS 'p_redir_fr'   ,
+                              compendium_pages.view_count         AS 'p_viewcount'  ,
+                              compendium_pages.year_appeared      AS 'p_app_year'   ,
+                              compendium_pages.month_appeared     AS 'p_app_month'  ,
+                              compendium_pages.year_peak          AS 'p_peak_year'  ,
+                              compendium_pages.month_peak         AS 'p_peak_month' ,
+                              compendium_pages.is_nsfw            AS 'p_nsfw'       ,
+                              compendium_pages.is_gross           AS 'p_gross'      ,
+                              compendium_pages.is_offensive       AS 'p_offensive'  ,
+                              compendium_pages.title_is_nsfw      AS 'p_nsfw_title' ,
+                              compendium_pages.summary_$lang      AS 'p_summary'    ,
+                              compendium_pages.admin_notes        AS 'p_notes'      ,
+                              compendium_pages.admin_urls         AS 'p_urlnotes'   ,
+                              compendium_eras.id                  AS 'pe_id'        ,
+                              compendium_eras.short_name_$lang    AS 'pe_name'      ,
+                              compendium_types.id                 AS 'pt_id'        ,
+                              compendium_types.name_$lang         AS 'pt_name'      ,
+                              compendium_types.full_name_$lang    AS 'pt_display'
+                              $count_categories
+                    FROM      compendium_pages
+                    LEFT JOIN compendium_types  ON    compendium_pages.fk_compendium_types  = compendium_types.id
+                    LEFT JOIN compendium_eras   ON    compendium_pages.fk_compendium_eras   = compendium_eras.id
+                              $join_categories
+                              $query_search
+                              $group_categories
+                              $query_sort
+                              $query_limit ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qpages); $i++)
@@ -1616,108 +1620,97 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   $search_caption = isset($search['caption']) ? sanitize($search['caption'], 'string')    : '';
   $search_deleted = isset($search['deleted']) ? sanitize($search['deleted'], 'int', 0, 2) : 0;
 
-  // Fetch the images
-  $qimages = "     SELECT   compendium_images.id                AS 'ci_id'          ,
-                            compendium_images.is_deleted        AS 'ci_del'         ,
-                            compendium_images.uploaded_at       AS 'ci_date'        ,
-                            compendium_images.file_name         AS 'ci_name'        ,
-                            compendium_images.tags              AS 'ci_tags'        ,
-                            compendium_images.view_count        AS 'ci_viewcount'   ,
-                            compendium_images.is_nsfw           AS 'ci_nsfw'        ,
-                            compendium_images.is_gross          AS 'ci_gross'       ,
-                            compendium_images.is_offensive      AS 'ci_offensive'   ,
-                            compendium_images.used_in_pages_en  AS 'ci_used_en'     ,
-                            compendium_images.used_in_pages_fr  AS 'ci_used_fr'     ,
-                            compendium_images.caption_$lang     AS 'ci_caption'     ,
-                            compendium_images.caption_en        AS 'ci_caption_en'  ,
-                            compendium_images.caption_fr        AS 'ci_caption_fr'
-                  FROM      compendium_images
-                  WHERE     1 = 1 ";
+  // Search through the data: Content warnings
+  $query_search = match($search_nsfw)
+  {
+    'safe'      => "  WHERE   compendium_images.is_nsfw       = 0
+                      AND     compendium_images.is_gross      = 0
+                      AND     compendium_images.is_offensive  = 0 "   ,
+    'nsfw'      => "  WHERE ( compendium_images.is_nsfw       = 1
+                      OR      compendium_images.is_gross      = 1
+                      OR      compendium_images.is_offensive  = 1 ) " ,
+    'image'     => "  WHERE   compendium_images.is_nsfw       = 1 "   ,
+    'gross'     => "  WHERE   compendium_images.is_gross      = 1 "   ,
+    'offensive' => "  WHERE   compendium_images.is_offensive  = 1 "   ,
+    default     => "  WHERE   1 = 1 "                                 ,
+  };
 
-  // Search the data
-  if($search_name)
-    $qimages .= " AND       compendium_images.file_name                         LIKE  '%$search_name%'    ";
-  if($search_date)
-    $qimages .= " AND       YEAR(FROM_UNIXTIME(compendium_images.uploaded_at))  =     '$search_date'      ";
-  if($search_nsfw == 'safe')
-    $qimages .= " AND       compendium_images.is_nsfw                           =     0
-                  AND       compendium_images.is_gross                          =     0
-                  AND       compendium_images.is_offensive                      =     0                   ";
-  else if($search_nsfw == 'nsfw')
-    $qimages .= " AND     ( compendium_images.is_nsfw                           =     1
-                  OR        compendium_images.is_gross                          =     1
-                  OR        compendium_images.is_offensive                      =     1 )                 ";
-  else if($search_nsfw == 'image')
-    $qimages .= " AND       compendium_images.is_nsfw                           =     1                   ";
-  else if($search_nsfw == 'gross')
-    $qimages .= " AND       compendium_images.is_gross                          =     1                   ";
-  else if($search_nsfw == 'offensive')
-    $qimages .= " AND       compendium_images.is_offensive                      =     1                   ";
-  if($search_used_en)
-    $qimages .= " AND       compendium_images.used_in_pages_en                  LIKE  '%$search_used_en%' ";
-  if($search_used_fr)
-    $qimages .= " AND       compendium_images.used_in_pages_fr                  LIKE  '%$search_used_fr%' ";
-  if($search_tags)
-    $qimages .= " AND       compendium_images.tags                              LIKE  '%$search_tags%'    ";
-  if($search_caption == 'none')
-    $qimages .= " AND       compendium_images.caption_en                        =     ''
-                  AND       compendium_images.caption_fr                        =     ''                  ";
-  else if($search_caption == 'monolingual')
-    $qimages .= " AND     ( compendium_images.caption_en                        =     ''
-                  AND       compendium_images.caption_fr                        !=    '' )
-                  OR      ( compendium_images.caption_en                        !=    ''
-                  AND       compendium_images.caption_fr                        =     '' )                ";
-  else if($search_caption == 'bilingual')
-    $qimages .= " AND       compendium_images.caption_en                        !=    ''
-                  AND       compendium_images.caption_fr                        !=    ''                  ";
-  else if($search_caption == 'english')
-    $qimages .= " AND       compendium_images.caption_en                        !=    ''                  ";
-  else if($search_caption == 'french')
-    $qimages .= " AND       compendium_images.caption_fr                        !=    ''                  ";
-  if($search_deleted == 1)
-    $qimages .= " AND       compendium_images.is_deleted                        =     0                   ";
-  if($search_deleted == 2)
-    $qimages .= " AND       compendium_images.is_deleted                        =     1                   ";
+  // Search through the data: Caption languages
+  $query_search .= match($search_caption)
+  {
+    'none'        => "  AND   compendium_images.caption_en  = ''
+                        AND   compendium_images.caption_fr  = '' " ,
+    'monolingual' => "  AND ( compendium_images.caption_en  = ''
+                        AND   compendium_images.caption_fr != '' )
+                        OR  ( compendium_images.caption_en != ''
+                        AND   compendium_images.caption_fr  = '' ) " ,
+    'bilingual'   => "  AND   compendium_images.caption_en != ''
+                        AND   compendium_images.caption_fr != '' " ,
+    'english'     => "  AND   compendium_images.caption_en != '' " ,
+    'french'      => "  AND   compendium_images.caption_fr != '' " ,
+    default       => "" ,
+  };
+
+  // Search through the data: Other searches
+  $query_search .= ($search_name)         ? " AND compendium_images.file_name        LIKE '%$search_name%'    " : "";
+  $query_search .= ($search_date)         ? " AND
+                                     YEAR(FROM_UNIXTIME(compendium_images.uploaded_at)) = '$search_date'      " : "";
+  $query_search .= ($search_used_en)      ? " AND compendium_images.used_in_pages_en LIKE '%$search_used_en%' " : "";
+  $query_search .= ($search_used_fr)      ? " AND compendium_images.used_in_pages_fr LIKE '%$search_used_fr%' " : "";
+  $query_search .= ($search_tags)         ? " AND compendium_images.tags             LIKE '%$search_tags%'    " : "";
+  $query_search .= ($search_deleted == 1) ? " AND compendium_images.is_deleted          = 0                   " : "";
+  $query_search .= ($search_deleted == 2) ? " AND compendium_images.is_deleted          = 1                   " : "";
 
   // Sort the data
-  if($sort_by == 'name')
-    $qimages .= " ORDER BY    compendium_images.file_name         ASC     ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'nsfw')
-    $qimages .= " ORDER BY    compendium_images.is_nsfw           = ''    ,
-                              compendium_images.is_gross          = ''    ,
-                              compendium_images.is_offensive      = ''    ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'used_en')
-    $qimages .= " ORDER BY    compendium_images.used_in_pages_en  != ''   ,
-                              compendium_images.used_in_pages_fr  != ''   ,
-                              compendium_images.used_in_pages_en  ASC     ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'used_fr')
-    $qimages .= " ORDER BY    compendium_images.used_in_pages_fr  != ''   ,
-                              compendium_images.used_in_pages_en  != ''   ,
-                              compendium_images.used_in_pages_fr  ASC     ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'tags')
-    $qimages .= " ORDER BY    compendium_images.tags              ASC     ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'caption')
-    $qimages .= " ORDER BY  ( compendium_images.caption_en        != ''
-                  AND         compendium_images.caption_fr        != '' ) ,
-                              compendium_images.caption_fr        != ''   ,
-                              compendium_images.caption_en        != ''   ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'views')
-    $qimages .= " ORDER BY    compendium_images.view_count        DESC    ,
-                              compendium_images.uploaded_at       DESC    ";
-  else if($sort_by == 'deleted')
-    $qimages .= " ORDER BY    compendium_images.is_deleted        DESC    ,
-                              compendium_images.uploaded_at       DESC    ";
-  else
-    $qimages .= " ORDER BY    compendium_images.uploaded_at       DESC    ";
+  $query_sort = match($sort_by)
+  {
+    'name'    => "  ORDER BY    compendium_images.file_name         ASC     ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'nsfw'    => "  ORDER BY    compendium_images.is_nsfw           = ''    ,
+                                compendium_images.is_gross          = ''    ,
+                                compendium_images.is_offensive      = ''    ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'used_en' => "  ORDER BY    compendium_images.used_in_pages_en  != ''   ,
+                                compendium_images.used_in_pages_fr  != ''   ,
+                                compendium_images.used_in_pages_en  ASC     ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'used_fr' => "  ORDER BY    compendium_images.used_in_pages_fr  != ''   ,
+                                compendium_images.used_in_pages_en  != ''   ,
+                                compendium_images.used_in_pages_fr  ASC     ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'tags'    => "  ORDER BY    compendium_images.tags              != ''   ,
+                                compendium_images.tags              ASC     ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'caption' => "  ORDER BY (  compendium_images.caption_en        != ''
+                    AND         compendium_images.caption_fr        != '' ) ,
+                                compendium_images.caption_fr        != ''   ,
+                                compendium_images.caption_en        != ''   ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'views'   => "  ORDER BY    compendium_images.view_count        DESC    ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'deleted' =>  " ORDER BY    compendium_images.is_deleted        DESC    ,
+                                compendium_images.uploaded_at       DESC    " ,
+    default   => "  ORDER BY    compendium_images.uploaded_at       DESC    " ,
+  };
 
-  // Run the query
-  $qimages = query($qimages);
+  // Fetch the images
+  $qimages = query("  SELECT  compendium_images.id                AS 'ci_id'          ,
+                              compendium_images.is_deleted        AS 'ci_del'         ,
+                              compendium_images.uploaded_at       AS 'ci_date'        ,
+                              compendium_images.file_name         AS 'ci_name'        ,
+                              compendium_images.tags              AS 'ci_tags'        ,
+                              compendium_images.view_count        AS 'ci_viewcount'   ,
+                              compendium_images.is_nsfw           AS 'ci_nsfw'        ,
+                              compendium_images.is_gross          AS 'ci_gross'       ,
+                              compendium_images.is_offensive      AS 'ci_offensive'   ,
+                              compendium_images.used_in_pages_en  AS 'ci_used_en'     ,
+                              compendium_images.used_in_pages_fr  AS 'ci_used_fr'     ,
+                              compendium_images.caption_$lang     AS 'ci_caption'     ,
+                              compendium_images.caption_en        AS 'ci_caption_en'  ,
+                              compendium_images.caption_fr        AS 'ci_caption_fr'
+                    FROM      compendium_images
+                              $query_search
+                              $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qimages); $i++)
@@ -2811,54 +2804,46 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   if($search_title || $search_type || $search_priority > -1 || $search_notes > -1 || $search_status == 1)
     $missing = array();
 
+  // Search through the data
+  $query_search  = ($search_url)            ? " AND compendium_missing.page_url        LIKE '%$search_url%'     " : "";
+  $query_search .= ($search_title)          ? " AND compendium_missing.title           LIKE '%$search_title%'   " : "";
+  $query_search .= ($search_notes == 0)     ? " AND compendium_missing.notes              = ''                  " : "";
+  $query_search .= ($search_notes == 1)     ? " AND compendium_missing.notes             != ''                  " : "";
+  $query_search .= ($search_type)           ? " AND compendium_missing.fk_compendium_types = '$search_type'     " : "";
+  $query_search .= ($search_priority > -1)  ? " AND compendium_missing.is_a_priority      = '$search_priority'  " : "";
+
+  // Do not fetch any missing pages when searching for links or sorting by links
+  $query_search .= ($search_links || ($sort_by == 'links' && $search_status != 0)) ? " AND 0 = 1 " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'url'   => " ORDER BY compendium_missing.page_url             DESC  " ,
+    'title' => " ORDER BY compendium_missing.title                = ''  ,
+                          compendium_missing.title                ASC   ,
+                          compendium_missing.page_url             ASC   " ,
+    'type'  => " ORDER BY compendium_missing.fk_compendium_types  = ''  ,
+                          compendium_types.name_$lang             ASC   ,
+                          compendium_missing.is_a_priority        DESC  ,
+                          compendium_missing.page_url             ASC   " ,
+    'notes' => " ORDER BY compendium_missing.notes                = ''  ,
+                          compendium_missing.page_url             ASC   " ,
+    default => " ORDER BY compendium_missing.is_a_priority        DESC  ,
+                          compendium_missing.page_url             ASC   " ,
+  };
+
   // Fetch the missing pages in the database
-  $qmissing = "     SELECT    compendium_missing.id             AS 'cm_id'        ,
-                              compendium_missing.page_url       AS 'cm_url'       ,
-                              compendium_missing.title          AS 'cm_title'     ,
-                              compendium_missing.is_a_priority  AS 'cm_priority'  ,
-                              compendium_missing.notes          AS 'cm_notes'     ,
-                              compendium_types.name_$lang       AS 'cm_type'
-                    FROM      compendium_missing
-                    LEFT JOIN compendium_types ON compendium_missing.fk_compendium_types = compendium_types.id
-                    WHERE     1 = 1 ";
-
-  // Search the data
-  if($search_url)
-    $qmissing .= "  AND       compendium_missing.page_url       LIKE  '%$search_url%'     ";
-  if($search_title)
-    $qmissing .= "  AND       compendium_missing.title          LIKE  '%$search_title%'   ";
-  if($search_notes == 0)
-    $qmissing .= "  AND       compendium_missing.notes          =     ''                  ";
-  else if($search_notes == 1)
-    $qmissing .= "  AND       compendium_missing.notes          !=    ''                  ";
-  if($search_type)
-    $qmissing .= "  AND       compendium_missing.fk_compendium_types  =     '$search_type'      ";
-  if($search_priority > -1)
-    $qmissing .= "  AND       compendium_missing.is_a_priority  =     '$search_priority'  ";
-  if($search_links || ($sort_by == 'links' && $search_status != 0))
-    $qmissing .= "  AND       0                                 =     1                   ";
-
-  // Order the data
-  if($sort_by == 'url')
-    $qmissing .= "  ORDER BY  compendium_missing.page_url             DESC  ";
-  else if($sort_by == 'title')
-    $qmissing .= "  ORDER BY  compendium_missing.title                = ''  ,
-                              compendium_missing.title                ASC   ,
-                              compendium_missing.page_url             ASC   ";
-  else if($sort_by == 'type')
-    $qmissing .= "  ORDER BY  compendium_missing.fk_compendium_types  = ''  ,
-                              compendium_types.name_$lang             ASC   ,
-                              compendium_missing.is_a_priority        DESC  ,
-                              compendium_missing.page_url             ASC   ";
-  else if($sort_by == 'notes')
-    $qmissing .= "  ORDER BY  compendium_missing.notes                = ''  ,
-                              compendium_missing.page_url             ASC   ";
-  else
-    $qmissing .= "  ORDER BY  compendium_missing.is_a_priority        DESC  ,
-                              compendium_missing.page_url             ASC   ";
-
-  // Run the query
-  $qmissing = query($qmissing);
+  $qmissing = query(" SELECT    compendium_missing.id             AS 'cm_id'        ,
+                                compendium_missing.page_url       AS 'cm_url'       ,
+                                compendium_missing.title          AS 'cm_title'     ,
+                                compendium_missing.is_a_priority  AS 'cm_priority'  ,
+                                compendium_missing.notes          AS 'cm_notes'     ,
+                                compendium_types.name_$lang       AS 'cm_type'
+                      FROM      compendium_missing
+                      LEFT JOIN compendium_types ON compendium_missing.fk_compendium_types = compendium_types.id
+                      WHERE     1 = 1
+                                $query_search
+                                $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmissing); $i++)
