@@ -119,60 +119,56 @@ function meetups_list(  string  $sort_by  = 'date'  ,
   $search_people    = isset($search['people'])    ? sanitize($search['people'], 'int', 0)   : 0;
   $search_user      = isset($search['attendee'])  ? sanitize($search['attendee'], 'int', 0) : 0;
 
+  // Hide deleted meetups to regular users
+  $query_search = (!user_is_moderator()) ? " AND meetups.is_deleted = 0 " : "";
+
+  // Search the data: Languages
+  if($search_lang == 'ENFR' || $search_lang == 'FREN')
+    $query_search .= "  AND ( meetups.languages LIKE 'ENFR'
+                        OR    meetups.languages LIKE 'FREN' ) ";
+  else if($search_lang)
+    $query_search .= "  AND   meetups.languages LIKE '$search_lang' ";
+
+  // Search the data: Other searches
+  $query_search .= ($search_date)     ? " AND YEAR(meetups.event_date)  = '$search_date'        " : "";
+  $query_search .= ($search_people)   ? " AND meetups.attendee_count   >= '$search_people'      " : "";
+  $query_search .= ($search_location) ? " AND meetups.location       LIKE '%$search_location%'  " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'location'  => " ORDER BY meetups.location        ASC   ,
+                              meetups.event_date      DESC  " ,
+    'people'    => " ORDER BY meetups.attendee_count  DESC  ,
+                              meetups.event_date      DESC  " ,
+    default     => " ORDER BY meetups.event_date      DESC  " ,
+  };
+
+  // Different query depending on whether the full meetup list or a single attendant's meetup list are being requested
+  if(!$search_user)
+    $query_from = " FROM      meetups
+                    WHERE     1 = 1 ";
+  else
+    $query_from = " FROM      meetups_people
+                    LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
+                    WHERE     meetups_people.fk_users               = '$search_user' ";
+
+  // Group by meetup if an attendee is being searched for
+  $query_group = ($search_user) ? " GROUP BY meetups_people.fk_meetups " : "";
+
   // Fetch the meetups
-  $qmeetups = "     SELECT    meetups.id              AS 'm_id'       ,
+  $qmeetups = query(" SELECT  meetups.id              AS 'm_id'       ,
                               meetups.is_deleted      AS 'm_deleted'  ,
                               meetups.event_date      AS 'm_date'     ,
                               meetups.location        AS 'm_location' ,
                               meetups.languages       AS 'm_lang'     ,
                               meetups.attendee_count  AS 'm_people'   ,
                               meetups.details_en      AS 'm_desc_en'  ,
-                              meetups.details_fr      AS 'm_desc_fr'  ";
-
-  // Standard query
-  if(!$search_user)
-    $qmeetups .= "  FROM      meetups
-                    WHERE     1 = 1 ";
-
-  // Use a different query if an attendee is being searched for
-  else
-    $qmeetups .= "  FROM      meetups_people
-                    LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
-                    WHERE     meetups_people.fk_users               = '$search_user' ";
-
-  // Do not show deleted meetups to regular users
-  if(!user_is_moderator())
-    $qmeetups .= "  AND       meetups.is_deleted        = 0                     ";
-
-  // Search the data
-  if($search_date)
-    $qmeetups .= "  AND       YEAR(meetups.event_date)  = '$search_date'        ";
-  if($search_lang == 'ENFR' || $search_lang == 'FREN')
-    $qmeetups .= "  AND     ( meetups.languages      LIKE 'ENFR'
-                    OR        meetups.languages      LIKE 'FREN' )              ";
-  else if($search_lang)
-    $qmeetups .= "  AND       meetups.languages      LIKE '$search_lang'        ";
-  if($search_location)
-    $qmeetups .= "  AND       meetups.location       LIKE '%$search_location%'  ";
-  if($search_people)
-    $qmeetups .= "  AND       meetups.attendee_count   >= '$search_people'      ";
-
-  // Group by meetup if an attendee is being searched for
-  if($search_user)
-    $qmeetups .= "  GROUP BY  meetups_people.fk_meetups ";
-
-  // Sort the data
-  if($sort_by == 'location')
-    $qmeetups .= "  ORDER BY  meetups.location        ASC   ,
-                              meetups.event_date      DESC  ";
-  else if($sort_by == 'people')
-    $qmeetups .= "  ORDER BY  meetups.attendee_count  DESC  ,
-                              meetups.event_date      DESC  ";
-  else
-    $qmeetups .= "  ORDER BY  meetups.event_date      DESC  ";
-
-  // Run the query
-  $qmeetups = query($qmeetups);
+                              meetups.details_fr      AS 'm_desc_fr'
+                              $query_from
+                              $query_search
+                              $query_group
+                              $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmeetups); $i++)
