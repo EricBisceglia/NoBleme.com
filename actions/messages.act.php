@@ -61,73 +61,72 @@ function private_message_list(  string  $sort_by        = ''      ,
   $search_read      = isset($search['read'])      ? sanitize($search['read'], 'int', -1, 1)         : NULL;
   $timestamp        = sanitize(time(), 'int', 0);
 
-  // Fetch the private messages
-  $qmessages = "    SELECT      users_private_messages.id                 AS 'pm_id'    ,
-                                users_private_messages.fk_users_sender    AS 'us_id'    ,
-                                users_sender.username                     AS 'us_nick'  ,
-                                users_private_messages.fk_users_recipient AS 'ur_id'    ,
-                                users_recipient.username                  AS 'ur_nick'  ,
-                                users_private_messages.sent_at            AS 'pm_sent'  ,
-                                users_private_messages.read_at            AS 'pm_read'  ,
-                                users_private_messages.title              AS 'pm_title' ,
-                                users_private_messages.body               AS 'pm_body'
-                    FROM        users_private_messages
-                    LEFT JOIN   users AS users_sender
-                    ON          users_private_messages.fk_users_sender = users_sender.id
-                    LEFT JOIN   users AS users_recipient
-                    ON          users_private_messages.fk_users_recipient = users_recipient.id ";
-
-  // Select whether they are sent or recieved messages
+  // Determine whether to show sent or recieved messages
   if(!$sent_messages)
-    $qmessages .= " WHERE       users_private_messages.fk_users_recipient   = '$user_id'
-                    AND         users_private_messages.deleted_by_recipient = 0 ";
+    $query_search = " WHERE users_private_messages.fk_users_recipient   = '$user_id'
+                      AND   users_private_messages.deleted_by_recipient = 0 ";
   else
-      $qmessages .= " WHERE       users_private_messages.fk_users_sender    = '$user_id'
-                      AND         users_private_messages.deleted_by_sender  = 0 ";
+    $query_search = " WHERE users_private_messages.fk_users_sender    = '$user_id'
+                      AND   users_private_messages.deleted_by_sender  = 0 ";
 
-
-  // Search for data if requested
-  if($search_title)
-    $qmessages .= " AND         users_private_messages.title                        LIKE '%$search_title%'        ";
+  // Search through the data: Sender
   if($search_sender && str_contains(string_change_case(__('nobleme'), 'lowercase'), string_change_case($search_sender, 'lowercase')))
-    $qmessages .= " AND       ( users_private_messages.fk_users_sender                 = 0
-                    OR          users_sender.username                               LIKE '%$search_sender%' )     ";
+    $query_search .= "  AND ( users_private_messages.fk_users_sender  = 0
+                        OR    users_sender.username                LIKE '%$search_sender%' ) ";
   else if($search_sender)
-    $qmessages .= " AND         users_sender.username                               LIKE '%$search_sender%'       ";
+    $query_search .= "  AND   users_sender.username                LIKE '%$search_sender%' ";
+
+  // Search through the data: Recipient
   if($search_recipient && str_contains(string_change_case(__('nobleme'), 'lowercase'), string_change_case($search_recipient, 'lowercase')))
-    $qmessages .= " AND       ( users_private_messages.fk_users_recipient              = 0
-                    OR          users_recipient.username                            LIKE '%$search_recipient%' )  ";
+    $query_search .= "  AND ( users_private_messages.fk_users_recipient = 0
+                        OR    users_recipient.username               LIKE '%$search_recipient%' ) ";
   else if($search_recipient)
-    $qmessages .= " AND         users_recipient.username                            LIKE '%$search_recipient%'    ";
-  if($search_date)
-    $qmessages .= " AND         YEAR(FROM_UNIXTIME(users_private_messages.sent_at))    = '$search_date'           ";
+    $query_search .= "  AND   users_recipient.username               LIKE '%$search_recipient%' ";
+
+  // Search through the data: Read status
   if($search_read == -1)
-    $qmessages .= " AND         users_private_messages.read_at                         = 0                        ";
+    $query_search .= "  AND users_private_messages.read_at = 0 ";
   else if($search_read)
-    $qmessages .= " AND         users_private_messages.read_at                         > 0                        ";
+    $query_search .= "  AND users_private_messages.read_at > 0 ";
 
-  // Sort the data as requested
-  if($sort_by == 'title')
-    $qmessages .= " ORDER BY  users_private_messages.title              ASC   ,
-                              users_private_messages.sent_at            DESC  ";
-  else if($sort_by == 'sender')
-    $qmessages .= " ORDER BY  users_private_messages.fk_users_sender    = 0   ,
-                              users_sender.username                     ASC   ,
-                              users_private_messages.sent_at            DESC  ";
-  else if($sort_by == 'recipient')
-    $qmessages .= " ORDER BY  users_private_messages.fk_users_recipient = 0   ,
-                              users_recipient.username                  ASC   ,
-                              users_private_messages.sent_at            DESC  ";
-  else if($sort_by == 'rsent')
-    $qmessages .= " ORDER BY  users_private_messages.sent_at            ASC   ";
-  else if($sort_by == 'read')
-    $qmessages .= " ORDER BY  users_private_messages.read_at            != 0  ,
-                              users_private_messages.read_at            DESC  ";
-  else
-    $qmessages .= " ORDER BY  users_private_messages.sent_at            DESC  ";
+  // Search through the data: Other searches
+  $query_search .= ($search_title) ? " AND users_private_messages.title                  LIKE '%$search_title%' " : "";
+  $query_search .= ($search_date)  ? " AND YEAR(FROM_UNIXTIME(users_private_messages.sent_at)) = '$search_date' " : "";
 
-  // Execute the query
-  $qmessages = query($qmessages);
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'title'     => "  ORDER BY  users_private_messages.title              ASC   ,
+                                users_private_messages.sent_at            DESC  " ,
+    'sender'    => "  ORDER BY  users_private_messages.fk_users_sender    = 0   ,
+                                users_sender.username                     ASC   ,
+                                users_private_messages.sent_at            DESC  " ,
+    'recipient' => "  ORDER BY  users_private_messages.fk_users_recipient = 0   ,
+                                users_recipient.username                  ASC   ,
+                                users_private_messages.sent_at            DESC  " ,
+    'rsent'     => "  ORDER BY  users_private_messages.sent_at            ASC   " ,
+    'read'      => "  ORDER BY  users_private_messages.read_at            != 0  ,
+                                users_private_messages.read_at            DESC  " ,
+    default     => "  ORDER BY  users_private_messages.sent_at            DESC  " ,
+  };
+
+  // Fetch the private messages
+  $qmessages = query("  SELECT    users_private_messages.id                 AS 'pm_id'    ,
+                                  users_private_messages.fk_users_sender    AS 'us_id'    ,
+                                  users_sender.username                     AS 'us_nick'  ,
+                                  users_private_messages.fk_users_recipient AS 'ur_id'    ,
+                                  users_recipient.username                  AS 'ur_nick'  ,
+                                  users_private_messages.sent_at            AS 'pm_sent'  ,
+                                  users_private_messages.read_at            AS 'pm_read'  ,
+                                  users_private_messages.title              AS 'pm_title' ,
+                                  users_private_messages.body               AS 'pm_body'
+                        FROM      users_private_messages
+                        LEFT JOIN users AS users_sender
+                        ON        users_private_messages.fk_users_sender = users_sender.id
+                        LEFT JOIN users AS users_recipient
+                        ON        users_private_messages.fk_users_recipient = users_recipient.id
+                                  $query_search
+                                  $query_sort ");
 
   // Initialize the unread messages counter
   $count_unread = 0;
