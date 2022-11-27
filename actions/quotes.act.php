@@ -200,64 +200,62 @@ function quotes_list( ?array  $search         = array() ,
   $search_user = (isset($search['user'])) ? sanitize($search['user'], 'int', 0)   : 0;
   $search_year = (isset($search['year'])) ? sanitize($search['year'], 'int', -1)  : 0;
 
-  // Fetch the quotes
-  $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'       ,
-                            quotes.submitted_at                                                     AS 'q_date'     ,
-                            GROUP_CONCAT(linked_users.id ORDER BY linked_users.username ASC)        AS 'lu_id'      ,
-                            GROUP_CONCAT(linked_users.username ORDER BY linked_users.username ASC)  AS 'lu_nick'    ,
-                            quotes.is_nsfw                                                          AS 'q_nsfw'     ,
-                            quotes.is_deleted                                                       AS 'q_deleted'  ,
-                            quotes.admin_validation                                                 AS 'q_public'   ,
-                            quotes.body                                                             AS 'q_body'
-                  FROM      quotes
-                  LEFT JOIN quotes_users                  ON  quotes.id               = quotes_users.fk_quotes
-                  LEFT JOIN users         AS linked_users ON  quotes_users.fk_users   = linked_users.id
-                                                          AND linked_users.is_deleted = 0
-                  WHERE     1 = 1 ";
-
-  // Show a single quote
+  // View a single quote
   if($quote_id && $is_admin)
-    $qquotes .= " AND       quotes.id               = '$quote_id' ";
+    $query_search = " WHERE quotes.id               = '$quote_id' ";
   else if($quote_id)
-    $qquotes .= " AND       quotes.id               = '$quote_id'
-                  AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0 ";
+    $query_search = " WHERE quotes.id               = '$quote_id'
+                      AND   quotes.admin_validation = 1
+                      AND   quotes.is_deleted       = 0 ";
 
   // View quotes awaiting validation
   else if($is_admin && $show_waitlist)
-    $qquotes .= " AND       quotes.admin_validation = 0 ";
+    $query_search = " WHERE quotes.admin_validation = 0 ";
 
   // View deleted quotes
   else if($is_admin && $show_deleted)
-    $qquotes .= " AND       quotes.is_deleted = 1 ";
+    $query_search = " WHERE quotes.is_deleted = 1 ";
 
-  // Normal view
+  // Default view
   else
-    $qquotes .= " AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0 ";
+    $query_search = " WHERE quotes.admin_validation = 1
+                      AND   quotes.is_deleted       = 0 ";
 
   // Filter the quotes by language
   if($lang_en && !$lang_fr && !$quote_id)
-    $qquotes .= " AND       quotes.language  LIKE 'EN'  ";
+    $query_search .= " AND quotes.language LIKE 'EN'  ";
   if($lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       quotes.language  LIKE 'FR'  ";
+    $query_search .= " AND quotes.language LIKE 'FR'  ";
   if(!$lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       1                   = 0     ";
+    $query_search .= " AND 1 = 0                      ";
 
-  // Search parameters
-  if($search_body)
-    $qquotes .= " AND       quotes.body                            LIKE '%$search_body%'  ";
-  if($search_user)
-    $qquotes .= " AND       quotes_users.fk_users                     = '$search_user'    ";
+  // Search through the data: Years
   if($search_year == -1)
-    $qquotes .= " AND       quotes.submitted_at                       = 0                 ";
+    $query_search .= " AND quotes.submitted_at                      = 0               ";
   else if($search_year)
-    $qquotes .= " AND       YEAR(FROM_UNIXTIME(quotes.submitted_at))  = '$search_year'    ";
+    $query_search .= " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year'  ";
 
-  // Finish the query
-  $qquotes .= "   GROUP BY  quotes.id
-                  ORDER BY  quotes.submitted_at DESC  ,
-                            quotes.id           DESC  ";
+  // Search through the data: Other searches
+  $query_search .= ($search_body) ? " AND quotes.body        LIKE '%$search_body%'  " : "";
+  $query_search .= ($search_user) ? " AND quotes_users.fk_users = '$search_user'    " : "";
+
+  // Fetch the quotes
+  $qquotes = "  SELECT    quotes.id                                                               AS 'q_id'       ,
+                          quotes.submitted_at                                                     AS 'q_date'     ,
+                          GROUP_CONCAT(linked_users.id ORDER BY linked_users.username ASC)        AS 'lu_id'      ,
+                          GROUP_CONCAT(linked_users.username ORDER BY linked_users.username ASC)  AS 'lu_nick'    ,
+                          quotes.is_nsfw                                                          AS 'q_nsfw'     ,
+                          quotes.is_deleted                                                       AS 'q_deleted'  ,
+                          quotes.admin_validation                                                 AS 'q_public'   ,
+                          quotes.body                                                             AS 'q_body'
+                FROM      quotes
+                LEFT JOIN quotes_users                  ON  quotes.id               = quotes_users.fk_quotes
+                LEFT JOIN users         AS linked_users ON  quotes_users.fk_users   = linked_users.id
+                                                        AND linked_users.is_deleted = 0
+                          $query_search
+                GROUP BY  quotes.id
+                ORDER BY  quotes.submitted_at DESC  ,
+                          quotes.id           DESC  ";
 
   // Run the query
   $dquotes = query($qquotes);
