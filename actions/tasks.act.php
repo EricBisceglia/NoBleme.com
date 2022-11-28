@@ -176,133 +176,127 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   $search_goal      = isset($search['goal'])      ? sanitize($search['goal'], 'int', -1)      : 0;
   $search_admin     = isset($search['admin'])     ? sanitize($search['admin'], 'int', 0, 5)   : 0;
 
-  // Fetch the tasks
-  $qtasks = "     SELECT    dev_tasks.id                        AS 't_id'             ,
-                            dev_tasks.is_deleted                AS 't_deleted'        ,
-                            dev_tasks.created_at                AS 't_created'        ,
-                            dev_tasks.finished_at               AS 't_finished'       ,
-                            dev_tasks.is_public                 AS 't_public'         ,
-                            dev_tasks.admin_validation          AS 't_validated'      ,
-                            dev_tasks.priority_level            AS 't_status'         ,
-                            dev_tasks.title_en                  AS 't_title_en'       ,
-                            dev_tasks.title_fr                  AS 't_title_fr'       ,
-                            dev_tasks_categories.id             AS 't_category_id'    ,
-                            dev_tasks_categories.title_$lang    AS 't_category'       ,
-                            dev_tasks_milestones.id             AS 't_milestone_id'   ,
-                            dev_tasks_milestones.title_$lang    AS 't_milestone'      ,
-                            dev_tasks_milestones.summary_$lang  AS 't_milestone_body' ,
-                            users.username                      AS 't_author'
-                  FROM      dev_tasks
-                  LEFT JOIN dev_tasks_categories  ON dev_tasks.fk_dev_tasks_categories  = dev_tasks_categories.id
-                  LEFT JOIN dev_tasks_milestones  ON dev_tasks.fk_dev_tasks_milestones  = dev_tasks_milestones.id
-                  LEFT JOIN users                 ON dev_tasks.fk_users                 = users.id
-                  WHERE     1 = 1 ";
+  // Do not show deleted, unvalidated, private, or wrong language tasks to regular users
+  $query_search = (!$is_admin) ? "  WHERE dev_tasks.is_deleted        = 0
+                                    AND   dev_tasks.is_public         = 1
+                                    AND   dev_tasks.admin_validation  = 1
+                                    AND   dev_tasks.title_$lang      != '' " : " WHERE 1 = 1 ";
 
-  // Do not show deleted, unvalidated, or private tasks to regular users
-  if(!$is_admin)
-    $qtasks .= "  AND       dev_tasks.is_deleted        = 0
-                  AND       dev_tasks.is_public         = 1
-                  AND       dev_tasks.admin_validation  = 1                     ";
-
-  // Regular users should only see tasks with a title matching their current language
-  if(!$is_admin)
-    $qtasks .= "  AND       dev_tasks.title_$lang      != ''                    ";
-
-  // Search the data
-  if($search_id)
-    $qtasks .= "  AND       dev_tasks.id                                = '$search_id'          ";
-  if($search_title)
-    $qtasks .= "  AND       dev_tasks.title_$lang                    LIKE '%$search_title%'     ";
-  if($search_status == -2)
-    $qtasks .= "  AND       dev_tasks.finished_at                       = 0                     ";
-  else if($search_status == -1)
-    $qtasks .= "  AND       dev_tasks.finished_at                       > 0                     ";
-  else if($search_status > 0 && $search_status <= 6)
-    $qtasks .= "  AND       dev_tasks.priority_level                    = '$search_status_id'
-                  AND       dev_tasks.finished_at                       = 0                     ";
-  else if($search_status > 6)
-    $qtasks .=  " AND       YEAR(FROM_UNIXTIME(dev_tasks.finished_at))  = '$search_status'      ";
-  if($search_created)
-    $qtasks .= "  AND       YEAR(FROM_UNIXTIME(dev_tasks.created_at))   = '$search_created'     ";
-  if($search_reporter)
-    $qtasks .= "  AND       users.username                           LIKE '%$search_reporter%'  ";
-  if($search_category == -1)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_categories           = 0                     ";
-  else if($search_category)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_categories           = '$search_category'    ";
-  if($search_goal == -1)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_milestones           = 0                     ";
-  else if($search_goal)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_milestones           = '$search_goal'        ";
-  if($search_admin == 1)
-    $qtasks .= "  AND       dev_tasks.admin_validation                  = 0                     ";
-  else if($search_admin == 2)
-    $qtasks .= "  AND       dev_tasks.is_deleted                        = 1                     ";
-  else if($search_admin == 3)
-    $qtasks .= "  AND       dev_tasks.is_public                         = 0                     ";
-  else if($search_admin == 4)
-    $qtasks .= "  AND       dev_tasks.title_en                          = ''                    ";
-  else if($search_admin == 5)
-    $qtasks .= "  AND       dev_tasks.title_fr                          = ''                    ";
-
-  // Limit the returned data in roadmap view
+  // Show less data in roadmap view
   if($sort_by == 'roadmap')
-    $qtasks .= "  AND       dev_tasks.is_deleted                        = 0
-                  AND       dev_tasks.admin_validation                  = 1
-                  AND       dev_tasks.fk_dev_tasks_milestones           > 0                     ";
+    $query_search .= "  AND dev_tasks.is_deleted              = 0
+                        AND dev_tasks.admin_validation        = 1
+                        AND dev_tasks.fk_dev_tasks_milestones > 0 ";
+
+  // Search through the data: Task status
+  if($search_status == -2)
+    $query_search .= "  AND dev_tasks.finished_at                       = 0                 ";
+  else if($search_status == -1)
+    $query_search .= "  AND dev_tasks.finished_at                       > 0                 ";
+  else if($search_status > 0 && $search_status <= 6)
+    $query_search .= "  AND dev_tasks.priority_level                    = '$search_status_id'
+                        AND dev_tasks.finished_at                       = 0                 ";
+  else if($search_status > 6)
+    $query_search .= "  AND YEAR(FROM_UNIXTIME(dev_tasks.finished_at))  = '$search_status'  ";
+
+  // Search through the data: Categories
+  if($search_category == -1)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_categories = 0                   ";
+  else if($search_category)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_categories = '$search_category'  ";
+
+  // Search through the data: Goals
+  if($search_goal == -1)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_milestones = 0               ";
+  else if($search_goal)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_milestones = '$search_goal'  ";
+
+  // Search through the data: Admin filters
+  if($is_admin)
+  {
+    $query_search .= match($search_admin)
+    {
+      1       => " AND  dev_tasks.admin_validation  = 0 "   ,
+      2       => " AND  dev_tasks.is_deleted        = 1 "   ,
+      3       => " AND  dev_tasks.is_public         = 0 "   ,
+      4       => " AND  dev_tasks.title_en          = '' "  ,
+      5       => " AND  dev_tasks.title_fr          = '' "  ,
+      default => ""                                         ,
+    };
+  }
+
+  // Search through the data: Other searches
+  $query_search .= ($search_id)       ? " AND dev_tasks.id                              = '$search_id'          " : "";
+  $query_search .= ($search_title)    ? " AND dev_tasks.title_$lang                  LIKE '%$search_title%'     " : "";
+  $query_search .= ($search_created)  ? " AND YEAR(FROM_UNIXTIME(dev_tasks.created_at)) = '$search_created'     " : "";
+  $query_search .= ($search_reporter) ? " AND users.username                         LIKE '%$search_reporter%'  " : "";
 
   // Sort the data
-  if($sort_by == 'id')
-    $qtasks .= "  ORDER BY    dev_tasks.id                        ASC     ";
-  else if($sort_by == 'description')
-    $qtasks .= "  ORDER BY    dev_tasks.title_$lang               ASC     ";
-  else if($sort_by == 'created')
-    $qtasks .= "  ORDER BY    dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'reporter')
-    $qtasks .= "  ORDER BY    users.username                      ASC     ,
-                              dev_tasks.finished_at               != ''   ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'category')
-    $qtasks .= "  ORDER BY    dev_tasks_categories.id             IS NULL ,
-                              dev_tasks_categories.title_$lang    ASC     ,
-                              dev_tasks.finished_at               != ''   ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'goal')
-    $qtasks .= "  ORDER BY    dev_tasks.finished_at               != ''   ,
-                              dev_tasks_milestones.id             IS NULL ,
-                              dev_tasks_milestones.sorting_order  DESC    ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'roadmap')
-    $qtasks .= "  ORDER BY    dev_tasks_milestones.id             IS NULL ,
-                              dev_tasks_milestones.sorting_order  DESC    ,
-                              dev_tasks.finished_at               > 0     ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'admin')
-    $qtasks .= "  ORDER BY    dev_tasks.admin_validation          ASC     ,
-                              dev_tasks.is_deleted                DESC    ,
-                              dev_tasks.finished_at               > 0     ,
-                              dev_tasks.is_public                 ASC     ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else
-    $qtasks .= "  ORDER BY    dev_tasks.admin_validation          = 1     ,
-                              dev_tasks.is_deleted                != ''   ,
-                              dev_tasks.finished_at               != ''   ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
+  $query_sort = match($sort_by)
+  {
+    'id'          => " ORDER BY dev_tasks.id                        ASC     " ,
+    'description' => " ORDER BY dev_tasks.title_$lang               ASC     " ,
+    'created'     => " ORDER BY dev_tasks.created_at                DESC    " ,
+    'reporter'    => " ORDER BY users.username                      ASC     ,
+                                dev_tasks.finished_at               != ''   ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'category'    => " ORDER BY dev_tasks_categories.id             IS NULL ,
+                                dev_tasks_categories.title_$lang    ASC     ,
+                                dev_tasks.finished_at               != ''   ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'goal'        => " ORDER BY dev_tasks.finished_at               != ''   ,
+                                dev_tasks_milestones.id             IS NULL ,
+                                dev_tasks_milestones.sorting_order  DESC    ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'roadmap'     => " ORDER BY dev_tasks_milestones.id             IS NULL ,
+                                dev_tasks_milestones.sorting_order  DESC    ,
+                                dev_tasks.finished_at               > 0     ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'admin'       => " ORDER BY dev_tasks.admin_validation          ASC     ,
+                                dev_tasks.is_deleted                DESC    ,
+                                dev_tasks.finished_at               > 0     ,
+                                dev_tasks.is_public                 ASC     ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    default       => " ORDER BY dev_tasks.admin_validation          = 1     ,
+                                dev_tasks.is_deleted                != ''   ,
+                                dev_tasks.finished_at               != ''   ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+  };
 
-  // Run the query
-  $qtasks = query($qtasks);
+  // Fetch the tasks
+  $qtasks = query(" SELECT    dev_tasks.id                        AS 't_id'             ,
+                              dev_tasks.is_deleted                AS 't_deleted'        ,
+                              dev_tasks.created_at                AS 't_created'        ,
+                              dev_tasks.finished_at               AS 't_finished'       ,
+                              dev_tasks.is_public                 AS 't_public'         ,
+                              dev_tasks.admin_validation          AS 't_validated'      ,
+                              dev_tasks.priority_level            AS 't_status'         ,
+                              dev_tasks.title_en                  AS 't_title_en'       ,
+                              dev_tasks.title_fr                  AS 't_title_fr'       ,
+                              dev_tasks_categories.id             AS 't_category_id'    ,
+                              dev_tasks_categories.title_$lang    AS 't_category'       ,
+                              dev_tasks_milestones.id             AS 't_milestone_id'   ,
+                              dev_tasks_milestones.title_$lang    AS 't_milestone'      ,
+                              dev_tasks_milestones.summary_$lang  AS 't_milestone_body' ,
+                              users.username                      AS 't_author'
+                    FROM      dev_tasks
+                    LEFT JOIN dev_tasks_categories  ON dev_tasks.fk_dev_tasks_categories  = dev_tasks_categories.id
+                    LEFT JOIN dev_tasks_milestones  ON dev_tasks.fk_dev_tasks_milestones  = dev_tasks_milestones.id
+                    LEFT JOIN users                 ON dev_tasks.fk_users                 = users.id
+                              $query_search
+                              $query_sort ");
 
   // Initialize the finished task counter
   $total_tasks_finished = 0;
@@ -1107,24 +1101,22 @@ function tasks_categories_list( bool  $exclude_archived = false ,
   // Exclude archived categories if requested
   $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_categories.is_archived = 0 ' : '';
 
-  // Fetch the categories
-  $qcategories  = "   SELECT    dev_tasks_categories.id           AS 'c_id'       ,
-                                dev_tasks_categories.is_archived  AS 'c_archived' ,
-                                dev_tasks_categories.title_en     AS 'c_title_en' ,
-                                dev_tasks_categories.title_fr     AS 'c_title_fr' ,
-                                dev_tasks_categories.title_$lang  AS 'c_title'
-                      FROM      dev_tasks_categories
-                                $query_archived ";
-
   // Sort the categories
   if($sort_by_archived)
-    $qcategories .= " ORDER BY  dev_tasks_categories.is_archived  ASC ,
-                                dev_tasks_categories.title_$lang  ASC ";
+    $query_sort = " ORDER BY  dev_tasks_categories.is_archived  ASC ,
+                              dev_tasks_categories.title_$lang  ASC ";
   else
-    $qcategories .= " ORDER BY  dev_tasks_categories.title_$lang  ASC ";
+    $query_sort = " ORDER BY  dev_tasks_categories.title_$lang  ASC ";
 
-  // Run the query
-  $qcategories = query($qcategories);
+  // Fetch the categories
+  $qcategories  = query(" SELECT  dev_tasks_categories.id           AS 'c_id'       ,
+                                  dev_tasks_categories.is_archived  AS 'c_archived' ,
+                                  dev_tasks_categories.title_en     AS 'c_title_en' ,
+                                  dev_tasks_categories.title_fr     AS 'c_title_fr' ,
+                                  dev_tasks_categories.title_$lang  AS 'c_title'
+                          FROM    dev_tasks_categories
+                                  $query_archived
+                                  $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
@@ -1280,20 +1272,17 @@ function tasks_milestones_list( bool $exclude_archived = false ) : array
   $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_milestones.is_archived = 0 ' : '';
 
   // Fetch the milestones
-  $qmilestones  = " SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
-                              dev_tasks_milestones.is_archived    AS 'm_archived' ,
-                              dev_tasks_milestones.title_en       AS 'm_title_en' ,
-                              dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
-                              dev_tasks_milestones.title_$lang    AS 'm_title'    ,
-                              dev_tasks_milestones.sorting_order  AS 'm_order'    ,
-                              dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
-                              dev_tasks_milestones.summary_fr     AS 'm_body_fr'
-                    FROM      dev_tasks_milestones
-                              $query_archived
-                    ORDER BY  dev_tasks_milestones.sorting_order DESC ";
-
-  // Run the query
-  $qmilestones = query($qmilestones);
+  $qmilestones  = query(" SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
+                                    dev_tasks_milestones.is_archived    AS 'm_archived' ,
+                                    dev_tasks_milestones.title_en       AS 'm_title_en' ,
+                                    dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
+                                    dev_tasks_milestones.title_$lang    AS 'm_title'    ,
+                                    dev_tasks_milestones.sorting_order  AS 'm_order'    ,
+                                    dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
+                                    dev_tasks_milestones.summary_fr     AS 'm_body_fr'
+                          FROM      dev_tasks_milestones
+                                    $query_archived
+                          ORDER BY  dev_tasks_milestones.sorting_order DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
