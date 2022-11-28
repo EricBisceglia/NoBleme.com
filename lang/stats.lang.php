@@ -229,7 +229,7 @@ ___('admin_stats_users_count',        'EN', "{{1}} users registered on the websi
 ___('admin_stats_users_count',        'FR', "{{1}} comptes crées sur le site");
 ___('admin_stats_users_partial',      'EN', "{{1}} user out of {{2}} shown ({{3}})");
 ___('admin_stats_users_partial',      'FR', "{{1}} compte sur {{2}} affiché ({{3}})");
-___('admin_stats_users_partial+',     'EN', "{{1}} user out of {{2}} shown ({{3}})");
+___('admin_stats_users_partial+',     'EN', "{{1}} users out of {{2}} shown ({{3}})");
 ___('admin_stats_users_partial+',     'FR', "{{1}} comptes sur {{2}} affichés ({{3}})");
 ___('admin_stats_users_empty',        'EN', "Empty");
 ___('admin_stats_users_empty',        'FR', "Vide");
