@@ -213,11 +213,49 @@ function user_list( string  $sort_by          = ''      ,
   $search_active      = isset($search['active'])      ? sanitize($search['active'], 'int', 0, 1)              : NULL;
   $search_languages   = isset($search['languages'])   ? sanitize($search['languages'], 'string')              : NULL;
 
-  // Prepare data
+  // Determine the activity cutoff
   $minimum_activity = sanitize((time() - $activity_cutoff), 'int', 0);
 
-  // Initialize the returned array
-  $data = array();
+  // Hide user activity based on their settings
+  $query_settings = ($is_activity && !$is_admin) ? " AND users_settings.hide_from_activity = 0 " : "";
+
+  // Activity cutoff
+  $query_settings .= ($activity_cutoff) ? " AND users.last_visited_at >= '$minimum_activity' " : "";
+
+  // Banned users view
+  $query_settings .= ($banned_only) ? " AND users.is_banned_until > 0 " : "";
+
+  // Search through the data
+  $query_search  = ($search_id)         ? " AND   users.id                          = '$search_id'          " : "";
+  $query_search .= ($search_username)   ? " AND   users.username                 LIKE '%$search_username%'  " : "";
+  $query_search .= ($search_del_user)   ? " AND   users.deleted_username         LIKE '%$search_del_user%'  " : "";
+  $query_search .= ($search_registered) ? "
+                          AND YEAR(FROM_UNIXTIME(users_profile.created_at))         = '$search_registered'  " : "";
+  $query_search .= ($search_active)     ? " AND ( users.last_visited_at             > '$active_limit'
+                                            OR    users_profile.created_at          > '$active_limit' )     " : "";
+  $query_search .= ($search_languages)  ? " AND   users_profile.spoken_languages LIKE '%$search_languages%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'id'                => " ORDER BY users.id                                ASC   " ,
+    'activity'          => " ORDER BY users.last_visited_at                   DESC  " ,
+    'banned'            => " ORDER BY users.is_banned_until                   ASC   " ,
+    'username'          => " ORDER BY users.username                          ASC   " ,
+    'deleted_username'  => " ORDER BY users.deleted_username                  ASC   " ,
+    'deleted'           => " ORDER BY users.deleted_at                        DESC  " ,
+    'registered'        => " ORDER BY users_profile.created_at                DESC  " ,
+    'rregistered'       => " ORDER BY users_profile.created_at                ASC   " ,
+    'language'          => " ORDER BY users_profile.spoken_languages = 'ENFR' DESC  ,
+                                      users_profile.spoken_languages = 'FREN' DESC  ,
+                                      users_profile.spoken_languages = 'EN'   DESC  ,
+                                      users_profile.spoken_languages = 'FR'   DESC  ,
+                                      users.last_visited_at                   DESC  " ,
+    default             => " ORDER BY users.id                                ASC   " ,
+  };
+
+  // Limit the amount of users returned
+  $query_limit = ($max_count) ? " LIMIT $max_count " : "";
 
   // Fetch the user list
   $qusers = "       SELECT    'user'                          AS 'data_type'        ,
@@ -246,67 +284,11 @@ function user_list( string  $sort_by          = ''      ,
                     FROM      users
                     LEFT JOIN users_settings  ON users.id = users_settings.fk_users
                     LEFT JOIN users_profile   ON users.id = users_profile.fk_users
-                    WHERE     users.is_deleted                              = '$deleted'              ";
-
-  // Hide user activity based on their settings
-  if($is_activity && !$is_admin)
-    $qusers .= "    AND       users_settings.hide_from_activity             = 0                       ";
-
-  // Activity cutoff
-  if($activity_cutoff)
-    $qusers .= "    AND       users.last_visited_at                         >= '$minimum_activity'    ";
-
-  // Banned users view
-  if($banned_only)
-    $qusers .= "    AND       users.is_banned_until                         > 0                       ";
-
-  // Run the searches
-  if($search_id)
-    $qusers .= "    AND       users.id                                      = '$search_id'            ";
-  if($search_username)
-    $qusers .= "    AND       users.username                             LIKE '%$search_username%'    ";
-  if($search_del_user)
-    $qusers .= "    AND       users.deleted_username                     LIKE '%$search_del_user%'    ";
-  if($search_registered)
-    $qusers .= "    AND       YEAR(FROM_UNIXTIME(users_profile.created_at)) = '$search_registered'    ";
-  if($search_active)
-    $qusers .= "    AND     ( users.last_visited_at                         > '$active_limit'
-                    OR        users_profile.created_at                      > '$active_limit' )       ";
-  if($search_languages)
-    $qusers .= "    AND       users_profile.spoken_languages             LIKE '%$search_languages%'   ";
-
-  // Sort the users
-  if(!$include_guests)
-  {
-    if($sort_by == 'id')
-      $qusers .= "  ORDER BY  users.id                  ASC   ";
-    else if($sort_by == 'activity')
-      $qusers .= "  ORDER BY  users.last_visited_at     DESC  ";
-    else if($sort_by == 'banned')
-      $qusers .= "  ORDER BY  users.is_banned_until     ASC   ";
-    else if($sort_by == 'username')
-      $qusers .= "  ORDER BY  users.username            ASC   ";
-    else if($sort_by == 'deleted_username')
-      $qusers .= "  ORDER BY  users.deleted_username    ASC   ";
-    else if($sort_by == 'deleted')
-      $qusers .= "  ORDER BY  users.deleted_at          DESC  ";
-    else if($sort_by == 'registered')
-      $qusers .= "  ORDER BY  users_profile.created_at  DESC  ";
-    else if($sort_by == 'rregistered')
-      $qusers .= "  ORDER BY  users_profile.created_at  ASC   ";
-    else if($sort_by == 'language')
-      $qusers .= "  ORDER BY  users_profile.spoken_languages = 'ENFR' DESC  ,
-                              users_profile.spoken_languages = 'FREN' DESC  ,
-                              users_profile.spoken_languages = 'EN'   DESC  ,
-                              users_profile.spoken_languages = 'FR'   DESC  ,
-                              users.last_visited_at                   DESC  ";
-    else
-      $qusers .= "  ORDER BY  users.id                  ASC   ";
-  }
-
-  // Limit the amount of users returned
-  if($max_count)
-    $qusers .= "    LIMIT $max_count ";
+                    WHERE     users.is_deleted = '$deleted'
+                              $query_settings
+                              $query_search
+                              $query_sort
+                              $query_limit ";
 
   // Include guests if necessary
   if($include_guests)
@@ -372,6 +354,9 @@ function user_list( string  $sort_by          = ''      ,
 
   // Run the query
   $qusers = query($qusers);
+
+  // Initialize the returned array
+  $data = array();
 
   // Fetch the user's display mode
   $mode = user_get_mode();
@@ -454,29 +439,28 @@ function user_list_admins( string $sort_by = '' ) : array
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'activity'  => " ORDER BY users.is_administrator  DESC  ,
+                              users.last_visited_at   DESC  " ,
+    default     => " ORDER BY users.is_administrator  DESC  ,
+                              users.username          ASC   " ,
+  };
+
   // Fetch the admin list
-  $qadmins = "    SELECT    users.id                        AS 'u_id'       ,
-                            users.username                  AS 'u_nick'     ,
-                            users.is_administrator          AS 'u_admin'    ,
-                            users.is_moderator              AS 'u_mod'      ,
-                            users.last_visited_at           AS 'u_activity' ,
-                            users_profile.spoken_languages  AS 'u_languages'
-                  FROM      users
-                  LEFT JOIN users_profile ON users.id = users_profile.fk_users
-                  WHERE     users.is_deleted        = 0
-                  AND     ( users.is_administrator  = 1
-                  OR        users.is_moderator      = 1 ) ";
-
-  // Sorting order
-  if($sort_by == 'activity')
-    $qadmins .= " ORDER BY  users.is_administrator  DESC  ,
-                            users.last_visited_at   DESC   ";
-  else
-    $qadmins .= " ORDER BY  users.is_administrator  DESC  ,
-                            users.username          ASC   ";
-
-  // Run the query
-  $qadmins = query($qadmins);
+  $qadmins = query("  SELECT    users.id                        AS 'u_id'       ,
+                                users.username                  AS 'u_nick'     ,
+                                users.is_administrator          AS 'u_admin'    ,
+                                users.is_moderator              AS 'u_mod'      ,
+                                users.last_visited_at           AS 'u_activity' ,
+                                users_profile.spoken_languages  AS 'u_languages'
+                      FROM      users
+                      LEFT JOIN users_profile ON users.id = users_profile.fk_users
+                      WHERE     users.is_deleted        = 0
+                      AND     ( users.is_administrator  = 1
+                      OR        users.is_moderator      = 1 )
+                                $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qadmins); $i++)

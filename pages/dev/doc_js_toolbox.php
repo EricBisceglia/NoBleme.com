@@ -20,7 +20,7 @@ $page_title_fr    = "Outils JS";
 
 // Extra CSS & JS
 $css = array('dev');
-$js  = array('common/editor', 'common/highlight', 'common/preview', 'common/selector', 'common/toggle');
+$js  = array('common/editor', 'common/highlight', 'common/preview', 'common/selector');
 
 
 

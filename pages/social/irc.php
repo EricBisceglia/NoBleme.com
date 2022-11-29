@@ -16,7 +16,7 @@ $page_description = "NoBleme's primary communication method, our real time IRC c
 
 // Extra CSS & JS
 $css  = array('irc');
-$js   = array('social/irc', 'common/toggle', 'common/selector');
+$js   = array('social/irc', 'common/selector');
 
 
 

@@ -23,7 +23,7 @@ $page_title_fr    = "Compendium : Modifier une page";
 
 // Extra CSS & JS
 $css  = array('compendium');
-$js   = array('compendium/admin', 'common/toggle');
+$js   = array('compendium/admin');
 
 
 

@@ -22,7 +22,7 @@ $page_title_fr    = "Bot IRC";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('dev/irc_bot', 'common/toggle', 'common/selector');
+$js   = array('dev/irc_bot', 'common/selector');
 
 
 

@@ -20,7 +20,7 @@ $page_description = "Roadmap of NoBleme's past and future development";
 
 // Extra CSS & JS
 $css  = array('tasks');
-$js   = array('tasks/list', 'tasks/edit', 'common/toggle');
+$js   = array('tasks/list', 'tasks/edit');
 
 
 

@@ -21,7 +21,7 @@ $page_description = "Modify your account's public profile to better reflect (or 
 
 // Extra CSS & JS
 $css  = array('users');
-$js   = array('users/profile', 'common/toggle', 'common/preview', 'common/editor');
+$js   = array('users/profile', 'common/preview', 'common/editor');
 
 
 

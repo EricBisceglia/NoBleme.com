@@ -22,7 +22,7 @@ $page_title_en    = "Edit a meetup";
 $page_title_fr    = "Modifier une IRL";
 
 // Extra JS
-$js = array('meetups/meetup', 'common/toggle', 'common/preview');
+$js = array('meetups/meetup', 'common/preview');
 
 
 

@@ -19,7 +19,7 @@ $page_title_fr    = "Message privé";
 $page_description = "Write a private message to another website user.";
 
 // Extra JS
-$js = array('common/editor', 'common/preview', 'common/toggle', 'messages/messages', 'users/autocomplete_username');
+$js = array('common/editor', 'common/preview', 'messages/messages', 'users/autocomplete_username');
 
 
 

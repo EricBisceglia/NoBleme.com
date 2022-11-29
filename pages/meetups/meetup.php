@@ -18,7 +18,7 @@ $page_title_fr    = "Rencontre IRL";
 $page_description = "Real life meetup between the members of NoBleme's community";
 
 // Extra JS
-$js = array('meetups/meetup', 'common/toggle', 'users/autocomplete_username');
+$js = array('meetups/meetup', 'users/autocomplete_username');
 
 
 

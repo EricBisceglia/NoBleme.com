@@ -24,7 +24,7 @@ $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
 // Extra JS
-$js = array('admin/ban', 'users/autocomplete_username', 'common/toggle');
+$js = array('admin/ban', 'users/autocomplete_username');
 
 
 

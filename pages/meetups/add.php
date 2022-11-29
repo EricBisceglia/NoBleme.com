@@ -20,7 +20,7 @@ $page_title_en    = "Add a new meetup";
 $page_title_fr    = "Créer une nouvelle IRL";
 
 // Extra JS
-$js = array('meetups/meetup', 'common/toggle', 'common/preview');
+$js = array('meetups/meetup', 'common/preview');
 
 
 

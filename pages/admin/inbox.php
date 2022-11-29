@@ -22,7 +22,7 @@ $page_title_fr    = "Courrier administratif";
 $page_description = "Private message exchanges between users and the administrative team";
 
 // Extra JS & CSS
-$js   = array('admin/messages', 'common/toggle', 'common/editor', 'common/preview');
+$js   = array('admin/messages', 'common/editor', 'common/preview');
 $css  = array('admin');
 
 
