@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -111,7 +111,7 @@ function irc_channels_list() : array
     $data[$i]['type_css'] = sanitize_output($temp['css']);
     $data[$i]['lang_en']  = str_contains($row['c_lang'], 'EN');
     $data[$i]['lang_fr']  = str_contains($row['c_lang'], 'FR');
-    $temp                 = ($lang == 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
+    $temp                 = ($lang === 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
     $data[$i]['desc']     = sanitize_output($temp);
   }
 
@@ -155,7 +155,7 @@ function irc_channels_add( array $contents ) : mixed
     return __('irc_channels_add_error_name');
 
   // Error: No hash in name
-  if(substr($channel_name, 0, 1) != '#')
+  if(substr($channel_name, 0, 1) !== '#')
     return __('irc_channels_add_error_hash');
 
   // Error: Spaces in name
@@ -287,13 +287,13 @@ function irc_channels_edit( int   $channel_id ,
                           moderator_username:   $mod_username );
 
   // Detailed activity logs
-  if($dchannel['c_desc_en'] != $contents['desc_en'])
+  if($dchannel['c_desc_en'] !== $contents['desc_en'])
     log_activity_details($modlog, 'Channel description (EN)', 'Description du canal (EN)', $dchannel['c_desc_en'], $contents['desc_en']);
-  if($dchannel['c_desc_fr'] != $contents['desc_fr'])
+  if($dchannel['c_desc_fr'] !== $contents['desc_fr'])
     log_activity_details($modlog, 'Channel description (FR)', 'Description du canal (FR)', $dchannel['c_desc_fr'], $contents['desc_fr']);
-  if($dchannel['c_type'] != $contents['type'])
+  if($dchannel['c_type'] !== $contents['type'])
     log_activity_details($modlog, "Channel type", "Type de canal", $channel_type_old['name_en'], $channel_type_new['name_en']);
-  if($dchannel['c_lang'] != $channel_lang)
+  if($dchannel['c_lang'] !== $channel_lang)
     log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang'], $channel_lang);
 
   // IRC bot message
@@ -387,7 +387,7 @@ function irc_channels_type_get( int $type_id ) : array
   $lang = user_get_language();
 
   // Channel type description
-  if($lang == 'EN')
+  if($lang === 'EN')
   {
     $data['name'] = match($type_id)
     {
@@ -549,7 +549,7 @@ function irc_bot_admin_send_message(  string  $body           ,
   // If a channel is specified, ensure it begins with a hash then prepend a PRIVMSG to the body
   else if($channel)
   {
-    if($channel && (substr($channel, 0, 1) != '#'))
+    if($channel && (substr($channel, 0, 1) !== '#'))
       $channel = '#'.$channel;
     $body = 'PRIVMSG '.$channel.' :'.$body;
   }
@@ -698,11 +698,11 @@ function irc_bot_message_history_list( array $search = array() ) : array
   if($search_body)
     $search .= "  AND logs_irc_bot.is_action    =     0
                   AND logs_irc_bot.body         LIKE  '%$search_body%' ";
-  if($search_errors == 0)
+  if($search_errors === 0)
     $search .= "  AND logs_irc_bot.is_action    =     0
                   AND logs_irc_bot.is_silenced  =     0
                   AND logs_irc_bot.is_failed    =     0 ";
-  else if($search_errors == 1)
+  else if($search_errors === 1)
     $search .= "  AND ( logs_irc_bot.is_action  =     1
                   OR  logs_irc_bot.is_silenced  =     1
                   OR  logs_irc_bot.is_failed    =     1 ) ";
@@ -770,7 +770,7 @@ function irc_bot_message_history_replay( int $log_id ) : void
 
   // Strip the hash from the start of the  channel name
   $channel = $dlog['il_channel'];
-  if($channel && (substr($channel, 0, 1) == '#'))
+  if($channel && (substr($channel, 0, 1) === '#'))
     $channel = substr($channel, 1);
 
   // Replay the message and bypass silenced mode

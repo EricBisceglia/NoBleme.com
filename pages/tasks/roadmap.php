@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php for($i = 0; $i < $task_list['rows']; $i++) { ?>
 
-  <?php if(!$i || $task_list[$i]['milestone'] != $task_list[$i - 1]['milestone']) { ?>
+  <?php if(!$i || $task_list[$i]['milestone'] !== $task_list[$i - 1]['milestone']) { ?>
 
   </div>
 
@@ -151,7 +151,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
         </tr>
 
-  <?php if($i == ($task_list['rows'] - 1) || $task_list[$i]['milestone'] != $task_list[$i + 1]['milestone']) { ?>
+  <?php if($i === ($task_list['rows'] - 1) || $task_list[$i]['milestone'] !== $task_list[$i + 1]['milestone']) { ?>
 
       </tbody>
     </table>

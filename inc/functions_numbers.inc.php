@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -58,23 +58,23 @@ function number_display_format( mixed   $number                   ,
                                 bool    $prepend_sign = false     ) : string
 {
   // Standard format - 10,01
-  if($format == "number")
+  if($format === "number")
     $number = number_format((float)$number, 0, ',', ' ');
 
   // Price - 10 € (ignore decimals)
-  if($format == "price")
+  if($format === "price")
     $number = number_format((float)$number, 0, ',', ' ')." €";
 
   // Price with cents - 10,01 € (limit to 2 decimals)
-  if($format == "price_cents")
+  if($format === "price_cents")
     $number = number_format((float)$number, 2, ',', ' ')." €";
 
   // Percentage - 10,01 %
-  else if($format == "percentage")
+  else if($format === "percentage")
     $number = number_format((float)$number, $decimals, ',', ' ')." %";
 
   // Percentage point - 10,01 p%
-  else if($format == "percentage_point")
+  else if($format === "percentage_point")
     $number = number_format((float)$number, $decimals, ',', ' ')." p%";
 
   // Return the number, with an extra sign if necessary
@@ -136,20 +136,20 @@ function number_ordinal( int $number )
   $last_digit = $number % 10;
 
   // Figure out the ordinal in french
-  if($lang == 'FR')
+  if($lang === 'FR')
   {
     $ordinal = __('ordinal_0_fr');
-    $ordinal = ($number == 1) ? __('ordinal_1_fr') : $ordinal;
-    $ordinal = ($number == 2) ? __('ordinal_2_fr') : $ordinal;
+    $ordinal = ($number === 1) ? __('ordinal_1_fr') : $ordinal;
+    $ordinal = ($number === 2) ? __('ordinal_2_fr') : $ordinal;
   }
 
   // Figure out the ordinal in english
   else
   {
     $ordinal = __('ordinal_0_en');
-    $ordinal = (($last_digit % 10) == 1) ? __('ordinal_1_en') : $ordinal;
-    $ordinal = (($last_digit % 10) == 2) ? __('ordinal_2_en') : $ordinal;
-    $ordinal = (($last_digit % 10) == 3) ? __('ordinal_3_en') : $ordinal;
+    $ordinal = (($last_digit % 10) === 1) ? __('ordinal_1_en') : $ordinal;
+    $ordinal = (($last_digit % 10) === 2) ? __('ordinal_2_en') : $ordinal;
+    $ordinal = (($last_digit % 10) === 3) ? __('ordinal_3_en') : $ordinal;
   }
 
   // Return the ordinal

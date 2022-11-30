@@ -256,7 +256,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <?php if($tasks_stats['category_oldest_'.$i] == $tasks_stats['category_newest_'.$i]) { ?>
+        <?php if($tasks_stats['category_oldest_'.$i] === $tasks_stats['category_newest_'.$i]) { ?>
 
         <td colspan="2">
           <?=$tasks_stats['category_oldest_'.$i]?>

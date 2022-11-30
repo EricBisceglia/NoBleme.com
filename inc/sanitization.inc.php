@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -42,7 +42,7 @@ function sanitize(  mixed   $data                 ,
                     string  $padding  = "_"       ) : mixed
 {
   // For floats, ensure that it is a float, else convert it, then ensure that it is between min and max values
-  if($type == "float")
+  if($type === "float")
   {
     if(!is_float($data))
       $data = floatval($data);
@@ -53,7 +53,7 @@ function sanitize(  mixed   $data                 ,
   }
 
   // For ints, ensure that it is an int, else convert it, then ensure that it is between min and max values
-  else if($type == "int")
+  else if($type === "int")
   {
     if(!is_int($data))
       $data = intval($data);
@@ -64,7 +64,7 @@ function sanitize(  mixed   $data                 ,
   }
 
   // For strings, ensure that it is a string, else convert it to one
-  else if($type == "string")
+  else if($type === "string")
   {
     if(!is_string($data))
       $data = strval($data);
@@ -122,11 +122,11 @@ function sanitize_input(  string  $input_type             ,
                           string  $padding        = "_"   )
 {
   // When dealing with $_POST, fetch the value (if it exists)
-  if($input_type == 'POST')
+  if($input_type === 'POST')
     $data = (isset($_POST[$input_name])) ? $_POST[$input_name] : $default_value;
 
   // Same thing if dealing with $_GET
-  if($input_type == 'GET')
+  if($input_type === 'GET')
     $data = (isset($_GET[$input_name])) ? $_GET[$input_name] : $default_value;
 
   // Sanitize the data, then return it

@@ -45,7 +45,7 @@ function user_register_submit()
   }
 
   // Ensure passwords are identical
-  if(document.getElementById('register_password_1').value != document.getElementById('register_password_2').value)
+  if(document.getElementById('register_password_1').value !== document.getElementById('register_password_2').value)
   {
     css_add('label_register_password_2', 'red');
     form_failed = 1;
@@ -55,7 +55,7 @@ function user_register_submit()
   css_remove('label_register_question_1', 'red');
   var temp = document.querySelectorAll('input[name=register_question_1]:checked');
   var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 2)
+  if(temp !== 2)
   {
     css_add('label_register_question_1', 'red');
     form_failed = 1;
@@ -63,7 +63,7 @@ function user_register_submit()
   css_remove('label_register_question_2', 'red');
   var temp = document.querySelectorAll('input[name=register_question_2]:checked');
   var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 2)
+  if(temp !== 2)
   {
     css_add('label_register_question_2', 'red');
     form_failed = 1;
@@ -71,7 +71,7 @@ function user_register_submit()
   css_remove('label_register_question_3', 'red');
   var temp = document.querySelectorAll('input[name=register_question_3]:checked');
   var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 2)
+  if(temp !== 2)
   {
     css_add('label_register_question_3', 'red');
     form_failed = 1;
@@ -79,7 +79,7 @@ function user_register_submit()
   css_remove('label_register_question_4', 'red');
   var temp = document.querySelectorAll('input[name=register_question_4]:checked');
   var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 1)
+  if(temp !== 1)
   {
     css_add('label_register_question_4', 'red');
     form_failed = 1;
@@ -154,7 +154,7 @@ function user_register_validate_password()
     css_remove('label_register_password_1', 'red');
 
   // If the second password is invalid or passwords are different, show it
-  if (register_password_2 && (register_password_2.length < 8 || (register_password_2 != register_password_1)))
+  if (register_password_2 && (register_password_2.length < 8 || (register_password_2 !== register_password_1)))
     css_add('label_register_password_2', 'red');
 
   // If the passwords are valid, reset the field to normal

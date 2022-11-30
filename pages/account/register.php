@@ -69,16 +69,26 @@ $register_username    = isset($_POST['register_username'])    ? sanitize_output(
 $register_password_1  = isset($_POST['register_password_1'])  ? sanitize_output($_POST['register_password_1'])    : '';
 $register_password_2  = isset($_POST['register_password_2'])  ? sanitize_output($_POST['register_password_2'])    : '';
 $register_email       = isset($_POST['register_email'])       ? sanitize_output($_POST['register_email'])         : '';
-$register_check_q1[1] = (isset($_POST['register_question_1']) && $_POST['register_question_1'] == 1) ? ' checked' : '';
-$register_check_q1[2] = (isset($_POST['register_question_1']) && $_POST['register_question_1'] == 2) ? ' checked' : '';
-$register_check_q1[3] = (isset($_POST['register_question_1']) && $_POST['register_question_1'] == 3) ? ' checked' : '';
-$register_check_q2[1] = (isset($_POST['register_question_2']) && $_POST['register_question_2'] == 1) ? ' checked' : '';
-$register_check_q2[2] = (isset($_POST['register_question_2']) && $_POST['register_question_2'] == 2) ? ' checked' : '';
-$register_check_q2[3] = (isset($_POST['register_question_2']) && $_POST['register_question_2'] == 3) ? ' checked' : '';
-$register_check_q3[1] = (isset($_POST['register_question_3']) && $_POST['register_question_3'] == 1) ? ' checked' : '';
-$register_check_q3[2] = (isset($_POST['register_question_3']) && $_POST['register_question_3'] == 2) ? ' checked' : '';
-$register_check_q4[1] = (isset($_POST['register_question_4']) && $_POST['register_question_4'] == 1) ? ' checked' : '';
-$register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['register_question_4'] == 2) ? ' checked' : '';
+$register_check_q1[1] =
+                       (isset($_POST['register_question_1']) && $_POST['register_question_1'] === 1) ? ' checked' : '';
+$register_check_q1[2] =
+                       (isset($_POST['register_question_1']) && $_POST['register_question_1'] === 2) ? ' checked' : '';
+$register_check_q1[3] =
+                       (isset($_POST['register_question_1']) && $_POST['register_question_1'] === 3) ? ' checked' : '';
+$register_check_q2[1] =
+                       (isset($_POST['register_question_2']) && $_POST['register_question_2'] === 1) ? ' checked' : '';
+$register_check_q2[2] =
+                       (isset($_POST['register_question_2']) && $_POST['register_question_2'] === 2) ? ' checked' : '';
+$register_check_q2[3] =
+                       (isset($_POST['register_question_2']) && $_POST['register_question_2'] === 3) ? ' checked' : '';
+$register_check_q3[1] =
+                       (isset($_POST['register_question_3']) && $_POST['register_question_3'] === 1) ? ' checked' : '';
+$register_check_q3[2] =
+                       (isset($_POST['register_question_3']) && $_POST['register_question_3'] === 2) ? ' checked' : '';
+$register_check_q4[1] =
+                       (isset($_POST['register_question_4']) && $_POST['register_question_4'] === 1) ? ' checked' : '';
+$register_check_q4[2] =
+                       (isset($_POST['register_question_4']) && $_POST['register_question_4'] === 2) ? ' checked' : '';
 
 
 

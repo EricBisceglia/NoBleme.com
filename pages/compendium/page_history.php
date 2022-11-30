@@ -121,7 +121,7 @@ if(!$compendium_page_history)
       </td>
 
       <td class="spaced">
-        <?php if(($i + 1) == $compendium_page_history['rows']) { ?>
+        <?php if(($i + 1) === $compendium_page_history['rows']) { ?>
         <?=__('compendium_page_history_creation')?>
         <?php } else { ?>
         <?=$compendium_page_history[$i]['body']?>
@@ -130,7 +130,7 @@ if(!$compendium_page_history)
 
       <?php if($is_admin && $compendium_page_history['rows'] > 1) { ?>
       <td class="spaced nowrap">
-        <?php if(($i + 1) == $compendium_page_history['rows']) { ?>
+        <?php if(($i + 1) === $compendium_page_history['rows']) { ?>
         &nbsp;
         <?php } else { ?>
         <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "compendium_page_history_edit_form('".$compendium_page_history[$i]['id']."');")?>

@@ -95,7 +95,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <input type="text" class="indiv" id="tasks_solve_source" name="tasks_solve_source" value="<?=$tasks_solve_source?>">
       </div>
 
-      <?php if($task_details['creator_id'] != user_get_id()) { ?>
+      <?php if($task_details['creator_id'] !== user_get_id()) { ?>
       <input type="checkbox" id="tasks_solve_no_message" name="tasks_solve_no_message"<?=$tasks_solve_no_message?>>
       <label class="label_inline" for="tasks_solve_no_message"><?=__('tasks_solve_no_message')?></label><br>
       <?php } ?>

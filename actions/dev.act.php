@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -111,7 +111,7 @@ function dev_versions_list() : array
   for($i = 0 ; $i < $data['rows']; $i++)
   {
     // If it is the oldest version, there is no possible differential
-    if($i == ($data['rows'] - 1))
+    if($i === ($data['rows'] - 1))
     {
       $data[$i]['date_diff']  = '-';
       $data[$i]['css']        = '';
@@ -266,7 +266,7 @@ function dev_versions_edit( int     $id           ,
                                           AND     system_versions.extension LIKE  '$extension' "));
 
   // If it already exists (and isn't the current version), stop the process
-  if(isset($dversion['v_id']) && ($dversion['v_id'] != $id))
+  if(isset($dversion['v_id']) && ($dversion['v_id'] !== $id))
     return __('dev_versions_edit_error_duplicate');
 
   // Edit the version
@@ -440,7 +440,7 @@ function dev_blogs_list(  string  $sort = ''  ,
 
   // Decide whether to show deleted content
   $show_deleted = (!$is_admin) ? " AND dev_blogs.is_deleted = 0 "     : ' ';
-  $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang != '' "  : ' ';
+  $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang !== '' " : ' ';
 
   // Filter by year if necessary
   $year = sanitize($year, 'int', 0);
@@ -448,7 +448,7 @@ function dev_blogs_list(  string  $sort = ''  ,
 
   // Sort the content if necessary
   $order_by = " dev_blogs.posted_at DESC ";
-  $order_by = ($is_admin && $sort == 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
+  $order_by = ($is_admin && $sort === 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
 
   // Fetch devblogs
   $qblogs = query(" SELECT    dev_blogs.id            AS 'b_id'       ,
@@ -885,7 +885,7 @@ function dev_doc_icon_to_clipboard( string  $name                               
   // Prepare the data
   $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
   $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
-  $small    = ($size == 'small') ? ', is_small: true' : '';
+  $small    = ($size === 'small') ? ', is_small: true' : '';
 
   // Assemble the string
   $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");

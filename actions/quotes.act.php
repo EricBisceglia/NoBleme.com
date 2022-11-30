@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -230,7 +230,7 @@ function quotes_list( ?array  $search         = array() ,
     $query_search .= " AND 1 = 0                      ";
 
   // Search through the data: Years
-  if($search_year == -1)
+  if($search_year === -1)
     $query_search .= " AND quotes.submitted_at                      = 0               ";
   else if($search_year)
     $query_search .= " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year'  ";
@@ -269,7 +269,7 @@ function quotes_list( ?array  $search         = array() ,
     $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
     $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
     $temp                     = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
-    $data[$i]['linked_count'] = ($temp && $temp == count($data[$i]['linked_nicks'])) ? $temp : 0;
+    $data[$i]['linked_count'] = ($temp && $temp === count($data[$i]['linked_nicks'])) ? $temp : 0;
     $data[$i]['nsfw']         = $row['q_nsfw'];
     $data[$i]['deleted']      = $row['q_deleted'];
     $data[$i]['validated']    = $row['q_public'];
@@ -574,7 +574,7 @@ function quotes_approve(int $quote_id) : mixed
           WHERE   quotes.id               = '$quote_id' ");
 
   // Notify the user if they are not the one approving the quote
-  if($dquote['q_submitter'] && user_get_id() != $dquote['q_submitter'])
+  if($dquote['q_submitter'] && user_get_id() !== $dquote['q_submitter'])
   {
     // Prepare some data
     $admin_id = sanitize(user_get_id(), 'int', 0);
@@ -583,10 +583,10 @@ function quotes_approve(int $quote_id) : mixed
     $path     = root_path();
 
     // Prepare the message's title
-    $message_title = ($lang == 'FR') ? 'Citation approuvée' : 'Quote proposal approved';
+    $message_title = ($lang === 'FR') ? 'Citation approuvée' : 'Quote proposal approved';
 
     // Prepare the message's body
-    if($lang == 'FR')
+    if($lang === 'FR')
       $message_body = <<<EOT
 Votre proposition de citation a été approuvée : [url={$path}pages/quotes/{$quote_id}]Citation #{$quote_id}[/url].
 
@@ -610,15 +610,15 @@ EOT;
   }
 
   // Notify IRC in the correct language
-  if($dquote['q_lang'] == 'EN')
+  if($dquote['q_lang'] === 'EN')
     irc_bot_send_message("A new quote has been added to NoBleme's quote database: ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'english');
-  else if($dquote['q_lang'] == 'FR')
+  else if($dquote['q_lang'] === 'FR')
     irc_bot_send_message("Une nouvelle entrée a été ajoutée à la collection de citations de NoBleme : ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'french');
 
   // Notify Discord
-  if($dquote['q_lang'] == 'EN')
+  if($dquote['q_lang'] === 'EN')
     discord_send_message("A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
-  else if($dquote['q_lang'] == 'FR')
+  else if($dquote['q_lang'] === 'FR')
     discord_send_message("A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
 
   // Fetch more data on the quote
@@ -692,7 +692,7 @@ function quotes_reject( int     $quote_id     ,
           WHERE   quotes.id               = '$quote_id' ");
 
   // Notify the user if they are not the one rejecting the quote
-  if($dquote['q_submitter'] && user_get_id() != $dquote['q_submitter'])
+  if($dquote['q_submitter'] && user_get_id() !== $dquote['q_submitter'])
   {
     // Prepare some data
     $admin_id = sanitize(user_get_id(), 'int', 0);
@@ -701,19 +701,19 @@ function quotes_reject( int     $quote_id     ,
     $body     = $dquote['q_body'];
 
     // Prepare the message's title
-    $message_title = ($lang == 'FR') ? 'Citation rejetée' : 'Quote proposal rejected';
+    $message_title = ($lang === 'FR') ? 'Citation rejetée' : 'Quote proposal rejected';
 
     // Prepare the rejection reason
     if($reason)
     {
-      if($lang == 'FR')
+      if($lang === 'FR')
         $reason = "[u]Raison du refus[/u] : $reason";
       else
         $reason = "[u]Rejection reason[/u]: $reason";
     }
 
     // Prepare the message's body
-    if($lang == 'FR')
+    if($lang === 'FR')
       $message_body = <<<EOT
 Votre proposition de citation a été rejetée.
 
@@ -1204,8 +1204,8 @@ function user_settings_quotes() : array
     $lang = user_get_language();
 
     // Set the language settings
-    $lang_en = ($lang == 'EN');
-    $lang_fr = ($lang == 'FR');
+    $lang_en = ($lang === 'EN');
+    $lang_fr = ($lang === 'FR');
   }
 
   // Return those privacy settings, neatly folded in a cozy array

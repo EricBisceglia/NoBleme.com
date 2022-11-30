@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 
@@ -97,11 +97,11 @@ function fixtures_generate_data(  string  $type               ,
     return '';
 
   // Random int between $min and $max
-  if($type == 'int')
+  if($type === 'int')
     return mt_rand($min, $max);
 
   // Random string of digits
-  if($type == 'digits')
+  if($type === 'digits')
   {
     $digits  = '';
     $max_length   = mt_rand($min, $max);
@@ -111,7 +111,7 @@ function fixtures_generate_data(  string  $type               ,
   }
 
   // Random string
-  if($type == 'string')
+  if($type === 'string')
   {
     $characters   = "aaaaaabcdeeeeeeefghiiiiiijkllmmnnoooooopqrrsssttuuvwxyz";
     if(!$no_spaces)
@@ -124,14 +124,14 @@ function fixtures_generate_data(  string  $type               ,
   }
 
   // Random paragraph
-  if($type == 'sentence')
+  if($type === 'sentence')
   {
     $sentence = ucfirst(fixtures_lorem_ipsum(mt_rand($min, $max), 1));
     return ($no_periods) ? $sentence : $sentence.'.';
   }
 
   // Random text
-  if($type == 'text')
+  if($type === 'text')
   {
     $text = '';
     $max_length = mt_rand($min, $max);
@@ -257,7 +257,7 @@ query(" INSERT INTO system_variables
 $random = mt_rand(30,50);
 for($i = 0; $i < $random; $i++)
 {
-  if($i == 0)
+  if($i === 0)
   {
     $time       = 1111239420;
     $date       = date('Y-m-d', $time);
@@ -1099,7 +1099,7 @@ while($dusers = mysqli_fetch_array($qusers))
       $deleted_r  = (mt_rand(0,50) < 50) ? 0 : 1;
       $deleted_s  = (mt_rand(0,50) < 50) ? 0 : 1;
       $recipient  = ($i % 2) ? $partner : $dusers['u_id'];
-      $sender     = ($recipient == $partner) ? $dusers['u_id'] : $partner;
+      $sender     = ($recipient === $partner) ? $dusers['u_id'] : $partner;
       $sent_at    = ($i) ? mt_rand($sent_at, time()) : mt_rand(1111239420, time());
       $read_at    = ($i < $random2 || mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
       $title      = ($i) ? 'RE: '.$title : fixtures_generate_data('sentence', 1, 2);
@@ -1590,13 +1590,13 @@ for($i = 0; $i < $random; $i++)
 
   // Activity logs
   $quote = fixtures_query_id();
-  if(!$deleted && $language == 'EN')
+  if(!$deleted && $language === 'EN')
     query(" INSERT INTO logs_activity
             SET         logs_activity.happened_at       = '$submitted'    ,
                         logs_activity.language          = 'ENFR'          ,
                         logs_activity.activity_type     = 'quotes_new_en' ,
                         logs_activity.activity_id       = '$quote'        ");
-  else if(!$deleted && $language == 'FR')
+  else if(!$deleted && $language === 'FR')
     query(" INSERT INTO logs_activity
             SET         logs_activity.happened_at       = '$submitted'    ,
                         logs_activity.language          = 'FR'            ,
@@ -1814,7 +1814,7 @@ for($i = 0; $i < $random; $i++)
 {
   // Generate random data
   $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
-  $draft        = (!$deleted && mt_rand(0,20) == 20) ? 1 : 0;
+  $draft        = (!$deleted && mt_rand(0,20) === 20) ? 1 : 0;
   $created_at   = mt_rand(1111239420, time());
   $era          = (mt_rand(0,1)) ? fixtures_fetch_random_id('compendium_eras') : 0;
   $temp         = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');

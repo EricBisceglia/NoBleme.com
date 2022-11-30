@@ -84,10 +84,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1 class="align_center">
     <?=__link('pages/users/list', $profile_data['username'], 'noglow')?>
-    <?php if(!$profile_id || $profile_id == $user_id) { ?>
+    <?php if(!$profile_id || $profile_id === $user_id) { ?>
     <?=__icon('edit', href: 'pages/users/profile_edit', alt: 'E', title: __('edit'), title_case: 'initials')?>
     <?php } ?>
-    <?php if($is_moderator && $profile_id && $profile_id != $user_id) { ?>
+    <?php if($is_moderator && $profile_id && $profile_id !== $user_id) { ?>
     <?=__icon('edit', href: 'pages/users/profile_delete?id='.$profile_data['id'], alt: 'E', title: __('edit'), title_case: 'initials')?>
     <?=__icon('user_delete', href: 'pages/admin/ban?id='.$profile_data['id'], alt: 'X', title: __('edit'), title_case: 'initials')?>
     <?php } ?>

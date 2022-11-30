@@ -94,9 +94,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p class="tinypadding_top">
     <?php if($compendium_pages_list[$i]['appeared']) { ?>
     <?=__('compendium_list_appeared').__(':', spaces_after: 1),$compendium_pages_list[$i]['appeared']?>
-    <?php } if($compendium_pages_list[$i]['appeared'] && $compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <?php } if($compendium_pages_list[$i]['appeared'] && $compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] !== $compendium_pages_list[$i]['peak']) { ?>
     <br>
-    <?php } if($compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] != $compendium_pages_list[$i]['peak']) { ?>
+    <?php } if($compendium_pages_list[$i]['peak'] && $compendium_pages_list[$i]['appeared'] !== $compendium_pages_list[$i]['peak']) { ?>
     <?=__('compendium_list_peak').__(':', spaces_after: 1),$compendium_pages_list[$i]['peak']?>
     <?php } ?>
   </p>

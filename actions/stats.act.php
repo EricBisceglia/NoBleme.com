@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -154,16 +154,16 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   for($i = 0; $i < $data['rows']; $i++)
   {
     // Remove unwanted metrics when searching for specific performances
-    $temp                     = ($search_queries == 1 && $data[$i]['queries'] > $min_queries)   ? 1 : 0;
-    $temp                     = ($search_queries == 2 && $data[$i]['queries'] > $good_queries)  ? 1 : $temp;
-    $temp                     = ($search_queries == 3 && $data[$i]['queries'] < $bad_queries)   ? 1 : $temp;
-    $temp                     = ($search_queries == 4 && $data[$i]['queries'] < $awful_queries) ? 1 : $temp;
-    $temp                     = ($search_queries == 5 && $data[$i]['queries'] < $max_queries)   ? 1 : $temp;
-    $temp                     = ($search_load == 1 && $data[$i]['load'] > $min_load)            ? 1 : $temp;
-    $temp                     = ($search_load == 2 && $data[$i]['load'] > $good_load)           ? 1 : $temp;
-    $temp                     = ($search_load == 3 && $data[$i]['load'] < $bad_load)            ? 1 : $temp;
-    $temp                     = ($search_load == 4 && $data[$i]['load'] < $awful_load)          ? 1 : $temp;
-    $data[$i]['skip']         = ($search_load == 5 && $data[$i]['load'] < $max_load)            ? 1 : $temp;
+    $temp                     = ($search_queries === 1 && $data[$i]['queries'] > $min_queries)    ? 1 : 0;
+    $temp                     = ($search_queries === 2 && $data[$i]['queries'] > $good_queries)   ? 1 : $temp;
+    $temp                     = ($search_queries === 3 && $data[$i]['queries'] < $bad_queries)    ? 1 : $temp;
+    $temp                     = ($search_queries === 4 && $data[$i]['queries'] < $awful_queries)  ? 1 : $temp;
+    $temp                     = ($search_queries === 5 && $data[$i]['queries'] < $max_queries)    ? 1 : $temp;
+    $temp                     = ($search_load === 1 && $data[$i]['load'] > $min_load)             ? 1 : $temp;
+    $temp                     = ($search_load === 2 && $data[$i]['load'] > $good_load)            ? 1 : $temp;
+    $temp                     = ($search_load === 3 && $data[$i]['load'] < $bad_load)             ? 1 : $temp;
+    $temp                     = ($search_load === 4 && $data[$i]['load'] < $awful_load)           ? 1 : $temp;
+    $data[$i]['skip']         = ($search_load === 5 && $data[$i]['load'] < $max_load)             ? 1 : $temp;
     $data['realrows']         = ($data[$i]['skip']) ? ($data['realrows'] - 1) : $data['realrows'];
 
     // Style the metrics based on their performance
@@ -213,7 +213,7 @@ function stats_metrics_reset( int $metric_id = NULL ) : void
             WHERE   stats_pages.id          = '$metric_id' ");
 
   // Wipe all metrics
-  else if($metric_id == 0)
+  else if($metric_id === 0)
     query(" UPDATE  stats_pages
             SET     stats_pages.query_count = 0 ,
                     stats_pages.load_time   = 0 ");
@@ -286,7 +286,7 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   for($i = 0; $row = mysqli_fetch_array($qviews); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
-    $temp                 = ($lang == 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
+    $temp                 = ($lang === 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
     $temp                 = (in_array($sort_by, array('url', 'uactivity'))) ? $row['p_url'] : $temp;
     $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 40, '...')) : '-';
     $data[$i]['fullname'] = (mb_strlen($temp) > 40) ? sanitize_output($temp) : NULL;
@@ -307,9 +307,9 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
-  if($sort_by == 'growth')
+  if($sort_by === 'growth')
     array_multisort(array_column($data, "sgrowth"), SORT_DESC, $data);
-  if($sort_by == 'pgrowth')
+  if($sort_by === 'pgrowth')
     array_multisort(array_column($data, "spgrowth"), SORT_DESC, $data);
 
   // Add the number of rows to the data
@@ -419,28 +419,28 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   };
 
   // Search through the data: Website language
-  if($search_language && $search_language != 'None')
+  if($search_language && $search_language !== 'None')
     $query_search .= " AND  users.current_language LIKE '%$search_language%'  ";
   else if($search_language)
     $query_search .= " AND  users.current_language    = ''                    ";
 
   // Search through the data: Spoken languages
-  if($search_speaks && $search_speaks != 'None' && $search_speaks != 'Both')
+  if($search_speaks && $search_speaks !== 'None' && $search_speaks !== 'Both')
     $query_search .= " AND    users_profile.spoken_languages LIKE '%$search_speaks%'  ";
-  else if($search_speaks == 'Both')
+  else if($search_speaks === 'Both')
     $query_search .= "  AND ( users_profile.spoken_languages LIKE 'FREN'
                         OR    users_profile.spoken_languages LIKE 'ENFR' )            ";
   else if($search_speaks)
     $query_search .= "  AND   users_profile.spoken_languages    = ''                  ";
 
   // Search through the data: Website theme
-  if($search_theme && $search_theme != 'None')
+  if($search_theme && $search_theme !== 'None')
     $query_search .= " AND users.current_theme LIKE '%$search_theme%' ";
   else if($search_theme)
     $query_search .= " AND users.current_theme    = ''                ";
 
   // Search through the data: Birthday
-  if($search_birthday == -1)
+  if($search_birthday === -1)
     $query_search .= " AND users_profile.birthday       = '0000-00-00'        ";
   else if($search_birthday > 0)
     $query_search .= " AND YEAR(users_profile.birthday) = '$search_birthday'  ";
@@ -624,11 +624,11 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
 
     // Update the stats
     $sum_visited  += ($row['u_visit'] >= (time() - 8640000))  ? 1 : 0;
-    $sum_english  += ($row['u_lang'] == 'EN')                 ? 1 : 0;
-    $sum_french   += ($row['u_lang'] == 'FR')                 ? 1 : 0;
-    $sum_dark     += ($row['u_theme'] == 'dark')              ? 1 : 0;
-    $sum_light    += ($row['u_theme'] == 'light')             ? 1 : 0;
-    $sum_profile  += ($row['u_birthday'] != '0000-00-00' || $row['u_location'] || $row['u_languages'] || $row['u_pronouns_en'] || $row['u_pronouns_fr'] || $row['u_profile_en'] || $row['u_profile_fr']) ? 1 : 0;
+    $sum_english  += ($row['u_lang'] === 'EN')                ? 1 : 0;
+    $sum_french   += ($row['u_lang'] === 'FR')                ? 1 : 0;
+    $sum_dark     += ($row['u_theme'] === 'dark')             ? 1 : 0;
+    $sum_light    += ($row['u_theme'] === 'light')            ? 1 : 0;
+    $sum_profile  += ($row['u_birthday'] !== '0000-00-00' || $row['u_location'] || $row['u_languages'] || $row['u_pronouns_en'] || $row['u_pronouns_fr'] || $row['u_profile_en'] || $row['u_profile_fr']) ? 1 : 0;
   }
 
   // Fetch the total guest count
@@ -696,13 +696,13 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   $query_search = ($is_admin) ? " WHERE 1 = 1 " : " AND users.id IS NULL ";
 
   // Search through the data: Website language
-  if($search_language && $search_language != 'None')
+  if($search_language && $search_language !== 'None')
     $query_search .= " AND users_guests.current_language LIKE '%$search_language%'  ";
   else if($search_language)
     $query_search .= " AND users_guests.current_language    = ''                    ";
 
   // Search through the data: Website theme
-  if($search_theme && $search_theme != 'None')
+  if($search_theme && $search_theme !== 'None')
     $query_search .= " AND users_guests.current_theme  LIKE '%$search_theme%' ";
   else if($search_theme)
     $query_search .= " AND users_guests.current_theme     = ''                ";
@@ -715,7 +715,7 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
                                       OR    users_guests.last_visited_url        LIKE '%$search_page%' )      " : "";
 
   // Forbid non-admins from searching by identity
-  if($sort_by == 'identity' && !$is_admin)
+  if($sort_by === 'identity' && !$is_admin)
     $sort_by = '';
 
   // Sort the data
@@ -786,10 +786,10 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
     $data[$i]['visits']   = ($row['g_visits'] > 1) ? sanitize_output($row['g_visits']) : '-';
 
     // Update the stats
-    $sum_english  += ($row['g_lang'] == 'EN')     ? 1 : 0;
-    $sum_french   += ($row['g_lang'] == 'FR')     ? 1 : 0;
-    $sum_dark     += ($row['g_theme'] == 'dark')  ? 1 : 0;
-    $sum_light    += ($row['g_theme'] == 'light') ? 1 : 0;
+    $sum_english  += ($row['g_lang'] === 'EN')      ? 1 : 0;
+    $sum_french   += ($row['g_lang'] === 'FR')      ? 1 : 0;
+    $sum_dark     += ($row['g_theme'] === 'dark')   ? 1 : 0;
+    $sum_light    += ($row['g_theme'] === 'light')  ? 1 : 0;
   }
 
   // Fetch the total guest count
@@ -873,7 +873,7 @@ function stats_doppelgangers_list() : array
   // Go through the rows once again but in reverse in order count the amount of times an IP is shared
   for($i = ($data['rows'] - 1); $i >= 0; $i--)
   {
-    if($i < ($data['rows'] - 1) && $data[$i]['ip'] == $data[$i+1]['ip'])
+    if($i < ($data['rows'] - 1) && $data[$i]['ip'] === $data[$i+1]['ip'])
       $count++;
     else
       $count = 1;

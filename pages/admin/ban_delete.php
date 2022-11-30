@@ -77,7 +77,7 @@ $ban_username = user_get_username($user_id);
 $ban_details  = user_ban_details($user_id);
 
 // Hide the french unban justification in the english interface
-$admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';
+$admin_ban_hide_french = ($lang === 'EN') ? ' hidden' : '';
 
 
 

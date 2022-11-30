@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -84,7 +84,7 @@ function private_message_list(  string  $sort_by        = ''      ,
     $query_search .= "  AND   users_recipient.username               LIKE '%$search_recipient%' ";
 
   // Search through the data: Read status
-  if($search_read == -1)
+  if($search_read === -1)
     $query_search .= "  AND users_private_messages.read_at = 0 ";
   else if($search_read)
     $query_search .= "  AND users_private_messages.read_at > 0 ";
@@ -224,14 +224,14 @@ function private_message_get( int $message_id ) : array
   $dmessage = mysqli_fetch_array(query($qmessage));
 
   // Error: Deleted messages
-  if(($dmessage['pm_deleted_r'] && $dmessage['pm_recipient'] == $user_id) || ($dmessage['pm_deleted_s'] && $dmessage['pm_sender_id'] == $user_id))
+  if(($dmessage['pm_deleted_r'] && $dmessage['pm_recipient'] === $user_id) || ($dmessage['pm_deleted_s'] && $dmessage['pm_sender_id'] === $user_id))
   {
     $data['error'] = __('users_message_deleted');
     return $data;
   }
 
   // Error: Message does not belong to user
-  if($dmessage['pm_recipient'] != $user_id && $dmessage['pm_sender_id'] != $user_id)
+  if($dmessage['pm_recipient'] !== $user_id && $dmessage['pm_sender_id'] !== $user_id)
   {
     $data['error'] = __('users_message_neighbor');
     return $data;
@@ -239,7 +239,7 @@ function private_message_get( int $message_id ) : array
 
   // Prepare the data
   $data['id']         = sanitize_output($message_id);
-  $data['self']       = ($user_id == $dmessage['pm_sender_id']);
+  $data['self']       = ($user_id === $dmessage['pm_sender_id']);
   $data['title']      = sanitize_output($dmessage['pm_title']);
   $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
   $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
@@ -248,7 +248,7 @@ function private_message_get( int $message_id ) : array
   $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
 
   // Mark the message as read if it was previously unread
-  if(!$dmessage['pm_read'] && $user_id == $dmessage['pm_recipient'])
+  if(!$dmessage['pm_read'] && $user_id === $dmessage['pm_recipient'])
   {
     $timestamp = sanitize(time(), 'int', 0);
     query(" UPDATE  users_private_messages
@@ -257,7 +257,7 @@ function private_message_get( int $message_id ) : array
   }
 
   // Get parent message chain
-  if($dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id)
+  if($dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id)
   {
     // Initialize the parent counter
     $i = 0;
@@ -293,10 +293,10 @@ function private_message_get( int $message_id ) : array
       if(!isset($message_error))
       {
         // Identify whether the user is the sender or the recipient
-        $user_is_sender = ($user_id == $dmessage['pm_sender_id']);
+        $user_is_sender = ($user_id === $dmessage['pm_sender_id']);
 
         // Error: User is neither sender nor recipient
-        if(!$user_is_sender && $user_id != $dmessage['pm_recipient'])
+        if(!$user_is_sender && $user_id !== $dmessage['pm_recipient'])
           $message_error = 1;
 
         // Error: Too many parents (maybe an infinite loop?)
@@ -320,7 +320,7 @@ function private_message_get( int $message_id ) : array
     }
 
     // Keep looping as long as there is a parent and no error has arisen
-    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id);
+    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id);
 
     // Add the number of parents to the data
     $data['parents'] = $i;
@@ -441,11 +441,11 @@ function private_message_reply( int     $message_id ,
     return __('users_message_deleted');
 
   // Error: Can not reply to self
-  if($user_id == $dmessage['pm_sender'])
+  if($user_id === $dmessage['pm_sender'])
     return __('users_message_reply_self');
 
   // Error: Can not reply to other people's messages
-  if($user_id != $dmessage['pm_recipient'])
+  if($user_id !== $dmessage['pm_recipient'])
     return __('users_message_reply_others');
 
   // Check if the user is flooding the website
@@ -514,18 +514,18 @@ function private_message_delete( int $message_id ) : mixed
                                           WHERE   users_private_messages.id = '$message_id' "));
 
   // Determine whether user is sender or recipient
-  $user_is_sender = ($dmessage['pm_sender'] == $user_id);
+  $user_is_sender = ($dmessage['pm_sender'] === $user_id);
 
   // Error: Message is already deleted
   if(($user_is_sender && $dmessage['pm_deleted_s']) || (!$user_is_sender && $dmessage['pm_deleted_r']))
     return __('users_message_predeleted');
 
   // Error: Message does not belong to user
-  if($dmessage['pm_recipient'] != $user_id && $dmessage['pm_sender'] != $user_id)
+  if($dmessage['pm_recipient'] !== $user_id && $dmessage['pm_sender'] !== $user_id)
     return __('users_message_ownership');
 
   // If both sender and recipient deleted the message, or if the message is sent to self, hard delete it
-  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']) || ($dmessage['pm_recipient'] == $dmessage['pm_sender']))
+  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']) || ($dmessage['pm_recipient'] === $dmessage['pm_sender']))
     query(" DELETE FROM users_private_messages
             WHERE       users_private_messages.id = '$message_id' ");
 
@@ -628,21 +628,21 @@ function private_message_admins(  string  $body               ,
   }
 
   // Error: Requested username is too short
-  if($type == 'username' && mb_strlen($extra) < 3)
+  if($type === 'username' && mb_strlen($extra) < 3)
   {
     $data['error'] = __('users_message_error_nick_short');
     return $data;
   }
 
   // Error: Requested username is too long
-  if($type == 'username' && mb_strlen($extra) > 15)
+  if($type === 'username' && mb_strlen($extra) > 15)
   {
     $data['error'] = __('users_message_error_nick_long');
     return $data;
   }
 
   // Error: Special characters in username
-  if($type == 'username' && !preg_match("/^[a-zA-Z0-9]+$/", $extra))
+  if($type === 'username' && !preg_match("/^[a-zA-Z0-9]+$/", $extra))
   {
     $data['error'] = __('users_message_error_nick_type');
     return $data;
@@ -656,17 +656,17 @@ function private_message_admins(  string  $body               ,
   }
 
   // Determine how the message should be named based on the user's language
-  if($type == 'username')
+  if($type === 'username')
     $title = __('users_message_admins_name_nick');
-  else if($type == 'delete')
+  else if($type === 'delete')
     $title = __('users_message_admins_name_del');
   else
     $title = __('users_message_admins_name');
 
   // Prepare the body
-  if($type == 'username')
+  if($type === 'username')
     $body = __('users_message_admins_body_nick', preset_values: array($extra)).$body;
-  else if($type == 'delete')
+  else if($type === 'delete')
     $body = __('users_message_admins_body_del').$body;
 
   // Send the message
@@ -878,7 +878,7 @@ function admin_mail_get( int $message_id ) : array
   }
 
   // Get parent message chain
-  if($dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id)
+  if($dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id)
   {
     // Initialize the parent counter
     $i = 0;
@@ -956,7 +956,7 @@ function admin_mail_get( int $message_id ) : array
     }
 
     // Keep looping as long as there is a parent and no error has arisen
-    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id);
+    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id);
 
     // Add the number of parents to the data
     $data['parents'] = $i;
@@ -1011,7 +1011,7 @@ function admin_mail_reply(  int     $message_id ,
                                           WHERE   users_private_messages.id = '$message_id' "));
 
   // Error: Can not reply to self
-  if($user_id == $dmessage['pm_sender'])
+  if($user_id === $dmessage['pm_sender'])
     return __('users_message_reply_self');
 
   // Error: Can not reply to other people's messages

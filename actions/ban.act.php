@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -73,7 +73,7 @@ function admin_ban_create(  int     $banner_id            ,
     return __('admin_ban_add_error_wrong_user');
 
   // Error: Can't ban self
-  if($banned_user_id == $banner_id)
+  if($banned_user_id === $banner_id)
     return __('admin_ban_add_error_self');
 
   // Error: Moderators can't ban admins
@@ -81,15 +81,15 @@ function admin_ban_create(  int     $banner_id            ,
     return __('admin_ban_add_error_moderator');
 
   // Determine when the ban ends
-  if($ban_length == 1)
+  if($ban_length === 1)
     $ban_end  = strtotime('+1 day', time());
-  else if($ban_length == 7)
+  else if($ban_length === 7)
     $ban_end  = strtotime('+1 week', time());
-  else if($ban_length == 30)
+  else if($ban_length === 30)
     $ban_end  = strtotime('+1 month', time());
-  else if($ban_length == 365)
+  else if($ban_length === 365)
     $ban_end  = strtotime('+1 year', time());
-  else if($ban_length == 3650)
+  else if($ban_length === 3650)
     $ban_end  = strtotime('+10 years', time());
   else
     return __('admin_ban_add_error_length');
@@ -148,10 +148,10 @@ function admin_ban_create(  int     $banner_id            ,
   $ban_duration_fr  = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
 
   // Private message to the banned user
-  $ban_duration_pm    = ($banned_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
+  $ban_duration_pm    = ($banned_user_language === 'EN') ? $ban_duration_en : $ban_duration_fr;
   $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en_raw)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
   $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr_raw)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
-  $ban_reason_pm      = ($banned_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
+  $ban_reason_pm      = ($banned_user_language === 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
   private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, lang: $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0, hide_admin_mail: true);
 
   // IRC bot messages
@@ -217,7 +217,7 @@ function admin_ban_edit(  int     $banner_id            ,
     return;
 
   // Do nothing if it is an attempt to ban self
-  if($banned_id == $banner_id)
+  if($banned_id === $banner_id)
     return;
 
   // Do nothing if a moderator is trying to ban an administrator
@@ -232,15 +232,15 @@ function admin_ban_edit(  int     $banner_id            ,
                                       WHERE   users.id = '$banned_id' "));
 
   // Determine when the ban ends
-  if($ban_length == 1)
+  if($ban_length === 1)
     $ban_end  = strtotime('+1 day', time());
-  else if($ban_length == 7)
+  else if($ban_length === 7)
     $ban_end  = strtotime('+1 week', time());
-  else if($ban_length == 30)
+  else if($ban_length === 30)
     $ban_end  = strtotime('+1 month', time());
-  else if($ban_length == 365)
+  else if($ban_length === 365)
     $ban_end  = strtotime('+1 year', time());
-  else if($ban_length == 3650)
+  else if($ban_length === 3650)
     $ban_end  = strtotime('+10 years', time());
   else
     $ban_end  = $dban['b_end'];
@@ -266,7 +266,7 @@ function admin_ban_edit(  int     $banner_id            ,
                   username:             $banned_username_raw  );
 
   // Generate a modlog and detailed activity logs if needed
-  if($ban_length || $ban_reason_en_raw != $dban['b_reason_en'] || $ban_reason_fr_raw != $dban['b_reason_fr'])
+  if($ban_length || $ban_reason_en_raw !== $dban['b_reason_en'] || $ban_reason_fr_raw !== $dban['b_reason_fr'])
   {
     $modlog = log_activity( 'users_banned_edit'                         ,
                             is_moderators_only:   1                     ,
@@ -276,9 +276,9 @@ function admin_ban_edit(  int     $banner_id            ,
                             fk_users:             $banned_id            ,
                             username:             $banned_username_raw  ,
                             moderator_username:   $banner_username_raw  );
-    if($ban_reason_en_raw != $dban['b_reason_en'])
+    if($ban_reason_en_raw !== $dban['b_reason_en'])
       log_activity_details($modlog, 'New ban reason (EN)', 'Nouvelle raison du ban (EN)', $dban['b_reason_en'], $ban_reason_en_raw);
-    if($ban_reason_fr_raw != $dban['b_reason_fr'])
+    if($ban_reason_fr_raw !== $dban['b_reason_fr'])
       log_activity_details($modlog, 'New ban reason (FR)', 'Nouvelle raison du ban (FR)', $dban['b_reason_fr'], $ban_reason_fr_raw);
   }
 
@@ -313,7 +313,7 @@ function admin_ban_edit(  int     $banner_id            ,
   if($ban_length)
   {
     $ban_user_language  = user_get_language($banned_id);
-    $ban_duration_pm    = ($ban_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
+    $ban_duration_pm    = ($ban_user_language === 'EN') ? $ban_duration_en : $ban_duration_fr;
     private_message_send(__('admin_ban_edit_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_edit_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, $ban_user_language), $ban_duration_pm[$ban_length])), $banned_id, 0, hide_admin_mail: true);
   }
 }
@@ -361,7 +361,7 @@ function admin_ban_delete(  string  $unbanned_id            ,
     return;
 
   // Do nothing if it is an attempt to unban self
-  if($unbanned_id == $unbanner_id)
+  if($unbanned_id === $unbanner_id)
     return;
 
   // Do nothing if a moderator is trying to unban an administrator
@@ -457,7 +457,7 @@ function admin_ip_ban_get( int $ip_ban_id ) : array
   $data['time_left']  = sanitize_output(time_until($dban['b_end']));
   $temp               = ($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en'];
   $lang               = user_get_language();
-  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
+  $data['ban_reason'] = ($lang === 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
 
   // Return the data
   return $data;
@@ -558,7 +558,7 @@ function admin_ip_ban_create( int     $banner_id              ,
     return __('admin_ban_add_error_ip_and_user');
 
   // Error: Cannot ban wildcard
-  if(!$username && $ip_address == '*')
+  if(!$username && $ip_address === '*')
     return __('admin_ban_add_error_wildcard');
 
   // Error: One wildcard maximum
@@ -570,15 +570,15 @@ function admin_ip_ban_create( int     $banner_id              ,
     return __('admin_ban_add_error_characters');
 
   // Determine when the ban ends
-  if($ban_length == 1)
+  if($ban_length === 1)
     $ban_end  = strtotime('+1 day', time());
-  else if($ban_length == 7)
+  else if($ban_length === 7)
     $ban_end  = strtotime('+1 week', time());
-  else if($ban_length == 30)
+  else if($ban_length === 30)
     $ban_end  = strtotime('+1 month', time());
-  else if($ban_length == 365)
+  else if($ban_length === 365)
     $ban_end  = strtotime('+1 year', time());
-  else if($ban_length == 3650)
+  else if($ban_length === 3650)
     $ban_end  = strtotime('+10 years', time());
   else
     return __('admin_ban_add_error_length');
@@ -594,7 +594,7 @@ function admin_ip_ban_create( int     $banner_id              ,
       return __('admin_ban_add_error_wrong_user');
 
     // Error: Can't ban self
-    if($banned_user_id == $banner_id)
+    if($banned_user_id === $banner_id)
       return __('admin_ban_add_error_self');
 
     // Error: Moderators can't ban admins
@@ -1025,19 +1025,19 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
     $data[$i]['unbanned_by']        = sanitize_output($row['unbanner_nick']);
     $data[$i]['unbanned_by_id']     = $row['unbanner_id'];
     $temp                           = ($row['l_reason_fr']) ? $row['l_reason_fr'] : $row['l_reason_en'];
-    $temp                           = ($lang == 'EN') ? $row['l_reason_en'] : $temp;
+    $temp                           = ($lang === 'EN') ? $row['l_reason_en'] : $temp;
     $data[$i]['ban_reason']         = sanitize_output(string_truncate($temp, 9, '...'));
     $data[$i]['ban_reason_full']    = (strlen($temp) > 9 ) ? sanitize_output($temp) : '';
     $temp                           = ($row['l_ureason_fr']) ? $row['l_ureason_fr'] : $row['l_ureason_en'];
-    $temp                           = ($lang == 'EN') ? $row['l_ureason_en'] : $temp;
+    $temp                           = ($lang === 'EN') ? $row['l_ureason_en'] : $temp;
     $data[$i]['unban_reason']       = sanitize_output(string_truncate($temp, 9, '...'));
     $data[$i]['unban_reason_full']  = (strlen($temp) > 9 ) ? sanitize_output($temp) : '';
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
-  if($sort_by == 'sentence')
+  if($sort_by === 'sentence')
     array_multisort(array_column($data, "duration"), SORT_DESC, $data);
-  if($sort_by == 'served')
+  if($sort_by === 'served')
     array_multisort(array_column($data, "served"), SORT_DESC, $data);
 
   // Add the number of rows to the data

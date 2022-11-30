@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -163,7 +163,7 @@ if(!isset($_SESSION['lang']))
   {
     // Fetch the language settings (default to english if it isn't french or if it isn't found)
     if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-      $language_header  = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == 'fr') ? 'FR' : 'EN';
+      $language_header  = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) === 'fr') ? 'FR' : 'EN';
     else
       $language_header  = 'EN';
 
@@ -189,7 +189,7 @@ if(!isset($_SESSION['lang']))
 if(isset($_GET['changelang']))
 {
   // Get the language that the user is currently not using
-  $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
+  $changelang = ($_SESSION['lang'] === 'EN') ? 'FR' : 'EN';
 
   // Change the cookie and session language to the new one
   $_SESSION['lang'] = $changelang;
@@ -352,7 +352,7 @@ if($is_ip_banned && user_is_logged_in())
   user_log_out();
 
 // Full IP bans should be redirected to an error page
-if(substr($_SERVER["PHP_SELF"], -14) != "/banned_ip.php" && $is_ip_banned == 2)
+if(substr($_SERVER["PHP_SELF"], -14) !== "/banned_ip.php" && $is_ip_banned === 2)
   exit(header("Location: ".$path."banned_ip"));
 
 
@@ -361,7 +361,7 @@ if(substr($_SERVER["PHP_SELF"], -14) != "/banned_ip.php" && $is_ip_banned == 2)
 // Is the user banned
 
 // First off, to avoid infinite loops, make sure that the user is logged in and isn't already on the banned.php page
-if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
+if(substr($_SERVER["PHP_SELF"], -11) !== "/banned.php" && user_is_logged_in())
 {
   // Check whether the user is banned - if yes, redirect them to the banned page
   if(user_is_banned($_SESSION['user_id']))
@@ -898,7 +898,7 @@ function user_restrict_to_administrators() : void
   $lang = user_get_language();
 
   // Prepare the error message that will be displayed
-  $error_message = ($lang == 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
+  $error_message = ($lang === 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
 
   // Check if the user is logged in
   if(user_is_logged_in())
@@ -930,7 +930,7 @@ function user_restrict_to_moderators() : void
   $lang = user_get_language();
 
   // Prepare the error message that will be displayed
-  $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes d'administration du site.";
+  $error_message = ($lang === 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes d'administration du site.";
 
   // Check if the user is logged in
   if(user_is_logged_in())
@@ -965,12 +965,12 @@ function user_restrict_to_users() : void
   $lang = user_get_language();
 
   // Determine the icon's color
-  $icon_color = (user_get_mode() == 'dark') ? ' red' : '';
+  $icon_color = (user_get_mode() === 'dark') ? ' red' : '';
 
   // If the user is logged out, throw an error page asking the user to log in or register
   if(!user_is_logged_in())
   {
-    if($lang == 'EN')
+    if($lang === 'EN')
       error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle$icon_color\"> icon on the top right of the page");
     else
       error_page("Cette page nécessite de vous connecter à un compte.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle$icon_color\"> en haut à droite de la page");
@@ -995,7 +995,7 @@ function user_restrict_to_guests() : void
   $lang = user_get_language();
 
   // Prepare the error message that will be displayed
-  $error_message = ($lang == 'EN') ? "This page cannot be used while logged into an account." : "Cette page n'est pas utilisable lorsque vous êtes connecté à un compte.";
+  $error_message = ($lang === 'EN') ? "This page cannot be used while logged into an account." : "Cette page n'est pas utilisable lorsque vous êtes connecté à un compte.";
 
   // If the user is logged in, throw the error
   if(user_is_logged_in())
@@ -1214,7 +1214,7 @@ function user_get_birth_years() : array
 function user_generate_random_username( string $lang = 'EN' ) : string
 {
   // English logic
-  if($lang == 'EN')
+  if($lang === 'EN')
   {
     // Random word list: A main qualifier
     $qualifier1 = array("Lonely ", "Cute ", "Mr. ", "Ms. ", "President ", "Generic ", "Dirty ", "The ", "Forever ", "Never ", "Always ", "Painful ", "Very ", "Ugly ", "Dangerously ", "Mysterious ", "Chaotic ", "Pale ", "Funny ", "Cute ", "One eyed ", "European ", "American ", "Asian ", "Silly ", "Millenial ", "Dirty ", "Techno ", "Tired ", "Horned ", "Dead ", "Cool ", "Naked ", "Overcooked ", "Raw ", "One ", "First ", "Past ", "Some ");
@@ -1230,7 +1230,7 @@ function user_generate_random_username( string $lang = 'EN' ) : string
   }
 
   // French logic
-  if($lang == 'FR')
+  if($lang === 'FR')
   {
     // Random word list: The first qualifier should end with a space if it's not directly attached to the core name
     $qualifier1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Beau ", "Doux ", "Un ", "Premier ", "Gentil ", "Méchant ", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex-", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Futur ", "Second ", "Meta-", "Long ", "Double ", "Simple ", "Fourbe ", "Mini ");

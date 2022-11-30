@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -75,7 +75,7 @@ function meetups_get( int $meetup_id ) : mixed
   $data['id']             = $meetup_id;
   $data['is_deleted']     = sanitize_output($dmeetup['m_deleted']);
   $data['is_finished']    = (strtotime(date('Y-m-d')) > strtotime($dmeetup['m_date']));
-  $data['is_today']       = (date('Y-m-d') == $dmeetup['m_date']);
+  $data['is_today']       = (date('Y-m-d') === $dmeetup['m_date']);
   $data['date']           = sanitize_output(date_to_text($dmeetup['m_date']));
   $data['date_en']        = sanitize_output(date_to_text($dmeetup['m_date'], lang: 'EN'));
   $data['date_short_en']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'EN');
@@ -87,8 +87,8 @@ function meetups_get( int $meetup_id ) : mixed
   $data['days_until']     = sanitize_output($temp.__('day', amount: $temp, spaces_before: 1));
   $data['lang_en']        = str_contains($dmeetup['m_lang'], 'EN');
   $data['lang_fr']        = str_contains($dmeetup['m_lang'], 'FR');
-  $data['wrong_lang_en']  = ($lang == 'en' && !str_contains($dmeetup['m_lang'], 'EN'));
-  $data['wrong_lang_fr']  = ($lang == 'fr' && !str_contains($dmeetup['m_lang'], 'FR'));
+  $data['wrong_lang_en']  = ($lang === 'en' && !str_contains($dmeetup['m_lang'], 'EN'));
+  $data['wrong_lang_fr']  = ($lang === 'fr' && !str_contains($dmeetup['m_lang'], 'FR'));
   $data['details']        = bbcodes(sanitize_output($dmeetup['m_details_'.$lang], preserve_line_breaks: true));
   $data['details_en']     = sanitize_output($dmeetup['m_details_en']);
   $data['details_fr']     = sanitize_output($dmeetup['m_details_fr']);
@@ -123,7 +123,7 @@ function meetups_list(  string  $sort_by  = 'date'  ,
   $query_search = (!user_is_moderator()) ? " AND meetups.is_deleted = 0 " : "";
 
   // Search the data: Languages
-  if($search_lang == 'ENFR' || $search_lang == 'FREN')
+  if($search_lang === 'ENFR' || $search_lang === 'FREN')
     $query_search .= "  AND ( meetups.languages LIKE 'ENFR'
                         OR    meetups.languages LIKE 'FREN' ) ";
   else if($search_lang)
@@ -229,7 +229,7 @@ function meetups_add( array $contents ) : mixed
   $meetup_lang        = ($contents['lang_fr'])            ? $temp.'FR'                                         : $temp;
 
   // Error: Incorrect date
-  if(!$meetup_date || $meetup_date == '0000-00-00')
+  if(!$meetup_date || $meetup_date === '0000-00-00')
     return __('meetups_new_error_date');
 
   // Error: No location
@@ -359,7 +359,7 @@ function meetups_edit(  int   $meetup_id  ,
     return __('meetups_edit_error_id');
 
   // Error: Incorrect date
-  if(!$meetup_date || $meetup_date == '0000-00-00')
+  if(!$meetup_date || $meetup_date === '0000-00-00')
     return __('meetups_new_error_date');
 
   // Error: No location
@@ -413,7 +413,7 @@ function meetups_edit(  int   $meetup_id  ,
   $mod_username = user_get_username();
 
   // Activity log, only for future meetups getting their date changed
-  if(!$meetup_deleted && $meetup_date != $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  if(!$meetup_deleted && $meetup_date !== $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
     log_activity( 'meetups_edit'                        ,
                   language:             $meetup_lang    ,
                   activity_id:          $meetup_id      ,
@@ -429,15 +429,15 @@ function meetups_edit(  int   $meetup_id  ,
                           moderator_username:   $mod_username   );
 
   // Detailed moderation logs
-  if($meetup_date != $meetup_date_old)
+  if($meetup_date !== $meetup_date_old)
     log_activity_details($modlog, "Meetup date", "Date de l\'IRL", $meetup_date_old, $meetup_date, do_not_sanitize: true);
-  if($meetup_location != $meetup_location_old)
+  if($meetup_location !== $meetup_location_old)
     log_activity_details($modlog, "Meetup location", "Lieu de l\'IRL", $meetup_location_old, $meetup_location, do_not_sanitize: true);
-  if($meetup_lang != $meetup_lang_old)
+  if($meetup_lang !== $meetup_lang_old)
     log_activity_details($modlog, "Meetup languages", "Langues de l\'IRL", $meetup_lang_old, $meetup_lang, do_not_sanitize: true);
-  if($meetup_details_en != $meetup_details_en_old)
+  if($meetup_details_en !== $meetup_details_en_old)
     log_activity_details($modlog, "Extra details (english)", "Détails supplémentaires (anglais)", $meetup_details_en_old, $meetup_details_en, do_not_sanitize: true);
-  if($meetup_details_fr != $meetup_details_fr_old)
+  if($meetup_details_fr !== $meetup_details_fr_old)
     log_activity_details($modlog, "Extra details (french)", "Détails supplémentaires (français)", $meetup_details_fr_old, $meetup_details_fr, do_not_sanitize: true);
 
   // Plain text meetup dates and location
@@ -445,7 +445,7 @@ function meetups_edit(  int   $meetup_id  ,
   $meetup_date_fr = date_to_text($meetup_date, lang: 'FR');
 
   // IRC bot message
-  if(!$meetup_deleted && $meetup_date != $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  if(!$meetup_deleted && $meetup_date !== $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
   {
     if(str_contains($meetup_lang, 'EN'))
       irc_bot_send_message("The $meetup_date_en real life meetup has been moved to a new date - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
@@ -455,7 +455,7 @@ function meetups_edit(  int   $meetup_id  ,
   irc_bot_send_message("The $meetup_date_en real life meetup has been modified by $mod_username - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Discord message
-  if(!$meetup_deleted && $meetup_date != $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  if(!$meetup_deleted && $meetup_date !== $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
   {
     if(str_contains($meetup_lang, 'EN') && str_contains($meetup_lang, 'FR'))
     {
@@ -895,7 +895,7 @@ function meetups_attendees_add( int   $meetup_id  ,
   $extra_en   = (isset($contents['extra_en']))  ? sanitize($contents['extra_en'], 'string')           : '';
   $extra_fr   = (isset($contents['extra_fr']))  ? sanitize($contents['extra_fr'], 'string')           : '';
   $lock       = (isset($contents['lock']))      ? sanitize($contents['lock'], 'bool')                 : 'false';
-  $lock       = ($lock == 'true')               ? 1                                                   : 0;
+  $lock       = ($lock === 'true')              ? 1                                                   : 0;
   $username   = ($nickname)                     ? string_truncate($contents['nickname'], 20) : $contents['account'];
 
   // Error: No account or nickname provided
@@ -992,7 +992,7 @@ function meetups_attendees_add( int   $meetup_id  ,
     irc_bot_send_message("$username has joined the $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
   if(str_contains($meetup_lang, 'FR') && !$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
     irc_bot_send_message("$username a rejoint la rencontre IRL du $meetup_date_fr - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
-  if(strtotime($meetup_date) == strtotime(date('Y-m-d')))
+  if(strtotime($meetup_date) === strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has added $username to the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
   if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has added $username to the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
@@ -1039,7 +1039,7 @@ function meetups_attendees_edit(  int   $attendee_id  ,
   $extra_en     = (isset($contents['extra_en']))  ? sanitize($contents['extra_en'], 'string')           : '';
   $extra_fr     = (isset($contents['extra_fr']))  ? sanitize($contents['extra_fr'], 'string')           : '';
   $lock         = (isset($contents['lock']))      ? sanitize($contents['lock'], 'bool')                 : 'false';
-  $lock         = ($lock == 'true')               ? 1                                                   : 0;
+  $lock         = ($lock === 'true')              ? 1                                                   : 0;
   $username     = ($nickname)                     ? string_truncate($contents['nickname'], 20) : $contents['account'];
 
   // Error: No account or nickname provided
@@ -1137,21 +1137,21 @@ function meetups_attendees_edit(  int   $attendee_id  ,
                           moderator_username:   $mod_username );
 
   // Detailed moderation log
-  if($account != $old_account)
+  if($account !== $old_account)
     log_activity_details($modlog, 'Account name', 'Nom du compte', $old_account, $account, do_not_sanitize: true);
-  if($nickname != $old_nickname)
+  if($nickname !== $old_nickname)
     log_activity_details($modlog, 'Nickname or name', 'Pseudonyme ou nom', $old_nickname, $nickname, do_not_sanitize: true);
-  if($extra_en != $old_extra_en)
+  if($extra_en !== $old_extra_en)
     log_activity_details($modlog, 'Extra details (EN)', 'Détails supplémentaires (EN)', $old_extra_en, $extra_en, do_not_sanitize: true);
-  if($extra_fr != $old_extra_fr)
+  if($extra_fr !== $old_extra_fr)
     log_activity_details($modlog, 'Extra details (FR)', 'Détails supplémentaires (FR)', $old_extra_fr, $extra_fr, do_not_sanitize: true);
-  if($lock != $old_lock)
+  if($lock !== $old_lock)
     log_activity_details($modlog, 'Confirmed attendance', 'Présence confirmée', $old_lock, $lock, do_not_sanitize: true);
 
   // IRC bot message
   if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has edited $username's details in the upcoming $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
-  if(strtotime($meetup_date) == strtotime(date('Y-m-d')))
+  if(strtotime($meetup_date) === strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has edited $username's details in the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
   if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has edited $username's details in the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
@@ -1270,7 +1270,7 @@ function meetups_attendees_delete( int $attendee_id ) : mixed
     irc_bot_send_message("$username_raw has left the $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
   if(str_contains($meetup_lang, 'FR') && !$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
     irc_bot_send_message("$username_raw a quitté la rencontre IRL du $meetup_date_fr - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
-  if(strtotime($meetup_date) == strtotime(date('Y-m-d')))
+  if(strtotime($meetup_date) === strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has removed $username_raw from the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
   if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has removed $username_raw from the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');

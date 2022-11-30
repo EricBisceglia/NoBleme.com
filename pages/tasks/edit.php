@@ -73,11 +73,11 @@ $tasks_preview_body_fr  = "";
 
 // Prepare dropdown menus
 for($i = 0; $i <= 5; $i++)
-  $tasks_edit_priority_selected[$i]  = ($task_details['priority'] == $i) ? ' selected' : '';
+  $tasks_edit_priority_selected[$i]  = ($task_details['priority'] === $i) ? ' selected' : '';
 for($i = 0; $i < $tasks_categories['rows']; $i++)
-  $tasks_edit_category_selected[$i]  = ($task_details['category_id'] == $tasks_categories[$i]['id']) ? ' selected' : '';
+  $tasks_edit_category_selected[$i]  = ($task_details['category_id'] === $tasks_categories[$i]['id']) ? ' selected' : '';
 for($i = 0; $i < $tasks_milestones['rows']; $i++)
-  $tasks_edit_milestone_selected[$i] = ($task_details['milestone_id'] == $tasks_milestones[$i]['id']) ? ' selected' : '';
+  $tasks_edit_milestone_selected[$i] = ($task_details['milestone_id'] === $tasks_milestones[$i]['id']) ? ' selected' : '';
 
 // Prepare checkboxes
 $tasks_edit_private = (!$task_details['public'])  ? ' checked' : '';
@@ -131,11 +131,11 @@ if(isset($_POST['tasks_edit_submit']) || isset($_POST['tasks_edit_preview']))
 
   // Preserve the dropdown menus
   for($i = 0; $i <= 5; $i++)
-    $tasks_edit_priority_selected[$i]  = ($tasks_edit_priority == $i) ? ' selected' : '';
+    $tasks_edit_priority_selected[$i]  = ($tasks_edit_priority === $i) ? ' selected' : '';
   for($i = 0; $i < $tasks_categories['rows']; $i++)
-    $tasks_edit_category_selected[$i]  = ($tasks_edit_category == $tasks_categories[$i]['id']) ? ' selected' : '';
+    $tasks_edit_category_selected[$i]  = ($tasks_edit_category === $tasks_categories[$i]['id']) ? ' selected' : '';
   for($i = 0; $i < $tasks_milestones['rows']; $i++)
-    $tasks_edit_milestone_selected[$i] = ($tasks_edit_milestone == $tasks_milestones[$i]['id']) ? ' selected' : '';
+    $tasks_edit_milestone_selected[$i] = ($tasks_edit_milestone === $tasks_milestones[$i]['id']) ? ' selected' : '';
 
   // Prepare previews
   $tasks_preview_body_en  = bbcodes(sanitize_output(form_fetch_element('tasks_edit_body_en'), true));
@@ -208,7 +208,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <select class="indiv align_left" id="tasks_edit_category" name="tasks_edit_category">
             <option value="0" selected>&nbsp;</option>
             <?php for($i = 0; $i < $tasks_categories['rows']; $i++) { ?>
-            <?php if($i && $tasks_categories[$i]['archived'] != $tasks_categories[$i - 1]['archived']) { ?>
+            <?php if($i && $tasks_categories[$i]['archived'] !== $tasks_categories[$i - 1]['archived']) { ?>
             <option value="0">---</option>
             <?php } ?>
             <option value="<?=$tasks_categories[$i]['id']?>"<?=$tasks_edit_category_selected[$i]?>><?=$tasks_categories[$i]['title']?></option>

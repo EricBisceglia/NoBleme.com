@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -94,7 +94,7 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   $future_search .= ($search_description)     ? "
                                            AND system_scheduler.task_description LIKE '%$search_description%' " : "";
   $future_search .= ($search_report)          ? " AND 1 = 0                                                   " : "";
-  $future_search .= ($search_execution == 2)  ? " AND 1 = 0                                                   " : "";
+  $future_search .= ($search_execution === 2) ? " AND 1 = 0                                                   " : "";
 
   // Search through the data: Past executions
   $past_search  = " WHERE 1 = 1 ";
@@ -103,7 +103,7 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   $past_search .= ($search_description)     ? "
                                                AND logs_scheduler.task_description LIKE '%$search_description%' " : "";
   $past_search .= ($search_report)          ? " AND logs_scheduler.execution_report LIKE '%$search_report%'     " : "";
-  $past_search .= ($search_execution == 1)  ? " AND 1 = 0                                                       " : "";
+  $past_search .= ($search_execution === 1) ? " AND 1 = 0                                                       " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -148,11 +148,11 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qscheduler); $i++)
   {
-    $data['rows_past']       += ($row['s_exec'] == 'past') ? 1 : 0;
-    $data['rows_future']     += ($row['s_exec'] == 'future') ? 1 : 0;
+    $data['rows_past']       += ($row['s_exec'] === 'past') ? 1 : 0;
+    $data['rows_future']     += ($row['s_exec'] === 'future') ? 1 : 0;
     $data[$i]['type']         = $row['s_exec'];
     $data[$i]['id']           = $row['s_id'];
-    $temp                     = ($row['s_exec'] == 'past') ? time_since($row['s_date']) : time_until($row['s_date']);
+    $temp                     = ($row['s_exec'] === 'past') ? time_since($row['s_date']) : time_until($row['s_date']);
     $data[$i]['date']         = sanitize_output($temp);
     $data[$i]['fdate']        = date_to_text($row['s_date'], 0, 1, $lang);
     $data[$i]['task_id']      = $row['s_tid'];

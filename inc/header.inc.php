@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -95,7 +95,7 @@ if($website_closed  && !$is_admin)
 $query_string = isset($_SERVER['REDIRECT_QUERY_STRING']) ? $_SERVER['REDIRECT_QUERY_STRING'] : $_SERVER['QUERY_STRING'];
 
 // Determine the color theme to suggest
-$color_theme = ($mode == "dark") ? "light" : "dark";
+$color_theme = ($mode === "dark") ? "light" : "dark";
 
 // Assemble the redirections
 $url_mode   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&'.$color_theme.'_mode=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$color_theme.'_mode=1';
@@ -142,7 +142,7 @@ if(isset($page_url) && !isset($error_mode))
   $pageviews  = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
 
   // If the page exists, increment its view count
-  if(mysqli_num_rows($qpageviews) != 0)
+  if(mysqli_num_rows($qpageviews) !== 0)
   {
     // Don't increment it however if the user is an admin in production mode
     if(!$is_admin || $GLOBALS['dev_mode'])
@@ -255,7 +255,7 @@ if($activity_user)
 
   // Fetch the result for display
   $private_message_count      = $dpms['pm_nb'];
-  $private_message_count_css  = ($private_message_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') ? ' header_submenu_blink' : '';
+  $private_message_count_css  = ($private_message_count && basename($_SERVER['PHP_SELF']) !== 'inbox.php') ? ' header_submenu_blink' : '';
 }
 
 
@@ -280,7 +280,7 @@ if($is_moderator)
 
   // Fetch the result for display
   $admin_mail_count     = $dpms['pm_nb'];
-  $admin_mail_count_css = ($admin_mail_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') ? ' header_submenu_blink' : '';
+  $admin_mail_count_css = ($admin_mail_count && basename($_SERVER['PHP_SELF']) !== 'inbox.php') ? ' header_submenu_blink' : '';
 }
 
 
@@ -297,8 +297,8 @@ if($is_moderator)
 // Page title
 
 // Set the current page title based on the user's language
-$page_title = ($lang == 'EN' && isset($page_title_en)) ? $page_title_en : '';
-$page_title = ($lang == 'FR' && isset($page_title_fr)) ? $page_title_fr : $page_title;
+$page_title = ($lang === 'EN' && isset($page_title_en)) ? $page_title_en : '';
+$page_title = ($lang === 'FR' && isset($page_title_fr)) ? $page_title_fr : $page_title;
 
 // If the current page is unnamed, simply call it NoBleme, else append NoBleme to it - or Devmode when in dev mode
 $temp       = ($GLOBALS['dev_mode']) ? ' | Devmode' : ' | NoBleme';
@@ -331,7 +331,7 @@ if(strlen($page_description) <= 25)
 // Other settings
 
 // Theme color
-$theme_color  = ($mode == 'dark') ? '#B00B1E' : '#EEEEEE';
+$theme_color  = ($mode === 'dark') ? '#B00B1E' : '#EEEEEE';
 
 
 
@@ -358,7 +358,7 @@ if(isset($css))
 }
 
 // Add light mode if required
-if($mode == "light")
+if($mode === "light")
 $stylesheets .= '
     <link rel="stylesheet" href="'.$path.'css/light_mode.css" type="text/css">';
 
@@ -497,20 +497,20 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
         <div class="header_topmenu_zone">
 
-          <?php if(user_is_logged_in() && $private_message_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
+          <?php if(user_is_logged_in() && $private_message_count && basename($_SERVER['PHP_SELF']) !== 'inbox.php') { ?>
           <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="A" title="<?=string_change_case(__('account'), 'initials');?>" onclick="toggle_header_menu('account');">
           <?php } else { ?>
           <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="A" title="<?=string_change_case(__('account'), 'initials');?>" onclick="toggle_header_menu('account');">
           <?php } ?>
 
-          <?php if($is_moderator && $admin_mail_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
+          <?php if($is_moderator && $admin_mail_count && basename($_SERVER['PHP_SELF']) !== 'inbox.php') { ?>
           <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="M" title="<?=string_change_case(__('administration'), 'initials');?>" onclick="toggle_header_menu('admin');">
           <?php } else if($is_moderator) { ?>
           <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="M" title="<?=string_change_case(__('administration'), 'initials');?>" onclick="toggle_header_menu('admin');">
           <?php } ?>
 
           <a href="<?=$url_mode?>">
-            <?php if($mode == "dark") { ?>
+            <?php if($mode === "dark") { ?>
             <img class="header_topmenu_icon header_topmenu_mode" src="<?=$path?>img/icons/light_mode.svg" alt="L" title="<?=string_change_case(__('mode_light'), 'initials');?>">
             <?php } else { ?>
             <img class="header_topmenu_icon header_topmenu_mode" src="<?=$path?>img/icons/dark_mode.svg" alt="D" title="<?=string_change_case(__('mode_dark'), 'initials');?>">
@@ -518,7 +518,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           </a>
 
           <a href="<?=$url_lang?>">
-            <?php if($lang == 'FR') { ?>
+            <?php if($lang === 'FR') { ?>
             <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="<?=string_change_case(__('english'), 'initials')?>">
             <?php } else { ?>
             <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR" title="<?=string_change_case(__('french'), 'initials')?>">

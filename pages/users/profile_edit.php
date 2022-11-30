@@ -70,8 +70,8 @@ if(!$profile_data)
   exit(header("Location: ./"));
 
 // Hide the french inputs when the user's language is english
-$hide_lang      = ($lang == 'FR' || $profile_data['lang_fr']) ? '' : ' hidden';
-$hide_lang_full = ($lang == 'FR' || $profile_data['lang_fr']) ? '' : ' class="hidden"';
+$hide_lang      = ($lang === 'FR' || $profile_data['lang_fr']) ? '' : ' hidden';
+$hide_lang_full = ($lang === 'FR' || $profile_data['lang_fr']) ? '' : ' class="hidden"';
 
 // Determine whether the language checkboxes should be checked
 $check_lang_en = ($profile_data['lang_en']) ? ' checked' : '';
@@ -80,17 +80,17 @@ $check_lang_fr = ($profile_data['lang_fr']) ? ' checked' : '';
 // Prepare the dropdown menu for birth day
 $select_birth_day[0] = (!$profile_data['birth_d']) ? ' selecetd' : '';
 for($i = 1; $i <= 31; $i++)
-  $select_birth_day[$i] = ($i == $profile_data['birth_d']) ? ' selected' : '';
+  $select_birth_day[$i] = ($i === $profile_data['birth_d']) ? ' selected' : '';
 
 // Prepare the dropdown menu for birth month
 $select_birth_month[0] = (!$profile_data['birth_m']) ? ' selecetd' : '';
 for($i = 1; $i <= 12; $i++)
-  $select_birth_month[$i] = ($i == $profile_data['birth_m']) ? ' selected' : '';
+  $select_birth_month[$i] = ($i === $profile_data['birth_m']) ? ' selected' : '';
 
 // Prepare the dropdown menu for birth year
 $select_birth_year[0] = (!$profile_data['birth_y']) ? ' selecetd' : '';
 for($i = 1900; $i <= date('Y'); $i++)
-  $select_birth_year[$i] = ($i == $profile_data['birth_y']) ? ' selected' : '';
+  $select_birth_year[$i] = ($i === $profile_data['birth_y']) ? ' selected' : '';
 
 
 

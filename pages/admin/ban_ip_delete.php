@@ -65,7 +65,7 @@ if(isset($_POST['admin_ipban_delete_submit']))
 $ban_details = admin_ip_ban_get($ip_ban_id);
 
 // Hide the french unban justification in the english interface
-$admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';
+$admin_ban_hide_french = ($lang === 'EN') ? ' hidden' : '';
 
 
 

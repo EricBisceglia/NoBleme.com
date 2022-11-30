@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -183,15 +183,15 @@ function tasks_list(  string  $sort_by    = 'status'  ,
                                     AND   dev_tasks.title_$lang      != '' " : " WHERE 1 = 1 ";
 
   // Show less data in roadmap view
-  if($sort_by == 'roadmap')
+  if($sort_by === 'roadmap')
     $query_search .= "  AND dev_tasks.is_deleted              = 0
                         AND dev_tasks.admin_validation        = 1
                         AND dev_tasks.fk_dev_tasks_milestones > 0 ";
 
   // Search through the data: Task status
-  if($search_status == -2)
+  if($search_status === -2)
     $query_search .= "  AND dev_tasks.finished_at                       = 0                 ";
-  else if($search_status == -1)
+  else if($search_status === -1)
     $query_search .= "  AND dev_tasks.finished_at                       > 0                 ";
   else if($search_status > 0 && $search_status <= 6)
     $query_search .= "  AND dev_tasks.priority_level                    = '$search_status_id'
@@ -200,13 +200,13 @@ function tasks_list(  string  $sort_by    = 'status'  ,
     $query_search .= "  AND YEAR(FROM_UNIXTIME(dev_tasks.finished_at))  = '$search_status'  ";
 
   // Search through the data: Categories
-  if($search_category == -1)
+  if($search_category === -1)
     $query_search .= " AND  dev_tasks.fk_dev_tasks_categories = 0                   ";
   else if($search_category)
     $query_search .= " AND  dev_tasks.fk_dev_tasks_categories = '$search_category'  ";
 
   // Search through the data: Goals
-  if($search_goal == -1)
+  if($search_goal === -1)
     $query_search .= " AND  dev_tasks.fk_dev_tasks_milestones = 0               ";
   else if($search_goal)
     $query_search .= " AND  dev_tasks.fk_dev_tasks_milestones = '$search_goal'  ";
@@ -316,10 +316,10 @@ function tasks_list(  string  $sort_by    = 'status'  ,
     $temp                   = ($row['t_status'] > 3) ? ' bold' : $temp;
     $temp                   = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $temp;
     $data[$i]['css_status'] = ($temp && !$row['t_finished']) ? $temp : '';
-    $temp                   = ($lang == 'en') ? $row['t_title_en'] : $row['t_title_fr'];
-    $temp                   = ($lang == 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $temp;
-    $temp                   = ($lang != 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $temp;
-    $temp                   = ($sort_by == 'roadmap' && !$row['t_public']) ? __('tasks_roadmap_private').$temp : $temp;
+    $temp                   = ($lang === 'en') ? $row['t_title_en'] : $row['t_title_fr'];
+    $temp                   = ($lang === 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $temp;
+    $temp                   = ($lang !== 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $temp;
+    $temp                   = ($sort_by === 'roadmap' && !$row['t_public']) ? __('tasks_roadmap_private').$temp : $temp;
     $data[$i]['title']      = sanitize_output(string_truncate($temp, 42, '…'));
     $data[$i]['road_title'] = sanitize_output(string_truncate($temp, 50, '…'));
     $data[$i]['fulltitle']  = (strlen($temp) > 42) ? sanitize_output($temp) : '';
@@ -499,7 +499,7 @@ function tasks_propose( string $body ) : mixed
 
   // Determine the body's language and the task's title
   $lang       = string_change_case(user_get_language(), 'lowercase');
-  $task_title = ($lang == 'en') ? "Unvalidated task" : "Tâche non validée";
+  $task_title = ($lang === 'en') ? "Unvalidated task" : "Tâche non validée";
 
   // Create the unvalidated task
   query(" INSERT INTO dev_tasks
@@ -591,10 +591,10 @@ function tasks_approve( int   $task_id  ,
   $path     = root_path();
 
   // Prepare the message's title
-  $message_title = ($lang == 'FR') ? 'Tâche acceptée' : 'Task proposal approved';
+  $message_title = ($lang === 'FR') ? 'Tâche acceptée' : 'Task proposal approved';
 
   // Prepare the message's body
-  if($lang == 'FR')
+  if($lang === 'FR')
     $message_body = <<<EOT
 [url={$path}pages/tasks/{$task_id}]Votre proposition de tâche a été approuvée.[/url]
 
@@ -608,7 +608,7 @@ Thank you for helping NoBleme's development.
 EOT;
 
   // If the task is private, prepare a different message
-  if($task_private && $lang == 'FR')
+  if($task_private && $lang === 'FR')
     $message_body = <<<EOT
 Une proposition de [url={$path}pages/tasks/list]tâche[/url] que vous avez fait récemment a été acceptée.
 
@@ -626,7 +626,7 @@ Thank you for helping NoBleme's development. Please keep this secret for now!
 EOT;
 
   // Send the notification message unless it's being sent to self
-  if($user_id != $admin_id)
+  if($user_id !== $admin_id)
     private_message_send( $message_title          ,
                           $message_body           ,
                           recipient: $user_id     ,
@@ -717,10 +717,10 @@ function tasks_reject(  int     $task_id            ,
   $admin_id = user_get_id();
 
   // Prepare the message's title
-  $message_title = ($lang == 'FR') ? 'Tâche refusée' : 'Task proposal rejected';
+  $message_title = ($lang === 'FR') ? 'Tâche refusée' : 'Task proposal rejected';
 
   // If a reason is specified, prepare it
-  if($reason && $lang == 'FR')
+  if($reason && $lang === 'FR')
     $reason = <<<EOT
 
 Votre proposition a été rejetée pour la raison suivante : {$reason}
@@ -734,7 +734,7 @@ Your proposal has been rejected for the following reason: {$reason}
 EOT;
 
   // Prepare the message's body
-  if($lang == 'FR')
+  if($lang === 'FR')
     $message_body = <<<EOT
 Vous avez fait une [url={$path}pages/tasks/proposal]proposition de tâche[/url], qui a été rejetée.
 {$reason}
@@ -752,7 +752,7 @@ Thank you for helping NoBleme's development.
 EOT;
 
   // Send the notification message unless it's being sent to self
-  if($user_id != $admin_id)
+  if($user_id !== $admin_id)
     private_message_send( $message_title          ,
                           $message_body           ,
                           recipient: $user_id     ,
@@ -848,7 +848,7 @@ function tasks_solve( int     $task_id              ,
   tasks_stats_recalculate_user($task_data['creator_id']);
 
   // If stealthy mode is requested or the author is the one currently approving the task, stop here
-  if($is_stealthy || $task_data['creator_id'] == user_get_id())
+  if($is_stealthy || $task_data['creator_id'] === user_get_id())
     return null;
 
   // Fetch some data about the user
@@ -858,10 +858,10 @@ function tasks_solve( int     $task_id              ,
   $admin_id = user_get_id();
 
   // Prepare the message's title
-  $message_title = ($lang == 'FR') ? 'Tâche résolue' : 'Task solved';
+  $message_title = ($lang === 'FR') ? 'Tâche résolue' : 'Task solved';
 
   // Prepare the message's body
-  if($lang == 'FR')
+  if($lang === 'FR')
     $message_body = <<<EOT
 Une tâche que vous avez proposée a été résolue : [url={$path}pages/tasks/{$task_id}]Tâche #{$task_id}[/url].
 
@@ -1195,7 +1195,7 @@ function tasks_categories_edit( int   $category_id  = 0       ,
   $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
   $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
   $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])               : 0;
-  $archived = ($archived == 'true')           ? 1                                             : 0;
+  $archived = ($archived === 'true')          ? 1                                             : 0;
 
   // Update the task category
   query(" UPDATE  dev_tasks_categories
@@ -1369,7 +1369,7 @@ function tasks_milestones_edit( int   $milestone_id = 0       ,
   $body_en  = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')  : '';
   $body_fr  = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')  : '';
   $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])           : 0;
-  $archived = ($archived == 'true')           ? 1                                         : 0;
+  $archived = ($archived === 'true')          ? 1                                         : 0;
 
   // Update the task milestone
   query(" UPDATE  dev_tasks_milestones

@@ -23,8 +23,8 @@ function admin_ban_add_swap_form()
   ban_type = document.getElementById('admin_ban_add_type').value;
 
   // Determine which elements should be hidden and which should be shown
-  hide_element = (ban_type == 'user') ? 'admin_ban_add_swap_ip'   : 'admin_ban_add_swap_user';
-  show_element = (ban_type == 'user') ? 'admin_ban_add_swap_user' : 'admin_ban_add_swap_ip';
+  hide_element = (ban_type === 'user') ? 'admin_ban_add_swap_ip'   : 'admin_ban_add_swap_user';
+  show_element = (ban_type === 'user') ? 'admin_ban_add_swap_user' : 'admin_ban_add_swap_ip';
 
   // Swap the forms
   toggle_class_oneway(hide_element, 0);

@@ -34,7 +34,7 @@ $page_title_fr    = "Traductions redondantes";
 $directory = $path."/lang/";
 foreach(scandir($directory) as $filename)
 {
-  if($filename && mb_substr($filename, -9) == '.lang.php')
+  if($filename && mb_substr($filename, -9) === '.lang.php')
     include_once './../../lang/'.$filename;
 }
 
@@ -171,7 +171,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $duplicate_translations['rows']; $i++) { ?>
 
-      <?php if(($i + 1) < $duplicate_translations['rows'] && $duplicate_translations[$i]['value'] != $duplicate_translations[$i+1]['value']) { ?>
+      <?php if(($i + 1) < $duplicate_translations['rows'] && $duplicate_translations[$i]['value'] !== $duplicate_translations[$i+1]['value']) { ?>
       <tr class="row_separator_dark">
       <?php } else { ?>
       <tr>

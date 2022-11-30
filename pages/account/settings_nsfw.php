@@ -46,7 +46,7 @@ $nsfw_settings = user_settings_nsfw();
 
 // Prepare the selector
 for($i = 0; $i <= 2; $i++)
-  $nsfw_selected[$i] = ($nsfw_settings == $i) ? ' selected' : '';
+  $nsfw_selected[$i] = ($nsfw_settings === $i) ? ' selected' : '';
 
 
 

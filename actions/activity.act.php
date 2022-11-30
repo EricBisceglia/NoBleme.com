@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -107,7 +107,7 @@ function activity_list( bool    $show_mod_logs  = false ,
   $deleted = (!$is_admin) ? 0 : $deleted;
 
   // Log type filter
-  $search_type = ($type && $type != "all") ? " AND logs_activity.activity_type LIKE '".$type."_%' " : "";
+  $search_type = ($type && $type !== "all") ? " AND logs_activity.activity_type LIKE '".$type."_%' " : "";
 
   // Show deleted logs on request
   $search_deleted = ($deleted) ? " AND logs_activity.is_deleted = 1 " : " AND logs_activity.is_deleted = 0 ";

@@ -66,7 +66,7 @@ function fetch_sanitize_id(element)
   element_type  = document.getElementById(element)?.type.toLowerCase();
 
   // If the element is a checkbox, return 1 or 0
-  if(element_tag == 'input' && (element_type == 'checkbox' || element_type == 'radio'))
+  if(element_tag === 'input' && (element_type === 'checkbox' || element_type === 'radio'))
     return (document.getElementById(element)?.checked) ? 1 : 0;
 
   // Otherwise, return the element's sanitized value
@@ -194,7 +194,7 @@ function form_require_field(  element_id  ,
     css_remove(label_id, 'red');
 
   // Check whether the field is empty
-  if(document.getElementById(element_id).value == "")
+  if(document.getElementById(element_id).value === "")
   {
     // If it is empty, change the styling of its associated label and return 0
     if(label_id)
@@ -281,7 +281,7 @@ function toggle_element(  element_id              ,
   var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
 
   // Toggle it to the opposite visibility state
-  if(element_visibility == 'none')
+  if(element_visibility === 'none')
     selected_element.style.display = element_type;
   else
     selected_element.style.display = 'none';
@@ -310,7 +310,7 @@ function toggle_class(  element_class           ,
   var class_visibility  = first_element.currentStyle ? first_element.currentStyle.display : getComputedStyle(first_element,null).display;
 
   // Define the new visibility state to apply to the class
-  var new_visibility_state = class_visibility == 'none' ? element_type : 'none';
+  var new_visibility_state = class_visibility === 'none' ? element_type : 'none';
 
   // Apply the changed visibility state to all elements of the class
   for(var i = 0; i < selected_class.length; i++)
@@ -396,7 +396,7 @@ function element_is_toggled( element_id )
   var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
 
   // Return the appropriate value
-  if(element_visibility == 'none')
+  if(element_visibility === 'none')
     return false;
   else
     return true;
@@ -571,7 +571,7 @@ function unblur_element(element_id)
 function popin_close(popin_id)
 {
   // If the requested popin has been opened, close it
-  if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
+  if(location.hash === popin_id || location.hash === '#'+popin_id || popin_id === '*')
   {
     // Get rid of the hash in the URL
     location.hash = '#_';

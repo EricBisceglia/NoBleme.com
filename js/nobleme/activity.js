@@ -25,7 +25,7 @@ function activity_submit_menus( fetch_url               ,
   if(toggle_deleted)
   {
     deleted_status = document.getElementById('activity_deleted').value;
-    deleted_status = (deleted_status == 1) ? 0 : 1;
+    deleted_status = (deleted_status === 1) ? 0 : 1;
     document.getElementById('activity_deleted').value = deleted_status;
   }
 

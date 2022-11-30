@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -117,7 +117,7 @@ function user_authenticate( string  $ip                   ,
   $hashed_password = encrypt_data($password_raw);
 
   // If the entered password is incorrect, log the bruteforce attempt and end the process here
-  if($dfetch_user['u_pass'] && $hashed_password != $dfetch_user['u_pass'])
+  if($dfetch_user['u_pass'] && $hashed_password !== $dfetch_user['u_pass'])
   {
     query(" INSERT INTO users_login_attempts
             SET         users_login_attempts.fk_users     = '$user_id'    ,
@@ -224,7 +224,7 @@ function user_create_account( string  $username               ,
     $email = '';
 
   // Error: Different passwords
-  if($password_check && ($password_raw != $password_check))
+  if($password_check && ($password_raw !== $password_check))
     return __('users_register_error_passwords');
 
   // Error: Password too short
@@ -232,7 +232,7 @@ function user_create_account( string  $username               ,
     return __('users_register_error_password_length');
 
   // Error: Different captchas
-  if($captcha && ($captcha != $captcha_session))
+  if($captcha && ($captcha !== $captcha_session))
     return __('users_register_error_captchas');
 
   // Error: username too short
@@ -390,7 +390,7 @@ function account_update_password( string  $current_password     ,
     return __('account_password_error_confirm');
 
   // Error: Different passwords
-  if($new_password != $new_password_confirm)
+  if($new_password !== $new_password_confirm)
     return __('users_register_error_passwords');
 
   // Error: Password is too short
@@ -411,7 +411,7 @@ function account_update_password( string  $current_password     ,
                                       WHERE   users.id = '$user_id' "));
 
   // Error: Incorrect password
-  if($current_password && $current_password != $dpass['u_pass'])
+  if($current_password && $current_password !== $dpass['u_pass'])
     return __('account_password_error_wrong');
 
   // Update the password
@@ -446,9 +446,9 @@ function account_update_settings( string  $setting  ,
   $setting  = sanitize($setting, 'string');
 
   // Ensure the values are within allowed boundaries and sanitize them
-  if($setting == 'show_nsfw_content')
+  if($setting === 'show_nsfw_content')
     $value = sanitize($value, 'int', 0, 2);
-  else if($setting == 'quotes_languages')
+  else if($setting === 'quotes_languages')
     $value = sanitize($value, 'string');
   else
     $value = sanitize($value, 'int', 0, 1);

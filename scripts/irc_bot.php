@@ -73,7 +73,7 @@ while(1)
     $irc_ping = explode(' ', $irc_socket_contents);
 
     // If a PING is found, reply with the appropriate PONG
-    if($irc_ping[0] == 'PING')
+    if($irc_ping[0] === 'PING')
       fputs($irc_socket,"PONG ".$irc_ping[1]."\r\n");
   }
 
@@ -85,7 +85,7 @@ while(1)
   }
 
   // Check the bot's txt file for an order to quit
-  if(substr(file_get_contents($irc_bot_file),0,4) == 'quit' || substr(file_get_contents($irc_bot_file),11,4) == 'quit')
+  if(substr(file_get_contents($irc_bot_file),0,4) === 'quit' || substr(file_get_contents($irc_bot_file),11,4) === 'quit')
   {
     // Delete the first line of the bot's txt file
     $irc_bot_file_data = file($irc_bot_file, FILE_IGNORE_NEW_LINES);
@@ -100,7 +100,7 @@ while(1)
   }
 
   // Check if the bot's txt file has changed
-  if($latest_message != file_get_contents($irc_bot_file))
+  if($latest_message !== file_get_contents($irc_bot_file))
   {
     // Update the status of the loop
     $latest_message = file_get_contents($irc_bot_file);

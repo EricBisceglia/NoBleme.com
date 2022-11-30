@@ -219,7 +219,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
 
-      <?php if(isset($version_edit_error) && $version_edit_error && $version_edit_id == $version_history[$i]['id']) { ?>
+      <?php if(isset($version_edit_error) && $version_edit_error && $version_edit_id === $version_history[$i]['id']) { ?>
 
       <tr>
         <td colspan="4" class="red text_white bold">

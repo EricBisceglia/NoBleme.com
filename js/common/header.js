@@ -35,7 +35,7 @@ function toggle_header_menu(  menu_name             ,
     all_submenus[i].style.display = 'none';
 
   // If the menu is invisible, open it
-  if(menu_visibility == 'none')
+  if(menu_visibility === 'none')
     selected_submenu.style.display = 'grid';
 
   // Check whether this title's color scheme should be inverted
@@ -51,14 +51,14 @@ function toggle_header_menu(  menu_name             ,
     document.getElementById('header_menu_title_' + menu_name).classList.add('header_topmenu_title_selected');
 
   // If the annoying new notification animation is there, replace it with the standard user icon upon clicking
-  if(menu_name == 'account')
+  if(menu_name === 'account')
   {
     var account_icon = document.getElementById('header_topmenu_account_icon');
     account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "login.svg"));
   }
 
   // Same for admin mail notifications
-  else if(menu_name == 'admin')
+  else if(menu_name === 'admin')
   {
     var account_icon = document.getElementById('header_topmenu_admin_icon');
     account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "admin_panel.svg"));
@@ -115,7 +115,7 @@ function user_login_attempt_process()
   login_status = document.getElementById('login_form_error').innerHTML;
 
   // If the back says the user is logged in, redirect them to their inbox
-  if(login_status == "OK")
+  if(login_status === "OK")
   {
     root_path = document.getElementById('root_path').value;
     window.location = root_path + 'pages/messages/inbox';

@@ -193,7 +193,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <option value="0">&nbsp;</option>
             <option value="-1"><?=__('tasks_list_uncategorized')?></option>
             <?php for($i = 0; $i < $tasks_categories_list['rows']; $i++) { ?>
-            <?php if($i && $tasks_categories_list[$i]['archived'] != $tasks_categories_list[$i - 1]['archived']) { ?>
+            <?php if($i && $tasks_categories_list[$i]['archived'] !== $tasks_categories_list[$i - 1]['archived']) { ?>
             <option value="0">---</option>
             <?php } ?>
             <option value="<?=$tasks_categories_list[$i]['id']?>"><?=$tasks_categories_list[$i]['title']?></option>

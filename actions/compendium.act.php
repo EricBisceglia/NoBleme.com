@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -337,7 +337,7 @@ function compendium_pages_get_random( int $exclude_id = 0 ,
   $exclude_id = sanitize($exclude_id, 'int', 0);
 
   // Add the excluded id if necessary
-  $query_exclude = ($exclude_id) ? " AND compendium_pages.id != '$exclude_id' " : '';
+  $query_exclude = ($exclude_id) ? " AND compendium_pages.id !== '$exclude_id' " : '';
 
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -391,7 +391,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Get the user's current language, access rights, settings, and the compendium pages which they can access
   $lang       = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-  $otherlang  = ($lang == 'en') ? 'fr' : 'en';
+  $otherlang  = ($lang === 'en') ? 'fr' : 'en';
   $is_admin   = ($user_view) ? 0 : user_is_administrator();
   $nsfw       = user_settings_nsfw();
   $privacy    = user_settings_privacy();
@@ -465,7 +465,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   };
 
   // Search through the data: Page title
-  if($search_title == 'exists' && $is_admin)
+  if($search_title === 'exists' && $is_admin)
     $query_search .= "  AND   compendium_pages.title_$lang      !=    '' ";
   else if($search_title)
     $query_search .= "  AND   compendium_pages.title_$lang      LIKE  '%$search_title%'
@@ -473,11 +473,11 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                         AND   compendium_pages.title_$otherlang LIKE  '%$search_title%' ) ";
 
   // Search through the data: Redirections
-  if($search_redirect == -1)
+  if($search_redirect === -1)
     $query_search .= "  AND ( compendium_pages.title_$lang             != ''
                         OR    compendium_pages.title_$otherlang        != '' )
                         AND   compendium_pages.redirection_$lang        = '' ";
-  else if($search_redirect == 1)
+  else if($search_redirect === 1)
     $query_search .= "  AND ( compendium_pages.redirection_$lang       != ''
                         OR    compendium_pages.title_$lang              = ''
                         AND   compendium_pages.redirection_$otherlang  != '' ) ";
@@ -485,13 +485,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $query_search .= "  AND   compendium_pages.redirection_$lang     LIKE '%$search_redirname%' ";
 
   // Search through the data: Page types
-  if($search_type == -1)
+  if($search_type === -1)
     $query_search .= " AND compendium_pages.fk_compendium_types  = 0               ";
   else if($search_type)
     $query_search .= " AND compendium_pages.fk_compendium_types  = '$search_type'  ";
 
   // Search through the data: Cultural eras
-  if($search_era == -1)
+  if($search_era === -1)
     $query_search .= " AND compendium_pages.fk_compendium_eras = 0             ";
   else if($search_era)
     $query_search .= " AND compendium_pages.fk_compendium_eras = '$search_era' ";
@@ -499,37 +499,37 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Search through the data: Categories
   if($search_category > 0)
     $query_search .= " AND compendium_pages_categories.fk_compendium_categories  = '$search_category' ";
-  else if($search_category == -1)
+  else if($search_category === -1)
     $query_search .= " AND compendium_pages_categories.fk_compendium_categories  IS NULL              ";
-  else if($search_category == -2)
+  else if($search_category === -2)
     $query_search .= " AND compendium_pages_categories.fk_compendium_categories  IS NOT NULL          ";
 
   // Search through the data: Content warnings
-  if($search_nsfw_admin == 'nsfw')
+  if($search_nsfw_admin === 'nsfw')
     $query_search .= "  AND ( compendium_pages.title_is_nsfw  = 1
                         OR    compendium_pages.is_nsfw        = 1
                         OR    compendium_pages.is_gross       = 1
                         OR    compendium_pages.is_offensive   = 1 ) ";
-  else if($search_nsfw_admin == 'safe')
+  else if($search_nsfw_admin === 'safe')
     $query_search .= "  AND   compendium_pages.title_is_nsfw  = 0
                         AND   compendium_pages.is_nsfw        = 0
                         AND   compendium_pages.is_gross       = 0
                         AND   compendium_pages.is_offensive   = 0 ";
-  else if($search_nsfw_admin == 'title')
+  else if($search_nsfw_admin === 'title')
     $query_search .= "  AND   compendium_pages.title_is_nsfw  = 1 ";
-  else if($search_nsfw_admin == 'page')
+  else if($search_nsfw_admin === 'page')
     $query_search .= "  AND   compendium_pages.is_nsfw        = 1 ";
-  else if($search_nsfw_admin == 'gross')
+  else if($search_nsfw_admin === 'gross')
     $query_search .= "  AND   compendium_pages.is_gross       = 1 ";
-  else if($search_nsfw_admin == 'offensive')
+  else if($search_nsfw_admin === 'offensive')
     $query_search .= "  AND   compendium_pages.is_offensive   = 1 ";
 
   // Search through the data: Unpublished content
-  if($search_wip == 'draft')
+  if($search_wip === 'draft')
     $query_search .= "  AND compendium_pages.is_draft   = 1 ";
-  else if($search_wip == 'deleted')
+  else if($search_wip === 'deleted')
     $query_search .= "  AND compendium_pages.is_deleted = 1 ";
-  else if($search_wip == 'finished')
+  else if($search_wip === 'finished')
     $query_search .= "  AND compendium_pages.is_draft   = 0
                         AND compendium_pages.is_deleted = 0 ";
 
@@ -681,7 +681,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['fulltitle']  = (mb_strlen($row['p_title']) > 32) ? sanitize_output($row['p_title']) : '';
     $data[$i]['admintitle'] = sanitize_output(string_truncate($row['p_title'], 20, '...'));
     $data[$i]['adminfull']  = (mb_strlen($row['p_title']) > 20) ? sanitize_output($row['p_title']) : '';
-    $temp                   = ($lang == 'en') ? $row['p_title_fr'] : $row['p_title_en'];
+    $temp                   = ($lang === 'en') ? $row['p_title_fr'] : $row['p_title_en'];
     $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 21, '...'));
     $data[$i]['fullwrong']  = (mb_strlen($temp) > 23) ? sanitize_output($temp) : '';
     $data[$i]['notitle']    = (!$row['p_title_en'] && !$row['p_title_fr']) ? 1 : 0;
@@ -981,7 +981,7 @@ function compendium_pages_edit( int   $page_id  ,
     return __('compendium_page_new_no_url');
 
   // Error: New URL is already taken
-  if(($page_url_raw != $page_data['url_raw']) && database_entry_exists('compendium_pages', 'page_url', $page_url))
+  if(($page_url_raw !== $page_data['url_raw']) && database_entry_exists('compendium_pages', 'page_url', $page_url))
     return __('compendium_page_new_no_url');
 
   // Error: No title in either language
@@ -1052,7 +1052,7 @@ function compendium_pages_edit( int   $page_id  ,
   }
 
   // If the url was changed, delete any related missing page
-  if($page_url_raw != $page_data['url_raw'])
+  if($page_url_raw !== $page_data['url_raw'])
     query(" DELETE FROM compendium_missing
             WHERE       compendium_missing.page_url LIKE '$page_url' ");
 
@@ -1652,14 +1652,14 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   };
 
   // Search through the data: Other searches
-  $query_search .= ($search_name)         ? " AND compendium_images.file_name        LIKE '%$search_name%'    " : "";
-  $query_search .= ($search_date)         ? " AND
-                                     YEAR(FROM_UNIXTIME(compendium_images.uploaded_at)) = '$search_date'      " : "";
-  $query_search .= ($search_used_en)      ? " AND compendium_images.used_in_pages_en LIKE '%$search_used_en%' " : "";
-  $query_search .= ($search_used_fr)      ? " AND compendium_images.used_in_pages_fr LIKE '%$search_used_fr%' " : "";
-  $query_search .= ($search_tags)         ? " AND compendium_images.tags             LIKE '%$search_tags%'    " : "";
-  $query_search .= ($search_deleted == 1) ? " AND compendium_images.is_deleted          = 0                   " : "";
-  $query_search .= ($search_deleted == 2) ? " AND compendium_images.is_deleted          = 1                   " : "";
+  $query_search .= ($search_name)           ? " AND compendium_images.file_name        LIKE '%$search_name%'    " : "";
+  $query_search .= ($search_date)           ? " AND
+                                       YEAR(FROM_UNIXTIME(compendium_images.uploaded_at)) = '$search_date'      " : "";
+  $query_search .= ($search_used_en)        ? " AND compendium_images.used_in_pages_en LIKE '%$search_used_en%' " : "";
+  $query_search .= ($search_used_fr)        ? " AND compendium_images.used_in_pages_fr LIKE '%$search_used_fr%' " : "";
+  $query_search .= ($search_tags)           ? " AND compendium_images.tags             LIKE '%$search_tags%'    " : "";
+  $query_search .= ($search_deleted === 1)  ? " AND compendium_images.is_deleted          = 0                   " : "";
+  $query_search .= ($search_deleted === 2)  ? " AND compendium_images.is_deleted          = 1                   " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -1891,7 +1891,7 @@ function compendium_images_edit(  int   $image_id  ,
     return __('compendium_image_upload_misnamed');
 
   // Move the image file if necessary
-  if($image_name_raw != $image_data['name_raw'])
+  if($image_name_raw !== $image_data['name_raw'])
   {
     // Determine the previous and new file paths
     $old_file_path  = root_path().'img/compendium/'.$image_data['name_raw'];
@@ -1961,23 +1961,23 @@ function compendium_images_delete(  int     $image_id ,
   $image_data = compendium_images_get($image_id);
 
   // Stop here if the image is used on any page
-  if($action != 'restore' && $image_data['used_en'] || $image_data['used_fr'])
+  if($action !== 'restore' && $image_data['used_en'] || $image_data['used_fr'])
     return;
 
   // Soft deletion
-  if($action == 'delete')
+  if($action === 'delete')
     query(" UPDATE  compendium_images
             SET     compendium_images.is_deleted  = 1
             WHERE   compendium_images.id          = '$image_id' ");
 
   // Restoration
-  if($action == 'restore')
+  if($action === 'restore')
     query(" UPDATE  compendium_images
             SET     compendium_images.is_deleted  = 0
             WHERE   compendium_images.id          = '$image_id' ");
 
   // Hard deletion
-  if($action == 'hard_delete')
+  if($action === 'hard_delete')
   {
     // Delete the database entry
     query(" DELETE FROM compendium_images
@@ -2801,19 +2801,19 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   }
 
   // Remove all elements from array if some searches are being performed
-  if($search_title || $search_type || $search_priority > -1 || $search_notes > -1 || $search_status == 1)
+  if($search_title || $search_type || $search_priority > -1 || $search_notes > -1 || $search_status === 1)
     $missing = array();
 
   // Search through the data
   $query_search  = ($search_url)            ? " AND compendium_missing.page_url        LIKE '%$search_url%'     " : "";
   $query_search .= ($search_title)          ? " AND compendium_missing.title           LIKE '%$search_title%'   " : "";
-  $query_search .= ($search_notes == 0)     ? " AND compendium_missing.notes              = ''                  " : "";
-  $query_search .= ($search_notes == 1)     ? " AND compendium_missing.notes             != ''                  " : "";
+  $query_search .= ($search_notes === 0)    ? " AND compendium_missing.notes              = ''                  " : "";
+  $query_search .= ($search_notes === 1)    ? " AND compendium_missing.notes             != ''                  " : "";
   $query_search .= ($search_type)           ? " AND compendium_missing.fk_compendium_types = '$search_type'     " : "";
   $query_search .= ($search_priority > -1)  ? " AND compendium_missing.is_a_priority      = '$search_priority'  " : "";
 
   // Do not fetch any missing pages when searching for links or sorting by links
-  $query_search .= ($search_links || ($sort_by == 'links' && $search_status != 0)) ? " AND 0 = 1 " : "";
+  $query_search .= ($search_links || ($sort_by === 'links' && $search_status !== 0)) ? " AND 0 = 1 " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -2884,7 +2884,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   }
 
   // Sort the array by links if requested
-  if($sort_by == 'links')
+  if($sort_by === 'links')
   {
     // Create a new temporary array combining both page names and link count
     $sort_pages = array();
@@ -2913,7 +2913,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   $data['rows'] = $i;
 
   // Remove the rows when searching for undocumented pages
-  if($search_status == 0)
+  if($search_status === 0)
     $data['rows'] = 0;
 
   // Return the prepared data
@@ -2989,7 +2989,7 @@ function compendium_missing_edit( string  $missing_url      ,
     $missing_data_url = sanitize($missing_data['url_raw'], 'string');
 
     // Error: Missing page's new URL is already taken
-    if($missing_data_url != $missing_url && database_entry_exists('compendium_missing', 'page_url', $missing_url))
+    if($missing_data_url !== $missing_url && database_entry_exists('compendium_missing', 'page_url', $missing_url))
       return __('compendium_missing_edit_double');
 
     // Update the missing pages
@@ -4103,7 +4103,7 @@ function compendium_page_history_edit(  int   $history_id   ,
   $history_body_en  = isset($history_data['body_en']) ? sanitize($history_data['body_en'], 'string')  : '';
   $history_body_fr  = isset($history_data['body_fr']) ? sanitize($history_data['body_fr'], 'string')  : '';
   $history_major    = isset($history_data['major'])   ? sanitize($history_data['major'], 'string')    : 'false';
-  $history_major    = ($history_major == 'false')     ? 0                                             : 1;
+  $history_major    = ($history_major === 'false')    ? 0                                             : 1;
 
   // Update the quote
   query(" UPDATE  compendium_pages_history
@@ -4726,14 +4726,14 @@ function compendium_format_url( ?string $url                      ,
   // Prohibit reserved urls
   if(!$no_reserved_urls)
   {
-    $url = (mb_substr($url, 0, 6)   == 'admin_')            ? mb_substr($url, 6)  : $url;
-    $url = (mb_substr($url, 0, 8)   == 'category')          ? mb_substr($url, 8)  : $url;
-    $url = (mb_substr($url, 0, 12)  == 'cultural_era')      ? mb_substr($url, 12) : $url;
-    $url = (mb_substr($url, 0, 5)   == 'index')             ? mb_substr($url, 5)  : $url;
-    $url = (mb_substr($url, 0, 5)   == 'image')             ? mb_substr($url, 5)  : $url;
-    $url = (mb_substr($url, 0, 17)  == 'mission_statement') ? mb_substr($url, 17) : $url;
-    $url = (mb_substr($url, 0, 5)   == 'page_')             ? mb_substr($url, 5)  : $url;
-    $url = (mb_substr($url, 0, 7)   == 'random_')           ? mb_substr($url, 7)  : $url;
+    $url = (mb_substr($url, 0, 6)   === 'admin_')             ? mb_substr($url, 6)  : $url;
+    $url = (mb_substr($url, 0, 8)   === 'category')           ? mb_substr($url, 8)  : $url;
+    $url = (mb_substr($url, 0, 12)  === 'cultural_era')       ? mb_substr($url, 12) : $url;
+    $url = (mb_substr($url, 0, 5)   === 'index')              ? mb_substr($url, 5)  : $url;
+    $url = (mb_substr($url, 0, 5)   === 'image')              ? mb_substr($url, 5)  : $url;
+    $url = (mb_substr($url, 0, 17)  === 'mission_statement')  ? mb_substr($url, 17) : $url;
+    $url = (mb_substr($url, 0, 5)   === 'page_')              ? mb_substr($url, 5)  : $url;
+    $url = (mb_substr($url, 0, 7)   === 'random_')            ? mb_substr($url, 7)  : $url;
   }
 
   // Return the formatted url

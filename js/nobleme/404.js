@@ -62,14 +62,14 @@ function this_page_is_a_404()
   document.getElementById('text404_mobile').value = textarea_contents + text_404[cursor_row].substring(0,cursor_position) + "_";
 
   // Check if we need to move to the next line
-  if(cursor_position++ == text_length)
+  if(cursor_position++ === text_length)
   {
     // If we do, reposition the cursor
     cursor_position=0;
     cursor_row++;
 
     // Check if the text is done being printed
-    if(cursor_row != text_404.length)
+    if(cursor_row !== text_404.length)
     {
       // If not, update the current position and run this function again after a small pause
       text_length = text_404[cursor_row].length;

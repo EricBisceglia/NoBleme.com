@@ -77,7 +77,7 @@ $meetups_dates_list     = '<option value="0"'.$meetups_date_selected.'>&nbsp;</o
 // Loop through the years and select the correct one if requested
 for($i = 0; $i < $meetup_years['rows']; $i++)
 {
-  $meetups_date_selected  = ($meetups_search_date == $meetup_years[$i]['year']) ? ' selected' : '';
+  $meetups_date_selected  = ($meetups_search_date === $meetup_years[$i]['year']) ? ' selected' : '';
   $meetups_dates_list    .= '<option value="'.$meetup_years[$i]['year'].'"'.$meetups_date_selected.'>'.$meetup_years[$i]['year'].'</option>';
 }
 
@@ -170,7 +170,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <th>
                 <select class="table_search" name="meetups_list_language" id="meetups_list_language" onchange="meetups_list_search()">
                   <option value="0">&nbsp;</option>
-                  <?php if($lang == 'EN') { ?>
+                  <?php if($lang === 'EN') { ?>
                   <option value="ENFR"><?=string_change_case(__('bilingual'), 'initials')?></option>
                   <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
                   <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
