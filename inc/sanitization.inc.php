@@ -9,7 +9,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  sanitize                      Sanitizes data.                                                                    */
+/*                                                                                                                   */
 /*  sanitize_input                Sanitizes user inputted data.                                                      */
+/*  sanitize_array_element        Sanitizes an element from an array.                                                */
+/*                                                                                                                   */
 /*  sanitize_output               Sanitizes data for HTML usage.                                                     */
 /*  sanitize_output_full          Sanitizes data before outputting it as HTML, for untrusted user data.              */
 /*  sanitize_output_javascript    Sanitizes data for passing to inline javascript.                                   */
@@ -26,19 +29,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * For ints and floats, it also allows you to ensure that the number's value is between a set minimum and maximum.
  * For strings, it allows you to ensure that the string's length is between a minimum and maximum size.
  *
- * @param   mixed     $data                 The data to be sanitized.
- * @param   string    $type     (OPTIONAL)  The expected data type: "string", "int", or "float"
- * @param   int|null  $min      (OPTIONAL)  Minimum expected value or length of the data (see description above).
- * @param   int|null  $max      (OPTIONAL)  Maximum expected value or length of the data (see description above).
- * @param   string    $padding  (OPTIONAL)  The character to add at the end of strings that are too short.
+ * @param   mixed       $data                 The data to be sanitized.
+ * @param   string      $type     (OPTIONAL)  The expected data type: "string", "int", or "float"
+ * @param   mixed|null  $min      (OPTIONAL)  Minimum expected value or length of the data (see description above).
+ * @param   mixed|null  $max      (OPTIONAL)  Maximum expected value or length of the data (see description above).
+ * @param   string      $padding  (OPTIONAL)  The character to add at the end of strings that are too short.
  *
- * @return  mixed                           Sanitized version of your data.
+ * @return  mixed                             Sanitized version of your data.
  */
 
 function sanitize(  mixed   $data                 ,
                     string  $type     = 'string'  ,
-                    ?int    $min      = NULL      ,
-                    ?int    $max      = NULL      ,
+                    mixed   $min      = NULL      ,
+                    mixed   $max      = NULL      ,
                     string  $padding  = "_"       ) : mixed
 {
   // For floats, ensure that it is a float, else convert it, then ensure that it is between min and max values
@@ -102,23 +105,23 @@ function sanitize(  mixed   $data                 ,
  * This function is a wrapper around the sanitize() function.
  * It provides more options and convenience when dealing with data from $_POST or $_GET values.
  *
- * @param   string    $input_type                 The type of input: 'POST' or 'GET'.
- * @param   string    $input_name                 The input's name (eg. for $_POST['abc'], this is 'abc').
- * @param   string    $data_type                  The expected data type ('string', 'int', 'float').
- * @param   mixed     $default_value  (OPTIONAL)  Returns this value if the $input_name does not exist.
- * @param   int|null  $min            (OPTIONAL)  Min. value: see the documentation of sanitize().
- * @param   int|null  $max            (OPTIONAL)  Max. value: see the documentation of sanitize().
- * @param   string    $padding        (OPTIONAL)  Character used for padding strings, see sanitize().
+ * @param   string      $input_type                 The type of input: 'POST' or 'GET'.
+ * @param   string      $input_name                 The input's name (eg. for $_POST['abc'], this is 'abc').
+ * @param   string      $data_type                  The expected data type ('string', 'int', 'float').
+ * @param   mixed|null  $default_value  (OPTIONAL)  Returns this value if the $input_name does not exist.
+ * @param   mixed|null  $min            (OPTIONAL)  Minimum expected value or length of the data, see sanitize().
+ * @param   mixed|null  $max            (OPTIONAL)  Maximum expected value or length of the data, see sanitize().
+ * @param   string      $padding        (OPTIONAL)  Character used for padding strings, see sanitize().
  *
- * @return  mixed                                 Sanitized version of your inputted data.
+ * @return  mixed                                   Sanitized version of your inputted data.
  */
 
 function sanitize_input(  string  $input_type             ,
                           string  $input_name             ,
                           string  $data_type              ,
                           mixed   $default_value  = ''    ,
-                          ?int    $min            = NULL  ,
-                          ?int    $max            = NULL  ,
+                          mixed   $min            = NULL  ,
+                          mixed   $max            = NULL  ,
                           string  $padding        = "_"   )
 {
   // When dealing with $_POST, fetch the value (if it exists)
@@ -137,13 +140,60 @@ function sanitize_input(  string  $input_type             ,
 
 
 /**
+ * Sanitizes an element from an array.
+ *
+ * @param   array       $array                    The array containing the element.
+ * @param   string      $element                  The identifier of the array element which needs to be sanitized.
+ * @param   string      $data_type                The expected type of the array element.
+ * @param   mixed|null  $min          (OPTIONAL)  Minimum expected value or length of the data.
+ * @param   mixed|null  $max          (OPTIONAL)  Maximum expected value or length of the data.
+ * @param   string|null $case         (OPTIONAL)  Changes the case of a string.
+ * @param   string|null $convert_date (OPTIONAL)  Converts a date (eg. 'to_mysql')
+ * @param   mixed|null  $default      (OPTIONAL)  Returns this value if the element does not exist.
+ *
+ * @return  mixed                               The sanitized data.
+ */
+
+function sanitize_array_element(  array   $array                ,
+                                  string  $element              ,
+                                  string  $data_type            ,
+                                  mixed   $min          = NULL  ,
+                                  mixed   $max          = NULL  ,
+                                  ?string $case         = NULL  ,
+                                  ?string $convert_date = NULL  ,
+                                  mixed   $default      = NULL  )
+{
+  // If the array element does not exist, return the default value or null
+  if(!isset($array[$element]))
+    return $default;
+
+  // Grab the array element
+  $data = $array[$element];
+
+  // Change the case if requested
+  $data = ($case) ? string_change_case($data, $case) : $data;
+
+  // Apply a date function if required
+  $data = ($convert_date === 'to_mysql') ? date_to_mysql($data) : $data;
+
+  // Otherwise, return the sanitized array element
+  return sanitize(data: $data       ,
+                  type: $data_type  ,
+                  min:  $min        ,
+                  max:  $max        );
+}
+
+
+
+
+/**
  * Sanitizes data for HTML usage.
  *
  * @param   string|null $data                               The data to be sanitized.
  * @param   bool        $prevent_line_breaks    (OPTIONAL)  If false/unset, will remove the line breaks from your data.
  * @param   bool        $preserve_backslashes   (OPTIONAL)  If false/unset, will remove backslashes from your data.
  *
- * @return  string                                      The sanitized data, ready to be printed in your HTML.
+ * @return  string                                          The sanitized data, ready to be printed in your HTML.
  */
 
 function sanitize_output( ?string $data                         ,

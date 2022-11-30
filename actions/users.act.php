@@ -206,12 +206,12 @@ function user_list( string  $sort_by          = ''      ,
   $active_limit     = sanitize(time() - 2629746, 'int', 0);
 
   // Sanitize the search parameters
-  $search_id          = isset($search['id'])          ? sanitize($search['id'], 'int', 0)                     : NULL;
-  $search_username    = isset($search['username'])    ? sanitize($search['username'], 'string')               : NULL;
-  $search_del_user    = isset($search['del_user'])    ? sanitize($search['del_user'], 'string')               : NULL;
-  $search_registered  = isset($search['registered'])  ? sanitize($search['registered'], 'int', 0, date('Y'))  : NULL;
-  $search_active      = isset($search['active'])      ? sanitize($search['active'], 'int', 0, 1)              : NULL;
-  $search_languages   = isset($search['languages'])   ? sanitize($search['languages'], 'string')              : NULL;
+  $search_id          = sanitize_array_element($search, 'id', 'int', min: 0, default: 0);
+  $search_username    = sanitize_array_element($search, 'username', 'string');
+  $search_del_user    = sanitize_array_element($search, 'del_user', 'string');
+  $search_registered  = sanitize_array_element($search, 'registered', 'int', min: 0, max: date('Y'), default: 0);
+  $search_active      = sanitize_array_element($search, 'active', 'int', min: 0, max: 1, default: 0);
+  $search_languages   = sanitize_array_element($search, 'languages', 'string');
 
   // Determine the activity cutoff
   $minimum_activity = sanitize((time() - $activity_cutoff), 'int', 0);

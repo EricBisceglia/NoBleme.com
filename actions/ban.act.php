@@ -935,7 +935,7 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
 */
 
 function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
-                              array  $search    = array()   ) : array
+                              array   $search   = array()   ) : array
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -946,10 +946,10 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
   require_included_file('functions_numbers.inc.php');
 
   // Sanitize the search parameters
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1) : -1;
-  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string')   : NULL;
-  $search_banner    = isset($search['banner'])    ? sanitize($search['banner'], 'string')     : NULL;
-  $search_unbanner  = isset($search['unbanner'])  ? sanitize($search['unbanner'], 'string')   : NULL;
+  $search_status    = sanitize_array_element($search, 'status', 'int', min: -1, max: 1, default: -1);
+  $search_username  = sanitize_array_element($search, 'username', 'string');
+  $search_banner    = sanitize_array_element($search, 'banner', 'string');
+  $search_unbanner  = sanitize_array_element($search, 'unbanner', 'string');
 
   // Determine which logs to show
   $query_search = match($search_status)

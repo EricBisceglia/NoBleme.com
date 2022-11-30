@@ -166,15 +166,15 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   $is_admin = ($user_view) ? 0 : user_is_administrator();
 
   // Sanitize the search parameters
-  $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)         : 0;
-  $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')      : '';
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -2)    : 0;
+  $search_id        = sanitize_array_element($search, 'id', 'int', min: 0, default: 0);
+  $search_title     = sanitize_array_element($search, 'title', 'string');
+  $search_status    = sanitize_array_element($search, 'status', 'int', min: -2, default: 0);
   $search_status_id = sanitize($search_status - 1, 'int', 0, 5);
-  $search_created   = isset($search['created'])   ? sanitize($search['created'], 'int', 0)    : 0;
-  $search_reporter  = isset($search['reporter'])  ? sanitize($search['reporter'], 'string')   : '';
-  $search_category  = isset($search['category'])  ? sanitize($search['category'], 'int', -1)  : 0;
-  $search_goal      = isset($search['goal'])      ? sanitize($search['goal'], 'int', -1)      : 0;
-  $search_admin     = isset($search['admin'])     ? sanitize($search['admin'], 'int', 0, 5)   : 0;
+  $search_created   = sanitize_array_element($search, 'created', 'int', min: 0, default: 0);
+  $search_reporter  = sanitize_array_element($search, 'reporter', 'string');
+  $search_category  = sanitize_array_element($search, 'category', 'int', min: -1, default: 0);
+  $search_goal      = sanitize_array_element($search, 'goal', 'int', min: -1, default: 0);
+  $search_admin     = sanitize_array_element($search, 'admin', 'int', min: 0, max: 5, default: 0);
 
   // Do not show deleted, unvalidated, private, or wrong language tasks to regular users
   $query_search = (!$is_admin) ? "  WHERE dev_tasks.is_deleted        = 0
@@ -394,16 +394,16 @@ function tasks_add( array $contents ) : mixed
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
-  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
-  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
-  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
-  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
-  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
-  $task_public    = ($task_private)                 ? 0                                             : 1;
-  $task_silent    = (isset($contents['silent']))    ? sanitize($contents['silent'], 'int', 0, 1)    : 0;
+  $task_title_en  = sanitize_array_element($contents, 'title_en', 'string');
+  $task_title_fr  = sanitize_array_element($contents, 'title_fr', 'string');
+  $task_body_en   = sanitize_array_element($contents, 'body_en', 'string');
+  $task_body_fr   = sanitize_array_element($contents, 'body_fr', 'string');
+  $task_priority  = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 5, default: 0);
+  $task_category  = sanitize_array_element($contents, 'category', 'int', min: 0, default: 0);
+  $task_milestone = sanitize_array_element($contents, 'milestone', 'int', min: 0, default: 0);
+  $task_private   = sanitize_array_element($contents, 'private', 'int', min: 0, max: 1, default: 0);
+  $task_public    = ($task_private) ? 0 : 1;
+  $task_silent    = sanitize_array_element($contents, 'silent', 'int', min: 0, max: 1, default: 0);
 
   // Error: No title
   if(!$task_title_en && !$task_title_fr)
@@ -542,16 +542,16 @@ function tasks_approve( int   $task_id  ,
 
   // Sanitize and prepare the data
   $task_id        = sanitize($task_id, 'int', 0);
-  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
-  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
-  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
-  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
-  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
-  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
-  $task_public    = ($task_private)                 ? 0                                             : 1;
-  $task_silent    = (isset($contents['silent']))    ? sanitize($contents['silent'], 'int', 0, 1)    : 0;
+  $task_title_en  = sanitize_array_element($contents, 'title_en', 'string');
+  $task_title_fr  = sanitize_array_element($contents, 'title_fr', 'string');
+  $task_body_en   = sanitize_array_element($contents, 'body_en', 'string');
+  $task_body_fr   = sanitize_array_element($contents, 'body_fr', 'string');
+  $task_priority  = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 5, default: 0);
+  $task_category  = sanitize_array_element($contents, 'category', 'int', min: 0, default: 0);
+  $task_milestone = sanitize_array_element($contents, 'milestone', 'int', min: 0, default: 0);
+  $task_private   = sanitize_array_element($contents, 'private', 'int', min: 0, max: 1, default: 0);
+  $task_public    = ($task_private) ? 0 : 1;
+  $task_silent    = sanitize_array_element($contents, 'silent', 'int', min: 0, max: 1, default: 0);
 
   // Error: No title
   if(!$task_title_en && !$task_title_fr)
@@ -909,18 +909,18 @@ function tasks_edit(  int     $task_id  ,
 
   // Sanitize and prepare the data
   $task_id        = sanitize($task_id, 'int', 0);
-  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
-  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
-  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
-  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
-  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
-  $task_source    = (isset($contents['source']))    ? sanitize($contents['source'], 'string')       : '';
-  $task_author    = (isset($contents['author']))    ? $contents['author']                           : 0;
-  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
-  $task_public    = ($task_private)                 ? 0                                             : 1;
-  $task_solved    = (isset($contents['solved']))    ? sanitize($contents['solved'], 'int', 0, 1)    : 0;
+  $task_title_en  = sanitize_array_element($contents, 'title_en', 'string');
+  $task_title_fr  = sanitize_array_element($contents, 'title_fr', 'string');
+  $task_body_en   = sanitize_array_element($contents, 'body_en', 'string');
+  $task_body_fr   = sanitize_array_element($contents, 'body_fr', 'string');
+  $task_priority  = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 5, default: 0);
+  $task_category  = sanitize_array_element($contents, 'category', 'int', min: 0, default: 0);
+  $task_milestone = sanitize_array_element($contents, 'milestone', 'int', min: 0, default: 0);
+  $task_source    = sanitize_array_element($contents, 'source', 'string');
+  $task_author    = (isset($contents['author'])) ? $contents['author'] : 0;
+  $task_private   = sanitize_array_element($contents, 'private', 'int', min: 0, max: 1, default: 0);
+  $task_public    = ($task_private) ? 0 : 1;
+  $task_solved    = sanitize_array_element($contents, 'solved', 'int', min: 0, max: 1, default: 0);
 
   // Error: No title
   if(!$task_title_en && !$task_title_fr)
@@ -1153,8 +1153,8 @@ function tasks_categories_add( array $contents ) : void
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
 
   // Set default values in case some are missing
   $title_en = ($title_en) ? $title_en : '-';
@@ -1192,10 +1192,10 @@ function tasks_categories_edit( int   $category_id  = 0       ,
     return;
 
   // Sanitize and prepare the data
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])               : 0;
-  $archived = ($archived === 'true')          ? 1                                             : 0;
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
+  $archived = sanitize_array_element($contents, 'archived', 'string', default: 'false');
+  $archived = ($archived === 'true') ? 1 : 0;
 
   // Update the task category
   query(" UPDATE  dev_tasks_categories
@@ -1322,9 +1322,9 @@ function tasks_milestones_add( array $contents ) : void
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $order    = (isset($contents['order']))     ? sanitize($contents['order'], 'int', 0)    : 0;
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $order    = sanitize_array_element($contents, 'order', 'int', min: 0, default: 0);
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
 
   // Set default values in case some are missing
   $title_en = ($title_en) ? $title_en : '-';
@@ -1363,13 +1363,13 @@ function tasks_milestones_edit( int   $milestone_id = 0       ,
     return;
 
   // Sanitize and prepare the data
-  $order    = (isset($contents['order']))     ? sanitize($contents['order'], 'int', 0)    : 0;
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
-  $body_en  = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')  : '';
-  $body_fr  = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')  : '';
-  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])           : 0;
-  $archived = ($archived === 'true')          ? 1                                         : 0;
+  $order    = sanitize_array_element($contents, 'order', 'int', min: 0, default: 0);
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
+  $body_en  = sanitize_array_element($contents, 'body_en', 'string');
+  $body_fr  = sanitize_array_element($contents, 'body_fr', 'string');
+  $archived = sanitize_array_element($contents, 'archived', 'string', default: 'false');
+  $archived = ($archived === 'true') ? 1 : 0;
 
   // Update the task milestone
   query(" UPDATE  dev_tasks_milestones

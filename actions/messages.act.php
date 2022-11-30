@@ -54,11 +54,11 @@ function private_message_list(  string  $sort_by        = ''      ,
   $user_id = sanitize(user_get_id(), 'int', 1);
 
   // Sanitize the search parameters
-  $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')            : NULL;
-  $search_sender    = isset($search['sender'])    ? sanitize($search['sender'], 'string')           : NULL;
-  $search_recipient = isset($search['recipient']) ? sanitize($search['recipient'], 'string')        : NULL;
-  $search_date      = isset($search['date'])      ? sanitize($search['date'], 'int', 0, date('Y'))  : NULL;
-  $search_read      = isset($search['read'])      ? sanitize($search['read'], 'int', -1, 1)         : NULL;
+  $search_title     = sanitize_array_element($search, 'title', 'string');
+  $search_sender    = sanitize_array_element($search, 'sender', 'string');
+  $search_recipient = sanitize_array_element($search, 'recipient', 'string');
+  $search_date      = sanitize_array_element($search, 'date', 'int', min: 0, max: date('Y'), default: 0);
+  $search_read      = sanitize_array_element($search, 'read', 'int', min: -1, max: 1, default: 0);
   $timestamp        = sanitize(time(), 'int', 0);
 
   // Determine whether to show sent or recieved messages

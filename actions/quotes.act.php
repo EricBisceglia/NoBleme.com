@@ -196,9 +196,9 @@ function quotes_list( ?array  $search         = array() ,
   $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Prepare the search parameters
-  $search_body = (isset($search['body'])) ? sanitize($search['body'], 'string')   : '';
-  $search_user = (isset($search['user'])) ? sanitize($search['user'], 'int', 0)   : 0;
-  $search_year = (isset($search['year'])) ? sanitize($search['year'], 'int', -1)  : 0;
+  $search_body = sanitize_array_element($search, 'body', 'string');
+  $search_user = sanitize_array_element($search, 'user', 'int', min: 0, default: 0);
+  $search_year = sanitize_array_element($search, 'year', 'int', min: -1, default: 0);
 
   // View a single quote
   if($quote_id && $is_admin)

@@ -81,11 +81,11 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   $sort_by  = sanitize($sort_by, 'string');
 
   // Sanitize the search parameters
-  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'string')         : NULL;
-  $search_id          = isset($search['id'])          ? sanitize($search['id'], 'int', 0)           : NULL;
-  $search_execution   = isset($search['date'])        ? sanitize($search['date'], 'int', 0, 2)      : 0;
-  $search_description = isset($search['description']) ? sanitize($search['description'], 'string')  : NULL;
-  $search_report      = isset($search['report'])      ? sanitize($search['report'], 'string')       : NULL;
+  $search_type        = sanitize_array_element($search, 'type', 'string');
+  $search_id          = sanitize_array_element($search, 'id', 'int', 0, default: 0);
+  $search_execution   = sanitize_array_element($search, 'date', 'int', 0, 2, default: 0);
+  $search_description = sanitize_array_element($search, 'description', 'string');
+  $search_report      = sanitize_array_element($search, 'report', 'string');
 
   // Search through the data: Future executions
   $future_search  = " WHERE 1 = 1 ";

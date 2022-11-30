@@ -113,11 +113,11 @@ function meetups_list(  string  $sort_by  = 'date'  ,
                         array   $search   = array() ) : array
 {
   // Sanitize the search parameters
-  $search_date      = isset($search['date'])      ? sanitize($search['date'], 'int', 0)     : NULL;
-  $search_lang      = isset($search['lang'])      ? sanitize($search['lang'], 'string')     : NULL;
-  $search_location  = isset($search['location'])  ? sanitize($search['location'], 'string') : NULL;
-  $search_people    = isset($search['people'])    ? sanitize($search['people'], 'int', 0)   : 0;
-  $search_user      = isset($search['attendee'])  ? sanitize($search['attendee'], 'int', 0) : 0;
+  $search_date      = sanitize_array_element($search, 'date', 'int', min: 0, default: 0);
+  $search_lang      = sanitize_array_element($search, 'lang', 'string');
+  $search_location  = sanitize_array_element($search, 'location', 'string');
+  $search_people    = sanitize_array_element($search, 'people', 'int', min: 0, default: 0);
+  $search_user      = sanitize_array_element($search, 'attendee', 'int', min: 0, default: 0);
 
   // Hide deleted meetups to regular users
   $query_search = (!user_is_moderator()) ? " AND meetups.is_deleted = 0 " : "";
@@ -221,12 +221,12 @@ function meetups_add( array $contents ) : mixed
   user_restrict_to_moderators();
 
   // Sanitize and prepare the data
-  $meetup_date        = (isset($contents['date']))        ? sanitize(date_to_mysql($contents['date']), 'string') : 0;
-  $meetup_location    = (isset($contents['location']))    ? sanitize($contents['location'], 'string', max: 20)    : '';
-  $meetup_details_en  = (isset($contents['details_en']))  ? sanitize($contents['details_en'], 'string')           : '';
-  $meetup_details_fr  = (isset($contents['details_fr']))  ? sanitize($contents['details_fr'], 'string')           : '';
-  $temp               = ($contents['lang_en'])            ? 'EN'                                                  : '';
-  $meetup_lang        = ($contents['lang_fr'])            ? $temp.'FR'                                         : $temp;
+  $meetup_date        = sanitize_array_element($contents, 'date', 'string', convert_date: 'to_mysql', default: 0);
+  $meetup_location    = sanitize_array_element($contents, 'location', 'string', max: 20);
+  $meetup_details_en  = sanitize_array_element($contents, 'details_en', 'string');
+  $meetup_details_fr  = sanitize_array_element($contents, 'details_fr', 'string');
+  $temp               = ($contents['lang_en']) ? 'EN' : '';
+  $meetup_lang        = ($contents['lang_fr']) ? $temp.'FR' : $temp;
 
   // Error: Incorrect date
   if(!$meetup_date || $meetup_date === '0000-00-00')
@@ -347,12 +347,12 @@ function meetups_edit(  int   $meetup_id  ,
 
   // Sanitize and prepare the data
   $meetup_id          = sanitize($meetup_id, 'int', 0);
-  $meetup_date        = (isset($contents['date']))        ? sanitize(date_to_mysql($contents['date']), 'string') : 0;
-  $meetup_location    = (isset($contents['location']))    ? sanitize($contents['location'], 'string', max: 20)    : '';
-  $meetup_details_en  = (isset($contents['details_en']))  ? sanitize($contents['details_en'], 'string')           : '';
-  $meetup_details_fr  = (isset($contents['details_fr']))  ? sanitize($contents['details_fr'], 'string')           : '';
-  $temp               = ($contents['lang_en'])            ? 'EN'                                                  : '';
-  $meetup_lang        = ($contents['lang_fr'])            ? $temp.'FR'                                         : $temp;
+  $meetup_date        = sanitize_array_element($contents, 'date', 'string', convert_date: 'to_mysql', default: 0);
+  $meetup_location    = sanitize_array_element($contents, 'location', 'string', max: 20);
+  $meetup_details_en  = sanitize_array_element($contents, 'details_en', 'string');
+  $meetup_details_fr  = sanitize_array_element($contents, 'details_fr', 'string');
+  $temp               = ($contents['lang_en']) ? 'EN' : '';
+  $meetup_lang        = ($contents['lang_fr']) ? $temp.'FR' : $temp;
 
   // Error: Meetup does not exist
   if(!database_row_exists('meetups', $meetup_id))
@@ -890,13 +890,13 @@ function meetups_attendees_add( int   $meetup_id  ,
 
   // Sanitize and prepare the data
   $meetup_id  = sanitize($meetup_id, 'int', 0);
-  $account    = (isset($contents['account']))   ? sanitize($contents['account'], 'string')            : '';
-  $nickname   = (isset($contents['nickname']))  ? sanitize($contents['nickname'], 'string', max: 20)  : '';
-  $extra_en   = (isset($contents['extra_en']))  ? sanitize($contents['extra_en'], 'string')           : '';
-  $extra_fr   = (isset($contents['extra_fr']))  ? sanitize($contents['extra_fr'], 'string')           : '';
-  $lock       = (isset($contents['lock']))      ? sanitize($contents['lock'], 'bool')                 : 'false';
-  $lock       = ($lock === 'true')              ? 1                                                   : 0;
-  $username   = ($nickname)                     ? string_truncate($contents['nickname'], 20) : $contents['account'];
+  $account    = sanitize_array_element($contents, 'account', 'string');
+  $nickname   = sanitize_array_element($contents, 'nickname', 'string', max: 20);
+  $extra_en   = sanitize_array_element($contents, 'extra_en', 'string');
+  $extra_fr   = sanitize_array_element($contents, 'extra_fr', 'string');
+  $lock       = (isset($contents['lock'])) ? sanitize($contents['lock'], 'bool') : 'false';
+  $lock       = ($lock === 'true') ? 1 : 0;
+  $username   = ($nickname) ? string_truncate($contents['nickname'], 20) : $contents['account'];
 
   // Error: No account or nickname provided
   if(!$account && !$nickname)
@@ -1034,13 +1034,13 @@ function meetups_attendees_edit(  int   $attendee_id  ,
 
   // Sanitize and prepare the data
   $attendee_id  = sanitize($attendee_id, 'int', 0);
-  $account      = (isset($contents['account']))   ? sanitize($contents['account'], 'string')            : '';
-  $nickname     = (isset($contents['nickname']))  ? sanitize($contents['nickname'], 'string', max: 20)  : '';
-  $extra_en     = (isset($contents['extra_en']))  ? sanitize($contents['extra_en'], 'string')           : '';
-  $extra_fr     = (isset($contents['extra_fr']))  ? sanitize($contents['extra_fr'], 'string')           : '';
-  $lock         = (isset($contents['lock']))      ? sanitize($contents['lock'], 'bool')                 : 'false';
-  $lock         = ($lock === 'true')              ? 1                                                   : 0;
-  $username     = ($nickname)                     ? string_truncate($contents['nickname'], 20) : $contents['account'];
+  $account    = sanitize_array_element($contents, 'account', 'string');
+  $nickname   = sanitize_array_element($contents, 'nickname', 'string', max: 20);
+  $extra_en   = sanitize_array_element($contents, 'extra_en', 'string');
+  $extra_fr   = sanitize_array_element($contents, 'extra_fr', 'string');
+  $lock       = (isset($contents['lock'])) ? sanitize($contents['lock'], 'bool') : 'false';
+  $lock       = ($lock === 'true') ? 1 : 0;
+  $username   = ($nickname) ? string_truncate($contents['nickname'], 20) : $contents['account'];
 
   // Error: No account or nickname provided
   if(!$account && !$nickname)

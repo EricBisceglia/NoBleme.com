@@ -142,13 +142,13 @@ function irc_channels_add( array $contents ) : mixed
   user_restrict_to_moderators();
 
   // Sanitize and prepare the data
-  $channel_name_raw = (isset($contents['name']))    ? $contents['name']                         : '';
-  $channel_name     = (isset($contents['name']))    ? sanitize($contents['name'], 'string')     : '';
-  $channel_desc_en  = (isset($contents['desc_en'])) ? sanitize($contents['desc_en'], 'string')  : '';
-  $channel_desc_fr  = (isset($contents['desc_en'])) ? sanitize($contents['desc_fr'], 'string')  : '';
-  $channel_type     = (isset($contents['type']))    ? sanitize($contents['type'], 'int', 0, 3)  : 1;
-  $temp             = (isset($contents['lang_en'])) ? 'EN'                                      : '';
-  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR'                                : $temp;
+  $channel_name_raw = (isset($contents['name'])) ? $contents['name'] : '';
+  $channel_name     = sanitize_array_element($contents, 'name', 'string');
+  $channel_desc_en  = sanitize_array_element($contents, 'desc_en', 'string');
+  $channel_desc_fr  = sanitize_array_element($contents, 'desc_fr', 'string');
+  $channel_type     = sanitize_array_element($contents, 'type', 'int', min: 0, max: 3, default: 1);
+  $temp             = (isset($contents['lang_en'])) ? 'EN' : '';
+  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR' : $temp;
 
   // Error: No name
   if(!$channel_name)
@@ -242,11 +242,11 @@ function irc_channels_edit( int   $channel_id ,
     return __('irc_channels_edit_error_id');
 
   // Sanitize and prepare the data
-  $channel_desc_en  = (isset($contents['desc_en'])) ? sanitize($contents['desc_en'], 'string')  : '';
-  $channel_desc_fr  = (isset($contents['desc_en'])) ? sanitize($contents['desc_fr'], 'string')  : '';
-  $channel_type     = (isset($contents['type']))    ? sanitize($contents['type'], 'int', 0, 3)  : 1;
-  $temp             = (isset($contents['lang_en'])) ? 'EN'                                      : '';
-  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR'                                : $temp;
+  $channel_desc_en  = sanitize_array_element($contents, 'desc_en', 'string');
+  $channel_desc_fr  = sanitize_array_element($contents, 'desc_fr', 'string');
+  $channel_type     = sanitize_array_element($contents, 'type', 'int', min: 0, max: 3, default: 1);
+  $temp             = (isset($contents['lang_en'])) ? 'EN' : '';
+  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR' : $temp;
 
   // Error: No description
   if(!$channel_desc_en || !$channel_desc_fr)
@@ -685,9 +685,9 @@ function irc_bot_message_history_list( array $search = array() ) : array
   require_included_file('functions_time.inc.php');
 
   // Sanitize the search parameters
-  $search_channel = isset($search['channel']) ? sanitize($search['channel'], 'string')  : NULL;
-  $search_body    = isset($search['message']) ? sanitize($search['message'], 'string')  : NULL;
-  $search_errors  = isset($search['sent'])    ? sanitize($search['sent'], 'int', -1, 1) : -1;
+  $search_channel = sanitize_array_element($search, 'channel', 'string');
+  $search_body    = sanitize_array_element($search, 'message', 'string');
+  $search_errors  = sanitize_array_element($search, 'sent', 'int', min: -1, max: 1, default: -1);
 
   // Prepare the search string
   $search = " WHERE 1=1 ";

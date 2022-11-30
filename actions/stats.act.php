@@ -43,9 +43,9 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   require_included_file('functions_numbers.inc.php');
 
   // Sanitize the search parameters
-  $search_url     = isset($search['url'])     ? sanitize($search['url'], 'string')        : NULL;
-  $search_queries = isset($search['queries']) ? sanitize($search['queries'], 'int', 0, 5) : NULL;
-  $search_load    = isset($search['load'])    ? sanitize($search['load'], 'int', 0, 5)    : NULL;
+  $search_url     = sanitize_array_element($search, 'url', 'string');
+  $search_queries = sanitize_array_element($search, 'queries', 'int', min: 0, max: 5, default: 0);
+  $search_load    = sanitize_array_element($search, 'load', 'int', min: 0, max: 5, default: 0);
 
   // Search through the data
   $query_search = ($search_url) ? " AND stats_pages.page_url LIKE '%$search_url%' " : "";
@@ -248,7 +248,7 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   $lang_lowercase = sanitize(string_change_case($lang, 'lowercase'), 'string');
 
   // Sanitize the search parameters
-  $search_name = isset($search['name']) ? sanitize($search['name'], 'string') : NULL;
+  $search_name = sanitize_array_element($search, 'name', 'string');
 
   // Search through the data
   $query_search = ($search_name) ? "  WHERE ( stats_pages.page_url                  LIKE '%$search_name%'
@@ -399,16 +399,16 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Sanitize the search parameters
-  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string')             : NULL;
-  $search_created   = isset($search['created'])   ? sanitize($search['created'], 'int', 0, date('Y'))   : NULL;
-  $search_page      = isset($search['page'])      ? sanitize($search['page'], 'string')                 : NULL;
-  $search_action    = isset($search['action'])    ? sanitize($search['action'], 'int', -1, 1)           : -1;
-  $search_language  = isset($search['language'])  ? sanitize($search['language'], 'string')             : NULL;
-  $search_speaks    = isset($search['speaks'])    ? sanitize($search['speaks'], 'string')               : NULL;
-  $search_theme     = isset($search['theme'])     ? sanitize($search['theme'], 'string')                : NULL;
-  $search_birthday  = isset($search['birthday'])  ? sanitize($search['birthday'], 'int', -1, date('Y')) : 0;
-  $search_profile   = isset($search['profile'])   ? sanitize($search['profile'], 'string')              : NULL;
-  $search_settings  = isset($search['settings'])  ? sanitize($search['settings'], 'string')             : NULL;
+  $search_username  = sanitize_array_element($search, 'username', 'string');
+  $search_created   = sanitize_array_element($search, 'created', 'int', min: 0, max: date('Y'), default: 0);
+  $search_page      = sanitize_array_element($search, 'page', 'string');
+  $search_action    = sanitize_array_element($search, 'action', 'int', min: -1, max: 1, default: -1);
+  $search_language  = sanitize_array_element($search, 'language', 'string');
+  $search_speaks    = sanitize_array_element($search, 'speaks', 'string');
+  $search_theme     = sanitize_array_element($search, 'theme', 'string');
+  $search_birthday  = sanitize_array_element($search, 'birthday', 'int', min: 0, max: date('Y'), default: 0);
+  $search_profile   = sanitize_array_element($search, 'profile', 'string');
+  $search_settings  = sanitize_array_element($search, 'settings', 'string');
 
   // Search through the data: Actions
   $query_search = match($search_action)
@@ -687,10 +687,10 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   $is_admin = user_is_administrator();
 
   // Sanitize the search parameters
-  $search_identity  = isset($search['identity'])  ? sanitize($search['identity'], 'string') : NULL;
-  $search_page      = isset($search['page'])      ? sanitize($search['page'], 'string')     : NULL;
-  $search_language  = isset($search['language'])  ? sanitize($search['language'], 'string') : NULL;
-  $search_theme     = isset($search['theme'])     ? sanitize($search['theme'], 'string')    : NULL;
+  $search_identity  = sanitize_array_element($search, 'identity', 'string');
+  $search_page      = sanitize_array_element($search, 'page', 'string');
+  $search_language  = sanitize_array_element($search, 'language', 'string');
+  $search_theme     = sanitize_array_element($search, 'theme', 'string');
 
   // Only admins should see users in this list
   $query_search = ($is_admin) ? " WHERE 1 = 1 " : " AND users.id IS NULL ";

@@ -399,25 +399,25 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $pages      = compendium_pages_list_urls();
 
   // Sanitize the search parameters
-  $search_url         = isset($search['url'])         ? sanitize($search['url'], 'string')                  : '';
-  $search_translation = isset($search['translation']) ? sanitize($search['translation'], 'int', -2, 2)      : 0;
-  $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
-  $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], 'int', -1, 1)         : 0;
-  $search_redirname   = isset($search['redirname'])   ? sanitize($search['redirname'], 'string')            : '';
-  $search_nsfw        = isset($search['nsfw'])        ? sanitize($search['nsfw'], 'int', -1, 1)             : -1;
-  $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
-  $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
-  $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
-  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', -1)                : 0;
-  $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', -1)                 : 0;
-  $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', -2)            : 0;
-  $search_language    = isset($search['language'])    ? sanitize($search['language'], 'string')             : '';
-  $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
-  $search_peaked      = isset($search['peaked'])      ? sanitize($search['peaked'], 'int', 0, date('Y'))    : 0;
-  $search_created     = isset($search['created'])     ? sanitize($search['created'], 'int', 0, date('Y'))   : 0;
-  $search_nsfw_admin  = isset($search['nsfw_admin'])  ? sanitize($search['nsfw_admin'], 'string')           : '';
-  $search_wip         = isset($search['wip'])         ? sanitize($search['wip'], 'string')                  : '';
-  $search_notes       = isset($search['notes'])       ? sanitize($search['notes'], 'int', 0, 1)             : 0;
+  $search_url         = sanitize_array_element($search, 'url', 'string');
+  $search_translation = sanitize_array_element($search, 'translation', 'int', min: -2, max: 2, default: 0);
+  $search_title       = sanitize_array_element($search, 'title', 'string');
+  $search_redirect    = sanitize_array_element($search, 'redirect', 'int', min: -1, max: 1, default: 0);
+  $search_redirname   = sanitize_array_element($search, 'redirname', 'string');
+  $search_nsfw        = sanitize_array_element($search, 'nsfw', 'int', min: -1, max: 1, default: -1);
+  $search_gross       = sanitize_array_element($search, 'gross', 'int', min: -1, max: 1, default: -1);
+  $search_offensive   = sanitize_array_element($search, 'offensive', 'int', min: -1, max: 1, default: -1);
+  $search_nsfw_title  = sanitize_array_element($search, 'nsfw_title', 'int', min: -1, max: 1, default: -1);
+  $search_type        = sanitize_array_element($search, 'type', 'int', min: -1, default: 0);
+  $search_era         = sanitize_array_element($search, 'era', 'int', min: -1, default: 0);
+  $search_category    = sanitize_array_element($search, 'category', 'int', min: -2, default: 0);
+  $search_language    = sanitize_array_element($search, 'language', 'string');
+  $search_appeared    = sanitize_array_element($search, 'appeared', 'int', min: 0, max: date('Y'), default: 0);
+  $search_peaked      = sanitize_array_element($search, 'peaked', 'int', min: 0, max: date('Y'), default: 0);
+  $search_created     = sanitize_array_element($search, 'created', 'int', min: 0, max: date('Y'), default: 0);
+  $search_nsfw_admin  = sanitize_array_element($search, 'nsfw_admin', 'string');
+  $search_wip         = sanitize_array_element($search, 'wip', 'string');
+  $search_notes       = sanitize_array_element($search, 'notes', 'int', min: 0, max: 1, default: 0);
 
   // Forbid some searches if the user is not an admin
   if(!$is_admin)
@@ -806,25 +806,25 @@ function compendium_pages_add( array $contents ) : mixed
   $page_url           = sanitize($page_url, 'string');
   $page_title_en      = sanitize($page_title_en, 'string');
   $page_title_fr      = sanitize($page_title_fr, 'string');
-  $page_redirect_en   = isset($contents['redirect_en'])   ? sanitize($contents['redirect_en'], 'string')      : '';
-  $page_redirect_fr   = isset($contents['redirect_fr'])   ? sanitize($contents['redirect_fr'], 'string')      : '';
-  $page_redirect_ext  = isset($contents['redirect_ext'])  ? sanitize($contents['redirect_ext'], 'int', 0, 1)  : 0;
-  $page_summary_en    = isset($contents['summary_en'])    ? sanitize($contents['summary_en'], 'string')       : '';
-  $page_summary_fr    = isset($contents['summary_fr'])    ? sanitize($contents['summary_fr'], 'string')       : '';
-  $page_body_en       = isset($contents['body_en'])       ? sanitize($contents['body_en'], 'string')          : '';
-  $page_body_fr       = isset($contents['body_fr'])       ? sanitize($contents['body_fr'], 'string')          : '';
-  $page_appear_month  = isset($contents['appear_month'])  ? sanitize($contents['appear_month'], 'int', 0, 12) : 0;
-  $page_appear_year   = isset($contents['appear_year'])   ? sanitize($contents['appear_year'], 'int', 0)      : 0;
-  $page_peak_month    = isset($contents['peak_month'])    ? sanitize($contents['peak_month'], 'int', 0, 12)   : 0;
-  $page_peak_year     = isset($contents['peak_year'])     ? sanitize($contents['peak_year'], 'int', 0)        : 0;
-  $page_nsfw_title    = isset($contents['nsfw_title'])    ? sanitize($contents['nsfw_title'], 'int', 0, 1)    : 0;
-  $page_nsfw          = isset($contents['nsfw'])          ? sanitize($contents['nsfw'], 'int', 0, 1)          : 0;
-  $page_gross         = isset($contents['gross'])         ? sanitize($contents['gross'], 'int', 0, 1)         : 0;
-  $page_offensive     = isset($contents['offensive'])     ? sanitize($contents['offensive'], 'int', 0, 1)     : 0;
-  $page_type          = isset($contents['type'])          ? sanitize($contents['type'], 'int', 0)             : 0;
-  $page_era           = isset($contents['era'])           ? sanitize($contents['era'], 'int', 0)              : 0;
-  $page_admin_notes   = isset($contents['admin_notes'])   ? sanitize($contents['admin_notes'], 'string')      : '';
-  $page_admin_urls    = isset($contents['admin_urls'])    ? sanitize($contents['admin_urls'], 'string')       : '';
+  $page_redirect_en   = sanitize_array_element($contents, 'redirect_en', 'string');
+  $page_redirect_fr   = sanitize_array_element($contents, 'redirect_fr', 'string');
+  $page_redirect_ext  = sanitize_array_element($contents, 'redirect_ext', 'int', min: 0, max: 1, default: 0);
+  $page_summary_en    = sanitize_array_element($contents, 'summary_en', 'string');
+  $page_summary_fr    = sanitize_array_element($contents, 'summary_fr', 'string');
+  $page_body_en       = sanitize_array_element($contents, 'body_en', 'string');
+  $page_body_fr       = sanitize_array_element($contents, 'body_fr', 'string');
+  $page_appear_month  = sanitize_array_element($contents, 'appear_month', 'int', min: 0, max: 12, default: 0);
+  $page_appear_year   = sanitize_array_element($contents, 'appear_year', 'int', min: 0, default: 0);
+  $page_peak_month    = sanitize_array_element($contents, 'peak_month', 'int', min: 0, max: 12, default: 0);
+  $page_peak_year     = sanitize_array_element($contents, 'peak_year', 'int', min: 0, default: 0);
+  $page_nsfw_title    = sanitize_array_element($contents, 'nsfw_title', 'int', min: 0, max: 1, default: 0);
+  $page_nsfw          = sanitize_array_element($contents, 'nsfw', 'int', min: 0, max: 1, default: 0);
+  $page_gross         = sanitize_array_element($contents, 'gross', 'int', min: 0, max: 1, default: 0);
+  $page_offensive     = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
+  $page_type          = sanitize_array_element($contents, 'type', 'int', min: 0, default: 0);
+  $page_era           = sanitize_array_element($contents, 'era', 'int', min: 0, default: 0);
+  $page_admin_notes   = sanitize_array_element($contents, 'admin_notes', 'string');
+  $page_admin_urls    = sanitize_array_element($contents, 'admin_urls', 'string');
 
   // Error: No URL or URL already taken
   if(!$page_url || database_entry_exists('compendium_pages', 'page_url', $page_url))
@@ -952,29 +952,29 @@ function compendium_pages_edit( int   $page_id  ,
   $page_url           = sanitize($page_url, 'string');
   $page_title_en      = sanitize($page_title_en, 'string');
   $page_title_fr      = sanitize($page_title_fr, 'string');
-  $page_redirect_en   = isset($contents['redirect_en'])   ? sanitize($contents['redirect_en'], 'string')      : '';
-  $page_redirect_fr   = isset($contents['redirect_fr'])   ? sanitize($contents['redirect_fr'], 'string')      : '';
-  $page_redirect_ext  = isset($contents['redirect_ext'])  ? sanitize($contents['redirect_ext'], 'int', 0, 1)  : 0;
-  $page_summary_en    = isset($contents['summary_en'])    ? sanitize($contents['summary_en'], 'string')       : '';
-  $page_summary_fr    = isset($contents['summary_fr'])    ? sanitize($contents['summary_fr'], 'string')       : '';
-  $page_body_en       = isset($contents['body_en'])       ? sanitize($contents['body_en'], 'string')          : '';
-  $page_body_fr       = isset($contents['body_fr'])       ? sanitize($contents['body_fr'], 'string')          : '';
-  $page_appear_month  = isset($contents['appear_month'])  ? sanitize($contents['appear_month'], 'int', 0, 12) : 0;
-  $page_appear_year   = isset($contents['appear_year'])   ? sanitize($contents['appear_year'], 'int', 0)      : 0;
-  $page_peak_month    = isset($contents['peak_month'])    ? sanitize($contents['peak_month'], 'int', 0, 12)   : 0;
-  $page_peak_year     = isset($contents['peak_year'])     ? sanitize($contents['peak_year'], 'int', 0)        : 0;
-  $page_nsfw_title    = isset($contents['nsfw_title'])    ? sanitize($contents['nsfw_title'], 'int', 0, 1)    : 0;
-  $page_nsfw          = isset($contents['nsfw'])          ? sanitize($contents['nsfw'], 'int', 0, 1)          : 0;
-  $page_gross         = isset($contents['gross'])         ? sanitize($contents['gross'], 'int', 0, 1)         : 0;
-  $page_offensive     = isset($contents['offensive'])     ? sanitize($contents['offensive'], 'int', 0, 1)     : 0;
-  $page_type          = isset($contents['type'])          ? sanitize($contents['type'], 'int', 0)             : 0;
-  $page_era           = isset($contents['era'])           ? sanitize($contents['era'], 'int', 0)              : 0;
-  $page_admin_notes   = isset($contents['admin_notes'])   ? sanitize($contents['admin_notes'], 'string')      : '';
-  $page_admin_urls    = isset($contents['admin_urls'])    ? sanitize($contents['admin_urls'], 'string')       : '';
-  $page_history_en    = isset($contents['history_en'])    ? sanitize($contents['history_en'], 'string')       : '';
-  $page_history_fr    = isset($contents['history_fr'])    ? sanitize($contents['history_fr'], 'string')       : '';
-  $page_history_major = isset($contents['major'])         ? sanitize($contents['major'], 'int', 0, 1)         : 0;
-  $page_silent_edit   = isset($contents['silent'])        ? sanitize($contents['silent'], 'int', 0, 1)        : 0;
+  $page_redirect_en   = sanitize_array_element($contents, 'redirect_en', 'string');
+  $page_redirect_fr   = sanitize_array_element($contents, 'redirect_fr', 'string');
+  $page_redirect_ext  = sanitize_array_element($contents, 'redirect_ext', 'int', min: 0, max: 1, default: 0);
+  $page_summary_en    = sanitize_array_element($contents, 'summary_en', 'string');
+  $page_summary_fr    = sanitize_array_element($contents, 'summary_fr', 'string');
+  $page_body_en       = sanitize_array_element($contents, 'body_en', 'string');
+  $page_body_fr       = sanitize_array_element($contents, 'body_fr', 'string');
+  $page_appear_month  = sanitize_array_element($contents, 'appear_month', 'int', min: 0, max: 12, default: 0);
+  $page_appear_year   = sanitize_array_element($contents, 'appear_year', 'int', min: 0, default: 0);
+  $page_peak_month    = sanitize_array_element($contents, 'peak_month', 'int', min: 0, max: 12, default: 0);
+  $page_peak_year     = sanitize_array_element($contents, 'peak_year', 'int', min: 0, default: 0);
+  $page_nsfw_title    = sanitize_array_element($contents, 'nsfw_title', 'int', min: 0, max: 1, default: 0);
+  $page_nsfw          = sanitize_array_element($contents, 'nsfw', 'int', min: 0, max: 1, default: 0);
+  $page_gross         = sanitize_array_element($contents, 'gross', 'int', min: 0, max: 1, default: 0);
+  $page_offensive     = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
+  $page_type          = sanitize_array_element($contents, 'type', 'int', min: 0, default: 0);
+  $page_era           = sanitize_array_element($contents, 'era', 'int', min: 0, default: 0);
+  $page_admin_notes   = sanitize_array_element($contents, 'admin_notes', 'string');
+  $page_admin_urls    = sanitize_array_element($contents, 'admin_urls', 'string');
+  $page_history_en    = sanitize_array_element($contents, 'history_en', 'string');
+  $page_history_fr    = sanitize_array_element($contents, 'history_fr', 'string');
+  $page_history_major = sanitize_array_element($contents, 'major', 'int', min: 0, max: 1, default: 0);
+  $page_silent_edit   = sanitize_array_element($contents, 'silent', 'int', min: 0, max: 1, default: 0);
 
   // Error: No URL
   if(!$page_url)
@@ -1611,14 +1611,14 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
   $pages    = compendium_pages_list_urls();
 
   // Sanitize the search parameters
-  $search_name    = isset($search['name'])    ? sanitize($search['name'], 'string')       : '';
-  $search_date    = isset($search['date'])    ? sanitize($search['date'], 0)              : 0;
-  $search_nsfw    = isset($search['nsfw'])    ? sanitize($search['nsfw'], 'string')       : '';
-  $search_used_en = isset($search['used_en']) ? sanitize($search['used_en'], 'string')    : '';
-  $search_used_fr = isset($search['used_fr']) ? sanitize($search['used_fr'], 'string')    : '';
-  $search_tags    = isset($search['tags'])    ? sanitize($search['tags'], 'string')       : '';
-  $search_caption = isset($search['caption']) ? sanitize($search['caption'], 'string')    : '';
-  $search_deleted = isset($search['deleted']) ? sanitize($search['deleted'], 'int', 0, 2) : 0;
+  $search_name    = sanitize_array_element($search, 'name', 'string');
+  $search_date    = sanitize_array_element($search, 'date', 'int', min: 0, default: 0);
+  $search_nsfw    = sanitize_array_element($search, 'nsfw', 'string');
+  $search_used_en = sanitize_array_element($search, 'used_en', 'string');
+  $search_used_fr = sanitize_array_element($search, 'used_fr', 'string');
+  $search_tags    = sanitize_array_element($search, 'tags', 'string');
+  $search_caption = sanitize_array_element($search, 'caption', 'string');
+  $search_deleted = sanitize_array_element($search, 'deleted', 'int', min: 0, max: 2, default: 0);
 
   // Search through the data: Content warnings
   $query_search = match($search_nsfw)
@@ -1757,8 +1757,8 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
 /**
  * Uploads a new compendium image.
  *
- * @param   array       $file       The image being uploaded.
- * @param   string      $contents   The contents of the image data.
+ * @param   array   $file       The image being uploaded.
+ * @param   array   $contents   The contents of the image data.
  *
  * @return  string|int              A string if an error happened, or the new compendium image's ID if all went well.
  */
@@ -1804,13 +1804,12 @@ function compendium_images_upload(  array   $file     ,
     return __('compendium_image_upload_filename');
 
   // Sanitize and prepare the rest of the contents
-  $tags       = isset($contents['tags'])        ? string_change_case($contents['tags'], 'lowercase')  : '';
-  $tags       = sanitize($tags, 'string');
-  $caption_en = isset($contents['caption_en'])  ? sanitize($contents['caption_en'], 'string')         : '';
-  $caption_fr = isset($contents['caption_fr'])  ? sanitize($contents['caption_fr'], 'string')         : '';
-  $nsfw       = isset($contents['nsfw'])        ? sanitize($contents['nsfw'], 'int', 0, 1)            : 0;
-  $gross      = isset($contents['gross'])       ? sanitize($contents['gross'], 'int', 0, 1)           : 0;
-  $offensive  = isset($contents['offensive'])   ? sanitize($contents['offensive'], 'int', 0, 1)       : 0;
+  $tags       = sanitize_array_element($contents, 'tags', 'string', case: 'lowercase');
+  $caption_en = sanitize_array_element($contents, 'caption_en', 'string');
+  $caption_fr = sanitize_array_element($contents, 'caption_fr', 'string');
+  $nsfw       = sanitize_array_element($contents, 'nsfw', 'int', min: 0, max: 1, default: 0);
+  $gross      = sanitize_array_element($contents, 'gross', 'int', min: 0, max: 1, default: 0);
+  $offensive  = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
 
   // Upload the image
   if(move_uploaded_file($temp_name, $file_path))
@@ -1876,15 +1875,14 @@ function compendium_images_edit(  int   $image_id  ,
     return __('compendium_image_edit_missing');
 
   // Sanitize and prepare the data
-  $timestamp        = sanitize(time(), 'int', 0);
   $image_name_raw   = isset($contents['name']) ? $contents['name'] : '';
   $image_name       = sanitize(compendium_format_image_name($contents['name']), 'string');
-  $image_tags       = isset($contents['tags'])        ? sanitize($contents['tags'], 'string')         : '';
-  $image_caption_en = isset($contents['caption_en'])  ? sanitize($contents['caption_en'], 'string')   : '';
-  $image_caption_fr = isset($contents['caption_fr'])  ? sanitize($contents['caption_fr'], 'string')   : '';
-  $image_nsfw       = isset($contents['nsfw'])        ? sanitize($contents['nsfw'], 'int', 0, 1)      : 0;
-  $image_gross      = isset($contents['gross'])       ? sanitize($contents['gross'], 'int', 0, 1)     : 0;
-  $image_offensive  = isset($contents['offensive'])   ? sanitize($contents['offensive'], 'int', 0, 1) : 0;
+  $image_tags       = sanitize_array_element($contents, 'tags', 'string', case: 'lowercase');
+  $image_caption_en = sanitize_array_element($contents, 'caption_en', 'string');
+  $image_caption_fr = sanitize_array_element($contents, 'caption_fr', 'string');
+  $image_nsfw       = sanitize_array_element($contents, 'nsfw', 'int', min: 0, max: 1, default: 0);
+  $image_gross      = sanitize_array_element($contents, 'gross', 'int', min: 0, max: 1, default: 0);
+  $image_offensive  = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
 
   // Error: No image name
   if(!$image_name)
@@ -2536,13 +2534,13 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   $links            = array();
   $call_count       = array();
   $urls             = array();
-  $search_url       = isset($search['url'])       ? sanitize($search['url'], 'string')          : '';
-  $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')        : '';
-  $search_type      = isset($search['type'])      ? sanitize($search['type'], 'int', 0)         : 0;
-  $search_priority  = isset($search['priority'])  ? sanitize($search['priority'], 'int', -1, 1) : -1;
-  $search_notes     = isset($search['notes'])     ? sanitize($search['notes'], 'int', -1, 1)    : -1;
-  $search_links     = isset($search['links'])     ? sanitize($search['links'], 'int', 0, 1)     : 0;
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1)   : -1;
+  $search_url       = sanitize_array_element($search, 'url', 'string');
+  $search_title     = sanitize_array_element($search, 'title', 'string');
+  $search_type      = sanitize_array_element($search, 'type', 'int', min: 0, default: 0);
+  $search_priority  = sanitize_array_element($search, 'priority', 'int', min: -1, max: 1, default: -1);
+  $search_notes     = sanitize_array_element($search, 'notes', 'int', min: -1, max: 1, default: -1);
+  $search_links     = sanitize_array_element($search, 'links', 'int', min: 0, max: 1, default: 0);
+  $search_status    = sanitize_array_element($search, 'status', 'int', min: -1, max: 1, default: -1);
 
   // Fetch a list of all urls
   $qurls = query("  SELECT    compendium_pages.page_url AS 'c_url'
@@ -2946,10 +2944,10 @@ function compendium_missing_edit( string  $missing_url      ,
   // Sanitize and prepare the data
   $missing_url      = sanitize(compendium_format_url($missing_url), 'string');
   $missing_id       = sanitize($missing_id, 'int', 0);
-  $missing_title    = (isset($contents['title']))     ? sanitize($contents['title'], 'string')        : '';
-  $missing_type     = (isset($contents['type']))      ? sanitize($contents['type'], 'int', 0)         : 0;
-  $missing_notes    = (isset($contents['notes']))     ? sanitize($contents['notes'], 'string')        : '';
-  $missing_priority = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 1)  : '';
+  $missing_title    = sanitize_array_element($contents, 'title', 'string');
+  $missing_type     = sanitize_array_element($contents, 'type', 'int', min: 0, default: 0);
+  $missing_notes    = sanitize_array_element($contents, 'notes', 'string');
+  $missing_priority = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 1, default: 0);
 
   // Error: No url
   if(!$missing_url)
@@ -4100,10 +4098,10 @@ function compendium_page_history_edit(  int   $history_id   ,
     return;
 
   // Sanitize the updated data
-  $history_body_en  = isset($history_data['body_en']) ? sanitize($history_data['body_en'], 'string')  : '';
-  $history_body_fr  = isset($history_data['body_fr']) ? sanitize($history_data['body_fr'], 'string')  : '';
-  $history_major    = isset($history_data['major'])   ? sanitize($history_data['major'], 'string')    : 'false';
-  $history_major    = ($history_major === 'false')    ? 0                                             : 1;
+  $history_body_en  = sanitize_array_element($history_data, 'body_en', 'string');
+  $history_body_fr  = sanitize_array_element($history_data, 'body_fr', 'string');
+  $history_major    = sanitize_array_element($history_data, 'major', 'string', default: 'false');
+  $history_major    = ($history_major === 'false') ? 0 : 1;
 
   // Update the quote
   query(" UPDATE  compendium_pages_history
@@ -4190,10 +4188,10 @@ function compendium_admin_notes_edit( array $notes_data ) : void
   user_restrict_to_administrators();
 
   // Sanitize the updated admin notes
-  $notes_global       = isset($notes_data['global'])      ? sanitize($notes_data['global'], 'string')       : '';
-  $notes_snippets     = isset($notes_data['snippets'])    ? sanitize($notes_data['snippets'], 'string')     : '';
-  $notes_template_en  = isset($notes_data['template_en']) ? sanitize($notes_data['template_en'], 'string')  : '';
-  $notes_template_fr  = isset($notes_data['template_fr']) ? sanitize($notes_data['template_fr'], 'string')  : '';
+  $notes_global       = sanitize_array_element($notes_data, 'global', 'string');
+  $notes_snippets     = sanitize_array_element($notes_data, 'snippets', 'string');
+  $notes_template_en  = sanitize_array_element($notes_data, 'template_en', 'string');
+  $notes_template_fr  = sanitize_array_element($notes_data, 'template_fr', 'string');
 
   // Update the admin notes
   query(" UPDATE  compendium_admin_tools
