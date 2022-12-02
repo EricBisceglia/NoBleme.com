@@ -154,31 +154,31 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   for($i = 0; $i < $data['rows']; $i++)
   {
     // Remove unwanted metrics when searching for specific performances
-    $temp                     = ($search_queries === 1 && $data[$i]['queries'] > $min_queries)    ? 1 : 0;
-    $temp                     = ($search_queries === 2 && $data[$i]['queries'] > $good_queries)   ? 1 : $temp;
-    $temp                     = ($search_queries === 3 && $data[$i]['queries'] < $bad_queries)    ? 1 : $temp;
-    $temp                     = ($search_queries === 4 && $data[$i]['queries'] < $awful_queries)  ? 1 : $temp;
-    $temp                     = ($search_queries === 5 && $data[$i]['queries'] < $max_queries)    ? 1 : $temp;
-    $temp                     = ($search_load === 1 && $data[$i]['load'] > $min_load)             ? 1 : $temp;
-    $temp                     = ($search_load === 2 && $data[$i]['load'] > $good_load)            ? 1 : $temp;
-    $temp                     = ($search_load === 3 && $data[$i]['load'] < $bad_load)             ? 1 : $temp;
-    $temp                     = ($search_load === 4 && $data[$i]['load'] < $awful_load)           ? 1 : $temp;
-    $data[$i]['skip']         = ($search_load === 5 && $data[$i]['load'] < $max_load)             ? 1 : $temp;
-    $data['realrows']         = ($data[$i]['skip']) ? ($data['realrows'] - 1) : $data['realrows'];
+    $unwanted_metrics = ($search_queries === 1 && $data[$i]['queries'] > $min_queries)    ? 1 : 0;
+    $unwanted_metrics = ($search_queries === 2 && $data[$i]['queries'] > $good_queries)   ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_queries === 3 && $data[$i]['queries'] < $bad_queries)    ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_queries === 4 && $data[$i]['queries'] < $awful_queries)  ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_queries === 5 && $data[$i]['queries'] < $max_queries)    ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 1 && $data[$i]['load'] > $min_load)             ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 2 && $data[$i]['load'] > $good_load)            ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 3 && $data[$i]['load'] < $bad_load)             ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 4 && $data[$i]['load'] < $awful_load)           ? 1 : $unwanted_metrics;
+    $data[$i]['skip'] = ($search_load === 5 && $data[$i]['load'] < $max_load)             ? 1 : $unwanted_metrics;
+    $data['realrows'] = ($data[$i]['skip']) ? ($data['realrows'] - 1) : $data['realrows'];
 
     // Style the metrics based on their performance
-    $temp                     = ($data[$i]['queries'] <= $good_queries) ? 'green' : 'purple';
-    $temp                     = ($data[$i]['queries'] <= $min_queries) ? 'blue' : $temp;
-    $temp                     = ($data[$i]['queries'] >= $bad_queries) ? 'orange' : $temp;
-    $temp                     = ($data[$i]['queries'] >= $awful_queries) ? 'red' : $temp;
-    $temp                     = ($data[$i]['queries'] >= $max_queries) ? 'brown' : $temp;
-    $data[$i]['css_queries']  = sanitize_output($temp);
-    $temp                     = ($data[$i]['load'] <= $good_load) ? 'green' : 'purple';
-    $temp                     = ($data[$i]['load'] <= $min_load) ? 'blue' : $temp;
-    $temp                     = ($data[$i]['load'] >= $bad_load) ? 'orange' : $temp;
-    $temp                     = ($data[$i]['load'] >= $awful_load) ? 'red' : $temp;
-    $temp                     = ($data[$i]['load'] >= $max_load) ? 'brown' : $temp;
-    $data[$i]['css_load']     = sanitize_output($temp);
+    $metrics_css              = ($data[$i]['queries'] <= $good_queries) ? 'green' : 'purple';
+    $metrics_css              = ($data[$i]['queries'] <= $min_queries) ? 'blue' : $metrics_css;
+    $metrics_css              = ($data[$i]['queries'] >= $bad_queries) ? 'orange' : $metrics_css;
+    $metrics_css              = ($data[$i]['queries'] >= $awful_queries) ? 'red' : $metrics_css;
+    $metrics_css              = ($data[$i]['queries'] >= $max_queries) ? 'brown' : $metrics_css;
+    $data[$i]['css_queries']  = sanitize_output($metrics_css);
+    $metrics_css              = ($data[$i]['load'] <= $good_load) ? 'green' : 'purple';
+    $metrics_css              = ($data[$i]['load'] <= $min_load) ? 'blue' : $metrics_css;
+    $metrics_css              = ($data[$i]['load'] >= $bad_load) ? 'orange' : $metrics_css;
+    $metrics_css              = ($data[$i]['load'] >= $awful_load) ? 'red' : $metrics_css;
+    $metrics_css              = ($data[$i]['load'] >= $max_load) ? 'brown' : $metrics_css;
+    $data[$i]['css_load']     = sanitize_output($metrics_css);
     $data[$i]['load']         = sanitize_output(number_display_format($data[$i]['load'], 'number')).'ms';
   }
 
@@ -286,24 +286,26 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   for($i = 0; $row = mysqli_fetch_array($qviews); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
-    $temp                 = ($lang === 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
-    $temp                 = (in_array($sort_by, array('url', 'uactivity'))) ? $row['p_url'] : $temp;
-    $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 40, '...')) : '-';
-    $data[$i]['fullname'] = (mb_strlen($temp) > 40) ? sanitize_output($temp) : NULL;
+    $page_name            = ($lang === 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
+    $page_name            = (in_array($sort_by, array('url', 'uactivity'))) ? "yea" : $page_name;
+    $data[$i]['name']     = ($page_name) ? sanitize_output(string_truncate($page_name, 40, '...')) : '-';
+    $data[$i]['fullname'] = (mb_strlen($page_name) > 40) ? sanitize_output($page_name) : NULL;
     $data[$i]['url']      = sanitize_output($row['p_url']);
     $data[$i]['activity'] = sanitize_output(time_since($row['p_activity']));
     $data[$i]['views']    = sanitize_output(number_display_format($row['p_views'], 'number'));
-    $temp                 = ($row['p_oldviews']) ? number_display_format($row['p_oldviews'], 'number') : '-';
-    $temp                 = ($row['p_oldviews']) ? $temp : __('admin_views_new');
-    $data[$i]['oldviews'] = sanitize_output($temp);
-    $temp                 = $row['p_views'] - $row['p_oldviews'];
-    $data[$i]['sgrowth']  = $temp;
-    $data[$i]['growth']   = ($temp) ? sanitize_output(number_display_format($temp, 'number', 0, 1)) : '-';
-    $temp                 = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
-    $data[$i]['spgrowth'] = $temp;
-    $temp                 = ($temp) ? number_display_format($temp, 'percentage', 0, 1) : 0;
-    $temp                 = ($row['p_oldviews']) ? $temp : __('admin_views_new');
-    $data[$i]['pgrowth']  = ($temp) ? sanitize_output($temp) : '-';
+    $old_view_count       = ($row['p_oldviews']) ? number_display_format($row['p_oldviews'], 'number') : '-';
+    $old_view_count       = ($row['p_oldviews']) ? $old_view_count : __('admin_views_new');
+    $data[$i]['oldviews'] = sanitize_output($old_view_count);
+    $data[$i]['sgrowth']  = sanitize_output($row['p_views'] - $row['p_oldviews']);
+    $data[$i]['growth']   = ($data[$i]['sgrowth'])
+                          ? sanitize_output(number_display_format($data[$i]['sgrowth'], 'number', 0, 1))
+                          : '-';
+    $data[$i]['spgrowth'] = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
+    $percent_growth       = ($data[$i]['spgrowth'])
+                          ? number_display_format($data[$i]['spgrowth'], 'percentage', 0, 1)
+                          : 0;
+    $percent_growth       = ($row['p_oldviews']) ? $percent_growth : __('admin_views_new');
+    $data[$i]['pgrowth']  = ($percent_growth) ? sanitize_output($percent_growth) : '-';
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
@@ -317,8 +319,9 @@ function stats_views_list(  string  $sort_by  = NULL    ,
 
   // Add the current comparison date to the data
   $comparison_date          = system_variable_fetch('last_pageview_check');
-  $temp                     = date_to_text($comparison_date).' ('.time_since($comparison_date).')';
-  $data['comparison_date']  = ($comparison_date) ? sanitize_output($temp) : __('admin_views_nodate');
+  $data['comparison_date']  = ($comparison_date)
+                            ? sanitize_output(date_to_text($comparison_date).' ('.time_since($comparison_date).')')
+                            : __('admin_views_nodate');
 
   // Return the prepared data
   return $data;
@@ -594,12 +597,11 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   {
     // Prepare the data
     $data[$i]['id']       = sanitize_output($row['u_id']);
-    $temp                 = ($row['u_mod']) ? 'text_green bold noglow' : 'bold';
-    $temp                 = ($row['u_admin']) ? 'text_red bold' : $temp;
-    $temp                 = ($row['u_banned']) ? 'text_brown bold noglow strikethrough' : $temp;
-    $data[$i]['user_css'] = ($row['u_deleted']) ? ' strikethrough noglow' : $temp;
-    $temp                 = ($row['u_deleted']) ? $row['u_delnick'] : $row['u_nick'];
-    $data[$i]['username'] = sanitize_output($temp);
+    $user_css             = ($row['u_mod']) ? 'text_green bold noglow' : 'bold';
+    $user_css             = ($row['u_admin']) ? 'text_red bold' : $user_css;
+    $user_css             = ($row['u_banned']) ? 'text_brown bold noglow strikethrough' : $user_css;
+    $data[$i]['user_css'] = ($row['u_deleted']) ? ' strikethrough noglow' : $user_css;
+    $data[$i]['username'] = ($row['u_deleted']) ? sanitize_output($row['u_delnick']) : sanitize_output($row['u_nick']);
     $data[$i]['language'] = sanitize_output($row['u_lang']);
     $data[$i]['theme']    = sanitize_output($row['u_theme']);
     $data[$i]['active']   = sanitize_output(time_since($row['u_visit']));
@@ -775,8 +777,8 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   {
     // Prepare the data
     $data[$i]['user_id']  = sanitize_output($row['u_id']);
-    $temp                 = ($is_admin) ? $row['g_ip'] : string_truncate($row['g_name'], 30, '...');
-    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($temp);
+    $guest_identity       = ($is_admin) ? $row['g_ip'] : string_truncate($row['g_name'], 30, '...');
+    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($guest_identity);
     $data[$i]['ip']       = sanitize_output($row['g_ip']);
     $data[$i]['language'] = sanitize_output($row['g_lang']);
     $data[$i]['theme']    = sanitize_output($row['g_theme']);
