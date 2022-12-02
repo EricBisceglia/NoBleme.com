@@ -9,7 +9,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  sanitize                      Sanitizes data.                                                                    */
-/*                                                                                                                   */
 /*  sanitize_input                Sanitizes user inputted data.                                                      */
 /*  sanitize_array_element        Sanitizes an element from an array.                                                */
 /*                                                                                                                   */
@@ -122,7 +121,7 @@ function sanitize_input(  string  $input_type             ,
                           mixed   $default_value  = ''    ,
                           mixed   $min            = NULL  ,
                           mixed   $max            = NULL  ,
-                          string  $padding        = "_"   )
+                          string  $padding        = "_"   ) : mixed
 {
   // When dealing with $_POST, fetch the value (if it exists)
   if($input_type === 'POST')
@@ -161,7 +160,7 @@ function sanitize_array_element(  array   $array                ,
                                   mixed   $max          = NULL  ,
                                   ?string $case         = NULL  ,
                                   ?string $convert_date = NULL  ,
-                                  mixed   $default      = NULL  )
+                                  mixed   $default      = NULL  ) : mixed
 {
   // If the array element does not exist, return the default value or null
   if(!isset($array[$element]))

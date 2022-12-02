@@ -649,6 +649,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Sanitizes user inputted data.
         </td>
       </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          sanitize_array_element()
+        </td>
+        <td class="align_left">
+          Sanitizes an element from an array.
+        </td>
+      </tr>
 
     </tbody>
   </table>

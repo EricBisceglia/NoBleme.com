@@ -455,9 +455,9 @@ function admin_ip_ban_get( int $ip_ban_id ) : array
   // Prepare the data
   $data['ip_address'] = sanitize_output($dban['b_ip']);
   $data['time_left']  = sanitize_output(time_until($dban['b_end']));
-  $temp               = ($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en'];
-  $lang               = user_get_language();
-  $data['ban_reason'] = ($lang === 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
+  $data['ban_reason'] = (user_get_language() === 'EN')
+                      ? sanitize_output($dban['b_reason_en'])
+                      : sanitize_output(($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en']);
 
   // Return the data
   return $data;
@@ -897,18 +897,24 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   $data['banned_ip']        = sanitize_output($dlog['l_ip']);
   $data['total_ip_ban']     = sanitize_output($dlog['l_total_ip_ban']);
   $data['ip_bans']          = ($dlog['l_ip']) ? admin_ip_ban_list_users($dlog['l_ip']) : '';
-  $temp                     = date_to_text($dlog['l_start'], 0, 1, $lang);
-  $data['start']            = sanitize_output($temp.' ('.time_since($dlog['l_start']).')');
-  $temp                     = ($dlog['l_end'] > time()) ? time_until($dlog['l_end']) : time_since($dlog['l_end']);
-  $data['end']              = sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang).' ('.$temp.')');
-  $temp                     = date_to_text($dlog['l_unban'], 0, 1, $lang);
-  $data['unban']            = ($dlog['l_unban']) ? sanitize_output($temp.' ('.time_since($dlog['l_unban']).')') : '-';
+  $data['start']            = sanitize_output(
+                              date_to_text($dlog['l_start'], 0, 1, $lang).' ('.time_since($dlog['l_start']).')');
+  $data['end']              = ($dlog['l_end'] > time())
+                            ? sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang)
+                              .' ('.time_until($dlog['l_end']).')')
+                            : sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang)
+                              .' ('.time_since($dlog['l_end']).')');
+  $data['unban']            = ($dlog['l_unban'])
+                            ? sanitize_output(date_to_text($dlog['l_unban'], 0, 1, $lang)
+                              .' ('.time_since($dlog['l_unban']).')')
+                            : '-';
   $data['days']             = time_days_elapsed($dlog['l_start'], $dlog['l_end'], 1);
-  $temp                     = ($dlog['l_unban']) ? $dlog['l_unban'] : time();
-  $data['served']           = time_days_elapsed($dlog['l_start'], $temp, 1);
-  $temp                     = maths_percentage_of($data['served'], $data['days']);
-  $temp                     = ($temp > 100) ? 100 : $temp;
-  $data['percent']          = number_display_format($temp, "percentage", 0);
+  $data['served']           = ($dlog['l_unban'])
+                            ? time_days_elapsed($dlog['l_start'], $dlog['l_unban'], 1)
+                            : time_days_elapsed($dlog['l_start'], time(), 1);
+  $percentage_served        = maths_percentage_of($data['served'], $data['days']);
+  $percentage_served        = ($percentage_served > 100) ? 100 : $percentage_served;
+  $data['percent']          = number_display_format($percentage_served, "percentage", 0);
   $data['banned_by']        = sanitize_output($dlog['banner_nick']);
   $data['banned_by_id']     = sanitize_output($dlog['banner_id']);
   $data['ban_reason_en']    = ($dlog['l_reason_en']) ? sanitize_output($dlog['l_reason_en']) : '-';
@@ -1015,23 +1021,24 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
     $data[$i]['end']                = ($row['l_unban']) ? time_since($row['l_unban']) : '';
     $data[$i]['end_full']           = date_to_text($row['l_end'], 0, 1, $lang);
     $data[$i]['duration']           = time_days_elapsed($row['l_start'], $row['l_end'], 1);
-    $temp                           = ($row['l_unban']) ? $row['l_unban'] : time();
-    $data[$i]['served']             = time_days_elapsed($row['l_start'], $temp, 1);
-    $temp                           = maths_percentage_of($data[$i]['served'], $data[$i]['duration']);
-    $temp                           = ($temp > 100) ? 100 : $temp;
-    $data[$i]['served_percent']     = number_display_format($temp, "percentage", 0);
+    $data[$i]['served']             = ($row['l_unban'])
+                                    ? time_days_elapsed($row['l_start'], $row['l_unban'], 1)
+                                    : time_days_elapsed($row['l_start'], time(), 1);
+    $percent_served                 = maths_percentage_of($data[$i]['served'], $data[$i]['duration']);
+    $percent_served                 = ($percent_served > 100) ? 100 : $percent_served;
+    $data[$i]['served_percent']     = number_display_format($percent_served, "percentage", 0);
     $data[$i]['banned_by']          = sanitize_output($row['banner_nick']);
     $data[$i]['banned_by_id']       = $row['banner_id'];
     $data[$i]['unbanned_by']        = sanitize_output($row['unbanner_nick']);
     $data[$i]['unbanned_by_id']     = $row['unbanner_id'];
-    $temp                           = ($row['l_reason_fr']) ? $row['l_reason_fr'] : $row['l_reason_en'];
-    $temp                           = ($lang === 'EN') ? $row['l_reason_en'] : $temp;
-    $data[$i]['ban_reason']         = sanitize_output(string_truncate($temp, 9, '...'));
-    $data[$i]['ban_reason_full']    = (strlen($temp) > 9 ) ? sanitize_output($temp) : '';
-    $temp                           = ($row['l_ureason_fr']) ? $row['l_ureason_fr'] : $row['l_ureason_en'];
-    $temp                           = ($lang === 'EN') ? $row['l_ureason_en'] : $temp;
-    $data[$i]['unban_reason']       = sanitize_output(string_truncate($temp, 9, '...'));
-    $data[$i]['unban_reason_full']  = (strlen($temp) > 9 ) ? sanitize_output($temp) : '';
+    $ban_reason                     = ($row['l_reason_fr']) ? $row['l_reason_fr'] : $row['l_reason_en'];
+    $ban_reason                     = ($lang === 'EN') ? $row['l_reason_en'] : $ban_reason;
+    $data[$i]['ban_reason']         = sanitize_output(string_truncate($ban_reason, 9, '...'));
+    $data[$i]['ban_reason_full']    = (strlen($ban_reason) > 9 ) ? sanitize_output($ban_reason) : '';
+    $unban_reason                   = ($row['l_ureason_fr']) ? $row['l_ureason_fr'] : $row['l_ureason_en'];
+    $unban_reason                   = ($lang === 'EN') ? $row['l_ureason_en'] : $unban_reason;
+    $data[$i]['unban_reason']       = sanitize_output(string_truncate($unban_reason, 9, '...'));
+    $data[$i]['unban_reason_full']  = (strlen($unban_reason) > 9 ) ? sanitize_output($unban_reason) : '';
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
