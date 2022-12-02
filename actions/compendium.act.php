@@ -187,10 +187,10 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['url']        = sanitize_output($dpage['p_url']);
   $data['url_raw']    = $dpage['p_url'];
   $data['no_page']    = ($dpage['p_title']) ? 0 : 1;
-  $temp               = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
-  $temp               = (strlen($dpage['p_title']) > 30) ? 'h3' : $temp;
-  $temp               = (strlen($dpage['p_title']) > 40) ? 'h4' : $temp;
-  $data['title_size'] = (strlen($dpage['p_title']) > 50) ? 'h5' : $temp;
+  $title_size         = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
+  $title_size         = (strlen($dpage['p_title']) > 30) ? 'h3' : $title_size;
+  $title_size         = (strlen($dpage['p_title']) > 40) ? 'h4' : $title_size;
+  $data['title_size'] = (strlen($dpage['p_title']) > 50) ? 'h5' : $title_size;
   $data['title']      = sanitize_output($dpage['p_title']);
   $data['title_en']   = sanitize_output($dpage['p_title_en']);
   $data['title_fr']   = sanitize_output($dpage['p_title_fr']);
@@ -199,12 +199,12 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['redir_en']   = sanitize_output($dpage['p_redirect_en']);
   $data['redir_fr']   = sanitize_output($dpage['p_redirect_fr']);
   $data['redir_ext']  = sanitize_output($dpage['p_redirect_ext']);
-  $temp               = ($dpage['p_new_month']) ? __('month_'.$dpage['p_new_month'], spaces_after: 1) : '';
-  $data['appeared']   = ($dpage['p_new_year']) ? $temp.$dpage['p_new_year'] : '';
+  $appeared_month     = ($dpage['p_new_month']) ? __('month_'.$dpage['p_new_month'], spaces_after: 1) : '';
+  $data['appeared']   = ($dpage['p_new_year']) ? $appeared_month.$dpage['p_new_year'] : '';
   $data['app_year']   = sanitize_output($dpage['p_new_year']);
   $data['app_month']  = sanitize_output($dpage['p_new_month']);
-  $temp               = ($dpage['p_peak_month']) ? __('month_'.$dpage['p_peak_month'], spaces_after: 1) : '';
-  $data['peak']       = ($dpage['p_peak_year']) ? $temp.$dpage['p_peak_year'] : '';
+  $peak_month         = ($dpage['p_peak_month']) ? __('month_'.$dpage['p_peak_month'], spaces_after: 1) : '';
+  $data['peak']       = ($dpage['p_peak_year']) ? $peak_month.$dpage['p_peak_year'] : '';
   $data['peak_year']  = sanitize_output($dpage['p_peak_year']);
   $data['peak_month'] = sanitize_output($dpage['p_peak_month']);
   $data['nsfw']       = sanitize_output($dpage['p_nsfw']);
@@ -216,8 +216,8 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['summary']    = sanitize_output($dpage['p_summary']);
   $data['summary_en'] = sanitize_output($dpage['p_summary_en']);
   $data['summary_fr'] = sanitize_output($dpage['p_summary_fr']);
-  $temp               = bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true));
-  $data['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']       = nbcodes(bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true)),
+                                page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']    = sanitize_output($dpage['p_body_en']);
   $data['body_fr']    = sanitize_output($dpage['p_body_fr']);
   $data['admin_note'] = sanitize_output($dpage['p_admin_notes']);
@@ -237,8 +237,10 @@ function compendium_pages_get(  int     $page_id  = 0     ,
                                         LIMIT     1 "));
 
   // Prepare the lastest update
-  $temp             = (isset($dupdate['ph_time']) && $dupdate['ph_time']) ? $dupdate['ph_time'] : $dpage['p_created'];
-  $data['updated']  = ($temp) ? sanitize_output(string_change_case(time_since($temp), 'lowercase')) : __('error');
+  $latest_update    = (isset($dupdate['ph_time']) && $dupdate['ph_time']) ? $dupdate['ph_time'] : $dpage['p_created'];
+  $data['updated']  = ($latest_update)
+                    ? sanitize_output(string_change_case(time_since($latest_update), 'lowercase'))
+                    : __('error');
 
   // Fetch any associated categories
   $qcategories = query("  SELECT    compendium_pages_categories.id    AS 'cpc_id'   ,
@@ -669,10 +671,12 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['id']         = sanitize_output($row['p_id']);
     $data[$i]['deleted']    = ($row['p_deleted']);
     $data[$i]['draft']      = ($row['p_draft']);
-    $temp                   = sanitize_output(string_change_case(time_since($row['p_created']), 'lowercase'));
-    $data[$i]['created']    = ($row['p_created']) ? $temp : '';
-    $temp                   = sanitize_output(string_change_case(time_since($row['p_edited']), 'lowercase'));
-    $data[$i]['edited']     = ($row['p_edited']) ? $temp : '';
+    $data[$i]['created']    = ($row['p_created'])
+                            ? sanitize_output(string_change_case(time_since($row['p_created']), 'lowercase'))
+                            : '';
+    $data[$i]['edited']     = ($row['p_edited'])
+                            ? sanitize_output(string_change_case(time_since($row['p_edited']), 'lowercase'))
+                            : '';
     $data[$i]['url']        = sanitize_output($row['p_url']);
     $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 20, '...'));
     $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 20) ? sanitize_output($row['p_url']) : '';
@@ -681,36 +685,41 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['fulltitle']  = (mb_strlen($row['p_title']) > 32) ? sanitize_output($row['p_title']) : '';
     $data[$i]['admintitle'] = sanitize_output(string_truncate($row['p_title'], 20, '...'));
     $data[$i]['adminfull']  = (mb_strlen($row['p_title']) > 20) ? sanitize_output($row['p_title']) : '';
-    $temp                   = ($lang === 'en') ? $row['p_title_fr'] : $row['p_title_en'];
-    $data[$i]['wrongtitle'] = sanitize_output(string_truncate($temp, 21, '...'));
-    $data[$i]['fullwrong']  = (mb_strlen($temp) > 23) ? sanitize_output($temp) : '';
+    $wrong_title            = ($lang === 'en') ? $row['p_title_fr'] : $row['p_title_en'];
+    $data[$i]['wrongtitle'] = sanitize_output(string_truncate($wrong_title, 21, '...'));
+    $data[$i]['fullwrong']  = (mb_strlen($wrong_title) > 23) ? sanitize_output($wrong_title) : '';
     $data[$i]['notitle']    = (!$row['p_title_en'] && !$row['p_title_fr']) ? 1 : 0;
     $data[$i]['lang_en']    = ($row['p_title_en']) ? 1 : 0;
     $data[$i]['lang_fr']    = ($row['p_title_fr']) ? 1 : 0;
     $data[$i]['redirect']   = sanitize_output(string_truncate($row['p_redirect'], 20, '...'));
     $data[$i]['fullredir']  = (mb_strlen($row['p_redirect']) > 20) ? sanitize_output($row['p_redirect']) : '';
-    $temp                   = sanitize_output(string_truncate($row['p_redir_'.$otherlang], 20, '...'));
-    $data[$i]['redirlang']  = (!$row['p_redir_'.$lang] && $row['p_redir_'.$otherlang]) ? $temp : '';
-    $temp                   = sanitize_output($row['p_redir_'.$otherlang]);
-    $temp                   = (mb_strlen($row['p_redir_'.$otherlang]) > 20) ? $temp : '';
-    $data[$i]['fullrlang']  = ($temp && !$row['p_redir_'.$lang] && $row['p_redir_'.$otherlang]) ? $temp : '';
-    $temp                   = ($row['p_app_month']) ? __('month_'.$row['p_app_month'], spaces_after: 1) : '';
-    $data[$i]['appeared']   = ($row['p_app_year']) ? $temp.$row['p_app_year'] : '';
-    $temp                   = ($row['p_app_month']) ? __('month_short_'.$row['p_app_month'], spaces_after: 1) : '';
-    $data[$i]['app_short']  = ($row['p_app_year']) ? $temp.mb_substr($row['p_app_year'], 2) : '';
-    $temp                   = ($row['p_peak_month']) ? __('month_'.$row['p_peak_month'], spaces_after: 1) : '';
-    $data[$i]['peak']       = ($row['p_peak_year']) ? $temp.$row['p_peak_year'] : '';
-    $temp                   = ($row['p_peak_month']) ? __('month_short_'.$row['p_peak_month'], spaces_after: 1) : '';
-    $data[$i]['peak_short'] = ($row['p_peak_year']) ? $temp.mb_substr($row['p_peak_year'], 2) : '';
+    $data[$i]['redirlang']  = (!$row['p_redir_'.$lang] && $row['p_redir_'.$otherlang])
+                            ? sanitize_output(string_truncate($row['p_redir_'.$otherlang], 20, '...'))
+                            : '';
+    $redirect_language      = (mb_strlen($row['p_redir_'.$otherlang]) > 20)
+                            ? sanitize_output($row['p_redir_'.$otherlang])
+                            : '';
+    $data[$i]['fullrlang']  = ($redirect_language && !$row['p_redir_'.$lang] && $row['p_redir_'.$otherlang])
+                            ? $redirect_language
+                            : '';
+    $appeared_month         = ($row['p_app_month']) ? __('month_'.$row['p_app_month'], spaces_after: 1) : '';
+    $data[$i]['appeared']   = ($row['p_app_year']) ? $appeared_month.$row['p_app_year'] : '';
+    $appeared_month_short   = ($row['p_app_month']) ? __('month_short_'.$row['p_app_month'], spaces_after: 1) : '';
+    $data[$i]['app_short']  = ($row['p_app_year']) ? $appeared_month_short.mb_substr($row['p_app_year'], 2) : '';
+    $peak_month             = ($row['p_peak_month']) ? __('month_'.$row['p_peak_month'], spaces_after: 1) : '';
+    $data[$i]['peak']       = ($row['p_peak_year']) ? $peak_month.$row['p_peak_year'] : '';
+    $peak_month_short       = ($row['p_peak_month']) ? __('month_short_'.$row['p_peak_month'], spaces_after: 1) : '';
+    $data[$i]['peak_short'] = ($row['p_peak_year']) ? $peak_month_short.mb_substr($row['p_peak_year'], 2) : '';
     $data[$i]['blur']       = ($row['p_nsfw_title'] && $nsfw < 1) ? ' blur' : '';
     $data[$i]['blur_link']  = ($row['p_nsfw_title'] && $nsfw < 1) ? ' blur' : ' forced_link';
-    $temp                   = bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true));
     $data[$i]['adminnsfw']  = ($row['p_nsfw'] || $row['p_gross'] || $row['p_offensive'] || $row['p_nsfw_title']);
+
     $data[$i]['nsfw']       = ($row['p_nsfw']);
     $data[$i]['gross']      = ($row['p_gross']);
     $data[$i]['offensive']  = ($row['p_offensive']);
     $data[$i]['nsfwtitle']  = ($row['p_nsfw_title']);
-    $data[$i]['summary']    = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data[$i]['summary']    = nbcodes(bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true)),
+                                      page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['notes']      = sanitize_output($row['p_notes']);
     $data[$i]['urlnotes']   = sanitize_output($row['p_urlnotes']);
     $data[$i]['type_id']    = sanitize_output($row['pt_id']);
@@ -718,8 +727,9 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
     $data[$i]['era']        = sanitize_output($row['pe_name']);
     $data[$i]['categories'] = ($join_categories) ? sanitize_output($row['pc_count']) : 0;
-    $temp                   = number_display_format($row['p_viewcount'], "number");
-    $data[$i]['viewcount']  = ($row['p_viewcount'] > 1) ? sanitize_output($temp) : '&nbsp;';
+    $data[$i]['viewcount']  = ($row['p_viewcount'] > 1)
+                            ? sanitize_output(number_display_format($row['p_viewcount'], "number"))
+                            : '&nbsp;';
 
     // Prepare the admin urls
     if($row['p_urlnotes'])
@@ -1518,12 +1528,12 @@ function compendium_images_get( ?int    $image_id   = 0 ,
   $data['nsfw']       = sanitize_output($dimage['ci_nsfw']);
   $data['gross']      = sanitize_output($dimage['ci_gross']);
   $data['offensive']  = sanitize_output($dimage['ci_offensive']);
-  $temp               = ($dimage['ci_nsfw'] || $dimage['ci_gross'] || $dimage['ci_offensive']) ? 1 : 0;
-  $data['blur']       = ($nsfw < 2 && $temp) ? ' class="compendium_image_blur"' : '';
-  $data['blurred']    = ($nsfw < 2 && $temp) ? 1 : 0;
+  $blur_image         = ($dimage['ci_nsfw'] || $dimage['ci_gross'] || $dimage['ci_offensive']) ? 1 : 0;
+  $data['blur']       = ($nsfw < 2 && $blur_image) ? ' class="compendium_image_blur"' : '';
+  $data['blurred']    = ($nsfw < 2 && $blur_image) ? 1 : 0;
   $data['body_clean'] = sanitize_output($dimage['ci_body']);
-  $temp               = bbcodes(sanitize_output($dimage['ci_body'], preserve_line_breaks: true));
-  $data['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']       = nbcodes(bbcodes(sanitize_output($dimage['ci_body'], preserve_line_breaks: true)),
+                                page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $page_links         = ($dimage['ci_used']) ? compendium_images_assemble_links($dimage['ci_used']) : '';
   $data['used']       = ($dimage['ci_used']) ? $page_links['list'] : '';
   $data['used_count'] = ($dimage['ci_used']) ? $page_links['count'] : 0;
@@ -1531,8 +1541,9 @@ function compendium_images_get( ?int    $image_id   = 0 ,
   $data['used_fr']    = sanitize_output($dimage['ci_used_fr']);
   $data['caption_en'] = sanitize_output($dimage['ci_caption_en']);
   $data['caption_fr'] = sanitize_output($dimage['ci_caption_fr']);
-  $temp               = ($dimage['ci_caption_en']) ? $dimage['ci_caption_en'] : $dimage['ci_caption_fr'];
-  $data['meta_desc']  = string_truncate($temp, 250, '...');
+  $data['meta_desc']  = ($dimage['ci_caption_en'])
+                      ? string_truncate($dimage['ci_caption_en'], 250, '...')
+                      : string_truncate($dimage['ci_caption_fr'], 250, '...');
 
   // Return the data
   return $data;
@@ -1738,10 +1749,11 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
     $data[$i]['tags_full']  = ($row['ci_tags']) ? $tags['list'] : '';
     $data[$i]['caption_en'] = ($row['ci_caption_en']) ? 1 : 0;
     $data[$i]['caption_fr'] = ($row['ci_caption_fr']) ? 1 : 0;
-    $temp                   = bbcodes(sanitize_output($row['ci_caption'], preserve_line_breaks: true));
-    $data[$i]['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
-    $temp                   = number_display_format($row['ci_viewcount'], "number");
-    $data[$i]['views']      = ($row['ci_viewcount'] > 1) ? sanitize_output($temp) : '&nbsp;';
+    $data[$i]['body']       = nbcodes(bbcodes(sanitize_output($row['ci_caption'], preserve_line_breaks: true)),
+                              page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data[$i]['views']      = ($row['ci_viewcount'] > 1)
+                            ? sanitize_output(number_display_format($row['ci_viewcount'], "number"))
+                            : '&nbsp;';
   }
 
   // Add the number of rows to the data
@@ -1789,7 +1801,7 @@ function compendium_images_upload(  array   $file     ,
   $name_raw   = compendium_format_image_name($contents['name']);
   $name       = sanitize($name_raw, 'string');
   $file_path  = root_path().'img/compendium/'.$name_raw;
-  $temp_name  = $file['tmp_name'];
+  $tmp_name   = $file['tmp_name'];
 
   // Error: Incorrect file name
   if(!$name)
@@ -1812,7 +1824,7 @@ function compendium_images_upload(  array   $file     ,
   $offensive  = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
 
   // Upload the image
-  if(move_uploaded_file($temp_name, $file_path))
+  if(move_uploaded_file($tmp_name, $file_path))
   {
     // Create the image entry
     query(" INSERT INTO compendium_images
@@ -2205,8 +2217,8 @@ function compendium_images_assemble_links(  string  $page_list          ,
   {
     if(!($i % 2) && isset($page_list_array[$i + 1]))
     {
-      $temp = ($shorten) ? string_truncate($page_list_array[$i + 1], 18, '...') : $page_list_array[$i + 1];
-      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], sanitize_output($temp)).'<br>';
+      $short_name = ($shorten) ? string_truncate($page_list_array[$i + 1], 18, '...') : $page_list_array[$i + 1];
+      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], sanitize_output($short_name)).'<br>';
     }
   }
 
@@ -2240,8 +2252,8 @@ function compendium_images_assemble_tags( string  $tags             ,
   $formatted_tags = '';
   for($i = 0; $i < count($tags_array); $i++)
   {
-    $temp = ($shorten) ? string_truncate($tags_array[$i], 15, '...') : $tags_array[$i];
-    $formatted_tags .= sanitize_output($temp).'<br>';
+    $short_name = ($shorten) ? string_truncate($tags_array[$i], 15, '...') : $tags_array[$i];
+    $formatted_tags .= sanitize_output($short_name).'<br>';
   }
 
   // Add the formatted tag list and the tag count to the returned data
@@ -2391,8 +2403,8 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $data['type']     = sanitize_output($dmissing['cm_type']);
     $data['title']    = sanitize_output($dmissing['cm_title']);
     $data['prio']     = sanitize_output($dmissing['cm_priority']);
-    $temp             = bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true));
-    $data['body']     = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data['body']     = nbcodes(bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true)),
+                                page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data['notes']    = sanitize_output($dmissing['cm_notes']);
   }
 
@@ -2856,8 +2868,8 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     $data[$i]['t_full']     = (mb_strlen($row['cm_title']) > 22) ? sanitize_output($row['cm_title']) : '';
     $data[$i]['type']       = sanitize_output(string_truncate($row['cm_type'], 20, '...'));
     $data[$i]['priority']   = sanitize_output($row['cm_priority']);
-    $temp                   = bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true));
-    $data[$i]['notes']      = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data[$i]['notes']      = nbcodes(bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true)),
+                                      page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
     // Find page call count and remove matching missing pages
     if(in_array($row['cm_url'], $missing))
@@ -3083,8 +3095,8 @@ function compendium_types_get( int $type_id ) : mixed
   $data['full_fr']      = sanitize_output($dtype['ct_full_fr']);
   $data['full_en_raw']  = $dtype['ct_full_en'];
   $data['full_fr_raw']  = $dtype['ct_full_fr'];
-  $temp                 = bbcodes(sanitize_output($dtype['ct_body'], preserve_line_breaks: true));
-  $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']         = nbcodes(bbcodes(sanitize_output($dtype['ct_body'], preserve_line_breaks: true)),
+                          page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dtype['ct_body_en']);
   $data['body_fr']      = sanitize_output($dtype['ct_body_fr']);
 
@@ -3329,8 +3341,8 @@ function compendium_categories_get( int $category_id ) : mixed
   $data['name_fr_raw']  = $dcategory['cc_name_fr'];
   $data['name_en']      = sanitize_output($dcategory['cc_name_en']);
   $data['name_fr']      = sanitize_output($dcategory['cc_name_fr']);
-  $temp                 = bbcodes(sanitize_output($dcategory['cc_body'], preserve_line_breaks: true));
-  $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']         = nbcodes(bbcodes(sanitize_output($dcategory['cc_body'], preserve_line_breaks: true)),
+                          page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dcategory['cc_body_en']);
   $data['body_fr']      = sanitize_output($dcategory['cc_body_fr']);
 
@@ -3582,8 +3594,8 @@ function compendium_eras_get( int $era_id ) : mixed
   $data['name_fr']      = sanitize_output($dera['ce_name_fr']);
   $data['short_en']     = sanitize_output($dera['ce_short_en']);
   $data['short_fr']     = sanitize_output($dera['ce_short_fr']);
-  $temp                 = bbcodes(sanitize_output($dera['ce_body'], preserve_line_breaks: true));
-  $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']         = nbcodes(bbcodes(sanitize_output($dera['ce_body'], preserve_line_breaks: true)),
+                                  page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dera['ce_body_en']);
   $data['body_fr']      = sanitize_output($dera['ce_body_fr']);
 
@@ -4393,14 +4405,14 @@ function compendium_stats_list() : array
   // Add some stats to the return array
   $data['pages']      = sanitize_output($dpages['cp_total']);
   $data['nsfw']       = sanitize_output($dpages['cp_nsfw']);
-  $temp               = maths_percentage_of($dpages['cp_nsfw'], $dpages['cp_total']);
-  $data['nsfwp']      = number_display_format($temp, 'percentage');
+  $data['nsfwp']      = number_display_format(maths_percentage_of($dpages['cp_nsfw'], $dpages['cp_total']) ,
+                                              'percentage');
   $data['gross']      = sanitize_output($dpages['cp_gross']);
-  $temp               = maths_percentage_of($dpages['cp_gross'], $dpages['cp_total']);
-  $data['grossp']     = number_display_format($temp, 'percentage');
+  $data['grossp']     = number_display_format(maths_percentage_of($dpages['cp_gross'], $dpages['cp_total']) ,
+                                              'percentage');
   $data['offensive']  = sanitize_output($dpages['cp_offensive']);
-  $temp               = maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']);
-  $data['offensivep'] = number_display_format($temp, 'percentage');
+  $data['offensivep'] = number_display_format(maths_percentage_of($dpages['cp_offensive'], $dpages['cp_total']) ,
+                                              'percentage');
 
   // Fetch the total number of images
   $dimages = mysqli_fetch_array(query(" SELECT  COUNT(*)                            AS 'ci_total' ,
@@ -4413,14 +4425,14 @@ function compendium_stats_list() : array
   // Add some stats to the return array
   $data['images']       = sanitize_output($dimages['ci_total']);
   $data['insfw']        = sanitize_output($dimages['ci_nsfw']);
-  $temp                 = maths_percentage_of($dimages['ci_nsfw'], $dimages['ci_total']);
-  $data['insfwp']       = number_display_format($temp, 'percentage');
+  $data['insfwp']       = number_display_format(maths_percentage_of($dimages['ci_nsfw'], $dimages['ci_total']) ,
+                                                'percentage');
   $data['igross']       = sanitize_output($dimages['ci_gross']);
-  $temp                 = maths_percentage_of($dimages['ci_gross'], $dimages['ci_total']);
-  $data['igrossp']      = number_display_format($temp, 'percentage');
+  $data['igrossp']      = number_display_format(maths_percentage_of($dimages['ci_gross'], $dimages['ci_total']) ,
+                                                'percentage');
   $data['ioffensive']   = sanitize_output($dimages['ci_offensive']);
-  $temp                 = maths_percentage_of($dimages['ci_offensive'], $dimages['ci_total']);
-  $data['ioffensivep']  = number_display_format($temp, 'percentage');
+  $data['ioffensivep']  = number_display_format(maths_percentage_of($dimages['ci_offensive'], $dimages['ci_total']) ,
+                                                'percentage');
 
   // Fetch total page views
   $dpages = mysqli_fetch_array(query("  SELECT  SUM(compendium_pages.view_count) AS 'cp_views'
@@ -4474,20 +4486,26 @@ function compendium_stats_list() : array
     $data['types_id_'.$i]     = sanitize_output($row['ct_id']);
     $data['types_name_'.$i]   = sanitize_output($row['ct_name']);
     $data['types_pages_'.$i]  = ($type_stats['pages_'.$row['ct_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['types_pages_'.$i], $data['pages']);
-    $data['types_pagesp_'.$i] = number_display_format($temp, 'percentage');
+    $data['types_pagesp_'.$i] = number_display_format(maths_percentage_of($data['types_pages_'.$i], $data['pages']) ,
+                                                      'percentage');
     $data['types_nsfw_'.$i]   = ($type_stats['nsfw_'.$row['ct_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['types_nsfw_'.$i], $data['types_pages_'.$i]);
-    $temp                     = $data['types_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['types_nsfw_'.$i]   = ($data['types_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['types_nsfw_'.$i]   = ($data['types_nsfw_'.$i])
+                              ? $data['types_nsfw_'.$i].' ('.number_display_format(
+                                maths_percentage_of($data['types_nsfw_'.$i], $data['types_pages_'.$i]) ,
+                                                    'percentage').')'
+                              : '&nbsp;';
     $data['types_gross_'.$i]  = ($type_stats['gross_'.$row['ct_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['types_gross_'.$i], $data['types_pages_'.$i]);
-    $temp                     = $data['types_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['types_gross_'.$i]  = ($data['types_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['types_gross_'.$i]  = ($data['types_gross_'.$i])
+                              ? $data['types_gross_'.$i].' ('.number_display_format(
+                                maths_percentage_of($data['types_gross_'.$i], $data['types_pages_'.$i]) ,
+                                                    'percentage').')'
+                              : '&nbsp;';
     $data['types_off_'.$i]    = ($type_stats['off_'.$row['ct_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['types_off_'.$i], $data['types_pages_'.$i]);
-    $temp                     = $data['types_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['types_off_'.$i]    = ($data['types_off_'.$i]) ? $temp : '&nbsp;';
+    $data['types_off_'.$i]    = ($data['types_off_'.$i])
+                              ? $data['types_off_'.$i].' ('.number_display_format(
+                                maths_percentage_of($data['types_off_'.$i], $data['types_pages_'.$i]) ,
+                                                    'percentage').')'
+                              : '&nbsp;';
   }
 
   // Add the amount of page types to the return array
@@ -4539,17 +4557,23 @@ function compendium_stats_list() : array
     $data['cat_name_'.$i]   = sanitize_output($row['cc_name']);
     $data['cat_pages_'.$i]  = ($category_stats['pages_'.$row['cc_id']]) ?? 0;
     $data['cat_nsfw_'.$i]   = ($category_stats['nsfw_'.$row['cc_id']]) ?? 0;
-    $temp                   = maths_percentage_of($data['cat_nsfw_'.$i], $data['cat_pages_'.$i]);
-    $temp                   = $data['cat_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['cat_nsfw_'.$i]   = ($data['cat_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_nsfw_'.$i]   = ($data['cat_nsfw_'.$i])
+                            ? $data['cat_nsfw_'.$i].' ('.number_display_format(
+                              maths_percentage_of($data['cat_nsfw_'.$i], $data['cat_pages_'.$i]) ,
+                                                  'percentage').')'
+                            : '&nbsp;';
     $data['cat_gross_'.$i]  = ($category_stats['gross_'.$row['cc_id']]) ?? 0;
-    $temp                   = maths_percentage_of($data['cat_gross_'.$i], $data['cat_pages_'.$i]);
-    $temp                   = $data['cat_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['cat_gross_'.$i]  = ($data['cat_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_gross_'.$i]  = ($data['cat_gross_'.$i])
+                            ? $data['cat_gross_'.$i].' ('.number_display_format(
+                              maths_percentage_of($data['cat_gross_'.$i], $data['cat_pages_'.$i]) ,
+                                                  'percentage').')'
+                            : '&nbsp;';
     $data['cat_off_'.$i]    = ($category_stats['off_'.$row['cc_id']]) ?? 0;
-    $temp                   = maths_percentage_of($data['cat_off_'.$i], $data['cat_pages_'.$i]);
-    $temp                   = $data['cat_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['cat_off_'.$i]    = ($data['cat_off_'.$i]) ? $temp : '&nbsp;';
+    $data['cat_off_'.$i]    = ($data['cat_off_'.$i])
+                            ? $data['cat_off_'.$i].' ('.number_display_format(
+                              maths_percentage_of($data['cat_off_'.$i], $data['cat_pages_'.$i]) ,
+                                                  'percentage').')'
+                            : '&nbsp;';
   }
 
   // Add the amount of categories to the return array
@@ -4603,17 +4627,23 @@ function compendium_stats_list() : array
     $data['eras_end_'.$i]     = ($row['ce_end']) ? sanitize_output($row['ce_end']) : '-';
     $data['eras_pages_'.$i]   = ($era_stats['pages_'.$row['ce_id']]) ?? 0;
     $data['eras_nsfw_'.$i]    = ($era_stats['nsfw_'.$row['ce_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['eras_nsfw_'.$i], $data['eras_pages_'.$i]);
-    $temp                     = $data['eras_nsfw_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['eras_nsfw_'.$i]    = ($data['eras_nsfw_'.$i]) ? $temp : '&nbsp;';
+    $data['eras_nsfw_'.$i]    = ($data['eras_nsfw_'.$i])
+                              ? $data['eras_nsfw_'.$i].' ('.number_display_format(
+                                maths_percentage_of($data['eras_nsfw_'.$i], $data['eras_pages_'.$i]) ,
+                                                    'percentage').')'
+                              : '&nbsp;';
     $data['eras_gross_'.$i]   = ($era_stats['gross_'.$row['ce_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['eras_gross_'.$i], $data['eras_pages_'.$i]);
-    $temp                     = $data['eras_gross_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['eras_gross_'.$i]   = ($data['eras_gross_'.$i]) ? $temp : '&nbsp;';
+    $data['eras_gross_'.$i]   = ($data['eras_gross_'.$i])
+                              ? $data['eras_gross_'.$i].' ('.number_display_format(
+                                maths_percentage_of($data['eras_gross_'.$i], $data['eras_pages_'.$i]) ,
+                                                    'percentage').')'
+                              : '&nbsp;';
     $data['eras_off_'.$i]     = ($era_stats['off_'.$row['ce_id']]) ?? 0;
-    $temp                     = maths_percentage_of($data['eras_off_'.$i], $data['eras_pages_'.$i]);
-    $temp                     = $data['eras_off_'.$i].' ('.number_display_format($temp, 'percentage').')';
-    $data['eras_off_'.$i]     = ($data['eras_off_'.$i]) ? $temp : '&nbsp;';
+    $data['eras_off_'.$i]     = ($data['eras_off_'.$i])
+                              ? $data['eras_off_'.$i].' ('.number_display_format(
+                                maths_percentage_of($data['eras_off_'.$i], $data['eras_pages_'.$i]) ,
+                                                    'percentage').')'
+                              : '&nbsp;';
   }
 
   // Add the amount of cultural eras to the return array
@@ -4818,8 +4848,8 @@ function compendium_nbcodes_apply( ?string $text ) : string
   $pages    = compendium_pages_list_urls();
 
   // Format the string
-  $temp = bbcodes(sanitize_output($text, preserve_line_breaks: true));
-  $text = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $text = nbcodes(bbcodes(sanitize_output($text, preserve_line_breaks: true)) ,
+                  page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
   // Return the formatted string
   return $text;
