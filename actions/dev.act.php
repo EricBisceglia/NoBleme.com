@@ -120,14 +120,14 @@ function dev_versions_list() : array
     // Otherwise, calculate the time differential
     else
     {
-      $temp_diff = time_days_elapsed($data[$i + 1]['date_raw'], $data[$i]['date_raw']);
+      $date_diff = time_days_elapsed($data[$i + 1]['date_raw'], $data[$i]['date_raw']);
 
       // Assemble the formatted string
-      $data[$i]['date_diff'] = ($temp_diff) ? sanitize_output($temp_diff.__('day', $temp_diff, 1)) : '-';
+      $data[$i]['date_diff'] = ($date_diff) ? sanitize_output($date_diff.__('day', $date_diff, 1)) : '-';
 
       // Give stylings to long delays
-      $temp_style       = ($temp_diff > 90) ? ' class="smallglow"' : '';
-      $data[$i]['css']  = ($temp_diff > 365) ? ' class="bold glow"' : $temp_style;
+      $date_style       = ($date_diff > 90) ? ' class="smallglow"' : '';
+      $data[$i]['css']  = ($date_diff > 365) ? ' class="bold glow"' : $date_style;
     }
   }
 
@@ -372,8 +372,7 @@ function dev_blogs_get( int $blog_id ) : mixed
 
   // Assemble an array with the data
   $data['deleted']    = $dblog['b_deleted'];
-  $temp               = ($dblog["b_title_$lang"]) ? $dblog["b_title_$lang"] : __('dev_blog_no_title');
-  $data['title']      = sanitize_output($temp);
+  $data['title']      = ($dblog["b_title_$lang"]) ? sanitize_output($dblog["b_title_$lang"]) : __('dev_blog_no_title');
   $data['title_en']   = $dblog['b_title_en'];
   $data['title_fr']   = $dblog['b_title_fr'];
   $data['date']       = sanitize_output(date_to_text($dblog['b_date']));

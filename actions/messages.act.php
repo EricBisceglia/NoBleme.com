@@ -231,7 +231,7 @@ function private_message_get( int $message_id ) : array
   }
 
   // Error: Message does not belong to user
-  if($dmessage['pm_recipient'] !== $user_id && $dmessage['pm_sender_id'] !== $user_id)
+  if((int)$dmessage['pm_recipient'] !== $user_id && (int)$dmessage['pm_sender_id'] !== $user_id)
   {
     $data['error'] = __('users_message_neighbor');
     return $data;
@@ -307,11 +307,12 @@ function private_message_get( int $message_id ) : array
       // Prepare the message's contents and increment the loop counter
       if(!isset($message_error))
       {
-        $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
-        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
+        $sender_deleted         = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
+        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $sender_deleted;
         $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
-        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : __('nobleme');
-        $data[$i]['sender']     = sanitize_output($temp);
+        $data[$i]['sender']     = ($dmessage['pm_sender_id'])
+                                ? sanitize_output($dmessage['pm_sender'])
+                                : __('nobleme');
         $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
         $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
         $data[$i]['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
@@ -750,8 +751,8 @@ function admin_mail_list( string $search = '' ) : array
     $data[$i]['title']      = sanitize_output($row['pm_title']);
     $data[$i]['read']       = ($row['pm_read']);
     $data[$i]['recipient']  = $row['pm_recipient'];
-    $temp                   = $row['us_id'] ? sanitize_output($row['us_nick']) : sanitize_output($row['ur_nick']);
-    $data[$i]['sender']     = (!$row['us_id'] && !$row['pm_recipient']) ? __('nobleme') : $temp;
+    $sender_username        = $row['us_id'] ? sanitize_output($row['us_nick']) : sanitize_output($row['ur_nick']);
+    $data[$i]['sender']     = (!$row['us_id'] && !$row['pm_recipient']) ? __('nobleme') : $sender_username;
     $data[$i]['sent']       = sanitize_output(time_since($row['pm_sent']));
     $data[$i]['parent']     = $row['pm_parent'];
     $parent_ids[$i]         = $row['pm_parent'];
@@ -859,8 +860,8 @@ function admin_mail_get( int $message_id ) : array
   $data['self']         = (!$dmessage['pm_sender_id']);
   $data['title']        = sanitize_output($dmessage['pm_title']);
   $data['sender_id']    = sanitize_output($dmessage['pm_sender_id']);
-  $temp                 = ($dmessage['pm_true']) ? sanitize_output($dmessage['ts_username']) : __('nobleme');
-  $data['sender']       = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : $temp;
+  $sender_username      = ($dmessage['pm_true']) ? sanitize_output($dmessage['ts_username']) : __('nobleme');
+  $data['sender']       = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : $sender_username;
   $data['recipient_id'] = sanitize_output($dmessage['pm_recipient_id']);
   $data['recipient']    = ($dmessage['pm_recipient_id']) ? sanitize_output($dmessage['pm_recipient']) : __('nobleme');
   $data['sent_at']      = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
@@ -932,12 +933,13 @@ function admin_mail_get( int $message_id ) : array
       if(!isset($message_error))
       {
         $data[$i]['id']         = sanitize_output($message_id);
-        $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
-        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
+        $sender_deleted         = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
+        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $sender_deleted;
         $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
-        $temp                   = ($dmessage['pm_true']) ? sanitize_output($dmessage['pm_true']) : __('nobleme');
-        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : $temp;
-        $data[$i]['sender']     = sanitize_output($temp);
+        $true_sender_username   = ($dmessage['pm_true']) ? sanitize_output($dmessage['pm_true']) : __('nobleme');
+        $data[$i]['sender']     = ($dmessage['pm_sender_id'])
+                                ? sanitize_output($dmessage['pm_sender'])
+                                : sanitize_output($true_sender_username);
         $data[$i]['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
         $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
         $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));

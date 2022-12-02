@@ -83,8 +83,8 @@ function meetups_get( int $meetup_id ) : mixed
   $data['date_ddmmyy']    = sanitize_output(date('d/m/y', strtotime($dmeetup['m_date'])));
   $data['location']       = sanitize_output($dmeetup['m_location']);
   $data['location_raw']   = $dmeetup['m_location'];
-  $temp                   = time_days_elapsed(date('Y-m-d'), $dmeetup['m_date']);
-  $data['days_until']     = sanitize_output($temp.__('day', amount: $temp, spaces_before: 1));
+  $days_to_meetup         = time_days_elapsed(date('Y-m-d'), $dmeetup['m_date']);
+  $data['days_until']     = sanitize_output($days_to_meetup.__('day', amount: $days_to_meetup, spaces_before: 1));
   $data['lang_en']        = str_contains($dmeetup['m_lang'], 'EN');
   $data['lang_fr']        = str_contains($dmeetup['m_lang'], 'FR');
   $data['wrong_lang_en']  = ($lang === 'en' && !str_contains($dmeetup['m_lang'], 'EN'));
@@ -174,9 +174,10 @@ function meetups_list(  string  $sort_by  = 'date'  ,
   for($i = 0; $row = mysqli_fetch_array($qmeetups); $i++)
   {
     $data[$i]['id']         = $row['m_id'];
-    $temp                   = ($row['m_deleted']) ? 'text_red': 'green dark_hover text_white';
-    $temp2                  = strtotime(date('Y-m-d'));
-    $data[$i]['css']        = ($row['m_deleted'] || (strtotime($row['m_date']) >= $temp2)) ? ' '.$temp : '';
+    $meetup_css             = ($row['m_deleted']) ? 'text_red': 'green dark_hover text_white';
+    $data[$i]['css']        = ($row['m_deleted'] || (strtotime($row['m_date']) >= strtotime(date('Y-m-d'))))
+                            ? ' '.$meetup_css
+                            : '';
     $data[$i]['css_link']   = ($row['m_deleted']) ? 'text_red text_white_hover' : '';
     $data[$i]['deleted']    = $row['m_deleted'];
     $data[$i]['date']       = sanitize_output(date_to_text($row['m_date']));
@@ -225,8 +226,8 @@ function meetups_add( array $contents ) : mixed
   $meetup_location    = sanitize_array_element($contents, 'location', 'string', max: 20);
   $meetup_details_en  = sanitize_array_element($contents, 'details_en', 'string');
   $meetup_details_fr  = sanitize_array_element($contents, 'details_fr', 'string');
-  $temp               = ($contents['lang_en']) ? 'EN' : '';
-  $meetup_lang        = ($contents['lang_fr']) ? $temp.'FR' : $temp;
+  $meetup_lang        = ($contents['lang_en']) ? 'EN' : '';
+  $meetup_lang       .= ($contents['lang_fr']) ? 'FR' : '';
 
   // Error: Incorrect date
   if(!$meetup_date || $meetup_date === '0000-00-00')
@@ -351,8 +352,8 @@ function meetups_edit(  int   $meetup_id  ,
   $meetup_location    = sanitize_array_element($contents, 'location', 'string', max: 20);
   $meetup_details_en  = sanitize_array_element($contents, 'details_en', 'string');
   $meetup_details_fr  = sanitize_array_element($contents, 'details_fr', 'string');
-  $temp               = ($contents['lang_en']) ? 'EN' : '';
-  $meetup_lang        = ($contents['lang_fr']) ? $temp.'FR' : $temp;
+  $meetup_lang        = ($contents['lang_en']) ? 'EN' : '';
+  $meetup_lang       .= ($contents['lang_fr']) ? 'FR' : '';
 
   // Error: Meetup does not exist
   if(!database_row_exists('meetups', $meetup_id))

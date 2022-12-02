@@ -106,13 +106,12 @@ function irc_channels_list() : array
   {
     $data[$i]['id']       = $row['c_id'];
     $data[$i]['name']     = sanitize_output($row['c_name']);
-    $temp                 = irc_channels_type_get($row['c_type']);
-    $data[$i]['type']     = sanitize_output($temp['name']);
-    $data[$i]['type_css'] = sanitize_output($temp['css']);
+    $channel_type         = irc_channels_type_get($row['c_type']);
+    $data[$i]['type']     = sanitize_output($channel_type['name']);
+    $data[$i]['type_css'] = sanitize_output($channel_type['css']);
     $data[$i]['lang_en']  = str_contains($row['c_lang'], 'EN');
     $data[$i]['lang_fr']  = str_contains($row['c_lang'], 'FR');
-    $temp                 = ($lang === 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
-    $data[$i]['desc']     = sanitize_output($temp);
+    $data[$i]['desc']     = ($lang === 'EN') ? sanitize_output($row['c_desc_en']) : sanitize_output($row['c_desc_fr']);
   }
 
   // Add the number of rows to the data
@@ -147,8 +146,8 @@ function irc_channels_add( array $contents ) : mixed
   $channel_desc_en  = sanitize_array_element($contents, 'desc_en', 'string');
   $channel_desc_fr  = sanitize_array_element($contents, 'desc_fr', 'string');
   $channel_type     = sanitize_array_element($contents, 'type', 'int', min: 0, max: 3, default: 1);
-  $temp             = (isset($contents['lang_en'])) ? 'EN' : '';
-  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR' : $temp;
+  $channel_lang     = (isset($contents['lang_en'])) ? 'EN' : '';
+  $channel_lang    .= (isset($contents['lang_fr'])) ? 'FR' : '';
 
   // Error: No name
   if(!$channel_name)
@@ -245,8 +244,8 @@ function irc_channels_edit( int   $channel_id ,
   $channel_desc_en  = sanitize_array_element($contents, 'desc_en', 'string');
   $channel_desc_fr  = sanitize_array_element($contents, 'desc_fr', 'string');
   $channel_type     = sanitize_array_element($contents, 'type', 'int', min: 0, max: 3, default: 1);
-  $temp             = (isset($contents['lang_en'])) ? 'EN' : '';
-  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR' : $temp;
+  $channel_lang     = (isset($contents['lang_en'])) ? 'EN' : '';
+  $channel_lang    .= (isset($contents['lang_fr'])) ? 'FR' : '';
 
   // Error: No description
   if(!$channel_desc_en || !$channel_desc_fr)
@@ -729,9 +728,9 @@ function irc_bot_message_history_list( array $search = array() ) : array
     $data[$i]['channel']    = ($row['li_manual']) ? __('irc_bot_history_nochan') : sanitize_output($row['li_channel']);
     $data[$i]['body']       = sanitize_output($row['li_body']);
     $data[$i]['body_js']    = sanitize_output_javascript($row['li_body']);
-    $temp                   = ($row['li_silenced']) ? __('irc_bot_history_silenced') : '';
-    $temp                   = ($row['li_failed']) ? __('irc_bot_history_failed') : $temp;
-    $data[$i]['failed']     = ($row['li_silenced'] || $row['li_failed']) ? $temp : '';
+    $log_failed             = ($row['li_silenced']) ? __('irc_bot_history_silenced') : '';
+    $log_failed             = ($row['li_failed']) ? __('irc_bot_history_failed') : $log_failed;
+    $data[$i]['failed']     = ($row['li_silenced'] || $row['li_failed']) ? $log_failed : '';
     $data[$i]['failed_css'] = ($data[$i]['failed']) ? ' text_red bold' : '';
     $data[$i]['action']     = $row['li_action'];
   }
