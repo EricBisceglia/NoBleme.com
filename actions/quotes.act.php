@@ -119,8 +119,9 @@ function quotes_get_linked_users(int $quote_id) : mixed
   {
     $data[$i]['id']       = $row['u_id'];
     $data[$i]['deleted']  = $row['u_deleted'];
-    $temp                 = ($row['u_deleted']) ? $row['u_realnick'] : $row['u_nick'];
-    $data[$i]['username'] = sanitize_output($temp);
+    $data[$i]['username'] = ($row['u_deleted'])
+                          ? sanitize_output($row['u_realnick'])
+                          : sanitize_output($row['u_nick']);
   }
 
   // Add the number of rows to the data
@@ -264,12 +265,15 @@ function quotes_list( ?array  $search         = array() ,
   for($i = 0; $row = mysqli_fetch_array($dquotes); $i++)
   {
     $data[$i]['id']           = $row['q_id'];
-    $temp                     = ($row['q_date']) ? date_to_text($row['q_date'], strip_day: 1) : __('quotes_nodate');
-    $data[$i]['date']         = sanitize_output($temp);
+    $data[$i]['date']         = ($row['q_date'])
+                              ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
+                              : __('quotes_nodate');
     $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
     $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
-    $temp                     = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
-    $data[$i]['linked_count'] = ($temp && $temp === count($data[$i]['linked_nicks'])) ? $temp : 0;
+    $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
+    $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
+                              ? $linked_id_count
+                              : 0;
     $data[$i]['nsfw']         = $row['q_nsfw'];
     $data[$i]['deleted']      = $row['q_deleted'];
     $data[$i]['validated']    = $row['q_public'];
@@ -888,14 +892,14 @@ function quotes_stats_list() : array
   // Add some stats to the return array
   $data['total']        = $dquotes['q_total'];
   $data['total_en']     = $dquotes['q_total_en'];
-  $temp                 = maths_percentage_of($dquotes['q_total_en'], $dquotes['q_total']);
-  $data['percent_en']   = number_display_format($temp, 'percentage');
+  $data['percent_en']   = number_display_format(maths_percentage_of($dquotes['q_total_en'], $dquotes['q_total']) ,
+                                                'percentage');
   $data['total_fr']     = $dquotes['q_total_fr'];
-  $temp                 = maths_percentage_of($dquotes['q_total_fr'], $dquotes['q_total']);
-  $data['percent_fr']   = number_display_format($temp, 'percentage');
+  $data['percent_fr']   = number_display_format(maths_percentage_of($dquotes['q_total_fr'], $dquotes['q_total']) ,
+                                                'percentage');
   $data['total_nsfw']   = $dquotes['q_total_nsfw'];
-  $temp                 = maths_percentage_of($dquotes['q_total_nsfw'], $dquotes['q_total']);
-  $data['percent_nsfw'] = number_display_format($temp, 'percentage');
+  $data['percent_nsfw'] = number_display_format(maths_percentage_of($dquotes['q_total_nsfw'], $dquotes['q_total']) ,
+                                                'percentage');
 
   // Fetch all quotes, included unvalidated and deleted
   $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)                AS 'q_total'          ,
@@ -906,8 +910,8 @@ function quotes_stats_list() : array
 
   // Add some stats to the return array
   $data['deleted']      = $dquotes['q_total_deleted'];
-  $temp                 = maths_percentage_of($dquotes['q_total_deleted'], $dquotes['q_total']);
-  $data['percent_del']  = number_display_format($temp, 'percentage');
+  $data['percent_del']  = number_display_format(maths_percentage_of($dquotes['q_total_deleted'], $dquotes['q_total']) ,
+                                                'percentage');
   $data['unvalidated']  = $dquotes['q_total_unvalidated'];
 
   // Fetch user stats
@@ -936,17 +940,19 @@ function quotes_stats_list() : array
     $data['users_quotes_en_'.$i]    = $row['us_quotes_en'] ? (sanitize_output($row['us_quotes_en'])) : '';
     $data['users_quotes_fr_'.$i]    = $row['us_quotes_fr'] ? (sanitize_output($row['us_quotes_fr'])) : '';
     $data['users_quotes_nsfw_'.$i]  = $row['us_quotes_nsfw'] ? (sanitize_output($row['us_quotes_nsfw'])) : '';
-    $temp                           = maths_percentage_of($row['us_quotes_nsfw'], $row['us_quotes']);
-    $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
-    $data['users_quotes_nsfw_'.$i] .= $row['us_quotes_nsfw'] ? ' ('.$temp.')' : '';
+    $data['users_quotes_nsfw_'.$i] .= $row['us_quotes_nsfw']
+                                    ? ' ('.sanitize_output(number_display_format(
+                                                      maths_percentage_of($row['us_quotes_nsfw'], $row['us_quotes']) ,
+                                                           'percentage')).')'
+                                    : '';
     $data['users_qold_id_'.$i]      = sanitize_output($row['us_quotes_old_id']);
-    $temp                           = '< '.$data['oldest_year'];
-    $temp                           = ($row['us_quotes_old_date']) ? date('Y', $row['us_quotes_old_date']) : $temp;
-    $data['users_qold_date_'.$i]    = sanitize_output($temp);
+    $data['users_qold_date_'.$i]    = ($row['us_quotes_old_date'])
+                                    ? sanitize_output(date('Y', $row['us_quotes_old_date']))
+                                    : sanitize_output('< '.$data['oldest_year']);
     $data['users_qnew_id_'.$i]      = sanitize_output($row['us_quotes_new_id']);
-    $temp                           = '< '.$data['oldest_year'];
-    $temp                           = ($row['us_quotes_new_date']) ? date('Y', $row['us_quotes_new_date']) : $temp;
-    $data['users_qnew_date_'.$i]    = sanitize_output($temp);
+    $data['users_qnew_date_'.$i]    = ($row['us_quotes_new_date'])
+                                    ? sanitize_output(date('Y', $row['us_quotes_new_date']))
+                                    : sanitize_output('< '.$data['oldest_year']);
   }
 
   // Add the amount of user stats to the return array
@@ -1002,8 +1008,9 @@ function quotes_stats_list() : array
     $data['contrib_nick_'.$i]       = sanitize_output($row['u_nick']);
     $data['contrib_submitted_'.$i]  = sanitize_output($row['us_submitted']);
     $data['contrib_approved_'.$i]   = ($row['us_approved']) ? sanitize_output($row['us_approved']) : '';
-    $temp                           = maths_percentage_of($row['us_approved'], $row['us_submitted']);
-    $data['contrib_percentage_'.$i] = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['contrib_percentage_'.$i] = sanitize_output(number_display_format(
+                                                      maths_percentage_of($row['us_approved'], $row['us_submitted']) ,
+                                                      'percentage'));
   }
 
   // Add the amount of user stats to the return array
