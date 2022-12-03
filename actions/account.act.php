@@ -458,6 +458,20 @@ function account_update_settings( string  $setting  ,
           SET     users_settings.$setting = '$value'
           WHERE   users_settings.fk_users = '$user_id' ");
 
+  // Update the session storage
+  if($setting === 'show_nsfw_content')
+    $_SESSION['settings_nsfw'] = $value;
+  else if($setting === 'hide_youtube')
+    $_SESSION['settings_privacy']['youtube'] = $value;
+  else if($setting === 'hide_google_trends')
+    $_SESSION['settings_privacy']['trends'] = $value;
+  else if($setting === 'hide_discord')
+    $_SESSION['settings_privacy']['discord'] = $value;
+  else if($setting === 'hide_kiwiirc')
+    $_SESSION['settings_privacy']['kiwiirc'] = $value;
+  else if($setting === 'hide_from_activity')
+    $_SESSION['settings_privacy']['online'] = $value;
+
   // All went well
   return;
 }

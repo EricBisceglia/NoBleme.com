@@ -1089,10 +1089,17 @@ function user_settings_nsfw() : int
   // Sanitize the user id
   $user_id = sanitize($_SESSION['user_id'], 'int', 0);
 
+  // Check if the data is saved in the session
+  if(isset($_SESSION['settings_nsfw']))
+    return $_SESSION['settings_nsfw'];
+
   // Fetch the current nsfw level of the user
   $dnsfw = mysqli_fetch_array(query(" SELECT  users_settings.show_nsfw_content AS 'user_nsfw'
                                       FROM    users_settings
                                       WHERE   users_settings.fk_users = '$user_id' "));
+
+  // Save the user's nsfw settings in the session
+  $_SESSION['settings_nsfw'] = $dnsfw['user_nsfw'];
 
   // Return the user's nsfw settings
   return $dnsfw['user_nsfw'];
@@ -1125,21 +1132,42 @@ function user_settings_privacy() : array
     // Sanitize the user id
     $user_id = sanitize($_SESSION['user_id'], 'int', 0);
 
-    // Fetch the settings
-    $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_youtube       AS 'user_youtube' ,
-                                                    users_settings.hide_google_trends AS 'user_trends'  ,
-                                                    users_settings.hide_discord       AS 'user_discord' ,
-                                                    users_settings.hide_kiwiirc       AS 'user_kiwiirc' ,
-                                                    users_settings.hide_from_activity AS 'user_online'
-                                            FROM    users_settings
-                                            WHERE   users_settings.fk_users = '$user_id' "));
+    // Check if the settings are set in the session
+    if(isset($_SESSION['settings_privacy']))
+    {
+      // Set the privacy values to those set in the session
+      $privacy_youtube  = $_SESSION['settings_privacy']['youtube'];
+      $privacy_trends   = $_SESSION['settings_privacy']['trends'];
+      $privacy_discord  = $_SESSION['settings_privacy']['discord'];
+      $privacy_kiwiirc  = $_SESSION['settings_privacy']['kiwiirc'];
+      $privacy_online   = $_SESSION['settings_privacy']['online'];
+    }
 
-    // Set the privacy values to those wanted by the user
-    $privacy_youtube  = $dprivacy['user_youtube'];
-    $privacy_trends   = $dprivacy['user_trends'];
-    $privacy_discord  = $dprivacy['user_discord'];
-    $privacy_kiwiirc  = $dprivacy['user_kiwiirc'];
-    $privacy_online   = $dprivacy['user_online'];
+    // Otherwise, fetch the settings
+    else
+    {
+      $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_youtube       AS 'user_youtube' ,
+                                                      users_settings.hide_google_trends AS 'user_trends'  ,
+                                                      users_settings.hide_discord       AS 'user_discord' ,
+                                                      users_settings.hide_kiwiirc       AS 'user_kiwiirc' ,
+                                                      users_settings.hide_from_activity AS 'user_online'
+                                              FROM    users_settings
+                                              WHERE   users_settings.fk_users = '$user_id' "));
+
+      // Set them in the session
+      $_SESSION['settings_privacy'] = array(  'youtube' => $dprivacy['user_youtube']  ,
+                                              'trends'  => $dprivacy['user_trends']   ,
+                                              'discord' => $dprivacy['user_discord']  ,
+                                              'kiwiirc' => $dprivacy['user_kiwiirc']  ,
+                                              'online'  => $dprivacy['user_online']   );
+
+      // Set the privacy values to those wanted by the user
+      $privacy_youtube  = $dprivacy['user_youtube'];
+      $privacy_trends   = $dprivacy['user_trends'];
+      $privacy_discord  = $dprivacy['user_discord'];
+      $privacy_kiwiirc  = $dprivacy['user_kiwiirc'];
+      $privacy_online   = $dprivacy['user_online'];
+    }
   }
 
   // Return those privacy settings, neatly folded in a cozy array
