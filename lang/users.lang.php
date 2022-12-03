@@ -428,3 +428,5 @@ ___('users_stats_birth_age',    'EN', "Upcoming age");
 ___('users_stats_birth_age',    'FR', "Anniversaire");
 ___('users_stats_birth_date',   'EN', "Birth date");
 ___('users_stats_birth_date',   'FR', "Date de<br>naissance");
+___('users_stats_birth_days',   'EN', "Days to<br>birthday");
+___('users_stats_birth_days',   'FR', "Jours avant<br>anniversaire");

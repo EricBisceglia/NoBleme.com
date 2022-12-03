@@ -324,7 +324,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th>
-          <?=__('users_stats_anniv_days')?>
+          <?=__('users_stats_birth_days')?>
         </th>
 
       </tr>
