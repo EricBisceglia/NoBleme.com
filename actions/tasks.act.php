@@ -104,8 +104,9 @@ function tasks_get( int $task_id ) : mixed
   $data['validated']      = $dtask['t_validated'];
   $data['public']         = $dtask['t_public'];
   $data['title']          = sanitize_output($dtask['t_title']);
-  $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
-  $data['title_flex']     = sanitize_output($temp);
+  $data['title_flex']     = ($dtask['t_title_en'])
+                          ? sanitize_output($dtask['t_title_en'])
+                          : sanitize_output($dtask['t_title_fr']);
   $data['title_en']       = sanitize_output($dtask['t_title_en']);
   $data['title_fr']       = sanitize_output($dtask['t_title_fr']);
   $data['title_en_raw']   = $dtask['t_title_en'];
@@ -115,8 +116,9 @@ function tasks_get( int $task_id ) : mixed
   $data['created_since']  = sanitize_output(time_since($dtask['t_created']));
   $data['creator']        = sanitize_output($dtask['u_name']);
   $data['creator_id']     = sanitize_output($dtask['u_id']);
-  $temp                   = sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1));
-  $data['solved']         = ($dtask['t_solved']) ? $temp : '';
+  $data['solved']         = ($dtask['t_solved'])
+                          ? sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1))
+                          : '';
   $data['solved_full']    = sanitize_output(date_to_text($dtask['t_solved'], include_time: 1));
   $data['solved_since']   = sanitize_output(time_since($dtask['t_solved']));
   $data['priority']       = sanitize_output($dtask['t_priority']);
@@ -125,14 +127,15 @@ function tasks_get( int $task_id ) : mixed
   $data['milestone']      = sanitize_output($dtask['tm_name']);
   $data['milestone_id']   = ($dtask['tm_id']) ? sanitize_output($dtask['tm_id']) : 0;
   $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
-  $temp                   = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
-  $data['body_flex']      = bbcodes(sanitize_output($temp, preserve_line_breaks: true));
-  $data['body_proposal']  = sanitize_output($temp);
+  $body_flex              = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
+  $data['body_flex']      = bbcodes(sanitize_output($body_flex, preserve_line_breaks: true));
+  $data['body_proposal']  = sanitize_output($body_flex);
   $data['body_en']        = sanitize_output($dtask['t_body_en']);
   $data['body_fr']        = sanitize_output($dtask['t_body_fr']);
   $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
-  $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
-  $data['meta_desc']      = 'Task #'.$task_id.': '.$temp;
+  $data['meta_desc']      = ($dtask['t_title_en'])
+                          ? 'Task #'.$task_id.': '.$dtask['t_title_en']
+                          : 'Task #'.$task_id.': '.$dtask['t_title_fr'];
 
   // Return the array
   return $data;
@@ -310,23 +313,26 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   {
     // Prepare the data
     $data[$i]['id']         = sanitize_output($row['t_id']);
-    $temp                   = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
-    $data[$i]['css_row']    = ($row['t_deleted']) ? 'brown' : $temp;
-    $temp                   = ($row['t_status'] < 2) ? ' italics' : '';
-    $temp                   = ($row['t_status'] > 3) ? ' bold' : $temp;
-    $temp                   = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $temp;
-    $data[$i]['css_status'] = ($temp && !$row['t_finished']) ? $temp : '';
-    $temp                   = ($lang === 'en') ? $row['t_title_en'] : $row['t_title_fr'];
-    $temp                   = ($lang === 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $temp;
-    $temp                   = ($lang !== 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $temp;
-    $temp                   = ($sort_by === 'roadmap' && !$row['t_public']) ? __('tasks_roadmap_private').$temp : $temp;
-    $data[$i]['title']      = sanitize_output(string_truncate($temp, 42, '…'));
-    $data[$i]['road_title'] = sanitize_output(string_truncate($temp, 50, '…'));
-    $data[$i]['fulltitle']  = (strlen($temp) > 42) ? sanitize_output($temp) : '';
-    $data[$i]['road_full']  = (strlen($temp) > 50) ? sanitize_output($temp) : '';
-    $data[$i]['shorttitle'] = sanitize_output(string_truncate($temp, 38, '…'));
-    $temp                   = sanitize_output(__('tasks_list_solved'));
-    $data[$i]['status']     = ($row['t_finished']) ? $temp : sanitize_output(__('tasks_list_state_'.$row['t_status']));
+    $task_css               = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
+    $data[$i]['css_row']    = ($row['t_deleted']) ? 'brown' : $task_css;
+    $task_css               = ($row['t_status'] < 2) ? ' italics' : '';
+    $task_css               = ($row['t_status'] > 3) ? ' bold' : $task_css;
+    $task_css               = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $task_css;
+    $data[$i]['css_status'] = ($task_css && !$row['t_finished']) ? $task_css : '';
+    $task_title             = ($lang === 'en') ? $row['t_title_en'] : $row['t_title_fr'];
+    $task_title             = ($lang === 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $task_title;
+    $task_title             = ($lang !== 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $task_title;
+    $task_title             = ($sort_by === 'roadmap' && !$row['t_public'])
+                            ? __('tasks_roadmap_private').$task_title
+                            : $task_title;
+    $data[$i]['title']      = sanitize_output(string_truncate($task_title, 42, '…'));
+    $data[$i]['road_title'] = sanitize_output(string_truncate($task_title, 50, '…'));
+    $data[$i]['fulltitle']  = (strlen($task_title) > 42) ? sanitize_output($task_title) : '';
+    $data[$i]['road_full']  = (strlen($task_title) > 50) ? sanitize_output($task_title) : '';
+    $data[$i]['shorttitle'] = sanitize_output(string_truncate($task_title, 38, '…'));
+    $data[$i]['status']     = ($row['t_finished'])
+                            ? sanitize_output(__('tasks_list_solved'))
+                            : sanitize_output(__('tasks_list_state_'.$row['t_status']));
     $data[$i]['created']    = sanitize_output(time_since($row['t_created']));
     $data[$i]['solved']     = ($row['t_finished']) ? sanitize_output(time_since($row['t_finished'])) : __('tasks_roadmap_unsolved');
     $data[$i]['author']     = sanitize_output($row['t_author']);
@@ -1466,14 +1472,15 @@ function tasks_stats_list() : array
   // Add some stats to the return array
   $data['total']            = sanitize_output($dtasks['t_total']);
   $data['solved']           = sanitize_output($dtasks['t_solved']);
-  $temp                     = maths_percentage_of($dtasks['t_solved'], $dtasks['t_total']);
-  $data['percent_solved']   = number_display_format($temp, 'percentage', 1);
+  $data['percent_solved']   = number_display_format(maths_percentage_of($dtasks['t_solved'], $dtasks['t_total']) ,
+                                                    'percentage', 1);
   $data['unsolved']         = sanitize_output($dtasks['t_total'] - $dtasks['t_solved']);
-  $temp                     = maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']), $dtasks['t_total']);
-  $data['percent_unsolved'] = number_display_format($temp, 'percentage', 1);
+  $data['percent_unsolved'] = number_display_format(
+                                maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']) , $dtasks['t_total']) ,
+                                'percentage', 1);
   $data['sourced']          = sanitize_output($dtasks['t_source']);
-  $temp                     = maths_percentage_of($dtasks['t_source'], $dtasks['t_solved']);
-  $data['percent_sourced']  = number_display_format($temp, 'percentage', 1);
+  $data['percent_sourced']  = number_display_format(maths_percentage_of($dtasks['t_source'], $dtasks['t_solved']) ,
+                                                    'percentage', 1);
 
   // Fetch opened tasks by year
   $qtasks = query(" SELECT    YEAR(FROM_UNIXTIME(dev_tasks.created_at)) AS 't_year' ,
@@ -1552,9 +1559,11 @@ function tasks_stats_list() : array
     $data['category_name_'.$i]      = sanitize_output($row['tc_title']);
     $data['category_count_'.$i]     = sanitize_output($row['tc_count']);
     $data['category_unsolved_'.$i]  = ($row['tc_unsolved']) ? sanitize_output($row['tc_unsolved']) : '&nbsp;';
-    $temp                           = maths_percentage_of($row['tc_unsolved'], $row['tc_count']);
-    $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
-    $data['category_punsolved_'.$i] = ($row['tc_unsolved']) ? $temp : '';
+    $data['category_punsolved_'.$i] = ($row['tc_unsolved'])
+                                    ? sanitize_output(number_display_format(
+                                                            maths_percentage_of($row['tc_unsolved'], $row['tc_count'])
+                                                            , 'percentage'))
+                                    : '';
     $data['category_oldest_'.$i]    = ($row['tc_oldest']) ? sanitize_output($row['tc_oldest']) : '&nbsp;';
     $data['category_newest_'.$i]    = ($row['tc_newest']) ? sanitize_output($row['tc_newest']) : '&nbsp;';
   }
@@ -1588,8 +1597,9 @@ function tasks_stats_list() : array
     $data['milestone_id_'.$i]       = sanitize_output($row['tm_id']);
     $data['milestone_title_'.$i]    = sanitize_output($row['tm_title']);
     $data['milestone_body_'.$i]     = bbcodes(sanitize_output($row['tm_body'], preserve_line_breaks: true));
-    $temp                           = (isset($row['tm_date'])) ? date_to_text($row['tm_date'], strip_day: 1) : '-';
-    $data['milestone_date_'.$i]     = sanitize_output($temp);
+    $data['milestone_date_'.$i]     = (isset($row['tm_date']))
+                                    ? sanitize_output(date_to_text($row['tm_date'], strip_day: 1))
+                                    : '-';
     $data['milestone_solved_'.$i]   = $row['tm_solved'] ? sanitize_output($row['tm_solved']) : '&nbsp';
     $data['milestone_unsolved_'.$i] = $row['tm_unsolved'] ? sanitize_output($row['tm_unsolved']) : '&nbsp';
   }
@@ -1615,8 +1625,9 @@ function tasks_stats_list() : array
   {
     $data['priority_level_'.$i]   = sanitize_output($row['t_priority']);
     $data['priority_count_'.$i]   = sanitize_output($row['t_count']);
-    $temp                         = maths_percentage_of($row['t_count'], $data['total']);
-    $data['priority_percent_'.$i] = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['priority_percent_'.$i] = sanitize_output(number_display_format(
+                                                      maths_percentage_of($row['t_count'], $data['total']) ,
+                                                      'percentage'));
     $data['priority_open_'.$i]    = ($row['t_unsolved']) ? sanitize_output($row['t_unsolved']) : '&nbsp;';
   }
 
@@ -1640,10 +1651,12 @@ function tasks_stats_list() : array
     $data['contrib_id_'.$i]     = sanitize_output($row['u_id']);
     $data['contrib_nick_'.$i]   = sanitize_output($row['u_nick']);
     $data['contrib_tasks_'.$i]  = sanitize_output($row['us_tasks']);
-    $temp                       = $row['us_tasks'] - $row['us_solved'];
-    $data['contrib_open_'.$i]   = ($temp) ? sanitize_output($temp) : '&nbsp;';
-    $temp                       = ($temp) ? maths_percentage_of($temp, $row['us_tasks']) : '';
-    $data['contrib_popen_'.$i]  = ($temp) ? sanitize_output('('.number_display_format($temp, 'percentage').')') : '';
+    $open_tasks                 = $row['us_tasks'] - $row['us_solved'];
+    $data['contrib_open_'.$i]   = ($open_tasks) ? sanitize_output($open_tasks) : '&nbsp;';
+    $percentage_open_tasks      = ($open_tasks) ? maths_percentage_of($open_tasks, $row['us_tasks']) : '';
+    $data['contrib_popen_'.$i]  = ($percentage_open_tasks)
+                                ? sanitize_output('('.number_display_format($percentage_open_tasks, 'percentage').')')
+                                : '';
   }
 
   // ADd the number of contributors to the return array
