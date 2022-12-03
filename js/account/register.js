@@ -53,33 +53,33 @@ function user_register_submit()
 
   // Check whether the questions are correctly answered
   css_remove('label_register_question_1', 'red');
-  var temp = document.querySelectorAll('input[name=register_question_1]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp !== 2)
+  var question1 = document.querySelectorAll('input[name=register_question_1]:checked');
+  question1 = (question1.length > 0) ? parseInt(question1[0].value) : null;
+  if(question1 !== 2)
   {
     css_add('label_register_question_1', 'red');
     form_failed = 1;
   }
   css_remove('label_register_question_2', 'red');
-  var temp = document.querySelectorAll('input[name=register_question_2]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp !== 2)
+  var question2 = document.querySelectorAll('input[name=register_question_2]:checked');
+  question2 = (question2.length > 0) ? parseInt(question2[0].value) : null;
+  if(question2 !== 2)
   {
     css_add('label_register_question_2', 'red');
     form_failed = 1;
   }
   css_remove('label_register_question_3', 'red');
-  var temp = document.querySelectorAll('input[name=register_question_3]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp !== 2)
+  var question3 = document.querySelectorAll('input[name=register_question_3]:checked');
+  question3 = (question3.length > 0) ? parseInt(question3[0].value) : null;
+  if(question3 !== 2)
   {
     css_add('label_register_question_3', 'red');
     form_failed = 1;
   }
   css_remove('label_register_question_4', 'red');
-  var temp = document.querySelectorAll('input[name=register_question_4]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp !== 1)
+  var question4 = document.querySelectorAll('input[name=register_question_4]:checked');
+  question4 = (question4.length > 0) ? parseInt(question4[0].value) : null;
+  if(question4 !== 1)
   {
     css_add('label_register_question_4', 'red');
     form_failed = 1;
