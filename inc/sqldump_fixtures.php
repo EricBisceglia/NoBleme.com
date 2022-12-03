@@ -679,9 +679,9 @@ for($i = 0; $i < $random; $i++)
   $last_page_fr = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_url     = (mt_rand(0,2) < 2) ? 'index' : '';
-  $temp         = mt_rand(0,10);
-  $temp         = (mt_rand(0,1)) ? 1 : $temp;
-  $visit_count  = (mt_rand(0,10) < 10) ? $temp : mt_rand(10, 100);
+  $random       = mt_rand(0,10);
+  $random       = (mt_rand(0,1)) ? 1 : $random;
+  $visit_count  = (mt_rand(0,10) < 10) ? $random : mt_rand(10, 100);
 
   // Generate the guests
   query(" INSERT INTO users_guests
@@ -718,11 +718,11 @@ for($i = 0; $i < $random; $i++)
   $deleted_nick = ($deleted) ? $username : '';
   $current_ip   = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255);
   $email        = $username.'@localhost';
-  $temp         = mt_rand(0,1);
-  $temp2        = mt_rand(0,1) ? 'EN' : 'FR';
-  $cur_language = ($temp) ? '' : $temp2;
-  $temp2        = mt_rand(0,5) < 5 ? 'dark' : 'light';
-  $cur_theme    = ($temp) ? '' : $temp2;
+  $random       = mt_rand(0,1);
+  $randlang     = mt_rand(0,1) ? 'EN' : 'FR';
+  $cur_language = ($random) ? '' : $randlang;
+  $randtheme    = mt_rand(0,5) < 5 ? 'dark' : 'light';
+  $cur_theme    = ($random) ? '' : $randtheme;
   $created_at   = mt_rand(1111239420, time());
   $deleted_at   = ($deleted) ? mt_rand($created_at, time()) : '';
   $last_visit   = mt_rand($created_at, time());
@@ -730,9 +730,9 @@ for($i = 0; $i < $random; $i++)
   $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_url     = (mt_rand(0,2) < 2) ? 'index' : '';
   $last_action  = (mt_rand(0, 5) < 5) ? 0 : mt_rand($created_at, $last_visit);
-  $temp2        = mt_rand(0, 100);
-  $temp2        = (mt_rand(0, 10) < 10) ? $temp2 : mt_rand(0, 1000);
-  $visit_count  = ($temp) ? 0 : $temp2;
+  $random2      = mt_rand(0, 100);
+  $random2      = (mt_rand(0, 10) < 10) ? $random2 : mt_rand(0, 1000);
+  $visit_count  = ($random) ? 0 : $random2;
   $birthday     = (mt_rand(0,4) < 4) ? '0000-00-00' : mt_rand(1980, 2010).'-'.mt_rand(1,12).'-'.mt_rand(1,28);
   $languages    = (mt_rand(0,5) < 5) ? '' : 'EN';
   $languages   .= (mt_rand(0,5) < 5) ? '' : 'FR';
@@ -1817,9 +1817,9 @@ for($i = 0; $i < $random; $i++)
   $draft        = (!$deleted && mt_rand(0,20) === 20) ? 1 : 0;
   $created_at   = mt_rand(1111239420, time());
   $era          = (mt_rand(0,1)) ? fixtures_fetch_random_id('compendium_eras') : 0;
-  $temp         = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');
-  $temp         = (mt_rand(0,1)) ? 2 : $temp;
-  $type         = (mt_rand(0,1)) ? 1 : $temp;
+  $random       = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');
+  $random       = (mt_rand(0,1)) ? 2 : $random;
+  $type         = (mt_rand(0,1)) ? 1 : $random;
   $url          = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
   $title_en     = (mt_rand(0,5) < 5) ? ucfirst(fixtures_generate_data('sentence', 1, 6, 1)) : '';
   $title_fr     = (mt_rand(0,5) < 5) ? ucfirst(fixtures_generate_data('sentence', 1, 6, 1)) : '';
@@ -1836,12 +1836,12 @@ for($i = 0; $i < $random; $i++)
   $body_en      = fixtures_generate_data('text', 2, 5);
   $body_fr      = fixtures_generate_data('text', 2, 5);
   $admin_notes  = (mt_rand(0,7) < 7) ? '' : fixtures_generate_data('text', 1, 1);
-  $temp         = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
-  $temp2        = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
-  $temp3        = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
-  $temp         = (mt_rand(0, 1)) ? $temp : $temp.';'.$temp2;
-  $temp         = (mt_rand(0,3) < 3) ? $temp : $temp.';'.$temp3;
-  $admin_urls   = (mt_rand(0,7) < 7) ? '' : $temp;
+  $random_url   = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $random_url2  = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $random_url3  = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $random_urls  = (mt_rand(0, 1)) ? $random_url : $random_url.';'.$random_url2;
+  $random_urls  = (mt_rand(0,3) < 3) ? $random_urls : $random_urls.';'.$random_url3;
+  $admin_urls   = (mt_rand(0,7) < 7) ? '' : $random_urls;
   $view_count   = (mt_rand(0, 10000));
 
   // Generate the pages if they don't exist already
@@ -2053,9 +2053,9 @@ $random = mt_rand(25,75);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $temp     = (mt_rand(0, 1)) ? 3 : fixtures_fetch_random_id('compendium_types');
-  $temp     = (mt_rand(0, 1)) ? 2 : $temp;
-  $type     = (mt_rand(0, 1)) ? 0 : $temp;
+  $randtype = (mt_rand(0, 1)) ? 3 : fixtures_fetch_random_id('compendium_types');
+  $randtype = (mt_rand(0, 1)) ? 2 : $randtype;
+  $type     = (mt_rand(0, 1)) ? 0 : $randtype;
   $url      = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
   $title    = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
   $priority = (mt_rand(0, 5) < 5) ? 0 : 1;

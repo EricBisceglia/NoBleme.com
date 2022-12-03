@@ -531,9 +531,9 @@ function sql_create_index(  string  $table_name           ,
   // If it does not exist yet, then can create it and run a check to populate the table's indexes
   if(!mysqli_num_rows($qindex))
   {
-    $temp = ($fulltext) ? ' FULLTEXT ' : '';
+    $query_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
     query(" ALTER TABLE ".$table_name."
-            ADD ".$temp." INDEX ".$index_name." (".$field_names."); ");
+            ADD ".$query_fulltext." INDEX ".$index_name." (".$field_names."); ");
     query(" CHECK TABLE ".$table_name." ");
   }
 }
