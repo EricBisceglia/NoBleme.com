@@ -301,8 +301,8 @@ $page_title = ($lang === 'EN' && isset($page_title_en)) ? $page_title_en : '';
 $page_title = ($lang === 'FR' && isset($page_title_fr)) ? $page_title_fr : $page_title;
 
 // If the current page is unnamed, simply call it NoBleme, else append NoBleme to it - or Devmode when in dev mode
-$temp       = ($GLOBALS['dev_mode']) ? ' | Devmode' : ' | NoBleme';
-$page_title = ($page_title) ? sanitize_meta_tags($page_title.$temp) : 'NoBleme.com';
+$title_suffix = ($GLOBALS['dev_mode']) ? ' | Devmode' : ' | NoBleme';
+$page_title   = ($page_title) ? sanitize_meta_tags($page_title.$title_suffix) : 'NoBleme.com';
 
 
 

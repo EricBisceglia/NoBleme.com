@@ -120,56 +120,66 @@ function log_activity_parse(  bool    $admins_only        ,
   {
     $return['css']  = ($mode === 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/users/'.$userid;
-    $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
-    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $username.' has been banned '.$temp[$amount].$temp2;
-    $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
-    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $username.' s\'est fait bannir '.$temp[$amount].$temp2;
+    $ban_length     = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month',
+                            '365' => 'for a year', '3650' => 'permanently');
+    $return['EN']   = $username.' has been banned '.$ban_length[$amount];
+    $return['EN']  .= ($title_en) ? ' ('.$title_en.')' : '';
+    $ban_length     = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois',
+                            '365' => 'un an', '3650' => 'définitivement');
+    $return['FR']   = $username.' s\'est fait bannir '.$ban_length[$amount];
+    $return['FR']  .= ($title_fr) ? ' ('.$title_fr.')' : '';
   }
   else if($type === 'users_banned')
   {
     $return['css']  = ($mode === 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
-    $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
-    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_username.' banned '.$username.' '.$temp[$amount].$temp2;
-    $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
-    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_username.' a banni '.$username.' '.$temp[$amount].$temp2;
+    $ban_length     = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month',
+                            '365' => 'for a year', '3650' => 'permanently');
+    $return['EN']   = $mod_username.' banned '.$username.' '.$ban_length[$amount];
+    $return['EN']  .= ($title_en) ? ' ('.$title_en.')' : '';
+    $ban_length     = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois',
+                            '365' => 'un an', '3650' => 'définitivement');
+    $return['FR']   = $mod_username.' a banni '.$username.' '.$ban_length[$amount];
+    $return['FR']  .= ($title_fr) ? ' ('.$title_fr.')' : '';
   }
 
   else if($type === 'users_banned_edit' && !$admins_only)
   {
     $return['css']  = ($mode === 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/users/'.$userid;
-    $temp           = array(0 => '', 1 => 'ending a day from now', 7 => 'ending a week from now', 30 => 'ending a month from now', '365' => 'ending a year from now', '3650' => 'a permanent ban');
-    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $username.' has had their ban updated to '.$temp[$amount].$temp2;
-    $temp           = array(0 => '', 1 => 'dans un jour', 7 => 'dans une semaine', 30 => 'dans un mois', '365' => 'dans un an', '3650' => 'ban permanent');
-    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = 'La date de fin du bannissement de '.$username.' a changé : '.$temp[$amount].$temp2;
+    $ban_length     = array(0 => '', 1 => 'ending a day from now', 7 => 'ending a week from now',
+                            30 => 'ending a month from now', 365 => 'ending a year from now',
+                            3650 => 'a permanent ban');
+    $return['EN']   = $username.' has had their ban updated to '.$ban_length[$amount];
+    $return['EN']  .= ($title_en) ? ' ('.$title_en.')' : '';
+    $ban_length     = array(0 => '', 1 => 'dans un jour', 7 => 'dans une semaine',
+                            30 => 'dans un mois', 365 => 'dans un an', 3650 => 'ban permanent');
+    $return['FR']   = 'La date de fin du bannissement de '.$username.' a changé : '.$ban_length[$amount];
+    $return['FR']  .= ($title_fr) ? ' ('.$title_fr.')' : '';
   }
   else if($type === 'users_banned_edit')
   {
     $return['css']  = ($mode === 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
-    $temp           = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now', 30 => 'to ending a month from now', '365' => 'to ending a year from now', '3650' => 'to a permanent ban');
-    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_username.' edited the ban of '.$username.' '.$temp[$amount].$temp2;
-    $temp           = array(0 => '', 1 => ': fini dans un jour', 7 => ': fini dans une semaine', 30 => ': fini dans un mois', '365' => ': fini dans un an', '3650' => 'en un ban permanent');
-    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_username.' a modifié le bannissement de '.$username.' '.$temp[$amount].$temp2;
+    $ban_length     = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now',
+                            30 => 'to ending a month from now', 365 => 'to ending a year from now',
+                            3650 => 'to a permanent ban');
+    $return['EN']   = $mod_username.' edited the ban of '.$username.' '.$ban_length[$amount];
+    $return['EN']  .= ($title_en) ? ' ('.$title_en.')' : '';
+    $ban_length     = array(0 => '', 1 => ': fini dans un jour', 7 => ': fini dans une semaine',
+                            30 => ': fini dans un mois', 365 => ': fini dans un an', 3650 => 'en un ban permanent');
+    $return['FR']   = $mod_username.' a modifié le bannissement de '.$username.' '.$ban_length[$amount];
+    $return['FR']  .= ($title_fr) ? ' ('.$title_fr.')' : '';
   }
 
   else if($type === 'users_banned_delete')
   {
     $return['css']  = ($mode === 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
-    $temp           = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_username.' unbanned '.$username.$temp;
-    $temp           = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_username.' a débanni '.$username.$temp;
+    $return['EN']   = $mod_username.' unbanned '.$username;
+    $return['EN']  .= ($title_en) ? ' ('.$title_en.')' : '';
+    $return['FR']   = $mod_username.' a débanni '.$username;
+    $return['FR']  .= ($title_fr) ? ' ('.$title_fr.')' : '';
   }
 
   else if($type === 'users_unbanned' && !$admins_only)
@@ -191,12 +201,14 @@ function log_activity_parse(  bool    $admins_only        ,
   {
     $return['css']  = ($mode === 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
-    $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
-    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_username.' banned the IP address '.$username.' '.$temp[$amount].$temp2;
-    $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
-    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_username.' a banni l\'adresse IP '.$username.' '.$temp[$amount].$temp2;
+    $ban_length     = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month',
+                            365 => 'for a year', 3650 => 'permanently');
+    $return['EN']   = $mod_username.' banned the IP address '.$username.' '.$ban_length[$amount];
+    $return['EN']  .= ($title_en) ? ' ('.$title_en.')' : '';
+    $ban_length     = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois',
+                            365 => 'un an', 3650 => 'définitivement');
+    $return['FR']   = $mod_username.' a banni l\'adresse IP '.$username.' '.$ban_length[$amount];
+    $return['FR']  .= ($title_fr) ? ' ('.$title_fr.')' : '';
   }
 
   else if($type === 'users_banned_ip_delete')
