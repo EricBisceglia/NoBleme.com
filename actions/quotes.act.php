@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -119,8 +119,9 @@ function quotes_get_linked_users(int $quote_id) : mixed
   {
     $data[$i]['id']       = $row['u_id'];
     $data[$i]['deleted']  = $row['u_deleted'];
-    $temp                 = ($row['u_deleted']) ? $row['u_realnick'] : $row['u_nick'];
-    $data[$i]['username'] = sanitize_output($temp);
+    $data[$i]['username'] = ($row['u_deleted'])
+                          ? sanitize_output($row['u_realnick'])
+                          : sanitize_output($row['u_nick']);
   }
 
   // Add the number of rows to the data
@@ -196,68 +197,66 @@ function quotes_list( ?array  $search         = array() ,
   $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Prepare the search parameters
-  $search_body = (isset($search['body'])) ? sanitize($search['body'], 'string')   : '';
-  $search_user = (isset($search['user'])) ? sanitize($search['user'], 'int', 0)   : 0;
-  $search_year = (isset($search['year'])) ? sanitize($search['year'], 'int', -1)  : 0;
+  $search_body = sanitize_array_element($search, 'body', 'string');
+  $search_user = sanitize_array_element($search, 'user', 'int', min: 0, default: 0);
+  $search_year = sanitize_array_element($search, 'year', 'int', min: -1, default: 0);
 
-  // Fetch the quotes
-  $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'       ,
-                            quotes.submitted_at                                                     AS 'q_date'     ,
-                            GROUP_CONCAT(linked_users.id ORDER BY linked_users.username ASC)        AS 'lu_id'      ,
-                            GROUP_CONCAT(linked_users.username ORDER BY linked_users.username ASC)  AS 'lu_nick'    ,
-                            quotes.is_nsfw                                                          AS 'q_nsfw'     ,
-                            quotes.is_deleted                                                       AS 'q_deleted'  ,
-                            quotes.admin_validation                                                 AS 'q_public'   ,
-                            quotes.body                                                             AS 'q_body'
-                  FROM      quotes
-                  LEFT JOIN quotes_users                  ON  quotes.id               = quotes_users.fk_quotes
-                  LEFT JOIN users         AS linked_users ON  quotes_users.fk_users   = linked_users.id
-                                                          AND linked_users.is_deleted = 0
-                  WHERE     1 = 1 ";
-
-  // Show a single quote
+  // View a single quote
   if($quote_id && $is_admin)
-    $qquotes .= " AND       quotes.id               = '$quote_id' ";
+    $query_search = " WHERE quotes.id               = '$quote_id' ";
   else if($quote_id)
-    $qquotes .= " AND       quotes.id               = '$quote_id'
-                  AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0 ";
+    $query_search = " WHERE quotes.id               = '$quote_id'
+                      AND   quotes.admin_validation = 1
+                      AND   quotes.is_deleted       = 0 ";
 
   // View quotes awaiting validation
   else if($is_admin && $show_waitlist)
-    $qquotes .= " AND       quotes.admin_validation = 0 ";
+    $query_search = " WHERE quotes.admin_validation = 0 ";
 
   // View deleted quotes
   else if($is_admin && $show_deleted)
-    $qquotes .= " AND       quotes.is_deleted = 1 ";
+    $query_search = " WHERE quotes.is_deleted = 1 ";
 
-  // Normal view
+  // Default view
   else
-    $qquotes .= " AND       quotes.admin_validation = 1
-                  AND       quotes.is_deleted       = 0 ";
+    $query_search = " WHERE quotes.admin_validation = 1
+                      AND   quotes.is_deleted       = 0 ";
 
   // Filter the quotes by language
   if($lang_en && !$lang_fr && !$quote_id)
-    $qquotes .= " AND       quotes.language  LIKE 'EN'  ";
+    $query_search .= " AND quotes.language LIKE 'EN'  ";
   if($lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       quotes.language  LIKE 'FR'  ";
+    $query_search .= " AND quotes.language LIKE 'FR'  ";
   if(!$lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       1                   = 0     ";
+    $query_search .= " AND 1 = 0                      ";
 
-  // Search parameters
-  if($search_body)
-    $qquotes .= " AND       quotes.body                            LIKE '%$search_body%'  ";
-  if($search_user)
-    $qquotes .= " AND       quotes_users.fk_users                     = '$search_user'    ";
-  if($search_year == -1)
-    $qquotes .= " AND       quotes.submitted_at                       = 0                 ";
+  // Search through the data: Years
+  if($search_year === -1)
+    $query_search .= " AND quotes.submitted_at                      = 0               ";
   else if($search_year)
-    $qquotes .= " AND       YEAR(FROM_UNIXTIME(quotes.submitted_at))  = '$search_year'    ";
+    $query_search .= " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year'  ";
 
-  // Finish the query
-  $qquotes .= "   GROUP BY  quotes.id
-                  ORDER BY  quotes.submitted_at DESC  ,
-                            quotes.id           DESC  ";
+  // Search through the data: Other searches
+  $query_search .= ($search_body) ? " AND quotes.body        LIKE '%$search_body%'  " : "";
+  $query_search .= ($search_user) ? " AND quotes_users.fk_users = '$search_user'    " : "";
+
+  // Fetch the quotes
+  $qquotes = "  SELECT    quotes.id                                                               AS 'q_id'       ,
+                          quotes.submitted_at                                                     AS 'q_date'     ,
+                          GROUP_CONCAT(linked_users.id ORDER BY linked_users.username ASC)        AS 'lu_id'      ,
+                          GROUP_CONCAT(linked_users.username ORDER BY linked_users.username ASC)  AS 'lu_nick'    ,
+                          quotes.is_nsfw                                                          AS 'q_nsfw'     ,
+                          quotes.is_deleted                                                       AS 'q_deleted'  ,
+                          quotes.admin_validation                                                 AS 'q_public'   ,
+                          quotes.body                                                             AS 'q_body'
+                FROM      quotes
+                LEFT JOIN quotes_users                  ON  quotes.id               = quotes_users.fk_quotes
+                LEFT JOIN users         AS linked_users ON  quotes_users.fk_users   = linked_users.id
+                                                        AND linked_users.is_deleted = 0
+                          $query_search
+                GROUP BY  quotes.id
+                ORDER BY  quotes.submitted_at DESC  ,
+                          quotes.id           DESC  ";
 
   // Run the query
   $dquotes = query($qquotes);
@@ -266,12 +265,15 @@ function quotes_list( ?array  $search         = array() ,
   for($i = 0; $row = mysqli_fetch_array($dquotes); $i++)
   {
     $data[$i]['id']           = $row['q_id'];
-    $temp                     = ($row['q_date']) ? date_to_text($row['q_date'], strip_day: 1) : __('quotes_nodate');
-    $data[$i]['date']         = sanitize_output($temp);
+    $data[$i]['date']         = ($row['q_date'])
+                              ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
+                              : __('quotes_nodate');
     $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
     $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
-    $temp                     = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
-    $data[$i]['linked_count'] = ($temp && $temp == count($data[$i]['linked_nicks'])) ? $temp : 0;
+    $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
+    $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
+                              ? $linked_id_count
+                              : 0;
     $data[$i]['nsfw']         = $row['q_nsfw'];
     $data[$i]['deleted']      = $row['q_deleted'];
     $data[$i]['validated']    = $row['q_public'];
@@ -340,9 +342,9 @@ function quotes_add( string $body ) : mixed
     // Prepare the admin mail
     $path       = root_path();
     $mail_body  = <<<EOT
-A new quote proposal has been made by [url=${path}pages/users/${submitter_id}]${submitter_nick}[/url] : [url=${path}pages/quotes/${quote_id}][Quote #${quote_id}][/url]
+A new quote proposal has been made by [url={$path}pages/users/{$submitter_id}]{$submitter_nick}[/url] : [url={$path}pages/quotes/{$quote_id}][Quote #{$quote_id}][/url]
 
-[quote=${submitter_nick}]${body_raw}[/quote]
+[quote={$submitter_nick}]{$body_raw}[/quote]
 EOT;
 
     // Send the admin mail
@@ -576,7 +578,7 @@ function quotes_approve(int $quote_id) : mixed
           WHERE   quotes.id               = '$quote_id' ");
 
   // Notify the user if they are not the one approving the quote
-  if($dquote['q_submitter'] && user_get_id() != $dquote['q_submitter'])
+  if($dquote['q_submitter'] && user_get_id() !== (int)$dquote['q_submitter'])
   {
     // Prepare some data
     $admin_id = sanitize(user_get_id(), 'int', 0);
@@ -585,18 +587,18 @@ function quotes_approve(int $quote_id) : mixed
     $path     = root_path();
 
     // Prepare the message's title
-    $message_title = ($lang == 'FR') ? 'Citation approuvée' : 'Quote proposal approved';
+    $message_title = ($lang === 'FR') ? 'Citation approuvée' : 'Quote proposal approved';
 
     // Prepare the message's body
-    if($lang == 'FR')
+    if($lang === 'FR')
       $message_body = <<<EOT
-Votre proposition de citation a été approuvée : [url=${path}pages/quotes/${quote_id}]Citation #${quote_id}[/url].
+Votre proposition de citation a été approuvée : [url={$path}pages/quotes/{$quote_id}]Citation #{$quote_id}[/url].
 
 Nous vous remercions pour votre participation à la collection de citations de NoBleme.
 EOT;
     else
       $message_body = <<<EOT
-Your quote proposal has been approved: [url=${path}pages/quotes/${quote_id}]Quote #${quote_id}[/url].
+Your quote proposal has been approved: [url={$path}pages/quotes/{$quote_id}]Quote #{$quote_id}[/url].
 
 Thank you for being a part of NoBleme's quote database. It is greatly appreciated.
 EOT;
@@ -612,15 +614,15 @@ EOT;
   }
 
   // Notify IRC in the correct language
-  if($dquote['q_lang'] == 'EN')
+  if($dquote['q_lang'] === 'EN')
     irc_bot_send_message("A new quote has been added to NoBleme's quote database: ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'english');
-  else if($dquote['q_lang'] == 'FR')
+  else if($dquote['q_lang'] === 'FR')
     irc_bot_send_message("Une nouvelle entrée a été ajoutée à la collection de citations de NoBleme : ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'french');
 
   // Notify Discord
-  if($dquote['q_lang'] == 'EN')
+  if($dquote['q_lang'] === 'EN')
     discord_send_message("A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
-  else if($dquote['q_lang'] == 'FR')
+  else if($dquote['q_lang'] === 'FR')
     discord_send_message("A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
 
   // Fetch more data on the quote
@@ -694,7 +696,7 @@ function quotes_reject( int     $quote_id     ,
           WHERE   quotes.id               = '$quote_id' ");
 
   // Notify the user if they are not the one rejecting the quote
-  if($dquote['q_submitter'] && user_get_id() != $dquote['q_submitter'])
+  if($dquote['q_submitter'] && user_get_id() !== (int)$dquote['q_submitter'])
   {
     // Prepare some data
     $admin_id = sanitize(user_get_id(), 'int', 0);
@@ -703,29 +705,29 @@ function quotes_reject( int     $quote_id     ,
     $body     = $dquote['q_body'];
 
     // Prepare the message's title
-    $message_title = ($lang == 'FR') ? 'Citation rejetée' : 'Quote proposal rejected';
+    $message_title = ($lang === 'FR') ? 'Citation rejetée' : 'Quote proposal rejected';
 
     // Prepare the rejection reason
     if($reason)
     {
-      if($lang == 'FR')
+      if($lang === 'FR')
         $reason = "[u]Raison du refus[/u] : $reason";
       else
         $reason = "[u]Rejection reason[/u]: $reason";
     }
 
     // Prepare the message's body
-    if($lang == 'FR')
+    if($lang === 'FR')
       $message_body = <<<EOT
 Votre proposition de citation a été rejetée.
 
 Ce refus ne signifie pas que votre contribution n'est pas appréciée : dans une optique de faire primer la qualité sur la quantité, nous refusons un grand nombre de propositions. N'hésitez pas à soumettre d'autres propositions dans le futur. Nous vous remercions pour votre participation à la collection de citations de NoBleme.
 
-${reason}
+{$reason}
 
 Le contenu de votre proposition de citation était le suivant :
 
-[quote]${body}[/quote]
+[quote]{$body}[/quote]
 EOT;
     else
       $message_body = <<<EOT
@@ -733,11 +735,11 @@ Your quote proposal has been rejected.
 
 This refusal does not mean that we do not appreciate your contribution: our goal is to prioritize quality over quantity, therefore we reject a lot of quote proposals. Do not hesitate to submit more quote proposals in the future. Thank you for contributing to NoBleme's quote database. It is greatly appreciated.
 
-${reason}
+{$reason}
 
 Your proposal was the following:
 
-[quote]${body}[/quote]
+[quote]{$body}[/quote]
 EOT;
 
 
@@ -890,14 +892,14 @@ function quotes_stats_list() : array
   // Add some stats to the return array
   $data['total']        = $dquotes['q_total'];
   $data['total_en']     = $dquotes['q_total_en'];
-  $temp                 = maths_percentage_of($dquotes['q_total_en'], $dquotes['q_total']);
-  $data['percent_en']   = number_display_format($temp, 'percentage');
+  $data['percent_en']   = number_display_format(maths_percentage_of($dquotes['q_total_en'], $dquotes['q_total']) ,
+                                                'percentage');
   $data['total_fr']     = $dquotes['q_total_fr'];
-  $temp                 = maths_percentage_of($dquotes['q_total_fr'], $dquotes['q_total']);
-  $data['percent_fr']   = number_display_format($temp, 'percentage');
+  $data['percent_fr']   = number_display_format(maths_percentage_of($dquotes['q_total_fr'], $dquotes['q_total']) ,
+                                                'percentage');
   $data['total_nsfw']   = $dquotes['q_total_nsfw'];
-  $temp                 = maths_percentage_of($dquotes['q_total_nsfw'], $dquotes['q_total']);
-  $data['percent_nsfw'] = number_display_format($temp, 'percentage');
+  $data['percent_nsfw'] = number_display_format(maths_percentage_of($dquotes['q_total_nsfw'], $dquotes['q_total']) ,
+                                                'percentage');
 
   // Fetch all quotes, included unvalidated and deleted
   $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)                AS 'q_total'          ,
@@ -908,8 +910,8 @@ function quotes_stats_list() : array
 
   // Add some stats to the return array
   $data['deleted']      = $dquotes['q_total_deleted'];
-  $temp                 = maths_percentage_of($dquotes['q_total_deleted'], $dquotes['q_total']);
-  $data['percent_del']  = number_display_format($temp, 'percentage');
+  $data['percent_del']  = number_display_format(maths_percentage_of($dquotes['q_total_deleted'], $dquotes['q_total']) ,
+                                                'percentage');
   $data['unvalidated']  = $dquotes['q_total_unvalidated'];
 
   // Fetch user stats
@@ -938,17 +940,19 @@ function quotes_stats_list() : array
     $data['users_quotes_en_'.$i]    = $row['us_quotes_en'] ? (sanitize_output($row['us_quotes_en'])) : '';
     $data['users_quotes_fr_'.$i]    = $row['us_quotes_fr'] ? (sanitize_output($row['us_quotes_fr'])) : '';
     $data['users_quotes_nsfw_'.$i]  = $row['us_quotes_nsfw'] ? (sanitize_output($row['us_quotes_nsfw'])) : '';
-    $temp                           = maths_percentage_of($row['us_quotes_nsfw'], $row['us_quotes']);
-    $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
-    $data['users_quotes_nsfw_'.$i] .= $row['us_quotes_nsfw'] ? ' ('.$temp.')' : '';
+    $data['users_quotes_nsfw_'.$i] .= $row['us_quotes_nsfw']
+                                    ? ' ('.sanitize_output(number_display_format(
+                                                      maths_percentage_of($row['us_quotes_nsfw'], $row['us_quotes']) ,
+                                                           'percentage')).')'
+                                    : '';
     $data['users_qold_id_'.$i]      = sanitize_output($row['us_quotes_old_id']);
-    $temp                           = '< '.$data['oldest_year'];
-    $temp                           = ($row['us_quotes_old_date']) ? date('Y', $row['us_quotes_old_date']) : $temp;
-    $data['users_qold_date_'.$i]    = sanitize_output($temp);
+    $data['users_qold_date_'.$i]    = ($row['us_quotes_old_date'])
+                                    ? sanitize_output(date('Y', $row['us_quotes_old_date']))
+                                    : sanitize_output('< '.$data['oldest_year']);
     $data['users_qnew_id_'.$i]      = sanitize_output($row['us_quotes_new_id']);
-    $temp                           = '< '.$data['oldest_year'];
-    $temp                           = ($row['us_quotes_new_date']) ? date('Y', $row['us_quotes_new_date']) : $temp;
-    $data['users_qnew_date_'.$i]    = sanitize_output($temp);
+    $data['users_qnew_date_'.$i]    = ($row['us_quotes_new_date'])
+                                    ? sanitize_output(date('Y', $row['us_quotes_new_date']))
+                                    : sanitize_output('< '.$data['oldest_year']);
   }
 
   // Add the amount of user stats to the return array
@@ -1004,8 +1008,9 @@ function quotes_stats_list() : array
     $data['contrib_nick_'.$i]       = sanitize_output($row['u_nick']);
     $data['contrib_submitted_'.$i]  = sanitize_output($row['us_submitted']);
     $data['contrib_approved_'.$i]   = ($row['us_approved']) ? sanitize_output($row['us_approved']) : '';
-    $temp                           = maths_percentage_of($row['us_approved'], $row['us_submitted']);
-    $data['contrib_percentage_'.$i] = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['contrib_percentage_'.$i] = sanitize_output(number_display_format(
+                                                      maths_percentage_of($row['us_approved'], $row['us_submitted']) ,
+                                                      'percentage'));
   }
 
   // Add the amount of user stats to the return array
@@ -1206,8 +1211,8 @@ function user_settings_quotes() : array
     $lang = user_get_language();
 
     // Set the language settings
-    $lang_en = ($lang == 'EN');
-    $lang_fr = ($lang == 'FR');
+    $lang_en = ($lang === 'EN');
+    $lang_fr = ($lang === 'FR');
   }
 
   // Return those privacy settings, neatly folded in a cozy array

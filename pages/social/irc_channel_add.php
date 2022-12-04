@@ -74,7 +74,7 @@ for($i = 0; $i <= 3; $i++)
   $irc_channel_type_name[$i] = sanitize_output($irc_channel_type['name']);
 
   // Preselect the correct dropdown entry
-  $irc_channel_type_selected[$i] = ($i == $irc_channel_add_type) ? ' selected' : '';
+  $irc_channel_type_selected[$i] = ($i === $irc_channel_add_type) ? ' selected' : '';
 }
 
 // Languages checkboxes

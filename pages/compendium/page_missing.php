@@ -23,7 +23,7 @@ $page_title_fr    = "Compendium : Page manquante";
 $page_description = "An encyclopedia of 21st century culture, documenting the ";
 
 // Extra JS
-$js = array('common/toggle', 'compendium/admin');
+$js = array('compendium/admin');
 
 
 

@@ -5,10 +5,9 @@
 /*  user_login_attempt              Attempts to log in a guest.                                                      */
 /*  user_login_attempt_process      Process a finished login attempt.                                                */
 /*                                                                                                                   */
-/*  popin_close                     Closes an open popin.                                                            */
-/*                                                                                                                   */
 /*********************************************************************************************************************/
-
+// Close the lost account access popin if it is open upon loading the page
+popin_close('popin_lost_access');
 
 /**
  * Toggles the visibility of a top menu.
@@ -36,7 +35,7 @@ function toggle_header_menu(  menu_name             ,
     all_submenus[i].style.display = 'none';
 
   // If the menu is invisible, open it
-  if(menu_visibility == 'none')
+  if(menu_visibility === 'none')
     selected_submenu.style.display = 'grid';
 
   // Check whether this title's color scheme should be inverted
@@ -52,14 +51,14 @@ function toggle_header_menu(  menu_name             ,
     document.getElementById('header_menu_title_' + menu_name).classList.add('header_topmenu_title_selected');
 
   // If the annoying new notification animation is there, replace it with the standard user icon upon clicking
-  if(menu_name == 'account')
+  if(menu_name === 'account')
   {
     var account_icon = document.getElementById('header_topmenu_account_icon');
     account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "login.svg"));
   }
 
   // Same for admin mail notifications
-  else if(menu_name == 'admin')
+  else if(menu_name === 'admin')
   {
     var account_icon = document.getElementById('header_topmenu_admin_icon');
     account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "admin_panel.svg"));
@@ -116,7 +115,7 @@ function user_login_attempt_process()
   login_status = document.getElementById('login_form_error').innerHTML;
 
   // If the back says the user is logged in, redirect them to their inbox
-  if(login_status == "OK")
+  if(login_status === "OK")
   {
     root_path = document.getElementById('root_path').value;
     window.location = root_path + 'pages/messages/inbox';
@@ -126,41 +125,3 @@ function user_login_attempt_process()
   else
     document.getElementById('login_form_error').style.display = 'block';
 }
-
-
-
-
-/**
- * Closes an open popin.
- *
- * @param   {string}  popin_id  The id of the popin, or * to close all open popins
- *
- * @returns {void}
- */
-
-function popin_close(popin_id)
-{
-  // If the requested popin has been opened, close it
-  if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
-  {
-    // Get rid of the hash in the URL
-    location.hash = '#_';
-    history.replaceState({}, document.title, window.location.href.split('#')[0]);
-
-    // Scroll back to the top
-    var popin_scroll = document.getElementsByClassName('popin_body');
-    for(var i = 0; i < popin_scroll.length; i++)
-      popin_scroll[i].scrollTop = 0;
-  }
-}
-
-
-// Close all open popins upon pressing the escape key
-document.addEventListener("keydown", ({key}) => {
-  if (key === "Escape")
-    popin_close('*');
-})
-
-
-// Close the lost account access popin if it is open upon loading the page
-popin_close('popin_lost_access');

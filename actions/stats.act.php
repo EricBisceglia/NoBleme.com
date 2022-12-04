@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -43,39 +43,35 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   require_included_file('functions_numbers.inc.php');
 
   // Sanitize the search parameters
-  $search_url     = isset($search['url'])     ? sanitize($search['url'], 'string')        : NULL;
-  $search_queries = isset($search['queries']) ? sanitize($search['queries'], 'int', 0, 5) : NULL;
-  $search_load    = isset($search['load'])    ? sanitize($search['load'], 'int', 0, 5)    : NULL;
+  $search_url     = sanitize_array_element($search, 'url', 'string');
+  $search_queries = sanitize_array_element($search, 'queries', 'int', min: 0, max: 5, default: 0);
+  $search_load    = sanitize_array_element($search, 'load', 'int', min: 0, max: 5, default: 0);
+
+  // Search through the data
+  $query_search = ($search_url) ? " AND stats_pages.page_url LIKE '%$search_url%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'url'     => " ORDER BY stats_pages.page_url        ASC   " ,
+    'views'   => " ORDER BY stats_pages.view_count      DESC  " ,
+    'queries' => " ORDER BY stats_pages.query_count     DESC  " ,
+    'load'    => " ORDER BY stats_pages.load_time       DESC  " ,
+    default   => " ORDER BY stats_pages.last_viewed_at  DESC  " ,
+  };
 
   // Prepare the query to fetch the metrics
-  $qmetrics = "   SELECT    stats_pages.id              AS 's_id'       ,
-                            stats_pages.page_url        AS 's_url'      ,
-                            stats_pages.last_viewed_at  AS 's_activity' ,
-                            stats_pages.view_count      AS 's_views'    ,
-                            stats_pages.query_count     AS 's_queries'  ,
-                            stats_pages.load_time       AS 's_load'
-                   FROM     stats_pages
-                   WHERE    stats_pages.query_count     > 0
-                   AND      stats_pages.load_time       > 0 ";
-
-  // Search for data if requested
-  if($search_url)
-    $qmetrics .= " AND      stats_pages.page_url        LIKE '%$search_url%' ";
-
-  // Sort the data as requested
-  if($sort_by == 'url')
-    $qmetrics .= " ORDER BY stats_pages.page_url        ASC   ";
-  else if($sort_by == 'views')
-    $qmetrics .= " ORDER BY stats_pages.view_count      DESC  ";
-  else if($sort_by == 'queries')
-    $qmetrics .= " ORDER BY stats_pages.query_count     DESC  ";
-  else if($sort_by == 'load')
-    $qmetrics .= " ORDER BY stats_pages.load_time       DESC  ";
-  else
-    $qmetrics .= " ORDER BY stats_pages.last_viewed_at  DESC  ";
-
-  // Execute the query
-  $qmetrics = query($qmetrics);
+  $qmetrics = query(" SELECT    stats_pages.id              AS 's_id'       ,
+                                stats_pages.page_url        AS 's_url'      ,
+                                stats_pages.last_viewed_at  AS 's_activity' ,
+                                stats_pages.view_count      AS 's_views'    ,
+                                stats_pages.query_count     AS 's_queries'  ,
+                                stats_pages.load_time       AS 's_load'
+                      FROM     stats_pages
+                      WHERE    stats_pages.query_count     > 0
+                      AND      stats_pages.load_time       > 0
+                                $query_search
+                                $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmetrics); $i++)
@@ -158,31 +154,31 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   for($i = 0; $i < $data['rows']; $i++)
   {
     // Remove unwanted metrics when searching for specific performances
-    $temp                     = ($search_queries == 1 && $data[$i]['queries'] > $min_queries)   ? 1 : 0;
-    $temp                     = ($search_queries == 2 && $data[$i]['queries'] > $good_queries)  ? 1 : $temp;
-    $temp                     = ($search_queries == 3 && $data[$i]['queries'] < $bad_queries)   ? 1 : $temp;
-    $temp                     = ($search_queries == 4 && $data[$i]['queries'] < $awful_queries) ? 1 : $temp;
-    $temp                     = ($search_queries == 5 && $data[$i]['queries'] < $max_queries)   ? 1 : $temp;
-    $temp                     = ($search_load == 1 && $data[$i]['load'] > $min_load)            ? 1 : $temp;
-    $temp                     = ($search_load == 2 && $data[$i]['load'] > $good_load)           ? 1 : $temp;
-    $temp                     = ($search_load == 3 && $data[$i]['load'] < $bad_load)            ? 1 : $temp;
-    $temp                     = ($search_load == 4 && $data[$i]['load'] < $awful_load)          ? 1 : $temp;
-    $data[$i]['skip']         = ($search_load == 5 && $data[$i]['load'] < $max_load)            ? 1 : $temp;
-    $data['realrows']         = ($data[$i]['skip']) ? ($data['realrows'] - 1) : $data['realrows'];
+    $unwanted_metrics = ($search_queries === 1 && $data[$i]['queries'] > $min_queries)    ? 1 : 0;
+    $unwanted_metrics = ($search_queries === 2 && $data[$i]['queries'] > $good_queries)   ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_queries === 3 && $data[$i]['queries'] < $bad_queries)    ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_queries === 4 && $data[$i]['queries'] < $awful_queries)  ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_queries === 5 && $data[$i]['queries'] < $max_queries)    ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 1 && $data[$i]['load'] > $min_load)             ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 2 && $data[$i]['load'] > $good_load)            ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 3 && $data[$i]['load'] < $bad_load)             ? 1 : $unwanted_metrics;
+    $unwanted_metrics = ($search_load === 4 && $data[$i]['load'] < $awful_load)           ? 1 : $unwanted_metrics;
+    $data[$i]['skip'] = ($search_load === 5 && $data[$i]['load'] < $max_load)             ? 1 : $unwanted_metrics;
+    $data['realrows'] = ($data[$i]['skip']) ? ($data['realrows'] - 1) : $data['realrows'];
 
     // Style the metrics based on their performance
-    $temp                     = ($data[$i]['queries'] <= $good_queries) ? 'green' : 'purple';
-    $temp                     = ($data[$i]['queries'] <= $min_queries) ? 'blue' : $temp;
-    $temp                     = ($data[$i]['queries'] >= $bad_queries) ? 'orange' : $temp;
-    $temp                     = ($data[$i]['queries'] >= $awful_queries) ? 'red' : $temp;
-    $temp                     = ($data[$i]['queries'] >= $max_queries) ? 'brown' : $temp;
-    $data[$i]['css_queries']  = sanitize_output($temp);
-    $temp                     = ($data[$i]['load'] <= $good_load) ? 'green' : 'purple';
-    $temp                     = ($data[$i]['load'] <= $min_load) ? 'blue' : $temp;
-    $temp                     = ($data[$i]['load'] >= $bad_load) ? 'orange' : $temp;
-    $temp                     = ($data[$i]['load'] >= $awful_load) ? 'red' : $temp;
-    $temp                     = ($data[$i]['load'] >= $max_load) ? 'brown' : $temp;
-    $data[$i]['css_load']     = sanitize_output($temp);
+    $metrics_css              = ($data[$i]['queries'] <= $good_queries) ? 'green' : 'purple';
+    $metrics_css              = ($data[$i]['queries'] <= $min_queries) ? 'blue' : $metrics_css;
+    $metrics_css              = ($data[$i]['queries'] >= $bad_queries) ? 'orange' : $metrics_css;
+    $metrics_css              = ($data[$i]['queries'] >= $awful_queries) ? 'red' : $metrics_css;
+    $metrics_css              = ($data[$i]['queries'] >= $max_queries) ? 'brown' : $metrics_css;
+    $data[$i]['css_queries']  = sanitize_output($metrics_css);
+    $metrics_css              = ($data[$i]['load'] <= $good_load) ? 'green' : 'purple';
+    $metrics_css              = ($data[$i]['load'] <= $min_load) ? 'blue' : $metrics_css;
+    $metrics_css              = ($data[$i]['load'] >= $bad_load) ? 'orange' : $metrics_css;
+    $metrics_css              = ($data[$i]['load'] >= $awful_load) ? 'red' : $metrics_css;
+    $metrics_css              = ($data[$i]['load'] >= $max_load) ? 'brown' : $metrics_css;
+    $data[$i]['css_load']     = sanitize_output($metrics_css);
     $data[$i]['load']         = sanitize_output(number_display_format($data[$i]['load'], 'number')).'ms';
   }
 
@@ -217,7 +213,7 @@ function stats_metrics_reset( int $metric_id = NULL ) : void
             WHERE   stats_pages.id          = '$metric_id' ");
 
   // Wipe all metrics
-  else if($metric_id == 0)
+  else if($metric_id === 0)
     query(" UPDATE  stats_pages
             SET     stats_pages.query_count = 0 ,
                     stats_pages.load_time   = 0 ");
@@ -252,73 +248,70 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   $lang_lowercase = sanitize(string_change_case($lang, 'lowercase'), 'string');
 
   // Sanitize the search parameters
-  $search_name = isset($search['name']) ? sanitize($search['name'], 'string') : NULL;
+  $search_name = sanitize_array_element($search, 'name', 'string');
+
+  // Search through the data
+  $query_search = ($search_name) ? "  WHERE ( stats_pages.page_url                  LIKE '%$search_name%'
+                                      OR      stats_pages.page_name_$lang_lowercase LIKE '%$search_name%' ) " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'url'       => " ORDER BY stats_pages.page_url                  ASC   " ,
+    'name'      => " ORDER BY stats_pages.page_name_$lang_lowercase ASC   " ,
+    'oldviews'  => " ORDER BY stats_pages.view_count_archive        DESC  ,
+                              stats_pages.view_count                DESC  ,
+                              stats_pages.last_viewed_at            DESC  " ,
+    'activity'  => " ORDER BY stats_pages.last_viewed_at            DESC  " ,
+    'ractivity' => " ORDER BY stats_pages.last_viewed_at            ASC   " ,
+    'uactivity' => " ORDER BY stats_pages.last_viewed_at            ASC   " ,
+    default     => " ORDER BY stats_pages.view_count                DESC  ,
+                              stats_pages.view_count_archive        DESC  ,
+                              stats_pages.last_viewed_at            DESC  " ,
+  };
 
   // Prepare the query to fetch the views
-  $qviews = "     SELECT    stats_pages.id                  AS 'p_id'       ,
-                            stats_pages.page_name_en        AS 'p_name_en'  ,
-                            stats_pages.page_name_fr        AS 'p_name_fr'  ,
-                            stats_pages.page_url            AS 'p_url'      ,
-                            stats_pages.last_viewed_at      AS 'p_activity' ,
-                            stats_pages.view_count          AS 'p_views'    ,
-                            stats_pages.view_count_archive  AS 'p_oldviews'
-                  FROM      stats_pages
-                  WHERE     1 = 1 ";
-
-  // Search for data if requested
-  if($search_name)
-    $qviews .= "  AND (     stats_pages.page_url                  LIKE '%$search_name%'
-                  OR        stats_pages.page_name_$lang_lowercase LIKE '%$search_name%' ) ";
-
-  // Sort the data as requested
-  if($sort_by == 'url')
-    $qviews .= "  ORDER BY  stats_pages.page_url                  ASC   ";
-  else if($sort_by == 'name')
-    $qviews .= "  ORDER BY  stats_pages.page_name_$lang_lowercase ASC   ";
-  else if($sort_by == 'oldviews')
-    $qviews .= "  ORDER BY  stats_pages.view_count_archive        DESC  ,
-                            stats_pages.view_count                DESC  ,
-                            stats_pages.last_viewed_at            DESC  ";
-  else if($sort_by == 'activity')
-    $qviews .= "  ORDER BY  stats_pages.last_viewed_at            DESC  ";
-  else if($sort_by == 'ractivity' || $sort_by == 'uactivity')
-    $qviews .= "  ORDER BY  stats_pages.last_viewed_at            ASC   ";
-  else
-    $qviews .= "  ORDER BY  stats_pages.view_count                DESC  ,
-                            stats_pages.view_count_archive        DESC  ,
-                            stats_pages.last_viewed_at            DESC  ";
-
-  // Fetch the pageviews
-  $qviews = query($qviews);
+  $qviews = query(" SELECT    stats_pages.id                  AS 'p_id'       ,
+                              stats_pages.page_name_en        AS 'p_name_en'  ,
+                              stats_pages.page_name_fr        AS 'p_name_fr'  ,
+                              stats_pages.page_url            AS 'p_url'      ,
+                              stats_pages.last_viewed_at      AS 'p_activity' ,
+                              stats_pages.view_count          AS 'p_views'    ,
+                              stats_pages.view_count_archive  AS 'p_oldviews'
+                    FROM      stats_pages
+                              $query_search
+                              $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qviews); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
-    $temp                 = ($lang == 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
-    $temp                 = (in_array($sort_by, array('url', 'uactivity'))) ? $row['p_url'] : $temp;
-    $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 40, '...')) : '-';
-    $data[$i]['fullname'] = (mb_strlen($temp) > 40) ? sanitize_output($temp) : NULL;
+    $page_name            = ($lang === 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
+    $page_name            = (in_array($sort_by, array('url', 'uactivity'))) ? "yea" : $page_name;
+    $data[$i]['name']     = ($page_name) ? sanitize_output(string_truncate($page_name, 40, '...')) : '-';
+    $data[$i]['fullname'] = (mb_strlen($page_name) > 40) ? sanitize_output($page_name) : NULL;
     $data[$i]['url']      = sanitize_output($row['p_url']);
     $data[$i]['activity'] = sanitize_output(time_since($row['p_activity']));
     $data[$i]['views']    = sanitize_output(number_display_format($row['p_views'], 'number'));
-    $temp                 = ($row['p_oldviews']) ? number_display_format($row['p_oldviews'], 'number') : '-';
-    $temp                 = ($row['p_oldviews']) ? $temp : __('admin_views_new');
-    $data[$i]['oldviews'] = sanitize_output($temp);
-    $temp                 = $row['p_views'] - $row['p_oldviews'];
-    $data[$i]['sgrowth']  = $temp;
-    $data[$i]['growth']   = ($temp) ? sanitize_output(number_display_format($temp, 'number', 0, 1)) : '-';
-    $temp                 = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
-    $data[$i]['spgrowth'] = $temp;
-    $temp                 = ($temp) ? number_display_format($temp, 'percentage', 0, 1) : 0;
-    $temp                 = ($row['p_oldviews']) ? $temp : __('admin_views_new');
-    $data[$i]['pgrowth']  = ($temp) ? sanitize_output($temp) : '-';
+    $old_view_count       = ($row['p_oldviews']) ? number_display_format($row['p_oldviews'], 'number') : '-';
+    $old_view_count       = ($row['p_oldviews']) ? $old_view_count : __('admin_views_new');
+    $data[$i]['oldviews'] = sanitize_output($old_view_count);
+    $data[$i]['sgrowth']  = sanitize_output($row['p_views'] - $row['p_oldviews']);
+    $data[$i]['growth']   = ($data[$i]['sgrowth'])
+                          ? sanitize_output(number_display_format($data[$i]['sgrowth'], 'number', 0, 1))
+                          : '-';
+    $data[$i]['spgrowth'] = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
+    $percent_growth       = ($data[$i]['spgrowth'])
+                          ? number_display_format($data[$i]['spgrowth'], 'percentage', 0, 1)
+                          : 0;
+    $percent_growth       = ($row['p_oldviews']) ? $percent_growth : __('admin_views_new');
+    $data[$i]['pgrowth']  = ($percent_growth) ? sanitize_output($percent_growth) : '-';
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
-  if($sort_by == 'growth')
+  if($sort_by === 'growth')
     array_multisort(array_column($data, "sgrowth"), SORT_DESC, $data);
-  if($sort_by == 'pgrowth')
+  if($sort_by === 'pgrowth')
     array_multisort(array_column($data, "spgrowth"), SORT_DESC, $data);
 
   // Add the number of rows to the data
@@ -326,8 +319,9 @@ function stats_views_list(  string  $sort_by  = NULL    ,
 
   // Add the current comparison date to the data
   $comparison_date          = system_variable_fetch('last_pageview_check');
-  $temp                     = date_to_text($comparison_date).' ('.time_since($comparison_date).')';
-  $data['comparison_date']  = ($comparison_date) ? sanitize_output($temp) : __('admin_views_nodate');
+  $data['comparison_date']  = ($comparison_date)
+                            ? sanitize_output(date_to_text($comparison_date).' ('.time_since($comparison_date).')')
+                            : __('admin_views_nodate');
 
   // Return the prepared data
   return $data;
@@ -408,195 +402,187 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Sanitize the search parameters
-  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string')             : NULL;
-  $search_created   = isset($search['created'])   ? sanitize($search['created'], 'int', 0, date('Y'))   : NULL;
-  $search_page      = isset($search['page'])      ? sanitize($search['page'], 'string')                 : NULL;
-  $search_action    = isset($search['action'])    ? sanitize($search['action'], 'int', -1, 1)           : -1;
-  $search_language  = isset($search['language'])  ? sanitize($search['language'], 'string')             : NULL;
-  $search_speaks    = isset($search['speaks'])    ? sanitize($search['speaks'], 'string')               : NULL;
-  $search_theme     = isset($search['theme'])     ? sanitize($search['theme'], 'string')                : NULL;
-  $search_birthday  = isset($search['birthday'])  ? sanitize($search['birthday'], 'int', -1, date('Y')) : 0;
-  $search_profile   = isset($search['profile'])   ? sanitize($search['profile'], 'string')              : NULL;
-  $search_settings  = isset($search['settings'])  ? sanitize($search['settings'], 'string')             : NULL;
+  $search_username  = sanitize_array_element($search, 'username', 'string');
+  $search_created   = sanitize_array_element($search, 'created', 'int', min: 0, max: date('Y'), default: 0);
+  $search_page      = sanitize_array_element($search, 'page', 'string');
+  $search_action    = sanitize_array_element($search, 'action', 'int', min: -1, max: 1, default: -1);
+  $search_language  = sanitize_array_element($search, 'language', 'string');
+  $search_speaks    = sanitize_array_element($search, 'speaks', 'string');
+  $search_theme     = sanitize_array_element($search, 'theme', 'string');
+  $search_birthday  = sanitize_array_element($search, 'birthday', 'int', min: 0, max: date('Y'), default: 0);
+  $search_profile   = sanitize_array_element($search, 'profile', 'string');
+  $search_settings  = sanitize_array_element($search, 'settings', 'string');
+
+  // Search through the data: Actions
+  $query_search = match($search_action)
+  {
+    0       => " WHERE users.last_action_at = 0 " ,
+    1       => " WHERE users.last_action_at > 0 " ,
+    default => " WHERE 1 = 1 "                    ,
+  };
+
+  // Search through the data: Website language
+  if($search_language && $search_language !== 'None')
+    $query_search .= " AND  users.current_language LIKE '%$search_language%'  ";
+  else if($search_language)
+    $query_search .= " AND  users.current_language    = ''                    ";
+
+  // Search through the data: Spoken languages
+  if($search_speaks && $search_speaks !== 'None' && $search_speaks !== 'Both')
+    $query_search .= " AND    users_profile.spoken_languages LIKE '%$search_speaks%'  ";
+  else if($search_speaks === 'Both')
+    $query_search .= "  AND ( users_profile.spoken_languages LIKE 'FREN'
+                        OR    users_profile.spoken_languages LIKE 'ENFR' )            ";
+  else if($search_speaks)
+    $query_search .= "  AND   users_profile.spoken_languages    = ''                  ";
+
+  // Search through the data: Website theme
+  if($search_theme && $search_theme !== 'None')
+    $query_search .= " AND users.current_theme LIKE '%$search_theme%' ";
+  else if($search_theme)
+    $query_search .= " AND users.current_theme    = ''                ";
+
+  // Search through the data: Birthday
+  if($search_birthday === -1)
+    $query_search .= " AND users_profile.birthday       = '0000-00-00'        ";
+  else if($search_birthday > 0)
+    $query_search .= " AND YEAR(users_profile.birthday) = '$search_birthday'  ";
+
+  // Search through the data: Profile info
+  $query_search .= match($search_profile)
+  {
+    'empty'     => "  AND   users_profile.birthday          = '0000-00-00'
+                      AND   users_profile.spoken_languages  = ''
+                      AND   users_profile.lives_at          = ''
+                      AND   users_profile.pronouns_en       = ''
+                      AND   users_profile.pronouns_fr       = ''
+                      AND   users_profile.profile_text_en   = ''
+                      AND   users_profile.profile_text_fr   = '' "            ,
+    'filled'    => "  AND ( users_profile.birthday         != '0000-00-00'
+                      OR    users_profile.spoken_languages != ''
+                      OR    users_profile.lives_at         != ''
+                      OR    users_profile.pronouns_en      != ''
+                      OR    users_profile.pronouns_fr      != ''
+                      OR    users_profile.profile_text_en  != ''
+                      OR    users_profile.profile_text_fr  != '' ) "          ,
+    'complete'  => "  AND   users_profile.birthday         != '0000-00-00'
+                      AND   users_profile.spoken_languages != ''
+                      AND   users_profile.lives_at         != ''
+                      AND ( users_profile.pronouns_en      != ''
+                      OR    users_profile.pronouns_fr      != '' )
+                      AND ( users_profile.profile_text_en  != ''
+                      OR    users_profile.profile_text_fr  != '' ) "          ,
+    'speaks'    => "  AND   users_profile.spoken_languages != '' "            ,
+    'birthday'  => "  AND   users_profile.birthday         != '0000-00-00' "  ,
+    'location'  => "  AND   users_profile.lives_at         != '' "            ,
+    'pronouns'  => "  AND ( users_profile.pronouns_en      != ''
+                      OR    users_profile.pronouns_fr      != '' ) "          ,
+    'text'      => "  AND ( users_profile.profile_text_en  != ''
+                      OR    users_profile.profile_text_fr  != '' ) "          ,
+    default     => ""                                                         ,
+  };
+
+  // Search through the data: Settings
+  $query_search .= match($search_settings)
+  {
+    'nsfw'        => " AND  users_settings.show_nsfw_content  = 2 " ,
+    'some_nsfw'   => " AND  users_settings.show_nsfw_content  = 1 " ,
+    'no_nsfw'     => " AND  users_settings.show_nsfw_content  = 0 " ,
+    'no_youtube'  => " AND  users_settings.hide_youtube       = 1 " ,
+    'no_trends'   => " AND  users_settings.hide_google_trends = 1 " ,
+    'no_discord'  => " AND  users_settings.hide_discord       = 1 " ,
+    'no_kiwiirc'  => " AND  users_settings.hide_kiwiirc       = 1 " ,
+    'hide'        => " AND  users_settings.hide_from_activity = 1 " ,
+    default       => ""                                             ,
+  };
+
+  // Search through the data: Other searches
+  $query_search .= ($search_username)     ? " AND   users.username                 LIKE '%$search_username%'  " : "";
+  $query_search .= ($search_created > 0)  ? "
+                                    AND YEAR(FROM_UNIXTIME(users_profile.created_at)) = '$search_created'     " : "";
+  $query_search .= ($search_page)         ? " AND ( users.last_visited_page_$lang  LIKE '%$search_page%'
+                                              OR    users.last_visited_url         LIKE '%$search_page%' )    " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'username'  => " ORDER BY users.username                  ASC       " ,
+    'usertypes' => " ORDER BY users.is_administrator          = 0       ,
+                              users.is_moderator              = 0       ,
+                              users.is_banned_until           = 0       ,
+                              users.is_deleted                = 0       ,
+                              users.username                  ASC       " ,
+    'visits'    => " ORDER BY users.visited_page_count        DESC      ,
+                              users.last_visited_at           DESC      " ,
+    'created'   => " ORDER BY users_profile.created_at        ASC       " ,
+    'rcreated'  => " ORDER BY users_profile.created_at        DESC      " ,
+    'ractivity' => " ORDER BY users.last_visited_at           ASC       " ,
+    'page'      => " ORDER BY users.last_visited_page_$lang   = ''      ,
+                              users.last_visited_page_$lang   ASC       ,
+                              users.last_visited_at           DESC      " ,
+    'url'       => " ORDER BY users.last_visited_url          = ''      ,
+                              users.last_visited_url          ASC       ,
+                              users.last_visited_page_$lang   = ''      ,
+                              users.last_visited_page_$lang   ASC       ,
+                              users.last_visited_at           DESC      " ,
+    'action'    => " ORDER BY users.last_action_at            = 0       ,
+                              users.last_action_at            DESC      ,
+                              users.last_visited_at           DESC      " ,
+    'language'  => " ORDER BY users.current_language          = ''      ,
+                              users.current_language          != 'EN'   ,
+                              users.current_language          ASC       ,
+                              users.last_visited_at           DESC      " ,
+    'speaks'    => " ORDER BY users_profile.spoken_languages  = ''      ,
+                              users_profile.spoken_languages  != 'EN'   ,
+                              users_profile.spoken_languages  ASC       ,
+                              users.last_visited_at           DESC      " ,
+    'theme'     => " ORDER BY users.current_theme             = ''      ,
+                              users.current_theme             != 'dark' ,
+                              users.current_theme             ASC       ,
+                              users.last_visited_at           DESC      " ,
+    'birthday'  => " ORDER BY users_profile.birthday          = 0       ,
+                              users_profile.birthday          ASC       ,
+                              users.last_visited_at           DESC      " ,
+    'rbirthday' => " ORDER BY users_profile.birthday          = 0       ,
+                              users_profile.birthday          DESC      ,
+                              users.last_visited_at           DESC      " ,
+    default     => " ORDER BY users.last_visited_at           DESC      " ,
+  };
 
   // Fetch the guest list
-  $qusers = "     SELECT    users.id                          AS 'u_id'           ,
-                            users.is_deleted                  AS 'u_deleted'      ,
-                            users.is_administrator            AS 'u_admin'        ,
-                            users.is_moderator                AS 'u_mod'          ,
-                            users.deleted_username            AS 'u_delnick'      ,
-                            users.username                    AS 'u_nick'         ,
-                            users.current_language            AS 'u_lang'         ,
-                            users.current_theme               AS 'u_theme'        ,
-                            users.last_visited_at             AS 'u_visit'        ,
-                            users.last_visited_page_$lang     AS 'u_page'         ,
-                            users.last_visited_url            AS 'u_url'          ,
-                            users.last_action_at              AS 'u_action'       ,
-                            users.visited_page_count          AS 'u_visits'       ,
-                            users.is_banned_until             AS 'u_banned'       ,
-                            users_profile.created_at          AS 'u_created'      ,
-                            users_profile.birthday            AS 'u_birthday'     ,
-                            users_profile.spoken_languages    AS 'u_languages'    ,
-                            users_profile.lives_at            AS 'u_location'     ,
-                            users_profile.pronouns_en         AS 'u_pronouns_en'  ,
-                            users_profile.pronouns_fr         AS 'u_pronouns_fr'  ,
-                            users_profile.profile_text_en     AS 'u_profile_en'   ,
-                            users_profile.profile_text_fr     AS 'u_profile_fr'   ,
-                            users_settings.show_nsfw_content  AS 'u_nsfw'         ,
-                            users_settings.hide_youtube       AS 'u_youtube'      ,
-                            users_settings.hide_google_trends AS 'u_trends'       ,
-                            users_settings.hide_discord       AS 'u_discord'      ,
-                            users_settings.hide_kiwiirc       AS 'u_kiwiirc'      ,
-                            users_settings.hide_from_activity AS 'u_hidden'
-                  FROM      users
-                  LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
-                  LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
-                  WHERE     1 = 1 ";
-
-  // Search for data if requested
-  if($search_username)
-    $qusers .= "  AND       users.username                                LIKE '%$search_username%' ";
-  if($search_created > 0)
-    $qusers .= "  AND       YEAR(FROM_UNIXTIME(users_profile.created_at)) =    '$search_created'    ";
-  if($search_page)
-    $qusers .= "  AND     ( users.last_visited_page_$lang                 LIKE '%$search_page%'
-                  OR        users.last_visited_url                        LIKE '%$search_page%' )   ";
-  if($search_action == 0)
-    $qusers .= "  AND       users.last_action_at                          = 0                       ";
-  else if($search_action == 1)
-    $qusers .= "  AND       users.last_action_at                          > 0                       ";
-  if($search_language && $search_language != 'None')
-    $qusers .= "  AND       users.current_language                        LIKE '%$search_language%' ";
-  else if($search_language)
-    $qusers .= "  AND       users.current_language                        =     ''                  ";
-  if($search_speaks && $search_speaks != 'None' && $search_speaks != 'Both')
-    $qusers .= "  AND       users_profile.spoken_languages                LIKE '%$search_speaks%'   ";
-  else if($search_speaks == 'Both')
-    $qusers .= "  AND     ( users_profile.spoken_languages                LIKE 'FREN'
-                  OR        users_profile.spoken_languages                LIKE 'ENFR' )             ";
-  else if($search_speaks)
-    $qusers .= "  AND       users_profile.spoken_languages                =     ''                  ";
-  if($search_theme && $search_theme != 'None')
-    $qusers .= "  AND       users.current_theme                           LIKE '%$search_theme%'    ";
-  else if($search_theme)
-    $qusers .= "  AND       users.current_theme                           =     ''                  ";
-  if($search_birthday == -1)
-    $qusers .= "  AND       users_profile.birthday                        =     '0000-00-00'        ";
-  else if($search_birthday > 0)
-    $qusers .= "  AND       YEAR(users_profile.birthday)                  =     '$search_birthday'  ";
-  if($search_profile == 'empty')
-    $qusers .= "  AND       users_profile.birthday                        =     '0000-00-00'
-                  AND       users_profile.spoken_languages                =     ''
-                  AND       users_profile.lives_at                        =     ''
-                  AND       users_profile.pronouns_en                     =     ''
-                  AND       users_profile.pronouns_fr                     =     ''
-                  AND       users_profile.profile_text_en                 =     ''
-                  AND       users_profile.profile_text_fr                 =     ''                  ";
-  else if($search_profile == 'filled')
-    $qusers .= "  AND     ( users_profile.birthday                        !=    '0000-00-00'
-                  OR        users_profile.spoken_languages                !=    ''
-                  OR        users_profile.lives_at                        !=    ''
-                  OR        users_profile.pronouns_en                     !=    ''
-                  OR        users_profile.pronouns_fr                     !=    ''
-                  OR        users_profile.profile_text_en                 !=    ''
-                  OR        users_profile.profile_text_fr                 !=    '' )                ";
-  else if($search_profile == 'complete')
-    $qusers .= "  AND       users_profile.birthday                        !=    '0000-00-00'
-                  AND       users_profile.spoken_languages                !=    ''
-                  AND       users_profile.lives_at                        !=    ''
-                  AND     ( users_profile.pronouns_en                     !=    ''
-                  OR        users_profile.pronouns_fr                     !=    '' )
-                  AND     ( users_profile.profile_text_en                 !=    ''
-                  OR        users_profile.profile_text_fr                 !=    '' )                ";
-  else if($search_profile == 'speaks')
-    $qusers .= "  AND       users_profile.spoken_languages                !=    ''                  ";
-  else if($search_profile == 'birthday')
-    $qusers .= "  AND       users_profile.birthday                        !=    '0000-00-00'        ";
-  else if($search_profile == 'location')
-    $qusers .= "  AND       users_profile.lives_at                        !=    ''                  ";
-  else if($search_profile == 'pronouns')
-    $qusers .= "  AND     ( users_profile.pronouns_en                     !=    ''
-                  OR        users_profile.pronouns_fr                     !=    '' )                ";
-  else if($search_profile == 'text')
-    $qusers .= "  AND     ( users_profile.profile_text_en                 !=    ''
-                  OR        users_profile.profile_text_fr                 !=    '' )                ";
-  if($search_settings == 'nsfw')
-    $qusers .= "  AND       users_settings.show_nsfw_content              =     2                   ";
-  else if($search_settings == 'some_nsfw')
-    $qusers .= "  AND       users_settings.show_nsfw_content              =     1                   ";
-  else if($search_settings == 'no_nsfw')
-    $qusers .= "  AND       users_settings.show_nsfw_content              =     0                   ";
-  else if($search_settings == 'no_youtube')
-    $qusers .= "  AND       users_settings.hide_youtube                   =     1                   ";
-  else if($search_settings == 'no_trends')
-    $qusers .= "  AND       users_settings.hide_google_trends             =     1                   ";
-  else if($search_settings == 'no_discord')
-    $qusers .= "  AND       users_settings.hide_discord                   =     1                   ";
-  else if($search_settings == 'no_kiwiirc')
-    $qusers .= "  AND       users_settings.hide_kiwiirc                   =     1                   ";
-  else if($search_settings == 'hide')
-    $qusers .= "  AND       users_settings.hide_from_activity             =     1                   ";
-
-  // Sort the data as requested
-  if($sort_by == 'username')
-    $qusers .= "  ORDER BY  users.username                  ASC       ";
-  else if($sort_by == 'usertypes')
-    $qusers .= "  ORDER BY  users.is_administrator          = 0       ,
-                            users.is_moderator              = 0       ,
-                            users.is_banned_until           = 0       ,
-                            users.is_deleted                = 0       ,
-                            users.username                  ASC       ";
-  else if($sort_by == 'visits')
-    $qusers .= "  ORDER BY  users.visited_page_count        DESC      ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'created')
-    $qusers .= "  ORDER BY  users_profile.created_at        ASC       ";
-  else if($sort_by == 'rcreated')
-    $qusers .= "  ORDER BY  users_profile.created_at        DESC      ";
-  else if($sort_by == 'ractivity')
-    $qusers .= "  ORDER BY  users.last_visited_at           ASC       ";
-  else if($sort_by == 'page')
-    $qusers .= "  ORDER BY  users.last_visited_page_$lang   = ''      ,
-                            users.last_visited_page_$lang   ASC       ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'url')
-    $qusers .= "  ORDER BY  users.last_visited_url          = ''      ,
-                            users.last_visited_url          ASC       ,
-                            users.last_visited_page_$lang   = ''      ,
-                            users.last_visited_page_$lang   ASC       ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'action')
-    $qusers .= "  ORDER BY  users.last_action_at            = 0       ,
-                            users.last_action_at            DESC      ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'language')
-    $qusers .= "  ORDER BY  users.current_language          = ''      ,
-                            users.current_language          != 'EN'   ,
-                            users.current_language          ASC       ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'speaks')
-    $qusers .= "  ORDER BY  users_profile.spoken_languages  = ''      ,
-                            users_profile.spoken_languages  != 'EN'   ,
-                            users_profile.spoken_languages  ASC       ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'theme')
-    $qusers .= "  ORDER BY  users.current_theme             = ''      ,
-                            users.current_theme             != 'dark' ,
-                            users.current_theme             ASC       ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'birthday')
-    $qusers .= "  ORDER BY  users_profile.birthday          = 0       ,
-                            users_profile.birthday          ASC       ,
-                            users.last_visited_at           DESC      ";
-  else if($sort_by == 'rbirthday')
-    $qusers .= "  ORDER BY  users_profile.birthday          = 0       ,
-                            users_profile.birthday          DESC      ,
-                            users.last_visited_at           DESC      ";
-  else
-    $qusers .= "  ORDER BY  users.last_visited_at           DESC      ";
-
-  // Run the query
-  $qusers = query($qusers);
+  $qusers = query(" SELECT    users.id                          AS 'u_id'           ,
+                              users.is_deleted                  AS 'u_deleted'      ,
+                              users.is_administrator            AS 'u_admin'        ,
+                              users.is_moderator                AS 'u_mod'          ,
+                              users.deleted_username            AS 'u_delnick'      ,
+                              users.username                    AS 'u_nick'         ,
+                              users.current_language            AS 'u_lang'         ,
+                              users.current_theme               AS 'u_theme'        ,
+                              users.last_visited_at             AS 'u_visit'        ,
+                              users.last_visited_page_$lang     AS 'u_page'         ,
+                              users.last_visited_url            AS 'u_url'          ,
+                              users.last_action_at              AS 'u_action'       ,
+                              users.visited_page_count          AS 'u_visits'       ,
+                              users.is_banned_until             AS 'u_banned'       ,
+                              users_profile.created_at          AS 'u_created'      ,
+                              users_profile.birthday            AS 'u_birthday'     ,
+                              users_profile.spoken_languages    AS 'u_languages'    ,
+                              users_profile.lives_at            AS 'u_location'     ,
+                              users_profile.pronouns_en         AS 'u_pronouns_en'  ,
+                              users_profile.pronouns_fr         AS 'u_pronouns_fr'  ,
+                              users_profile.profile_text_en     AS 'u_profile_en'   ,
+                              users_profile.profile_text_fr     AS 'u_profile_fr'   ,
+                              users_settings.show_nsfw_content  AS 'u_nsfw'         ,
+                              users_settings.hide_youtube       AS 'u_youtube'      ,
+                              users_settings.hide_google_trends AS 'u_trends'       ,
+                              users_settings.hide_discord       AS 'u_discord'      ,
+                              users_settings.hide_kiwiirc       AS 'u_kiwiirc'      ,
+                              users_settings.hide_from_activity AS 'u_hidden'
+                    FROM      users
+                    LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+                    LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
+                              $query_search
+                              $query_sort ");
 
   // Initialize variables used for stats
   $sum_visited  = 0;
@@ -611,12 +597,11 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   {
     // Prepare the data
     $data[$i]['id']       = sanitize_output($row['u_id']);
-    $temp                 = ($row['u_mod']) ? 'text_green bold noglow' : 'bold';
-    $temp                 = ($row['u_admin']) ? 'text_red bold' : $temp;
-    $temp                 = ($row['u_banned']) ? 'text_brown bold noglow strikethrough' : $temp;
-    $data[$i]['user_css'] = ($row['u_deleted']) ? ' strikethrough noglow' : $temp;
-    $temp                 = ($row['u_deleted']) ? $row['u_delnick'] : $row['u_nick'];
-    $data[$i]['username'] = sanitize_output($temp);
+    $user_css             = ($row['u_mod']) ? 'text_green bold noglow' : 'bold';
+    $user_css             = ($row['u_admin']) ? 'text_red bold' : $user_css;
+    $user_css             = ($row['u_banned']) ? 'text_brown bold noglow strikethrough' : $user_css;
+    $data[$i]['user_css'] = ($row['u_deleted']) ? ' strikethrough noglow' : $user_css;
+    $data[$i]['username'] = ($row['u_deleted']) ? sanitize_output($row['u_delnick']) : sanitize_output($row['u_nick']);
     $data[$i]['language'] = sanitize_output($row['u_lang']);
     $data[$i]['theme']    = sanitize_output($row['u_theme']);
     $data[$i]['active']   = sanitize_output(time_since($row['u_visit']));
@@ -641,11 +626,11 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
 
     // Update the stats
     $sum_visited  += ($row['u_visit'] >= (time() - 8640000))  ? 1 : 0;
-    $sum_english  += ($row['u_lang'] == 'EN')                 ? 1 : 0;
-    $sum_french   += ($row['u_lang'] == 'FR')                 ? 1 : 0;
-    $sum_dark     += ($row['u_theme'] == 'dark')              ? 1 : 0;
-    $sum_light    += ($row['u_theme'] == 'light')             ? 1 : 0;
-    $sum_profile  += ($row['u_birthday'] != '0000-00-00' || $row['u_location'] || $row['u_languages'] || $row['u_pronouns_en'] || $row['u_pronouns_fr'] || $row['u_profile_en'] || $row['u_profile_fr']) ? 1 : 0;
+    $sum_english  += ($row['u_lang'] === 'EN')                ? 1 : 0;
+    $sum_french   += ($row['u_lang'] === 'FR')                ? 1 : 0;
+    $sum_dark     += ($row['u_theme'] === 'dark')             ? 1 : 0;
+    $sum_light    += ($row['u_theme'] === 'light')            ? 1 : 0;
+    $sum_profile  += ($row['u_birthday'] !== '0000-00-00' || $row['u_location'] || $row['u_languages'] || $row['u_pronouns_en'] || $row['u_pronouns_fr'] || $row['u_profile_en'] || $row['u_profile_fr']) ? 1 : 0;
   }
 
   // Fetch the total guest count
@@ -704,85 +689,82 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   $is_admin = user_is_administrator();
 
   // Sanitize the search parameters
-  $search_identity  = isset($search['identity'])  ? sanitize($search['identity'], 'string') : NULL;
-  $search_page      = isset($search['page'])      ? sanitize($search['page'], 'string')     : NULL;
-  $search_language  = isset($search['language'])  ? sanitize($search['language'], 'string') : NULL;
-  $search_theme     = isset($search['theme'])     ? sanitize($search['theme'], 'string')    : NULL;
-
-  // Fetch the guest list
-  $qguests = "    SELECT    users_guests.ip_address                   AS 'g_ip'     ,
-                            users_guests.current_language             AS 'g_lang'   ,
-                            users_guests.current_theme                AS 'g_theme'  ,
-                            users_guests.last_visited_at              AS 'g_visit'  ,
-                            users_guests.last_visited_page_$lang      AS 'g_page'   ,
-                            users_guests.last_visited_url             AS 'g_url'    ,
-                            users_guests.visited_page_count           AS 'g_visits' ,
-                            users_guests.randomly_assigned_name_$lang AS 'g_name'   ,
-                            users.id                                  AS 'u_id'     ,
-                            users.username                            AS 'u_nick'
-                  FROM      users_guests
-                  LEFT JOIN users
-                  ON        users_guests.ip_address LIKE users.current_ip_address
-                  WHERE     1 = 1 ";
+  $search_identity  = sanitize_array_element($search, 'identity', 'string');
+  $search_page      = sanitize_array_element($search, 'page', 'string');
+  $search_language  = sanitize_array_element($search, 'language', 'string');
+  $search_theme     = sanitize_array_element($search, 'theme', 'string');
 
   // Only admins should see users in this list
-  if(!$is_admin)
-    $qguests .= " AND       users.id IS NULL ";
+  $query_search = ($is_admin) ? " WHERE 1 = 1 " : " AND users.id IS NULL ";
 
-  // Search for data if requested
-  if($search_identity && $is_admin)
-    $qguests .= " AND     ( users_guests.ip_address               LIKE '%$search_identity%'
-                  OR        users.username                        LIKE '%$search_identity%' ) ";
-  if($search_page)
-    $qguests .= " AND     ( users_guests.last_visited_page_$lang  LIKE '%$search_page%'
-                  OR        users_guests.last_visited_url         LIKE '%$search_page%' )     ";
-  if($search_language && $search_language != 'None')
-    $qguests .= " AND       users_guests.current_language         LIKE '%$search_language%'   ";
+  // Search through the data: Website language
+  if($search_language && $search_language !== 'None')
+    $query_search .= " AND users_guests.current_language LIKE '%$search_language%'  ";
   else if($search_language)
-    $qguests .= " AND       users_guests.current_language         =     ''                    ";
-  if($search_theme && $search_theme != 'None')
-    $qguests .= " AND       users_guests.current_theme             LIKE '%$search_theme%'     ";
+    $query_search .= " AND users_guests.current_language    = ''                    ";
+
+  // Search through the data: Website theme
+  if($search_theme && $search_theme !== 'None')
+    $query_search .= " AND users_guests.current_theme  LIKE '%$search_theme%' ";
   else if($search_theme)
-    $qguests .= " AND       users_guests.current_theme             =     ''                   ";
+    $query_search .= " AND users_guests.current_theme     = ''                ";
 
-  // Avoid duplication when multiple users match a guest's IP
-  $qguests .= "   GROUP BY  users_guests.id ";
+  // Search through the data: Other searches
+  $query_search .= ($search_identity && $is_admin) ? "
+                                      AND ( users_guests.ip_address              LIKE '%$search_identity%'
+                                      OR    users.username                       LIKE '%$search_identity%' )  " : "";
+  $query_search .= ($search_page) ? " AND ( users_guests.last_visited_page_$lang LIKE '%$search_page%'
+                                      OR    users_guests.last_visited_url        LIKE '%$search_page%' )      " : "";
 
-  // Sort the data as requested
-  if($sort_by == 'identity' && $is_admin)
-    $qguests .= " ORDER BY  users.id                IS NULL ,
-                            users.username          ASC     ,
-                            users_guests.ip_address ASC     ";
-  else if($sort_by == 'visits')
-    $qguests .= " ORDER BY  users_guests.visited_page_count DESC  ,
-                            users_guests.last_visited_at    DESC  ";
-  else if($sort_by == 'ractivity')
-    $qguests .= " ORDER BY  users_guests.last_visited_at ASC ";
-  else if($sort_by == 'page')
-    $qguests .= " ORDER BY  users_guests.last_visited_page_$lang  = ''  ,
-                            users_guests.last_visited_page_$lang  ASC   ,
-                            users_guests.last_visited_at          DESC  ";
-  else if($sort_by == 'url')
-    $qguests .= " ORDER BY  users_guests.last_visited_url         = ''  ,
-                            users_guests.last_visited_url         ASC   ,
-                            users_guests.last_visited_page_$lang  = ''  ,
-                            users_guests.last_visited_page_$lang  ASC   ,
-                            users_guests.last_visited_at          DESC  ";
-  else if($sort_by == 'language')
-    $qguests .= " ORDER BY  users_guests.current_language = ''    ,
-                            users_guests.current_language != 'EN' ,
-                            users_guests.current_language ASC     ,
-                            users_guests.last_visited_at  DESC    ";
-  else if($sort_by == 'theme')
-    $qguests .= " ORDER BY  users_guests.current_theme    = ''      ,
-                            users_guests.current_theme    != 'dark' ,
-                            users_guests.current_theme    ASC       ,
-                            users_guests.last_visited_at  DESC      ";
-  else
-    $qguests .= " ORDER BY  users_guests.last_visited_at DESC ";
+  // Forbid non-admins from searching by identity
+  if($sort_by === 'identity' && !$is_admin)
+    $sort_by = '';
 
-  // Run the query
-  $qguests = query($qguests);
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'identity'  => " ORDER BY users.id                              IS NULL   ,
+                              users.username                        ASC       ,
+                              users_guests.ip_address               ASC       " ,
+    'visits'    => " ORDER BY users_guests.visited_page_count       DESC      ,
+                              users_guests.last_visited_at          DESC      " ,
+    'ractivity' => " ORDER BY users_guests.last_visited_at          ASC       " ,
+    'page'      => " ORDER BY users_guests.last_visited_page_$lang  = ''      ,
+                              users_guests.last_visited_page_$lang  ASC       ,
+                              users_guests.last_visited_at          DESC      " ,
+    'url'       => " ORDER BY users_guests.last_visited_url         = ''      ,
+                              users_guests.last_visited_url         ASC       ,
+                              users_guests.last_visited_page_$lang  = ''      ,
+                              users_guests.last_visited_page_$lang  ASC       ,
+                              users_guests.last_visited_at          DESC      " ,
+    'language'  => " ORDER BY users_guests.current_language         = ''      ,
+                              users_guests.current_language         != 'EN'   ,
+                              users_guests.current_language         ASC       ,
+                              users_guests.last_visited_at          DESC      " ,
+    'theme'     => " ORDER BY users_guests.current_theme            = ''      ,
+                              users_guests.current_theme            != 'dark' ,
+                              users_guests.current_theme            ASC       ,
+                              users_guests.last_visited_at          DESC      " ,
+    default     => " ORDER BY users_guests.last_visited_at          DESC      " ,
+  };
+
+  // Fetch the guest list
+  $qguests = query("  SELECT    users_guests.ip_address                   AS 'g_ip'     ,
+                                users_guests.current_language             AS 'g_lang'   ,
+                                users_guests.current_theme                AS 'g_theme'  ,
+                                users_guests.last_visited_at              AS 'g_visit'  ,
+                                users_guests.last_visited_page_$lang      AS 'g_page'   ,
+                                users_guests.last_visited_url             AS 'g_url'    ,
+                                users_guests.visited_page_count           AS 'g_visits' ,
+                                users_guests.randomly_assigned_name_$lang AS 'g_name'   ,
+                                users.id                                  AS 'u_id'     ,
+                                users.username                            AS 'u_nick'
+                      FROM      users_guests
+                      LEFT JOIN users
+                      ON        users_guests.ip_address LIKE users.current_ip_address
+                                $query_search
+                      GROUP BY  users_guests.id
+                                $query_sort ");
 
   // Initialize variables used for stats
   $sum_english  = 0;
@@ -795,8 +777,8 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   {
     // Prepare the data
     $data[$i]['user_id']  = sanitize_output($row['u_id']);
-    $temp                 = ($is_admin) ? $row['g_ip'] : string_truncate($row['g_name'], 30, '...');
-    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($temp);
+    $guest_identity       = ($is_admin) ? $row['g_ip'] : string_truncate($row['g_name'], 30, '...');
+    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($guest_identity);
     $data[$i]['ip']       = sanitize_output($row['g_ip']);
     $data[$i]['language'] = sanitize_output($row['g_lang']);
     $data[$i]['theme']    = sanitize_output($row['g_theme']);
@@ -806,10 +788,10 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
     $data[$i]['visits']   = ($row['g_visits'] > 1) ? sanitize_output($row['g_visits']) : '-';
 
     // Update the stats
-    $sum_english  += ($row['g_lang'] == 'EN')     ? 1 : 0;
-    $sum_french   += ($row['g_lang'] == 'FR')     ? 1 : 0;
-    $sum_dark     += ($row['g_theme'] == 'dark')  ? 1 : 0;
-    $sum_light    += ($row['g_theme'] == 'light') ? 1 : 0;
+    $sum_english  += ($row['g_lang'] === 'EN')      ? 1 : 0;
+    $sum_french   += ($row['g_lang'] === 'FR')      ? 1 : 0;
+    $sum_dark     += ($row['g_theme'] === 'dark')   ? 1 : 0;
+    $sum_light    += ($row['g_theme'] === 'light')  ? 1 : 0;
   }
 
   // Fetch the total guest count
@@ -893,7 +875,7 @@ function stats_doppelgangers_list() : array
   // Go through the rows once again but in reverse in order count the amount of times an IP is shared
   for($i = ($data['rows'] - 1); $i >= 0; $i--)
   {
-    if($i < ($data['rows'] - 1) && $data[$i]['ip'] == $data[$i+1]['ip'])
+    if($i < ($data['rows'] - 1) && $data[$i]['ip'] === $data[$i+1]['ip'])
       $count++;
     else
       $count = 1;

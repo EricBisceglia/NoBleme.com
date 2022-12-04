@@ -17,7 +17,7 @@ $page_title_fr    = "Statistiques des comptes";
 $page_description = "Statistics generated from NoBleme's registered users.";
 
 // Extra JS
-$js = array('common/toggle', 'common/selector');
+$js = array('common/selector');
 
 
 
@@ -324,7 +324,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th>
-          <?=__('users_stats_anniv_days')?>
+          <?=__('users_stats_birth_days')?>
         </th>
 
       </tr>

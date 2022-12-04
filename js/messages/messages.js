@@ -111,11 +111,7 @@ function users_message_open(  message_id          ,
 {
   // Make it seem as if the message is read in the message list, unless specified otherwise
   if(!keep_unread)
-  {
-    document.getElementById('private_message_title_' + message_id).classList.remove('text_red');
-    document.getElementById('private_message_title_' + message_id).classList.remove('glow');
-    document.getElementById('private_message_title_' + message_id).classList.remove('bold');
-  }
+    css_remove('private_message_title_' + message_id, ['text_red', 'glow', 'bold']);
 
   // Open the private message popin
   location.hash = '#popin_private_message';
@@ -179,7 +175,7 @@ function users_message_reply_send( message_id )
   // Don't send empty messages
   if(!document.getElementById('private_message_reply_body').value)
   {
-    document.getElementById('private_message_reply_body').classList.add('glow');
+    css_add('private_message_reply_body', 'glow');
     return;
   }
 

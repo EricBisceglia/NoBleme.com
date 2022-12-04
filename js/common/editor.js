@@ -24,15 +24,15 @@ function editor_apply(  target_element          ,
   selection = target_element.value.substring(start, end);
 
   // Apply BBCode: bold
-  if(bbcode == 'bold')
+  if(bbcode === 'bold')
     replace = '[b]' + selection + '[/b]';
 
   // Apply BBCode: underlined
-  else if(bbcode == 'underlined')
+  else if(bbcode === 'underlined')
     replace = '[u]' + selection + '[/u]';
 
   // Apply BBcode: quote
-  else if(bbcode == 'quote')
+  else if(bbcode === 'quote')
   {
     // Ask for the author and act accordingly
     author = prompt(prompt_text);
@@ -43,7 +43,7 @@ function editor_apply(  target_element          ,
   }
 
   // Apply BBcode: spoiler
-  else if(bbcode == 'spoiler')
+  else if(bbcode === 'spoiler')
   {
     // Ask for the author and act accordingly
     author = prompt(prompt_text);
@@ -54,7 +54,7 @@ function editor_apply(  target_element          ,
   }
 
   // Apply BBcode: link
-  else if(bbcode == 'link')
+  else if(bbcode === 'link')
   {
     // Ask for the url and the text
     link = prompt(prompt_text);
@@ -79,7 +79,7 @@ function editor_apply(  target_element          ,
   }
 
   // Apply BBcode: image
-  else if(bbcode == 'image')
+  else if(bbcode === 'image')
   {
     // Ask for the url
     source = prompt(prompt_text);

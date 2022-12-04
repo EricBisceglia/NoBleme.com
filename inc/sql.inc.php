@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -87,7 +87,7 @@ function query( string  $query                  ,
     echo '<div class="tinypadding_top"><pre>['.$GLOBALS['query'].'] '.$query.'</pre></div>';
 
     // Check if the query is a SELECT
-    if(substr(str_replace(' ', '', $query), 0, 6) == 'SELECT' && mysqli_num_rows($query_result))
+    if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && mysqli_num_rows($query_result))
     {
       // Prepare an array for the query results
       $full_query_results = array();

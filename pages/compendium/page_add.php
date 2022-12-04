@@ -144,9 +144,9 @@ $compendium_new_admin_urls    = sanitize_output($compendium_new_admin_urls);
 
 // Keep the proper menu entries selected
 for($i = 1; $i <= 12; $i++)
-  $compendium_new_appear_month_select[$i] = ($compendium_new_appear_month == $i)  ? ' selected' : '';
+  $compendium_new_appear_month_select[$i] = ($compendium_new_appear_month === $i)  ? ' selected' : '';
 for($i = 1; $i <= 12; $i++)
-  $compendium_new_peak_month_select[$i]   = ($compendium_new_peak_month == $i)    ? ' selected' : '';
+  $compendium_new_peak_month_select[$i]   = ($compendium_new_peak_month === $i)    ? ' selected' : '';
 
 // Keep the proper checkboxes checked
 $compendium_new_redirect_ext_checkbox = ($compendium_new_redirect_ext)  ? ' checked' : '';
@@ -160,18 +160,18 @@ $compendium_types_list = compendium_types_list();
 
 // Keep the proper page type selected
 for($i = 0; $i < $compendium_types_list['rows']; $i++)
-  $compendium_new_type_select[$i] = ($compendium_new_type == $compendium_types_list[$i]['id']) ? ' selected' : '';
+  $compendium_new_type_select[$i] = ($compendium_new_type === $compendium_types_list[$i]['id']) ? ' selected' : '';
 
 // Fetch the era list
 $compendium_eras_list = compendium_eras_list();
 
 // Keep the proper era selected
 for($i = 0; $i < $compendium_eras_list['rows']; $i++)
-  $compendium_new_era_select[$i] = ($compendium_new_era == $compendium_eras_list[$i]['id']) ? ' selected' : '';
+  $compendium_new_era_select[$i] = ($compendium_new_era === $compendium_eras_list[$i]['id']) ? ' selected' : '';
 
 // Keep the proper categories checked
 for($i = 0; $i < $compendium_categories_list['rows']; $i++)
-  $compendium_new_category_checkbox[$i] = ($compendium_new_category[$compendium_categories_list[$i]['id']] == $compendium_categories_list[$i]['id']) ? ' checked' : '';
+  $compendium_new_category_checkbox[$i] = ($compendium_new_category[$compendium_categories_list[$i]['id']] === $compendium_categories_list[$i]['id']) ? ' checked' : '';
 
 
 

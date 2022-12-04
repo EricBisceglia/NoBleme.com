@@ -16,7 +16,7 @@ $page_title_fr    = "Devblog : ";
 $page_description = "Development blog:";
 
 // Extra JS
-$js = array('dev/blogs', 'common/toggle');
+$js = array('dev/blogs');
 
 
 

@@ -22,7 +22,7 @@ $page_title_en    = "Approve task";
 $page_title_fr    = "Approuver une tâche";
 
 // Extra JS & CSS
-$js   = array('common/toggle', 'tasks/edit');
+$js   = array('tasks/edit');
 $css  = array('tasks');
 
 
@@ -99,11 +99,11 @@ $tasks_approve_silent     = form_fetch_element('tasks_approve_silent', element_e
 
 // Preserve the dropdown menus
 for($i = 0; $i <= 5; $i++)
-  $tasks_approve_priority_selected[$i]  = ($tasks_approve_priority == $i) ? ' selected' : '';
+  $tasks_approve_priority_selected[$i]  = ($tasks_approve_priority === $i) ? ' selected' : '';
 for($i = 0; $i < $tasks_categories['rows']; $i++)
-  $tasks_approve_category_selected[$i]  = ($tasks_approve_category == $tasks_categories[$i]['id']) ? ' selected' : '';
+  $tasks_approve_category_selected[$i]  = ($tasks_approve_category === $tasks_categories[$i]['id']) ? ' selected' : '';
 for($i = 0; $i < $tasks_milestones['rows']; $i++)
-  $tasks_approve_milestone_selected[$i] = ($tasks_approve_milestone == $tasks_milestones[$i]['id']) ? ' selected' : '';
+  $tasks_approve_milestone_selected[$i] = ($tasks_approve_milestone === $tasks_milestones[$i]['id']) ? ' selected' : '';
 
 // Preview the descriptions
 $tasks_preview_body_en  = bbcodes(sanitize_output(form_fetch_element('tasks_approve_body_en'), true));

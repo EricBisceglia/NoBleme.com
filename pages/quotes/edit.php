@@ -66,8 +66,8 @@ if(!$quote_data)
   header("Location: ".$path."pages/quotes/list");
 
 // Select the correct language option
-$quote_lang_en = ($quote_data['lang'] == 'EN') ? ' selected' : '';
-$quote_lang_fr = ($quote_data['lang'] == 'FR') ? ' selected' : '';
+$quote_lang_en = ($quote_data['lang'] === 'EN') ? ' selected' : '';
+$quote_lang_fr = ($quote_data['lang'] === 'FR') ? ' selected' : '';
 
 // Check the nsfw box when necessary
 $quote_nsfw = ($quote_data['nsfw']) ? ' checked' : '';

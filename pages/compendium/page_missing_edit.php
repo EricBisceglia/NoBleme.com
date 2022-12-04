@@ -74,7 +74,7 @@ $compendium_types_list = compendium_types_list();
 
 // Keep the proper page type selected
 for($i = 0; $i < $compendium_types_list['rows']; $i++)
-  $compendium_missing_type_select[$i] = ($compendium_missing_type == $compendium_types_list[$i]['id']) ? ' selected' : '';
+  $compendium_missing_type_select[$i] = ($compendium_missing_type === $compendium_types_list[$i]['id']) ? ' selected' : '';
 
 
 

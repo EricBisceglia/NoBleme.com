@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -104,8 +104,9 @@ function tasks_get( int $task_id ) : mixed
   $data['validated']      = $dtask['t_validated'];
   $data['public']         = $dtask['t_public'];
   $data['title']          = sanitize_output($dtask['t_title']);
-  $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
-  $data['title_flex']     = sanitize_output($temp);
+  $data['title_flex']     = ($dtask['t_title_en'])
+                          ? sanitize_output($dtask['t_title_en'])
+                          : sanitize_output($dtask['t_title_fr']);
   $data['title_en']       = sanitize_output($dtask['t_title_en']);
   $data['title_fr']       = sanitize_output($dtask['t_title_fr']);
   $data['title_en_raw']   = $dtask['t_title_en'];
@@ -115,8 +116,9 @@ function tasks_get( int $task_id ) : mixed
   $data['created_since']  = sanitize_output(time_since($dtask['t_created']));
   $data['creator']        = sanitize_output($dtask['u_name']);
   $data['creator_id']     = sanitize_output($dtask['u_id']);
-  $temp                   = sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1));
-  $data['solved']         = ($dtask['t_solved']) ? $temp : '';
+  $data['solved']         = ($dtask['t_solved'])
+                          ? sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1))
+                          : '';
   $data['solved_full']    = sanitize_output(date_to_text($dtask['t_solved'], include_time: 1));
   $data['solved_since']   = sanitize_output(time_since($dtask['t_solved']));
   $data['priority']       = sanitize_output($dtask['t_priority']);
@@ -125,14 +127,15 @@ function tasks_get( int $task_id ) : mixed
   $data['milestone']      = sanitize_output($dtask['tm_name']);
   $data['milestone_id']   = ($dtask['tm_id']) ? sanitize_output($dtask['tm_id']) : 0;
   $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
-  $temp                   = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
-  $data['body_flex']      = bbcodes(sanitize_output($temp, preserve_line_breaks: true));
-  $data['body_proposal']  = sanitize_output($temp);
+  $body_flex              = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
+  $data['body_flex']      = bbcodes(sanitize_output($body_flex, preserve_line_breaks: true));
+  $data['body_proposal']  = sanitize_output($body_flex);
   $data['body_en']        = sanitize_output($dtask['t_body_en']);
   $data['body_fr']        = sanitize_output($dtask['t_body_fr']);
   $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
-  $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
-  $data['meta_desc']      = 'Task #'.$task_id.': '.$temp;
+  $data['meta_desc']      = ($dtask['t_title_en'])
+                          ? 'Task #'.$task_id.': '.$dtask['t_title_en']
+                          : 'Task #'.$task_id.': '.$dtask['t_title_fr'];
 
   // Return the array
   return $data;
@@ -166,143 +169,137 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   $is_admin = ($user_view) ? 0 : user_is_administrator();
 
   // Sanitize the search parameters
-  $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)         : 0;
-  $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')      : '';
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -2)    : 0;
+  $search_id        = sanitize_array_element($search, 'id', 'int', min: 0, default: 0);
+  $search_title     = sanitize_array_element($search, 'title', 'string');
+  $search_status    = sanitize_array_element($search, 'status', 'int', min: -2, default: 0);
   $search_status_id = sanitize($search_status - 1, 'int', 0, 5);
-  $search_created   = isset($search['created'])   ? sanitize($search['created'], 'int', 0)    : 0;
-  $search_reporter  = isset($search['reporter'])  ? sanitize($search['reporter'], 'string')   : '';
-  $search_category  = isset($search['category'])  ? sanitize($search['category'], 'int', -1)  : 0;
-  $search_goal      = isset($search['goal'])      ? sanitize($search['goal'], 'int', -1)      : 0;
-  $search_admin     = isset($search['admin'])     ? sanitize($search['admin'], 'int', 0, 5)   : 0;
+  $search_created   = sanitize_array_element($search, 'created', 'int', min: 0, default: 0);
+  $search_reporter  = sanitize_array_element($search, 'reporter', 'string');
+  $search_category  = sanitize_array_element($search, 'category', 'int', min: -1, default: 0);
+  $search_goal      = sanitize_array_element($search, 'goal', 'int', min: -1, default: 0);
+  $search_admin     = sanitize_array_element($search, 'admin', 'int', min: 0, max: 5, default: 0);
 
-  // Fetch the tasks
-  $qtasks = "     SELECT    dev_tasks.id                        AS 't_id'             ,
-                            dev_tasks.is_deleted                AS 't_deleted'        ,
-                            dev_tasks.created_at                AS 't_created'        ,
-                            dev_tasks.finished_at               AS 't_finished'       ,
-                            dev_tasks.is_public                 AS 't_public'         ,
-                            dev_tasks.admin_validation          AS 't_validated'      ,
-                            dev_tasks.priority_level            AS 't_status'         ,
-                            dev_tasks.title_en                  AS 't_title_en'       ,
-                            dev_tasks.title_fr                  AS 't_title_fr'       ,
-                            dev_tasks_categories.id             AS 't_category_id'    ,
-                            dev_tasks_categories.title_$lang    AS 't_category'       ,
-                            dev_tasks_milestones.id             AS 't_milestone_id'   ,
-                            dev_tasks_milestones.title_$lang    AS 't_milestone'      ,
-                            dev_tasks_milestones.summary_$lang  AS 't_milestone_body' ,
-                            users.username                      AS 't_author'
-                  FROM      dev_tasks
-                  LEFT JOIN dev_tasks_categories  ON dev_tasks.fk_dev_tasks_categories  = dev_tasks_categories.id
-                  LEFT JOIN dev_tasks_milestones  ON dev_tasks.fk_dev_tasks_milestones  = dev_tasks_milestones.id
-                  LEFT JOIN users                 ON dev_tasks.fk_users                 = users.id
-                  WHERE     1 = 1 ";
+  // Do not show deleted, unvalidated, private, or wrong language tasks to regular users
+  $query_search = (!$is_admin) ? "  WHERE dev_tasks.is_deleted        = 0
+                                    AND   dev_tasks.is_public         = 1
+                                    AND   dev_tasks.admin_validation  = 1
+                                    AND   dev_tasks.title_$lang      != '' " : " WHERE 1 = 1 ";
 
-  // Do not show deleted, unvalidated, or private tasks to regular users
-  if(!$is_admin)
-    $qtasks .= "  AND       dev_tasks.is_deleted        = 0
-                  AND       dev_tasks.is_public         = 1
-                  AND       dev_tasks.admin_validation  = 1                     ";
+  // Show less data in roadmap view
+  if($sort_by === 'roadmap')
+    $query_search .= "  AND dev_tasks.is_deleted              = 0
+                        AND dev_tasks.admin_validation        = 1
+                        AND dev_tasks.fk_dev_tasks_milestones > 0 ";
 
-  // Regular users should only see tasks with a title matching their current language
-  if(!$is_admin)
-    $qtasks .= "  AND       dev_tasks.title_$lang      != ''                    ";
-
-  // Search the data
-  if($search_id)
-    $qtasks .= "  AND       dev_tasks.id                                = '$search_id'          ";
-  if($search_title)
-    $qtasks .= "  AND       dev_tasks.title_$lang                    LIKE '%$search_title%'     ";
-  if($search_status == -2)
-    $qtasks .= "  AND       dev_tasks.finished_at                       = 0                     ";
-  else if($search_status == -1)
-    $qtasks .= "  AND       dev_tasks.finished_at                       > 0                     ";
+  // Search through the data: Task status
+  if($search_status === -2)
+    $query_search .= "  AND dev_tasks.finished_at                       = 0                 ";
+  else if($search_status === -1)
+    $query_search .= "  AND dev_tasks.finished_at                       > 0                 ";
   else if($search_status > 0 && $search_status <= 6)
-    $qtasks .= "  AND       dev_tasks.priority_level                    = '$search_status_id'
-                  AND       dev_tasks.finished_at                       = 0                     ";
+    $query_search .= "  AND dev_tasks.priority_level                    = '$search_status_id'
+                        AND dev_tasks.finished_at                       = 0                 ";
   else if($search_status > 6)
-    $qtasks .=  " AND       YEAR(FROM_UNIXTIME(dev_tasks.finished_at))  = '$search_status'      ";
-  if($search_created)
-    $qtasks .= "  AND       YEAR(FROM_UNIXTIME(dev_tasks.created_at))   = '$search_created'     ";
-  if($search_reporter)
-    $qtasks .= "  AND       users.username                           LIKE '%$search_reporter%'  ";
-  if($search_category == -1)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_categories           = 0                     ";
-  else if($search_category)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_categories           = '$search_category'    ";
-  if($search_goal == -1)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_milestones           = 0                     ";
-  else if($search_goal)
-    $qtasks .= "  AND       dev_tasks.fk_dev_tasks_milestones           = '$search_goal'        ";
-  if($search_admin == 1)
-    $qtasks .= "  AND       dev_tasks.admin_validation                  = 0                     ";
-  else if($search_admin == 2)
-    $qtasks .= "  AND       dev_tasks.is_deleted                        = 1                     ";
-  else if($search_admin == 3)
-    $qtasks .= "  AND       dev_tasks.is_public                         = 0                     ";
-  else if($search_admin == 4)
-    $qtasks .= "  AND       dev_tasks.title_en                          = ''                    ";
-  else if($search_admin == 5)
-    $qtasks .= "  AND       dev_tasks.title_fr                          = ''                    ";
+    $query_search .= "  AND YEAR(FROM_UNIXTIME(dev_tasks.finished_at))  = '$search_status'  ";
 
-  // Limit the returned data in roadmap view
-  if($sort_by == 'roadmap')
-    $qtasks .= "  AND       dev_tasks.is_deleted                        = 0
-                  AND       dev_tasks.admin_validation                  = 1
-                  AND       dev_tasks.fk_dev_tasks_milestones           > 0                     ";
+  // Search through the data: Categories
+  if($search_category === -1)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_categories = 0                   ";
+  else if($search_category)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_categories = '$search_category'  ";
+
+  // Search through the data: Goals
+  if($search_goal === -1)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_milestones = 0               ";
+  else if($search_goal)
+    $query_search .= " AND  dev_tasks.fk_dev_tasks_milestones = '$search_goal'  ";
+
+  // Search through the data: Admin filters
+  if($is_admin)
+  {
+    $query_search .= match($search_admin)
+    {
+      1       => " AND  dev_tasks.admin_validation  = 0 "   ,
+      2       => " AND  dev_tasks.is_deleted        = 1 "   ,
+      3       => " AND  dev_tasks.is_public         = 0 "   ,
+      4       => " AND  dev_tasks.title_en          = '' "  ,
+      5       => " AND  dev_tasks.title_fr          = '' "  ,
+      default => ""                                         ,
+    };
+  }
+
+  // Search through the data: Other searches
+  $query_search .= ($search_id)       ? " AND dev_tasks.id                              = '$search_id'          " : "";
+  $query_search .= ($search_title)    ? " AND dev_tasks.title_$lang                  LIKE '%$search_title%'     " : "";
+  $query_search .= ($search_created)  ? " AND YEAR(FROM_UNIXTIME(dev_tasks.created_at)) = '$search_created'     " : "";
+  $query_search .= ($search_reporter) ? " AND users.username                         LIKE '%$search_reporter%'  " : "";
 
   // Sort the data
-  if($sort_by == 'id')
-    $qtasks .= "  ORDER BY    dev_tasks.id                        ASC     ";
-  else if($sort_by == 'description')
-    $qtasks .= "  ORDER BY    dev_tasks.title_$lang               ASC     ";
-  else if($sort_by == 'created')
-    $qtasks .= "  ORDER BY    dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'reporter')
-    $qtasks .= "  ORDER BY    users.username                      ASC     ,
-                              dev_tasks.finished_at               != ''   ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'category')
-    $qtasks .= "  ORDER BY    dev_tasks_categories.id             IS NULL ,
-                              dev_tasks_categories.title_$lang    ASC     ,
-                              dev_tasks.finished_at               != ''   ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'goal')
-    $qtasks .= "  ORDER BY    dev_tasks.finished_at               != ''   ,
-                              dev_tasks_milestones.id             IS NULL ,
-                              dev_tasks_milestones.sorting_order  DESC    ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'roadmap')
-    $qtasks .= "  ORDER BY    dev_tasks_milestones.id             IS NULL ,
-                              dev_tasks_milestones.sorting_order  DESC    ,
-                              dev_tasks.finished_at               > 0     ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else if($sort_by == 'admin')
-    $qtasks .= "  ORDER BY    dev_tasks.admin_validation          ASC     ,
-                              dev_tasks.is_deleted                DESC    ,
-                              dev_tasks.finished_at               > 0     ,
-                              dev_tasks.is_public                 ASC     ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.created_at                DESC    ";
-  else
-    $qtasks .= "  ORDER BY    dev_tasks.admin_validation          = 1     ,
-                              dev_tasks.is_deleted                != ''   ,
-                              dev_tasks.finished_at               != ''   ,
-                              dev_tasks.finished_at               DESC    ,
-                              dev_tasks.priority_level            DESC    ,
-                              dev_tasks.created_at                DESC    ";
+  $query_sort = match($sort_by)
+  {
+    'id'          => " ORDER BY dev_tasks.id                        ASC     " ,
+    'description' => " ORDER BY dev_tasks.title_$lang               ASC     " ,
+    'created'     => " ORDER BY dev_tasks.created_at                DESC    " ,
+    'reporter'    => " ORDER BY users.username                      ASC     ,
+                                dev_tasks.finished_at               != ''   ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'category'    => " ORDER BY dev_tasks_categories.id             IS NULL ,
+                                dev_tasks_categories.title_$lang    ASC     ,
+                                dev_tasks.finished_at               != ''   ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'goal'        => " ORDER BY dev_tasks.finished_at               != ''   ,
+                                dev_tasks_milestones.id             IS NULL ,
+                                dev_tasks_milestones.sorting_order  DESC    ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'roadmap'     => " ORDER BY dev_tasks_milestones.id             IS NULL ,
+                                dev_tasks_milestones.sorting_order  DESC    ,
+                                dev_tasks.finished_at               > 0     ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    'admin'       => " ORDER BY dev_tasks.admin_validation          ASC     ,
+                                dev_tasks.is_deleted                DESC    ,
+                                dev_tasks.finished_at               > 0     ,
+                                dev_tasks.is_public                 ASC     ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+    default       => " ORDER BY dev_tasks.admin_validation          = 1     ,
+                                dev_tasks.is_deleted                != ''   ,
+                                dev_tasks.finished_at               != ''   ,
+                                dev_tasks.finished_at               DESC    ,
+                                dev_tasks.priority_level            DESC    ,
+                                dev_tasks.created_at                DESC    " ,
+  };
 
-  // Run the query
-  $qtasks = query($qtasks);
+  // Fetch the tasks
+  $qtasks = query(" SELECT    dev_tasks.id                        AS 't_id'             ,
+                              dev_tasks.is_deleted                AS 't_deleted'        ,
+                              dev_tasks.created_at                AS 't_created'        ,
+                              dev_tasks.finished_at               AS 't_finished'       ,
+                              dev_tasks.is_public                 AS 't_public'         ,
+                              dev_tasks.admin_validation          AS 't_validated'      ,
+                              dev_tasks.priority_level            AS 't_status'         ,
+                              dev_tasks.title_en                  AS 't_title_en'       ,
+                              dev_tasks.title_fr                  AS 't_title_fr'       ,
+                              dev_tasks_categories.id             AS 't_category_id'    ,
+                              dev_tasks_categories.title_$lang    AS 't_category'       ,
+                              dev_tasks_milestones.id             AS 't_milestone_id'   ,
+                              dev_tasks_milestones.title_$lang    AS 't_milestone'      ,
+                              dev_tasks_milestones.summary_$lang  AS 't_milestone_body' ,
+                              users.username                      AS 't_author'
+                    FROM      dev_tasks
+                    LEFT JOIN dev_tasks_categories  ON dev_tasks.fk_dev_tasks_categories  = dev_tasks_categories.id
+                    LEFT JOIN dev_tasks_milestones  ON dev_tasks.fk_dev_tasks_milestones  = dev_tasks_milestones.id
+                    LEFT JOIN users                 ON dev_tasks.fk_users                 = users.id
+                              $query_search
+                              $query_sort ");
 
   // Initialize the finished task counter
   $total_tasks_finished = 0;
@@ -316,23 +313,26 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   {
     // Prepare the data
     $data[$i]['id']         = sanitize_output($row['t_id']);
-    $temp                   = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
-    $data[$i]['css_row']    = ($row['t_deleted']) ? 'brown' : $temp;
-    $temp                   = ($row['t_status'] < 2) ? ' italics' : '';
-    $temp                   = ($row['t_status'] > 3) ? ' bold' : $temp;
-    $temp                   = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $temp;
-    $data[$i]['css_status'] = ($temp && !$row['t_finished']) ? $temp : '';
-    $temp                   = ($lang == 'en') ? $row['t_title_en'] : $row['t_title_fr'];
-    $temp                   = ($lang == 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $temp;
-    $temp                   = ($lang != 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $temp;
-    $temp                   = ($sort_by == 'roadmap' && !$row['t_public']) ? __('tasks_roadmap_private').$temp : $temp;
-    $data[$i]['title']      = sanitize_output(string_truncate($temp, 42, '…'));
-    $data[$i]['road_title'] = sanitize_output(string_truncate($temp, 50, '…'));
-    $data[$i]['fulltitle']  = (strlen($temp) > 42) ? sanitize_output($temp) : '';
-    $data[$i]['road_full']  = (strlen($temp) > 50) ? sanitize_output($temp) : '';
-    $data[$i]['shorttitle'] = sanitize_output(string_truncate($temp, 38, '…'));
-    $temp                   = sanitize_output(__('tasks_list_solved'));
-    $data[$i]['status']     = ($row['t_finished']) ? $temp : sanitize_output(__('tasks_list_state_'.$row['t_status']));
+    $task_css               = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
+    $data[$i]['css_row']    = ($row['t_deleted']) ? 'brown' : $task_css;
+    $task_css               = ($row['t_status'] < 2) ? ' italics' : '';
+    $task_css               = ($row['t_status'] > 3) ? ' bold' : $task_css;
+    $task_css               = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $task_css;
+    $data[$i]['css_status'] = ($task_css && !$row['t_finished']) ? $task_css : '';
+    $task_title             = ($lang === 'en') ? $row['t_title_en'] : $row['t_title_fr'];
+    $task_title             = ($lang === 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $task_title;
+    $task_title             = ($lang !== 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $task_title;
+    $task_title             = ($sort_by === 'roadmap' && !$row['t_public'])
+                            ? __('tasks_roadmap_private').$task_title
+                            : $task_title;
+    $data[$i]['title']      = sanitize_output(string_truncate($task_title, 42, '…'));
+    $data[$i]['road_title'] = sanitize_output(string_truncate($task_title, 50, '…'));
+    $data[$i]['fulltitle']  = (strlen($task_title) > 42) ? sanitize_output($task_title) : '';
+    $data[$i]['road_full']  = (strlen($task_title) > 50) ? sanitize_output($task_title) : '';
+    $data[$i]['shorttitle'] = sanitize_output(string_truncate($task_title, 38, '…'));
+    $data[$i]['status']     = ($row['t_finished'])
+                            ? sanitize_output(__('tasks_list_solved'))
+                            : sanitize_output(__('tasks_list_state_'.$row['t_status']));
     $data[$i]['created']    = sanitize_output(time_since($row['t_created']));
     $data[$i]['solved']     = ($row['t_finished']) ? sanitize_output(time_since($row['t_finished'])) : __('tasks_roadmap_unsolved');
     $data[$i]['author']     = sanitize_output($row['t_author']);
@@ -400,16 +400,16 @@ function tasks_add( array $contents ) : mixed
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
-  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
-  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
-  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
-  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
-  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
-  $task_public    = ($task_private)                 ? 0                                             : 1;
-  $task_silent    = (isset($contents['silent']))    ? sanitize($contents['silent'], 'int', 0, 1)    : 0;
+  $task_title_en  = sanitize_array_element($contents, 'title_en', 'string');
+  $task_title_fr  = sanitize_array_element($contents, 'title_fr', 'string');
+  $task_body_en   = sanitize_array_element($contents, 'body_en', 'string');
+  $task_body_fr   = sanitize_array_element($contents, 'body_fr', 'string');
+  $task_priority  = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 5, default: 0);
+  $task_category  = sanitize_array_element($contents, 'category', 'int', min: 0, default: 0);
+  $task_milestone = sanitize_array_element($contents, 'milestone', 'int', min: 0, default: 0);
+  $task_private   = sanitize_array_element($contents, 'private', 'int', min: 0, max: 1, default: 0);
+  $task_public    = ($task_private) ? 0 : 1;
+  $task_silent    = sanitize_array_element($contents, 'silent', 'int', min: 0, max: 1, default: 0);
 
   // Error: No title
   if(!$task_title_en && !$task_title_fr)
@@ -505,7 +505,7 @@ function tasks_propose( string $body ) : mixed
 
   // Determine the body's language and the task's title
   $lang       = string_change_case(user_get_language(), 'lowercase');
-  $task_title = ($lang == 'en') ? "Unvalidated task" : "Tâche non validée";
+  $task_title = ($lang === 'en') ? "Unvalidated task" : "Tâche non validée";
 
   // Create the unvalidated task
   query(" INSERT INTO dev_tasks
@@ -548,16 +548,16 @@ function tasks_approve( int   $task_id  ,
 
   // Sanitize and prepare the data
   $task_id        = sanitize($task_id, 'int', 0);
-  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
-  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
-  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
-  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
-  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
-  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
-  $task_public    = ($task_private)                 ? 0                                             : 1;
-  $task_silent    = (isset($contents['silent']))    ? sanitize($contents['silent'], 'int', 0, 1)    : 0;
+  $task_title_en  = sanitize_array_element($contents, 'title_en', 'string');
+  $task_title_fr  = sanitize_array_element($contents, 'title_fr', 'string');
+  $task_body_en   = sanitize_array_element($contents, 'body_en', 'string');
+  $task_body_fr   = sanitize_array_element($contents, 'body_fr', 'string');
+  $task_priority  = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 5, default: 0);
+  $task_category  = sanitize_array_element($contents, 'category', 'int', min: 0, default: 0);
+  $task_milestone = sanitize_array_element($contents, 'milestone', 'int', min: 0, default: 0);
+  $task_private   = sanitize_array_element($contents, 'private', 'int', min: 0, max: 1, default: 0);
+  $task_public    = ($task_private) ? 0 : 1;
+  $task_silent    = sanitize_array_element($contents, 'silent', 'int', min: 0, max: 1, default: 0);
 
   // Error: No title
   if(!$task_title_en && !$task_title_fr)
@@ -597,26 +597,26 @@ function tasks_approve( int   $task_id  ,
   $path     = root_path();
 
   // Prepare the message's title
-  $message_title = ($lang == 'FR') ? 'Tâche acceptée' : 'Task proposal approved';
+  $message_title = ($lang === 'FR') ? 'Tâche acceptée' : 'Task proposal approved';
 
   // Prepare the message's body
-  if($lang == 'FR')
+  if($lang === 'FR')
     $message_body = <<<EOT
-[url=${path}pages/tasks/${task_id}]Votre proposition de tâche a été approuvée.[/url]
+[url={$path}pages/tasks/{$task_id}]Votre proposition de tâche a été approuvée.[/url]
 
 Nous vous remercions pour votre participation au développement de NoBleme.
 EOT;
   else
     $message_body = <<<EOT
-[url=${path}pages/tasks/${task_id}]Your task proposal has been approved.[/url]
+[url={$path}pages/tasks/{$task_id}]Your task proposal has been approved.[/url]
 
 Thank you for helping NoBleme's development.
 EOT;
 
   // If the task is private, prepare a different message
-  if($task_private && $lang == 'FR')
+  if($task_private && $lang === 'FR')
     $message_body = <<<EOT
-Une proposition de [url=${path}pages/tasks/list]tâche[/url] que vous avez fait récemment a été acceptée.
+Une proposition de [url={$path}pages/tasks/list]tâche[/url] que vous avez fait récemment a été acceptée.
 
 La tâche va rester privée pour le moment : soit elle est sensible pour la sécurité du site, soit il s'agit d'une idée qui sera meilleure sous la forme d'une surprise pour le reste des personnes utilisant le site.
 
@@ -624,7 +624,7 @@ Merci d'en conserver le secret. Nous vous remercions pour votre participation au
 EOT;
   else if($task_private)
     $message_body = <<<EOT
-You made a [url=${path}pages/tasks/list]task[/url] proposal which has been approved.
+You made a [url={$path}pages/tasks/list]task[/url] proposal which has been approved.
 
 The task will remain private for now: it is either too sensitive for the website's security, or is a great idea that would be better kept secret in order to surprise everyone else once it is done.
 
@@ -632,7 +632,7 @@ Thank you for helping NoBleme's development. Please keep this secret for now!
 EOT;
 
   // Send the notification message unless it's being sent to self
-  if($user_id != $admin_id)
+  if($user_id !== $admin_id)
     private_message_send( $message_title          ,
                           $message_body           ,
                           recipient: $user_id     ,
@@ -723,42 +723,42 @@ function tasks_reject(  int     $task_id            ,
   $admin_id = user_get_id();
 
   // Prepare the message's title
-  $message_title = ($lang == 'FR') ? 'Tâche refusée' : 'Task proposal rejected';
+  $message_title = ($lang === 'FR') ? 'Tâche refusée' : 'Task proposal rejected';
 
   // If a reason is specified, prepare it
-  if($reason && $lang == 'FR')
+  if($reason && $lang === 'FR')
     $reason = <<<EOT
 
-Votre proposition a été rejetée pour la raison suivante : ${reason}
+Votre proposition a été rejetée pour la raison suivante : {$reason}
 
 EOT;
   else if($reason)
     $reason = <<<EOT
 
-Your proposal has been rejected for the following reason: ${reason}
+Your proposal has been rejected for the following reason: {$reason}
 
 EOT;
 
   // Prepare the message's body
-  if($lang == 'FR')
+  if($lang === 'FR')
     $message_body = <<<EOT
-Vous avez fait une [url=${path}pages/tasks/proposal]proposition de tâche[/url], qui a été rejetée.
-${reason}
+Vous avez fait une [url={$path}pages/tasks/proposal]proposition de tâche[/url], qui a été rejetée.
+{$reason}
 Malgré ce rejet, nous vous encourageons à continuer à contribuer dans le futur en rapportant des bugs ou en proposant vos idées.
 
 Nous vous remercions pour votre participation au développement de NoBleme.
 EOT;
   else
     $message_body = <<<EOT
-You made a [url=${path}pages/tasks/proposal]task proposal[/url], which has been rejected.
-${reason}
+You made a [url={$path}pages/tasks/proposal]task proposal[/url], which has been rejected.
+{$reason}
 Despite this rejection, we encourage you to continue contributing to NoBleme in the future by reporting bugs or suggesting your ideas.
 
 Thank you for helping NoBleme's development.
 EOT;
 
   // Send the notification message unless it's being sent to self
-  if($user_id != $admin_id)
+  if($user_id !== $admin_id)
     private_message_send( $message_title          ,
                           $message_body           ,
                           recipient: $user_id     ,
@@ -854,7 +854,7 @@ function tasks_solve( int     $task_id              ,
   tasks_stats_recalculate_user($task_data['creator_id']);
 
   // If stealthy mode is requested or the author is the one currently approving the task, stop here
-  if($is_stealthy || $task_data['creator_id'] == user_get_id())
+  if($is_stealthy || $task_data['creator_id'] === user_get_id())
     return null;
 
   // Fetch some data about the user
@@ -864,18 +864,18 @@ function tasks_solve( int     $task_id              ,
   $admin_id = user_get_id();
 
   // Prepare the message's title
-  $message_title = ($lang == 'FR') ? 'Tâche résolue' : 'Task solved';
+  $message_title = ($lang === 'FR') ? 'Tâche résolue' : 'Task solved';
 
   // Prepare the message's body
-  if($lang == 'FR')
+  if($lang === 'FR')
     $message_body = <<<EOT
-Une tâche que vous avez proposée a été résolue : [url=${path}pages/tasks/${task_id}]Tâche #${task_id}[/url].
+Une tâche que vous avez proposée a été résolue : [url={$path}pages/tasks/{$task_id}]Tâche #{$task_id}[/url].
 
 Nous vous remercions pour votre participation au développement de NoBleme.
 EOT;
   else
     $message_body = <<<EOT
-A task you opened has been solved: [url=${path}pages/tasks/${task_id}]Task #${task_id}[/url].
+A task you opened has been solved: [url={$path}pages/tasks/{$task_id}]Task #{$task_id}[/url].
 
 Thank you for helping NoBleme's development.
 EOT;
@@ -915,18 +915,18 @@ function tasks_edit(  int     $task_id  ,
 
   // Sanitize and prepare the data
   $task_id        = sanitize($task_id, 'int', 0);
-  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
-  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
-  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
-  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
-  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
-  $task_source    = (isset($contents['source']))    ? sanitize($contents['source'], 'string')       : '';
-  $task_author    = (isset($contents['author']))    ? $contents['author']                           : 0;
-  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
-  $task_public    = ($task_private)                 ? 0                                             : 1;
-  $task_solved    = (isset($contents['solved']))    ? sanitize($contents['solved'], 'int', 0, 1)    : 0;
+  $task_title_en  = sanitize_array_element($contents, 'title_en', 'string');
+  $task_title_fr  = sanitize_array_element($contents, 'title_fr', 'string');
+  $task_body_en   = sanitize_array_element($contents, 'body_en', 'string');
+  $task_body_fr   = sanitize_array_element($contents, 'body_fr', 'string');
+  $task_priority  = sanitize_array_element($contents, 'priority', 'int', min: 0, max: 5, default: 0);
+  $task_category  = sanitize_array_element($contents, 'category', 'int', min: 0, default: 0);
+  $task_milestone = sanitize_array_element($contents, 'milestone', 'int', min: 0, default: 0);
+  $task_source    = sanitize_array_element($contents, 'source', 'string');
+  $task_author    = (isset($contents['author'])) ? $contents['author'] : 0;
+  $task_private   = sanitize_array_element($contents, 'private', 'int', min: 0, max: 1, default: 0);
+  $task_public    = ($task_private) ? 0 : 1;
+  $task_solved    = sanitize_array_element($contents, 'solved', 'int', min: 0, max: 1, default: 0);
 
   // Error: No title
   if(!$task_title_en && !$task_title_fr)
@@ -1107,24 +1107,22 @@ function tasks_categories_list( bool  $exclude_archived = false ,
   // Exclude archived categories if requested
   $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_categories.is_archived = 0 ' : '';
 
-  // Fetch the categories
-  $qcategories  = "   SELECT    dev_tasks_categories.id           AS 'c_id'       ,
-                                dev_tasks_categories.is_archived  AS 'c_archived' ,
-                                dev_tasks_categories.title_en     AS 'c_title_en' ,
-                                dev_tasks_categories.title_fr     AS 'c_title_fr' ,
-                                dev_tasks_categories.title_$lang  AS 'c_title'
-                      FROM      dev_tasks_categories
-                                $query_archived ";
-
   // Sort the categories
   if($sort_by_archived)
-    $qcategories .= " ORDER BY  dev_tasks_categories.is_archived  ASC ,
-                                dev_tasks_categories.title_$lang  ASC ";
+    $query_sort = " ORDER BY  dev_tasks_categories.is_archived  ASC ,
+                              dev_tasks_categories.title_$lang  ASC ";
   else
-    $qcategories .= " ORDER BY  dev_tasks_categories.title_$lang  ASC ";
+    $query_sort = " ORDER BY  dev_tasks_categories.title_$lang  ASC ";
 
-  // Run the query
-  $qcategories = query($qcategories);
+  // Fetch the categories
+  $qcategories  = query(" SELECT  dev_tasks_categories.id           AS 'c_id'       ,
+                                  dev_tasks_categories.is_archived  AS 'c_archived' ,
+                                  dev_tasks_categories.title_en     AS 'c_title_en' ,
+                                  dev_tasks_categories.title_fr     AS 'c_title_fr' ,
+                                  dev_tasks_categories.title_$lang  AS 'c_title'
+                          FROM    dev_tasks_categories
+                                  $query_archived
+                                  $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
@@ -1161,8 +1159,8 @@ function tasks_categories_add( array $contents ) : void
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
 
   // Set default values in case some are missing
   $title_en = ($title_en) ? $title_en : '-';
@@ -1200,10 +1198,10 @@ function tasks_categories_edit( int   $category_id  = 0       ,
     return;
 
   // Sanitize and prepare the data
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
-  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])               : 0;
-  $archived = ($archived == 'true')           ? 1                                             : 0;
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
+  $archived = sanitize_array_element($contents, 'archived', 'string', default: 'false');
+  $archived = ($archived === 'true') ? 1 : 0;
 
   // Update the task category
   query(" UPDATE  dev_tasks_categories
@@ -1280,20 +1278,17 @@ function tasks_milestones_list( bool $exclude_archived = false ) : array
   $query_archived = ($exclude_archived) ? ' WHERE dev_tasks_milestones.is_archived = 0 ' : '';
 
   // Fetch the milestones
-  $qmilestones  = " SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
-                              dev_tasks_milestones.is_archived    AS 'm_archived' ,
-                              dev_tasks_milestones.title_en       AS 'm_title_en' ,
-                              dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
-                              dev_tasks_milestones.title_$lang    AS 'm_title'    ,
-                              dev_tasks_milestones.sorting_order  AS 'm_order'    ,
-                              dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
-                              dev_tasks_milestones.summary_fr     AS 'm_body_fr'
-                    FROM      dev_tasks_milestones
-                              $query_archived
-                    ORDER BY  dev_tasks_milestones.sorting_order DESC ";
-
-  // Run the query
-  $qmilestones = query($qmilestones);
+  $qmilestones  = query(" SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
+                                    dev_tasks_milestones.is_archived    AS 'm_archived' ,
+                                    dev_tasks_milestones.title_en       AS 'm_title_en' ,
+                                    dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
+                                    dev_tasks_milestones.title_$lang    AS 'm_title'    ,
+                                    dev_tasks_milestones.sorting_order  AS 'm_order'    ,
+                                    dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
+                                    dev_tasks_milestones.summary_fr     AS 'm_body_fr'
+                          FROM      dev_tasks_milestones
+                                    $query_archived
+                          ORDER BY  dev_tasks_milestones.sorting_order DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
@@ -1333,9 +1328,9 @@ function tasks_milestones_add( array $contents ) : void
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $order    = (isset($contents['order']))     ? sanitize($contents['order'], 'int', 0)    : 0;
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $order    = sanitize_array_element($contents, 'order', 'int', min: 0, default: 0);
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
 
   // Set default values in case some are missing
   $title_en = ($title_en) ? $title_en : '-';
@@ -1374,13 +1369,13 @@ function tasks_milestones_edit( int   $milestone_id = 0       ,
     return;
 
   // Sanitize and prepare the data
-  $order    = (isset($contents['order']))     ? sanitize($contents['order'], 'int', 0)    : 0;
-  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
-  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
-  $body_en  = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')  : '';
-  $body_fr  = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')  : '';
-  $archived = (isset($contents['archived']))  ? sanitize($contents['archived'])           : 0;
-  $archived = ($archived == 'true')           ? 1                                         : 0;
+  $order    = sanitize_array_element($contents, 'order', 'int', min: 0, default: 0);
+  $title_en = sanitize_array_element($contents, 'title_en', 'string');
+  $title_fr = sanitize_array_element($contents, 'title_fr', 'string');
+  $body_en  = sanitize_array_element($contents, 'body_en', 'string');
+  $body_fr  = sanitize_array_element($contents, 'body_fr', 'string');
+  $archived = sanitize_array_element($contents, 'archived', 'string', default: 'false');
+  $archived = ($archived === 'true') ? 1 : 0;
 
   // Update the task milestone
   query(" UPDATE  dev_tasks_milestones
@@ -1477,14 +1472,15 @@ function tasks_stats_list() : array
   // Add some stats to the return array
   $data['total']            = sanitize_output($dtasks['t_total']);
   $data['solved']           = sanitize_output($dtasks['t_solved']);
-  $temp                     = maths_percentage_of($dtasks['t_solved'], $dtasks['t_total']);
-  $data['percent_solved']   = number_display_format($temp, 'percentage', 1);
+  $data['percent_solved']   = number_display_format(maths_percentage_of($dtasks['t_solved'], $dtasks['t_total']) ,
+                                                    'percentage', 1);
   $data['unsolved']         = sanitize_output($dtasks['t_total'] - $dtasks['t_solved']);
-  $temp                     = maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']), $dtasks['t_total']);
-  $data['percent_unsolved'] = number_display_format($temp, 'percentage', 1);
+  $data['percent_unsolved'] = number_display_format(
+                                maths_percentage_of(($dtasks['t_total'] - $dtasks['t_solved']) , $dtasks['t_total']) ,
+                                'percentage', 1);
   $data['sourced']          = sanitize_output($dtasks['t_source']);
-  $temp                     = maths_percentage_of($dtasks['t_source'], $dtasks['t_solved']);
-  $data['percent_sourced']  = number_display_format($temp, 'percentage', 1);
+  $data['percent_sourced']  = number_display_format(maths_percentage_of($dtasks['t_source'], $dtasks['t_solved']) ,
+                                                    'percentage', 1);
 
   // Fetch opened tasks by year
   $qtasks = query(" SELECT    YEAR(FROM_UNIXTIME(dev_tasks.created_at)) AS 't_year' ,
@@ -1563,9 +1559,11 @@ function tasks_stats_list() : array
     $data['category_name_'.$i]      = sanitize_output($row['tc_title']);
     $data['category_count_'.$i]     = sanitize_output($row['tc_count']);
     $data['category_unsolved_'.$i]  = ($row['tc_unsolved']) ? sanitize_output($row['tc_unsolved']) : '&nbsp;';
-    $temp                           = maths_percentage_of($row['tc_unsolved'], $row['tc_count']);
-    $temp                           = sanitize_output(number_display_format($temp, 'percentage'));
-    $data['category_punsolved_'.$i] = ($row['tc_unsolved']) ? $temp : '';
+    $data['category_punsolved_'.$i] = ($row['tc_unsolved'])
+                                    ? sanitize_output(number_display_format(
+                                                            maths_percentage_of($row['tc_unsolved'], $row['tc_count'])
+                                                            , 'percentage'))
+                                    : '';
     $data['category_oldest_'.$i]    = ($row['tc_oldest']) ? sanitize_output($row['tc_oldest']) : '&nbsp;';
     $data['category_newest_'.$i]    = ($row['tc_newest']) ? sanitize_output($row['tc_newest']) : '&nbsp;';
   }
@@ -1599,8 +1597,9 @@ function tasks_stats_list() : array
     $data['milestone_id_'.$i]       = sanitize_output($row['tm_id']);
     $data['milestone_title_'.$i]    = sanitize_output($row['tm_title']);
     $data['milestone_body_'.$i]     = bbcodes(sanitize_output($row['tm_body'], preserve_line_breaks: true));
-    $temp                           = (isset($row['tm_date'])) ? date_to_text($row['tm_date'], strip_day: 1) : '-';
-    $data['milestone_date_'.$i]     = sanitize_output($temp);
+    $data['milestone_date_'.$i]     = (isset($row['tm_date']))
+                                    ? sanitize_output(date_to_text($row['tm_date'], strip_day: 1))
+                                    : '-';
     $data['milestone_solved_'.$i]   = $row['tm_solved'] ? sanitize_output($row['tm_solved']) : '&nbsp';
     $data['milestone_unsolved_'.$i] = $row['tm_unsolved'] ? sanitize_output($row['tm_unsolved']) : '&nbsp';
   }
@@ -1626,8 +1625,9 @@ function tasks_stats_list() : array
   {
     $data['priority_level_'.$i]   = sanitize_output($row['t_priority']);
     $data['priority_count_'.$i]   = sanitize_output($row['t_count']);
-    $temp                         = maths_percentage_of($row['t_count'], $data['total']);
-    $data['priority_percent_'.$i] = sanitize_output(number_display_format($temp, 'percentage'));
+    $data['priority_percent_'.$i] = sanitize_output(number_display_format(
+                                                      maths_percentage_of($row['t_count'], $data['total']) ,
+                                                      'percentage'));
     $data['priority_open_'.$i]    = ($row['t_unsolved']) ? sanitize_output($row['t_unsolved']) : '&nbsp;';
   }
 
@@ -1651,10 +1651,12 @@ function tasks_stats_list() : array
     $data['contrib_id_'.$i]     = sanitize_output($row['u_id']);
     $data['contrib_nick_'.$i]   = sanitize_output($row['u_nick']);
     $data['contrib_tasks_'.$i]  = sanitize_output($row['us_tasks']);
-    $temp                       = $row['us_tasks'] - $row['us_solved'];
-    $data['contrib_open_'.$i]   = ($temp) ? sanitize_output($temp) : '&nbsp;';
-    $temp                       = ($temp) ? maths_percentage_of($temp, $row['us_tasks']) : '';
-    $data['contrib_popen_'.$i]  = ($temp) ? sanitize_output('('.number_display_format($temp, 'percentage').')') : '';
+    $open_tasks                 = $row['us_tasks'] - $row['us_solved'];
+    $data['contrib_open_'.$i]   = ($open_tasks) ? sanitize_output($open_tasks) : '&nbsp;';
+    $percentage_open_tasks      = ($open_tasks) ? maths_percentage_of($open_tasks, $row['us_tasks']) : '';
+    $data['contrib_popen_'.$i]  = ($percentage_open_tasks)
+                                ? sanitize_output('('.number_display_format($percentage_open_tasks, 'percentage').')')
+                                : '';
   }
 
   // ADd the number of contributors to the return array

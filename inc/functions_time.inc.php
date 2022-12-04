@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -32,9 +32,9 @@ function time_since( int $timestamp ) : string
   // Return the time difference in plain text
   if($time_since < 0)
     return __('time_diff_past_future');
-  else if ($time_since == 0)
+  else if ($time_since === 0)
     return __('time_diff_past_now');
-  else if ($time_since == 1)
+  else if ($time_since === 1)
     return __('time_diff_past_second');
   else if ($time_since <= 60)
     return __('time_diff_past_seconds', $time_since, 0, 0, array($time_since));
@@ -81,9 +81,9 @@ function time_until( int $timestamp ) : string
   // Return the time difference in plain text
   if($time_until < 0)
     return __('time_diff_future_past');
-  else if ($time_until == 0)
+  else if ($time_until === 0)
     return __('time_diff_past_now');
-  else if ($time_until == 1)
+  else if ($time_until === 1)
     return __('time_diff_future_second');
   else if ($time_until < 60)
     return __('time_diff_future_seconds', $time_until, 0, 0, array($time_until));

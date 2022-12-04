@@ -19,7 +19,7 @@ $page_description = "Statistics generated from the tasks in NoBleme's to-do list
 
 // Extra CSS & JS
 $css  = array('tasks');
-$js   = array('common/toggle', 'common/selector');
+$js   = array('common/selector');
 
 
 
@@ -256,7 +256,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <?php if($tasks_stats['category_oldest_'.$i] == $tasks_stats['category_newest_'.$i]) { ?>
+        <?php if($tasks_stats['category_oldest_'.$i] === $tasks_stats['category_newest_'.$i]) { ?>
 
         <td colspan="2">
           <?=$tasks_stats['category_oldest_'.$i]?>

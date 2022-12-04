@@ -179,7 +179,7 @@ function compendium_missing_delete( missing_id  ,
     postdata = 'compendium_missing_delete_id=' + fetch_sanitize(missing_id);
 
     // Submit the deletion
-    if(page == 'list')
+    if(page === 'list')
       fetch_page('page_missing_list', 'compendium_missing_list_tbody', postdata);
     else
     {

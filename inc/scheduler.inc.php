@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +193,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     //***************************************************************************************************************//
     // End a ban after it has expired
 
-    if($scheduler_type == 'users_unban')
+    if($scheduler_type === 'users_unban')
     {
       // Fetch data on the user
       $duser = mysqli_fetch_array(query(" SELECT  users.username        AS 'u_nick'   ,
@@ -233,7 +233,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     //***************************************************************************************************************//
     // End an IP ban after it has expired
 
-    else if($scheduler_type == 'users_unban_ip')
+    else if($scheduler_type === 'users_unban_ip')
     {
       // Only proceed if the IP ban actually exists
       if(database_row_exists('system_ip_bans', $scheduler_action_id))
@@ -270,7 +270,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     //***************************************************************************************************************//
     // Recalculate a meetup's stats once it's over
 
-    else if($scheduler_type == 'meetups_end')
+    else if($scheduler_type === 'meetups_end')
     {
       // Only proceed if the meetup actually exists
       if(database_row_exists('meetups', $scheduler_action_id))

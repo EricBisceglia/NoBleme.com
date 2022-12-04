@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -73,7 +73,7 @@ function admin_ban_create(  int     $banner_id            ,
     return __('admin_ban_add_error_wrong_user');
 
   // Error: Can't ban self
-  if($banned_user_id == $banner_id)
+  if($banned_user_id === $banner_id)
     return __('admin_ban_add_error_self');
 
   // Error: Moderators can't ban admins
@@ -81,15 +81,15 @@ function admin_ban_create(  int     $banner_id            ,
     return __('admin_ban_add_error_moderator');
 
   // Determine when the ban ends
-  if($ban_length == 1)
+  if($ban_length === 1)
     $ban_end  = strtotime('+1 day', time());
-  else if($ban_length == 7)
+  else if($ban_length === 7)
     $ban_end  = strtotime('+1 week', time());
-  else if($ban_length == 30)
+  else if($ban_length === 30)
     $ban_end  = strtotime('+1 month', time());
-  else if($ban_length == 365)
+  else if($ban_length === 365)
     $ban_end  = strtotime('+1 year', time());
-  else if($ban_length == 3650)
+  else if($ban_length === 3650)
     $ban_end  = strtotime('+10 years', time());
   else
     return __('admin_ban_add_error_length');
@@ -148,10 +148,10 @@ function admin_ban_create(  int     $banner_id            ,
   $ban_duration_fr  = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
 
   // Private message to the banned user
-  $ban_duration_pm    = ($banned_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
+  $ban_duration_pm    = ($banned_user_language === 'EN') ? $ban_duration_en : $ban_duration_fr;
   $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en_raw)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
   $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr_raw)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
-  $ban_reason_pm      = ($banned_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
+  $ban_reason_pm      = ($banned_user_language === 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
   private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, lang: $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0, hide_admin_mail: true);
 
   // IRC bot messages
@@ -217,7 +217,7 @@ function admin_ban_edit(  int     $banner_id            ,
     return;
 
   // Do nothing if it is an attempt to ban self
-  if($banned_id == $banner_id)
+  if($banned_id === $banner_id)
     return;
 
   // Do nothing if a moderator is trying to ban an administrator
@@ -232,15 +232,15 @@ function admin_ban_edit(  int     $banner_id            ,
                                       WHERE   users.id = '$banned_id' "));
 
   // Determine when the ban ends
-  if($ban_length == 1)
+  if($ban_length === 1)
     $ban_end  = strtotime('+1 day', time());
-  else if($ban_length == 7)
+  else if($ban_length === 7)
     $ban_end  = strtotime('+1 week', time());
-  else if($ban_length == 30)
+  else if($ban_length === 30)
     $ban_end  = strtotime('+1 month', time());
-  else if($ban_length == 365)
+  else if($ban_length === 365)
     $ban_end  = strtotime('+1 year', time());
-  else if($ban_length == 3650)
+  else if($ban_length === 3650)
     $ban_end  = strtotime('+10 years', time());
   else
     $ban_end  = $dban['b_end'];
@@ -266,7 +266,7 @@ function admin_ban_edit(  int     $banner_id            ,
                   username:             $banned_username_raw  );
 
   // Generate a modlog and detailed activity logs if needed
-  if($ban_length || $ban_reason_en_raw != $dban['b_reason_en'] || $ban_reason_fr_raw != $dban['b_reason_fr'])
+  if($ban_length || $ban_reason_en_raw !== $dban['b_reason_en'] || $ban_reason_fr_raw !== $dban['b_reason_fr'])
   {
     $modlog = log_activity( 'users_banned_edit'                         ,
                             is_moderators_only:   1                     ,
@@ -276,9 +276,9 @@ function admin_ban_edit(  int     $banner_id            ,
                             fk_users:             $banned_id            ,
                             username:             $banned_username_raw  ,
                             moderator_username:   $banner_username_raw  );
-    if($ban_reason_en_raw != $dban['b_reason_en'])
+    if($ban_reason_en_raw !== $dban['b_reason_en'])
       log_activity_details($modlog, 'New ban reason (EN)', 'Nouvelle raison du ban (EN)', $dban['b_reason_en'], $ban_reason_en_raw);
-    if($ban_reason_fr_raw != $dban['b_reason_fr'])
+    if($ban_reason_fr_raw !== $dban['b_reason_fr'])
       log_activity_details($modlog, 'New ban reason (FR)', 'Nouvelle raison du ban (FR)', $dban['b_reason_fr'], $ban_reason_fr_raw);
   }
 
@@ -313,7 +313,7 @@ function admin_ban_edit(  int     $banner_id            ,
   if($ban_length)
   {
     $ban_user_language  = user_get_language($banned_id);
-    $ban_duration_pm    = ($ban_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
+    $ban_duration_pm    = ($ban_user_language === 'EN') ? $ban_duration_en : $ban_duration_fr;
     private_message_send(__('admin_ban_edit_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_edit_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, $ban_user_language), $ban_duration_pm[$ban_length])), $banned_id, 0, hide_admin_mail: true);
   }
 }
@@ -361,7 +361,7 @@ function admin_ban_delete(  string  $unbanned_id            ,
     return;
 
   // Do nothing if it is an attempt to unban self
-  if($unbanned_id == $unbanner_id)
+  if($unbanned_id === $unbanner_id)
     return;
 
   // Do nothing if a moderator is trying to unban an administrator
@@ -455,9 +455,9 @@ function admin_ip_ban_get( int $ip_ban_id ) : array
   // Prepare the data
   $data['ip_address'] = sanitize_output($dban['b_ip']);
   $data['time_left']  = sanitize_output(time_until($dban['b_end']));
-  $temp               = ($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en'];
-  $lang               = user_get_language();
-  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
+  $data['ban_reason'] = (user_get_language() === 'EN')
+                      ? sanitize_output($dban['b_reason_en'])
+                      : sanitize_output(($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en']);
 
   // Return the data
   return $data;
@@ -558,7 +558,7 @@ function admin_ip_ban_create( int     $banner_id              ,
     return __('admin_ban_add_error_ip_and_user');
 
   // Error: Cannot ban wildcard
-  if(!$username && $ip_address == '*')
+  if(!$username && $ip_address === '*')
     return __('admin_ban_add_error_wildcard');
 
   // Error: One wildcard maximum
@@ -570,15 +570,15 @@ function admin_ip_ban_create( int     $banner_id              ,
     return __('admin_ban_add_error_characters');
 
   // Determine when the ban ends
-  if($ban_length == 1)
+  if($ban_length === 1)
     $ban_end  = strtotime('+1 day', time());
-  else if($ban_length == 7)
+  else if($ban_length === 7)
     $ban_end  = strtotime('+1 week', time());
-  else if($ban_length == 30)
+  else if($ban_length === 30)
     $ban_end  = strtotime('+1 month', time());
-  else if($ban_length == 365)
+  else if($ban_length === 365)
     $ban_end  = strtotime('+1 year', time());
-  else if($ban_length == 3650)
+  else if($ban_length === 3650)
     $ban_end  = strtotime('+10 years', time());
   else
     return __('admin_ban_add_error_length');
@@ -594,7 +594,7 @@ function admin_ip_ban_create( int     $banner_id              ,
       return __('admin_ban_add_error_wrong_user');
 
     // Error: Can't ban self
-    if($banned_user_id == $banner_id)
+    if($banned_user_id === $banner_id)
       return __('admin_ban_add_error_self');
 
     // Error: Moderators can't ban admins
@@ -897,18 +897,24 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   $data['banned_ip']        = sanitize_output($dlog['l_ip']);
   $data['total_ip_ban']     = sanitize_output($dlog['l_total_ip_ban']);
   $data['ip_bans']          = ($dlog['l_ip']) ? admin_ip_ban_list_users($dlog['l_ip']) : '';
-  $temp                     = date_to_text($dlog['l_start'], 0, 1, $lang);
-  $data['start']            = sanitize_output($temp.' ('.time_since($dlog['l_start']).')');
-  $temp                     = ($dlog['l_end'] > time()) ? time_until($dlog['l_end']) : time_since($dlog['l_end']);
-  $data['end']              = sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang).' ('.$temp.')');
-  $temp                     = date_to_text($dlog['l_unban'], 0, 1, $lang);
-  $data['unban']            = ($dlog['l_unban']) ? sanitize_output($temp.' ('.time_since($dlog['l_unban']).')') : '-';
+  $data['start']            = sanitize_output(
+                              date_to_text($dlog['l_start'], 0, 1, $lang).' ('.time_since($dlog['l_start']).')');
+  $data['end']              = ($dlog['l_end'] > time())
+                            ? sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang)
+                              .' ('.time_until($dlog['l_end']).')')
+                            : sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang)
+                              .' ('.time_since($dlog['l_end']).')');
+  $data['unban']            = ($dlog['l_unban'])
+                            ? sanitize_output(date_to_text($dlog['l_unban'], 0, 1, $lang)
+                              .' ('.time_since($dlog['l_unban']).')')
+                            : '-';
   $data['days']             = time_days_elapsed($dlog['l_start'], $dlog['l_end'], 1);
-  $temp                     = ($dlog['l_unban']) ? $dlog['l_unban'] : time();
-  $data['served']           = time_days_elapsed($dlog['l_start'], $temp, 1);
-  $temp                     = maths_percentage_of($data['served'], $data['days']);
-  $temp                     = ($temp > 100) ? 100 : $temp;
-  $data['percent']          = number_display_format($temp, "percentage", 0);
+  $data['served']           = ($dlog['l_unban'])
+                            ? time_days_elapsed($dlog['l_start'], $dlog['l_unban'], 1)
+                            : time_days_elapsed($dlog['l_start'], time(), 1);
+  $percentage_served        = maths_percentage_of($data['served'], $data['days']);
+  $percentage_served        = ($percentage_served > 100) ? 100 : $percentage_served;
+  $data['percent']          = number_display_format($percentage_served, "percentage", 0);
   $data['banned_by']        = sanitize_output($dlog['banner_nick']);
   $data['banned_by_id']     = sanitize_output($dlog['banner_id']);
   $data['ban_reason_en']    = ($dlog['l_reason_en']) ? sanitize_output($dlog['l_reason_en']) : '-';
@@ -935,7 +941,7 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
 */
 
 function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
-                              array  $search    = array()   ) : array
+                              array   $search   = array()   ) : array
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -946,59 +952,58 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
   require_included_file('functions_numbers.inc.php');
 
   // Sanitize the search parameters
-  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1) : -1;
-  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string')   : NULL;
-  $search_banner    = isset($search['banner'])    ? sanitize($search['banner'], 'string')     : NULL;
-  $search_unbanner  = isset($search['unbanner'])  ? sanitize($search['unbanner'], 'string')   : NULL;
+  $search_status    = sanitize_array_element($search, 'status', 'int', min: -1, max: 1, default: -1);
+  $search_username  = sanitize_array_element($search, 'username', 'string');
+  $search_banner    = sanitize_array_element($search, 'banner', 'string');
+  $search_unbanner  = sanitize_array_element($search, 'unbanner', 'string');
 
-  // Prepare the query to fetch the log list
-  $qlogs  = "   SELECT    logs_bans.id                AS 'l_id'         ,
-                          logs_bans.banned_ip_address AS 'l_ip'         ,
-                          logs_bans.banned_at         AS 'l_start'      ,
-                          logs_bans.banned_until      AS 'l_end'        ,
-                          logs_bans.unbanned_at       AS 'l_unban'      ,
-                          logs_bans.ban_reason_en     AS 'l_reason_en'  ,
-                          logs_bans.ban_reason_fr     AS 'l_reason_fr'  ,
-                          logs_bans.unban_reason_en   AS 'l_ureason_en' ,
-                          logs_bans.unban_reason_fr   AS 'l_ureason_fr' ,
-                          logs_bans.is_a_total_ip_ban AS 'l_total_ban'  ,
-                          users_banned.id             AS 'banned_id'    ,
-                          users_banned.username       AS 'banned_nick'  ,
-                          users_banner.id             AS 'banner_id'    ,
-                          users_banner.username       AS 'banner_nick'  ,
-                          users_unbanner.id           AS 'unbanner_id'  ,
-                          users_unbanner.username     AS 'unbanner_nick'
-                FROM      logs_bans
-                LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
-                LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
-                LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
-                WHERE     1 = 1 ";
+  // Determine which logs to show
+  $query_search = match($search_status)
+  {
+    0       => " WHERE logs_bans.unbanned_at > 0 "  ,
+    1       => " WHERE logs_bans.unbanned_at = 0 "  ,
+    default => " WHERE 1 = 1 "                      ,
+  };
 
-  // Search for data if requested
-  if($search_status == 0)
-    $qlogs .= " AND       logs_bans.unbanned_at         >     0                       ";
-  else if($search_status == 1)
-    $qlogs .= " AND       logs_bans.unbanned_at         =     0                       ";
-  if($search_username)
-    $qlogs .= " AND     ( users_banned.username         LIKE  '%$search_username%'
-                OR        logs_bans.banned_ip_address   LIKE  '%$search_username%' )  ";
-  if($search_banner)
-    $qlogs .= " AND       users_banner.username         LIKE  '%$search_banner%'      ";
-  if($search_unbanner)
-    $qlogs .= " AND       users_unbanner.username       LIKE  '%$search_unbanner%'    ";
+  // Search through the data
+  $query_search .=  ($search_username)  ? " AND ( users_banned.username       LIKE '%$search_username%'
+                                            OR    logs_bans.banned_ip_address LIKE '%$search_username%' ) " : "";
+  $query_search .=  ($search_banner)    ? " AND   users_banner.username       LIKE '%$search_banner%'     " : "";
+  $query_search .=  ($search_unbanner)  ? " AND   users_unbanner.username     LIKE '%$search_unbanner%'   " : "";
 
-  // Sort the data as requested
-  if($sort_by == 'username')
-    $qlogs .= " ORDER BY  logs_bans.banned_ip_address != '' ,
-                          users_banned.username       ASC   ,
-                          logs_bans.banned_ip_address ASC   ";
-  else if($sort_by == 'unbanned')
-    $qlogs .= " ORDER BY  logs_bans.unbanned_at       DESC  ";
-  else
-    $qlogs .= " ORDER BY  logs_bans.banned_at         DESC  ";
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'username'  => " ORDER BY logs_bans.banned_ip_address != '' ,
+                              users_banned.username       ASC   ,
+                              logs_bans.banned_ip_address ASC   " ,
+    'unbanned'  => " ORDER BY logs_bans.unbanned_at       DESC  " ,
+    default     => " ORDER BY logs_bans.banned_at         DESC  " ,
+  };
 
-  // Execute the query
-  $qlogs = query($qlogs);
+  // Fetch the log list
+  $qlogs  = query("     SELECT    logs_bans.id                AS 'l_id'         ,
+                                  logs_bans.banned_ip_address AS 'l_ip'         ,
+                                  logs_bans.banned_at         AS 'l_start'      ,
+                                  logs_bans.banned_until      AS 'l_end'        ,
+                                  logs_bans.unbanned_at       AS 'l_unban'      ,
+                                  logs_bans.ban_reason_en     AS 'l_reason_en'  ,
+                                  logs_bans.ban_reason_fr     AS 'l_reason_fr'  ,
+                                  logs_bans.unban_reason_en   AS 'l_ureason_en' ,
+                                  logs_bans.unban_reason_fr   AS 'l_ureason_fr' ,
+                                  logs_bans.is_a_total_ip_ban AS 'l_total_ban'  ,
+                                  users_banned.id             AS 'banned_id'    ,
+                                  users_banned.username       AS 'banned_nick'  ,
+                                  users_banner.id             AS 'banner_id'    ,
+                                  users_banner.username       AS 'banner_nick'  ,
+                                  users_unbanner.id           AS 'unbanner_id'  ,
+                                  users_unbanner.username     AS 'unbanner_nick'
+                        FROM      logs_bans
+                        LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
+                        LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
+                        LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
+                                  $query_search
+                                  $query_sort ");
 
   // Fetch the user's language
   $lang = user_get_language();
@@ -1016,29 +1021,30 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
     $data[$i]['end']                = ($row['l_unban']) ? time_since($row['l_unban']) : '';
     $data[$i]['end_full']           = date_to_text($row['l_end'], 0, 1, $lang);
     $data[$i]['duration']           = time_days_elapsed($row['l_start'], $row['l_end'], 1);
-    $temp                           = ($row['l_unban']) ? $row['l_unban'] : time();
-    $data[$i]['served']             = time_days_elapsed($row['l_start'], $temp, 1);
-    $temp                           = maths_percentage_of($data[$i]['served'], $data[$i]['duration']);
-    $temp                           = ($temp > 100) ? 100 : $temp;
-    $data[$i]['served_percent']     = number_display_format($temp, "percentage", 0);
+    $data[$i]['served']             = ($row['l_unban'])
+                                    ? time_days_elapsed($row['l_start'], $row['l_unban'], 1)
+                                    : time_days_elapsed($row['l_start'], time(), 1);
+    $percent_served                 = maths_percentage_of($data[$i]['served'], $data[$i]['duration']);
+    $percent_served                 = ($percent_served > 100) ? 100 : $percent_served;
+    $data[$i]['served_percent']     = number_display_format($percent_served, "percentage", 0);
     $data[$i]['banned_by']          = sanitize_output($row['banner_nick']);
     $data[$i]['banned_by_id']       = $row['banner_id'];
     $data[$i]['unbanned_by']        = sanitize_output($row['unbanner_nick']);
     $data[$i]['unbanned_by_id']     = $row['unbanner_id'];
-    $temp                           = ($row['l_reason_fr']) ? $row['l_reason_fr'] : $row['l_reason_en'];
-    $temp                           = ($lang == 'EN') ? $row['l_reason_en'] : $temp;
-    $data[$i]['ban_reason']         = sanitize_output(string_truncate($temp, 9, '...'));
-    $data[$i]['ban_reason_full']    = (strlen($temp) > 9 ) ? sanitize_output($temp) : '';
-    $temp                           = ($row['l_ureason_fr']) ? $row['l_ureason_fr'] : $row['l_ureason_en'];
-    $temp                           = ($lang == 'EN') ? $row['l_ureason_en'] : $temp;
-    $data[$i]['unban_reason']       = sanitize_output(string_truncate($temp, 9, '...'));
-    $data[$i]['unban_reason_full']  = (strlen($temp) > 9 ) ? sanitize_output($temp) : '';
+    $ban_reason                     = ($row['l_reason_fr']) ? $row['l_reason_fr'] : $row['l_reason_en'];
+    $ban_reason                     = ($lang === 'EN') ? $row['l_reason_en'] : $ban_reason;
+    $data[$i]['ban_reason']         = sanitize_output(string_truncate($ban_reason, 9, '...'));
+    $data[$i]['ban_reason_full']    = (strlen($ban_reason) > 9 ) ? sanitize_output($ban_reason) : '';
+    $unban_reason                   = ($row['l_ureason_fr']) ? $row['l_ureason_fr'] : $row['l_ureason_en'];
+    $unban_reason                   = ($lang === 'EN') ? $row['l_ureason_en'] : $unban_reason;
+    $data[$i]['unban_reason']       = sanitize_output(string_truncate($unban_reason, 9, '...'));
+    $data[$i]['unban_reason_full']  = (strlen($unban_reason) > 9 ) ? sanitize_output($unban_reason) : '';
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
-  if($sort_by == 'sentence')
+  if($sort_by === 'sentence')
     array_multisort(array_column($data, "duration"), SORT_DESC, $data);
-  if($sort_by == 'served')
+  if($sort_by === 'served')
     array_multisort(array_column($data, "served"), SORT_DESC, $data);
 
   // Add the number of rows to the data

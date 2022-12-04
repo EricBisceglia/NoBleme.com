@@ -33,8 +33,8 @@ $js = array('quotes/list');
 if(user_is_logged_in() && isset($_POST['quotes_lang_en']) && isset($_POST['quotes_lang_fr']))
 {
   // Assemble the new values
-  $quotes_lang  = ($_POST['quotes_lang_en'] == 'true') ? 'EN' : '';
-  $quotes_lang .= ($_POST['quotes_lang_fr'] == 'true') ? 'FR' : '';
+  $quotes_lang  = ($_POST['quotes_lang_en'] === 'true') ? 'EN' : '';
+  $quotes_lang .= ($_POST['quotes_lang_fr'] === 'true') ? 'FR' : '';
 
   // Update the user settings
   account_update_settings('quotes_languages', $quotes_lang);
@@ -54,9 +54,9 @@ $quotes_settings = user_settings_quotes();
 
 // Override the quote language settings if a new value is being submitted
 if(isset($_POST['quotes_lang_en']))
-  $quotes_settings['show_en'] = ($_POST['quotes_lang_en'] == 'true') ? 1 : 0;
+  $quotes_settings['show_en'] = ($_POST['quotes_lang_en'] === 'true') ? 1 : 0;
 if(isset($_POST['quotes_lang_fr']))
-  $quotes_settings['show_fr'] = ($_POST['quotes_lang_fr'] == 'true') ? 1 : 0;
+  $quotes_settings['show_fr'] = ($_POST['quotes_lang_fr'] === 'true') ? 1 : 0;
 
 // Check if a single quote is being requested
 $quote_id = form_fetch_element('id', request_type: 'GET');
@@ -95,7 +95,7 @@ $quotes_list = quotes_list( $quotes_search    ,
 // Define whether quotes are being filtered
 if($quotes_user_id)
   $quotes_filter = sanitize_output(user_get_username((int)$quotes_user_id));
-else if($quotes_year == -1)
+else if($quotes_year === -1)
   $quotes_filter = __('quotes_count_undated', preset_values: array(quotes_stats_get_oldest_year()));
 else if($quotes_year)
   $quotes_filter = sanitize_output((int)$quotes_year);

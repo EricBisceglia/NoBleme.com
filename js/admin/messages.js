@@ -20,9 +20,7 @@
 function admin_mail_display( message_id = 0 )
 {
   // Make the message appear read by removing its red glow in the message list
-  document.getElementById('admin_mail_list_' + message_id).classList.remove('text_red');
-  document.getElementById('admin_mail_list_' + message_id).classList.remove('glow');
-  document.getElementById('admin_mail_list_' + message_id).classList.remove('bold');
+  css_remove('admin_mail_list_' + message_id, ['text_red', 'glow', 'bold']);
 
   // Assemble the postdata
   postdata = 'admin_mail_display_message=' + fetch_sanitize(message_id);
@@ -102,7 +100,7 @@ function admin_mail_reply_send( message_id )
   // Don't send empty messages
   if(!document.getElementById('admin_mail_reply_textarea').value)
   {
-    document.getElementById('admin_mail_reply_textarea').classList.add('glow');
+    css_add('admin_mail_reply_textarea', 'glow');
     return;
   }
 

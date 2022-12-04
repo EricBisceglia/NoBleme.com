@@ -89,7 +89,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $doppelgangers['rows']; $i++) { ?>
 
-      <?php if(!$i || $doppelgangers[$i]['ip'] != $doppelgangers[$i-1]['ip']) { ?>
+      <?php if(!$i || $doppelgangers[$i]['ip'] !== $doppelgangers[$i-1]['ip']) { ?>
       <tr>
         <?php if($doppelgangers['includes_bans']) { ?>
         <td colspan="4" class="dark smallest">
@@ -103,7 +103,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
 
-        <?php if(!$i || $doppelgangers[$i]['ip'] != $doppelgangers[$i-1]['ip']) { ?>
+        <?php if(!$i || $doppelgangers[$i]['ip'] !== $doppelgangers[$i-1]['ip']) { ?>
 
         <?php if($is_admin) { ?>
         <td rowspan="<?=$doppelgangers[$i]['count']?>" class="bold">

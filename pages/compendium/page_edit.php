@@ -23,7 +23,7 @@ $page_title_fr    = "Compendium : Modifier une page";
 
 // Extra CSS & JS
 $css  = array('compendium');
-$js   = array('compendium/admin', 'common/toggle');
+$js   = array('compendium/admin');
 
 
 
@@ -226,24 +226,24 @@ $compendium_types_list = compendium_types_list();
 
 // Keep the proper page type selected
 for($i = 0; $i < $compendium_types_list['rows']; $i++)
-  $compendium_edit_type_select[$i] = ($compendium_edit_type == $compendium_types_list[$i]['id']) ? ' selected' : '';
+  $compendium_edit_type_select[$i] = ($compendium_edit_type === $compendium_types_list[$i]['id']) ? ' selected' : '';
 
 // Fetch the era list
 $compendium_eras_list = compendium_eras_list();
 
 // Keep the proper era selected
 for($i = 0; $i < $compendium_eras_list['rows']; $i++)
-  $compendium_edit_era_select[$i] = ($compendium_edit_era == $compendium_eras_list[$i]['id']) ? ' selected' : '';
+  $compendium_edit_era_select[$i] = ($compendium_edit_era === $compendium_eras_list[$i]['id']) ? ' selected' : '';
 
 // Keep the proper appearance and peak entries selected
 for($i = 1; $i <= 12; $i++)
-  $compendium_edit_appear_month_select[$i] = ($compendium_edit_appear_month == $i)  ? ' selected' : '';
+  $compendium_edit_appear_month_select[$i] = ($compendium_edit_appear_month === $i)  ? ' selected' : '';
 for($i = 1; $i <= 12; $i++)
-  $compendium_edit_peak_month_select[$i]   = ($compendium_edit_peak_month == $i)    ? ' selected' : '';
+  $compendium_edit_peak_month_select[$i]   = ($compendium_edit_peak_month === $i)    ? ' selected' : '';
 
 // Keep the proper categories checked
 for($i = 0; $i < $compendium_categories_list['rows']; $i++)
-$compendium_edit_category_checkbox[$i] = ($compendium_edit_category[$compendium_categories_list[$i]['id']] == $compendium_categories_list[$i]['id']) ? ' checked' : '';
+$compendium_edit_category_checkbox[$i] = ($compendium_edit_category[$compendium_categories_list[$i]['id']] === $compendium_categories_list[$i]['id']) ? ' checked' : '';
 
 // Keep the proper checkboxes checked
 $compendium_edit_redirect_ext_checkbox  = ($compendium_edit_redirect_ext) ? ' checked' : '';

@@ -16,7 +16,7 @@ $page_description = "NoBleme's primary communication method, our real time IRC c
 
 // Extra CSS & JS
 $css  = array('irc');
-$js   = array('social/irc', 'common/toggle', 'common/selector');
+$js   = array('social/irc', 'common/selector');
 
 
 
@@ -76,7 +76,7 @@ $page_title_en  = (isset($_GET['channels']))  ? "IRC channels"            : $pag
 $page_title_fr  = (isset($_GET['channels']))  ? "Canaux IRC"              : $page_title_fr;
 
 // Determine the title to use in the header
-$irc_faq_page_name = ($lang == 'EN') ? $page_title_en : $page_title_fr;
+$irc_faq_page_name = ($lang === 'EN') ? $page_title_en : $page_title_fr;
 
 // Set the correct page URLs
 $page_url = (isset($_GET['why']))       ? 'pages/social/irc?why'      : $page_url;
@@ -386,7 +386,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_70 padding_top irc_faq_section<?=$irc_faq_selector['hide']['browser']?>" id="irc_faq_browser">
 
-  <?php if($lang == 'EN') { ?>
+  <?php if($lang === 'EN') { ?>
   <iframe src="https://kiwiirc.com/nextclient/?settings=d88c482df59c1ae0cca6627751a32973" class="indiv irc_client_iframe"></iframe>
   <?php } else { ?>
   <iframe src="https://kiwiirc.com/nextclient/?settings=5f080fa3340afd85b53f47188d628b10" class="indiv irc_client_iframe"></iframe>
@@ -1247,14 +1247,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($is_moderator) { ?>
         <tr>
           <td colspan="5" class="align_center uppercase dark text_white bold">
-            <?=__link('pages/social/irc_channel_add', __('irc_channels_add'))?>
+            <?=__link('pages/social/irc_channel_add', __('irc_channels_add'), "bold text_white glow")?>
           </td>
         </tr>
         <?php } ?>
 
         <?php for($i = 0; $i < $irc_channels['rows']; $i++) { ?>
 
-        <?php if($i < ($irc_channels['rows'] - 1) && $irc_channels[$i]['type'] != $irc_channels[$i + 1]['type']) { ?>
+        <?php if($i < ($irc_channels['rows'] - 1) && $irc_channels[$i]['type'] !== $irc_channels[$i + 1]['type']) { ?>
 
         <tr class="row_separator_dark_thin" id="irc_channel_list_row_<?=$irc_channels[$i]['id']?>">
 

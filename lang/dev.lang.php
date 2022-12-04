@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -183,8 +183,16 @@ ___('dev_palette_selector_tooltips',  'FR', "Infobulles");
 
 
 // JS toolbox selector
-___('dev_js_toolbox_title', 'EN', "JavaScript toolbox:");
-___('dev_js_toolbox_title', 'FR', "Boîte à outils JavaScript :");
+___('dev_js_toolbox_title',   'EN', "JavaScript toolbox:");
+___('dev_js_toolbox_title',   'FR', "Boîte à outils JavaScript :");
+___('dev_js_toolbox_fetch',   'EN', "Asynchronous query");
+___('dev_js_toolbox_fetch',   'FR', "Requête asynchrone");
+___('dev_js_toolbox_toggle',  'EN', "Visibility toggle");
+___('dev_js_toolbox_toggle',  'FR', "Gestion de la visibilité");
+___('dev_js_toolbox_css',     'EN', "CSS manipulation");
+___('dev_js_toolbox_css',     'FR', "Manipulation CSS");
+___('dev_js_toolbox_forms',   'EN', "Form validation");
+___('dev_js_toolbox_forms',   'FR', "Validation de formulaires");
 
 
 // Functions list selector

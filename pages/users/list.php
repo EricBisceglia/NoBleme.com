@@ -157,7 +157,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="<?=$user_list[$i]['css']?>">
 
           <td>
-            <?php if($mode == 'light' && !$user_list[$i]['css']) { ?>
+            <?php if($mode === 'light' && !$user_list[$i]['css']) { ?>
             <?=__link('pages/users/'.$user_list[$i]['id'], $user_list[$i]['username'], 'text_dark bold noglow')?>
             <?php } else { ?>
             <?=__link('pages/users/'.$user_list[$i]['id'], $user_list[$i]['username'], 'text_white bold noglow')?>

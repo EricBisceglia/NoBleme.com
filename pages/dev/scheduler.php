@@ -185,7 +185,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <?php for($i = 0; $i < $scheduler_tasks['rows'] ; $i++) { ?>
 
-            <?php if($i && $scheduler_tasks['sort'] == 'date' && $scheduler_tasks[$i]['type'] != $scheduler_tasks[$i-1]['type']) { ?>
+            <?php if($i && $scheduler_tasks['sort'] === 'date' && $scheduler_tasks[$i]['type'] !== $scheduler_tasks[$i-1]['type']) { ?>
 
             <tr>
               <td colspan="6" class="dark">
@@ -250,7 +250,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <?php } ?>
 
               <td class="align_center nowrap">
-                <?php if($scheduler_tasks[$i]['type'] == 'future') { ?>
+                <?php if($scheduler_tasks[$i]['type'] === 'future') { ?>
                 <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('edit'), title_case: 'initials', onclick: "dev_scheduler_edit_popin('".$scheduler_tasks[$i]['id']."', '".$scheduler_tasks[$i]['type']."');")?>
                 <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_task('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_task')."');")?>
                 <?php } else { ?>

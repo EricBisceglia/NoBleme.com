@@ -22,7 +22,7 @@ $page_title_fr    = "Bot IRC";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('dev/irc_bot', 'common/toggle', 'common/selector');
+$js   = array('dev/irc_bot', 'common/selector');
 
 
 
@@ -140,8 +140,8 @@ if(isset($_POST['dev_irc_bot_history_submit']))
   $irc_bot_history_search_channel = form_fetch_element('dev_irc_bot_history_channel');
   $irc_bot_history_search_message = form_fetch_element('dev_irc_bot_history_message');
   $irc_bot_history_search_sent    = form_fetch_element('dev_irc_bot_history_sent');
-  $irc_bot_history_search_sent_0  = ($irc_bot_history_search_sent == 0) ? ' selected' : '';
-  $irc_bot_history_search_sent_1  = ($irc_bot_history_search_sent == 1) ? ' selected' : '';
+  $irc_bot_history_search_sent_0  = ($irc_bot_history_search_sent === 0) ? ' selected' : '';
+  $irc_bot_history_search_sent_1  = ($irc_bot_history_search_sent === 1) ? ' selected' : '';
 
   // Fetch the search data
   $irc_bot_history_search = array(  'channel' =>  $irc_bot_history_search_channel ,
@@ -200,7 +200,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="padding_top irc_bot_section<?=$irc_bot_selector['hide']['start']?>" id="irc_bot_start">
 
-  <?php } if($irc_bot_selector['selected'] == 'start' || !page_is_fetched_dynamically()) { ?>
+  <?php } if($irc_bot_selector['selected'] === 'start' || !page_is_fetched_dynamically()) { ?>
 
   <div class="width_50 align_center bigpadding_top bigpadding_bot">
 
@@ -221,7 +221,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="padding_top irc_bot_section<?=$irc_bot_selector['hide']['stop']?>" id="irc_bot_stop">
 
-  <?php } if($irc_bot_selector['selected'] == 'stop' || !page_is_fetched_dynamically()) { ?>
+  <?php } if($irc_bot_selector['selected'] === 'stop' || !page_is_fetched_dynamically()) { ?>
 
   <div class="width_50 align_center">
 
@@ -252,7 +252,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="padding_top irc_bot_section<?=$irc_bot_selector['hide']['silence']?>" id="irc_bot_silence">
 
-  <?php } if($irc_bot_selector['selected'] == 'silence' || !page_is_fetched_dynamically()) { ?>
+  <?php } if($irc_bot_selector['selected'] === 'silence' || !page_is_fetched_dynamically()) { ?>
 
   <div class="width_50 align_center">
 
@@ -283,7 +283,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="padding_top irc_bot_section<?=$irc_bot_selector['hide']['upcoming']?>" id="irc_bot_upcoming">
 
-  <?php } if($irc_bot_selector['selected'] == 'upcoming' || !page_is_fetched_dynamically()) { ?>
+  <?php } if($irc_bot_selector['selected'] === 'upcoming' || !page_is_fetched_dynamically()) { ?>
 
   <div id="bot_actions_purge" class="width_80 autoscroll">
 
@@ -394,7 +394,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <tbody id="irc_bot_history_tbody">
 
-            <?php } if($irc_bot_selector['selected'] == 'message_log' || !page_is_fetched_dynamically()) { ?>
+            <?php } if($irc_bot_selector['selected'] === 'message_log' || !page_is_fetched_dynamically()) { ?>
 
             <?php for($i = 0; $i < $irc_bot_message_history['line_count']; $i++) { ?>
 

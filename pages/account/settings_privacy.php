@@ -18,7 +18,7 @@ $page_title_fr    = "Réglages : Vie privée";
 $page_description = "Block third party content from being displayed on the website";
 
 // Extra JS
-$js = array('common/toggle', 'account/settings');
+$js = array('account/settings');
 
 
 

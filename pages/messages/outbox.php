@@ -20,7 +20,7 @@ $page_title_fr    = "Boite d'envoi";
 $page_description = "Private message outbox - private messages sent by the user.";
 
 // Extra JS
-$js = array('common/editor', 'common/toggle', 'common/preview', 'messages/messages');
+$js = array('common/editor', 'common/preview', 'messages/messages');
 
 
 

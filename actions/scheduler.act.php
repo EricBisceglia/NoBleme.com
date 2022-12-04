@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -81,76 +81,65 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   $sort_by  = sanitize($sort_by, 'string');
 
   // Sanitize the search parameters
-  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'string')         : NULL;
-  $search_id          = isset($search['id'])          ? sanitize($search['id'], 'int', 0)           : NULL;
-  $search_execution   = isset($search['date'])        ? sanitize($search['date'], 'int', 0, 2)      : 0;
-  $search_description = isset($search['description']) ? sanitize($search['description'], 'string')  : NULL;
-  $search_report      = isset($search['report'])      ? sanitize($search['report'], 'string')       : NULL;
+  $search_type        = sanitize_array_element($search, 'type', 'string');
+  $search_id          = sanitize_array_element($search, 'id', 'int', 0, default: 0);
+  $search_execution   = sanitize_array_element($search, 'date', 'int', 0, 2, default: 0);
+  $search_description = sanitize_array_element($search, 'description', 'string');
+  $search_report      = sanitize_array_element($search, 'report', 'string');
 
-  // Fetch all future scheduler executions
-  $qscheduler = "     SELECT    'future'                          AS 's_exec' ,
-                                system_scheduler.id               AS 's_id'   ,
-                                system_scheduler.planned_at       AS 's_date' ,
-                                system_scheduler.task_id          AS 's_tid'  ,
-                                system_scheduler.task_type        AS 's_type' ,
-                                system_scheduler.task_description AS 's_desc' ,
-                                ''                                AS 's_report'
-                      FROM      system_scheduler
-                      WHERE     1 = 1 ";
+  // Search through the data: Future executions
+  $future_search  = " WHERE 1 = 1 ";
+  $future_search .= ($search_type)            ? " AND system_scheduler.task_type LIKE '$search_type'          " : "";
+  $future_search .= ($search_id)              ? " AND system_scheduler.task_id      = '$search_id'            " : "";
+  $future_search .= ($search_description)     ? "
+                                           AND system_scheduler.task_description LIKE '%$search_description%' " : "";
+  $future_search .= ($search_report)          ? " AND 1 = 0                                                   " : "";
+  $future_search .= ($search_execution === 2) ? " AND 1 = 0                                                   " : "";
 
-  // Search the data
-  if($search_type)
-    $qscheduler .= "  AND       system_scheduler.task_type        LIKE '$search_type' ";
-  if($search_id)
-    $qscheduler .= "  AND       system_scheduler.task_id          =     '$search_id' ";
-  if($search_execution == 2)
-    $qscheduler .= "  AND       1 = 0 ";
-  if($search_description)
-    $qscheduler .= "  AND       system_scheduler.task_description LIKE '%$search_description%' ";
-  if($search_report)
-    $qscheduler .= "  AND       1 = 0 ";
-
-  // Fetch all past scheduler execution
-  $qscheduler .= "    UNION
-                      SELECT    'past'                            AS 's_exec' ,
-                                logs_scheduler.id                 AS 's_id'   ,
-                                logs_scheduler.happened_at        AS 's_date' ,
-                                logs_scheduler.task_id            AS 's_tid'  ,
-                                logs_scheduler.task_type          AS 's_type' ,
-                                logs_scheduler.task_description   AS 's_desc' ,
-                                logs_scheduler.execution_report   AS 's_report'
-                      FROM      logs_scheduler
-                      WHERE     1 = 1 ";
-
-  // Search the data
-  if($search_type)
-    $qscheduler .= "  AND       logs_scheduler.task_type        LIKE '$search_type' ";
-  if($search_id)
-    $qscheduler .= "  AND       logs_scheduler.task_id          =     '$search_id' ";
-  if($search_execution == 1)
-    $qscheduler .= "  AND       1 = 0 ";
-  if($search_description)
-    $qscheduler .= "  AND       logs_scheduler.task_description LIKE '%$search_description%' ";
-  if($search_report)
-    $qscheduler .= "  AND       logs_scheduler.execution_report LIKE '%$search_report%' ";
+  // Search through the data: Past executions
+  $past_search  = " WHERE 1 = 1 ";
+  $past_search .= ($search_type)            ? " AND logs_scheduler.task_type       LIKE '$search_type'          " : "";
+  $past_search .= ($search_id)              ? " AND logs_scheduler.task_id            = '$search_id'            " : "";
+  $past_search .= ($search_description)     ? "
+                                               AND logs_scheduler.task_description LIKE '%$search_description%' " : "";
+  $past_search .= ($search_report)          ? " AND logs_scheduler.execution_report LIKE '%$search_report%'     " : "";
+  $past_search .= ($search_execution === 1) ? " AND 1 = 0                                                       " : "";
 
   // Sort the data
-  if($sort_by == 'type')
-    $qscheduler .= "  ORDER BY  s_type    ASC   ,
-                                s_date    DESC  ";
-  else if($sort_by == 'description')
-    $qscheduler .= "  ORDER BY  s_desc    = ''  ,
+  $query_sort = match($sort_by)
+  {
+    'type'        => " ORDER BY s_type    ASC   ,
+                                s_date    DESC  " ,
+    'description' => " ORDER BY s_desc    = ''  ,
                                 s_desc    ASC   ,
-                                s_date    DESC  ";
-  else if($sort_by == 'report')
-    $qscheduler .= "  ORDER BY  s_report  = ''  ,
+                                s_date    DESC  " ,
+    'report'      => " ORDER BY s_report  = ''  ,
                                 s_report  ASC   ,
-                                s_date    DESC  ";
-  else
-    $qscheduler .= "  ORDER BY  s_date    DESC ";
+                                s_date    DESC  " ,
+    default       => " ORDER BY s_date    DESC  " ,
+  };
 
-  // Run the query
-  $qscheduler = query($qscheduler);
+  // Fetch all future and past scheduler executions
+  $qscheduler = query(" ( SELECT  'future'                          AS 's_exec' ,
+                                  system_scheduler.id               AS 's_id'   ,
+                                  system_scheduler.planned_at       AS 's_date' ,
+                                  system_scheduler.task_id          AS 's_tid'  ,
+                                  system_scheduler.task_type        AS 's_type' ,
+                                  system_scheduler.task_description AS 's_desc' ,
+                                  ''                                AS 's_report'
+                          FROM    system_scheduler
+                                  $future_search )
+                          UNION
+                        ( SELECT  'past'                            AS 's_exec' ,
+                                  logs_scheduler.id                 AS 's_id'   ,
+                                  logs_scheduler.happened_at        AS 's_date' ,
+                                  logs_scheduler.task_id            AS 's_tid'  ,
+                                  logs_scheduler.task_type          AS 's_type' ,
+                                  logs_scheduler.task_description   AS 's_desc' ,
+                                  logs_scheduler.execution_report   AS 's_report'
+                          FROM    logs_scheduler
+                                  $past_search )
+                                  $query_sort ");
 
   // Reset the counters
   $data['rows_past']    = 0;
@@ -159,12 +148,13 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qscheduler); $i++)
   {
-    $data['rows_past']       += ($row['s_exec'] == 'past') ? 1 : 0;
-    $data['rows_future']     += ($row['s_exec'] == 'future') ? 1 : 0;
+    $data['rows_past']       += ($row['s_exec'] === 'past') ? 1 : 0;
+    $data['rows_future']     += ($row['s_exec'] === 'future') ? 1 : 0;
     $data[$i]['type']         = $row['s_exec'];
     $data[$i]['id']           = $row['s_id'];
-    $temp                     = ($row['s_exec'] == 'past') ? time_since($row['s_date']) : time_until($row['s_date']);
-    $data[$i]['date']         = sanitize_output($temp);
+    $data[$i]['date']         = ($row['s_exec'] === 'past')
+                              ? sanitize_output(time_since($row['s_date']))
+                              : sanitize_output(time_until($row['s_date']));
     $data[$i]['fdate']        = date_to_text($row['s_date'], 0, 1, $lang);
     $data[$i]['task_id']      = $row['s_tid'];
     $data[$i]['task_type']    = sanitize_output($row['s_type']);

@@ -24,7 +24,6 @@ $page_description = "Delete a user's public profile";
 
 // Extra CSS
 $css = array('users');
-$js  = array('common/toggle');
 
 
 
@@ -126,7 +125,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tbody>
 
           <?php if($profile_data['country']) { ?>
-          <tr class="pointer" onclick="toggle_checkbox('profile_delete_country');">
+          <tr class="pointer" onclick="checkbox_toggle('profile_delete_country');">
             <td class="nowrap">
               <input type="checkbox" id="profile_delete_country" name="profile_delete_country">
               <label class="label_inline" for="profile_delete_country"><?=__('users_profile_country')?></label>
@@ -138,7 +137,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
 
           <?php if($profile_data['pronoun_en']) { ?>
-          <tr class="pointer" onclick="toggle_checkbox('profile_delete_pronouns_en');">
+          <tr class="pointer" onclick="checkbox_toggle('profile_delete_pronouns_en');">
             <td class="nowrap">
               <input type="checkbox" id="profile_delete_pronouns_en" name="profile_delete_pronouns_en">
               <label class="label_inline" for="profile_delete_pronouns_en"><?=__('users_profile_pronouns').__('users_profile_edit_english')?></label>
@@ -150,7 +149,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
 
           <?php if($profile_data['pronoun_fr']) { ?>
-          <tr class="pointer" onclick="toggle_checkbox('profile_delete_pronouns_fr');">
+          <tr class="pointer" onclick="checkbox_toggle('profile_delete_pronouns_fr');">
             <td class="nowrap">
               <input type="checkbox" id="profile_delete_pronouns_fr" name="profile_delete_pronouns_fr">
               <label class="label_inline" for="profile_delete_pronouns_fr"><?=__('users_profile_pronouns').__('users_profile_edit_french')?></label>
@@ -162,7 +161,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
 
           <?php if($profile_data['ftext_en']) { ?>
-          <tr class="pointer" onclick="toggle_checkbox('profile_delete_text_en');">
+          <tr class="pointer" onclick="checkbox_toggle('profile_delete_text_en');">
             <td class="nowrap">
               <input type="checkbox" id="profile_delete_text_en" name="profile_delete_text_en">
               <label class="label_inline" for="profile_delete_text_en"><?=__('users_profile_delete_text').__('users_profile_edit_english')?></label>
@@ -176,7 +175,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
 
           <?php if($profile_data['ftext_fr']) { ?>
-          <tr class="pointer" onclick="toggle_checkbox('profile_delete_text_fr');">
+          <tr class="pointer" onclick="checkbox_toggle('profile_delete_text_fr');">
             <td class="nowrap">
               <input type="checkbox" id="profile_delete_text_fr" name="profile_delete_text_fr">
               <label class="label_inline" for="profile_delete_text_fr"><?=__('users_profile_delete_text').__('users_profile_edit_french')?></label>

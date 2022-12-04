@@ -1,15 +1,16 @@
 /************************************************** 404 ERROR PAGE ***************************************************/
 
-body                        { background-color: #000000;                                          }
-.topimg404                  { padding-top: 3.0rem; padding-bottom: 4.0rem;                        }
-.container404               { width: 65.0rem; max-width: 100%;                                    }
-.table404                   { background-color: #000000;                                          }
-.table404 tbody > tr:hover  { background-color: #000000                                           }
-.img404                     { width: 19.0rem;                                                     }
-.img404left                 { margin-right: 1.0rem;                                               }
-.img404right                { margin-left: 1.0rem;                                                }
-.text404                    { background-color: #000000; border: 0; color: #CACACA                ;
-                              text-align: center; overflow: auto; resize: none; height: 14.0rem;  }
+body                        { background-color: var(--nobleme-black);           }
+.topimg404                  { padding-top: 3.0rem; padding-bottom: 4.0rem;      }
+.container404               { width: 65.0rem; max-width: 100%;                  }
+.table404                   { background-color: var(--nobleme-black);           }
+.table404 tbody > tr:hover  { background-color: var(--nobleme-black)            }
+.img404                     { width: 19.0rem;                                   }
+.img404left                 { margin-right: 1.0rem;                             }
+.img404right                { margin-left: 1.0rem;                              }
+.text404                    { background-color: var(--nobleme-black); border: 0 ;
+                              color: var(--nobleme-light); text-align: center   ;
+                              overflow: auto; resize: none; height: 14.0rem;    }
 
 /********************************************* 404 ERROR PAGE ON MOBILE **********************************************/
 
@@ -21,14 +22,14 @@ body                        { background-color: #000000;                        
 
 /************************************** 404 ERROR PAGE HEADER MENU ALTERATIONS ***************************************/
 
-.header_topbar                  { background-color: #B00B1E;                            }
-.header_topmenu                 { background-color: #B00B1E;                            }
-.header_topmenu_title           { background-color: #B00B1E; color: #000000;            }
-.header_topmenu_title:hover     { background-color: #000000; color: #B00B1E;            }
-.header_topmenu_title_selected  { color: #B00B1E; background-color: #000000;            }
-.header_infobar                 { background-color: #000000;                            }
-.header_infobar:hover           { background-color: #000000;                            }
-.header_submenu                 { background-color: #000000;                            }
-.header_submenu_title           { color: #CACACA;                                       }
-.header_submenu_link            { color: #B00B1E;                                       }
-.header_submenu_link:hover      { color: #B00B1E; filter: drop-shadow(0 0 5px #B00B1E); }
+.header_topbar                  { background-color: var(--nobleme-red);                                       }
+.header_topmenu                 { background-color: var(--nobleme-red);                                       }
+.header_topmenu_title           { background-color: var(--nobleme-red); color: var(--nobleme-black);          }
+.header_topmenu_title:hover     { background-color: var(--nobleme-black); color: var(--nobleme-red);          }
+.header_topmenu_title_selected  { color: var(--nobleme-red); background-color: var(--nobleme-black);          }
+.header_infobar                 { background-color: var(--nobleme-black);                                     }
+.header_infobar:hover           { background-color: var(--nobleme-black);                                     }
+.header_submenu                 { background-color: var(--nobleme-black);                                     }
+.header_submenu_title           { color: var(--nobleme-light);                                                }
+.header_submenu_link            { color: var(--nobleme-red);                                                  }
+.header_submenu_link:hover      { color: var(--nobleme-red); filter: drop-shadow(0 0 5px var(--nobleme-red)); }

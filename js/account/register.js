@@ -22,66 +22,66 @@ function user_register_submit()
   form_failed = 0;
 
   // Ensure every text field is filled up
-  form_failed = (!form_require_field("register_username", "label_register_username")) ? 1 : form_failed;
-  form_failed = (!form_require_field("register_password_1", "label_register_password_1")) ? 1 : form_failed;
-  form_failed = (!form_require_field("register_password_2", "label_register_password_2")) ? 1 : form_failed;
-  form_failed = (!form_require_field("register_captcha", "label_register_captcha")) ? 1 : form_failed;
+  form_failed = (!form_require_field('register_username', 'label_register_username')) ? 1 : form_failed;
+  form_failed = (!form_require_field('register_password_1', 'label_register_password_1')) ? 1 : form_failed;
+  form_failed = (!form_require_field('register_password_2', 'label_register_password_2')) ? 1 : form_failed;
+  form_failed = (!form_require_field('register_captcha', 'label_register_captcha')) ? 1 : form_failed;
 
   // Ensure minimum/maximum string length are respected
-  if(document.getElementById("register_username").value.length < 3)
+  if(document.getElementById('register_username').value.length < 3)
   {
-    document.getElementById("label_register_username").classList.add('red');
+    css_add('label_register_username', 'red');
     form_failed = 1;
   }
-  if(document.getElementById("register_username").value.length > 15)
+  if(document.getElementById('register_username').value.length > 15)
   {
-    document.getElementById("label_register_username").classList.add('red');
+    css_add('label_register_username', 'red');
     form_failed = 1;
   }
-  if(document.getElementById("register_password_1").value.length < 8)
+  if(document.getElementById('register_password_1').value.length < 8)
   {
-    document.getElementById("label_register_password_1").classList.add('red');
+    css_add('label_register_password_1', 'red');
     form_failed = 1;
   }
 
   // Ensure passwords are identical
-  if(document.getElementById("register_password_1").value != document.getElementById("register_password_2").value)
+  if(document.getElementById('register_password_1').value !== document.getElementById('register_password_2').value)
   {
-    document.getElementById("label_register_password_2").classList.add('red');
+    css_add('label_register_password_2', 'red');
     form_failed = 1;
   }
 
   // Check whether the questions are correctly answered
-  document.getElementById("label_register_question_1").classList.remove('red');
-  var temp = document.querySelectorAll('input[name=register_question_1]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 2)
+  css_remove('label_register_question_1', 'red');
+  var question1 = document.querySelectorAll('input[name=register_question_1]:checked');
+  question1 = (question1.length > 0) ? parseInt(question1[0].value) : null;
+  if(question1 !== 2)
   {
-    document.getElementById("label_register_question_1").classList.add('red');
+    css_add('label_register_question_1', 'red');
     form_failed = 1;
   }
-  document.getElementById("label_register_question_2").classList.remove('red');
-  var temp = document.querySelectorAll('input[name=register_question_2]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 2)
+  css_remove('label_register_question_2', 'red');
+  var question2 = document.querySelectorAll('input[name=register_question_2]:checked');
+  question2 = (question2.length > 0) ? parseInt(question2[0].value) : null;
+  if(question2 !== 2)
   {
-    document.getElementById("label_register_question_2").classList.add('red');
+    css_add('label_register_question_2', 'red');
     form_failed = 1;
   }
-  document.getElementById("label_register_question_3").classList.remove('red');
-  var temp = document.querySelectorAll('input[name=register_question_3]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 2)
+  css_remove('label_register_question_3', 'red');
+  var question3 = document.querySelectorAll('input[name=register_question_3]:checked');
+  question3 = (question3.length > 0) ? parseInt(question3[0].value) : null;
+  if(question3 !== 2)
   {
-    document.getElementById("label_register_question_3").classList.add('red');
+    css_add('label_register_question_3', 'red');
     form_failed = 1;
   }
-  document.getElementById("label_register_question_4").classList.remove('red');
-  var temp = document.querySelectorAll('input[name=register_question_4]:checked');
-  var temp = (temp.length > 0) ? temp[0].value : null;
-  if(temp != 1)
+  css_remove('label_register_question_4', 'red');
+  var question4 = document.querySelectorAll('input[name=register_question_4]:checked');
+  question4 = (question4.length > 0) ? parseInt(question4[0].value) : null;
+  if(question4 !== 1)
   {
-    document.getElementById("label_register_question_4").classList.add('red');
+    css_add('label_register_question_4', 'red');
     form_failed = 1;
   }
 
@@ -103,7 +103,7 @@ function user_register_submit()
 function user_register_validate_username()
 {
   // Define the username validation regular expression
-  regex_username = new RegExp("^[a-zA-Z0-9]{3,15}$");
+  regex_username = new RegExp('^[a-zA-Z0-9]{3,15}$');
 
   // Fetch the username
   register_username = document.getElementById('register_username').value;
@@ -112,20 +112,20 @@ function user_register_validate_username()
   if (regex_username.test(register_username))
   {
     // Reset the label to normal
-    document.getElementById("label_register_username").classList.remove('red');
+    css_remove('label_register_username', 'red');
 
     // Check if the username is already taken and display the warning container
-    fetch_page('register_check_username', 'register_username_error', 'register_username='+fetch_sanitize(register_username), document.getElementById("register_username_error").classList.remove('hidden'));
+    fetch_page('register_check_username', 'register_username_error', 'register_username='+fetch_sanitize(register_username), css_remove('register_username_error', 'hidden'));
   }
 
   // If the username is invalid, show it
   else
   {
     // Make the label red
-    document.getElementById("label_register_username").classList.add('red');
+    css_add('label_register_username', 'red');
 
     // Hide the username already taken warning container
-    document.getElementById("register_username_error").classList.add('hidden');
+    css_add('label_register_error', 'hidden');
   }
 }
 
@@ -147,17 +147,17 @@ function user_register_validate_password()
 
   // If the first password is invalid, show it
   if (register_password_1.length < 8)
-    document.getElementById("label_register_password_1").classList.add('red');
+    css_add('label_register_password_1', 'red');
 
   // If the password is valid, reset the field to normal
   else
-    document.getElementById("label_register_password_1").classList.remove('red');
+    css_remove('label_register_password_1', 'red');
 
   // If the second password is invalid or passwords are different, show it
-  if (register_password_2 && (register_password_2.length < 8 || (register_password_2 != register_password_1)))
-    document.getElementById("label_register_password_2").classList.add('red');
+  if (register_password_2 && (register_password_2.length < 8 || (register_password_2 !== register_password_1)))
+    css_add('label_register_password_2', 'red');
 
   // If the passwords are valid, reset the field to normal
   else
-    document.getElementById("label_register_password_2").classList.remove('red');
+    css_remove('label_register_password_2', 'red');
 }

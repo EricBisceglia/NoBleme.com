@@ -18,7 +18,7 @@ $page_title_fr    = "Réglages : Vulgarité";
 $page_description = "Decide whether your account should let you display adult content on the website";
 
 // Extra JS
-$js = array('common/toggle', 'account/settings');
+$js = array('account/settings');
 
 
 
@@ -46,7 +46,7 @@ $nsfw_settings = user_settings_nsfw();
 
 // Prepare the selector
 for($i = 0; $i <= 2; $i++)
-  $nsfw_selected[$i] = ($nsfw_settings == $i) ? ' selected' : '';
+  $nsfw_selected[$i] = ($nsfw_settings === $i) ? ' selected' : '';
 
 
 

@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -111,7 +111,7 @@ function dev_versions_list() : array
   for($i = 0 ; $i < $data['rows']; $i++)
   {
     // If it is the oldest version, there is no possible differential
-    if($i == ($data['rows'] - 1))
+    if($i === ($data['rows'] - 1))
     {
       $data[$i]['date_diff']  = '-';
       $data[$i]['css']        = '';
@@ -120,14 +120,14 @@ function dev_versions_list() : array
     // Otherwise, calculate the time differential
     else
     {
-      $temp_diff = time_days_elapsed($data[$i + 1]['date_raw'], $data[$i]['date_raw']);
+      $date_diff = time_days_elapsed($data[$i + 1]['date_raw'], $data[$i]['date_raw']);
 
       // Assemble the formatted string
-      $data[$i]['date_diff'] = ($temp_diff) ? sanitize_output($temp_diff.__('day', $temp_diff, 1)) : '-';
+      $data[$i]['date_diff'] = ($date_diff) ? sanitize_output($date_diff.__('day', $date_diff, 1)) : '-';
 
       // Give stylings to long delays
-      $temp_style       = ($temp_diff > 90) ? ' class="smallglow"' : '';
-      $data[$i]['css']  = ($temp_diff > 365) ? ' class="bold glow"' : $temp_style;
+      $date_style       = ($date_diff > 90) ? ' class="smallglow"' : '';
+      $data[$i]['css']  = ($date_diff > 365) ? ' class="bold glow"' : $date_style;
     }
   }
 
@@ -266,7 +266,7 @@ function dev_versions_edit( int     $id           ,
                                           AND     system_versions.extension LIKE  '$extension' "));
 
   // If it already exists (and isn't the current version), stop the process
-  if(isset($dversion['v_id']) && ($dversion['v_id'] != $id))
+  if(isset($dversion['v_id']) && ($dversion['v_id'] !== $id))
     return __('dev_versions_edit_error_duplicate');
 
   // Edit the version
@@ -372,8 +372,7 @@ function dev_blogs_get( int $blog_id ) : mixed
 
   // Assemble an array with the data
   $data['deleted']    = $dblog['b_deleted'];
-  $temp               = ($dblog["b_title_$lang"]) ? $dblog["b_title_$lang"] : __('dev_blog_no_title');
-  $data['title']      = sanitize_output($temp);
+  $data['title']      = ($dblog["b_title_$lang"]) ? sanitize_output($dblog["b_title_$lang"]) : __('dev_blog_no_title');
   $data['title_en']   = $dblog['b_title_en'];
   $data['title_fr']   = $dblog['b_title_fr'];
   $data['date']       = sanitize_output(date_to_text($dblog['b_date']));
@@ -448,7 +447,7 @@ function dev_blogs_list(  string  $sort = ''  ,
 
   // Sort the content if necessary
   $order_by = " dev_blogs.posted_at DESC ";
-  $order_by = ($is_admin && $sort == 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
+  $order_by = ($is_admin && $sort === 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
 
   // Fetch devblogs
   $qblogs = query(" SELECT    dev_blogs.id            AS 'b_id'       ,
@@ -461,8 +460,8 @@ function dev_blogs_list(  string  $sort = ''  ,
                     LEFT JOIN stats_pages
                     ON        stats_pages.page_url LIKE CONCAT('pages/dev/blog?id=', dev_blogs.id)
                     WHERE     1 = 1
-                              $show_lang
                               $show_deleted
+                              $show_lang
                               $filter_year
                     ORDER BY  $order_by ");
 
@@ -885,7 +884,7 @@ function dev_doc_icon_to_clipboard( string  $name                               
   // Prepare the data
   $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
   $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
-  $small    = ($size == 'small') ? ', is_small: true' : '';
+  $small    = ($size === 'small') ? ', is_small: true' : '';
 
   // Assemble the string
   $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");

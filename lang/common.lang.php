@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -41,7 +41,7 @@ function __(  string  $string                   ,
     return '';
 
   // If required, use the plural version of the string if it exists (plural translation names ends in a '+')
-  if(!is_null($amount) && $amount != 1 && isset($GLOBALS['translations'][$string.'+']))
+  if(!is_null($amount) && $amount !== 1 && isset($GLOBALS['translations'][$string.'+']))
     $returned_string = $GLOBALS['translations'][$string.'+'];
 
   // Otherwise, use the requested string
@@ -87,13 +87,13 @@ function __(  string  $string                   ,
 
   // Prepare the spaces to prepend to the string
   if(is_int($spaces_before) && $spaces_before > 0)
-    $spaces_before = ($spaces_before == 1) ? " " : str_repeat(" ", $spaces_before);
+    $spaces_before = ($spaces_before === 1) ? " " : str_repeat(" ", $spaces_before);
   else
     $spaces_before = '';
 
   // Prepare the spaces to append to the string
   if(is_int($spaces_after) && $spaces_after > 0)
-    $spaces_after = ($spaces_after == 1) ? " " : str_repeat(" ", $spaces_after);
+    $spaces_after = ($spaces_after === 1) ? " " : str_repeat(" ", $spaces_after);
   else
     $spaces_after = '';
 
@@ -120,7 +120,7 @@ function ___( string  $name         ,
 {
   // Only treat this if we are in the current language
   $current_lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
-  if($current_lang != $lang)
+  if($current_lang !== $lang)
     return;
 
   // Check if a translation by this name already exists - if yes publicly humiliate the coder for their poor work :(
@@ -251,7 +251,7 @@ function __icon(  string  $icon                                   ,
 
   // Prepare the image path
   $icon = ($is_small) ? $icon.'_small' : $icon;
-  $icon = (!$use_light && (user_get_mode() == 'light' || $use_dark)) ? $icon.'_dark' : $icon;
+  $icon = (!$use_light && (user_get_mode() === 'light' || $use_dark)) ? $icon.'_dark' : $icon;
   $src  = 'src="'.$path.'img/icons/'.$icon.'.svg"';
 
   // Prepare the alt text and title

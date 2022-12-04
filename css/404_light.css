@@ -1,13 +1,13 @@
 /************************************** 404 ERROR PAGE HEADER MENU ALTERATIONS ***************************************/
 
-.header_topbar                  { background-color: #B00B1E;                            }
-.header_topmenu                 { background-color: #B00B1E;                            }
-.header_topmenu_title           { background-color: #B00B1E; color: #000000;            }
-.header_topmenu_title:hover     { background-color: #000000; color: #B00B1E;            }
-.header_topmenu_title_selected  { color: #B00B1E; background-color: #000000;            }
-.header_infobar                 { background-color: #000000;                            }
-.header_infobar:hover           { background-color: #000000;                            }
-.header_submenu                 { background-color: #000000;                            }
-.header_submenu_title           { color: #CACACA;                                       }
-.header_submenu_link            { color: #B00B1E;                                       }
-.header_submenu_link:hover      { color: #B00B1E; filter: drop-shadow(0 0 5px #B00B1E); }
+.header_topbar                  { background-color: var(--nobleme-red);                                       }
+.header_topmenu                 { background-color: var(--nobleme-red);                                       }
+.header_topmenu_title           { background-color: var(--nobleme-red); color: var(--nobleme-black);          }
+.header_topmenu_title:hover     { background-color: var(--nobleme-black); color: var(--nobleme-red);          }
+.header_topmenu_title_selected  { color: var(--nobleme-red); background-color: var(--nobleme-black);          }
+.header_infobar                 { background-color: var(--nobleme-black);                                     }
+.header_infobar:hover           { background-color: var(--nobleme-black);                                     }
+.header_submenu                 { background-color: var(--nobleme-black);                                     }
+.header_submenu_title           { color: var(--nobleme-light);                                                }
+.header_submenu_link            { color: var(--nobleme-red);                                                  }
+.header_submenu_link:hover      { color: var(--nobleme-red); filter: drop-shadow(0 0 5px var(--nobleme-red)); }

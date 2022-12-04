@@ -31,11 +31,11 @@ $meetup_id      = (int)form_fetch_element('meetup_id', 0);
 $deletion_type  = form_fetch_element('deletion_type');
 
 // Trigger a soft deletion
-if($deletion_type == 'soft')
+if($deletion_type === 'soft')
   meetups_delete($meetup_id);
 
 // Trigger a hard deletion - only admins can do this
-if($deletion_type == 'hard')
+if($deletion_type === 'hard')
 {
   user_restrict_to_administrators();
   meetups_hard_delete($meetup_id);

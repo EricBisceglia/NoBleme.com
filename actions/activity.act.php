@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -106,57 +106,40 @@ function activity_list( bool    $show_mod_logs  = false ,
   $amount  = (!$is_admin && $amount > 1000) ? 1000 : $amount;
   $deleted = (!$is_admin) ? 0 : $deleted;
 
-  // Initialize the returned array
-  $data = array();
-
-  // Fetch activity logs
-  $qlogs = "    SELECT    logs_activity.id                          AS 'l_id'         ,
-                          logs_activity.fk_users                    AS 'l_userid'     ,
-                          logs_activity.happened_at                 AS 'l_date'       ,
-                          logs_activity.activity_username           AS 'l_user'       ,
-                          logs_activity.activity_moderator_username AS 'l_mod_user'   ,
-                          logs_activity.activity_id                 AS 'l_actid'      ,
-                          logs_activity.activity_type               AS 'l_type'       ,
-                          logs_activity.activity_summary_en         AS 'l_summary_en' ,
-                          logs_activity.activity_summary_fr         AS 'l_summary_fr' ,
-                          logs_activity.activity_amount             AS 'l_amount'     ,
-                          logs_activity.moderation_reason           AS 'l_reason'     ,
-                          logs_activity_details.id                  AS 'l_details'
-                FROM      logs_activity
-                LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
-                WHERE     logs_activity.is_moderators_only      = '$modlogs'
-                AND       logs_activity.language             LIKE '%$lang%' ";
-
-  // Filter by log type
-  if($type == 'users')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'users_%' ";
-  else if($type == 'meetups')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'meetups_%' ";
-  else if($type == 'compendium')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'compendium_%' ";
-  else if($type == 'quotes')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'quotes_%' ";
-  else if($type == 'irc')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'irc_%' ";
-  else if($type == 'dev')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'dev_%' ";
+  // Log type filter
+  $search_type = ($type && $type !== "all") ? " AND logs_activity.activity_type LIKE '".$type."_%' " : "";
 
   // Show deleted logs on request
-  if($deleted)
-    $qlogs .= " AND       logs_activity.is_deleted = 1 ";
-  else
-    $qlogs .= " AND       logs_activity.is_deleted = 0 ";
+  $search_deleted = ($deleted) ? " AND logs_activity.is_deleted = 1 " : " AND logs_activity.is_deleted = 0 ";
 
-  // Group and sort limit the results
-  $qlogs .= "   GROUP BY  logs_activity.id
-                ORDER BY  logs_activity.happened_at DESC ";
+  // Limit on the number of results
+  $limit = ($amount <= 1000) ? " LIMIT $amount " : "";
 
-  // Limit the results
-  if($amount <= 1000)
-    $qlogs .= " LIMIT     $amount ";
+  // Fetch activity logs
+  $qlogs = query("    SELECT    logs_activity.id                          AS 'l_id'         ,
+                                logs_activity.fk_users                    AS 'l_userid'     ,
+                                logs_activity.happened_at                 AS 'l_date'       ,
+                                logs_activity.activity_username           AS 'l_user'       ,
+                                logs_activity.activity_moderator_username AS 'l_mod_user'   ,
+                                logs_activity.activity_id                 AS 'l_actid'      ,
+                                logs_activity.activity_type               AS 'l_type'       ,
+                                logs_activity.activity_summary_en         AS 'l_summary_en' ,
+                                logs_activity.activity_summary_fr         AS 'l_summary_fr' ,
+                                logs_activity.activity_amount             AS 'l_amount'     ,
+                                logs_activity.moderation_reason           AS 'l_reason'     ,
+                                logs_activity_details.id                  AS 'l_details'
+                      FROM      logs_activity
+                      LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
+                      WHERE     logs_activity.is_moderators_only  =     '$modlogs'
+                      AND       logs_activity.language            LIKE  '%$lang%'
+                                $search_type
+                                $search_deleted
+                      GROUP BY  logs_activity.id
+                      ORDER BY  logs_activity.happened_at DESC
+                                $limit ");
 
-  // Run the query
-  $qlogs = query($qlogs);
+  // Initialize the returned array
+  $data = array();
 
   // Go through the rows of the query
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
@@ -166,11 +149,14 @@ function activity_list( bool    $show_mod_logs  = false ,
 
     // Prepare the data
     $data[$i]['id']       = $row['l_id'];
-    $data[$i]['date']     = time_since($row['l_date']);
-    $data[$i]['fulldate'] = date_to_text($row['l_date']).__('at_date', 1, 1, 1).date('H:i:s', $row['l_date']);
-    $data[$i]['css']      = (!$deleted) ? $parsed_row['css'] : 'red text_light';
-    $data[$i]['href']     = $parsed_row['href'];
-    $data[$i]['text']     = (mb_strlen($parsed_row[$lang]) < 58) ? sanitize_output($parsed_row[$lang]) : sanitize_output(string_truncate($parsed_row[$lang], 55, '...'));
+    $data[$i]['date']     = sanitize_output(time_since($row['l_date']));
+    $data[$i]['fulldate'] = sanitize_output(
+                            date_to_text($row['l_date']).__('at_date', 1, 1, 1).date('H:i:s', $row['l_date']));
+    $data[$i]['css']      = (!$deleted) ? sanitize_output($parsed_row['css']) : 'red text_light';
+    $data[$i]['href']     = sanitize_output($parsed_row['href']);
+    $data[$i]['text']     = (mb_strlen($parsed_row[$lang]) < 58)
+                          ? sanitize_output($parsed_row[$lang])
+                          : sanitize_output(string_truncate($parsed_row[$lang], 55, '...'));
     $data[$i]['fulltext'] = (mb_strlen($parsed_row[$lang]) < 58) ? '' : sanitize_output($parsed_row[$lang]);
     $data[$i]['details']  = ($row['l_reason'] || $row['l_details']);
   }

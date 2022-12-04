@@ -193,7 +193,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } else { ?>
           <td colspan="5">
           <?php } ?>
-            <?php if($guests_data['rows'] == $guests_total_count) { ?>
+            <?php if($guests_data['rows'] === $guests_total_count) { ?>
             <?=__('admin_stats_guests_count', preset_values: array($guests_data['rows']))?>
             <?php } else { ?>
             <?=__('admin_stats_guests_partial', amount: $guests_data['rows'], preset_values: array($guests_data['rows'], $guests_total_count, $guests_data['percent_guests']))?>
@@ -237,20 +237,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <?php if($guests_data[$i]['language'] == 'EN') { ?>
+            <?php if($guests_data[$i]['language'] === 'EN') { ?>
             <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="20" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
-            <?php } else if($guests_data[$i]['language'] == 'FR') { ?>
+            <?php } else if($guests_data[$i]['language'] === 'FR') { ?>
             <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="20" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
             <?php } else { ?>
             &nbsp;
             <?php } ?>
           </td>
 
-          <?php if($guests_data[$i]['theme'] == 'dark') { ?>
+          <?php if($guests_data[$i]['theme'] === 'dark') { ?>
           <td class="text_light dark">
             <?=__('admin_stats_guests_theme_dark')?>
           </td>
-          <?php } else if($guests_data[$i]['theme'] == 'light') { ?>
+          <?php } else if($guests_data[$i]['theme'] === 'light') { ?>
           <td class="text_dark light">
             <?=__('admin_stats_guests_theme_light')?>
           </td>

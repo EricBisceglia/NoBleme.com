@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -428,3 +428,5 @@ ___('users_stats_birth_age',    'EN', "Upcoming age");
 ___('users_stats_birth_age',    'FR', "Anniversaire");
 ___('users_stats_birth_date',   'EN', "Birth date");
 ___('users_stats_birth_date',   'FR', "Date de<br>naissance");
+___('users_stats_birth_days',   'EN', "Days to<br>birthday");
+___('users_stats_birth_days',   'FR', "Jours avant<br>anniversaire");

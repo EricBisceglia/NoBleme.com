@@ -4,12 +4,12 @@
                                 animation-duration: 4500ms; animation-play-state: paused                ;
                                 padding-left: 6.0rem; padding-right: 8.0rem;                            }
 .nobleme_logo:hover           { animation-play-state: running;                                          }
-@keyframes nobleme-logo-blink { 0%   { filter: drop-shadow(0 0 10px #B00B1E);                           }
-                                10%  { filter: drop-shadow(0 0 10px #B00B1E);                           }
+@keyframes nobleme-logo-blink { 0%   { filter: drop-shadow(0 0 10px var(--nobleme-red));                }
+                                10%  { filter: drop-shadow(0 0 10px var(--nobleme-red));                }
                                 40%  { filter: none;                                                    }
                                 60%  { filter: none;                                                    }
-                                90%  { filter: drop-shadow(0 0 10px #B00B1E);                           }
-                                100% { filter: drop-shadow(0 0 10px #B00B1E); }                         }
+                                90%  { filter: drop-shadow(0 0 10px var(--nobleme-red));                }
+                                100% { filter: drop-shadow(0 0 10px var(--nobleme-red)); }              }
 @media (max-width: 992px)                                                                               {
 .nobleme_logo                 { padding-left: 4.0rem; padding-right: 5.0rem; padding-top: 10.0rem     } }
 

@@ -654,13 +654,13 @@ if($last_query < 26)
     }
     if(mb_strlen($newnick) > 15)
       $newnick = mb_substr($newnick, 0, 15);
-    if($newnick == 'Nemo')
+    if($newnick === 'Nemo')
     {
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
       $newnick = str_pad($newnick, 5, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
       $newnick = str_pad($newnick, 6, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
     }
-    if($newnick != $dusers['u_nick'])
+    if($newnick !== $dusers['u_nick'])
       query(" UPDATE  users
               SET     users.username  = '".sql_sanitize_data($newnick)."'
               WHERE   users.id        = '".sql_sanitize_data($dusers['u_id'])."'");

@@ -82,7 +82,7 @@ if(!$ban_log)
 
     <?php if($ban_log['is_banned'] && $ban_log['ip_bans']['rows']) { ?>
     <?php for($i = 0; $i < $ban_log['ip_bans']['rows']; $i++) { ?>
-    <?php if($i == ($ban_log['ip_bans']['rows'] - 1)) { ?>
+    <?php if($i === ($ban_log['ip_bans']['rows'] - 1)) { ?>
     <tr class="row_separator_dark">
     <?php } else { ?>
     <tr>

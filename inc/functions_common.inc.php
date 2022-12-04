@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -181,7 +181,7 @@ function system_variable_fetch( string $var_name ) : mixed
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
     // If the variable exists, fetch its value and return it
-    if($ddescribe['Field'] == $var_name)
+    if($ddescribe['Field'] === $var_name)
     {
       $dvar = mysqli_fetch_array(query("  SELECT  system_variables.".$var_name." AS 'v_value'
                                           FROM    system_variables "));
@@ -226,7 +226,7 @@ function system_variable_update(  string  $var_name ,
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
     // If the variable exists, update its value and return 1
-    if($ddescribe['Field'] == $var_name)
+    if($ddescribe['Field'] === $var_name)
     {
       query(" UPDATE  system_variables
               SET     system_variables.".$var_name." = '$value' ");
@@ -295,14 +295,14 @@ function system_get_current_version_number( string $format = 'semver' ) : mixed
                                           LIMIT     1 "));
 
   // Full format: version + date
-  if($format == 'full')
+  if($format === 'full')
     return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']).' - '.date_to_text($dversion['v_date'], 1, 0, $lang);
 
   // Array or next: all elements in an array (in case of next, prepare for the next version)
-  if($format == 'array' || $format == 'next')
+  if($format === 'array' || $format === 'next')
   {
-    $patch      = ($format == 'next' && !$dversion['v_extension']) ? ($dversion['v_patch'] + 1) : $dversion['v_patch'];
-    $extension  = ($format == 'next' && $dversion['v_extension']) ? string_increment($dversion['v_extension']) : $dversion['v_extension'];
+    $patch      = ($format === 'next' && !$dversion['v_extension']) ? ($dversion['v_patch'] + 1) : $dversion['v_patch'];
+    $extension  = ($format === 'next' && $dversion['v_extension']) ? string_increment($dversion['v_extension']) : $dversion['v_extension'];
     return array( 'major'     => $dversion['v_major']     ,
                   'minor'     => $dversion['v_minor']     ,
                   'patch'     => $patch                   ,
@@ -368,7 +368,7 @@ function has_file_been_included( string $file_name ) : bool
   foreach($included_files as $included_file)
   {
     // If the file has been included, return 1
-    if(basename($included_file) == $file_name)
+    if(basename($included_file) === $file_name)
       return 1;
   }
 
@@ -416,9 +416,9 @@ function form_fetch_element(  string  $element_name             ,
   // If the goal is only to check existence, just return whether the element exists or not
   if($element_exists)
   {
-    if($request_type == 'GET')
+    if($request_type === 'GET')
       return (isset($_GET[$element_name]));
-    else if($request_type == 'FILES')
+    else if($request_type === 'FILES')
       return (isset($_FILES[$element_name]));
     else
       return (isset($_POST[$element_name]));
@@ -427,9 +427,9 @@ function form_fetch_element(  string  $element_name             ,
   // Otherwise return the unsanitized value of the element if it exists
   else
   {
-    if($request_type == 'GET')
+    if($request_type === 'GET')
       return (isset($_GET[$element_name])) ? $_GET[$element_name] : $default_value;
-    else if($request_type == 'FILES')
+    else if($request_type === 'FILES')
       return (isset($_FILES[$element_name])) ? $_FILES[$element_name] : $default_value;
     else
       return (isset($_POST[$element_name])) ? $_POST[$element_name] : $default_value;
@@ -479,15 +479,15 @@ function string_change_case(  ?string $string ,
                               string  $case   ) : string
 {
   // Changes the string to all uppercase
-  if($case == 'uppercase')
+  if($case === 'uppercase')
     return mb_convert_case($string, MB_CASE_UPPER, "UTF-8");
 
   // Changes the string to all lowercase
-  else if($case == 'lowercase')
+  else if($case === 'lowercase')
     return mb_convert_case($string, MB_CASE_LOWER, "UTF-8");
 
   // Changes the first character of the string to uppercase, ignores the rest
-  else if($case == 'initials')
+  else if($case === 'initials')
     return mb_substr(mb_convert_case($string, MB_CASE_UPPER, "UTF-8"), 0, 1, 'utf-8').mb_substr($string, 1, 65536, 'utf-8');
 
   // Return nothing otherwise
@@ -603,11 +603,11 @@ function date_to_text(  mixed   $date         = ''    ,
   if(!$strip_day)
   {
     $return .= __('day_'.$weekday.'_'.$lang);
-    $return .= ($lang == 'en') ? "," : "";
+    $return .= ($lang === 'en') ? "," : "";
   }
 
   // Add the month to the return string if the date is in english
-  if($lang == 'en')
+  if($lang === 'en')
     $return .= " ".__('month_'.$month.'_en');
 
   // Add the day's number to the return string
@@ -615,19 +615,19 @@ function date_to_text(  mixed   $date         = ''    ,
     $return .= " ".date('j', $date);
 
   // Add the day's ordinal to the return string
-  if($strip_day < 2 && $lang == 'en')
+  if($strip_day < 2 && $lang === 'en')
   {
     $ordinal = __('ordinal_0_en');
-    $ordinal = ($day == 1 || $day == 21 || $day == 31) ? __('ordinal_1_en') : $ordinal;
-    $ordinal = (($day % 10) == 2) ? __('ordinal_2_en') : $ordinal;
-    $ordinal = (($day % 10) == 3) ? __('ordinal_3_en') : $ordinal;
+    $ordinal = ($day === 1 || $day === 21 || $day === 31) ? __('ordinal_1_en') : $ordinal;
+    $ordinal = (($day % 10) === 2) ? __('ordinal_2_en') : $ordinal;
+    $ordinal = (($day % 10) === 3) ? __('ordinal_3_en') : $ordinal;
     $return .= $ordinal;
   }
-  else if($strip_day < 2 && $lang == 'fr')
-    $return .= ($day == 1) ? __('ordinal_1_fr') : '';
+  else if($strip_day < 2 && $lang === 'fr')
+    $return .= ($day === 1) ? __('ordinal_1_fr') : '';
 
   // Add the month to the return string if the date is in french
-  if($lang == 'fr')
+  if($lang === 'fr')
     $return .= " ".string_change_case(__('month_'.$month.'_fr'), 'lowercase');
 
   // Add the year to the return string
@@ -639,7 +639,7 @@ function date_to_text(  mixed   $date         = ''    ,
   {
     $return .= " ".__('time_indicator_'.$lang);
     $return .= " ".$time;
-    $return .= ($include_time == 1) ? ":".$seconds : '';
+    $return .= ($include_time === 1) ? ":".$seconds : '';
   }
 
   // Return the formatted date
@@ -664,7 +664,7 @@ function date_to_text(  mixed   $date         = ''    ,
 function date_to_ddmmyy( string $date ) : mixed
 {
   // If the date is not set or '0000-00-00', return null
-  if(!$date || $date == '0000-00-00')
+  if(!$date || $date === '0000-00-00')
     return NULL;
 
   // Else, return the date in the DD/MM/YY format
@@ -691,11 +691,11 @@ function date_to_mysql( string  $date                   ,
                         string  $default = '0000-00-00' ) : string
 {
   // If the date is DD/MM/YYYY, convert it to the correct format
-  if(strlen($date) == 10)
+  if(strlen($date) === 10)
     $date = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
 
   // Same thing if the date is DD/MM/YY
-  else if(strlen($date) == 8)
+  else if(strlen($date) === 8)
     $date = date('Y-m-d', strtotime(substr($date,6,2).'-'.substr($date,3,2).'-'.substr($date,0,2)));
 
   // Otherwise, return the absence of a MySQL date
@@ -703,7 +703,7 @@ function date_to_mysql( string  $date                   ,
     return $default;
 
   // If the converted date is incorrect, also return the absence of a MySQL date
-  if($date == '1970-01-01')
+  if($date === '1970-01-01')
     return $default;
 
   // Return the converted date
@@ -756,7 +756,7 @@ function diff_raw_string_arrays(  array $old  ,
 
   // If a difference has been found, return it in an array of arrays of strings
   // The deleted content is in an array called 'd', and the inserted content in an array called 'i'
-  if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
+  if($maxlen === 0) return array(array('d'=>$old, 'i'=>$new));
 
   // As long as there are differences, run this function recursively until all differences are identified
   // Content without differences is returned at the root of the returned array, not within a 'd' or 'i' sub-array
@@ -928,8 +928,8 @@ function page_section_selector( array   $entries  ,
   foreach($entries as $entry)
   {
     // Define which dropdown menu entry should be selected and which page sections should be hidden
-    $data['menu'][$entry] = ($selected == $entry || (!$selected && $entry == $default)) ? ' selected' : '';
-    $data['hide'][$entry] = ($selected == $entry || (!$selected && $entry == $default)) ? '' : ' hidden';
+    $data['menu'][$entry] = ($selected === $entry || (!$selected && $entry === $default)) ? ' selected' : '';
+    $data['hide'][$entry] = ($selected === $entry || (!$selected && $entry === $default)) ? '' : ' hidden';
   }
 
   // Return the assembled data
@@ -1163,7 +1163,7 @@ function log_activity_details(  int     $linked_activity_log          ,
                                 bool    $do_not_sanitize      = false ) : void
 {
   // If there are no differences, do not create a detailed activity log
-  if($is_optional && ($before == $after))
+  if($is_optional && ($before === $after))
     return;
 
   // In order to avoid strain caused by the diff functions, do not create a diff log if $after is too long
@@ -1354,9 +1354,8 @@ function irc_bot_send_message(  string  $message                          ,
   $timestamp          = sanitize(time(), 'int', 0);
   $channel_sanitized  = sanitize($channel, 'string');
   $body_sanitized     = sanitize($message, 'string');
-  $temp               = (system_variable_fetch('irc_bot_is_silenced'));
-  $temp               = $ignore_silenced_mode ? 0 : $temp;
-  $silenced_mode      = sanitize($temp, 'int', 0, 1);
+  $bot_status         = (system_variable_fetch('irc_bot_is_silenced'));
+  $silenced_mode      = $ignore_silenced_mode ? 0 : sanitize($bot_status, 'int', 0, 1);
   $manual_mode        = ($channel) ? 0 : 1;
 
   // Write a log in the database
@@ -1435,9 +1434,9 @@ function discord_send_message(  string  $message          ,
     return;
 
   // Determine which webhook to use
-  if($channel == 'admin')
+  if($channel === 'admin')
     $webhook = $GLOBALS['discord_admin'];
-  else if($channel == 'mod')
+  else if($channel === 'mod')
     $webhook = $GLOBALS['discord_mod'];
   else
     $webhook = $GLOBALS['discord_main'];
@@ -1449,9 +1448,9 @@ function discord_send_message(  string  $message          ,
     $webhook = $GLOBALS['dev_discord'];
 
     // Prepare extra debug information
-    if($channel == 'admin')
+    if($channel === 'admin')
       $prepend = "**DEBUG: Admin notification:**";
-    else if($channel == 'mod')
+    else if($channel === 'mod')
       $prepend = "**DEBUG: Mod notification:**";
     else
       $prepend = "**DEBUG: Main channel notification:**";

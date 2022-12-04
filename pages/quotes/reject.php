@@ -62,7 +62,7 @@ if(!$quote_data || $quote_data['deleted'] || $quote_data['validated'])
 
 // Get the submitter's language
 $submitter_language = user_get_language($quote_data['submitter_id']);
-$submitter_language = ($submitter_language == 'FR') ? __('french') : __('english');
+$submitter_language = ($submitter_language === 'FR') ? __('french') : __('english');
 
 
 

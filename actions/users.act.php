@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -103,44 +103,50 @@ function user_get( ?int $user_id = NULL ) : mixed
   $data['banned']     = ($duser['u_banned']);
   $data['unbanned']   = sanitize_output(string_change_case(time_until($duser['u_banned']), 'lowercase'));
   $data['username']   = sanitize_output($duser['u_nick']);
-  $temp               = $duser['u_mod'] ? __('moderator') : '';
-  $temp               = $duser['u_admin'] ? __('administrator') : $temp;
-  $data['title']      = sanitize_output(string_change_case($temp, 'initials'));
-  $temp               = $duser['u_mod'] ? ' text_orange noglow' : '';
-  $data['title_css']  = $duser['u_admin'] ? ' text_red glow_dark' : $temp;
+  $user_title         = $duser['u_mod'] ? __('moderator') : '';
+  $user_title         = $duser['u_admin'] ? __('administrator') : $user_title;
+  $data['title']      = sanitize_output(string_change_case($user_title, 'initials'));
+  $user_css           = $duser['u_mod'] ? ' text_orange noglow' : '';
+  $data['title_css']  = $duser['u_admin'] ? ' text_red glow_dark' : $user_css;
   $data['lang_en']    = str_contains($duser['u_lang'], 'EN');
   $data['lang_fr']    = str_contains($duser['u_lang'], 'FR');
-  $temp               = ($lang == 'FR' && $duser['u_text_fr']) ? $duser['u_text_fr'] : $duser['u_text_en'];
-  $data['text']       = bbcodes(sanitize_output($temp, true));
+  $data['text']       = ($lang === 'FR' && $duser['u_text_fr'])
+                      ? bbcodes(sanitize_output($duser['u_text_fr'], preserve_line_breaks: true))
+                      : bbcodes(sanitize_output($duser['u_text_en'], preserve_line_breaks: true));
   $data['text_fr']    = sanitize_output($duser['u_text_fr']);
   $data['text_en']    = sanitize_output($duser['u_text_en']);
   $data['ftext_fr']   = bbcodes(sanitize_output($duser['u_text_fr'], true));
   $data['ftext_en']   = bbcodes(sanitize_output($duser['u_text_en'], true));
-  $temp               = ($lang == 'FR' && $duser['u_pronouns_fr']) ? $duser['u_pronouns_fr'] : $duser['u_pronouns_en'];
-  $data['pronouns']   = sanitize_output($temp);
+  $data['pronouns']   = ($lang === 'FR' && $duser['u_pronouns_fr'])
+                      ? sanitize_output($duser['u_pronouns_fr'])
+                      : sanitize_output($duser['u_pronouns_en']);
   $data['pronoun_en'] = sanitize_output($duser['u_pronouns_en']);
   $data['pronoun_fr'] = sanitize_output($duser['u_pronouns_fr']);
   $data['country']    = sanitize_output($duser['u_country']);
   $data['created']    = sanitize_output(date_to_text($duser['u_created'], strip_day: 1));
   $data['screated']   = sanitize_output(time_since($duser['u_created']));
-  $temp               = ($duser['u_activity']) ? $duser['u_activity'] : $duser['u_created'];
-  $data['activity']   = sanitize_output(time_since($temp));
-  $temp               = date_to_text($duser['u_birthday'], strip_day: true, strip_year: true);
-  $data['birthday']   = ($duser['u_birth_d'] && $duser['u_birth_m']) ? sanitize_output($temp) : 0;
+  $data['activity']   = ($duser['u_activity'])
+                      ? sanitize_output(time_since($duser['u_activity']))
+                      : sanitize_output(time_since($duser['u_created']));
+  $data['birthday']   = ($duser['u_birth_d'] && $duser['u_birth_m'])
+                      ? sanitize_output(date_to_text($duser['u_birthday'], strip_day: true, strip_year: true))
+                      : 0;
   $data['age']        = ($duser['u_birth_y']) ? sanitize_output($duser['u_age']) : 0;
   $data['birth_d']    = ($duser['u_birth_d']) ? sanitize_output($duser['u_birth_d']) : '';
   $data['birth_m']    = ($duser['u_birth_m']) ? sanitize_output($duser['u_birth_m']) : '';
   $data['birth_y']    = ($duser['u_birth_y']) ? sanitize_output($duser['u_birth_y']) : '';
   $data['hideact']    = ($duser['u_hideact']);
-  $data['ip']         = ($duser['u_ip'] == '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($duser['u_ip']);
-  $temp               = ($lang == 'FR' && $duser['u_active_fr']) ? $duser['u_active_fr'] : $duser['u_active_en'];
-  $data['lastpage']   = sanitize_output($temp);
+  $data['ip']         = ($duser['u_ip'] === '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($duser['u_ip']);
+  $data['lastpage']   = ($lang === 'FR' && $duser['u_active_fr'])
+                      ? sanitize_output($duser['u_active_fr'])
+                      : sanitize_output($duser['u_active_en']);
   $data['lasturl']    = sanitize_output($duser['u_active_url']);
-  $temp               = string_change_case(__('none_f'), 'initials');
-  $temp               = ($duser['u_lastaction']) ? time_since($duser['u_lastaction']) : $temp;
-  $data['lastaction'] = sanitize_output($temp);
-  $temp               = string_change_case(__('none_f'), 'initials');
-  $data['email']      = ($duser['u_mail']) ? sanitize_output($duser['u_mail']) : $temp;
+  $data['lastaction'] = ($duser['u_lastaction'])
+                      ? sanitize_output(time_since($duser['u_lastaction']))
+                      : sanitize_output(string_change_case(__('none_f'), 'initials'));
+  $data['email']      = ($duser['u_mail'])
+                      ? sanitize_output($duser['u_mail'])
+                      : string_change_case(__('none_f'), 'initials');
   $data['quotes']     = sanitize_output($duser['us_quotes']);
   $data['quotes_app'] = sanitize_output($duser['us_quotes_app']);
   $data['meetups']    = sanitize_output($duser['us_meetups']);
@@ -206,18 +212,56 @@ function user_list( string  $sort_by          = ''      ,
   $active_limit     = sanitize(time() - 2629746, 'int', 0);
 
   // Sanitize the search parameters
-  $search_id          = isset($search['id'])          ? sanitize($search['id'], 'int', 0)                     : NULL;
-  $search_username    = isset($search['username'])    ? sanitize($search['username'], 'string')               : NULL;
-  $search_del_user    = isset($search['del_user'])    ? sanitize($search['del_user'], 'string')               : NULL;
-  $search_registered  = isset($search['registered'])  ? sanitize($search['registered'], 'int', 0, date('Y'))  : NULL;
-  $search_active      = isset($search['active'])      ? sanitize($search['active'], 'int', 0, 1)              : NULL;
-  $search_languages   = isset($search['languages'])   ? sanitize($search['languages'], 'string')              : NULL;
+  $search_id          = sanitize_array_element($search, 'id', 'int', min: 0, default: 0);
+  $search_username    = sanitize_array_element($search, 'username', 'string');
+  $search_del_user    = sanitize_array_element($search, 'del_user', 'string');
+  $search_registered  = sanitize_array_element($search, 'registered', 'int', min: 0, max: date('Y'), default: 0);
+  $search_active      = sanitize_array_element($search, 'active', 'int', min: 0, max: 1, default: 0);
+  $search_languages   = sanitize_array_element($search, 'languages', 'string');
 
-  // Prepare data
+  // Determine the activity cutoff
   $minimum_activity = sanitize((time() - $activity_cutoff), 'int', 0);
 
-  // Initialize the returned array
-  $data = array();
+  // Hide user activity based on their settings
+  $query_settings = ($is_activity && !$is_admin) ? " AND users_settings.hide_from_activity = 0 " : "";
+
+  // Activity cutoff
+  $query_settings .= ($activity_cutoff) ? " AND users.last_visited_at >= '$minimum_activity' " : "";
+
+  // Banned users view
+  $query_settings .= ($banned_only) ? " AND users.is_banned_until > 0 " : "";
+
+  // Search through the data
+  $query_search  = ($search_id)         ? " AND   users.id                          = '$search_id'          " : "";
+  $query_search .= ($search_username)   ? " AND   users.username                 LIKE '%$search_username%'  " : "";
+  $query_search .= ($search_del_user)   ? " AND   users.deleted_username         LIKE '%$search_del_user%'  " : "";
+  $query_search .= ($search_registered) ? "
+                          AND YEAR(FROM_UNIXTIME(users_profile.created_at))         = '$search_registered'  " : "";
+  $query_search .= ($search_active)     ? " AND ( users.last_visited_at             > '$active_limit'
+                                            OR    users_profile.created_at          > '$active_limit' )     " : "";
+  $query_search .= ($search_languages)  ? " AND   users_profile.spoken_languages LIKE '%$search_languages%' " : "";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'id'                => " ORDER BY users.id                                ASC   " ,
+    'activity'          => " ORDER BY users.last_visited_at                   DESC  " ,
+    'banned'            => " ORDER BY users.is_banned_until                   ASC   " ,
+    'username'          => " ORDER BY users.username                          ASC   " ,
+    'deleted_username'  => " ORDER BY users.deleted_username                  ASC   " ,
+    'deleted'           => " ORDER BY users.deleted_at                        DESC  " ,
+    'registered'        => " ORDER BY users_profile.created_at                DESC  " ,
+    'rregistered'       => " ORDER BY users_profile.created_at                ASC   " ,
+    'language'          => " ORDER BY users_profile.spoken_languages = 'ENFR' DESC  ,
+                                      users_profile.spoken_languages = 'FREN' DESC  ,
+                                      users_profile.spoken_languages = 'EN'   DESC  ,
+                                      users_profile.spoken_languages = 'FR'   DESC  ,
+                                      users.last_visited_at                   DESC  " ,
+    default             => " ORDER BY users.id                                ASC   " ,
+  };
+
+  // Limit the amount of users returned
+  $query_limit = ($max_count) ? " LIMIT $max_count " : "";
 
   // Fetch the user list
   $qusers = "       SELECT    'user'                          AS 'data_type'        ,
@@ -246,67 +290,11 @@ function user_list( string  $sort_by          = ''      ,
                     FROM      users
                     LEFT JOIN users_settings  ON users.id = users_settings.fk_users
                     LEFT JOIN users_profile   ON users.id = users_profile.fk_users
-                    WHERE     users.is_deleted                              = '$deleted'              ";
-
-  // Hide user activity based on their settings
-  if($is_activity && !$is_admin)
-    $qusers .= "    AND       users_settings.hide_from_activity             = 0                       ";
-
-  // Activity cutoff
-  if($activity_cutoff)
-    $qusers .= "    AND       users.last_visited_at                         >= '$minimum_activity'    ";
-
-  // Banned users view
-  if($banned_only)
-    $qusers .= "    AND       users.is_banned_until                         > 0                       ";
-
-  // Run the searches
-  if($search_id)
-    $qusers .= "    AND       users.id                                      = '$search_id'            ";
-  if($search_username)
-    $qusers .= "    AND       users.username                             LIKE '%$search_username%'    ";
-  if($search_del_user)
-    $qusers .= "    AND       users.deleted_username                     LIKE '%$search_del_user%'    ";
-  if($search_registered)
-    $qusers .= "    AND       YEAR(FROM_UNIXTIME(users_profile.created_at)) = '$search_registered'    ";
-  if($search_active)
-    $qusers .= "    AND     ( users.last_visited_at                         > '$active_limit'
-                    OR        users_profile.created_at                      > '$active_limit' )       ";
-  if($search_languages)
-    $qusers .= "    AND       users_profile.spoken_languages             LIKE '%$search_languages%'   ";
-
-  // Sort the users
-  if(!$include_guests)
-  {
-    if($sort_by == 'id')
-      $qusers .= "  ORDER BY  users.id                  ASC   ";
-    else if($sort_by == 'activity')
-      $qusers .= "  ORDER BY  users.last_visited_at     DESC  ";
-    else if($sort_by == 'banned')
-      $qusers .= "  ORDER BY  users.is_banned_until     ASC   ";
-    else if($sort_by == 'username')
-      $qusers .= "  ORDER BY  users.username            ASC   ";
-    else if($sort_by == 'deleted_username')
-      $qusers .= "  ORDER BY  users.deleted_username    ASC   ";
-    else if($sort_by == 'deleted')
-      $qusers .= "  ORDER BY  users.deleted_at          DESC  ";
-    else if($sort_by == 'registered')
-      $qusers .= "  ORDER BY  users_profile.created_at  DESC  ";
-    else if($sort_by == 'rregistered')
-      $qusers .= "  ORDER BY  users_profile.created_at  ASC   ";
-    else if($sort_by == 'language')
-      $qusers .= "  ORDER BY  users_profile.spoken_languages = 'ENFR' DESC  ,
-                              users_profile.spoken_languages = 'FREN' DESC  ,
-                              users_profile.spoken_languages = 'EN'   DESC  ,
-                              users_profile.spoken_languages = 'FR'   DESC  ,
-                              users.last_visited_at                   DESC  ";
-    else
-      $qusers .= "  ORDER BY  users.id                  ASC   ";
-  }
-
-  // Limit the amount of users returned
-  if($max_count)
-    $qusers .= "    LIMIT $max_count ";
+                    WHERE     users.is_deleted = '$deleted'
+                              $query_settings
+                              $query_search
+                              $query_sort
+                              $query_limit ";
 
   // Include guests if necessary
   if($include_guests)
@@ -373,6 +361,9 @@ function user_list( string  $sort_by          = ''      ,
   // Run the query
   $qusers = query($qusers);
 
+  // Initialize the returned array
+  $data = array();
+
   // Fetch the user's display mode
   $mode = user_get_mode();
 
@@ -385,16 +376,18 @@ function user_list( string  $sort_by          = ''      ,
     $data[$i]['deleted']    = sanitize_output($row['u_deleted']);
     $data[$i]['del_since']  = sanitize_output(time_since($row['u_deleted_at']));
     $data[$i]['del_nick']   = sanitize_output($row['u_deleted_nick']);
-    $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
-    $temp                   = ($row['data_type'] == 'guest') ? $temp : $row['u_nick'];
-    $data[$i]['username']   = sanitize_output($temp);
+    $guest_name             = ($lang === 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
+    $data[$i]['username']   = ($row['data_type'] === 'guest')
+                            ? sanitize_output($guest_name)
+                            : sanitize_output($row['u_nick']);
     $data[$i]['registered'] = sanitize_output(time_since($row['u_created']));
     $data[$i]['created']    = sanitize_output(date_to_text($row['u_created'], include_time: 2));
-    $temp                   = ($row['u_activity']) ?: $row['u_created'];
-    $data[$i]['activity']   = sanitize_output(time_since($temp));
-    $data[$i]['active_at']  = sanitize_output(date_to_text($temp, include_time: 2));
-    $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
-    $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 40, '...'));
+    $user_activity          = ($row['u_activity']) ?: $row['u_created'];
+    $data[$i]['activity']   = sanitize_output(time_since($user_activity));
+    $data[$i]['active_at']  = sanitize_output(date_to_text($user_activity, include_time: 2));
+    $data[$i]['last_page']  = ($lang === 'EN')
+                            ? sanitize_output(string_truncate($row['u_last_page_en'], 40, '...'))
+                            : sanitize_output(string_truncate($row['u_last_page_fr'], 40, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
     $data[$i]['ip']         = sanitize_output($row['u_ip']);
     $data[$i]['lang_en']    = str_contains($row['u_languages'], 'EN');
@@ -405,30 +398,30 @@ function user_list( string  $sort_by          = ''      ,
     $data[$i]['ban_startf'] = ($row['u_ban_start']) ? date_to_text($row['u_ban_start'], 0, 2) : '';
     $data[$i]['ban_length'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], $row['u_ban_end'], 1) : '';
     $data[$i]['ban_served'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], time(), 1) : '';
-    $temp                   = ($row['u_ban_reason_en']) ? $row['u_ban_reason_en'] : '';
-    $temp                   = ($lang == 'FR' && $row['u_ban_reason_fr']) ? $row['u_ban_reason_fr'] : $temp;
-    $data[$i]['ban_reason'] = sanitize_output(string_truncate($temp, 30, '...'));
-    $data[$i]['ban_full']   = (strlen($temp) > 30) ? sanitize_output($temp) : '';
+    $ban_reason             = ($row['u_ban_reason_en']) ? $row['u_ban_reason_en'] : '';
+    $ban_reason             = ($lang === 'FR' && $row['u_ban_reason_fr']) ? $row['u_ban_reason_fr'] : $ban_reason;
+    $data[$i]['ban_reason'] = sanitize_output(string_truncate($ban_reason, 30, '...'));
+    $data[$i]['ban_full']   = (strlen($ban_reason) > 30) ? sanitize_output($ban_reason) : '';
     $data[$i]['ip_ban_id']  = $row['u_ip_ban_id'];
-    $data[$i]['ip_bans']    = ($row['data_type'] == 'ip_ban') ? admin_ip_ban_list_users($row['u_ip']) : '';
+    $data[$i]['ip_bans']    = ($row['data_type'] === 'ip_ban') ? admin_ip_ban_list_users($row['u_ip']) : '';
     $data[$i]['total_ban']  = ($row['u_total_ip_ban']);
     if($is_activity)
     {
-      $temp                 = ($row['data_type'] == 'user') ? ' bold text_blue noglow' : ' noglow';
-      $temp                 = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
-      $temp                 = ($row['u_admin']) ? ' bold text_red' : $temp;
+      $user_css             = ($row['data_type'] === 'user') ? ' bold text_blue noglow' : ' noglow';
+      $user_css             = ($row['u_mod']) ? ' bold text_orange noglow' : $user_css;
+      $user_css             = ($row['u_admin']) ? ' bold text_red' : $user_css;
     }
     else if($include_ip_bans)
-      $temp                 = ($row['u_total_ip_ban']) ? 'text_red glow_css' : 'noglow';
+      $user_css             = ($row['u_total_ip_ban']) ? 'text_red glow_css' : 'noglow';
     else
     {
-      $temp                 = ($row['u_activity']) ?: $row['u_created'];
-      $temp                 = ($temp > $active_limit) ? 'bold green text_white' : '';
-      $temp                 = ($row['u_ban_end']) ? 'bold brown text_white' : $temp;
-      $temp                 = ($row['u_mod']) ? 'bold orange text_white'  : $temp;
-      $temp                 = ($row['u_admin']) ? 'bold red text_white'  : $temp;
+      $user_css             = ($row['u_activity']) ?: $row['u_created'];
+      $user_css             = ($user_css > $active_limit) ? 'bold green text_white' : '';
+      $user_css             = ($row['u_ban_end']) ? 'bold brown text_white' : $user_css;
+      $user_css             = ($row['u_mod']) ? 'bold orange text_white'  : $user_css;
+      $user_css             = ($row['u_admin']) ? 'bold red text_white'  : $user_css;
     }
-    $data[$i]['css']        = $temp;
+    $data[$i]['css']        = $user_css;
   }
 
   // Add the number of rows to the data
@@ -454,29 +447,28 @@ function user_list_admins( string $sort_by = '' ) : array
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'activity'  => " ORDER BY users.is_administrator  DESC  ,
+                              users.last_visited_at   DESC  " ,
+    default     => " ORDER BY users.is_administrator  DESC  ,
+                              users.username          ASC   " ,
+  };
+
   // Fetch the admin list
-  $qadmins = "    SELECT    users.id                        AS 'u_id'       ,
-                            users.username                  AS 'u_nick'     ,
-                            users.is_administrator          AS 'u_admin'    ,
-                            users.is_moderator              AS 'u_mod'      ,
-                            users.last_visited_at           AS 'u_activity' ,
-                            users_profile.spoken_languages  AS 'u_languages'
-                  FROM      users
-                  LEFT JOIN users_profile ON users.id = users_profile.fk_users
-                  WHERE     users.is_deleted        = 0
-                  AND     ( users.is_administrator  = 1
-                  OR        users.is_moderator      = 1 ) ";
-
-  // Sorting order
-  if($sort_by == 'activity')
-    $qadmins .= " ORDER BY  users.is_administrator  DESC  ,
-                            users.last_visited_at   DESC   ";
-  else
-    $qadmins .= " ORDER BY  users.is_administrator  DESC  ,
-                            users.username          ASC   ";
-
-  // Run the query
-  $qadmins = query($qadmins);
+  $qadmins = query("  SELECT    users.id                        AS 'u_id'       ,
+                                users.username                  AS 'u_nick'     ,
+                                users.is_administrator          AS 'u_admin'    ,
+                                users.is_moderator              AS 'u_mod'      ,
+                                users.last_visited_at           AS 'u_activity' ,
+                                users_profile.spoken_languages  AS 'u_languages'
+                      FROM      users
+                      LEFT JOIN users_profile ON users.id = users_profile.fk_users
+                      WHERE     users.is_deleted        = 0
+                      AND     ( users.is_administrator  = 1
+                      OR        users.is_moderator      = 1 )
+                                $query_sort ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qadmins); $i++)
@@ -485,8 +477,9 @@ function user_list_admins( string $sort_by = '' ) : array
     $data[$i]['username'] = sanitize_output($row['u_nick']);
     $data[$i]['admin']    = sanitize_output($row['u_admin']);
     $data[$i]['mod']      = sanitize_output($row['u_mod']);
-    $temp                 = ($row['u_admin']) ? __('administrator') : __('moderator');
-    $data[$i]['title']    = sanitize_output(string_change_case($temp, 'initials'));
+    $data[$i]['title']    = ($row['u_admin'])
+                          ? sanitize_output(string_change_case(__('administrator'), 'initials'))
+                          : sanitize_output(string_change_case(__('moderator'), 'initials'));
     $data[$i]['activity'] = sanitize_output(time_since($row['u_activity']));
     $data[$i]['lang_en']  = str_contains($row['u_languages'], 'EN');
     $data[$i]['lang_fr']  = str_contains($row['u_languages'], 'FR');
@@ -564,19 +557,19 @@ function user_edit_profile( array $user_data ) : void
           WHERE   users_profile.fk_users          = '$user_id'      ");
 
   // Check for differences between the previous and new profiles
-  if($languages != $old_user_data['u_lang'])
+  if($languages !== $old_user_data['u_lang'])
     $differences['languages'] = 1;
-  if($birthday != $old_user_data['u_birthday'])
+  if($birthday !== $old_user_data['u_birthday'])
     $differences['birthday'] = 1;
-  if($residence_raw != $old_user_data['u_residence'])
+  if($residence_raw !== $old_user_data['u_residence'])
     $differences['residence'] = 1;
-  if($pronouns_en_raw != $old_user_data['u_pronouns_en'])
+  if($pronouns_en_raw !== $old_user_data['u_pronouns_en'])
     $differences['pronouns_en'] = 1;
-  if($pronouns_fr_raw != $old_user_data['u_pronouns_fr'])
+  if($pronouns_fr_raw !== $old_user_data['u_pronouns_fr'])
     $differences['pronouns_fr'] = 1;
-  if($text_en_raw != $old_user_data['u_text_en'])
+  if($text_en_raw !== $old_user_data['u_text_en'])
     $differences['text_en'] = 1;
-  if($text_fr_raw != $old_user_data['u_text_fr'])
+  if($text_fr_raw !== $old_user_data['u_text_fr'])
     $differences['text_fr'] = 1;
 
   // If any differences have been spotted, notify the moderation team - just in case
@@ -652,7 +645,7 @@ function user_delete_profile( $user_id              ,
   $mod_id = sanitize(user_get_id(), 'int');
 
   // End here if the moderator is trying to delete their own profile
-  if($user_id == $mod_id)
+  if($user_id === $mod_id)
     return;
 
   // Prepare and sanitize the data
@@ -757,10 +750,11 @@ function user_ban_details( ?int $user_id = NULL ) : array
   $lang               = user_get_language();
   $data['ban_start']  = sanitize_output(date_to_text($dban['u_ban_start'], 0, 0, $lang));
   $data['ban_length'] = time_days_elapsed(date('Y-m-d', $dban['u_ban_start']), date('Y-m-d', $dban['u_ban_end']));
-  $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, 0, $lang).__('at_date', 0, 1 ,1).date('H:i:s', $dban['u_ban_end']));
+  $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, 0, $lang).__('at_date', 0, 1 ,1)
+                        .date('H:i:s', $dban['u_ban_end']));
   $data['time_left']  = sanitize_output(time_until($dban['u_ban_end']));
-  $temp               = ($dban['u_ban_fr']) ? sanitize_output($dban['u_ban_fr']) : sanitize_output($dban['u_ban_en']);
-  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : $temp;
+  $ban_reason         = ($dban['u_ban_fr']) ? sanitize_output($dban['u_ban_fr']) : sanitize_output($dban['u_ban_en']);
+  $data['ban_reason'] = ($lang === 'EN') ? sanitize_output($dban['u_ban_en']) : $ban_reason;
   $data['ban_r_en']   = sanitize_output($dban['u_ban_en']);
   $data['ban_r_fr']   = sanitize_output($dban['u_ban_fr']);
 
@@ -846,13 +840,13 @@ function user_autocomplete_username(  string  $input        ,
     return NULL;
 
   // Exclude banned users if required
-  if($type == 'ban')
+  if($type === 'ban')
     $where .= " AND users.is_banned_until = 0 ";
-  else if($type == 'unban')
+  else if($type === 'unban')
     $where .= " AND users.is_banned_until > 0 ";
 
   // Look up a specific meetup if required
-  if($type == 'meetup')
+  if($type === 'meetup')
   {
     $join  .= " LEFT JOIN meetups_people ON meetups_people.fk_meetups = '$id' AND meetups_people.fk_users = users.id ";
     $where .= " AND meetups_people.id IS NULL ";
@@ -1054,10 +1048,10 @@ function users_stats_list() : array
     $data['anniv_nick_'.$i]     = sanitize_output($row['u_nick']);
     $data['anniv_years_'.$i]    = sanitize_output($row['up_years'].number_ordinal($row['up_years']));
     $data['anniv_date_'.$i]     = sanitize_output(date_to_text($row['up_date'], strip_day: 1));
-    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
-    $data['anniv_days_'.$i]     = ($temp) ? sanitize_output($temp) : __('emoji_tada');
-    $data['anniv_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
-    $data['anniv_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
+    $anniversary_days           = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
+    $data['anniv_days_'.$i]     = ($anniversary_days) ? sanitize_output($anniversary_days) : __('emoji_tada');
+    $data['anniv_css_row_'.$i]  = ($anniversary_days) ? '' : ' class="text_white green"';
+    $data['anniv_css_link_'.$i] = ($anniversary_days) ? 'bold' : 'text_white bold';
   }
 
   // Add the number of anniversaries to the return array
@@ -1087,16 +1081,18 @@ function users_stats_list() : array
   {
     $data['birth_id_'.$i]       = sanitize_output($row['u_id']);
     $data['birth_nick_'.$i]     = sanitize_output($row['u_nick']);
-    $temp                       = ($row['up_next'] == date('Y-m-d', time())) ? ($row['up_years']-1) : $row['up_years'];
-    $temp                       = $temp.__('year_age', amount: $temp, spaces_before: 1);
-    $data['birth_years_'.$i]    = ($row['up_year']) ? sanitize_output($temp) : '?';
-    $temp                       = date_to_text($row['up_birthday'], strip_day: true, strip_year: true).' ????';
-    $temp                       = ($row['up_year']) ? date_to_text($row['up_birthday'], strip_day: true) : $temp;
-    $data['birth_date_'.$i]     = sanitize_output($temp);
-    $temp                       = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
-    $data['birth_days_'.$i]     = ($temp) ? sanitize_output($temp) : __('emoji_tada');
-    $data['birth_css_row_'.$i]  = ($temp) ? '' : ' class="text_white green"';
-    $data['birth_css_link_'.$i] = ($temp) ? 'bold' : 'text_white bold';
+    $user_upcoming_age          = ($row['up_next'] === date('Y-m-d', time()))
+                                ? ($row['up_years']-1).__('year_age', amount: ($row['up_years']-1), spaces_before: 1)
+                                : $row['up_years'].__('year_age', amount: $row['up_years'], spaces_before: 1);
+    $data['birth_years_'.$i]    = ($row['up_year']) ? sanitize_output($user_upcoming_age) : '?';
+    $data['birth_date_'.$i]     = ($row['up_year'])
+                                ? sanitize_output(date_to_text($row['up_birthday'], strip_day: true))
+                                : sanitize_output(date_to_text($row['up_birthday'], strip_day: true, strip_year: true)
+                                                  .' ????');
+    $user_days_to_bday          = time_days_elapsed(date('Y-m-d', time()), substr($row['up_next'], 0, 10));
+    $data['birth_days_'.$i]     = ($user_days_to_bday) ? sanitize_output($user_days_to_bday) : __('emoji_tada');
+    $data['birth_css_row_'.$i]  = ($user_days_to_bday) ? '' : ' class="text_white green"';
+    $data['birth_css_link_'.$i] = ($user_days_to_bday) ? 'bold' : 'text_white bold';
   }
 
   // Add the number of birthdays to the return array

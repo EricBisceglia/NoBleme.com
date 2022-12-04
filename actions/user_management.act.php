@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -409,15 +409,15 @@ function admin_account_change_rights( string  $username ,
     return __('admin_deactivate_error_id');
 
   // Error: Can't delete your own rights
-  if($user_id == $admin_id)
+  if($user_id === $admin_id)
     return __('admin_rights_error_self');
 
   // Error: Can't get rid of the original user
-  if($user_id == 1 && $level < 2)
+  if($user_id === 1 && $level < 2)
     return __('admin_rights_error_founder');
 
   // Demotion to user
-  if($level == 0)
+  if($level === 0)
   {
     // Error: User is already an user
     if(!user_is_moderator($user_id) && !user_is_administrator($user_id))
@@ -447,7 +447,7 @@ function admin_account_change_rights( string  $username ,
   }
 
   // Promotion to moderator
-  if($level == 1)
+  if($level === 1)
   {
     // Error: Demotions must go full circle
     if(user_is_administrator($user_id))
@@ -483,7 +483,7 @@ function admin_account_change_rights( string  $username ,
   }
 
   // Promotion to administrator
-  if($level == 2)
+  if($level === 2)
   {
     // Error: User is already an administrators
     if(user_is_administrator($user_id))

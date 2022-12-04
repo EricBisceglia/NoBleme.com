@@ -294,7 +294,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } else { ?>
         <td colspan="8">
         <?php } ?>
-          <?php if($users_data['rows'] == $users_total_count) { ?>
+          <?php if($users_data['rows'] === $users_total_count) { ?>
           <?=__('admin_stats_users_count', preset_values: array($users_data['rows']))?>
           <?php } else { ?>
           <?=__('admin_stats_users_partial', amount: $users_data['rows'], preset_values: array($users_data['rows'], $users_total_count, $users_data['percent_users']))?>
@@ -339,9 +339,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <td>
-          <?php if($users_data[$i]['language'] == 'EN') { ?>
+          <?php if($users_data[$i]['language'] === 'EN') { ?>
           <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="20" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
-          <?php } else if($users_data[$i]['language'] == 'FR') { ?>
+          <?php } else if($users_data[$i]['language'] === 'FR') { ?>
           <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="20" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
           <?php } else { ?>
           &nbsp;
@@ -358,11 +358,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <?php if($users_data[$i]['theme'] == 'dark') { ?>
+        <?php if($users_data[$i]['theme'] === 'dark') { ?>
         <td class="text_light dark">
           <?=__('admin_stats_guests_theme_dark')?>
         </td>
-        <?php } else if($users_data[$i]['theme'] == 'light') { ?>
+        <?php } else if($users_data[$i]['theme'] === 'light') { ?>
         <td class="text_dark light">
           <?=__('admin_stats_guests_theme_light')?>
         </td>
@@ -426,9 +426,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td class="pointer tooltip_container tooltip_desktop" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
-          <?php if($users_data[$i]['nsfw'] == 0) { ?>
+          <?php if($users_data[$i]['nsfw'] === 0) { ?>
           <span class="text_red" title="<?=__('admin_stats_users_no_nsfw')?>">&cross;</span>
-          <?php } else if($users_data[$i]['nsfw'] == 1) { ?>
+          <?php } else if($users_data[$i]['nsfw'] === 1) { ?>
           <span class="text_orange" title="<?=__('admin_stats_users_some_nsfw')?>">&frac12;</span>
           <?php } else { ?>
           <span class="text_green" title="<?=__('admin_stats_users_all_nsfw')?>">&check;</span>
@@ -444,9 +444,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <span class="text_red" title="<?=__('admin_stats_users_hidden')?>">&cross;</span>
           <?php } ?>
           <div class="tooltip">
-            <?php if($users_data[$i]['nsfw'] == 0) { ?>
+            <?php if($users_data[$i]['nsfw'] === 0) { ?>
             <span class="text_red">&cross;</span> <?=__('admin_stats_users_no_nsfw')?>
-            <?php } else if($users_data[$i]['nsfw'] == 1) { ?>
+            <?php } else if($users_data[$i]['nsfw'] === 1) { ?>
             <span class="text_orange">&cross;</span> <?=__('admin_stats_users_some_nsfw')?>
             <?php } else { ?>
             <span class="text_green">&check;</span> <?=__('admin_stats_users_all_nsfw')?>

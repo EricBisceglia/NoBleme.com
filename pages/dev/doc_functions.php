@@ -20,7 +20,7 @@ $page_title_fr    = "Liste des fonctions";
 
 // Extra CSS & JS
 $css  = array('dev');
-$js   = array('common/toggle', 'common/selector');
+$js   = array('common/selector');
 
 
 
@@ -647,6 +647,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Sanitizes user inputted data.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right glow_dark bold">
+          sanitize_array_element()
+        </td>
+        <td class="align_left">
+          Sanitizes an element from an array.
         </td>
       </tr>
 

@@ -24,7 +24,7 @@ $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
 // Extra JS
-$js = array('admin/ban', 'users/autocomplete_username', 'common/toggle');
+$js = array('admin/ban', 'users/autocomplete_username');
 
 
 
@@ -39,7 +39,7 @@ $js = array('admin/ban', 'users/autocomplete_username', 'common/toggle');
 // Ban a user
 
 // Hide the french ban justification in the english interface
-$admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';
+$admin_ban_hide_french = ($lang === 'EN') ? ' hidden' : '';
 
 // Fetch the ban form values, that way they can be kept as is after submitting
 $admin_ban_add_type       = form_fetch_element('admin_ban_add_type', 'user');
@@ -58,27 +58,27 @@ $admin_ban_hide_type  = (isset($_GET['id'])) ? ' hidden' : '';
 $admin_ban_lock_nick  = (isset($_GET['id'])) ? ' disabled' : '';
 
 // Keep the ban type selector as is aswell by setting the correct element to selected
-$admin_ban_add_type_selector['user']  = ($admin_ban_add_type == 'user') ? ' selected' : '';
-$admin_ban_add_type_selector['ip']    = ($admin_ban_add_type == 'ip')   ? ' selected' : '';
+$admin_ban_add_type_selector['user']  = ($admin_ban_add_type === 'user')  ? ' selected' : '';
+$admin_ban_add_type_selector['ip']    = ($admin_ban_add_type === 'ip')    ? ' selected' : '';
 
 // Keep the IP ban sevirity selector as is aswell by setting the correct element to selected
-$admin_ban_severity_selector[0] = ($admin_ban_add_severity == 0)  ? ' selected' : '';
-$admin_ban_severity_selector[1] = ($admin_ban_add_severity == 1)  ? ' selected' : '';
+$admin_ban_severity_selector[0] = ($admin_ban_add_severity === 0) ? ' selected' : '';
+$admin_ban_severity_selector[1] = ($admin_ban_add_severity === 1) ? ' selected' : '';
 
 // Keep the ban length selector as is aswell by setting the correct element to selected
 $admin_ban_add_selector_values = array(0, 1, 7, 30, 365, 3650);
 foreach($admin_ban_add_selector_values as $value)
-  $admin_ban_add_selector[$value] = ($admin_ban_add_length == $value) ? ' selected' : '';
+  $admin_ban_add_selector[$value] = ($admin_ban_add_length === $value) ? ' selected' : '';
 
 // Keep proper visiblity of form elements depending on the ban type
-$admin_ban_add_visiblity_user = ($admin_ban_add_type == 'user') ? ''        : ' hidden';
-$admin_ban_add_visiblity_ip   = ($admin_ban_add_type == 'user') ? ' hidden' : '';
+$admin_ban_add_visiblity_user = ($admin_ban_add_type === 'user')  ? ''        : ' hidden';
+$admin_ban_add_visiblity_ip   = ($admin_ban_add_type === 'user')  ? ' hidden' : '';
 
 // Submit the ban request
 if(isset($_POST['admin_ban_add_submit']))
 {
   // User bans
-  if($admin_ban_add_type == 'user')
+  if($admin_ban_add_type === 'user')
     $admin_ban_add_error = admin_ban_create(  user_get_id()             ,
                                               $admin_ban_add_nick       ,
                                               $admin_ban_add_length     ,
@@ -291,7 +291,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <tr>
 
-          <?php if($banned_users[$i]['type'] == 'user') { ?>
+          <?php if($banned_users[$i]['type'] === 'user') { ?>
           <td>
             <?=__link('pages/users/'.$banned_users[$i]['id'], $banned_users[$i]['username'], $banned_users[$i]['css'])?>
           </td>
@@ -365,7 +365,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td>
             <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, class: 'valign_middle spaced', alt: 'M', title: __('details'), title_case: 'initials', onclick: "admin_ban_fetch_log(0, '".$banned_users[$i]['id']."', '".$banned_users[$i]['ip_ban_id']."');")?>
-            <?php if($banned_users[$i]['type'] == 'user') { ?>
+            <?php if($banned_users[$i]['type'] === 'user') { ?>
             <?=__icon('edit', is_small: true, href: 'pages/admin/ban_edit?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'M', title: __('modify'), title_case: 'initials')?>
             <?=__icon('delete', is_small: true, href: 'pages/admin/ban_delete?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
             <?php } else { ?>
@@ -492,7 +492,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr>
 
           <td>
-            <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
+            <?php if($ban_logs[$i]['ban_type'] === 'user') { ?>
             <?=__link('pages/users/'.$ban_logs[$i]['user_id'], $ban_logs[$i]['username'], 'bold noglow')?>
             <?php } else { ?>
             <?=$ban_logs[$i]['ip']?>

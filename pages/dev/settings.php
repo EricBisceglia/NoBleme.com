@@ -20,7 +20,7 @@ $page_title_en    = "Website settings";
 $page_title_fr    = "Réglages du site";
 
 // Extra JS
-$js = array('common/toggle', 'dev/settings');
+$js = array('dev/settings');
 
 
 

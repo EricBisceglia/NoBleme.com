@@ -15,7 +15,7 @@ $page_title_fr    = "Statistiques des IRL";
 $page_description = "Statistics generated from NoBleme's real life meetups";
 
 // Extra JS
-$js = array('common/toggle', 'common/selector');
+$js = array('common/selector');
 
 
 

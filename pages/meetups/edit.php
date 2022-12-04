@@ -22,7 +22,7 @@ $page_title_en    = "Edit a meetup";
 $page_title_fr    = "Modifier une IRL";
 
 // Extra JS
-$js = array('meetups/meetup', 'common/toggle', 'common/preview');
+$js = array('meetups/meetup', 'common/preview');
 
 
 
@@ -134,13 +134,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <div class="tinypadding_top padding_bot">
         <label><?=__('meetups_new_languages')?></label>
-        <?php if($lang == 'EN') { ?>
+        <?php if($lang === 'EN') { ?>
         <input type="checkbox" id="meetups_edit_lang_en" name="meetups_edit_lang_en"<?=$meetups_edit_lang_en?>>
         <label class="label_inline" for="meetups_edit_lang_en"><?=string_change_case(__('english'), 'initials')?></label><br>
         <?php } ?>
         <input type="checkbox" id="meetups_edit_lang_fr" name="meetups_edit_lang_fr"<?=$meetups_edit_lang_fr?>>
         <label class="label_inline" for="meetups_edit_lang_fr"><?=string_change_case(__('french'), 'initials')?></label><br>
-        <?php if($lang != 'EN') { ?>
+        <?php if($lang !== 'EN') { ?>
         <input type="checkbox" id="meetups_edit_lang_en" name="meetups_edit_lang_en"<?=$meetups_edit_lang_en?>>
         <label class="label_inline" for="meetups_edit_lang_en"><?=string_change_case(__('english'), 'initials')?></label><br>
         <?php } ?>
@@ -159,7 +159,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </p>
 
       <div class="tinypadding_top smallpadding_bot flexcontainer">
-        <?php if($lang == 'EN') { ?>
+        <?php if($lang === 'EN') { ?>
         <div class="flex spaced_right">
           <label for="meetups_edit_details_en"><?=__('meetups_new_details_en')?></label>
           <textarea class="higher" id="meetups_edit_details_en" name="meetups_edit_details_en" onkeyup="meetups_details_preview('en', 'edit');" onfocus="meetups_details_preview('en', 'edit');"><?=$meetups_edit_details_en?></textarea>

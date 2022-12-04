@@ -260,7 +260,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="uppercase bold dark text_white" colspan="6">
-          <?php if($admin_metrics['realrows'] == $admin_metrics['totalrows']) { ?>
+          <?php if($admin_metrics['realrows'] === $admin_metrics['totalrows']) { ?>
           <?=__('admin_metrics_count', $admin_metrics['totalrows'], 0, 0, array($admin_metrics['totalrows']))?>
           <?php } else { ?>
           <?=__('admin_metrics_count_search', $admin_metrics['realrows'], 0, 0, array($admin_metrics['realrows'], $admin_metrics['totalrows']))?>

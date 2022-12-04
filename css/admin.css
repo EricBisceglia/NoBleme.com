@@ -1,16 +1,22 @@
+/**************************************************** VARIABLES ******************************************************/
+
+:root { --nobleme-bright-red: #FF0000; }
+
 /**************************************************** ADMIN MAIL ****************************************************/
 
-.admin_mail_border      { border: 2px solid #FF0000;                                      }
-.admin_mail_container   { height: 50.0rem; padding: 3px; box-shadow: 0 0 15px #FF0000     ;
-                          border-radius: 10px;                                            }
-.admin_mail_left_panel  { margin-right: 0.2rem; box-shadow: 0 0 10px #FF0000              ;
+.admin_mail_border      { border: 2px solid var(--nobleme-bright-red);                    }
+.admin_mail_container   { height: 50.0rem; padding: 3px; border-radius: 10px              ;
+                          box-shadow: 0 0 15px var(--nobleme-bright-red);                 }
+.admin_mail_left_panel  { margin-right: 0.2rem                                            ;
+                          box-shadow: 0 0 10px var(--nobleme-bright-red)                  ;
                           border-top-left-radius: 8px; border-bottom-left-radius: 8px     ;
                           overflow-y: auto; overflow-x: hidden; flex: 7                   ;
                           padding-top: 0.5rem; padding-bottom: 0.5rem                     ;
                           padding-left: 0.5rem; padding-right: 0.5rem;                    }
-.admin_mail_right_panel { overflow-y: scroll; box-shadow: 0 0 10px #FF0000                ;
-                          border-bottom: 2px solid #FF0000; border-top-right-radius: 8px  ;
-                          border-bottom-right-radius: 8px; flex: 3;                       }
+.admin_mail_right_panel { overflow-y: scroll; flex: 3                                     ;
+                          box-shadow: 0 0 10px var(--nobleme-bright-red)                  ;
+                          border-bottom: 2px solid var(--nobleme-bright-red)              ;
+                          border-top-right-radius: 8px; border-bottom-right-radius: 8px;  }
 .admin_mail_search      { padding-top: 0.2rem; padding-bottom: 0.3rem                     ;
                           padding-left: 0.3rem; padding-right: 0.3rem;                    }
 .admin_mail_read        { padding: 0rem;                                                  }

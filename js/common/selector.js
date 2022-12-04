@@ -27,7 +27,7 @@
    page_url = window.location.href.split('?')[0].split("/").pop();
 
    // If the default selection is being selected, remove all URL parameters
-   if(default_selection && page_name == default_selection)
+   if(default_selection && page_name === default_selection)
      history.pushState({}, null, page_url);
 
    // Otherwise, set the currently selected entry as an URL parameter

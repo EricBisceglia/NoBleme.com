@@ -21,7 +21,7 @@ $page_title_en    = "New task";
 $page_title_fr    = "Nouvelle tâche";
 
 // Extra JS & CSS
-$js   = array('common/toggle', 'tasks/edit');
+$js   = array('tasks/edit');
 $css  = array('tasks');
 
 
@@ -83,11 +83,11 @@ $tasks_add_silent     = form_fetch_element('tasks_add_silent', element_exists: t
 
 // Preserve the dropdown menus
 for($i = 0; $i <= 5; $i++)
-  $tasks_add_priority_selected[$i]  = ($tasks_add_priority == $i) ? ' selected' : '';
+  $tasks_add_priority_selected[$i]  = ($tasks_add_priority === $i) ? ' selected' : '';
 for($i = 0; $i < $tasks_categories['rows']; $i++)
-  $tasks_add_category_selected[$i]  = ($tasks_add_category == $tasks_categories[$i]['id']) ? ' selected' : '';
+  $tasks_add_category_selected[$i]  = ($tasks_add_category === $tasks_categories[$i]['id']) ? ' selected' : '';
 for($i = 0; $i < $tasks_milestones['rows']; $i++)
-  $tasks_add_milestone_selected[$i] = ($tasks_add_milestone == $tasks_milestones[$i]['id']) ? ' selected' : '';
+  $tasks_add_milestone_selected[$i] = ($tasks_add_milestone === $tasks_milestones[$i]['id']) ? ' selected' : '';
 
 // Preview the descriptions
 $tasks_preview_body_en  = bbcodes(sanitize_output(form_fetch_element('tasks_add_body_en'), true));
