@@ -854,7 +854,7 @@ function tasks_solve( int     $task_id              ,
   tasks_stats_recalculate_user($task_data['creator_id']);
 
   // If stealthy mode is requested or the author is the one currently approving the task, stop here
-  if($is_stealthy || $task_data['creator_id'] === user_get_id())
+  if($is_stealthy || (int)$task_data['creator_id'] === user_get_id())
     return null;
 
   // Fetch some data about the user
