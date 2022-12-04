@@ -578,7 +578,7 @@ function quotes_approve(int $quote_id) : mixed
           WHERE   quotes.id               = '$quote_id' ");
 
   // Notify the user if they are not the one approving the quote
-  if($dquote['q_submitter'] && user_get_id() !== $dquote['q_submitter'])
+  if($dquote['q_submitter'] && user_get_id() !== (int)$dquote['q_submitter'])
   {
     // Prepare some data
     $admin_id = sanitize(user_get_id(), 'int', 0);
@@ -696,7 +696,7 @@ function quotes_reject( int     $quote_id     ,
           WHERE   quotes.id               = '$quote_id' ");
 
   // Notify the user if they are not the one rejecting the quote
-  if($dquote['q_submitter'] && user_get_id() !== $dquote['q_submitter'])
+  if($dquote['q_submitter'] && user_get_id() !== (int)$dquote['q_submitter'])
   {
     // Prepare some data
     $admin_id = sanitize(user_get_id(), 'int', 0);

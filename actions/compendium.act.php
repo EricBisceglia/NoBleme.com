@@ -339,7 +339,7 @@ function compendium_pages_get_random( int $exclude_id = 0 ,
   $exclude_id = sanitize($exclude_id, 'int', 0);
 
   // Add the excluded id if necessary
-  $query_exclude = ($exclude_id) ? " AND compendium_pages.id !== '$exclude_id' " : '';
+  $query_exclude = ($exclude_id) ? " AND compendium_pages.id != '$exclude_id' " : '';
 
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');

@@ -8,8 +8,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  private_message_list          Lists a user's private messages and system notifications.                          */
 /*  private_message_get           Fetches information about a private message.                                       */
+/*  private_message_list          Lists a user's private messages and system notifications.                          */
 /*  private_message_write         Sends a new private message.                                                       */
 /*  private_message_reply         Replies to an existing private message.                                            */
 /*  private_message_delete        Deletes a private message.                                                         */
@@ -25,6 +25,164 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_mail_read_all           Marks all unread admin mails as read.                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Fetches information about a private message.
+ *
+ * @param   int     $message_id   The private message's ID.
+ *
+ * @return  array                 An array of data regarding the message.
+ */
+
+function private_message_get( int $message_id ) : array
+{
+  // Require the user the be logged in
+  user_restrict_to_users();
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+  require_included_file('messages.lang.php');
+
+  // Sanitize the user and message ID
+  $user_id    = sanitize(user_get_id(), 'int', 0);
+  $message_id = sanitize($message_id, 'int', 0);
+
+  // Error: Message ID not found
+  if(!database_row_exists('users_private_messages', $message_id))
+  {
+    $data['error'] = __('users_message_not_found');
+    return $data;
+  }
+
+  // Prepare the query to fetch the message's data
+  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                          users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                          users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                          users_private_messages.fk_parent_message    AS 'pm_parent'    ,
+                          users_sender.username                       AS 'pm_sender'    ,
+                          users_private_messages.sent_at              AS 'pm_sent'      ,
+                          users_private_messages.read_at              AS 'pm_read'      ,
+                          users_private_messages.title                AS 'pm_title'     ,
+                          users_private_messages.body                 AS 'pm_body'
+                FROM      users_private_messages
+                LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                WHERE     users_private_messages.id = '$message_id' ";
+
+  // Fetch data regarding the message
+  $dmessage = mysqli_fetch_array(query($qmessage));
+
+  // Error: Deleted messages
+  if(($dmessage['pm_deleted_r'] && (int)$dmessage['pm_recipient'] === $user_id) || ($dmessage['pm_deleted_s'] && (int)$dmessage['pm_sender_id'] === $user_id))
+  {
+    $data['error'] = __('users_message_deleted');
+    return $data;
+  }
+
+  // Error: Message does not belong to user
+  if((int)$dmessage['pm_recipient'] !== $user_id && (int)$dmessage['pm_sender_id'] !== $user_id)
+  {
+    $data['error'] = __('users_message_neighbor');
+    return $data;
+  }
+
+  // Prepare the data
+  $data['id']         = sanitize_output($message_id);
+  $data['self']       = ($user_id === (int)$dmessage['pm_sender_id']);
+  $data['title']      = sanitize_output($dmessage['pm_title']);
+  $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
+  $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
+  $data['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+  $data['read_at']    = ($dmessage['pm_read']) ? sanitize_output(date_to_text($dmessage['pm_read'], 0, 2)) : NULL;
+  $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
+
+  // Mark the message as read if it was previously unread
+  if(!$dmessage['pm_read'] && $user_id === (int)$dmessage['pm_recipient'])
+  {
+    $timestamp = sanitize(time(), 'int', 0);
+    query(" UPDATE  users_private_messages
+            SET     users_private_messages.read_at  = '$timestamp'
+            WHERE   users_private_messages.id       = '$message_id' ");
+  }
+
+  // Get parent message chain
+  if($dmessage['pm_parent'] && (int)$dmessage['pm_parent'] !== $message_id)
+  {
+    // Initialize the parent counter
+    $i = 0;
+
+    // Loop through parent messages
+    do
+    {
+      // Fetch the parent ID
+      $message_id = sanitize($dmessage['pm_parent']);
+
+      // Prepare the query to fetch the message's data
+      $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                              users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                              users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                              users_private_messages.fk_parent_message    AS 'pm_parent'    ,
+                              users_sender.username                       AS 'pm_sender'    ,
+                              users_private_messages.sent_at              AS 'pm_sent'      ,
+                              users_private_messages.title                AS 'pm_title'     ,
+                              users_private_messages.body                 AS 'pm_body'
+                    FROM      users_private_messages
+                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                    WHERE     users_private_messages.id = '$message_id' ";
+
+      // Fetch data regarding the message
+      $dmessage = mysqli_fetch_array(query($qmessage));
+
+      // Error: Message does not exist
+      if(!isset($dmessage['pm_title']))
+        $message_error = 1;
+
+      // If the message does exist, look for more potential errors
+      if(!isset($message_error))
+      {
+        // Identify whether the user is the sender or the recipient
+        $user_is_sender = ($user_id === (int)$dmessage['pm_sender_id']);
+
+        // Error: User is neither sender nor recipient
+        if(!$user_is_sender && $user_id !== (int)$dmessage['pm_recipient'])
+          $message_error = 1;
+
+        // Error: Too many parents (maybe an infinite loop?)
+        if($i >= 100)
+          $message_error = 1;
+      }
+
+      // Prepare the message's contents and increment the loop counter
+      if(!isset($message_error))
+      {
+        $sender_deleted         = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
+        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $sender_deleted;
+        $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
+        $data[$i]['sender']     = ($dmessage['pm_sender_id'])
+                                ? sanitize_output($dmessage['pm_sender'])
+                                : __('nobleme');
+        $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+        $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
+        $data[$i]['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
+        $i++;
+      }
+    }
+
+    // Keep looping as long as there is a parent and no error has arisen
+    while(!isset($message_error) && $dmessage['pm_parent'] && (int)$dmessage['pm_parent'] !== $message_id);
+
+    // Add the number of parents to the data
+    $data['parents'] = $i;
+  }
+
+  // Return the data
+  return $data;
+}
+
+
 
 
 /**
@@ -177,164 +335,6 @@ function private_message_list(  string  $sort_by        = ''      ,
 
 
 /**
- * Fetches information about a private message.
- *
- * @param   int     $message_id   The private message's ID.
- *
- * @return  array                 An array of data regarding the message.
- */
-
-function private_message_get( int $message_id ) : array
-{
-  // Require the user the be logged in
-  user_restrict_to_users();
-
-  // Check if the required files have been included
-  require_included_file('functions_time.inc.php');
-  require_included_file('bbcodes.inc.php');
-  require_included_file('messages.lang.php');
-
-  // Sanitize the user and message ID
-  $user_id    = sanitize(user_get_id(), 'int', 0);
-  $message_id = sanitize($message_id, 'int', 0);
-
-  // Error: Message ID not found
-  if(!database_row_exists('users_private_messages', $message_id))
-  {
-    $data['error'] = __('users_message_not_found');
-    return $data;
-  }
-
-  // Prepare the query to fetch the message's data
-  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
-                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
-                          users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                          users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
-                          users_private_messages.fk_parent_message    AS 'pm_parent'    ,
-                          users_sender.username                       AS 'pm_sender'    ,
-                          users_private_messages.sent_at              AS 'pm_sent'      ,
-                          users_private_messages.read_at              AS 'pm_read'      ,
-                          users_private_messages.title                AS 'pm_title'     ,
-                          users_private_messages.body                 AS 'pm_body'
-                FROM      users_private_messages
-                LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
-                WHERE     users_private_messages.id = '$message_id' ";
-
-  // Fetch data regarding the message
-  $dmessage = mysqli_fetch_array(query($qmessage));
-
-  // Error: Deleted messages
-  if(($dmessage['pm_deleted_r'] && $dmessage['pm_recipient'] === $user_id) || ($dmessage['pm_deleted_s'] && $dmessage['pm_sender_id'] === $user_id))
-  {
-    $data['error'] = __('users_message_deleted');
-    return $data;
-  }
-
-  // Error: Message does not belong to user
-  if((int)$dmessage['pm_recipient'] !== $user_id && (int)$dmessage['pm_sender_id'] !== $user_id)
-  {
-    $data['error'] = __('users_message_neighbor');
-    return $data;
-  }
-
-  // Prepare the data
-  $data['id']         = sanitize_output($message_id);
-  $data['self']       = ($user_id === $dmessage['pm_sender_id']);
-  $data['title']      = sanitize_output($dmessage['pm_title']);
-  $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
-  $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
-  $data['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
-  $data['read_at']    = ($dmessage['pm_read']) ? sanitize_output(date_to_text($dmessage['pm_read'], 0, 2)) : NULL;
-  $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
-
-  // Mark the message as read if it was previously unread
-  if(!$dmessage['pm_read'] && $user_id === $dmessage['pm_recipient'])
-  {
-    $timestamp = sanitize(time(), 'int', 0);
-    query(" UPDATE  users_private_messages
-            SET     users_private_messages.read_at  = '$timestamp'
-            WHERE   users_private_messages.id       = '$message_id' ");
-  }
-
-  // Get parent message chain
-  if($dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id)
-  {
-    // Initialize the parent counter
-    $i = 0;
-
-    // Loop through parent messages
-    do
-    {
-      // Fetch the parent ID
-      $message_id = sanitize($dmessage['pm_parent']);
-
-      // Prepare the query to fetch the message's data
-      $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
-                              users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
-                              users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                              users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
-                              users_private_messages.fk_parent_message    AS 'pm_parent'    ,
-                              users_sender.username                       AS 'pm_sender'    ,
-                              users_private_messages.sent_at              AS 'pm_sent'      ,
-                              users_private_messages.title                AS 'pm_title'     ,
-                              users_private_messages.body                 AS 'pm_body'
-                    FROM      users_private_messages
-                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
-                    WHERE     users_private_messages.id = '$message_id' ";
-
-      // Fetch data regarding the message
-      $dmessage = mysqli_fetch_array(query($qmessage));
-
-      // Error: Message does not exist
-      if(!isset($dmessage['pm_title']))
-        $message_error = 1;
-
-      // If the message does exist, look for more potential errors
-      if(!isset($message_error))
-      {
-        // Identify whether the user is the sender or the recipient
-        $user_is_sender = ($user_id === $dmessage['pm_sender_id']);
-
-        // Error: User is neither sender nor recipient
-        if(!$user_is_sender && $user_id !== $dmessage['pm_recipient'])
-          $message_error = 1;
-
-        // Error: Too many parents (maybe an infinite loop?)
-        if($i >= 100)
-          $message_error = 1;
-      }
-
-      // Prepare the message's contents and increment the loop counter
-      if(!isset($message_error))
-      {
-        $sender_deleted         = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
-        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $sender_deleted;
-        $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
-        $data[$i]['sender']     = ($dmessage['pm_sender_id'])
-                                ? sanitize_output($dmessage['pm_sender'])
-                                : __('nobleme');
-        $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
-        $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
-        $data[$i]['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
-        $i++;
-      }
-    }
-
-    // Keep looping as long as there is a parent and no error has arisen
-    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id);
-
-    // Add the number of parents to the data
-    $data['parents'] = $i;
-  }
-
-  // Return the data
-  return $data;
-}
-
-
-
-
-/**
  * Sends a new private message.
  *
  * @param   string      $recipient  The private message's recipient nickname.
@@ -442,11 +442,11 @@ function private_message_reply( int     $message_id ,
     return __('users_message_deleted');
 
   // Error: Can not reply to self
-  if($user_id === $dmessage['pm_sender'])
+  if($user_id === (int)$dmessage['pm_sender'])
     return __('users_message_reply_self');
 
   // Error: Can not reply to other people's messages
-  if($user_id !== $dmessage['pm_recipient'])
+  if($user_id !== (int)$dmessage['pm_recipient'])
     return __('users_message_reply_others');
 
   // Check if the user is flooding the website
@@ -515,18 +515,18 @@ function private_message_delete( int $message_id ) : mixed
                                           WHERE   users_private_messages.id = '$message_id' "));
 
   // Determine whether user is sender or recipient
-  $user_is_sender = ($dmessage['pm_sender'] === $user_id);
+  $user_is_sender = ((int)$dmessage['pm_sender'] === $user_id);
 
   // Error: Message is already deleted
   if(($user_is_sender && $dmessage['pm_deleted_s']) || (!$user_is_sender && $dmessage['pm_deleted_r']))
     return __('users_message_predeleted');
 
   // Error: Message does not belong to user
-  if($dmessage['pm_recipient'] !== $user_id && $dmessage['pm_sender'] !== $user_id)
+  if((int)$dmessage['pm_recipient'] !== $user_id && (int)$dmessage['pm_sender'] !== $user_id)
     return __('users_message_ownership');
 
   // If both sender and recipient deleted the message, or if the message is sent to self, hard delete it
-  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']) || ($dmessage['pm_recipient'] === $dmessage['pm_sender']))
+  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']) || ((int)$dmessage['pm_recipient'] === (int)$dmessage['pm_sender']))
     query(" DELETE FROM users_private_messages
             WHERE       users_private_messages.id = '$message_id' ");
 
@@ -879,7 +879,7 @@ function admin_mail_get( int $message_id ) : array
   }
 
   // Get parent message chain
-  if($dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id)
+  if($dmessage['pm_parent'] && (int)$dmessage['pm_parent'] !== $message_id)
   {
     // Initialize the parent counter
     $i = 0;
@@ -958,7 +958,7 @@ function admin_mail_get( int $message_id ) : array
     }
 
     // Keep looping as long as there is a parent and no error has arisen
-    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] !== $message_id);
+    while(!isset($message_error) && $dmessage['pm_parent'] && (int)$dmessage['pm_parent'] !== $message_id);
 
     // Add the number of parents to the data
     $data['parents'] = $i;
@@ -1013,7 +1013,7 @@ function admin_mail_reply(  int     $message_id ,
                                           WHERE   users_private_messages.id = '$message_id' "));
 
   // Error: Can not reply to self
-  if($user_id === $dmessage['pm_sender'])
+  if($user_id === (int)$dmessage['pm_sender'])
     return __('users_message_reply_self');
 
   // Error: Can not reply to other people's messages

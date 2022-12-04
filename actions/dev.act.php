@@ -439,7 +439,7 @@ function dev_blogs_list(  string  $sort = ''  ,
 
   // Decide whether to show deleted content
   $show_deleted = (!$is_admin) ? " AND dev_blogs.is_deleted = 0 "     : ' ';
-  $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang !== '' " : ' ';
+  $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang != '' "  : ' ';
 
   // Filter by year if necessary
   $year = sanitize($year, 'int', 0);
@@ -460,8 +460,8 @@ function dev_blogs_list(  string  $sort = ''  ,
                     LEFT JOIN stats_pages
                     ON        stats_pages.page_url LIKE CONCAT('pages/dev/blog?id=', dev_blogs.id)
                     WHERE     1 = 1
-                              $show_lang
                               $show_deleted
+                              $show_lang
                               $filter_year
                     ORDER BY  $order_by ");
 
