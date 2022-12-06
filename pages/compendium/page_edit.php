@@ -243,7 +243,9 @@ for($i = 1; $i <= 12; $i++)
 
 // Keep the proper categories checked
 for($i = 0; $i < $compendium_categories_list['rows']; $i++)
-$compendium_edit_category_checkbox[$i] = ($compendium_edit_category[$compendium_categories_list[$i]['id']] === $compendium_categories_list[$i]['id']) ? ' checked' : '';
+$compendium_edit_category_checkbox[$i]  = ($compendium_edit_category[$compendium_categories_list[$i]['id']] === true)
+                                        ? ' checked'
+                                        : '';
 
 // Keep the proper checkboxes checked
 $compendium_edit_redirect_ext_checkbox  = ($compendium_edit_redirect_ext) ? ' checked' : '';
