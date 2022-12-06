@@ -376,6 +376,8 @@ ___('compendium_list_admin_title',            'EN', "Compendium pages");
 ___('compendium_list_admin_title',            'FR', "Pages du compendium");
 ___('compendium_list_admin_menu',             'EN', "Page list");
 ___('compendium_list_admin_menu',             'FR', "Liste des pages");
+___('compendium_list_admin_random',           'EN', "Random missing page");
+___('compendium_list_admin_random',           'FR', "Page manquante au hasard");
 ___('compendium_list_admin_url',              'EN', "Page URL");
 ___('compendium_list_admin_url',              'FR', "Adresse");
 ___('compendium_list_admin_redirect',         'EN', "Redirection");
