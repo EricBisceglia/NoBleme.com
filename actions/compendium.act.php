@@ -34,6 +34,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  compendium_images_autocomplete            Autocompletes an image file name.                                      */
 /*                                                                                                                   */
 /*  compendium_missing_get                    Returns data related to a missing compendium page.                     */
+/*  compendium_missing_get_random             Returns data related to a random missing compendium page.              */
 /*  compendium_missing_list                   Fetches a list of all missing compendium pages.                        */
 /*  compendium_missing_edit                   Creates or modifies data on a missing compendium page.                 */
 /*  compendium_missing_delete                 Deletes a missing compendium page entry.                               */
@@ -2341,7 +2342,7 @@ function compendium_images_autocomplete( string $input ) : mixed
 
 
 /**
- * Returns data related to a compendium page.
+ * Returns data related to a missing compendium page.
  *
  * @param   int         $missing_id   (OPTIONAL)  The missing page's id. One of these two parameters should be set.
  * @param   string      $missing_url  (OPTIONAL)  The missing page's url. One of these two parameters should be set.
@@ -2355,6 +2356,9 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
   require_included_file('bbcodes.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
 
   // Get the user's current language, settings, and the compendium pages which they can access
   $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -2510,6 +2514,43 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
 
   // Return the data
   return $data;
+}
+
+
+
+
+/**
+ * Returns data related to a random missing compendium page.
+ *
+ * @param   int   $exclude_id   (OPTIONAL)  A missing page id to exclude from the missing pages being fetched.
+ *
+ * @return  int                             The id of a randomly chosen missing compendium page.
+ */
+
+function compendium_missing_get_random( int $exclude_id = 0 ) : string
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the excluded id
+  $exclude_id = sanitize($exclude_id, 'int', 0);
+
+  // Add the excluded id if necessary
+  $query_exclude = ($exclude_id) ? " WHERE compendium_missing.id != '$exclude_id' " : '';
+
+  // Fetch a random missing page's id
+  $dpage = mysqli_fetch_array(query(" SELECT    compendium_missing.id AS 'cm_id'
+                                      FROM      compendium_missing
+                                                $query_exclude
+                                      ORDER BY  RAND()
+                                      LIMIT     1 "));
+
+  // If no page has been found, return an empty string
+  if(!isset($dpage['cm_id']))
+    return '';
+
+  // Otherwise, return the page url
+  return $dpage['cm_id'];
 }
 
 
