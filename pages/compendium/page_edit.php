@@ -237,9 +237,9 @@ for($i = 0; $i < $compendium_eras_list['rows']; $i++)
 
 // Keep the proper appearance and peak entries selected
 for($i = 1; $i <= 12; $i++)
-  $compendium_edit_appear_month_select[$i] = ($compendium_edit_appear_month === $i)  ? ' selected' : '';
+  $compendium_edit_appear_month_select[$i] = ((int)$compendium_edit_appear_month === $i)  ? ' selected' : '';
 for($i = 1; $i <= 12; $i++)
-  $compendium_edit_peak_month_select[$i]   = ($compendium_edit_peak_month === $i)    ? ' selected' : '';
+  $compendium_edit_peak_month_select[$i]   = ((int)$compendium_edit_peak_month === $i)    ? ' selected' : '';
 
 // Keep the proper categories checked
 for($i = 0; $i < $compendium_categories_list['rows']; $i++)
