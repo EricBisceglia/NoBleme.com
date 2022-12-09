@@ -217,7 +217,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['summary']    = sanitize_output($dpage['p_summary']);
   $data['summary_en'] = sanitize_output($dpage['p_summary_en']);
   $data['summary_fr'] = sanitize_output($dpage['p_summary_fr']);
-  $data['body']       = nbcodes(bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true)),
+  $data['body']       = nbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true),
                                 page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']    = sanitize_output($dpage['p_body_en']);
   $data['body_fr']    = sanitize_output($dpage['p_body_fr']);
@@ -719,7 +719,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['gross']      = ($row['p_gross']);
     $data[$i]['offensive']  = ($row['p_offensive']);
     $data[$i]['nsfwtitle']  = ($row['p_nsfw_title']);
-    $data[$i]['summary']    = nbcodes(bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true)),
+    $data[$i]['summary']    = nbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true),
                                       page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['notes']      = sanitize_output($row['p_notes']);
     $data[$i]['urlnotes']   = sanitize_output($row['p_urlnotes']);
@@ -1533,7 +1533,7 @@ function compendium_images_get( ?int    $image_id   = 0 ,
   $data['blur']       = ($nsfw < 2 && $blur_image) ? ' class="compendium_image_blur"' : '';
   $data['blurred']    = ($nsfw < 2 && $blur_image) ? 1 : 0;
   $data['body_clean'] = sanitize_output($dimage['ci_body']);
-  $data['body']       = nbcodes(bbcodes(sanitize_output($dimage['ci_body'], preserve_line_breaks: true)),
+  $data['body']       = nbcodes(sanitize_output($dimage['ci_body'], preserve_line_breaks: true),
                                 page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $page_links         = ($dimage['ci_used']) ? compendium_images_assemble_links($dimage['ci_used']) : '';
   $data['used']       = ($dimage['ci_used']) ? $page_links['list'] : '';
@@ -1750,8 +1750,8 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
     $data[$i]['tags_full']  = ($row['ci_tags']) ? $tags['list'] : '';
     $data[$i]['caption_en'] = ($row['ci_caption_en']) ? 1 : 0;
     $data[$i]['caption_fr'] = ($row['ci_caption_fr']) ? 1 : 0;
-    $data[$i]['body']       = nbcodes(bbcodes(sanitize_output($row['ci_caption'], preserve_line_breaks: true)),
-                              page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data[$i]['body']       = nbcodes(sanitize_output($row['ci_caption'], preserve_line_breaks: true),
+                                      page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['views']      = ($row['ci_viewcount'] > 1)
                             ? sanitize_output(number_display_format($row['ci_viewcount'], "number"))
                             : '&nbsp;';
@@ -2407,7 +2407,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $data['type']     = sanitize_output($dmissing['cm_type']);
     $data['title']    = sanitize_output($dmissing['cm_title']);
     $data['prio']     = sanitize_output($dmissing['cm_priority']);
-    $data['body']     = nbcodes(bbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true)),
+    $data['body']     = nbcodes(sanitize_output($dmissing['cm_notes'], preserve_line_breaks: true),
                                 page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data['notes']    = sanitize_output($dmissing['cm_notes']);
   }
@@ -2909,7 +2909,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
     $data[$i]['t_full']     = (mb_strlen($row['cm_title']) > 22) ? sanitize_output($row['cm_title']) : '';
     $data[$i]['type']       = sanitize_output(string_truncate($row['cm_type'], 20, '...'));
     $data[$i]['priority']   = sanitize_output($row['cm_priority']);
-    $data[$i]['notes']      = nbcodes(bbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true)),
+    $data[$i]['notes']      = nbcodes(sanitize_output($row['cm_notes'], preserve_line_breaks: true),
                                       page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
     // Find page call count and remove matching missing pages
@@ -3136,8 +3136,8 @@ function compendium_types_get( int $type_id ) : mixed
   $data['full_fr']      = sanitize_output($dtype['ct_full_fr']);
   $data['full_en_raw']  = $dtype['ct_full_en'];
   $data['full_fr_raw']  = $dtype['ct_full_fr'];
-  $data['body']         = nbcodes(bbcodes(sanitize_output($dtype['ct_body'], preserve_line_breaks: true)),
-                          page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']         = nbcodes(sanitize_output($dtype['ct_body'], preserve_line_breaks: true),
+                                  page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dtype['ct_body_en']);
   $data['body_fr']      = sanitize_output($dtype['ct_body_fr']);
 
@@ -3382,8 +3382,8 @@ function compendium_categories_get( int $category_id ) : mixed
   $data['name_fr_raw']  = $dcategory['cc_name_fr'];
   $data['name_en']      = sanitize_output($dcategory['cc_name_en']);
   $data['name_fr']      = sanitize_output($dcategory['cc_name_fr']);
-  $data['body']         = nbcodes(bbcodes(sanitize_output($dcategory['cc_body'], preserve_line_breaks: true)),
-                          page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body']         = nbcodes(sanitize_output($dcategory['cc_body'], preserve_line_breaks: true),
+                                  page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dcategory['cc_body_en']);
   $data['body_fr']      = sanitize_output($dcategory['cc_body_fr']);
 
@@ -3635,7 +3635,7 @@ function compendium_eras_get( int $era_id ) : mixed
   $data['name_fr']      = sanitize_output($dera['ce_name_fr']);
   $data['short_en']     = sanitize_output($dera['ce_short_en']);
   $data['short_fr']     = sanitize_output($dera['ce_short_fr']);
-  $data['body']         = nbcodes(bbcodes(sanitize_output($dera['ce_body'], preserve_line_breaks: true)),
+  $data['body']         = nbcodes(sanitize_output($dera['ce_body'], preserve_line_breaks: true),
                                   page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dera['ce_body_en']);
   $data['body_fr']      = sanitize_output($dera['ce_body_fr']);
@@ -4889,7 +4889,7 @@ function compendium_nbcodes_apply( ?string $text ) : string
   $pages    = compendium_pages_list_urls();
 
   // Format the string
-  $text = nbcodes(bbcodes(sanitize_output($text, preserve_line_breaks: true)) ,
+  $text = nbcodes(sanitize_output($text, preserve_line_breaks: true) ,
                   page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
 
   // Return the formatted string
