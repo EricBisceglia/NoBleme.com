@@ -441,6 +441,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="nowrap monospace">
+          [bulletlist]<br>
+          [bullet][/bullet]<br>
+          [/bulletlist]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_bullet_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_bullet_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
           [gallery]<br>
           [gallery:img.png]<br>
           [gallery-nsfw:img.png]<br>
