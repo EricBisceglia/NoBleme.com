@@ -159,10 +159,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </p>
 
     <p>
+      [bulletlist]<br>
+      [bullet]Bullet point[/bullet]<br>
+      [bullet]Bullet point[/bullet]<br>
+      [/bulletlist]<br>
+      <br>
+      <?=nbcodes('[bulletlist]<br>[bullet]Bullet point[/bullet]<br>[bullet]Bullet point[/bullet]<br>[/bulletlist]')?>
+    </p>
+
+    <p>
       [menu][/menu]<br>
       [menuitem:anchor_name|Menu item title]<br>
       [submenuitem:anchor_name|Sub-menu item title]<br>
       [anchor:anchor_name]<br>
+      <br>
       <?=nbcodes('[menu][menuitem:anchor_link|Menu item title]<br>[submenuitem:anchor_link|Sub-menu item title][/menu]')?>
     </p>
 

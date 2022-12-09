@@ -180,6 +180,11 @@ ___('nbcodes_menu_name',        'FR', "Bloc menu<br>Élément de menu<br>Ancre d
 ___('nbcodes_menu_example',     'EN', "[menu]<br>[menuitem:anchor_id|Menu entry]<br>[submenuitem:anchor_id_2|Menu entry]<br>[/menu]<br><br>[anchor:anchor_id]");
 ___('nbcodes_menu_example',     'FR', "[menu]<br>[menuitem:id_ancre|Élément du menu]<br>[submenuitem:id_ancre_2|Élément du menu]<br>[/menu]<br><br>[anchor:id_ancre]");
 
+___('nbcodes_bullet_name',      'EN', "Bullet list<br>Bullet point");
+___('nbcodes_bullet_name',      'FR', "Liste à puces<br>Élément de liste");
+___('nbcodes_bullet_example',   'EN', "[bulletlist]<br>[bullet]List element[/bullet]<br>[bullet]List element[/bullet]<br>[/bulletlist]");
+___('nbcodes_bullet_example',   'FR', "[bulletlist]<br>[bullet]Élément de liste[/bullet]<br>[bullet]Élément de liste[/bullet]<br>[/bulletlist]");
+
 ___('nbcodes_gallery_name',      'EN', "Gallery<br>Gallery elements");
 ___('nbcodes_gallery_name',      'FR', "Galerie<br>Éléments de galerie");
 ___('nbcodes_gallery_example',   'EN', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");

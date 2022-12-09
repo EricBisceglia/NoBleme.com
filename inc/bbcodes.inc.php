@@ -457,6 +457,44 @@ function nbcodes( string  $text                                                ,
 
 
   /*******************************************************************************************************************/
+  // [bulletlist][/bulletlist]
+
+  // Fetch all the matching tags
+  preg_match_all('/\[bulletlist\](.*?)\[\/bulletlist\]/is', $text, $results);
+
+  // We'll need to parse each of them individually
+  $i = 0;
+  foreach($results[0] as $pattern)
+  {
+    // Remove any line breaks within the bullet list
+    $bulletlist = str_replace(PHP_EOL, '', $results[1][$i]);
+    $bulletlist = str_replace('<br />', '', $bulletlist);
+    $bulletlist = str_replace('<br>', '', $bulletlist);
+
+    // Replace the tags with HTML
+    $text = str_replace($pattern, '<ul>'.$bulletlist.'</ul>', $text);
+
+    // Don't forget to increment the result being treated between each iteration of the loop
+    $i++;
+  }
+
+
+  /*******************************************************************************************************************/
+  // [bullet]Bullet point[/bullet]
+
+  // Replace tags with HTML
+  $text = str_replace("[bullet]", "<li>", $text, $open);
+  $text = str_replace("[/bullet]", "</li>", $text, $close);
+
+  // Close leftover open tags
+  if($open > $close)
+  {
+    for($i = 0; $i < ($open - $close); $i++)
+      $text.="</li>";
+  }
+
+
+  /*******************************************************************************************************************/
   // [image:image.png|left|description of the image]
 
   // Handle this with a regex
@@ -730,6 +768,13 @@ function nbcodes( string  $text                                                ,
   // Remove menus
   $text = preg_replace('/\[menu\](.*?)\[\/menu\]/is', __('nbcodes_menu_contents').'$1' , $text);
   $text = preg_replace('/\[menuitem:(.*?)\|(.*?)\]/is','* $2', $text);
+  $text = preg_replace('/\[submenuitem:(.*?)\|(.*?)\]/i','  * $2', $text);
+
+  // Remove bullet lists
+  $text = str_replace("[bulletlist]", "", $text, $open);
+  $text = str_replace("[/bulletlist]", "", $text, $open);
+  while(preg_match('/\[bullet\](.*?)\[\/bullet\]/is',$text))
+    $text = preg_replace("/\[bullet\](.*?)\[\/bullet\]/is", "* $1", $text);
 
   // Remove images
   $text = preg_replace('/\[image:(.*?)\|(.*?)\|(.*?)\]/i', '$1 - $3'.PHP_EOL, $text);
