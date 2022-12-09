@@ -161,8 +161,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <p>
       [menu][/menu]<br>
       [menuitem:anchor_name|Menu item title]<br>
+      [submenuitem:anchor_name|Sub-menu item title]<br>
       [anchor:anchor_name]<br>
-      <?=nbcodes('[menu][menuitem:anchor_link|Menu item title]<br>[menuitem:anchor_link|Other menu entry][/menu]')?>
+      <?=nbcodes('[menu][menuitem:anchor_link|Menu item title]<br>[submenuitem:anchor_link|Sub-menu item title][/menu]')?>
     </p>
 
     <p>

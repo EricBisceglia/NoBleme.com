@@ -177,8 +177,8 @@ ___('nbcodes_pasta_example',    'FR', "[copypasta=id_unique]Un texte[/copypasta]
 
 ___('nbcodes_menu_name',        'EN', "Menu section<br>Menu item<br>Link anchor");
 ___('nbcodes_menu_name',        'FR', "Bloc menu<br>Élément de menu<br>Ancre de lien");
-___('nbcodes_menu_example',     'EN', "[menu]<br>[menuitem:anchor_id|Menu entry]<br>[menuitem:anchor_id_2|Menu entry]<br>[/menu]<br><br>[anchor:anchor_id]");
-___('nbcodes_menu_example',     'FR', "[menu]<br>[menuitem:id_ancre|Élément du menu]<br>[menuitem:id_ancre_2|Élément du menu]<br>[/menu]<br><br>[anchor:id_ancre]");
+___('nbcodes_menu_example',     'EN', "[menu]<br>[menuitem:anchor_id|Menu entry]<br>[submenuitem:anchor_id_2|Menu entry]<br>[/menu]<br><br>[anchor:anchor_id]");
+___('nbcodes_menu_example',     'FR', "[menu]<br>[menuitem:id_ancre|Élément du menu]<br>[submenuitem:id_ancre_2|Élément du menu]<br>[/menu]<br><br>[anchor:id_ancre]");
 
 ___('nbcodes_gallery_name',      'EN', "Gallery<br>Gallery elements");
 ___('nbcodes_gallery_name',      'FR', "Galerie<br>Éléments de galerie");

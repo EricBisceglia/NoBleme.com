@@ -450,6 +450,13 @@ function nbcodes( string  $text                                                ,
 
 
   /*******************************************************************************************************************/
+  // [submenuitem:link|text]
+
+  // Handle this with a regex
+  $text = preg_replace('/\[submenuitem:(.*?)\|(.*?)\]/i','<span class="nbcode_menu_bull indented">&bull;</span> <a class="nbcode_menu_link" href="#$1">$2</a>', $text);
+
+
+  /*******************************************************************************************************************/
   // [image:image.png|left|description of the image]
 
   // Handle this with a regex
