@@ -150,70 +150,70 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <div class="width_30 padding_top">
 
     <p class="smallpadding_bot">
-      [nsfw]Censored[/nsfw] -> <?=nbcodes(bbcodes('[nsfw]Censored[/nsfw]'))?><br>
-      [page:page_name|Compendium link] -> <?=nbcodes(bbcodes('[page:page_name|Compendium link]'))?><br>
-      [nobleme:pages/dev/doc_css_palette|Internal link] -> <?=nbcodes(bbcodes('[nobleme:pages/dev/doc_css_palette|Internal link]'))?><br>
-      [link:https://nobleme.com|External link] -> <?=nbcodes(bbcodes('[link:https://nobleme.com|External link]'))?><br>
-      [source:1] -> <?=nbcodes(bbcodes('[source:1]'))?><br>
-      [sources:1|Description] -> <?=nbcodes(bbcodes('[sources:1|Description]'))?>
+      [nsfw]Censored[/nsfw] -> <?=nbcodes('[nsfw]Censored[/nsfw]')?><br>
+      [page:page_name|Compendium link] -> <?=nbcodes('[page:page_name|Compendium link]')?><br>
+      [nobleme:pages/dev/doc_css_palette|Internal link] -> <?=nbcodes('[nobleme:pages/dev/doc_css_palette|Internal link]')?><br>
+      [link:https://nobleme.com|External link] -> <?=nbcodes('[link:https://nobleme.com|External link]')?><br>
+      [source:1] -> <?=nbcodes('[source:1]')?><br>
+      [sources:1|Description] -> <?=nbcodes('[sources:1|Description]')?>
     </p>
 
     <p>
       [menu][/menu]<br>
       [menuitem:anchor_name|Menu item title]<br>
       [anchor:anchor_name]<br>
-      <?=nbcodes(bbcodes('[menu][menuitem:anchor_link|Menu item title]<br>[menuitem:anchor_link|Other menu entry][/menu]'))?>
+      <?=nbcodes('[menu][menuitem:anchor_link|Menu item title]<br>[menuitem:anchor_link|Other menu entry][/menu]')?>
     </p>
 
     <p>
       == Title ==<br>
-      <?=nbcodes(bbcodes('== Title =='))?>
+      <?=nbcodes('== Title ==')?>
     </p>
 
     <p>
       === Subtitle ===<br>
-      <?=nbcodes(bbcodes('=== Subtitle ==='))?>
+      <?=nbcodes('=== Subtitle ===')?>
     </p>
 
     <p class="smallpadding_bot">
       [copypasta=id]Lorem pasta[/copypasta]<br>
-      <?=nbcodes(bbcodes('[copypasta=id]Lorem pasta[/copypasta]'))?>
+      <?=nbcodes('[copypasta=id]Lorem pasta[/copypasta]')?>
     </p>
 
     <p class="smallpadding_bot">
       [copypasta-nsfw=id]Lorem pasta[/copypasta-nsfw]<br>
-      <?=nbcodes(bbcodes('[copypasta-nsfw=id]Lorem pasta[/copypasta-nsfw]'))?>
+      <?=nbcodes('[copypasta-nsfw=id]Lorem pasta[/copypasta-nsfw]')?>
     </p>
 
     <p class="smallpadding_bot">
       [trends:test]<br>
       [trends5:one|two|three|four|five]<br>
       <br>
-      <?=nbcodes(bbcodes('[trends5:one|two|three|four|five]'))?>
+      <?=nbcodes('[trends5:one|two|three|four|five]')?>
     </p>
 
     <p>
       [image:ah_original.jpg|left|Image description]<br>
       <br>
-      <?=nbcodes(bbcodes('[image:ah_original.jpg|left|Image description]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
+      <?=nbcodes('[image:ah_original.jpg|left|Image description]')?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
     </p>
 
     <p>
       [image-nsfw:ah_original.jpg|right]<br>
       <br>
-      <?=nbcodes(bbcodes('[image-nsfw:ah_original.jpg|right]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam.
+      <?=nbcodes('[image-nsfw:ah_original.jpg|right]')?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam.
     </p>
 
     <p>
       [youtube:XE6YaLtctcI|left|Video description]<br>
       <br>
-      <?=nbcodes(bbcodes('[youtube:XE6YaLtctcI|left|Video description]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in.
+      <?=nbcodes('[youtube:XE6YaLtctcI|left|Video description]')?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in.
     </p>
 
     <p>
       [youtube-nsfw:XE6YaLtctcI|right]<br>
       <br>
-      <?=nbcodes(bbcodes('[youtube-nsfw:XE6YaLtctcI|right]'))?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
+      <?=nbcodes('[youtube-nsfw:XE6YaLtctcI|right]')?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu.
     </p>
 
   </div>
@@ -228,12 +228,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       [gallery-youtube-nsfw:XE6YaLtctcI|Description]<br>
       [/gallery]<br>
       <br>
-      <?=nbcodes(bbcodes('[gallery]
+      <?=nbcodes('[gallery]
       [gallery:ah_original.jpg|Description]
       [gallery-nsfw:ah_original.jpg]
       [gallery-youtube:XE6YaLtctcI]
       [gallery-youtube-nsfw:XE6YaLtctcI|Description]
-      [/gallery]'))?>
+      [/gallery]')?>
     </p>
 
   </div>
