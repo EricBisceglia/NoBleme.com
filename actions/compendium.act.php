@@ -213,7 +213,7 @@ function compendium_pages_get(  int     $page_id  = 0     ,
   $data['gross']      = sanitize_output($dpage['p_gross']);
   $data['nsfw_title'] = sanitize_output($dpage['p_nsfw_title']);
   $data['blur_title'] = (($nsfw < 1) && $dpage['p_nsfw_title']) ? 1 : 0;
-  $data['meta_desc']  = string_truncate($dpage['p_summary_en'], 250, '...');
+  $data['meta_desc']  = string_truncate(nbcodes_remove($dpage['p_summary_en']), 250, '...');
   $data['summary']    = sanitize_output($dpage['p_summary']);
   $data['summary_en'] = sanitize_output($dpage['p_summary_en']);
   $data['summary_fr'] = sanitize_output($dpage['p_summary_fr']);
@@ -1543,8 +1543,8 @@ function compendium_images_get( ?int    $image_id   = 0 ,
   $data['caption_en'] = sanitize_output($dimage['ci_caption_en']);
   $data['caption_fr'] = sanitize_output($dimage['ci_caption_fr']);
   $data['meta_desc']  = ($dimage['ci_caption_en'])
-                      ? string_truncate($dimage['ci_caption_en'], 250, '...')
-                      : string_truncate($dimage['ci_caption_fr'], 250, '...');
+                      ? string_truncate(nbcodes_remove($dimage['ci_caption_en']), 250, '...')
+                      : string_truncate(nbcodes_remove($dimage['ci_caption_fr']), 250, '...');
 
   // Return the data
   return $data;
