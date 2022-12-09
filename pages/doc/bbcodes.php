@@ -428,6 +428,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="nowrap monospace">
           [menu]<br>
           [menuitem:id|text]<br>
+          [submenuitem:id|text]<br>
           [anchor:id]
         </td>
         <td class="bold nowrap">
