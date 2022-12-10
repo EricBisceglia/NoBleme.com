@@ -162,9 +162,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       [bulletlist]<br>
       [bullet]Bullet point[/bullet]<br>
       [bullet]Bullet point[/bullet]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;[subbulletlist]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;[subbullet]Sublist bullet point[/subbullet]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;[subbullet]Sublist bullet point[/subbullet]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;[/subbulletlist]<br>
+      [bullet]Bullet point[/bullet]<br>
       [/bulletlist]<br>
       <br>
-      <?=nbcodes('[bulletlist]<br>[bullet]Bullet point[/bullet]<br>[bullet]Bullet point[/bullet]<br>[/bulletlist]')?>
+      <?=nbcodes('[bulletlist]<br>[bullet]Bullet point[/bullet]<br>[bullet]Bullet point[/bullet]<br>[subbulletlist]<br>[subbullet]Sublist bullet point[/subbullet]<br>[subbullet]Sublist bullet point[/subbullet]<br>[/subbulletlist]<br>[bullet]Bullet point[/bullet]<br>[/bulletlist]')?>
     </p>
 
     <p>

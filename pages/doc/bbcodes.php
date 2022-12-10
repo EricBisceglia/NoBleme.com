@@ -443,7 +443,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="nowrap monospace">
           [bulletlist]<br>
           [bullet][/bullet]<br>
-          [/bulletlist]
+          [subbulletlist]<br>
+          [subbullet][/subbullet]
         </td>
         <td class="bold nowrap">
           <?=__('nbcodes_bullet_name')?>
