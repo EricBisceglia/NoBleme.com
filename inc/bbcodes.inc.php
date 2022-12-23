@@ -354,6 +354,13 @@ function nbcodes( string  $text                                                ,
 
 
   /*******************************************************************************************************************/
+  // === anchor:id|Subtitle ===
+
+  // Handle this with a regex
+  $text = preg_replace('/\=\=\=\ anchor:(.*?)\|(.*?)\ \=\=\=/is','<span id="$1">&nbsp;</span><h5 class="pointer" onclick="document.location=\'#$1\';">$2</h5>', $text);
+
+
+  /*******************************************************************************************************************/
   // === Subtitle ===
 
   // Initialize the tag counter
@@ -361,6 +368,13 @@ function nbcodes( string  $text                                                ,
 
   // Handle this with a regex
   $text = preg_replace_callback('/\=\=\=\ (.*?)\ \=\=\=/is', function($m) use(&$i) {$i++; return '<h5 class="pointer" id="subsection'.$i.'" onclick="document.location=\'#subsection'.$i.'\';">'.$m[1].'</h5>';}, $text);
+
+
+  /*******************************************************************************************************************/
+  // == anchor:id|Title ==
+
+  // Handle this with a regex
+  $text = preg_replace('/\=\=\ anchor:(.*?)\|(.*?)\ \=\=/is','<span id="$1">&nbsp;</span><h4 class="pointer" onclick="document.location=\'#$1\';">$2</h4>', $text);
 
 
   /*******************************************************************************************************************/
@@ -429,7 +443,7 @@ function nbcodes( string  $text                                                ,
 
 
   /*******************************************************************************************************************/
-  // [anchor:name]
+  // [anchor:id]
 
   // Handle this with a regex
   $text = preg_replace('/\[anchor:(.*?)\]/i','<span id="$1">&nbsp;</span>', $text);
@@ -772,10 +786,12 @@ function nbcodes( string  $text                                                ,
   $text = bbcodes_remove($text);
 
   // Remove subtitles
+  $text = preg_replace('/\=\=\=\ anchor:(.*?)\|(.*?)\ \=\=\=/i','$2', $text);
   $text = str_replace("=== ", "", $text, $open);
   $text = str_replace(" ===", "", $text, $open);
 
   // Remove titles
+  $text = preg_replace('/\=\=\ anchor:(.*?)\|(.*?)\ \=\=/i','$2', $text);
   $text = str_replace("== ", "", $text, $open);
   $text = str_replace(" ==", "", $text, $open);
 
