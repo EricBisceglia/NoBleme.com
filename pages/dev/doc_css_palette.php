@@ -183,12 +183,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <p>
       == Title ==<br>
-      <?=nbcodes('== Title ==')?>
+      <?=nbcodes('== Title ==')?><br>
+      == anchor:id|Title with id ==<br>
+      <?=nbcodes('== anchor:test_id|Title with id ==')?>
     </p>
 
     <p>
       === Subtitle ===<br>
-      <?=nbcodes('=== Subtitle ===')?>
+      <?=nbcodes('=== Subtitle ===')?><br>
+      === anchor:id|Subtitle with id ===<br>
+      <?=nbcodes('=== anchor:test_id|Subtitle with id ===')?>
     </p>
 
     <p class="smallpadding_bot">

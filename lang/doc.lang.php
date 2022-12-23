@@ -132,8 +132,8 @@ ___('nbcodes_example',          'FR', "Exemple");
 
 ___('nbcodes_title_name',       'EN', "Title<br>Subtitle");
 ___('nbcodes_title_name',       'FR', "Titre<br>Sous-titre");
-___('nbcodes_title_example',    'EN', "== Title ==<br>=== Subtitle ===");
-___('nbcodes_title_example',    'FR', "== Titre ==<br>=== Sous-titre ===");
+___('nbcodes_title_example',    'EN', "== Title ==<br>== anchor:id|Title with id ==<br>=== Subtitle ===<br>=== anchor:id|Subtitle with id ===");
+___('nbcodes_title_example',    'FR', "== Titre ==<br>== anchor:id|Titre avec id ==<br>=== Sous-titre ===<br>=== anchor:id|Sous-titre avec id ===");
 
 ___('nbcodes_nsfw_name',        'EN', "Optional blur");
 ___('nbcodes_nsfw_name',        'FR', "Flou optionnel");
