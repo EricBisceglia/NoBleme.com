@@ -642,3 +642,14 @@ $last_query = sql_check_query_id();
 /*                                                       4.4.x                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Store page length
+
+if($last_query < 42)
+{
+  sql_create_field('compendium_pages', 'character_count_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'definition_fr');
+  sql_create_field('compendium_pages', 'character_count_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'character_count_en');
+
+  sql_update_query_id(42);
+}

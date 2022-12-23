@@ -96,6 +96,8 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   `summary_fr` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `definition_en` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `definition_fr` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `character_count_en` int UNSIGNED NOT NULL DEFAULT '0',
+  `character_count_fr` int UNSIGNED NOT NULL DEFAULT '0',
   `admin_notes` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_urls` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
