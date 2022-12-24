@@ -371,7 +371,7 @@ ___('compendium_list_count',    'EN', "{{1}} compendium pages");
 ___('compendium_list_count',    'FR', "{{1}} pages dans le compendium");
 
 
-// Admin
+// Admin page list
 ___('compendium_list_admin_title',            'EN', "Compendium pages");
 ___('compendium_list_admin_title',            'FR', "Pages du compendium");
 ___('compendium_list_admin_menu',             'EN', "Page list");
@@ -434,6 +434,19 @@ ___('compendium_list_admin_finished',         'EN', "Finished");
 ___('compendium_list_admin_finished',         'FR', "Complet");
 ___('compendium_list_admin_draft',            'EN', "Draft");
 ___('compendium_list_admin_draft',            'FR', "Brouillon");
+
+
+// Admin stats
+___('compendium_list_stats_title',    'EN', "Compendium pages statistics");
+___('compendium_list_stats_title',    'FR', "Statistiques des pages du compendium");
+___('compendium_list_stats_menu',     'EN', "Page stats");
+___('compendium_list_stats_menu',     'FR', "Stats des pages");
+___('compendium_list_stats_views',    'EN', "Page<br>views");
+___('compendium_list_stats_views',    'FR', "Vues<br>page");
+___('compendium_list_stats_chars_en', 'EN', "Length<br>EN");
+___('compendium_list_stats_chars_en', 'FR', "Longueur<br>EN");
+___('compendium_list_stats_chars_fr', 'EN', "Length<br>FR");
+___('compendium_list_stats_chars_fr', 'FR', "Longueur<br>FR");
 
 
 

@@ -596,9 +596,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                                       compendium_pages.title_$lang            ASC                 " ,
     'created'       => "  ORDER BY    compendium_pages.created_at             DESC                ,
                                       compendium_pages.title_$lang            ASC                 " ,
-    'pageviews'     => "  ORDER BY    compendium_pages.view_count             DESC                ,
-                          GREATEST  ( compendium_pages.created_at                                 ,
-                                      compendium_pages.last_edited_at )       DESC                ,
+    'created_r'     => "  ORDER BY    compendium_pages.created_at             ASC                 ,
                                       compendium_pages.title_$lang            ASC                 " ,
     'language'      => "  ORDER BY  ( compendium_pages.title_en               != ''
                           AND         compendium_pages.title_fr               != '' )             ,
@@ -613,6 +611,32 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     'wip'           => "  ORDER BY    compendium_pages.is_draft               = 0                 ,
                                       compendium_pages.is_deleted             = 0                 ,
                                       compendium_pages.page_url               ASC                 " ,
+    'pageviews'     => "  ORDER BY    compendium_pages.view_count             DESC                ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'pageviews_r'   => "  ORDER BY    compendium_pages.view_count             ASC                 ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'chars_en'      => "  ORDER BY    compendium_pages.character_count_en     DESC                ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'chars_en_r'    => "  ORDER BY    compendium_pages.character_count_en     = 0                 ,
+                                      compendium_pages.character_count_en     ASC                 ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'chars_fr'      => "  ORDER BY    compendium_pages.character_count_fr     DESC                ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'chars_fr_r'    => "  ORDER BY    compendium_pages.character_count_fr     = 0                 ,
+                                      compendium_pages.character_count_fr     ASC                 ,
+                          GREATEST  ( compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
     default         => "  ORDER BY
                           GREATEST (  compendium_pages.created_at                                 ,
                                       compendium_pages.last_edited_at )       DESC                ,
@@ -650,6 +674,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                               compendium_pages.is_offensive       AS 'p_offensive'  ,
                               compendium_pages.title_is_nsfw      AS 'p_nsfw_title' ,
                               compendium_pages.summary_$lang      AS 'p_summary'    ,
+                              compendium_pages.character_count_en AS 'p_chars_en'   ,
+                              compendium_pages.character_count_fr AS 'p_chars_fr'   ,
                               compendium_pages.admin_notes        AS 'p_notes'      ,
                               compendium_pages.admin_urls         AS 'p_urlnotes'   ,
                               compendium_eras.id                  AS 'pe_id'        ,
@@ -676,12 +702,17 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['created']    = ($row['p_created'])
                             ? sanitize_output(string_change_case(time_since($row['p_created']), 'lowercase'))
                             : '';
+    $data[$i]['created_d']  = ($row['p_created'])
+                            ? sanitize_output(date('Y-m-d', $row['p_created']))
+                            : '';
     $data[$i]['edited']     = ($row['p_edited'])
                             ? sanitize_output(string_change_case(time_since($row['p_edited']), 'lowercase'))
                             : '';
     $data[$i]['url']        = sanitize_output($row['p_url']);
     $data[$i]['urldisplay'] = sanitize_output(string_truncate($row['p_url'], 20, '...'));
     $data[$i]['fullurl']    = (mb_strlen($row['p_url']) > 20) ? sanitize_output($row['p_url']) : '';
+    $data[$i]['urlstats']   = sanitize_output(string_truncate($row['p_url'], 30, '...'));
+    $data[$i]['fullurlst']  = (mb_strlen($row['p_url']) > 30) ? sanitize_output($row['p_url']) : '';
     $data[$i]['title']      = sanitize_output($row['p_title']);
     $data[$i]['shorttitle'] = sanitize_output(string_truncate($row['p_title'], 32, '...'));
     $data[$i]['fulltitle']  = (mb_strlen($row['p_title']) > 32) ? sanitize_output($row['p_title']) : '';
@@ -732,6 +763,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['viewcount']  = ($row['p_viewcount'] > 1)
                             ? sanitize_output(number_display_format($row['p_viewcount'], "number"))
                             : '&nbsp;';
+    $data[$i]['chars_en']   = ($row['p_chars_en']) ? sanitize_output($row['p_chars_en']) : '-';
+    $data[$i]['chars_fr']   = ($row['p_chars_fr']) ? sanitize_output($row['p_chars_fr']) : '-';
 
     // Prepare the admin urls
     if($row['p_urlnotes'])
