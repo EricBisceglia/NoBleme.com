@@ -61,6 +61,7 @@ $compendium_pages_list_search = array(  'url'             => form_fetch_element(
                                         'peaked'          => form_fetch_element('compendium_search_peak')         ,
                                         'created'         => form_fetch_element('compendium_search_created')      ,
                                         'language'        => form_fetch_element('compendium_search_language')     ,
+                                        'summary'         => form_fetch_element('compendium_search_summary')      ,
                                         'nsfw_admin'      => form_fetch_element('compendium_search_nsfw')         ,
                                         'wip'             => $compendium_pages_search_wip                         ,
                                         'join_categories' => 1                                                    );
@@ -142,6 +143,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <?=__('lang.')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('language');")?>
+        </th>
+        <th>
+          <?=__('compendium_list_admin_summary')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_admin_list_search('summary');")?>
         </th>
         <th>
           <?=__('compendium_list_admin_nsfw')?>
@@ -262,6 +267,15 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         </th>
 
         <th class="compendium_admin_search_small">
+          <select class="table_search" name="compendium_search_summary" id="compendium_search_summary" onchange="compendium_admin_list_search();">
+            <option value="">&nbsp;</option>
+            <option value="none"><?=string_change_case(__('none'), 'initials')?></option>
+            <option value="monolingual"><?=__('compendium_list_admin_monolingual')?></option>
+            <option value="bilingual"><?=string_change_case(__('bilingual'), 'initials')?></option>
+          </select>
+        </th>
+
+        <th class="compendium_admin_search_small">
           <select class="table_search" name="compendium_search_nsfw" id="compendium_search_nsfw" onchange="compendium_admin_list_search();">
             <option value="">&nbsp;</option>
             <option value="safe"><?=__('compendium_list_admin_safe')?></option>
@@ -295,7 +309,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php } ?>
 
       <tr>
-        <td colspan="15" class="uppercase text_light dark bold align_center">
+        <td colspan="16" class="uppercase text_light dark bold align_center">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>
@@ -412,6 +426,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?php if($compendium_pages_list[$i]['lang_en']) { ?>
           <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="14" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
           <?php } if($compendium_pages_list[$i]['lang_fr']) { ?>
+          <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="14" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
+          <?php } ?>
+        </td>
+
+        <td class="align_center">
+          <?php if($compendium_pages_list[$i]['summary_en']) { ?>
+          <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="14" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
+          <?php } if($compendium_pages_list[$i]['summary_fr']) { ?>
           <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="14" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
           <?php } ?>
         </td>

@@ -414,6 +414,8 @@ ___('compendium_list_admin_peak',             'EN', "Peak");
 ___('compendium_list_admin_peak',             'FR', "Pic");
 ___('compendium_list_admin_monolingual',      'EN', "Monolingual");
 ___('compendium_list_admin_monolingual',      'FR', "Monolangue");
+___('compendium_list_admin_summary',          'EN', "Summ.");
+___('compendium_list_admin_summary',          'FR', "Résu.");
 ___('compendium_list_admin_nsfw',             'EN', "NSFW");
 ___('compendium_list_admin_nsfw',             'FR', "NSFW");
 ___('compendium_list_admin_safe',             'EN', "Safe");
