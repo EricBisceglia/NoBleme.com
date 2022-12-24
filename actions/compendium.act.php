@@ -4736,6 +4736,50 @@ function compendium_stats_list() : array
   for($i = 0; $i < $data['eras_count']; $i++)
     $data['eras_pages_'.$i]   = ($data['eras_pages_'.$i]) ?: '&nbsp;';
 
+  // Fetch the longest pages
+  $qlongest = query(" SELECT    compendium_pages.page_url               AS 'cp_url'   ,
+                                compendium_pages.title_$lang            AS 'cp_title'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.is_deleted             = 0
+                      AND       compendium_pages.is_draft               = 0
+                      AND       compendium_pages.redirection_$lang      = ''
+                      AND       compendium_pages.title_$lang           != ''
+                      AND       compendium_pages.character_count_$lang  > 0
+                      ORDER BY  compendium_pages.character_count_$lang DESC
+                      LIMIT     10 ");
+
+  // Loop through the longest pages and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qlongest); $i++)
+  {
+    $data['longest_url_'.$i]    = sanitize_output($row['cp_url']);
+    $data['longest_title_'.$i]  = sanitize_output(string_truncate($row['cp_title'], 40, '...'));
+  }
+
+  // Add the amount of longest pages to the return array
+  $data['longest_count'] = $i;
+
+  // Fetch the shortest pages
+  $qshortest = query("  SELECT    compendium_pages.page_url               AS 'cp_url'   ,
+                                  compendium_pages.title_$lang            AS 'cp_title'
+                        FROM      compendium_pages
+                        WHERE     compendium_pages.is_deleted             = 0
+                        AND       compendium_pages.is_draft               = 0
+                        AND       compendium_pages.redirection_$lang      = ''
+                        AND       compendium_pages.title_$lang           != ''
+                        AND       compendium_pages.character_count_$lang  > 0
+                        ORDER BY  compendium_pages.character_count_$lang ASC
+                        LIMIT     10 ");
+
+  // Loop through the longest pages and add their data to the return array
+  for($i = 0; $row = mysqli_fetch_array($qshortest); $i++)
+  {
+    $data['shortest_url_'.$i]   = sanitize_output($row['cp_url']);
+    $data['shortest_title_'.$i] = sanitize_output(string_truncate($row['cp_title'], 40, '...'));
+  }
+
+  // Add the amount of longest pages to the return array
+  $data['shortest_count'] = $i;
+
   // Prepare a variable used to find the oldest page or image creation year
   $oldest_year = date('Y');
 

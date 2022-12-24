@@ -37,6 +37,7 @@ $compendium_selector_entries = array( 'overall'       ,
                                       'types'         ,
                                       'categories'    ,
                                       'eras'          ,
+                                      'length'        ,
                                       'years'         );
 
 // Define the default dropdown menu entry
@@ -90,6 +91,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="types"<?=$compendium_selector['menu']['types']?>><?=__('submenu_pages_compendium_types')?></option>
         <option value="categories"<?=$compendium_selector['menu']['categories']?>><?=string_change_case(__('category+'), 'initials')?></option>
         <option value="eras"<?=$compendium_selector['menu']['eras']?>><?=__('submenu_pages_compendium_eras')?></option>
+        <option value="length"<?=$compendium_selector['menu']['length']?>><?=__('compendium_stats_menu_length')?></option>
         <option value="years"<?=$compendium_selector['menu']['years']?>><?=__('stats_timeline')?></option>
       </select>
 
@@ -391,6 +393,97 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+
+
+
+
+<?php /*********************************************** PAGE LENGTH ************************************************/ ?>
+
+<div class="width_30 padding_top autoscroll compendium_stats_section<?=$compendium_selector['hide']['length']?>" id="compendium_stats_length">
+
+  <div class="bigpadding_bot">
+
+    <table class="nowrap">
+
+      <thead class="uppercase">
+
+        <tr>
+
+          <th>
+            &nbsp;
+          </th>
+
+          <th>
+            <?=__('compendium_stats_length_longest')?>
+          </th>
+
+        </tr>
+
+      </thead>
+      <tbody class="align_center altc">
+
+        <?php for($i = 0; $i < $compendium_stats['longest_count']; $i++) { ?>
+
+        <tr>
+
+          <td class="bold">
+            #<?=($i + 1)?>
+          </td>
+
+          <td>
+            <?=__link('pages/compendium/'.$compendium_stats['longest_url_'.$i], $compendium_stats['longest_title_'.$i])?>
+          </td>
+
+        </tr>
+
+        <?php } ?>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <table class="nowrap">
+
+      <thead class="uppercase">
+
+        <tr>
+
+          <th>
+            &nbsp;
+          </th>
+
+          <th>
+            <?=__('compendium_stats_length_shortest')?>
+          </th>
+
+        </tr>
+
+      </thead>
+      <tbody class="align_center altc">
+
+        <?php for($i = ($compendium_stats['shortest_count'] - 1); $i >= 0; $i--) { ?>
+
+        <tr>
+
+          <td class="bold">
+            #<?=($i + 1)?>
+          </td>
+
+          <td>
+            <?=__link('pages/compendium/'.$compendium_stats['shortest_url_'.$i], $compendium_stats['shortest_title_'.$i])?>
+          </td>
+
+        </tr>
+
+        <?php } ?>
+
+      </tbody>
+
+    </table>
+
+</div>
 
 
 
