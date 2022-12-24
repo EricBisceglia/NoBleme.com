@@ -1106,6 +1106,12 @@ ___('compendium_admin_notes_url',         'FR', "Liens");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Recalculate all stats
+___('compendium_stats_recalculate_button',  'EN', "Recalculate all compendium statistics");
+___('compendium_stats_recalculate_button',  'FR', "Recalculer toutes les statistiques du compendium");
+___('compendium_stats_recalculate_alert',   'EN', "Are you sure you wish to recalculate all compendium statistics?");
+___('compendium_stats_recalculate_alert',   'FR', "Confirmer que vous tenez à recalculer toutes les statistiques du compendium");
+
 // Overall stats
 ___('compendium_stats_overall_pages',       'EN', "There are currently <span class=\"bold\">{{1}}</span> {{link|pages/compendium/random_page|pages}} in the {{link|pages/compendium/index|21st century compendium}}.");
 ___('compendium_stats_overall_pages',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> {{link|pages/compendium/random_page|pages}} dans le {{link|pages/compendium/index|compendium du 21ème siècle}}.");

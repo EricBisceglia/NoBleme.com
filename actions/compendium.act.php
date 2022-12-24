@@ -73,6 +73,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  compendium_peak_list_years                Fetches the years at which compendium content has peaked.              */
 /*                                                                                                                   */
 /*  compendium_stats_list                     Returns stats related to the compendium.                               */
+/*  compendium_stats_recalculate_all          Recalculates stats for all compendium pages.                           */
 /*                                                                                                                   */
 /*  compendium_format_url                     Formats a compendium page url.                                         */
 /*  compendium_format_title                   Formats a compendium page title.                                       */
@@ -4763,6 +4764,45 @@ function compendium_stats_list() : array
 
   // Return the stats
   return $data;
+}
+
+
+
+
+/**
+ * Recalculates stats for all compendium pages.
+ *
+ * @return void
+ */
+
+function compendium_stats_recalculate_all()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Fetch all compendium pages
+  $qpages = query(" SELECT  compendium_pages.id                 AS 'cp_id'      ,
+                            compendium_pages.definition_en      AS 'cp_body_en' ,
+                            compendium_pages.definition_fr      AS 'cp_body_fr' ,
+                            compendium_pages.character_count_en AS 'cp_char_en' ,
+                            compendium_pages.character_count_fr AS 'cp_char_fr'
+                    FROM    compendium_pages ");
+
+  // Loop through the pages
+  while($dpages = mysqli_fetch_array($qpages))
+  {
+    // Recalculate character count
+    $page_id        = sanitize($dpages['cp_id'], 'int', 0);
+    $char_count_en  = sanitize(mb_strlen(nbcodes_remove($dpages['cp_body_en'])), 'int', 0);
+    $char_count_fr  = sanitize(mb_strlen(nbcodes_remove($dpages['cp_body_fr'])), 'int', 0);
+
+    // Update the page's stats if necessary
+    if($char_count_en !== (int)$dpages['cp_char_en'] || $char_count_fr !== (int)$dpages['cp_char_fr'])
+      query(" UPDATE  compendium_pages
+              SET     compendium_pages.character_count_en = $char_count_en  ,
+                      compendium_pages.character_count_fr = $char_count_fr
+              WHERE   compendium_pages.id                 = $page_id  ");
+  }
 }
 
 

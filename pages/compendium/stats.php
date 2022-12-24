@@ -50,6 +50,21 @@ $compendium_selector = page_section_selector(           $compendium_selector_ent
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Recalculate all stats
+
+if(isset($_GET['recalculate']) && user_is_administrator())
+{
+  // Recalculate the stats
+  compendium_stats_recalculate_all();
+
+  // Reload the page in its default state
+  exit(header("Location: ".$path."pages/compendium/stats"));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch compendium stats
 
 $compendium_stats = compendium_stats_list();
@@ -77,6 +92,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <option value="eras"<?=$compendium_selector['menu']['eras']?>><?=__('submenu_pages_compendium_eras')?></option>
         <option value="years"<?=$compendium_selector['menu']['years']?>><?=__('stats_timeline')?></option>
       </select>
+
+      <?php if($is_admin) { ?>
+      <?=__icon('refresh', alt: 'R', title: __('compendium_stats_recalculate_button'), title_case: 'initials', class: 'valign_middle pointer spaced_left', href: 'pages/compendium/stats?recalculate', confirm: __('compendium_stats_recalculate_alert'))?>
+      <?php } ?>
 
     </h5>
   </fieldset>
