@@ -834,6 +834,8 @@ function compendium_pages_add( array $contents ) : mixed
   $page_offensive     = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
   $page_type          = sanitize_array_element($contents, 'type', 'int', min: 0, default: 0);
   $page_era           = sanitize_array_element($contents, 'era', 'int', min: 0, default: 0);
+  $page_char_count_en = sanitize(mb_strlen(nbcodes_remove($page_body_en)), 'int', 0);
+  $page_char_count_fr = sanitize(mb_strlen(nbcodes_remove($page_body_fr)), 'int', 0);
   $page_admin_notes   = sanitize_array_element($contents, 'admin_notes', 'string');
   $page_admin_urls    = sanitize_array_element($contents, 'admin_urls', 'string');
 
@@ -878,6 +880,8 @@ function compendium_pages_add( array $contents ) : mixed
                       compendium_pages.summary_fr               = '$page_summary_fr'    ,
                       compendium_pages.definition_en            = '$page_body_en'       ,
                       compendium_pages.definition_fr            = '$page_body_fr'       ,
+                      compendium_pages.character_count_en       = '$page_char_count_en' ,
+                      compendium_pages.character_count_fr       = '$page_char_count_fr' ,
                       compendium_pages.admin_notes              = '$page_admin_notes'   ,
                       compendium_pages.admin_urls               = '$page_admin_urls'    ");
 
@@ -980,6 +984,8 @@ function compendium_pages_edit( int   $page_id  ,
   $page_offensive     = sanitize_array_element($contents, 'offensive', 'int', min: 0, max: 1, default: 0);
   $page_type          = sanitize_array_element($contents, 'type', 'int', min: 0, default: 0);
   $page_era           = sanitize_array_element($contents, 'era', 'int', min: 0, default: 0);
+  $page_char_count_en = sanitize(mb_strlen(nbcodes_remove($page_body_en)), 'int', 0);
+  $page_char_count_fr = sanitize(mb_strlen(nbcodes_remove($page_body_fr)), 'int', 0);
   $page_admin_notes   = sanitize_array_element($contents, 'admin_notes', 'string');
   $page_admin_urls    = sanitize_array_element($contents, 'admin_urls', 'string');
   $page_history_en    = sanitize_array_element($contents, 'history_en', 'string');
@@ -1030,6 +1036,8 @@ function compendium_pages_edit( int   $page_id  ,
                   compendium_pages.summary_fr               = '$page_summary_fr'    ,
                   compendium_pages.definition_en            = '$page_body_en'       ,
                   compendium_pages.definition_fr            = '$page_body_fr'       ,
+                  compendium_pages.character_count_en       = '$page_char_count_en' ,
+                  compendium_pages.character_count_fr       = '$page_char_count_fr' ,
                   compendium_pages.admin_notes              = '$page_admin_notes'   ,
                   compendium_pages.admin_urls               = '$page_admin_urls'
           WHERE   compendium_pages.id                       = '$page_id'            ");
