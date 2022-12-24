@@ -371,7 +371,7 @@ ___('compendium_list_count',    'EN', "{{1}} compendium pages");
 ___('compendium_list_count',    'FR', "{{1}} pages dans le compendium");
 
 
-// Admin
+// Admin page list
 ___('compendium_list_admin_title',            'EN', "Compendium pages");
 ___('compendium_list_admin_title',            'FR', "Pages du compendium");
 ___('compendium_list_admin_menu',             'EN', "Page list");
@@ -414,6 +414,8 @@ ___('compendium_list_admin_peak',             'EN', "Peak");
 ___('compendium_list_admin_peak',             'FR', "Pic");
 ___('compendium_list_admin_monolingual',      'EN', "Monolingual");
 ___('compendium_list_admin_monolingual',      'FR', "Monolangue");
+___('compendium_list_admin_summary',          'EN', "Summ.");
+___('compendium_list_admin_summary',          'FR', "Résu.");
 ___('compendium_list_admin_nsfw',             'EN', "NSFW");
 ___('compendium_list_admin_nsfw',             'FR', "NSFW");
 ___('compendium_list_admin_safe',             'EN', "Safe");
@@ -434,6 +436,19 @@ ___('compendium_list_admin_finished',         'EN', "Finished");
 ___('compendium_list_admin_finished',         'FR', "Complet");
 ___('compendium_list_admin_draft',            'EN', "Draft");
 ___('compendium_list_admin_draft',            'FR', "Brouillon");
+
+
+// Admin stats
+___('compendium_list_stats_title',    'EN', "Compendium pages statistics");
+___('compendium_list_stats_title',    'FR', "Statistiques des pages du compendium");
+___('compendium_list_stats_menu',     'EN', "Page stats");
+___('compendium_list_stats_menu',     'FR', "Stats des pages");
+___('compendium_list_stats_views',    'EN', "Page<br>views");
+___('compendium_list_stats_views',    'FR', "Vues<br>page");
+___('compendium_list_stats_chars_en', 'EN', "Length<br>EN");
+___('compendium_list_stats_chars_en', 'FR', "Longueur<br>EN");
+___('compendium_list_stats_chars_fr', 'EN', "Length<br>FR");
+___('compendium_list_stats_chars_fr', 'FR', "Longueur<br>FR");
 
 
 
@@ -1106,6 +1121,18 @@ ___('compendium_admin_notes_url',         'FR', "Liens");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Dropdown menu
+___('compendium_stats_menu_length', 'EN', "Page lengths");
+___('compendium_stats_menu_length', 'FR', "Taille des pages");
+
+
+// Recalculate all stats
+___('compendium_stats_recalculate_button',  'EN', "Recalculate all compendium statistics");
+___('compendium_stats_recalculate_button',  'FR', "Recalculer toutes les statistiques du compendium");
+___('compendium_stats_recalculate_alert',   'EN', "Are you sure you wish to recalculate all compendium statistics?");
+___('compendium_stats_recalculate_alert',   'FR', "Confirmer que vous tenez à recalculer toutes les statistiques du compendium");
+
+
 // Overall stats
 ___('compendium_stats_overall_pages',       'EN', "There are currently <span class=\"bold\">{{1}}</span> {{link|pages/compendium/random_page|pages}} in the {{link|pages/compendium/index|21st century compendium}}.");
 ___('compendium_stats_overall_pages',       'FR', "Il y a actuellement <span class=\"bold\">{{1}}</span> {{link|pages/compendium/random_page|pages}} dans le {{link|pages/compendium/index|compendium du 21ème siècle}}.");
@@ -1165,6 +1192,13 @@ ___('compendium_stats_types_offensive',   'FR', "Contenus<br>offensants");
 // Categories
 ___('compendium_stats_category',  'EN', "Category");
 ___('compendium_stats_category',  'FR', "Catégorie");
+
+
+// Page length
+___('compendium_stats_length_longest',  'EN', "Longest pages");
+___('compendium_stats_length_longest',  'FR', "Pages les plus longues");
+___('compendium_stats_length_shortest', 'EN', "Shortest pages");
+___('compendium_stats_length_shortest', 'FR', "Pages les plus courtes");
 
 
 // Timeline

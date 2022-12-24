@@ -1835,6 +1835,8 @@ for($i = 0; $i < $random; $i++)
   $summary_fr   = fixtures_generate_data('sentence', 25, 50);
   $body_en      = fixtures_generate_data('text', 2, 5);
   $body_fr      = fixtures_generate_data('text', 2, 5);
+  $length_en    = mb_strlen($body_en);
+  $length_fr    = mb_strlen($body_fr);
   $admin_notes  = (mt_rand(0,7) < 7) ? '' : fixtures_generate_data('text', 1, 1);
   $random_url   = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
   $random_url2  = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
@@ -1873,6 +1875,8 @@ for($i = 0; $i < $random; $i++)
                         compendium_pages.summary_fr           = '$summary_fr'   ,
                         compendium_pages.definition_en        = '$body_en'      ,
                         compendium_pages.definition_fr        = '$body_fr'      ,
+                        compendium_pages.character_count_en   = '$length_en'    ,
+                        compendium_pages.character_count_fr   = '$length_fr'    ,
                         compendium_pages.admin_notes          = '$admin_notes'  ,
                         compendium_pages.admin_urls           = '$admin_urls'   ");
 
