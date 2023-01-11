@@ -67,6 +67,22 @@ $css = array('index');
     <?=__('nobleme_home_statement_3')?>
   </p>
 
+  <h5 class="bigpadding_top">
+    <?=__('nobleme_home_compendium_title')?>
+  </h5>
+
+  <p>
+    <?=__('nobleme_home_compendium_1')?>
+  </p>
+
+  <p>
+    <?=__('nobleme_home_compendium_2')?>
+  </p>
+
+  <p>
+    <?=__('nobleme_home_compendium_3')?>
+  </p>
+
 </div>
 
 <?php /***************************************************************************************************************/

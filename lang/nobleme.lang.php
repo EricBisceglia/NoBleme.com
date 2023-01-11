@@ -73,6 +73,34 @@ Le menu de navigation situé en haut de chaque page vous permet d'explorer le co
 EOT
 );
 
+// 21st century compendium
+___('nobleme_home_compendium_title',  'EN', "21st century culture");
+___('nobleme_home_compendium_title',  'FR', "Culture du 21ème siècle");
+___('nobleme_home_compendium_1',      'EN', <<<EOT
+NoBleme includes the {{link++|pages/compendium/index|21st century compendium|bold|}}: a small encyclopedia documenting some aspects of 21st century culture, including {{link++|pages/compendium/meme|memes|bold|}}, {{link++|pages/compendium/slang|slang|bold|}}, and {{link++|pages/compendium/sociocultural|sociocultural|bold|}} topics.
+EOT
+);
+___('nobleme_home_compendium_1',      'FR', <<<EOT
+NoBleme contient le {{link++|pages/compendium/index|compendium du 21ème siècle|bold|}}: une petite encyclopédie documentant des aspects de la culture du 21ème siècle, incluant des {{link++|pages/compendium/meme|memes|bold|}}, de {{link++|pages/compendium/slang|l'argot|bold|}}, et des contenus {{link++|pages/compendium/sociocultural|socioculturels|bold|}}.
+EOT
+);
+___('nobleme_home_compendium_2',      'EN', <<<EOT
+Answers to most questions related to this compendium (why does it exist? what are its goals? what is a compendium anyway?) can be found in the compendium's {{link++|pages/compendium/mission_statement|mission statement|bold|}}.
+EOT
+);
+___('nobleme_home_compendium_2',      'FR', <<<EOT
+Des réponses à la plupart des questions portant sur ce compendium (pourquoi existe-il ? quels sont ses buts ? qu'est-ce qu'un compendium ?) se trouvent dans sa {{link++|pages/compendium/mission_statement|foire aux questions|bold|}}.
+EOT
+);
+___('nobleme_home_compendium_3',      'EN', <<<EOT
+You can find a {{link++|pages/compendium/page_list|list of all pages|bold|}} in the compendium, which will hopefully lead you to learn new things and have a few good laughs. Or maybe you're the type of person that would rather get started with a {{link++|pages/compendium/random_page|random page|bold|}} or a {{link++|pages/compendium/random_image|random image|bold|}} and see where fate leads you…
+EOT
+);
+___('nobleme_home_compendium_3',      'FR', <<<EOT
+En partant de la {{link++|pages/compendium/page_list|liste des pages|bold|}} du compendium, vous pourriez apprendre de nouvelles choses ou vous marrer un bon coup. Ou peut-être etes-vous le type de personne qui préfère commencer par une {{link++|pages/compendium/random_page|page au hasard|bold|}} ou une {{link++|pages/compendium/random_image|image au hasard|bold|}} et voir où le destin vous amène…
+EOT
+);
+
 
 
 
