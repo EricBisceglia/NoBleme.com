@@ -287,7 +287,7 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
     $page_name            = ($lang === 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
-    $page_name            = (in_array($sort_by, array('url', 'uactivity'))) ? "yea" : $page_name;
+    $page_name            = (in_array($sort_by, array('url', 'uactivity'))) ? $row['p_url'] : $page_name;
     $data[$i]['name']     = ($page_name) ? sanitize_output(string_truncate($page_name, 40, '...')) : '-';
     $data[$i]['fullname'] = (mb_strlen($page_name) > 40) ? sanitize_output($page_name) : NULL;
     $data[$i]['url']      = sanitize_output($row['p_url']);
