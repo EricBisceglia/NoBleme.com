@@ -1290,7 +1290,7 @@ A documentation of elements of 21st century culture.
 EOT
 );
 ___('compendium_faq_answer_1_1',  'FR', <<<EOT
-Une documentation d'éléments de la culture du 21ème siècle.
+Une documentation de divers éléments de la culture du 21ème siècle.
 EOT
 );
 ___('compendium_faq_answer_1_2',  'EN', <<<EOT
@@ -1302,27 +1302,27 @@ L'avènement d'Internet et d'une nouvelle ère hyperconnectée a modifié la cul
 EOT
 );
 ___('compendium_faq_answer_1_3',  'EN', <<<EOT
-<span class="bold">Memes</span> have become an unavoidable source of entertainment and amusement, or sometimes controversy and confusion. Memes are documented with a focus on fun, featuring image and video galleries showcasing how entertaining and creative people can be.
+{{link|pages/compendium/meme|Memes}} have become an unavoidable source of entertainment and amusement, or sometimes controversy and confusion. Memes are documented with a focus on fun, featuring image and video galleries showcasing how entertaining and creative people can be.
 EOT
 );
 ___('compendium_faq_answer_1_3',  'FR', <<<EOT
-<span class="bold">Les memes</span> sont devenus une source omniprésente de divertissement et d'amusement, ou parfois de controverse et de confusion. Les memes sont documentés en mettant l'accent sur leur côté divertissant, via des galeries d'images et de vidéos montrant le potentiel de créativité des gens.
+{{link|pages/compendium/meme|Les memes}} sont devenus une source omniprésente de divertissement et d'amusement, ou parfois de controverse et de confusion. Les memes sont documentés en mettant l'accent sur leur côté divertissant, via des galeries d'images et de vidéos montrant le potentiel de créativité des gens.
 EOT
 );
 ___('compendium_faq_answer_1_4',  'EN', <<<EOT
-<span class="bold">Slang</span> born or popularized in the 21st century gets featured in short pages explaining their meaning, and sometimes also the hidden meanings which can appear when used in funny or nefarious ways.
+{{link|pages/compendium/slang|Slang}} born or popularized in the 21st century gets featured in short pages explaining their meaning, and sometimes also the hidden meanings which can appear when used in funny or nefarious ways.
 EOT
 );
 ___('compendium_faq_answer_1_4',  'FR', <<<EOT
-<span class="bold">L'argot</span> propre à la culture du 21ème siècle est documenté dans des pages courtes explicant son sens, et parfois les sens cachés qui peuvent exister lorsque les mots sont utilisés dans un but comique ou néfaste.
+{{link|pages/compendium/slang|L'argot}} propre à la culture du 21ème siècle est documenté dans des pages courtes explicant sa signification, et parfois les sens cachés qui peuvent exister lorsque les mots sont utilisés dans un but comique ou néfaste.
 EOT
 );
 ___('compendium_faq_answer_1_5',  'EN', <<<EOT
-<span class="bold">Sociocultural</span> concepts which people were not aware of before the turn of the 21st century have become mainstream notions as many groups became able to express themselves on platforms that could reach a global audience. The 21st century compendium aims to demystify these sociocultural concepts by explaining them in simple terms, both the good and the bad, whether they belong to the oppressed or the oppressive, in order to explain their history, their meanings, their reach, and their real world consequences.
+{{link|pages/compendium/sociocultural|Sociocultural}} concepts which were rarely discussed before the turn of the 21st century have become mainstream notions, as many groups became able to express themselves on platforms that could reach a global audience. The 21st century compendium aims to demystify these sociocultural concepts by explaining them in simple terms, both the good and the bad, whether they belong to the oppressed or the oppressive, in order to explain their history, their meanings, their reach, and their real world consequences.
 EOT
 );
 ___('compendium_faq_answer_1_5',  'FR', <<<EOT
-<span class="bold">Des concepts socioculturels</span> sont également documentés. Pas tous propres au 21ème siècle, ils se sont popularisés grâce à la libération de la parole au tourant du siècle, Internet permettant à des groupes marginalisés de se faire entendre à une échelle globale. Ce compendium cherche à démystifier ces concepts socioculturels en les expliquant le plus simplement possible, qu'ils soient bons ou mauvais, oppressés ou oppressants, afin d'expliquer leur histoire, leur sens, leur portée, et leurs impacts dans le monde.
+{{link|pages/compendium/sociocultural|Des concepts socioculturels}} sont également documentés. Pas tous propres au 21ème siècle, ils se sont popularisés grâce à la libération de la parole au tournant du siècle, Internet permettant à des groupes marginalisés de se faire entendre. Ce compendium cherche à démystifier ces concepts socioculturels en les expliquant le plus simplement possible, qu'ils soient bons ou mauvais, oppressés ou oppressants, afin d'expliquer leur histoire, leur sens, leur portée, et leurs impacts dans le monde.
 EOT
 );
 ___('compendium_faq_answer_1_6',  'EN', <<<EOT
@@ -1348,7 +1348,7 @@ First and foremost, it strives to be an encyclopedia of its era. This is nothing
 EOT
 );
 ___('compendium_faq_answer_2_2',  'FR', <<<EOT
-Avant tout, son but est d'être une encyclopédie de son époque. Ce n'est rien d'unique, il existe déjà d'autres sites cherchant à accomplir le même but. Nous ne cherchons pas à rivaliser avec ces autres sites, et nous concentrons plutôt sur la qualité que sur la quantité : les pages sont écrites à un rythme lent, mais sont complètes, correctement sourcées, et respectent une ligne directrice unique et clairement définie.
+Avant tout, son but est d'être une encyclopédie de son époque. Ce n'est rien d'unique, il existe déjà d'autres sites cherchant à accomplir le même but. Nous ne cherchons pas à rivaliser avec ces autres sites, et nous concentrons plutôt sur la qualité que sur la quantité : les pages sont écrites à un rythme lent, mais sont complètes, correctement sourcées, et respectent une ligne éditoriale unique et clairement définie.
 EOT
 );
 ___('compendium_faq_answer_2_3',  'EN', <<<EOT
@@ -1364,7 +1364,7 @@ Lastly, as sociocultural topics have to be explained when documenting 21st centu
 EOT
 );
 ___('compendium_faq_answer_2_4',  'FR', <<<EOT
-Troisièmement, vu que des concepts socioculturels doivent être documentés en tant qu'éléments de la culture du 21ème siècle, un effort est fait pour les expliquer de la façon la plus claire possible. Nous savons à quel point devoir expliquer encore et encore les mêmes concepts de base à d'autres personnes peut être épuisant, et espérons que certaines pages de ce compendium pourront vous libérer de ces efforts et vous servir de liens que vous pourrez partager avec les personnes non sensibilisées à ces sujets.
+Troisièmement, vu que des concepts socioculturels doivent être documentés en tant qu'éléments de la culture du 21ème siècle, un effort est fait pour les expliquer de la façon la plus claire possible. Nous savons à quel point devoir expliquer encore et encore les mêmes concepts de base à d'autres personnes peut être épuisant, et espérons que certaines pages de ce compendium pourront vous libérer de ces efforts et vous servir d'outils que vous pourrez partager avec les personnes non sensibilisées à ces sujets.
 EOT
 );
 
@@ -1385,11 +1385,11 @@ Tenter de corriger ce biais ne ferait qu'amener un nouveau problème : ce n'est
 EOT
 );
 ___('compendium_faq_answer_3_3',  'EN', <<<EOT
-If you want to alleviate this issue by offering documentation on memes, slangs, sociocultural concepts of your language and/or culture, you can do so using our {{link|pages/messages/admins|contact form}}. We would be delighted with the help. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
+If you want to alleviate this issue by offering documentation on memes, slangs, sociocultural concepts of your language and/or culture, you can do so using our {{link|pages/messages/admins|contact form}}. We would be delighted with the help.
 EOT
 );
 ___('compendium_faq_answer_3_3',  'FR', <<<EOT
-Toutefois, si vous voulez nous aider à remédier à ce problème en proposant de la documentation sur des memes, de l'argot, des concepts socioculturels propres à votre langue et/ou culture, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Nous apprécierons assurément votre aide. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
+Toutefois, si vous voulez nous aider à remédier à ce problème en proposant de la documentation sur des memes, de l'argot, des concepts socioculturels propres à votre langue et/ou culture, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Nous apprécierons assurément votre aide.
 EOT
 );
 
@@ -1426,11 +1426,11 @@ Certaines personnes craignent que des minorités exploitent la bienveillance des
 EOT
 );
 ___('compendium_faq_answer_4_5',  'EN', <<<EOT
-If you are in full disagreement with political or social statements made in this compendium, it might be best for you to simply stop reading it. The Internet is a vast landscape with many other websites which might be more appropriate for your needs, and we have no desire to argue about basic empathy with contrarians.
+If you are in full disagreement with political or social statements made in this compendium, it might be best for you to simply stop reading it. The Internet is a vast landscape with many other websites which might be more appropriate for your needs.
 EOT
 );
 ___('compendium_faq_answer_4_5',  'FR', <<<EOT
-Si vous êtes en désaccord avec la majorité des prises de position politiques de ce compendium, peut-être vaudrait-il mieux simplement arrêter de le lire. L'Internet est un monde vaste rempli de nombreux autres contenus qui pourraient être plus appropriés pour vos besoins, et nous n'avons aucun désir de débattre d'un sujet aussi simple que l'existence de l'empathie avec des personnes fermées d'esprit.
+Si vous êtes en désaccord avec la majorité des prises de position politiques de ce compendium, peut-être vaudrait-il mieux simplement arrêter de le lire. Internet est vaste et rempli de nombreux autres contenus qui pourraient mieux vous convenir.
 EOT
 );
 
@@ -1443,11 +1443,11 @@ Non. Aucun objectif n'a été fixé, à court ou long terme, à part de continue
 EOT
 );
 ___('compendium_faq_answer_5_2',  'EN', <<<EOT
-Growth and exposure are appreciated, but not needed. Even if this compendium remained lost in its corner of the Internet and was seen by one new person every month, it would be enough to justify its existence. It is a work of passion, not an attempt at wealth or fame.
+Growth and exposure are appreciated, but not needed. Even if this compendium remained lost in its corner of the Internet and was seen by one new person every month, it would be enough to justify its existence.
 EOT
 );
 ___('compendium_faq_answer_5_2',  'FR', <<<EOT
-La croissance et la popularité sont appréciés, mais pas nécessaires. Même si ce compendium restait perdu dans son coin d'Internet et n'était vu que par une seule nouvelle personne chaque mois, ce serait suffisant pour justifier son existence. C'est une œuvre de passion, pas une tentative d'enrichissement ou de célébrité.
+La croissance et la popularité sont appréciés, mais pas nécessaires. Même si ce compendium restait perdu dans son coin d'Internet et n'était vu que par une seule nouvelle personne chaque mois, ce serait suffisant pour justifier son existence.
 EOT
 );
 
@@ -1468,11 +1468,11 @@ N'avoir qu'une seule personne en charge de la rédaction des contenus est un cho
 EOT
 );
 ___('compendium_faq_answer_6_3',  'EN', <<<EOT
-However, third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|pages/messages/admins|contact form}}. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
+However, third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|pages/messages/admins|contact form}}.
 EOT
 );
 ___('compendium_faq_answer_6_3',  'FR', <<<EOT
-Toutefois, les contributions tierces sont encouragées. Que vous vouliez proposer de nouveaux contenus ou signaler des erreurs dans du contenu existant, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
+Toutefois, les contributions tierces sont encouragées. Que vous vouliez proposer de nouveaux contenus ou signaler des erreurs dans du contenu existant, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}.
 EOT
 );
 
@@ -1518,7 +1518,7 @@ La réponse honnête est que c'est parfois impossible.
 EOT
 );
 ___('compendium_faq_answer_8_2',  'EN', <<<EOT
-Some content can be traced back to its authentic origins, or can be backed up by academic sources. In these cases, it is easy to document said content in a properly sourced way. Sadly, it is impossible to guarantee that the original content has not been appropriated from someone else's work, or that the acamedic sources do not have a bias.
+Some content can be traced back to its authentic origins, or can be backed up by academic sources. In these cases, it is easy to document said content in a properly sourced way. Sadly, it is impossible to guarantee that the original content has not been appropriated from someone else's work, or that the academic sources do not have a bias.
 EOT
 );
 ___('compendium_faq_answer_8_2',  'FR', <<<EOT
@@ -1526,11 +1526,11 @@ Certains contenus peuvent être remontés jusqu'à leurs origines authentiques, 
 EOT
 );
 ___('compendium_faq_answer_8_3',  'EN', <<<EOT
-As our sources might be unreliable, the documentation will evolve as needed to correct inaccuracies. Please report any incorrect content using our {{link|pages/messages/admins|contact form}}.
+As our sources might be unreliable, pages will evolve as needed to correct inaccuracies. Please report any incorrect content using our {{link|pages/messages/admins|contact form}}.
 EOT
 );
 ___('compendium_faq_answer_8_3',  'FR', <<<EOT
-Même si un gros effort est fait pour tout sourcer, les contenus évolueront autant que nécessaire pour corriger les erreurs qui peuvent s'y trouver. Signalez-nous les contenus inexacts ou les sources questionnables via notre {{link|pages/messages/admins|formulaire de contact}}.
+Même si un effort est fait pour tout sourcer, les pages continueront à évoluer si nécessaire, dans le but de corriger les erreurs qui peuvent s'y trouver. Signalez-nous les contenus inexacts ou les sources questionnables via notre {{link|pages/messages/admins|formulaire de contact}}.
 EOT
 );
 
@@ -1583,13 +1583,13 @@ ___('compendium_faq_answer_10_2', 'FR', <<<EOT
 Les éléments qui séparent ce compendium des autres sites silimaires sont les suivants :
 EOT
 );
-___('compendium_faq_answer_10_3', 'EN', "Documenting all aspects of 21st century culture at once, not just memes or politics.");
+___('compendium_faq_answer_10_3', 'EN', "Documenting all aspects of 21st century culture at once, not just memes alone.");
 ___('compendium_faq_answer_10_3', 'FR', "Documenter tous les aspects de la culture du 21ème siècle d'un coup, pas uniquement les memes.");
 ___('compendium_faq_answer_10_4', 'EN', "A focus on quality over quantity: less content, but better content.");
 ___('compendium_faq_answer_10_4', 'FR', "Une focalisation sur la qualité plutôt que la quantité : moins de contenus, mais de meilleurs contenus.");
 ___('compendium_faq_answer_10_5', 'EN', "Short and simple pages with simple vocabulary, accessible to all.");
 ___('compendium_faq_answer_10_5', 'FR', "Des pages courtes et accessibles utilisant du vocabulaire simple.");
-___('compendium_faq_answer_10_6', 'EN', "A single core writer/editor in order to have control over all content.");
+___('compendium_faq_answer_10_6', 'EN', "A single core writer/editor in order to have editorial consistency over all content.");
 ___('compendium_faq_answer_10_6', 'FR', "Une seule personne rédigeant tous les contenus afin de garantir la ligne éditoriale.");
 ___('compendium_faq_answer_10_7', 'EN', "English/French bilingual, as the french community lacks such websites.");
 ___('compendium_faq_answer_10_7', 'FR', "Bilingue français/anglais, la communauté francophone ayant peu de sites en ce genre.");
@@ -1603,7 +1603,7 @@ NoBleme est plus qu'un nom de domaine ou un site internet, c'est également un �
 EOT
 );
 ___('compendium_faq_answer_11_2', 'EN', <<<EOT
-As this whole platform is the work of one single person with limited time and energy to invest in the project, going with the quicker solution simply made more sense. Hopefully it will not affect your experience of browsing the 21st century compendium in any negative way.
+As this whole platform is the work of one single person with limited time and energy to invest in the project, going with the quicker solution simply made more sense. It should not affect your experience of browsing the 21st century compendium in any way.
 EOT
 );
 ___('compendium_faq_answer_11_2', 'FR', <<<EOT
@@ -1620,11 +1620,11 @@ NoBleme est une communauté internet qui existe en continu depuis 2005. Vous pou
 EOT
 );
 ___('compendium_faq_answer_12_2', 'EN', <<<EOT
-As a sidenote, a first attempt at documenting 21st century culture was already done on NoBleme all the way back in 2006, under the name "Wiki NoBleme". It was quite successful, attracting millions of readers, but had to eventually be shut down due to a few issues, the main one being that it attempted to keep politics out of everything and be a "neutral" documentation. Once it was clear that the neutral stance was actually helping the spread of harmful ideas, NoBleme's wiki was shut down in 2011. Ten years later, in 2021, this compendium is designed with the shortcomings of the first attempt in mind. Always learn from your past!
+A first attempt at documenting 21st century culture was already done on NoBleme all the way back in 2006, under the name "Wiki NoBleme". It was quite successful, attracting millions of readers, but had to eventually be shut down due to a few issues, the main one being that it attempted to keep politics out of everything and be a "neutral" documentation. Once it was clear that the neutral stance was actually helping the spread of harmful ideas, NoBleme's wiki was shut down in 2011. Ten years later, in 2021, this compendium is designed with the shortcomings of the first attempt in mind. Always learn from your past!
 EOT
 );
 ___('compendium_faq_answer_12_2', 'FR', <<<EOT
-Par ailleurs, une première tentative de documenter la culture du 21ème siècle avait déjà eu lieu sur NoBleme en 2006, sous le nom « wiki NoBleme ». Cette tentative a connu un grand succès, attirant des millions de visites, mais a fini par fermer ses portes sous le poids de nombreux problèmes, le principal étant la règle de rendre le wiki NoBleme « apolitique » en prétendant que les contenus qui y étaient documentés pouvaient l'être sans prendre en compte leur impact social et politique. Lorsqu'il est devenu clair que le wiki NoBleme contribuait involontairement à répandre des contenus nocifs, il a été définitevement fermé en 2011. Dix ans plus tard, en 2021, ce compendium a été crée en prenant en compte les leçons qui ont été apprises lors de cette première tentative originelle. Il est important de toujours tirer des leçons du passé !
+Une première tentative de documenter la culture du 21ème siècle avait déjà eu lieu sur NoBleme en 2006, sous le nom « wiki NoBleme ». Cette tentative a connu un grand succès, attirant des millions de visites, mais a fini par fermer ses portes sous le poids de nombreux problèmes, le principal étant la règle de rendre le wiki NoBleme « apolitique » en prétendant que les contenus qui y étaient documentés pouvaient l'être sans prendre en compte leur impact social et politique. Lorsqu'il est devenu clair que le wiki NoBleme contribuait involontairement à répandre des contenus nocifs, il a été définitevement fermé en 2011. Dix ans plus tard, en 2021, ce compendium a été crée en prenant en compte les leçons qui ont été apprises lors de cette première tentative originelle. Il est important de toujours tirer des leçons du passé !
 EOT
 );
 
@@ -1646,11 +1646,11 @@ EOT
 );
 
 ___('compendium_faq_answer_14_1', 'EN', <<<EOT
-Third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|pages/messages/admins|contact form}}. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
+Third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|pages/messages/admins|contact form}}.
 EOT
 );
 ___('compendium_faq_answer_14_1', 'FR', <<<EOT
-Les contributions sont plus que bienvenues. Que vous désiriez proposer des nouveaux contenus, signaler des erreurs, proposer des améliorations, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
+Les contributions sont plus que bienvenues. Si vous désirez proposer des nouveaux contenus, signaler des erreurs, proposer des améliorations, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}.
 EOT
 );
 ___('compendium_faq_answer_14_2', 'EN', <<<EOT
@@ -1679,10 +1679,10 @@ Des messages automatisés sont envoyés sur le {{link|pages/social/irc|serveur d
 EOT
 );
 ___('compendium_faq_answer_15_3', 'EN', <<<EOT
-Most compendium updates are also relayed on the {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}} and the {{external_popup|https://www.reddit.com/r/NoBleme/|r/nobleme subreddit}}.
+Most compendium updates are also relayed on the {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon account @nobleme@hsnl.social}} and the {{external_popup|https://www.reddit.com/r/NoBleme/|r/nobleme subreddit}}, which you can follow for updates.
 EOT
 );
 ___('compendium_faq_answer_15_3', 'FR', <<<EOT
-La plupart des mises à jour du compendium sont également partagées sur le {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}} et le {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}.
+La plupart des mises à jour du compendium sont également partagées sur la page {{external_popup|https://hsnl.social/web/@NoBleme|Mastodon @nobleme@hsnl.social}} ainsi que sur le {{external_popup|https://www.reddit.com/r/NoBleme/|subreddit r/nobleme}}, auxquels vous pouvez vous abonner.
 EOT
 );
