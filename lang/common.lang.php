@@ -1033,6 +1033,8 @@ ___('submenu_pages_compendium',             'EN', "Compendium");
 ___('submenu_pages_compendium',             'FR', "Compendium");
 ___('submenu_pages_compendium_index',       'EN', "21st century culture");
 ___('submenu_pages_compendium_index',       'FR', "Culture du 21ème siècle");
+___('submenu_pages_compendium_faq',         'EN', "Mission statement");
+___('submenu_pages_compendium_faq',         'FR', "Introduction & FAQ");
 ___('submenu_pages_compendium_pages',       'EN', "List of all pages");
 ___('submenu_pages_compendium_pages',       'FR', "Liste des pages");
 ___('submenu_pages_compendium_random',      'EN', "Random page");

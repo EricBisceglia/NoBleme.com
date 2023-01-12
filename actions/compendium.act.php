@@ -2938,7 +2938,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
   // Sort the data
   $query_sort = match($sort_by)
   {
-    'url'   => " ORDER BY compendium_missing.page_url             DESC  " ,
+    'url'   => " ORDER BY compendium_missing.page_url             ASC   " ,
     'title' => " ORDER BY compendium_missing.title                = ''  ,
                           compendium_missing.title                ASC   ,
                           compendium_missing.page_url             ASC   " ,

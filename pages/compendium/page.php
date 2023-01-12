@@ -142,7 +142,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <<?=$compendium_page_data['title_size']?>>
 
     <?php if($compendium_page_data['blur_title']) { ?>
-    <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow blur bigblur', onmouseover: 'unblur(this);')?>
+    <span class="noglow blur bigblur" onmouseover="unblur(this);"><?=$compendium_page_data['title']?></span>
     <?php } else { ?>
     <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow')?>
     <?php } ?>

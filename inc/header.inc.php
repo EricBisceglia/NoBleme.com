@@ -622,6 +622,9 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('pages/compendium/mission_statement', __('submenu_pages_compendium_faq'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('pages/compendium/page_list', __('submenu_pages_compendium_pages'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
