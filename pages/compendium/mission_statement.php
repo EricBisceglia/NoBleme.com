@@ -32,7 +32,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('compendium_faq_subtitle')?>
   </h5>
 
-  <p class="padding_bot">
+  <p class="padding_bot padding_top">
     <?=__('compendium_faq_intro')?>
   </p>
 
@@ -42,331 +42,331 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <ul>
     <li>
-      <?=__link('mission_statement#q0', __('compendium_faq_question_0'), is_internal: false)?>
+      <?=__link('mission_statement#whatis', __('compendium_faq_whatis_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q1', __('compendium_faq_question_1'), is_internal: false)?>
+      <?=__link('mission_statement#contents', __('compendium_faq_contents_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q2',__('compendium_faq_question_2'), is_internal: false)?>
+      <?=__link('mission_statement#goals',__('compendium_faq_goals_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q3',__('compendium_faq_question_3'), is_internal: false)?>
+      <?=__link('mission_statement#bias',__('compendium_faq_bias_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q4',__('compendium_faq_question_4'), is_internal: false)?>
+      <?=__link('mission_statement#leaning',__('compendium_faq_leaning_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q5',__('compendium_faq_question_5'), is_internal: false)?>
+      <?=__link('mission_statement#longterm',__('compendium_faq_longterm_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q6',__('compendium_faq_question_6'), is_internal: false)?>
+      <?=__link('mission_statement#who',__('compendium_faq_who_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q7',__('compendium_faq_question_7'), is_internal: false)?>
+      <?=__link('mission_statement#guidelines',__('compendium_faq_guidelines_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q8',__('compendium_faq_question_8'), is_internal: false)?>
+      <?=__link('mission_statement#sources',__('compendium_faq_sources_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q9',__('compendium_faq_question_9'), is_internal: false)?>
+      <?=__link('mission_statement#controversial',__('compendium_faq_controversial_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q10',__('compendium_faq_question_10'), is_internal: false)?>
+      <?=__link('mission_statement#differences',__('compendium_faq_differences_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q11',__('compendium_faq_question_11'), is_internal: false)?>
+      <?=__link('mission_statement#whynobleme',__('compendium_faq_whynobleme_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q12',__('compendium_faq_question_12'), is_internal: false)?>
+      <?=__link('mission_statement#whatnobleme',__('compendium_faq_whatnobleme_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q13',__('compendium_faq_question_13'), is_internal: false)?>
+      <?=__link('mission_statement#contact',__('compendium_faq_contact_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q14',__('compendium_faq_question_14'), is_internal: false)?>
+      <?=__link('mission_statement#help',__('compendium_faq_help_title'), is_internal: false)?>
     </li>
     <li>
-      <?=__link('mission_statement#q15',__('compendium_faq_question_15'), is_internal: false)?>
+      <?=__link('mission_statement#updates',__('compendium_faq_updates_title'), is_internal: false)?>
     </li>
   </ul>
 
-  <h5 id="q0" class="bigpadding_top">
-    <?=__('compendium_faq_question_0')?>
+  <h5 id="whatis" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#whatis', __('compendium_faq_whatis_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_0_1')?>
+    <?=__('compendium_faq_whatis_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_0_2')?>
+    <?=__('compendium_faq_whatis_2')?>
   </p>
 
-  <h5 id="q1" class="bigpadding_top">
-    <?=__('compendium_faq_question_1')?>
+  <h5 id="contents" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#contents', __('compendium_faq_contents_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_1_1')?>
+    <?=__('compendium_faq_contents_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_1_2')?>
+    <?=__('compendium_faq_contents_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_1_3')?>
+    <?=__('compendium_faq_contents_3')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_1_4')?>
+    <?=__('compendium_faq_contents_4')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_1_5')?>
+    <?=__('compendium_faq_contents_5')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_1_6')?>
+    <?=__('compendium_faq_contents_6')?>
   </p>
 
-  <h5 id="q2" class="bigpadding_top">
-    <?=__('compendium_faq_question_2')?>
+  <h5 id="goals" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#goals', __('compendium_faq_goals_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_2_1')?>
+    <?=__('compendium_faq_goals_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_2_2')?>
+    <?=__('compendium_faq_goals_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_2_3')?>
+    <?=__('compendium_faq_goals_3')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_2_4')?>
+    <?=__('compendium_faq_goals_4')?>
   </p>
 
-  <h5 id="q3" class="bigpadding_top">
-    <?=__('compendium_faq_question_3')?>
+  <h5 id="bias" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#bias', __('compendium_faq_bias_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_3_1')?>
+    <?=__('compendium_faq_bias_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_3_2')?>
+    <?=__('compendium_faq_bias_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_3_3')?>
+    <?=__('compendium_faq_bias_3')?>
   </p>
 
-  <h5 id="q4" class="bigpadding_top">
-    <?=__('compendium_faq_question_4')?>
+  <h5 id="leaning" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#leaning', __('compendium_faq_leaning_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_4_1')?>
+    <?=__('compendium_faq_leaning_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_4_2')?>
+    <?=__('compendium_faq_leaning_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_4_3')?>
+    <?=__('compendium_faq_leaning_3')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_4_4')?>
+    <?=__('compendium_faq_leaning_4')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_4_5')?>
+    <?=__('compendium_faq_leaning_5')?>
   </p>
 
-  <h5 id="q5" class="bigpadding_top">
-    <?=__('compendium_faq_question_5')?>
+  <h5 id="longterm" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#longterm', __('compendium_faq_longterm_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_5_1')?>
+    <?=__('compendium_faq_longterm_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_5_2')?>
+    <?=__('compendium_faq_longterm_2')?>
   </p>
 
-  <h5 id="q6" class="bigpadding_top">
-    <?=__('compendium_faq_question_6')?>
+  <h5 id="who" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#who', __('compendium_faq_who_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_6_1')?>
+    <?=__('compendium_faq_who_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_6_2')?>
+    <?=__('compendium_faq_who_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_6_3')?>
+    <?=__('compendium_faq_who_3')?>
   </p>
 
-  <h5 id="q7" class="bigpadding_top">
-    <?=__('compendium_faq_question_7')?>
+  <h5 id="guidelines" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#guidelines', __('compendium_faq_guidelines_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_7_1')?>
+    <?=__('compendium_faq_guidelines_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_7_2')?>
+    <?=__('compendium_faq_guidelines_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_7_3')?>
+    <?=__('compendium_faq_guidelines_3')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_7_4')?>
+    <?=__('compendium_faq_guidelines_4')?>
   </p>
 
-  <h5 id="q8" class="bigpadding_top">
-    <?=__('compendium_faq_question_8')?>
+  <h5 id="sources" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#sources', __('compendium_faq_sources_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_8_1')?>
+    <?=__('compendium_faq_sources_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_8_2')?>
+    <?=__('compendium_faq_sources_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_8_3')?>
+    <?=__('compendium_faq_sources_3')?>
   </p>
 
-  <h5 id="q9" class="bigpadding_top">
-    <?=__('compendium_faq_question_9')?>
+  <h5 id="controversial" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#controversial', __('compendium_faq_controversial_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_9_1')?>
+    <?=__('compendium_faq_controversial_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_9_2')?>
+    <?=__('compendium_faq_controversial_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_9_3')?>
+    <?=__('compendium_faq_controversial_3')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_9_4')?>
+    <?=__('compendium_faq_controversial_4')?>
   </p>
 
-  <h5 id="q10" class="bigpadding_top">
-    <?=__('compendium_faq_question_10')?>
+  <h5 id="differences" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#differences', __('compendium_faq_differences_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_10_1')?>
+    <?=__('compendium_faq_differences_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_10_2')?>
+    <?=__('compendium_faq_differences_2')?>
   </p>
 
   <ul class="smallpadding_top">
     <li>
-      <?=__('compendium_faq_answer_10_3')?>
+      <?=__('compendium_faq_differences_3')?>
     </li>
     <li>
-      <?=__('compendium_faq_answer_10_4')?>
+      <?=__('compendium_faq_differences_4')?>
     </li>
     <li>
-      <?=__('compendium_faq_answer_10_5')?>
+      <?=__('compendium_faq_differences_5')?>
     </li>
     <li>
-      <?=__('compendium_faq_answer_10_6')?>
+      <?=__('compendium_faq_differences_6')?>
     </li>
     <li>
-      <?=__('compendium_faq_answer_10_7')?>
+      <?=__('compendium_faq_differences_7')?>
     </li>
   </ul>
 
-  <h5 id="q11" class="bigpadding_top">
-    <?=__('compendium_faq_question_11')?>
+  <h5 id="whynobleme" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#whynobleme', __('compendium_faq_whynobleme_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_11_1')?>
+    <?=__('compendium_faq_whynobleme_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_11_2')?>
+    <?=__('compendium_faq_whynobleme_2')?>
   </p>
 
-  <h5 id="q12" class="bigpadding_top">
-    <?=__('compendium_faq_question_12')?>
+  <h5 id="whatnobleme" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#whatnobleme', __('compendium_faq_whatnobleme_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_12_1')?>
+    <?=__('compendium_faq_whatnobleme_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_12_2')?>
+    <?=__('compendium_faq_whatnobleme_2')?>
   </p>
 
-  <h5 id="q13" class="bigpadding_top">
-    <?=__('compendium_faq_question_13')?>
+  <h5 id="contact" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#contact', __('compendium_faq_contact_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_13_1')?>
+    <?=__('compendium_faq_contact_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_13_2')?>
+    <?=__('compendium_faq_contact_2')?>
   </p>
 
-  <h5 id="q14" class="bigpadding_top">
-    <?=__('compendium_faq_question_14')?>
+  <h5 id="help" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#help', __('compendium_faq_help_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_14_1')?>
+    <?=__('compendium_faq_help_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_14_2')?>
+    <?=__('compendium_faq_help_2')?>
   </p>
 
-  <h5 id="q15" class="bigpadding_top">
-    <?=__('compendium_faq_question_15')?>
+  <h5 id="updates" class="hugepadding_top smallpadding_bot">
+    <?=__link('pages/compendium/mission_statement#updates', __('compendium_faq_updates_title'), 'noglow')?>
   </h5>
 
   <p>
-    <?=__('compendium_faq_answer_15_1')?>
+    <?=__('compendium_faq_updates_1')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_15_2')?>
+    <?=__('compendium_faq_updates_2')?>
   </p>
 
   <p>
-    <?=__('compendium_faq_answer_15_3')?>
+    <?=__('compendium_faq_updates_3')?>
   </p>
 
 </div>
