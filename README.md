@@ -26,7 +26,7 @@ Installing a pre-assembled LAMP/MAMP/WAMP stack (depending on your OS) will let 
 
 4. Clone the source code of NoBleme (checkout the `trunk` branch for the current production release) and place it anywhere in your local `www` folder.
 
-5. Rename `/inc/configuration.inc.php.DEFAULT` to `/inc/configuration.inc.php` and edit the file's contents to match your local setup.
+5. Rename `/conf/configuration.inc.php.DEFAULT` to `/conf/configuration.inc.php` and edit the file's contents to match your local setup.
 
 6. Run the file called `fixtures.php` in your browser, it is located at the root of the project and will initialize the database.
 

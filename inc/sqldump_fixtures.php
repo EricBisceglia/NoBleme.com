@@ -21,7 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Only allow this page to be ran in dev mode, it wouldn't be nice to accidentally wipe production data, would it?
-include_once './inc/configuration.inc.php';
+include_once './../conf/configuration.inc.php';
 if(!$GLOBALS['dev_mode'])
   exit(header("Location: ."));
 

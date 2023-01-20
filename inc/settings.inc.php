@@ -7,14 +7,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Project configuration
+// Main configuration
 
 // Require PHP8
-if (version_compare(phpversion(), '8.0.0', '<'))
+if(version_compare(phpversion(), '8.0.0', '<'))
   exit("NoBleme requires at least PHP8 to run properly.");
 
-// Include the local configuration file
-@include_once 'configuration.inc.php';
+// Include the local configuration files
+@include_once dirname(__FILE__).'/../conf/configuration.inc.php';
 
 // If no MySQL password is provided, then it's not even worth trying to do anything
 if(!isset($GLOBALS['mysql_pass']))
