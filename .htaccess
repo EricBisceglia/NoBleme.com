@@ -48,6 +48,11 @@ ErrorDocument 404 https://nobleme.com/404
 </Files>
 
 # Don't allow direct access to sqldump
-<Files "sqldump_schema.sql">
+<Files "schema.sql">
+  Deny from all
+</Files>
+
+# Don't allow direct access to queries archive
+<Files "queries.archive.php">
   Deny from all
 </Files>

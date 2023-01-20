@@ -296,7 +296,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h2>
 
   <h5 class="align_center padding_bot">
-    These functions work only in sqldump_fixtures.php!
+    These functions work only in /dev/fixtures.dev.php!
   </h5>
 
   <table>

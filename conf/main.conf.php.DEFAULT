@@ -7,7 +7,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following global variables are your local settings - set them accordingly, otherwise NoBleme will not work
-// Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:
+// Duplicate this file, then remove the .DEFAULT (rename it to "main.conf.php") and fill up these variables:
 
 $GLOBALS['website_url']     = 'https://example.com/'; // URL of the website root
 $GLOBALS['domain_name']     = 'example.com';          // Domain name on which the website is being used
@@ -27,28 +27,6 @@ $GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not a
 $GLOBALS['enable_scripts']  = 0;                        // Toggle to enable php CLI scripts
 $GLOBALS['scripts_command'] = 'php';                    // Name of your php CLI command
 $GLOBALS['scripts_path']    = '/var/www/html/scripts/'; // Path to the scripts folder from your server's root
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IRC bot configuration, you don't need to change these if you're not going to use the bot
-// PHP CLI scripts must be enabled above or the IRC bot will fail to boot without an error message
-
-$GLOBALS['enable_irc_bot']    = 0;                                                    // Toggle this to enable the bot
-$GLOBALS['irc_bot_file_name'] = 'ircbot.txt';                                         // Name of the bot's txt file
-$GLOBALS['irc_bot_server']    = 'irc.example.com';                                    // IRC server name
-$GLOBALS['irc_bot_port']      = 6667;                                                 // IRC server port
-$GLOBALS['irc_bot_channels']  = array('nobleme', 'english', 'dev', 'sysop', 'admin'); // Array of channels to join
-$GLOBALS['irc_bot_nickname']  = 'NoBleme';                                            // Nickname of the IRC bot
-$GLOBALS['irc_bot_password']  = 'password';                                           // Password of the IRC bot
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Discord configuration, you don't need to change these if you're not going to use Discord
-
-$GLOBALS['enable_discord']  = 0;  // Toggle this to enable discord notifications
-$GLOBALS['discord_main']    = ''; // Webhook of the main public discord notifications channel
-$GLOBALS['discord_mod']     = ''; // Webhook of the moderation team's notifications channel
-$GLOBALS['discord_admin']   = ''; // Webhook of the admin team's notifications channel
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -20,8 +20,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*               Word of warning: This page WILL fail its execution if not included from fixtures.php                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+// Include the main configuration file
+if(file_exists('./conf/main.conf.php'))
+  include_once './conf/main.conf.php';
+else
+  exit(header("Location: ."));
+
 // Only allow this page to be ran in dev mode, it wouldn't be nice to accidentally wipe production data, would it?
-include_once './inc/configuration.inc.php';
 if(!$GLOBALS['dev_mode'])
   exit(header("Location: ."));
 
