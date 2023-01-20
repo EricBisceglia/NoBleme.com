@@ -77,7 +77,11 @@ Hopefully, the source code will be commented well enough that you should have no
 
 * `api` contains the routes of the website's REST API (they use the logic from `actions`).
 
+* `conf` contains the configuration files, which must be set up properly before running the project.
+
 * `css` contains all the CSS files used on the website (`reset.css` and `nobleme.css` are core files).
+
+* `dev` contains dev tools and utilities, for local usage only.
 
 * `img` contains all the images required to make the website look right.
 
@@ -88,6 +92,8 @@ Hopefully, the source code will be commented well enough that you should have no
 * `lang` contains all translations and templates (`common.lang.php` contains the core logic for them).
 
 * `pages` contains all of the views, the HTML layouts which the users are browsing (they use the logic from `actions`).
+
+* `scripts` contains scripts which get executed by the PHP command line instead of the web server.
 
 With this understanding of the folder structure, you should be able to follow how the components of each page are split. To summarize: the core is in `inc`, actions happen in `actions`, views are in `pages` + `css` + `js`, and translations are in `lang`.
 
