@@ -53,7 +53,10 @@ if(isset($_POST['fixtures_reset']))
   query(' SET NAMES utf8mb4 ');
 
   // Import the database schema
-  $database_schema = explode(';', file_get_contents('./inc/sqldump_schema.sql'));
+  if(file_exists('./dev/schema.sql'))
+    $database_schema = explode(';', file_get_contents('./dev/schema.sql'));
+  else
+    exit("SQL schema des not exist.");
 
   // Output progress
   echo "Database schema is being parsed<br>";
@@ -74,7 +77,7 @@ if(isset($_POST['fixtures_reset']))
 
 
   // Import and run fixtures aswell to fill up the database
-  include_once './inc/sqldump_fixtures.php';
+  include_once './dev/fixtures.dev.php';
 
   // Finished!
   exit("</tbody></table><br><hr><br>Job's done! ".$GLOBALS['query']." queries ran in ".(round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3)."s<br><br><a href=\"index\">Click here to return to the website's index.</a><br><br>"));

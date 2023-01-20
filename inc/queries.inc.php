@@ -626,7 +626,7 @@ function sql_sanitize_data( mixed $data ) : mixed
 /*                               Allows replaying of queries that haven't been run yet                               */
 /*              in order to ensure a version upgrade between any two versions of NoBleme goes smoothly               */
 /*                                                                                                                   */
-/*                                 Older queries are archived in queries.archive.php                                 */
+/*                               Older queries are archived in /dev/queries.archive.php                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Those queries are treated like data migrations and will only be ran once, hence the storing of the last query id
