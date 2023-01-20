@@ -10,8 +10,13 @@
 /*    It will also include fixtures (demo data) so that you can actually interact with the website's various pages   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+// Include the main configuration file
+if(file_exists('./conf/main.conf.php'))
+  include_once './conf/main.conf.php';
+else
+  exit(header("Location: ."));
+
 // Only allow this page to be ran in dev mode, it wouldn't be nice to accidentally wipe production data, would it?
-include_once './conf/configuration.inc.php';
 if(!$GLOBALS['dev_mode'])
   exit(header("Location: ."));
 
@@ -89,7 +94,7 @@ if(isset($_POST['fixtures_reset']))
       <br>
       There is no progress bar, but don't get fooled, if it's running then it's actually doing some work.<br>
       <br>
-      If it does not work, you probably have incorrect settings in <i>/conf/configuration.inc.php</i>
+      If it does not work, you probably have incorrect settings in <i>/conf/main.conf.php</i>
     </form>
   </body>
 </html>

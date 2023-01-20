@@ -13,25 +13,31 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 if(version_compare(phpversion(), '8.0.0', '<'))
   exit("NoBleme requires at least PHP8 to run properly.");
 
-// Include the local configuration files
-@include_once dirname(__FILE__).'/../conf/configuration.inc.php';
+// Include the local configuration file
+if(file_exists(dirname(__FILE__).'/../conf/main.conf.php'))
+  include_once dirname(__FILE__).'/../conf/main.conf.php';
+else
+  exit("NoBleme is incorrectly installed: The local configuration file is missing.");
+
+// Include the integrations configuration file
+if(file_exists(dirname(__FILE__).'/../conf/integrations.conf.php'))
+  include_once dirname(__FILE__).'/../conf/integrations.conf.php';
 
 // If no MySQL password is provided, then it's not even worth trying to do anything
 if(!isset($GLOBALS['mysql_pass']))
-  exit("NoBleme is incorrectly installed: The local configuration file is missing.");
+  exit("NoBleme is incorrectly installed: The local configuration file is incorrect.");
 
-// Give other global variables a default value if they're unset
+// Give global variables a default value if they're unset
 $GLOBALS['website_url']     = isset($GLOBALS['website_url'])      ? $GLOBALS['website_url']    : 'http://nobleme.com/';
 $GLOBALS['domain_name']     = isset($GLOBALS['domain_name'])      ? $GLOBALS['domain_name']     : 'nobleme.com';
 $GLOBALS['mysql_host']      = isset($GLOBALS['mysql_host'])       ? $GLOBALS['mysql_host']      : 'localhost';
 $GLOBALS['mysql_user']      = isset($GLOBALS['mysql_user'])       ? $GLOBALS['mysql_user']      : 'nobleme';
 $GLOBALS['salt_key']        = isset($GLOBALS['salt_key'])         ? $GLOBALS['salt_key']        : '$6$somestring$';
-$GLOBALS['irc_bot_pass']    = isset($GLOBALS['irc_bot_pass'])     ? $GLOBALS['irc_bot_pass']    : 'password';
 $GLOBALS['extra_folders']   = isset($GLOBALS['extra_folders'])    ? $GLOBALS['extra_folders']   : 0;
+$GLOBALS['enable_scripts']  = isset($GLOBALS['enable_scripts'])   ? $GLOBALS['enable_scripts']  : 0;
+$GLOBALS['enable_irc_bot']  = isset($GLOBALS['enable_irc_bot'])   ? $GLOBALS['enable_irc_bot']  : 0;
+$GLOBALS['enable_discord']  = isset($GLOBALS['enable_discord'])   ? $GLOBALS['enable_discord']  : 0;
 $GLOBALS['dev_mode']        = isset($GLOBALS['dev_mode'])         ? $GLOBALS['dev_mode']        : 0;
-$GLOBALS['env_debug_mode']  = isset($GLOBALS['env_debug_mode'])   ? $GLOBALS['env_debug_mode']  : 0;
-$GLOBALS['sql_debug_mode']  = isset($GLOBALS['sql_debug_mode'])   ? $GLOBALS['sql_debug_mode']  : 0;
-$GLOBALS['full_debug_mode'] = isset($GLOBALS['full_debug_mode'])  ? $GLOBALS['full_debug_mode'] : 0;
 
 // Enforce a global timezone on the server side
 date_default_timezone_set('Europe/Paris');

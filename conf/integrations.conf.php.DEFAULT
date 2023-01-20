@@ -1,0 +1,32 @@
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// The following global variables configure your third party integrations
+// Duplicate this file, then remove the .DEFAULT (rename it to "integrations.conf.php"), and fill up the variables
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IRC bot configuration, you don't need to change these if you're not going to use the bot
+// PHP CLI scripts must be enabled in main.conf.php or the IRC bot will fail to boot without an error message
+
+$GLOBALS['enable_irc_bot']    = 0;                            // Toggle this to enable the bot
+$GLOBALS['irc_bot_file_name'] = 'ircbot.txt';                 // Name of the bot's txt file
+$GLOBALS['irc_bot_server']    = 'irc.example.com';            // IRC server name
+$GLOBALS['irc_bot_port']      = 6667;                         // IRC server port
+$GLOBALS['irc_bot_channels']  = array('nobleme', 'english');  // Array of channels to join
+$GLOBALS['irc_bot_nickname']  = 'NoBleme';                    // Nickname of the IRC bot
+$GLOBALS['irc_bot_password']  = 'password';                   // Password of the IRC bot
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Discord configuration, you don't need to change these if you're not going to use Discord
+
+$GLOBALS['enable_discord']  = 0;  // Toggle this to enable discord notifications
+$GLOBALS['discord_main']    = ''; // Webhook of the main public discord notifications channel
+$GLOBALS['discord_mod']     = ''; // Webhook of the moderation team's notifications channel
+$GLOBALS['discord_admin']   = ''; // Webhook of the admin team's notifications channel

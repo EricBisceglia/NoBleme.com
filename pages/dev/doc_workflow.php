@@ -535,7 +535,7 @@ sudo systemctl restart httpd.service</pre>
     Configure NoBleme and apply the correct file and folder permissions.
   </p>
 
-  <pre>sudo nano /var/www/html/conf/configuration.inc.php
+  <pre>sudo nano /var/www/html/conf/main.conf.php
 
 sudo chmod -R 777 /var/www/html/img/compendium/
 sudo chmod -R 777 /var/www/html/ircbot.txt

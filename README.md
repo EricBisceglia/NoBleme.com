@@ -26,13 +26,13 @@ Installing a pre-assembled LAMP/MAMP/WAMP stack (depending on your OS) will let 
 
 4. Clone the source code of NoBleme (checkout the `trunk` branch for the current production release) and place it anywhere in your local `www` folder.
 
-5. Rename `/conf/configuration.inc.php.DEFAULT` to `/conf/configuration.inc.php` and edit the file's contents to match your local setup.
+5. Rename `/conf/main.conf.php.DEFAULT` to `/conf/main.conf.php` and edit the file's contents to match your local setup.
 
 6. Run the file called `fixtures.php` in your browser, it is located at the root of the project and will initialize the database.
 
-This is it, you now have a working local copy of NoBleme. It's that simple! Everything's here, including randomly generated data for most features of the website. Try logging in as either one of the demo users, they're useful when testing features that rely on user permissions, they require no passwords (as long as `dev_mode` is enabled in `configuration.inc.php`) and their nicknames are: `Banned`, `User`, `Prude`, `Mod`, and `Admin`.
+This is it, you now have a working local copy of NoBleme. It's that simple! Everything's here, including randomly generated data for most features of the website. Try logging in as either one of the demo users, they're useful when testing features that rely on user permissions, they require no passwords (as long as `dev_mode` is enabled in `main.conf.php`) and their nicknames are: `Banned`, `User`, `Prude`, `Mod`, and `Admin`.
 
-In case the `configuration.inc.php` part is overwhelming, it might help you if I shared what my local configuration looks like in my own development environment:
+In case the `main.conf.php` part is overwhelming, it might help you if I shared what my local configuration looks like in my own development environment:
 
 ```
 $GLOBALS['website_url']       = 'http://localhost/nobleme/';
@@ -41,25 +41,14 @@ $GLOBALS['mysql_host']        = 'localhost';
 $GLOBALS['mysql_user']        = 'root';
 $GLOBALS['mysql_pass']        = '';
 $GLOBALS['salt_key']          = '$6$somestring$';
-$GLOBALS['irc_bot_pass']      = '';
 $GLOBALS['extra_folders']     = 1;
 $GLOBALS['enable_irc_bot']    = 0;
-$GLOBALS['irc_bot_file_name'] = 'ircbot.txt';
-$GLOBALS['irc_bot_server']    = 'irc.example.com';
-$GLOBALS['irc_bot_port']      = 6667;
-$GLOBALS['irc_bot_channels']  = array('nobleme', 'english', 'dev', 'sysop', 'admin');
-$GLOBALS['irc_bot_nickname']  = 'NoBleme';
-$GLOBALS['irc_bot_password']  = 'password';
-$GLOBALS['enable_discord']    = 1;
-$GLOBALS['discord_main']      = '';
-$GLOBALS['discord_mod']       = '';
-$GLOBALS['discord_admin']     = '';
+$GLOBALS['enable_discord']    = 0;
 $GLOBALS['dev_mode']          = 0;
 $GLOBALS['dev_http_only']     = 1;
 $GLOBALS['env_debug_mode']    = 0;
 $GLOBALS['sql_debug_mode']    = 0;
 $GLOBALS['full_debug_mode']   = 0;
-$GLOBALS['dev_discord']       = 'https://discord.com/api/webhooks/my_testing_webhook_url_goes_here';
 ```
 
  
