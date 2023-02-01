@@ -73,11 +73,11 @@ $tasks_preview_body_fr  = "";
 
 // Prepare dropdown menus
 for($i = 0; $i <= 5; $i++)
-  $tasks_edit_priority_selected[$i]  = ($task_details['priority'] === $i) ? ' selected' : '';
+  $tasks_edit_priority_selected[$i]  = ((int)$task_details['priority'] === $i) ? ' selected' : '';
 for($i = 0; $i < $tasks_categories['rows']; $i++)
-  $tasks_edit_category_selected[$i]  = ($task_details['category_id'] === $tasks_categories[$i]['id']) ? ' selected' : '';
+  $tasks_edit_category_selected[$i]  = ((int)$task_details['category_id'] === (int)$tasks_categories[$i]['id']) ? ' selected' : '';
 for($i = 0; $i < $tasks_milestones['rows']; $i++)
-  $tasks_edit_milestone_selected[$i] = ($task_details['milestone_id'] === $tasks_milestones[$i]['id']) ? ' selected' : '';
+  $tasks_edit_milestone_selected[$i] = ((int)$task_details['milestone_id'] === (int)$tasks_milestones[$i]['id']) ? ' selected' : '';
 
 // Prepare checkboxes
 $tasks_edit_private = (!$task_details['public'])  ? ' checked' : '';
