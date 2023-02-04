@@ -117,37 +117,54 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 // Figure out if the user is connected or not according to session data
 $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
 
-// Does the user have special permissions? (required by the header)
-if(!$is_logged_in)
+// Gather data regarding the user
+if($is_logged_in)
 {
-  // By default, assume they don't
-  $is_admin     = 0;
-  $is_moderator = 0;
-}
-else
-{
-  // Sanitize the user id, just in case
-  $id_user = sanitize($is_logged_in, 'int', 0);
+  // Sanitize the user ID
+  $user_id = sanitize($is_logged_in, 'int', 0);
 
-  // Go look for their access rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_deleted        AS 'm_deleted'  ,
-                                                users.is_administrator  AS 'm_admin'    ,
-                                                users.is_moderator      AS 'm_mod'
+  // Fetch some data
+  $duser = mysqli_fetch_array(query("   SELECT  users.is_deleted        AS 'u_deleted'  ,
+                                                users.is_administrator  AS 'u_admin'    ,
+                                                users.is_moderator      AS 'u_mod'      ,
+                                                users.current_language  AS 'u_lang'     ,
+                                                users.current_theme     AS 'u_theme'
                                         FROM    users
-                                        WHERE   users.id = '$id_user' "));
+                                        WHERE   users.id = '$user_id' "));
 
-  // Set them as variables, which the header will use
-  $is_admin     = $drights['m_admin'];
-  $is_moderator = ($is_admin || $drights['m_mod']);
-
-  // If the user's account doesn't exist or is deleted, log them out and set all permissions to 0
-  if($drights['m_deleted'] || !isset($drights['m_admin']))
+  // If the user's account doesn't exist or is deleted, log them out and set their user id to 0
+  if(!isset($duser['u_deleted']) || $duser['u_deleted'])
   {
     user_log_out();
-    $is_admin     = 0;
-    $is_moderator = 0;
+    $user_id = 0;
   }
+
+  // Otherwise, set some useful values as variables
+  $is_admin     = $duser['u_admin'];
+  $is_moderator = ($is_admin || $duser['u_mod']);
+  $is_guest     = 0;
+  $language     = $duser['u_lang'];
+  $theme        = $duser['u_theme'];
 }
+
+// If the user isn't logged in, set some default values
+if(!$is_logged_in || !$user_id)
+{
+  $user_id      = 0;
+  $is_admin     = 0;
+  $is_moderator = 0;
+  $is_guest     = 1;
+  $language     = NULL;
+  $theme        = NULL;
+}
+
+// Make these variables global
+$GLOBALS['user_id']                 = $user_id;
+$GLOBALS['rights']['is_admin']      = $is_admin;
+$GLOBALS['rights']['is_moderator']  = $is_moderator;
+$GLOBALS['rights']['is_guest']      = $is_guest;
+$GLOBALS['settings']['lang']        = $language;
+$GLOBALS['settings']['theme']       = $theme;
 
 
 
@@ -488,6 +505,9 @@ function user_log_out() : void
   $url_self   = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
   $url_logout = urldecode(http_build_query($_GET));
   $url_logout = ($url_logout) ? $url_self.'?'.$url_logout : $url_self;
+
+  // Reset the user id in the session
+  $_SESSION['user_id'] = 0;
 
   // Reload the page
   exit(header("location: ".$url_logout));
