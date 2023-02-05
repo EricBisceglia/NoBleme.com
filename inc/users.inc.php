@@ -381,7 +381,7 @@ if(substr($_SERVER["PHP_SELF"], -14) !== "/banned_ip.php" && $is_ip_banned === 2
 if(substr($_SERVER["PHP_SELF"], -11) !== "/banned.php" && user_is_logged_in())
 {
   // Check whether the user is banned - if yes, redirect them to the banned page
-  if(user_is_banned($_SESSION['user_id']))
+  if(user_is_banned())
     exit(header("Location: ".$path."banned"));
 }
 
@@ -817,7 +817,7 @@ function user_is_banned( ?int $user_id = NULL ) : bool
                                         WHERE   users.id = '$user_id' "));
 
   // Return 0 if the user does not exist
-  if(!isset($drights['u_ban_end']))
+  if(!isset($dbanned['u_ban_end']))
     return 0;
 
   // If the user isn't banned, return 0
