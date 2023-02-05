@@ -373,13 +373,13 @@ function admin_account_change_password( string  $username ,
  * Changes an account's access rights.
  *
  * @param   string        $username   Username of the account that will get their access rights changed.
- * @param   string        $level      The new access rights to give the account.
+ * @param   int           $level      The new access rights to give the account.
  *
  * @return  string|int                Returns a string containing an error, or the user's id if all went well.
  */
 
 function admin_account_change_rights( string  $username ,
-                                      string  $level    ) : mixed
+                                      int     $level    ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

@@ -127,8 +127,7 @@ if($is_logged_in)
   $duser = mysqli_fetch_array(query("   SELECT  users.is_deleted        AS 'u_deleted'  ,
                                                 users.is_administrator  AS 'u_admin'    ,
                                                 users.is_moderator      AS 'u_mod'      ,
-                                                users.current_language  AS 'u_lang'     ,
-                                                users.current_theme     AS 'u_theme'
+                                                users.is_banned_until   AS 'u_ban_end'
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
 
@@ -143,8 +142,7 @@ if($is_logged_in)
   $is_admin     = $duser['u_admin'];
   $is_moderator = ($is_admin || $duser['u_mod']);
   $is_guest     = 0;
-  $language     = $duser['u_lang'];
-  $theme        = $duser['u_theme'];
+  $is_banned    = $duser['u_ban_end'];
 }
 
 // If the user isn't logged in, set some default values
@@ -154,17 +152,14 @@ if(!$is_logged_in || !$user_id)
   $is_admin     = 0;
   $is_moderator = 0;
   $is_guest     = 1;
-  $language     = NULL;
-  $theme        = NULL;
+  $is_banned    = 0;
 }
 
-// Make these variables global
-$GLOBALS['user_id']                 = $user_id;
-$GLOBALS['rights']['is_admin']      = $is_admin;
-$GLOBALS['rights']['is_moderator']  = $is_moderator;
-$GLOBALS['rights']['is_guest']      = $is_guest;
-$GLOBALS['settings']['lang']        = $language;
-$GLOBALS['settings']['theme']       = $theme;
+// Store these values in the session
+$_SESSION['is_admin']     = $is_admin;
+$_SESSION['is_moderator'] = $is_moderator;
+$_SESSION['is_guest']     = $is_guest;
+$_SESSION['is_banned']    = $is_banned;
 
 
 
@@ -696,6 +691,9 @@ function user_get_mode() : string
 
 function user_is_administrator( ?int $user_id = NULL ) : bool
 {
+  // Check whether the current user is being queried
+  $current_user = (is_null($user_id));
+
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
     $user_id = $_SESSION['user_id'];
@@ -704,6 +702,10 @@ function user_is_administrator( ?int $user_id = NULL ) : bool
   if(!$user_id)
     return 0;
 
+  // If we are looking for the current user, use the session info if it exists
+  if($current_user && isset($_SESSION['is_admin']))
+    return $_SESSION['is_admin'];
+
   // Sanitize user id
   $user_id = sanitize($user_id, 'int', 0);
 
@@ -711,6 +713,10 @@ function user_is_administrator( ?int $user_id = NULL ) : bool
   $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator AS 'u_admin'
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
+
+  // Return 0 if the user does not exist
+  if(!isset($drights['u_admin']))
+    return 0;
 
   // Return 1 if the user is an administrator, 0 if they don't
   return $drights['u_admin'];
@@ -731,6 +737,9 @@ function user_is_administrator( ?int $user_id = NULL ) : bool
 
 function user_is_moderator( ?int $user_id = NULL ) : bool
 {
+  // Check whether the current user is being queried
+  $current_user = (is_null($user_id));
+
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
     $user_id = $_SESSION['user_id'];
@@ -738,6 +747,10 @@ function user_is_moderator( ?int $user_id = NULL ) : bool
   // If no user is specified, this means they are a guest, return 0
   if(!$user_id)
     return 0;
+
+  // If we are looking for the current user, use the session info if it exists
+  if($current_user && isset($_SESSION['is_moderator']))
+    return $_SESSION['is_moderator'];
 
   // Sanitize user id
   $user_id = sanitize($user_id, 'int', 0);
@@ -747,6 +760,10 @@ function user_is_moderator( ?int $user_id = NULL ) : bool
                                                 users.is_administrator  AS 'u_admin'
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
+
+  // Return 0 if the user does not exist
+  if(!isset($drights['u_mod']))
+    return 0;
 
   // If user is an admin or a mod, return 1
   if($drights['u_mod'] || $drights['u_admin'])
@@ -771,6 +788,9 @@ function user_is_moderator( ?int $user_id = NULL ) : bool
 
 function user_is_banned( ?int $user_id = NULL ) : bool
 {
+  // Check whether the current user is being queried
+  $current_user = (is_null($user_id));
+
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
     $user_id = $_SESSION['user_id'];
@@ -779,6 +799,10 @@ function user_is_banned( ?int $user_id = NULL ) : bool
   if(!$user_id)
     return 0;
 
+  // If we are looking for the current user, use the session info if it exists
+  if($current_user && isset($_SESSION['is_banned']))
+    return $_SESSION['is_banned'];
+
   // Sanitize user id
   $user_id = sanitize($user_id, 'int', 0);
 
@@ -786,6 +810,10 @@ function user_is_banned( ?int $user_id = NULL ) : bool
   $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'u_ban_end'
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
+
+  // Return 0 if the user does not exist
+  if(!isset($drights['u_ban_end']))
+    return 0;
 
   // If the user isn't banned, return 0
   if(!$dbanned['u_ban_end'])
