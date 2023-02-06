@@ -41,6 +41,9 @@ $user_list_search = array(  'username'    => form_fetch_element('users_list_sear
 $user_list = user_list( form_fetch_element('users_list_sort', 'registered') ,
                         $user_list_search                                   );
 
+// Fetch the oldest account creation date
+$user_oldest_account = user_get_oldest();
+
 
 
 
@@ -111,7 +114,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <th>
             <select class="table_search" name="users_list_search_registered" id="users_list_search_registered" onchange="users_list_search();">
               <option value="0">&nbsp;</option>
-              <?php for($i = date('Y'); $i >= user_get_oldest(); $i--) { ?>
+              <?php for($i = date('Y'); $i >= $user_oldest_account; $i--) { ?>
               <option value="<?=$i?>"><?=$i?></option>
               <?php } ?>
             </select>
