@@ -1624,9 +1624,6 @@ function compendium_images_get( ?int    $image_id   = 0 ,
   if(!database_row_exists('compendium_images', $image_id))
     return NULL;
 
-  // Recalculate the image's links
-  compendium_images_recalculate_links($image_id);
-
   // Fetch the data
   $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id                  AS 'ci_id'          ,
                                                 compendium_images.is_deleted          AS 'ci_deleted'     ,
