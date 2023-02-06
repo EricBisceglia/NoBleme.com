@@ -80,6 +80,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  compendium_format_image_name              Formats a compendium image name.                                       */
 /*  compendium_nbcodes_apply                  Applies NBCodes to a string.                                           */
 /*                                                                                                                   */
+/*  compendium_find_images_in_entry           Puts the name of all images within a compendium entry in an array.     */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -222,6 +224,8 @@ function compendium_pages_get(  int     $page_id  = 0     ,
                                 page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']    = sanitize_output($dpage['p_body_en']);
   $data['body_fr']    = sanitize_output($dpage['p_body_fr']);
+  $data['bodyenraw']  = $dpage['p_body_en'];
+  $data['bodyfrraw']  = $dpage['p_body_fr'];
   $data['admin_note'] = sanitize_output($dpage['p_admin_notes']);
   $data['admin_urls'] = sanitize_output($dpage['p_admin_urls']);
   $data['type_id']    = sanitize_output($dpage['pt_id']);
@@ -1033,6 +1037,8 @@ function compendium_pages_edit( int   $page_id  ,
   $page_redirect_ext  = sanitize_array_element($contents, 'redirect_ext', 'int', min: 0, max: 1, default: 0);
   $page_summary_en    = sanitize_array_element($contents, 'summary_en', 'string');
   $page_summary_fr    = sanitize_array_element($contents, 'summary_fr', 'string');
+  $page_body_en_raw   = (isset($contents['body_en'])) ? $contents['body_en'] : '';
+  $page_body_fr_raw   = (isset($contents['body_fr'])) ? $contents['body_fr'] : '';
   $page_body_en       = sanitize_array_element($contents, 'body_en', 'string');
   $page_body_fr       = sanitize_array_element($contents, 'body_fr', 'string');
   $page_appear_month  = sanitize_array_element($contents, 'appear_month', 'int', min: 0, max: 12, default: 0);
@@ -1221,6 +1227,20 @@ function compendium_pages_edit( int   $page_id  ,
     }
   }
 
+  // Find all images in the page
+  $image_list_en      = compendium_find_images_in_entry($page_body_en_raw);
+  $image_list_fr      = compendium_find_images_in_entry($page_body_fr_raw);
+  $old_image_list_en  = compendium_find_images_in_entry($page_data['bodyenraw']);
+  $old_image_list_fr  = compendium_find_images_in_entry($page_data['bodyfrraw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr, $old_image_list_en, $old_image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used or previously used on the page
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
+
   // All went well, return null
   return NULL;
 }
@@ -1333,6 +1353,18 @@ function compendium_pages_publish(  int   $page_id                  ,
     if(isset($message))
       discord_send_message($message, 'main');
   }
+
+  // Find all images in the page
+  $image_list_en  = compendium_find_images_in_entry($page_data['bodyenraw']);
+  $image_list_fr  = compendium_find_images_in_entry($page_data['bodyfrraw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used on the page
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 }
 
 
@@ -1388,6 +1420,18 @@ function compendium_pages_delete( int   $page_id                ,
     query(" DELETE FROM compendium_pages_history
             WHERE       compendium_pages_history.fk_compendium_pages = '$page_id' ");
   }
+
+  // Find all images in the page
+  $image_list_en  = compendium_find_images_in_entry($page_data['bodyenraw']);
+  $image_list_fr  = compendium_find_images_in_entry($page_data['bodyfrraw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used on the page
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 }
 
 
@@ -1420,6 +1464,21 @@ function compendium_pages_restore( int $page_id ) : void
                         activity_id:      $page_id  ,
                         global_type_wipe: true      ,
                         restore:          true      );
+
+  // Fetch the page's data
+  $page_data = compendium_pages_get($page_id);
+
+  // Find all images in the page
+  $image_list_en  = compendium_find_images_in_entry($page_data['bodyenraw']);
+  $image_list_fr  = compendium_find_images_in_entry($page_data['bodyfrraw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used on the page
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 }
 
 
@@ -2078,31 +2137,58 @@ function compendium_images_delete(  int     $image_id ,
 /**
  * Recalculates the compendium pages on which an image is being used.
  *
- * @param   int   $image_id   The image's id.
+ * @param   int|string  $image  The image's id or file name.
  *
  * @return  void
  */
 
-function compendium_images_recalculate_links( int $image_id ) : void
+function compendium_images_recalculate_links( int|string $image ) : void
 {
-  // Sanitize the image's id
-  $image_id = sanitize($image_id, 'int', 0);
+  // If a file name has been provided, find its id
+  if(!is_int($image))
+  {
+    // Sanitize the file name
+    $image_name = sanitize($image, 'string');
 
-  // Stop here if the image doesn't exist
-  if(!database_row_exists('compendium_images', $image_id))
-    return;
+    // Stop here if the image doesn't have a name
+    if(!$image_name)
+      return;
 
-  // Fetch the image's name
-  $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.file_name AS 'ci_name'
-                                        FROM    compendium_images
-                                        WHERE   compendium_images.id = '$image_id' "));
+    // Stop here if the image doesn't exist
+    if(!database_entry_exists('compendium_images', 'file_name', $image_name))
+      return;
 
-  // Sanitize the image's name
-  $image_name = sanitize($dimage['ci_name'], 'string');
+    // Fetch the image's id
+    $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id  AS 'ci_id'
+                                          FROM    compendium_images
+                                          WHERE   compendium_images.file_name LIKE '$image_name' "));
 
-  // Stop here if the image doesn't have a name
-  if(!$image_name)
-    return;
+    // Sanitize the image's id
+    $image_id = sanitize($dimage['ci_id'], 'int', 0);
+  }
+
+  // If an id has been provided, find its file name
+  else
+  {
+    // Sanitize the image's id
+    $image_id = sanitize($image, 'int', 0);
+
+    // Stop here if the image doesn't exist
+    if(!database_row_exists('compendium_images', $image_id))
+      return;
+
+    // Fetch the image's name
+    $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.file_name AS 'ci_name'
+                                          FROM    compendium_images
+                                          WHERE   compendium_images.id = '$image_id' "));
+
+    // Sanitize the image's name
+    $image_name = sanitize($dimage['ci_name'], 'string');
+
+    // Stop here if the image doesn't have a name
+    if(!$image_name)
+      return;
+  }
 
   // Prepare strings for the image usages
   $usage_list_en  = '';
@@ -3209,6 +3295,8 @@ function compendium_types_get( int $type_id ) : mixed
                                   page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dtype['ct_body_en']);
   $data['body_fr']      = sanitize_output($dtype['ct_body_fr']);
+  $data['body_en_raw']  = $dtype['ct_body_en'];
+  $data['body_fr_raw']  = $dtype['ct_body_fr'];
 
   // Return the data
   return $data;
@@ -3280,13 +3368,15 @@ function compendium_types_add( array $contents ) : mixed
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $order    = sanitize($contents['order'], 'int', 0);
-  $name_en  = sanitize($contents['name_en'], 'string');
-  $name_fr  = sanitize($contents['name_fr'], 'string');
-  $full_en  = sanitize($contents['full_en'], 'string');
-  $full_fr  = sanitize($contents['full_fr'], 'string');
-  $body_en  = sanitize($contents['body_en'], 'string');
-  $body_fr  = sanitize($contents['body_fr'], 'string');
+  $order        = sanitize($contents['order'], 'int', 0);
+  $name_en      = sanitize($contents['name_en'], 'string');
+  $name_fr      = sanitize($contents['name_fr'], 'string');
+  $full_en      = sanitize($contents['full_en'], 'string');
+  $full_fr      = sanitize($contents['full_fr'], 'string');
+  $body_en      = sanitize($contents['body_en'], 'string');
+  $body_fr      = sanitize($contents['body_fr'], 'string');
+  $body_en_raw  = $contents['body_en'];
+  $body_fr_raw  = $contents['body_fr'];
 
   // Error: No title
   if(!$name_en || !$name_fr || !$full_en || !$full_fr)
@@ -3304,6 +3394,18 @@ function compendium_types_add( array $contents ) : mixed
 
   // Fetch the newly created compendium page type's id
   $type_id = query_id();
+
+  // Find all images in the page type's body
+  $image_list_en  = compendium_find_images_in_entry($body_en_raw);
+  $image_list_fr  = compendium_find_images_in_entry($body_fr_raw);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // Return the compendium page type's id
   return $type_id;
@@ -3326,19 +3428,22 @@ function compendium_types_edit( int   $type_id  ,
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $type_id  = sanitize($type_id, 'int', 0);
-  $order    = sanitize($contents['order'], 'int', 0);
-  $name_en  = sanitize($contents['name_en'], 'string');
-  $name_fr  = sanitize($contents['name_fr'], 'string');
-  $full_en  = sanitize($contents['full_en'], 'string');
-  $full_fr  = sanitize($contents['full_fr'], 'string');
-  $body_en  = sanitize($contents['body_en'], 'string');
-  $body_fr  = sanitize($contents['body_fr'], 'string');
+  $type_id      = sanitize($type_id, 'int', 0);
+  $order        = sanitize($contents['order'], 'int', 0);
+  $name_en      = sanitize($contents['name_en'], 'string');
+  $name_fr      = sanitize($contents['name_fr'], 'string');
+  $full_en      = sanitize($contents['full_en'], 'string');
+  $full_fr      = sanitize($contents['full_fr'], 'string');
+  $body_en      = sanitize($contents['body_en'], 'string');
+  $body_fr      = sanitize($contents['body_fr'], 'string');
+  $body_en_raw  = $contents['body_en'];
+  $body_fr_raw  = $contents['body_fr'];
 
   // Error: Page type does not exist
   if(!$type_id || !database_row_exists('compendium_types', $type_id))
@@ -3347,6 +3452,9 @@ function compendium_types_edit( int   $type_id  ,
   // Error: No title
   if(!$name_en || !$name_fr || !$full_en || !$full_fr)
     return __('compendium_type_add_no_name');
+
+  // Fetch the old page type's data
+  $type_old = compendium_types_get($type_id);
 
   // Edit the compendium page type
   query(" UPDATE  compendium_types
@@ -3358,6 +3466,20 @@ function compendium_types_edit( int   $type_id  ,
                   compendium_types.description_en   = '$body_en'  ,
                   compendium_types.description_fr   = '$body_fr'
           WHERE   compendium_types.id               = '$type_id' ");
+
+  // Find all images in the page type's body
+  $image_list_en      = compendium_find_images_in_entry($body_en_raw);
+  $image_list_fr      = compendium_find_images_in_entry($body_fr_raw);
+  $image_list_en_old  = compendium_find_images_in_entry($type_old['body_en_raw']);
+  $image_list_fr_old  = compendium_find_images_in_entry($type_old['body_fr_raw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr, $image_list_en_old, $image_list_fr_old);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used or previously used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // All went well
   return NULL;
@@ -3378,6 +3500,7 @@ function compendium_types_delete( int $type_id ) : mixed
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
@@ -3398,9 +3521,24 @@ function compendium_types_delete( int $type_id ) : mixed
   if($dtype['count'])
     return __('compendium_type_delete_impossible');
 
+  // Fetch the page type's data before deleting it
+  $type_deleted = compendium_types_get($type_id);
+
   // Delete the page type
   query(" DELETE FROM compendium_types
           WHERE       compendium_types.id = '$type_id' ");
+
+  // Find all images in the page type's body
+  $image_list_en  = compendium_find_images_in_entry($type_deleted['body_en_raw']);
+  $image_list_fr  = compendium_find_images_in_entry($type_deleted['body_fr_raw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // All went well
   return NULL;
@@ -3455,6 +3593,8 @@ function compendium_categories_get( int $category_id ) : mixed
                                   page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dcategory['cc_body_en']);
   $data['body_fr']      = sanitize_output($dcategory['cc_body_fr']);
+  $data['body_en_raw']  = $dcategory['cc_body_en'];
+  $data['body_fr_raw']  = $dcategory['cc_body_fr'];
 
   // Return the data
   return $data;
@@ -3527,11 +3667,13 @@ function compendium_categories_add( array $contents ) : mixed
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $order    = sanitize($contents['order'], 'int', 0);
-  $name_en  = sanitize($contents['name_en'], 'string');
-  $name_fr  = sanitize($contents['name_fr'], 'string');
-  $body_en  = sanitize($contents['body_en'], 'string');
-  $body_fr  = sanitize($contents['body_fr'], 'string');
+  $order        = sanitize($contents['order'], 'int', 0);
+  $name_en      = sanitize($contents['name_en'], 'string');
+  $name_fr      = sanitize($contents['name_fr'], 'string');
+  $body_en      = sanitize($contents['body_en'], 'string');
+  $body_fr      = sanitize($contents['body_fr'], 'string');
+  $body_en_raw  = $contents['body_en'];
+  $body_fr_raw  = $contents['body_fr'];
 
   // Error: No title
   if(!$name_en || !$name_fr)
@@ -3547,6 +3689,18 @@ function compendium_categories_add( array $contents ) : mixed
 
   // Fetch the newly created compendium category's id
   $category_id = query_id();
+
+  // Find all images in the category's body
+  $image_list_en  = compendium_find_images_in_entry($body_en_raw);
+  $image_list_fr  = compendium_find_images_in_entry($body_fr_raw);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // Return the compendium category's id
   return $category_id;
@@ -3569,6 +3723,7 @@ function compendium_categories_edit(  int   $category_id  ,
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
@@ -3580,6 +3735,8 @@ function compendium_categories_edit(  int   $category_id  ,
   $name_fr      = sanitize($contents['name_fr'], 'string');
   $body_en      = sanitize($contents['body_en'], 'string');
   $body_fr      = sanitize($contents['body_fr'], 'string');
+  $body_en_raw  = $contents['body_en'];
+  $body_fr_raw  = $contents['body_fr'];
 
   // Error: Category does not exist
   if(!$category_id || !database_row_exists('compendium_categories', $category_id))
@@ -3589,6 +3746,9 @@ function compendium_categories_edit(  int   $category_id  ,
   if(!$name_en || !$name_fr)
     return __('compendium_category_add_no_name');
 
+  // Fetch the old category's data
+  $category_old = compendium_categories_get($category_id);
+
   // Edit the compendium category
   query(" UPDATE  compendium_categories
           SET     compendium_categories.display_order   = '$order'    ,
@@ -3597,6 +3757,20 @@ function compendium_categories_edit(  int   $category_id  ,
                   compendium_categories.description_en  = '$body_en'  ,
                   compendium_categories.description_fr  = '$body_fr'
           WHERE   compendium_categories.id              = '$category_id' ");
+
+  // Find all images in the category's body
+  $image_list_en      = compendium_find_images_in_entry($body_en_raw);
+  $image_list_fr      = compendium_find_images_in_entry($body_fr_raw);
+  $image_list_en_old  = compendium_find_images_in_entry($category_old['body_en_raw']);
+  $image_list_fr_old  = compendium_find_images_in_entry($category_old['body_fr_raw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr, $image_list_en_old, $image_list_fr_old);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used or previously used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // All went well
   return NULL;
@@ -3617,6 +3791,7 @@ function compendium_categories_delete( int $category_id ) : mixed
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
@@ -3641,6 +3816,9 @@ function compendium_categories_delete( int $category_id ) : mixed
   if($dcategory['count'])
     return __('compendium_category_delete_impossible');
 
+  // Fetch the category's data before deleting it
+  $category_deleted = compendium_categories_get($category_id);
+
   // Delete the category
   query(" DELETE FROM compendium_categories
           WHERE       compendium_categories.id = '$category_id' ");
@@ -3648,6 +3826,18 @@ function compendium_categories_delete( int $category_id ) : mixed
   // Delete any dead links to the category
   query(" DELETE FROM compendium_pages_categories
           WHERE       compendium_pages_categories.fk_compendium_categories = '$category_id' ");
+
+  // Find all images in the category's body
+  $image_list_en  = compendium_find_images_in_entry($category_deleted['body_en_raw']);
+  $image_list_fr  = compendium_find_images_in_entry($category_deleted['body_fr_raw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // All went well
   return NULL;
@@ -3708,6 +3898,8 @@ function compendium_eras_get( int $era_id ) : mixed
                                   page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['body_en']      = sanitize_output($dera['ce_body_en']);
   $data['body_fr']      = sanitize_output($dera['ce_body_fr']);
+  $data['body_en_raw']  = $dera['ce_body_en'];
+  $data['body_fr_raw']  = $dera['ce_body_fr'];
 
   // Sanitize the start and end years
   $era_start  = sanitize($dera['ce_start'], 'int', 0);
@@ -3815,14 +4007,16 @@ function compendium_eras_add( array $contents ) : mixed
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $start    = sanitize($contents['start'], 'int', 0);
-  $end      = sanitize($contents['end'], 'int', 0);
-  $name_en  = sanitize($contents['name_en'], 'string');
-  $name_fr  = sanitize($contents['name_fr'], 'string');
-  $short_en = sanitize($contents['short_en'], 'string');
-  $short_fr = sanitize($contents['short_fr'], 'string');
-  $body_en  = sanitize($contents['body_en'], 'string');
-  $body_fr  = sanitize($contents['body_fr'], 'string');
+  $start        = sanitize($contents['start'], 'int', 0);
+  $end          = sanitize($contents['end'], 'int', 0);
+  $name_en      = sanitize($contents['name_en'], 'string');
+  $name_fr      = sanitize($contents['name_fr'], 'string');
+  $short_en     = sanitize($contents['short_en'], 'string');
+  $short_fr     = sanitize($contents['short_fr'], 'string');
+  $body_en      = sanitize($contents['body_en'], 'string');
+  $body_fr      = sanitize($contents['body_fr'], 'string');
+  $body_en_raw  = $contents['body_en'];
+  $body_fr_raw  = $contents['body_fr'];
 
   // Error: No title
   if(!$name_en || !$name_fr || !$short_en || !$short_fr)
@@ -3841,6 +4035,18 @@ function compendium_eras_add( array $contents ) : mixed
 
   // Fetch the newly created compendium era's id
   $era_id = query_id();
+
+  // Find all images in the compendium era's body
+  $image_list_en  = compendium_find_images_in_entry($body_en_raw);
+  $image_list_fr  = compendium_find_images_in_entry($body_fr_raw);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // Return the compendium era's id
   return $era_id;
@@ -3863,20 +4069,23 @@ function compendium_eras_edit(  int   $era_id   ,
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
 
   // Sanitize and prepare the data
-  $era_id   = sanitize($era_id, 'int', 0);
-  $start    = sanitize($contents['start'], 'int', 0);
-  $end      = sanitize($contents['end'], 'int', 0);
-  $name_en  = sanitize($contents['name_en'], 'string');
-  $name_fr  = sanitize($contents['name_fr'], 'string');
-  $short_en = sanitize($contents['short_en'], 'string');
-  $short_fr = sanitize($contents['short_fr'], 'string');
-  $body_en  = sanitize($contents['body_en'], 'string');
-  $body_fr  = sanitize($contents['body_fr'], 'string');
+  $era_id       = sanitize($era_id, 'int', 0);
+  $start        = sanitize($contents['start'], 'int', 0);
+  $end          = sanitize($contents['end'], 'int', 0);
+  $name_en      = sanitize($contents['name_en'], 'string');
+  $name_fr      = sanitize($contents['name_fr'], 'string');
+  $short_en     = sanitize($contents['short_en'], 'string');
+  $short_fr     = sanitize($contents['short_fr'], 'string');
+  $body_en      = sanitize($contents['body_en'], 'string');
+  $body_fr      = sanitize($contents['body_fr'], 'string');
+  $body_en_raw  = $contents['body_en'];
+  $body_fr_raw  = $contents['body_fr'];
 
   // Error: Era does not exist
   if(!$era_id || !database_row_exists('compendium_eras', $era_id))
@@ -3885,6 +4094,9 @@ function compendium_eras_edit(  int   $era_id   ,
   // Error: No title
   if(!$name_en || !$name_fr || !$short_en || !$short_fr)
     return __('compendium_era_add_no_name');
+
+  // Fetch the old compendium era's data
+  $era_old = compendium_eras_get($era_id);
 
   // Edit the compendium era
   query(" UPDATE  compendium_eras
@@ -3897,6 +4109,20 @@ function compendium_eras_edit(  int   $era_id   ,
                   compendium_eras.description_en  = '$body_en'  ,
                   compendium_eras.description_fr  = '$body_fr'
           WHERE   compendium_eras.id              = '$era_id' ");
+
+  // Find all images in the compendium era's body
+  $image_list_en      = compendium_find_images_in_entry($body_en_raw);
+  $image_list_fr      = compendium_find_images_in_entry($body_fr_raw);
+  $image_list_en_old  = compendium_find_images_in_entry($era_old['body_en_raw']);
+  $image_list_fr_old  = compendium_find_images_in_entry($era_old['body_fr_raw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr, $image_list_en_old, $image_list_fr_old);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used or previously used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
 
   // All went well
   return NULL;
@@ -3917,6 +4143,7 @@ function compendium_eras_delete( int $era_id ) : mixed
 {
   // Check if the required files have been included
   require_included_file('compendium.lang.php');
+  require_included_file('bbcodes.inc.php');
 
   // Only administrators can run this action
   user_restrict_to_administrators();
@@ -3937,9 +4164,25 @@ function compendium_eras_delete( int $era_id ) : mixed
   if($dera['count'])
     return __('compendium_era_delete_impossible');
 
+  // Fetch the compendium era's data before deleting it
+  $era_deleted = compendium_eras_get($era_id);
+
   // Delete the era
   query(" DELETE FROM compendium_eras
           WHERE       compendium_eras.id = '$era_id' ");
+
+  // Find all images in the compendium era's body
+  $image_list_en  = compendium_find_images_in_entry($era_deleted['body_en_raw']);
+  $image_list_fr  = compendium_find_images_in_entry($era_deleted['body_fr_raw']);
+
+  // Merge the image lists into one
+  $image_list = array_merge($image_list_en, $image_list_fr);
+  $image_list = array_unique($image_list);
+
+  // Update the info of all images used
+  foreach($image_list as $image_entry)
+    compendium_images_recalculate_links($image_entry);
+
 
   // All went well
   return NULL;
@@ -5046,4 +5289,122 @@ function compendium_nbcodes_apply( ?string $text ) : string
 
   // Return the formatted string
   return $text;
+}
+
+
+
+
+/**
+ * Puts the name of all images within a compendium entry in an array.
+ *
+ * @param   string  $entry  A compendium entry's body.
+ *
+ * @return  array           The list of images contained within the entry's body.
+ */
+
+function compendium_find_images_in_entry( string $entry ) : array
+{
+  // Initialize the list of images
+  $images = array();
+
+  // Find aligned images with a caption and add them to the list of images
+  preg_match_all('/\[image:(.*?)\|(.*?)\|(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Remove aligned images with a caption from the body
+  $entry = preg_replace('/\[image:(.*?)\|(.*?)\|(.*?)\]/i', '', $entry);
+
+  // Find aligned images with no caption and add them to the list of images
+  preg_match_all('/\[image:(.*?)\|(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Remove aligned images with no caption from the body
+  $entry = preg_replace('/\[image:(.*?)\|(.*?)\]/i', '', $entry);
+
+  // Find full resolution images and add them to the list of images
+  preg_match_all('/\[image:(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Find aligned nsfw images with a caption and add them to the list of images
+  preg_match_all('/\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Remove aligned nsfw images with a caption from the body
+  $entry = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]/i', '', $entry);
+
+  // Find aligned nsfw images with no caption and add them to the list of images
+  preg_match_all('/\[image-nsfw:(.*?)\|(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Remove aligned nsfw images with no caption from the body
+  $entry = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\]/i', '', $entry);
+
+  // Find full resolution nsfw images and add them to the list of images
+  preg_match_all('/\[image-nsfw:(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Find gallery entries with a caption and add them to the list of images
+  preg_match_all('/\[gallery:(.*?)\|(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Remove gallery entries with a caption from the body
+  $entry = preg_replace('/\[gallery:(.*?)\|(.*?)\]/i', '', $entry);
+
+  // Find gallery entries without a caption and add them to the list of images
+  preg_match_all('/\[gallery:(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Find nsfw gallery entries with a caption and add them to the list of images
+  preg_match_all('/\[gallery-nsfw:(.*?)\|(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Remove nsfw gallery entries with a caption from the body
+  $entry = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i', '', $entry);
+
+  // Find nsfw gallery entries without a caption and add them to the list of images
+  preg_match_all('/\[gallery-nsfw:(.*?)\]/i', $entry, $matches);
+  foreach($matches[1] as $match)
+  {
+    if(!in_array($match, $images))
+      array_push($images, $match);
+  }
+
+  // Return the list of images
+  return $images;
 }

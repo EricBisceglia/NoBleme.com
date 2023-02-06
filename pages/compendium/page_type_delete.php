@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();
