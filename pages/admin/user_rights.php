@@ -56,7 +56,7 @@ if(isset($_POST['admin_rights_submit']))
 
 // Set the correct rights to selected to preserve the form's selection
 for($i = -1; $i <= 2; $i++)
-  $admin_rights_level_selector[$i] = ($admin_rights_level === $i) ? ' selected' : '';
+  $admin_rights_level_selector[$i] = ((int)$admin_rights_level === $i) ? ' selected' : '';
 
 
 

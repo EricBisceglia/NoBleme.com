@@ -105,6 +105,10 @@ div.popin_body      { background: var(--nobleme-white);                  }
 a.popin_close       { color: var(--nobleme-dark);                        }
 a.popin_close:hover { filter: drop-shadow(0 0 10px var(--nobleme-dark)); }
 
+/************************************************** DEVELOPER TOOLS **************************************************/
+
+div.debug_query { border: 1px solid var(--nobleme-light); }
+
 /****************************************************** BBCODES ******************************************************/
 
 .bbcode_quote_title   { border-color: var(--nobleme-dark);                                          }

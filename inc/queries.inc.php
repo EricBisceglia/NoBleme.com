@@ -653,3 +653,17 @@ if($last_query < 42)
 
   sql_update_query_id(42);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// System variables: Store current version number
+
+if($last_query < 43)
+{
+  sql_create_field('system_variables', 'current_version_number_en', 'TEXT', 'last_pageview_check');
+  sql_create_field('system_variables', 'current_version_number_fr', 'TEXT', 'current_version_number_en');
+
+  sql_update_query_id(43);
+}

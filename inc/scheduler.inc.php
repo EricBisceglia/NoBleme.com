@@ -145,25 +145,27 @@ function schedule_task_delete(  string  $action_type  ,
 $timestamp = time();
 
 // Start a transaction to avoid deadlocks
-query(" START TRANSACTION ");
+query(" START TRANSACTION ", description: "Initialize the scheduler's transaction");
 
 // Fetch the timestamp of the most recent scheduler execution
 $dcheck_scheduler = mysqli_fetch_array(query("  SELECT  system_variables.last_scheduler_execution AS 'scheduler_last'
-                                                FROM    system_variables"));
+                                                FROM    system_variables " ,
+                                                description: "Check whether the scheduler needs to run"));
 
 // If the timestamp is less than 15 seconds old, end the transaction
 if($dcheck_scheduler['scheduler_last'] >= ($timestamp - 15))
-  query(" COMMIT ");
+  query(" COMMIT ", description: "End the scheduler's transaction");
 
 // Otherwise, run the scheduler
 if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 {
   // Update the timestamp of the latest scheduler execution
   query(" UPDATE  system_variables
-          SET     system_variables.last_scheduler_execution = '$timestamp' ");
+          SET     system_variables.last_scheduler_execution = '$timestamp' " ,
+          description: "Update the scheduler's last execution time");
 
   // End the transaction
-  query(" COMMIT ");
+  query(" COMMIT ", description: "End the scheduler's transaction");
 
   // Go check if any scheduled task is waiting to be ran
   $timestamp  = time();
@@ -172,7 +174,8 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                                 system_scheduler.task_type        AS 't_type' ,
                                 system_scheduler.task_description AS 't_desc'
                         FROM    system_scheduler
-                        WHERE   system_scheduler.planned_at       <= '$timestamp' ");
+                        WHERE   system_scheduler.planned_at       <= '$timestamp' " ,
+                        description: "Check for scheduled tasks awaiting execution" );
 
   // Parse the list of potential tasks awaiting execution
   while($dscheduler = mysqli_fetch_array($qscheduler))

@@ -198,6 +198,13 @@ function dev_versions_create( int     $major                    ,
   // Fetch the ID of the newly created version
   $version_id = sanitize(query_id(), 'int', 0);
 
+  // Update the version number in system variables
+  $system_version_en = sanitize(system_get_current_version_number('full', 'EN'));
+  $system_version_fr = sanitize(system_get_current_version_number('full', 'FR'));
+  query(" UPDATE  system_variables
+          SET     system_variables.current_version_number_en = '$system_version_en' ,
+                  system_variables.current_version_number_fr = '$system_version_fr' ");
+
   // Assemble the version number
   $version_number = system_assemble_version_number($major, $minor, $patch, $extension);
 
@@ -278,6 +285,13 @@ function dev_versions_edit( int     $id           ,
                   system_versions.release_date  = '$release_date'
           WHERE   system_versions.id            = '$id' ");
 
+  // Update the version number in system variables
+  $system_version_en = sanitize(system_get_current_version_number('full', 'EN'));
+  $system_version_fr = sanitize(system_get_current_version_number('full', 'FR'));
+  query(" UPDATE  system_variables
+          SET     system_variables.current_version_number_en = '$system_version_en' ,
+                  system_variables.current_version_number_fr = '$system_version_fr' ");
+
   // Return that all went well
   return NULL;
 }
@@ -319,6 +333,13 @@ function dev_versions_delete( int $version_id ) : mixed
   // Delete the entry
   query(" DELETE FROM system_versions
           WHERE       system_versions.id = '$version_id' ");
+
+  // Update the version number in system variables
+  $system_version_en = sanitize(system_get_current_version_number('full', 'EN'));
+  $system_version_fr = sanitize(system_get_current_version_number('full', 'FR'));
+  query(" UPDATE  system_variables
+          SET     system_variables.current_version_number_en = '$system_version_en' ,
+                  system_variables.current_version_number_fr = '$system_version_fr' ");
 
   // Delete the related activity logs
   log_activity_delete(  'dev_version'             ,

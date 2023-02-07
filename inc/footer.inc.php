@@ -10,10 +10,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 // Prepare the footer's contents
 
 // Current pageview count
-$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
+$pageviews_text = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
 
 // Current version
-$version = system_get_current_version_number('full');
+$version = 'current_version_number_'.string_change_case($lang, 'lowercase');
+$version = isset($system_variables[$version]) ? $system_variables[$version] : '';
 
 // Load time and query count
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
@@ -28,20 +29,40 @@ $copyright_date = date('Y');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Update the page's metrics
 
-if(isset($page_url) && !isset($error_mode))
+if(isset($page_url) && !isset($error_mode) && isset($pageviews))
 {
-  // Sanitize the data
+  // Sanitize metrics data
   $timestamp            = sanitize(time(), 'int');
-  $page_url_sanitized   = sanitize($page_url, 'string');
+  $pageviews_sanitized  = sanitize($pageviews, 'int', min: 1);
+  $page_en_sanitized    = sanitize($page_title_en, 'string');
+  $page_fr_sanitized    = sanitize($page_title_fr, 'string');
   $queries_sanitized    = sanitize($GLOBALS['query'], 'int');
   $load_time_sanitized  = sanitize(($load_time * 1000), 'int');
+  $page_url_sanitized   = sanitize($page_url, 'string');
 
-  // Update the page stats
-  query(" UPDATE  stats_pages
-          SET     stats_pages.last_viewed_at  = '$timestamp'          ,
-                  stats_pages.query_count     = '$queries_sanitized'  ,
-                  stats_pages.load_time       = '$load_time_sanitized'
-          WHERE   stats_pages.page_url     LIKE '$page_url_sanitized' ");
+  // Update the page's metrics if it exists
+  if($pageviews_exist)
+    query(" UPDATE  stats_pages
+            SET     stats_pages.view_count      =     '$pageviews_sanitized'  ,
+                    stats_pages.page_name_en    =     '$page_en_sanitized'    ,
+                    stats_pages.page_name_fr    =     '$page_fr_sanitized'    ,
+                    stats_pages.last_viewed_at  =     '$timestamp'            ,
+                    stats_pages.query_count     =     '$queries_sanitized'    ,
+                    stats_pages.load_time       =     '$load_time_sanitized'
+            WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' " ,
+            description: "Update statistics related to page usage");
+
+  // If it doesn't exist yet, create the page's entry in metrics and give it its first pageview
+  else if(!isset($dpageviews["p_views"]))
+    query(" INSERT INTO stats_pages
+            SET         stats_pages.page_url        = '$page_url_sanitized'   ,
+                        stats_pages.page_name_en    = '$page_en_sanitized'    ,
+                        stats_pages.page_name_fr    = '$page_fr_sanitized'    ,
+                        stats_pages.last_viewed_at  = '$timestamp'            ,
+                        stats_pages.query_count     = '$queries_sanitized'    ,
+                        stats_pages.load_time       = '$load_time_sanitized'  ,
+                        stats_pages.view_count      = '$pageviews_sanitized'  " ,
+                        description: "Create a new entry in the page usage statistics");
 }
 
 
@@ -67,13 +88,15 @@ if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
 
       <footer>
 
+        <?php if($version) { ?>
         <?=__link("pages/tasks/roadmap", string_change_case(__('version'), 'initials').' '.$version, "", 1, $path);?><br>
+        <?php } ?>
 
         <?php if($is_admin) { ?>
 
-        <?php if($pageviews) { ?>
+        <?php if($pageviews_text) { ?>
 
-        <?=__link("pages/admin/stats_views", $pageviews, "", true, $path);?><br>
+        <?=__link("pages/admin/stats_views", $pageviews_text, "", true, $path);?><br>
 
         <?php } ?>
 

@@ -521,6 +521,12 @@ a.popin_close               { font-size: 200%; top: -1.8rem; right: 0.8rem;     
 @media (min-width: 993px)                             {
 .section_selector_container { margin-top: -2.3rem; }  }
 
+/************************************************** DEVELOPER TOOLS **************************************************/
+
+div.debug_query_container { margin-top: 0.8rem; margin-bottom: 0.8rem; }
+div.debug_query           { max-height: 20.0rem; overflow-x: scroll; border: 1px solid var(--nobleme-red) ;
+                            margin-top: 0rem; margin-bottom: 0rem;                                        }
+
 /****************************************************** BBCODES ******************************************************/
 
 .bbcode_quote_title       { margin-bottom: 0.2rem; font-weight: bold;                                     }
