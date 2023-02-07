@@ -34,20 +34,22 @@ query(' SET NAMES utf8mb4 ', description: "Specify the charset for the session")
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Place all system variables in an array
+// Place all useful system variables in an array
 
-// By default fetch the values in the database
+// Fetch the variables in the database
 if(!isset($GLOBALS['sql_skip_system_variables']))
-  $system_variables = mysqli_fetch_array(query("  SELECT  system_variables.website_is_closed        ,
-                                                          system_variables.latest_query_id          ,
-                                                          system_variables.last_scheduler_execution ,
-                                                          system_variables.last_pageview_check      ,
+  $system_variables = mysqli_fetch_array(query("  SELECT  system_variables.website_is_closed          ,
+                                                          system_variables.latest_query_id            ,
+                                                          system_variables.last_scheduler_execution   ,
+                                                          system_variables.last_pageview_check        ,
+                                                          system_variables.current_version_number_en  ,
+                                                          system_variables.current_version_number_fr  ,
                                                           system_variables.irc_bot_is_silenced
                                                   FROM    system_variables
                                                   LIMIT   1 " ,
                                                   description: "Fetch globally required system variables" ));
 
-// Mock system variables that need to be there even in special circumstances
+// If necessary, mock system variables that need to be there even in special circumstances
 else
   $system_variables = array('website_is_closed' => 0);
 

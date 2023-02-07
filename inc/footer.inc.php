@@ -13,7 +13,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 $pageviews_text = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
 
 // Current version
-$version = system_get_current_version_number('full');
+$version = 'current_version_number_'.string_change_case($lang, 'lowercase');
+$version = isset($system_variables[$version]) ? $system_variables[$version] : '';
 
 // Load time and query count
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
@@ -87,7 +88,9 @@ if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
 
       <footer>
 
+        <?php if($version) { ?>
         <?=__link("pages/tasks/roadmap", string_change_case(__('version'), 'initials').' '.$version, "", 1, $path);?><br>
+        <?php } ?>
 
         <?php if($is_admin) { ?>
 

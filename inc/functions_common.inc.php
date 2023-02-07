@@ -273,15 +273,17 @@ function system_assemble_version_number(  string  $major          ,
 /**
  * Returns information about the current version number.
  *
- * @param   string  (OPTIONAL)  $format The format of the returned data ('semver', 'full', 'array', 'next').
+ * @param   string  (OPTIONAL)  $format   The format of the returned data ('semver', 'full', 'array', 'next').
+ * @param   string  (OPTIONAL)  $lang     The language to use for the returned data.
  *
  * @return  mixed               The current version number, in the chosen format.
  */
 
-function system_get_current_version_number( string $format = 'semver' ) : mixed
+function system_get_current_version_number( string  $format = 'semver'  ,
+                                            string  $lang   = NULL      ) : mixed
 {
   // Fetch the user's language
-  $lang = user_get_language();
+  $lang = ($lang) ? $lang : user_get_language();
 
   // Fetch the latest version
   $dversion = mysqli_fetch_array(query("  SELECT    system_versions.major         AS 'v_major'      ,
@@ -297,7 +299,7 @@ function system_get_current_version_number( string $format = 'semver' ) : mixed
 
   // Full format: version + date
   if($format === 'full')
-    return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']).' - '.date_to_text($dversion['v_date'], 1, 0, $lang);
+    return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']).' - '.date_to_text($dversion['v_date'], strip_day: 1, include_time: 0, lang: $lang);
 
   // Array or next: all elements in an array (in case of next, prepare for the next version)
   if($format === 'array' || $format === 'next')

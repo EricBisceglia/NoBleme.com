@@ -402,6 +402,8 @@ CREATE TABLE IF NOT EXISTS `system_variables` (
   `latest_query_id` smallint UNSIGNED NOT NULL DEFAULT '0',
   `last_scheduler_execution` int UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int UNSIGNED NOT NULL DEFAULT '0',
+  `current_version_number_en` text COLLATE utf8mb4_unicode_ci,
+  `current_version_number_fr` text COLLATE utf8mb4_unicode_ci,
   `registrations_are_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `irc_bot_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `discord_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
