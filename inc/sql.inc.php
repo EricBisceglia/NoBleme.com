@@ -83,10 +83,13 @@ function query( string  $query                  ,
   // SQL debug mode antics
   if($GLOBALS['dev_mode'] && $GLOBALS['sql_debug_mode'])
   {
-    // Print the query
-    echo '<div class="tinypadding_top"><pre>['.$GLOBALS['query'].'] '.$query.'</pre></div>';
+    // Open the debug message
+    echo '<div class="tinypadding_top"><pre>';
 
-    // Check if the query is a SELECT
+    // Show the query
+    echo '['.$GLOBALS['query'].'] '.$query;
+
+    // Check if the query returns any result
     if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && mysqli_num_rows($query_result))
     {
       // Prepare an array for the query results
@@ -108,11 +111,22 @@ function query( string  $query                  ,
       }
 
       // Display the query results
+      echo '<div class="debug_container">';
       var_dump($full_query_results);
+      echo '</div>';
 
       // Reset the query array so that it can be used again by the regular page
       mysqli_data_seek($query_result, 0);
     }
+
+    // Show the stacktrace by raising an exception
+    echo '<div class="debug_container">';
+    $stacktrace_exception = new Exception();
+    var_dump($stacktrace_exception -> getTraceAsString());
+    echo '</div>';
+
+    // Close the debug message
+    echo '</pre></div>';
   }
 
   // Return the result of the query
