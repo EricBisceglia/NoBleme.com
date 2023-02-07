@@ -97,9 +97,6 @@ if($compendium_page_data)
 // Copyright ending date
 $copyright_date = date('Y');
 
-// Current pageview count
-$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
-
 
 
 

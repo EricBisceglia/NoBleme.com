@@ -126,11 +126,8 @@ if(isset($_GET['logout']))
 // We only go through this if the page name and url are set before the header
 if(isset($page_url) && !isset($error_mode))
 {
-  // Sanitize the data
+  // Sanitize the page's url
   $page_url_sanitized = sanitize($page_url, 'string');
-  $page_en_sanitized  = sanitize($page_title_en, 'string');
-  $page_fr_sanitized  = sanitize($page_title_fr, 'string');
-  $page_timestamp     = sanitize(time(), 'int', 0);
 
   // Fetch current page's view count
   $qpageviews = query(" SELECT  stats_pages.view_count AS 'p_views'
@@ -139,31 +136,11 @@ if(isset($page_url) && !isset($error_mode))
                         description: "Fetch the current pageview count");
 
   // Define the current view count (used in the footer for metrics)
-  $dpageviews = mysqli_fetch_array($qpageviews);
-  $pageviews  = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
-
-  // If the page exists, increment its view count
-  if(mysqli_num_rows($qpageviews) !== 0)
-  {
-    // Don't increment it however if the user is an admin in production mode
-    if(!$is_admin || $GLOBALS['dev_mode'])
-      query(" UPDATE  stats_pages
-              SET     stats_pages.view_count      =     stats_pages.view_count + 1  ,
-                      stats_pages.page_name_en    =     '$page_en_sanitized'        ,
-                      stats_pages.page_name_fr    =     '$page_fr_sanitized'
-              WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' " ,
-              description: "Update the pageview count");
-  }
-
-  // If it doesn't, create the page and give it its first pageview
-  else if(!isset($dpageviews["p_views"]))
-    query(" INSERT INTO stats_pages
-            SET         stats_pages.page_url        = '$page_url_sanitized' ,
-                        stats_pages.page_name_en    = '$page_en_sanitized'  ,
-                        stats_pages.page_name_fr    = '$page_fr_sanitized'  ,
-                        stats_pages.last_viewed_at  = '$page_timestamp'     ,
-                        stats_pages.view_count      = 1                     " ,
-                        description: "Create a new entry in the pageviews statistics");
+  $dpageviews       = mysqli_fetch_array($qpageviews);
+  $pageviews        = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
+  $pageviews        = ($is_admin && !$GLOBALS['dev_mode']) ? ($pageviews - 1) : $pageviews;
+  $pageviews        = ($pageviews < 1) ? 1 : $pageviews;
+  $pageviews_exist  = isset($dpageviews["p_views"]);
 }
 
 
