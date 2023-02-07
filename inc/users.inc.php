@@ -132,7 +132,8 @@ if($is_logged_in)
                                                   users_settings.show_nsfw_content  AS 'us_nsfw'
                                         FROM      users
                                         LEFT JOIN users_settings on users_settings.fk_users = users.id
-                                        WHERE     users.id = '$user_id' "));
+                                        WHERE     users.id = '$user_id' " ,
+                                        description: "Fetch data related to the currently logged in user"));
 
   // If the user's account doesn't exist or is deleted, log them out and set their user id to 0
   if(!isset($duser['u_deleted']) || $duser['u_deleted'])
@@ -868,7 +869,8 @@ function user_is_ip_banned() : int
                                                 system_ip_bans.is_a_total_ban AS 'b_total'  ,
                                                 system_ip_bans.banned_until   AS 'b_end'
                                         FROM    system_ip_bans
-                                        WHERE   LOCATE(REPLACE(system_ip_bans.ip_address, '*', ''), '$user_ip') > 0 "));
+                                        WHERE   LOCATE(REPLACE(system_ip_bans.ip_address, '*', ''), '$user_ip') > 0 " ,
+                                        description: "Check whether a user is IP banned" ));
 
   // If the user isn't IP banned, return 0
   if(!isset($dbanned['b_id']))

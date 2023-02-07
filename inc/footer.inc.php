@@ -41,7 +41,8 @@ if(isset($page_url) && !isset($error_mode))
           SET     stats_pages.last_viewed_at  = '$timestamp'          ,
                   stats_pages.query_count     = '$queries_sanitized'  ,
                   stats_pages.load_time       = '$load_time_sanitized'
-          WHERE   stats_pages.page_url     LIKE '$page_url_sanitized' ");
+          WHERE   stats_pages.page_url     LIKE '$page_url_sanitized' ",
+          description: "Update statistics related to page usage");
 }
 
 

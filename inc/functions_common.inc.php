@@ -292,7 +292,8 @@ function system_get_current_version_number( string $format = 'semver' ) : mixed
                                           FROM      system_versions
                                           ORDER BY  system_versions.release_date  DESC ,
                                                     system_versions.id            DESC
-                                          LIMIT     1 "));
+                                          LIMIT     1 " ,
+                                          description: "Fetch the website's current version number"));
 
   // Full format: version + date
   if($format === 'full')

@@ -107,7 +107,7 @@ a.popin_close:hover { filter: drop-shadow(0 0 10px var(--nobleme-dark)); }
 
 /************************************************** DEVELOPER TOOLS **************************************************/
 
-div.debug_container { border: 1px solid var(--nobleme-light); }
+div.debug_query { border: 1px solid var(--nobleme-light); }
 
 /****************************************************** BBCODES ******************************************************/
 

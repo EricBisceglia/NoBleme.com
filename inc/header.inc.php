@@ -135,7 +135,8 @@ if(isset($page_url) && !isset($error_mode))
   // Fetch current page's view count
   $qpageviews = query(" SELECT  stats_pages.view_count AS 'p_views'
                         FROM    stats_pages
-                        WHERE   stats_pages.page_url = '$page_url_sanitized' ");
+                        WHERE   stats_pages.page_url = '$page_url_sanitized' " ,
+                        description: "Fetch the current pageview count");
 
   // Define the current view count (used in the footer for metrics)
   $dpageviews = mysqli_fetch_array($qpageviews);
@@ -150,7 +151,8 @@ if(isset($page_url) && !isset($error_mode))
               SET     stats_pages.view_count      =     stats_pages.view_count + 1  ,
                       stats_pages.page_name_en    =     '$page_en_sanitized'        ,
                       stats_pages.page_name_fr    =     '$page_fr_sanitized'
-              WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' ");
+              WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' " ,
+              description: "Update the pageview count");
   }
 
   // If it doesn't, create the page and give it its first pageview
@@ -160,7 +162,8 @@ if(isset($page_url) && !isset($error_mode))
                         stats_pages.page_name_en    = '$page_en_sanitized'  ,
                         stats_pages.page_name_fr    = '$page_fr_sanitized'  ,
                         stats_pages.last_viewed_at  = '$page_timestamp'     ,
-                        stats_pages.view_count      = 1                     ");
+                        stats_pages.view_count      = 1                     " ,
+                        description: "Create a new entry in the pageviews statistics");
 }
 
 
@@ -190,7 +193,8 @@ if($activity_user)
                   users.last_visited_url      = '$activity_url_sanitized'       ,
                   users.visited_page_count    = (users.visited_page_count + 1)  ,
                   users.current_ip_address    = '$activity_ip'
-          WHERE   users.id                    = '$activity_user'              ");
+          WHERE   users.id                    = '$activity_user'                " ,
+          description: "Update user activity statistics");
 
 // Guest activity
 else
@@ -198,12 +202,14 @@ else
   // Clean up older guest activity
   $guest_limit = sanitize(time() - 2500000, 'int', 0);
   query(" DELETE FROM users_guests
-          WHERE       users_guests.last_visited_at < '$guest_limit' ");
+          WHERE       users_guests.last_visited_at < '$guest_limit' " ,
+          description: "Clean old guest activity");
 
   // Check whether the guest already exists in the database
   $qguest   = query(" SELECT  users_guests.ip_address AS 'g_ip'
                       FROM    users_guests
-                      WHERE   users_guests.ip_address LIKE '$activity_ip' ");
+                      WHERE   users_guests.ip_address LIKE '$activity_ip' " ,
+                      description: "Update guest activity");
 
   // Create the guest if it does not exist
   if(!mysqli_num_rows($qguest))
@@ -216,7 +222,8 @@ else
     query(" INSERT INTO users_guests
             SET         users_guests.ip_address                 = '$activity_ip'    ,
                         users_guests.randomly_assigned_name_en  = '$guest_name_en'  ,
-                        users_guests.randomly_assigned_name_fr  = '$guest_name_fr'  ");
+                        users_guests.randomly_assigned_name_fr  = '$guest_name_fr'  " ,
+            description: "Create a new activity entry for the guest");
   }
 
   // Update guest activity data
@@ -228,7 +235,8 @@ else
                   users_guests.last_visited_page_fr = '$activity_page_fr_sanitized'         ,
                   users_guests.last_visited_url     = '$activity_url_sanitized'             ,
                   users_guests.visited_page_count   = (users_guests.visited_page_count + 1)
-          WHERE   users_guests.ip_address           = '$activity_ip'                        ");
+          WHERE   users_guests.ip_address           = '$activity_ip'                        " ,
+          description: "Update guest activity data");
 }
 
 
@@ -251,7 +259,8 @@ if($activity_user)
                                       FROM    users_private_messages
                                       WHERE   users_private_messages.read_at              = 0
                                       AND     users_private_messages.deleted_by_recipient = 0
-                                      AND     users_private_messages.fk_users_recipient   = '$activity_user' "));
+                                      AND     users_private_messages.fk_users_recipient   = '$activity_user' " ,
+                                      description: "Check for unread private messages"));
 
   // Fetch the result for display
   $private_message_count      = $dpms['pm_nb'];
@@ -276,7 +285,8 @@ if($is_moderator)
                                       AND     users_private_messages.hide_from_admin_mail   = 0
                                       AND     users_private_messages.deleted_by_recipient   = 0
                                       AND     users_private_messages.fk_users_recipient     = 0
-                                              $admin_condition "));
+                                              $admin_condition " ,
+                                      description: "Check for unread admin mail"));
 
   // Fetch the result for display
   $admin_mail_count     = $dpms['pm_nb'];

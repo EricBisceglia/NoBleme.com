@@ -28,7 +28,7 @@ $GLOBALS['query'] = 0;
 
 // Set the global charset in order to avoid encoding mishaps
 mysqli_set_charset($GLOBALS['db'], "utf8mb4");
-query(' SET NAMES utf8mb4 ');
+query(' SET NAMES utf8mb4 ', description: "Specify the charset for the session");
 
 
 
@@ -44,7 +44,8 @@ if(!isset($GLOBALS['sql_skip_system_variables']))
                                                           system_variables.last_pageview_check      ,
                                                           system_variables.irc_bot_is_silenced
                                                   FROM    system_variables
-                                                  LIMIT   1 "));
+                                                  LIMIT   1 " ,
+                                                  description: "Fetch globally required system variables" ));
 
 // Mock system variables that need to be there even in special circumstances
 else
@@ -60,14 +61,16 @@ else
  * As it is basically a global wrapper for MySQL usage, you should always use this function when executing a query.
  * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
  *
- * @param   string      $query                      The query that you want to run.
- * @param   bool        $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
+ * @param   string  $query                      The query that you want to run.
+ * @param   bool    $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
+ * @param   string  $description    (OPTIONAL)  Describe the query, will only be used in SQL debug mode.
  *
  * @return  object|bool                             A mysqli_object or a boolean, depending on the type of query.
  */
 
 function query( string  $query                  ,
-                bool    $ignore_errors  = false ) : mixed
+                bool    $ignore_errors  = false ,
+                string  $description    = NULL  ) : mixed
 {
   // First off let's increment the global query counter for this session
   $GLOBALS['query']++;
@@ -84,10 +87,13 @@ function query( string  $query                  ,
   if($GLOBALS['dev_mode'] && $GLOBALS['sql_debug_mode'])
   {
     // Open the debug message
-    echo '<div class="tinypadding_top"><pre>';
+    echo '<div class="debug_query_container">';
 
-    // Show the query
-    echo '['.$GLOBALS['query'].'] '.$query;
+    // Show the query's description
+    echo '<div class="debug_query"><pre>[#'.$GLOBALS['query'].'] '.$description.'</pre></div>';
+
+    // Show the query itself
+    echo '<div class="debug_query"><pre>'.$query.'</pre></div>';
 
     // Check if the query returns any result
     if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && mysqli_num_rows($query_result))
@@ -111,7 +117,7 @@ function query( string  $query                  ,
       }
 
       // Display the query results
-      echo '<div class="debug_container">';
+      echo '<div class="debug_query">';
       var_dump($full_query_results);
       echo '</div>';
 
@@ -120,13 +126,13 @@ function query( string  $query                  ,
     }
 
     // Show the stacktrace by raising an exception
-    echo '<div class="debug_container">';
+    echo '<div class="debug_query">';
     $stacktrace_exception = new Exception();
     var_dump($stacktrace_exception -> getTraceAsString());
     echo '</div>';
 
     // Close the debug message
-    echo '</pre></div>';
+    echo '</div>';
   }
 
   // Return the result of the query
