@@ -39,6 +39,14 @@ $js   = array('compendium/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch links from admin notes
+
+$compendium_admin_notes = compendium_admin_notes_get();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page list
 
 $compendium_pages_list = compendium_pages_list( sort_by:  'page_url'            ,
@@ -85,6 +93,28 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
       <tbody class="altc">
 
+        <tr>
+          <td class="align_left nowrap">
+            <?=__link('pages/compendium/admin_notes', __('compendium_admin_notes_title'))?>
+          </td>
+          <td>
+            &nbsp;
+          </td>
+          <td>
+            <?=$compendium_admin_notes['links_formatted']?>
+          </td>
+          <td class="align_center">
+            <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/admin_notes')?>
+          </td>
+          <td class="align_center">
+            <?php if($compendium_admin_notes['links_js']) { ?>
+            <?=__icon('link_external', is_small: true, alt: 'L', title: __('compendium_list_links_open'), title_case: 'initials', onclick: "compendium_page_links_open(".$compendium_admin_notes['links_js'].");")?>
+            <?php } else { ?>
+            &nbsp;
+            <?php } ?>
+          </td>
+        </tr>
+
         <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
         <tr>
@@ -116,7 +146,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
           <td class="align_center">
             <?php if($compendium_pages_list[$i]['linknotes']) { ?>
-            <?=__icon('link_external', is_small: true, alt: 'L', title: __('link'), title_case: 'initials', onclick: "compendium_page_links_open(".$compendium_pages_list[$i]['linknotes'].");")?>
+            <?=__icon('link_external', is_small: true, alt: 'L', title: __('compendium_list_links_open'), title_case: 'initials', onclick: "compendium_page_links_open(".$compendium_pages_list[$i]['linknotes'].");")?>
             <?php } else { ?>
             &nbsp;
             <?php } ?>

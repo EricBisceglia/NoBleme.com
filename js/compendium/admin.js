@@ -116,6 +116,8 @@ function compendium_page_links_open ( links )
 }
 
 
+
+
 /**
  * Triggers the recalculation of all compendium image links.
  *

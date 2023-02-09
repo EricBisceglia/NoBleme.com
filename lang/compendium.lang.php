@@ -1118,6 +1118,8 @@ ___('compendium_admin_notes_template_en', 'EN', "English template ({{link_popup|
 ___('compendium_admin_notes_template_en', 'FR', "Modèle anglophone ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_admin_notes_template_fr', 'EN', "French template ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_admin_notes_template_fr', 'FR', "Modèle francophone ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_admin_notes_links',       'EN', "Useful URLs, separated by three bars |||, will appear at the top of {{link_popup|pages/compendium/page_list_admin_links|page links and notes}}");
+___('compendium_admin_notes_links',       'FR', "URLs utiles, séparées par trois barres |||, apparaîtra en haut de {{link_popup|pages/compendium/page_list_admin_links|liens et notes des pages}}");
 ___('compendium_admin_notes_submit',      'EN', "Update admin notes");
 ___('compendium_admin_notes_submit',      'FR', "Mettre à jour les notes admin");
 

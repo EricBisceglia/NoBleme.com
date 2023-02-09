@@ -667,3 +667,16 @@ if($last_query < 43)
 
   sql_update_query_id(43);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Global admin links
+
+if($last_query < 44)
+{
+  sql_create_field('compendium_admin_tools', 'links', 'LONGTEXT', 'template_fr');
+
+  sql_update_query_id(44);
+}

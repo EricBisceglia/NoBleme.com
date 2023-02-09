@@ -45,7 +45,8 @@ if(isset($_POST['compendium_admin_notes_submit']))
   compendium_admin_notes_edit(array(  'global'      => form_fetch_element('compendium_admin_notes_global')      ,
                                       'snippets'    => form_fetch_element('compendium_admin_notes_snippets')    ,
                                       'template_en' => form_fetch_element('compendium_admin_notes_template_en') ,
-                                      'template_fr' => form_fetch_element('compendium_admin_notes_template_fr') ));
+                                      'template_fr' => form_fetch_element('compendium_admin_notes_template_fr') ,
+                                      'links'       => form_fetch_element('compendium_admin_notes_links')       ));
 
 
 
@@ -96,6 +97,11 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <textarea class="compendium_admin_notes" id="compendium_admin_notes_template_fr" name="compendium_admin_notes_template_fr"><?=$compendium_admin_notes['template_fr']?></textarea>
 
         </div>
+      </div>
+
+      <div class="smallpadding_bot">
+        <label for="compendium_admin_notes_links"><?=__('compendium_admin_notes_links')?></label>
+        <textarea class="compendium_admin_links" id="compendium_admin_notes_links" name="compendium_admin_notes_links"><?=$compendium_admin_notes['links']?></textarea>
       </div>
 
       <div class="tinypadding_top bigpadding_bot">
