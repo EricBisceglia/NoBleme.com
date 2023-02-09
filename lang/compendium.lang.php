@@ -454,14 +454,16 @@ ___('compendium_list_stats_chars_fr', 'FR', "Longueur<br>FR");
 // Page links and notes
 ___('compendium_list_links_title',  'EN', "Page links and notes");
 ___('compendium_list_links_title',  'FR', "Liens et notes des pages");
-___('compendium_list_links_menu',   'EN', "Page links");
-___('compendium_list_links_menu',   'FR', "Liens et notes");
+___('compendium_list_links_menu',   'EN', "Notes & links");
+___('compendium_list_links_menu',   'FR', "Notes & liens");
 ___('compendium_list_links_page',   'EN', "Compendium page");
 ___('compendium_list_links_page',   'FR', "Page du compendium");
 ___('compendium_list_links_text',   'EN', "Page notes");
 ___('compendium_list_links_text',   'FR', "Notes sur la page");
 ___('compendium_list_links_url',    'EN', "Related links");
 ___('compendium_list_links_url',    'FR', "Liens");
+___('compendium_list_links_open',   'EN', "Open");
+___('compendium_list_links_open',   'FR', "Voir");
 
 
 

@@ -785,7 +785,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['summary']    = nbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true),
                                       page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['notes']      = sanitize_output($row['p_notes']);
-    $data[$i]['urlnotes']   = sanitize_output($row['p_urlnotes']);
+    $data[$i]['urlnotes']   = '';
+    $data[$i]['linknotes']  = '';
     $data[$i]['type_id']    = sanitize_output($row['pt_id']);
     $data[$i]['type']       = sanitize_output($row['pt_name']);
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
@@ -800,17 +801,28 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     // Prepare the admin urls
     if($row['p_urlnotes'])
     {
+      // Open the array of links for usage in JS
+      $data[$i]['linknotes'] = '[';
+
       // Split the urls
       $admin_urls = explode("|||", $row['p_urlnotes']);
 
-      // Format the url list
+      // Format the url lists
       $formatted_admin_urls = '';
       for($j = 0; $j < count($admin_urls); $j++)
+      {
         $formatted_admin_urls .= __link($admin_urls[$j], string_truncate($admin_urls[$j], 40, '...'), is_internal: false).'<br>';
+        if($j)
+          $data[$i]['linknotes'] .= ', ';
+        $data[$i]['linknotes'] .= "'$admin_urls[$j]'";
+      }
 
       // Add the formatted page list and the page count to the data
       $data[$i]['urlnotes'] = $formatted_admin_urls;
       $data[$i]['urlcount'] = $j;
+
+      // Close the array of links for usage in JS
+      $data[$i]['linknotes'] .= ']';
     }
   }
 

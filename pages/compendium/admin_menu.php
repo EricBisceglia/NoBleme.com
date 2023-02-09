@@ -40,14 +40,14 @@ $compendium_admin_menu['search']      = isset($compendium_admin_menu['search']) 
         <option value="admin_notes"<?=$compendium_admin_menu['notes']?>>
           <?=__('compendium_admin_notes_title')?>
         </option>
+        <option value="page_list_admin_links"<?=$compendium_admin_menu['page_links']?>>
+          <?=__('compendium_list_links_menu')?>
+        </option>
         <option value="page_list_admin"<?=$compendium_admin_menu['page_list']?>>
           <?=__('compendium_list_admin_menu')?>
         </option>
         <option value="page_list_admin_stats"<?=$compendium_admin_menu['page_stats']?>>
           <?=__('compendium_list_stats_menu')?>
-        </option>
-        <option value="page_list_admin_links"<?=$compendium_admin_menu['page_links']?>>
-          <?=__('compendium_list_links_menu')?>
         </option>
         <option value="image_admin"<?=$compendium_admin_menu['images']?>>
           <?=__('compendium_image_list_title')?>

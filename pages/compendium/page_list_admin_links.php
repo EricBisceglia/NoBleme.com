@@ -76,6 +76,9 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <th>
             <?=__('act')?>
           </th>
+          <th>
+            <?=__('compendium_list_links_open')?>
+          </th>
         </tr>
 
       </thead>
@@ -109,6 +112,14 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
           <td class="align_center">
             <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_pages_list[$i]['id'])?>
+          </td>
+
+          <td class="align_center">
+            <?php if($compendium_pages_list[$i]['linknotes']) { ?>
+            <?=__icon('link_external', is_small: true, alt: 'L', title: __('link'), title_case: 'initials', onclick: "compendium_page_links_open(".$compendium_pages_list[$i]['linknotes'].");")?>
+            <?php } else { ?>
+            &nbsp;
+            <?php } ?>
           </td>
 
         </tr>
