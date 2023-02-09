@@ -68,7 +68,7 @@ $css = array('index');
   </p>
 
   <h5 class="bigpadding_top">
-    <?=__('nobleme_home_compendium_title')?>
+    <?=__('submenu_pages_compendium_index')?>
   </h5>
 
   <p>

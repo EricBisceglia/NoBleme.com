@@ -56,6 +56,7 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'admin_stats_users_pronouns'        , # Acceptable redundancy
                             'administration'                    , # Nuance in english only
                             'at_date'                           , # Nuance in english only
+                            'compendium_admin_search_page'      , # Nuance in english only
                             'compendium_category_edit_submit'   , # Nuance in english only
                             'compendium_era_edit_submit'        , # Nuance in english only
                             'compendium_eras_entries'           , # Nuance in english only
@@ -96,12 +97,18 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'month_short_6'                     , # Short/long versions
                             'month_short_7'                     , # Short/long versions
                             'month_short_8'                     , # Short/long versions
+                            'nobleme_home_statement_title'      , # Acceptable redundancy
                             'none_f'                            , # Nuance in french only
+                            'ordinal_2_en'                      , # Redundant on purpose
                             'preview_2'                         , # Nuance in french only
+                            'quotes_stats_contrib_approved'     , # Acceptable redundancy
+                            'quotes_stats_selector_submitted'   , # Acceptable redundancy
                             'quotes_subtitle'                   , # Nuance in english only
                             'quotes_users_empty'                , # Acceptable redundancy
+                            'search2'                           , # Nuance in french only
                             'sent+'                             , # Nuance in french only
                             'submenu_admin_doc'                 , # Nuance in english only
+                            'submenu_admin_settings'            , # Nuance in french only
                             'submenu_admin_stats_guests'        , # Nuance in english only
                             'submenu_nobleme_roadmap'           , # Nuance in english only
                             'submenu_pages_compendium_eras'     , # Nuance in english only
@@ -115,6 +122,8 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'tasks_list_goal'                   , # Nuance in english only
                             'tasks_list_uncategorized'          , # Acceptable redundancy
                             'tasks_reject_submit'               , # Nuance in french only
+                            'tasks_stats_selector_priority'     , # Nuance in english only
+                            'tasks_stats_selector_submitted'    , # Acceptable redundancy
                             'time_indicator_en'                 , # Redundant on purpose
                             'times'                             , # Redundant on purpose
                             'undelete'                          , # Nuance in english only
@@ -124,7 +133,12 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'users_message_admins_name_del'     , # Nuance in english only
                             'users_message_error_nick_long'     , # Nuance in english only
                             'users_message_error_nick_short'    , # Nuance in english only
-                            'users_profile_edit_submit'        ); # Nuance in english only
+                            'users_profile_edit_submit'         , # Nuance in english only
+                            'users_stats_anniv_days'            , # Nuance in english only
+                            'users_stats_birth_age'             , # Nuance in french only
+                            'users_stats_contrib_tasks'         , # Acceptable redundancy
+                            'year_age'                          , # Nuance in english only
+                            'year_age+'                        ); # Nuance in english only
 
 // Look for duplicate translations in the current language
 $duplicate_translations = dev_duplicate_translations_list($duplicate_ok_list);

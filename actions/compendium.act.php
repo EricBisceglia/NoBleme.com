@@ -4291,13 +4291,13 @@ function compendium_search( string $search_query ) : mixed
     // Content type name
     $search_results[$i]['type'] = match($row['c_type'])
     {
-      'page_type' => __('compendium_type_admin_short')            ,
-      'category'  => __('compendium_stats_category')              ,
-      'era'       => __('compendium_page_era')                    ,
-      'page'      => __('compendium_admin_search_page')           ,
-      'missing'   => __('compendium_page_missing_title')          ,
-      'image'     => string_change_case(__('image'), 'initials')  ,
-      default     => '&nbsp;'                                     ,
+      'page_type' => __('compendium_type_admin_short')              ,
+      'category'  => string_change_case(__('category'), 'initials') ,
+      'era'       => __('compendium_page_era')                      ,
+      'page'      => __('compendium_admin_search_page')             ,
+      'missing'   => __('compendium_page_missing_title')            ,
+      'image'     => string_change_case(__('image'), 'initials')    ,
+      default     => '&nbsp;'                                       ,
     };
 
     // Assemble the content URLs

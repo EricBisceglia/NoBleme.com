@@ -90,7 +90,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <select class="inh align_left" id="tasks_stats_selector" onchange="page_section_selector('tasks_stats', '<?=$tasks_selector_default?>');">
         <option value="overall"<?=$tasks_selector['menu']['overall']?>><?=__('stats_overall')?></option>
         <option value="years"<?=$tasks_selector['menu']['years']?>><?=__('stats_timeline')?></option>
-        <option value="categories"<?=$tasks_selector['menu']['categories']?>><?=__('tasks_stats_selector_categories')?></option>
+        <option value="categories"<?=$tasks_selector['menu']['categories']?>><?=string_change_case(__('category+'), 'initials')?></option>
         <option value="milestones"<?=$tasks_selector['menu']['milestones']?>><?=__('tasks_stats_selector_milestones')?></option>
         <option value="priority"<?=$tasks_selector['menu']['priority']?>><?=__('tasks_stats_selector_priority')?></option>
         <option value="contributors"<?=$tasks_selector['menu']['contributors']?>><?=__('tasks_stats_selector_submitted')?></option>
@@ -310,7 +310,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
 
         <th>
-          <?=__('tasks_stats_milestones_solved')?>
+          <?=__('tasks_stats_years_solved')?>
         </th>
 
       </tr>

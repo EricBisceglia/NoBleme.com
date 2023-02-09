@@ -247,7 +247,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <th>
-          <?=__link('pages/compendium/category_list', __('compendium_stats_category'))?>
+          <?=__link('pages/compendium/category_list', string_change_case(__('category'), 'initials'))?>
         </th>
 
         <th>

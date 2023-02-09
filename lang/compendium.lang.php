@@ -1196,11 +1196,6 @@ ___('compendium_stats_types_offensive',   'EN', "Offensive<br>entries");
 ___('compendium_stats_types_offensive',   'FR', "Contenus<br>offensants");
 
 
-// Categories
-___('compendium_stats_category',  'EN', "Category");
-___('compendium_stats_category',  'FR', "Catégorie");
-
-
 // Page length
 ___('compendium_stats_length_longest',  'EN', "Longest pages");
 ___('compendium_stats_length_longest',  'FR', "Pages les plus longues");
