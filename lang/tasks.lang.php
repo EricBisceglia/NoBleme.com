@@ -445,8 +445,6 @@ ___('tasks_proposal_sent',    'FR', "Votre proposition a été envoyée. Merci 
 // Page section selector
 ___('tasks_stats_selector_title',       'EN', "Tasks statistics");
 ___('tasks_stats_selector_title',       'FR', "Stats des tâches");
-___('tasks_stats_selector_categories',  'EN', "Categories");
-___('tasks_stats_selector_categories',  'FR', "Catégories");
 ___('tasks_stats_selector_milestones',  'EN', "Milestones");
 ___('tasks_stats_selector_milestones',  'FR', "Objectifs");
 ___('tasks_stats_selector_priority',    'EN', "Priority levels");
@@ -502,8 +500,6 @@ ___('tasks_stats_milestones_date',      'EN', "Release date");
 ___('tasks_stats_milestones_date',      'FR', "Date de<br>résolution");
 ___('tasks_stats_milestones_unsolved',  'EN', "Unsolved<br>tasks");
 ___('tasks_stats_milestones_unsolved',  'FR', "Tâches non<br>résolues");
-___('tasks_stats_milestones_solved',    'EN', "Solved<br>tasks");
-___('tasks_stats_milestones_solved',    'FR', "Tâches<br>résolues");
 
 
 // Priority levels

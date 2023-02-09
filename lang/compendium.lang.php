@@ -451,6 +451,21 @@ ___('compendium_list_stats_chars_fr', 'EN', "Length<br>FR");
 ___('compendium_list_stats_chars_fr', 'FR', "Longueur<br>FR");
 
 
+// Page links and notes
+___('compendium_list_links_title',  'EN', "Page links and notes");
+___('compendium_list_links_title',  'FR', "Liens et notes des pages");
+___('compendium_list_links_menu',   'EN', "Notes & links");
+___('compendium_list_links_menu',   'FR', "Notes & liens");
+___('compendium_list_links_page',   'EN', "Compendium page");
+___('compendium_list_links_page',   'FR', "Page du compendium");
+___('compendium_list_links_text',   'EN', "Page notes");
+___('compendium_list_links_text',   'FR', "Notes sur la page");
+___('compendium_list_links_url',    'EN', "Related links");
+___('compendium_list_links_url',    'FR', "Liens");
+___('compendium_list_links_open',   'EN', "Open");
+___('compendium_list_links_open',   'FR', "Voir");
+
+
 
 
 /*********************************************************************************************************************/
@@ -1103,14 +1118,10 @@ ___('compendium_admin_notes_template_en', 'EN', "English template ({{link_popup|
 ___('compendium_admin_notes_template_en', 'FR', "Modèle anglophone ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_admin_notes_template_fr', 'EN', "French template ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_admin_notes_template_fr', 'FR', "Modèle francophone ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_admin_notes_links',       'EN', "Useful URLs, separated by three bars |||, will appear at the top of {{link_popup|pages/compendium/page_list_admin_links|page links and notes}}");
+___('compendium_admin_notes_links',       'FR', "URLs utiles, séparées par trois barres |||, apparaîtra en haut de {{link_popup|pages/compendium/page_list_admin_links|liens et notes des pages}}");
 ___('compendium_admin_notes_submit',      'EN', "Update admin notes");
 ___('compendium_admin_notes_submit',      'FR', "Mettre à jour les notes admin");
-___('compendium_admin_notes_page',        'EN', "Compendium page");
-___('compendium_admin_notes_page',        'FR', "Page du compendium");
-___('compendium_admin_notes_text',        'EN', "Page notes");
-___('compendium_admin_notes_text',        'FR', "Notes sur la page");
-___('compendium_admin_notes_url',         'EN', "Related links");
-___('compendium_admin_notes_url',         'FR', "Liens");
 
 
 
@@ -1187,11 +1198,6 @@ ___('compendium_stats_types_gross',       'EN', "Gross<br>entries");
 ___('compendium_stats_types_gross',       'FR', "Contenus<br>dégueulasses");
 ___('compendium_stats_types_offensive',   'EN', "Offensive<br>entries");
 ___('compendium_stats_types_offensive',   'FR', "Contenus<br>offensants");
-
-
-// Categories
-___('compendium_stats_category',  'EN', "Category");
-___('compendium_stats_category',  'FR', "Catégorie");
 
 
 // Page length

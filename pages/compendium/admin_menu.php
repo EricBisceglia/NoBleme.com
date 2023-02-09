@@ -20,6 +20,7 @@ user_restrict_to_administrators();
 $compendium_admin_menu['notes']       = isset($compendium_admin_menu['notes'])        ? ' selected' : '';
 $compendium_admin_menu['page_list']   = isset($compendium_admin_menu['page_list'])    ? ' selected' : '';
 $compendium_admin_menu['page_stats']  = isset($compendium_admin_menu['page_stats'])   ? ' selected' : '';
+$compendium_admin_menu['page_links']  = isset($compendium_admin_menu['page_links'])   ? ' selected' : '';
 $compendium_admin_menu['images']      = isset($compendium_admin_menu['images'])       ? ' selected' : '';
 $compendium_admin_menu['page_types']  = isset($compendium_admin_menu['page_types'])   ? ' selected' : '';
 $compendium_admin_menu['categories']  = isset($compendium_admin_menu['categories'])   ? ' selected' : '';
@@ -38,6 +39,9 @@ $compendium_admin_menu['search']      = isset($compendium_admin_menu['search']) 
       <select class="inh" id="compendium_admin_menu" name="compendium_admin_menu" onchange="compendium_admin_menu();">
         <option value="admin_notes"<?=$compendium_admin_menu['notes']?>>
           <?=__('compendium_admin_notes_title')?>
+        </option>
+        <option value="page_list_admin_links"<?=$compendium_admin_menu['page_links']?>>
+          <?=__('compendium_list_links_menu')?>
         </option>
         <option value="page_list_admin"<?=$compendium_admin_menu['page_list']?>>
           <?=__('compendium_list_admin_menu')?>

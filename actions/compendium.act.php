@@ -785,7 +785,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['summary']    = nbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true),
                                       page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['notes']      = sanitize_output($row['p_notes']);
-    $data[$i]['urlnotes']   = sanitize_output($row['p_urlnotes']);
+    $data[$i]['urlnotes']   = '';
+    $data[$i]['linknotes']  = '';
     $data[$i]['type_id']    = sanitize_output($row['pt_id']);
     $data[$i]['type']       = sanitize_output($row['pt_name']);
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
@@ -800,17 +801,28 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     // Prepare the admin urls
     if($row['p_urlnotes'])
     {
+      // Open the array of links for usage in JS
+      $data[$i]['linknotes'] = '[';
+
       // Split the urls
       $admin_urls = explode("|||", $row['p_urlnotes']);
 
-      // Format the url list
+      // Format the url lists
       $formatted_admin_urls = '';
       for($j = 0; $j < count($admin_urls); $j++)
+      {
         $formatted_admin_urls .= __link($admin_urls[$j], string_truncate($admin_urls[$j], 40, '...'), is_internal: false).'<br>';
+        if($j)
+          $data[$i]['linknotes'] .= ', ';
+        $data[$i]['linknotes'] .= "'$admin_urls[$j]'";
+      }
 
       // Add the formatted page list and the page count to the data
       $data[$i]['urlnotes'] = $formatted_admin_urls;
       $data[$i]['urlcount'] = $j;
+
+      // Close the array of links for usage in JS
+      $data[$i]['linknotes'] .= ']';
     }
   }
 
@@ -4291,13 +4303,13 @@ function compendium_search( string $search_query ) : mixed
     // Content type name
     $search_results[$i]['type'] = match($row['c_type'])
     {
-      'page_type' => __('compendium_type_admin_short')            ,
-      'category'  => __('compendium_stats_category')              ,
-      'era'       => __('compendium_page_era')                    ,
-      'page'      => __('compendium_admin_search_page')           ,
-      'missing'   => __('compendium_page_missing_title')          ,
-      'image'     => string_change_case(__('image'), 'initials')  ,
-      default     => '&nbsp;'                                     ,
+      'page_type' => __('compendium_type_admin_short')              ,
+      'category'  => string_change_case(__('category'), 'initials') ,
+      'era'       => __('compendium_page_era')                      ,
+      'page'      => __('compendium_admin_search_page')             ,
+      'missing'   => __('compendium_page_missing_title')            ,
+      'image'     => string_change_case(__('image'), 'initials')    ,
+      default     => '&nbsp;'                                       ,
     };
 
     // Assemble the content URLs
@@ -4519,15 +4531,45 @@ function compendium_admin_notes_get() : array
   $dnotes = mysqli_fetch_array(query("  SELECT  compendium_admin_tools.global_notes AS 'cn_global'      ,
                                                 compendium_admin_tools.snippets     AS 'cn_snippets'    ,
                                                 compendium_admin_tools.template_en  AS 'cn_template_en' ,
-                                                compendium_admin_tools.template_fr  AS 'cn_template_fr'
+                                                compendium_admin_tools.template_fr  AS 'cn_template_fr' ,
+                                                compendium_admin_tools.links        AS 'cn_links'
                                         FROM    compendium_admin_tools
                                         LIMIT   1 "));
 
   // Assemble an array with the data
-  $data['global']       = sanitize_output($dnotes['cn_global']);
-  $data['snippets']     = sanitize_output($dnotes['cn_snippets']);
-  $data['template_en']  = sanitize_output($dnotes['cn_template_en']);
-  $data['template_fr']  = sanitize_output($dnotes['cn_template_fr']);
+  $data['global']           = sanitize_output($dnotes['cn_global']);
+  $data['snippets']         = sanitize_output($dnotes['cn_snippets']);
+  $data['template_en']      = sanitize_output($dnotes['cn_template_en']);
+  $data['template_fr']      = sanitize_output($dnotes['cn_template_fr']);
+  $data['links']            = sanitize_output($dnotes['cn_links']);
+  $data['links_formatted']  = '';
+  $data['links_js']         = '';
+
+  // Prepare the admin urls
+  if($dnotes['cn_links'])
+  {
+    // Open the array of links for usage in JS
+    $data['links_js'] = '[';
+
+    // Split the urls
+    $admin_urls = explode("|||", $dnotes['cn_links']);
+
+    // Format the url lists
+    $formatted_admin_urls = '';
+    for($i = 0; $i < count($admin_urls); $i++)
+    {
+      $formatted_admin_urls .= __link($admin_urls[$i], string_truncate($admin_urls[$i], 40, '...'), is_internal: false).'<br>';
+      if($i)
+        $data['links_js'] .= ', ';
+      $data['links_js'] .= "'$admin_urls[$i]'";
+    }
+
+    // Add the formatted page list to the data
+    $data['links_formatted'] = $formatted_admin_urls;
+
+    // Close the array of links for usage in JS
+    $data['links_js'] .= ']';
+  }
 
   // Return the data
   return $data;
@@ -4554,13 +4596,15 @@ function compendium_admin_notes_edit( array $notes_data ) : void
   $notes_snippets     = sanitize_array_element($notes_data, 'snippets', 'string');
   $notes_template_en  = sanitize_array_element($notes_data, 'template_en', 'string');
   $notes_template_fr  = sanitize_array_element($notes_data, 'template_fr', 'string');
+  $notes_links        = sanitize_array_element($notes_data, 'links', 'string');
 
   // Update the admin notes
   query(" UPDATE  compendium_admin_tools
           SET     compendium_admin_tools.global_notes = '$notes_global'       ,
                   compendium_admin_tools.snippets     = '$notes_snippets'     ,
                   compendium_admin_tools.template_en  = '$notes_template_en'  ,
-                  compendium_admin_tools.template_fr  = '$notes_template_fr'  ");
+                  compendium_admin_tools.template_fr  = '$notes_template_fr'  ,
+                  compendium_admin_tools.links        = '$notes_links'        ");
 }
 
 

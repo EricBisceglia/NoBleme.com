@@ -5,6 +5,8 @@
 /*  compendium_autocomplete_url           Updates the datalist used to autocomplete compendium page urls.            */
 /*  compendium_autocomplete_image         Updates the datalist used to autocomplete image file names.                */
 /*                                                                                                                   */
+/*  compendium_page_links_open            Opens all links related to a compendium page.                              */
+/*                                                                                                                   */
 /*  compendium_recalculate_image_links    Triggers the recalculation of all compendium image links.                  */
 /*                                                                                                                   */
 /*  compendium_image_delete               Triggers the deletion or undeletion of a compendium image.                 */
@@ -94,6 +96,23 @@ function compendium_autocomplete_image( image_input_id  ,
 
   // Submit the fetch request
   fetch_page('image_autocomplete', target_element, postdata);
+}
+
+
+
+
+/**
+ * Opens all links related to a compendium page.
+ *
+ * @param   {array}   links   The list of links which should be opened.
+ *
+ * @returns {void}
+ */
+
+function compendium_page_links_open ( links )
+{
+  for(i = 0; i < links.length; i++)
+    window.open(links[i]);
 }
 
 

@@ -74,8 +74,6 @@ EOT
 );
 
 // 21st century compendium
-___('nobleme_home_compendium_title',  'EN', "21st century culture");
-___('nobleme_home_compendium_title',  'FR', "Culture du 21ème siècle");
 ___('nobleme_home_compendium_1',      'EN', <<<EOT
 NoBleme includes the {{link++|pages/compendium/index|21st century compendium|bold|}}: a small encyclopedia documenting some aspects of 21st century culture, including {{link++|pages/compendium/meme|memes|bold|}}, {{link++|pages/compendium/slang|slang|bold|}}, and {{link++|pages/compendium/sociocultural|sociocultural|bold|}} topics.
 EOT

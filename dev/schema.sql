@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS `compendium_admin_tools` (
   `global_notes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `snippets` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `template_en` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `template_fr` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `template_fr` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `links` longtext COLLATE utf8mb4_unicode_ci
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `compendium_categories`;
