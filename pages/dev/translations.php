@@ -56,7 +56,6 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'admin_stats_users_pronouns'        , # Acceptable redundancy
                             'administration'                    , # Nuance in english only
                             'at_date'                           , # Nuance in english only
-                            'compendium_admin_notes_url'        , # Nuance in english only
                             'compendium_category_edit_submit'   , # Nuance in english only
                             'compendium_era_edit_submit'        , # Nuance in english only
                             'compendium_eras_entries'           , # Nuance in english only
@@ -64,6 +63,7 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'compendium_image_list_uploaded'    , # Nuance in english only
                             'compendium_list_admin_menu'        , # Nuance in english only
                             'compendium_list_created'           , # Nuance in french only
+                            'compendium_list_links_url'         , # Nuance in english only
                             'compendium_page_delete_submit'     , # Nuance in english only
                             'compendium_page_draft_submit'      , # Nuance in english only
                             'compendium_page_edit_submit'       , # Nuance in english only
