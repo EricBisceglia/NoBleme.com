@@ -646,6 +646,14 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                           GREATEST  ( compendium_pages.created_at                                 ,
                                       compendium_pages.last_edited_at )       DESC                ,
                                       compendium_pages.title_$lang            ASC                 " ,
+    'seen'          => "  ORDER BY    compendium_pages.last_seen_on           DESC                ,
+                          GREATEST (  compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
+    'seen_r'        => "  ORDER BY    compendium_pages.last_seen_on           ASC                 ,
+                          GREATEST (  compendium_pages.created_at                                 ,
+                                      compendium_pages.last_edited_at )       DESC                ,
+                                      compendium_pages.title_$lang            ASC                 " ,
     'chars_en'      => "  ORDER BY    compendium_pages.character_count_en     DESC                ,
                           GREATEST  ( compendium_pages.created_at                                 ,
                                       compendium_pages.last_edited_at )       DESC                ,
@@ -692,6 +700,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                               compendium_pages.redirection_en     AS 'p_redir_en'   ,
                               compendium_pages.redirection_fr     AS 'p_redir_fr'   ,
                               compendium_pages.view_count         AS 'p_viewcount'  ,
+                              compendium_pages.last_seen_on       AS 'p_seen'       ,
                               compendium_pages.year_appeared      AS 'p_app_year'   ,
                               compendium_pages.month_appeared     AS 'p_app_month'  ,
                               compendium_pages.year_peak          AS 'p_peak_year'  ,
@@ -795,6 +804,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['viewcount']  = ($row['p_viewcount'] > 1)
                             ? sanitize_output(number_display_format($row['p_viewcount'], "number"))
                             : '&nbsp;';
+    $data[$i]['seen']       = ($row['p_seen']) ? sanitize_output(time_since($row['p_seen'])) : '&nbsp;';
     $data[$i]['chars_en']   = ($row['p_chars_en']) ? sanitize_output($row['p_chars_en']) : '-';
     $data[$i]['chars_fr']   = ($row['p_chars_fr']) ? sanitize_output($row['p_chars_fr']) : '-';
 
@@ -1507,8 +1517,8 @@ function compendium_pages_update_pageviews( int     $page_id  ,
                                             string  $page_url )
 {
   // Sanitize the data
-  $page_url = sanitize($page_url, 'string');
-  $page_id  = sanitize($page_id, 'int', 0);
+  $page_url   = sanitize($page_url, 'string');
+  $page_id    = sanitize($page_id, 'int', 0);
 
   // Ensure the compendium page exists
   if(!$page_url || !$page_id || !database_row_exists('compendium_pages', $page_id))
@@ -1519,13 +1529,15 @@ function compendium_pages_update_pageviews( int     $page_id  ,
                                         FROM    stats_pages
                                         WHERE   stats_pages.page_url LIKE '$page_url' "));
 
-  // Sanitize the pageview count
+  // Sanitize the pageview count and the current timestamp
   $view_count = (isset($dviews['sp_count'])) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
+  $timestamp  = sanitize(time(), 'int', 0);
 
   // Update the pageview count
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.view_count = '$view_count'
-          WHERE   compendium_pages.id         = '$page_id' ");
+          SET     compendium_pages.view_count   = '$view_count' ,
+                  compendium_pages.last_seen_on = '$timestamp'
+          WHERE   compendium_pages.id           = '$page_id' ");
 }
 
 
@@ -1837,7 +1849,9 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                                 compendium_images.uploaded_at       DESC    " ,
     'views'   => "  ORDER BY    compendium_images.view_count        DESC    ,
                                 compendium_images.uploaded_at       DESC    " ,
-    'deleted' =>  " ORDER BY    compendium_images.is_deleted        DESC    ,
+    'seen'    => "  ORDER BY    compendium_images.last_seen_on      DESC    ,
+                                compendium_images.uploaded_at       DESC    " ,
+    'deleted' => "  ORDER BY    compendium_images.is_deleted        DESC    ,
                                 compendium_images.uploaded_at       DESC    " ,
     default   => "  ORDER BY    compendium_images.uploaded_at       DESC    " ,
   };
@@ -1849,6 +1863,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                               compendium_images.file_name         AS 'ci_name'        ,
                               compendium_images.tags              AS 'ci_tags'        ,
                               compendium_images.view_count        AS 'ci_viewcount'   ,
+                              compendium_images.last_seen_on      AS 'ci_seen'        ,
                               compendium_images.is_nsfw           AS 'ci_nsfw'        ,
                               compendium_images.is_gross          AS 'ci_gross'       ,
                               compendium_images.is_offensive      AS 'ci_offensive'   ,
@@ -1892,6 +1907,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
     $data[$i]['views']      = ($row['ci_viewcount'] > 1)
                             ? sanitize_output(number_display_format($row['ci_viewcount'], "number"))
                             : '&nbsp;';
+    $data[$i]['seen']       = ($row['ci_seen']) ? sanitize_output(time_since($row['ci_seen'])) : '&nbsp;';
   }
 
   // Add the number of rows to the data
@@ -2455,13 +2471,15 @@ function compendium_images_update_pageviews(  int     $image_id ,
                                         FROM    stats_pages
                                         WHERE   stats_pages.page_url LIKE '$page_url' "));
 
-  // Sanitize the pageview count
+  // Sanitize the pageview count and the current timestamp
   $view_count = (isset($dviews['sp_count']) && $dviews['sp_count']) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
+  $timestamp  = sanitize(time(), 'int', 0);
 
   // Update the pageview count
   query(" UPDATE  compendium_images
-          SET     compendium_images.view_count  = '$view_count'
-          WHERE   compendium_images.id          = '$image_id' ");
+          SET     compendium_images.view_count    = '$view_count' ,
+                  compendium_images.last_seen_on  = '$timestamp'
+          WHERE   compendium_images.id            = '$image_id' ");
 }
 
 

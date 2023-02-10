@@ -680,3 +680,23 @@ if($last_query < 44)
 
   sql_update_query_id(44);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Store last visit on pages and images + add some missing indexes
+
+if($last_query < 45)
+{
+  sql_create_field('compendium_pages', 'last_seen_on', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count');
+  sql_create_field('compendium_images', 'last_seen_on', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count');
+  sql_create_index('compendium_pages', 'index_seen', 'last_seen_on');
+  sql_create_index('compendium_images', 'index_seen', 'last_seen_on');
+
+  sql_create_index('compendium_pages', 'index_views', 'view_count');
+  sql_create_index('compendium_images', 'index_views', 'view_count');
+  sql_create_index('compendium_images', 'index_uploaded', 'uploaded_at');
+
+  sql_update_query_id(45);
+}

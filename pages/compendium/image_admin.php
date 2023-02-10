@@ -203,7 +203,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
 <hr>
 
-<div class="width_80 autoscroll">
+<div class="width_90 autoscroll">
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__('compendium_image_list_title')?>
@@ -240,6 +240,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <?=__('view+')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('views');")?>
+        </th>
+        <th>
+          <?=__('compendium_image_list_seen')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_image_list_search('seen');")?>
         </th>
         <th>
           <?=__('text')?>
@@ -290,7 +294,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </select>
         </th>
 
-        <th>
+        <th colspan="2">
           &nbsp;
         </th>
 
@@ -337,7 +341,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php } ?>
 
       <tr>
-        <td colspan="11" class="uppercase text_light dark bold align_center">
+        <td colspan="12" class="uppercase text_light dark bold align_center">
           <?=__('compendium_image_list_count', preset_values: array($compendium_images_list['rows']))?>
         </td>
       </tr>
@@ -413,6 +417,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center">
           <?=$compendium_images_list[$i]['views']?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_images_list[$i]['seen']?>
         </td>
 
         <td class="align_center">
