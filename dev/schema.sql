@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `compendium_images` (
   `file_name` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tags` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `view_count` int UNSIGNED NOT NULL DEFAULT '0',
+  `last_seen_on` int UNSIGNED NOT NULL DEFAULT '0',
   `is_nsfw` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_gross` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_offensive` tinyint UNSIGNED NOT NULL DEFAULT '0',
@@ -54,7 +55,10 @@ CREATE TABLE IF NOT EXISTS `compendium_images` (
   `caption_en` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `caption_fr` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_deleted` (`is_deleted`)
+  KEY `index_deleted` (`is_deleted`),
+  KEY `index_seen` (`last_seen_on`),
+  KEY `index_views` (`view_count`),
+  KEY `index_uploaded` (`uploaded_at`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `compendium_missing`;
@@ -85,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   `redirection_fr` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_external_redirection` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `view_count` int UNSIGNED NOT NULL DEFAULT '0',
+  `last_seen_on` int UNSIGNED NOT NULL DEFAULT '0',
   `year_appeared` smallint UNSIGNED NOT NULL DEFAULT '0',
   `month_appeared` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `year_peak` smallint UNSIGNED NOT NULL DEFAULT '0',
@@ -108,7 +113,9 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   KEY `index_url` (`page_url`(250)),
   KEY `index_appeared` (`year_appeared`,`month_appeared`),
   KEY `index_spread` (`year_peak`,`month_peak`),
-  KEY `index_deleted` (`is_deleted`)
+  KEY `index_deleted` (`is_deleted`),
+  KEY `index_seen` (`last_seen_on`),
+  KEY `index_views` (`view_count`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `compendium_pages_categories`;
