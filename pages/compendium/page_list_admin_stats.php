@@ -116,6 +116,11 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_stats_search('pageviews_r');")?>
         </th>
         <th>
+          <?=__('compendium_list_stats_seen')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_stats_search('seen');")?>
+          <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_stats_search('seen_r');")?>
+        </th>
+        <th>
           <?=__('compendium_list_stats_chars_en')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_stats_search('chars_en');")?>
           <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_stats_search('chars_en_r');")?>
@@ -174,7 +179,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           </select>
         </th>
 
-        <th colspan="3">
+        <th colspan="4">
           &nbsp;
         </th>
 
@@ -187,7 +192,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php } ?>
 
       <tr>
-        <td colspan="8" class="uppercase text_light dark bold align_center">
+        <td colspan="9" class="uppercase text_light dark bold align_center">
           <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
         </td>
       </tr>
@@ -236,6 +241,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center">
           <?=$compendium_pages_list[$i]['viewcount']?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['seen']?>
         </td>
 
         <td class="align_center">

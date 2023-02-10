@@ -445,6 +445,8 @@ ___('compendium_list_stats_menu',     'EN', "Page stats");
 ___('compendium_list_stats_menu',     'FR', "Stats des pages");
 ___('compendium_list_stats_views',    'EN', "Page<br>views");
 ___('compendium_list_stats_views',    'FR', "Vues<br>page");
+___('compendium_list_stats_seen',     'EN', "Last seen");
+___('compendium_list_stats_seen',     'FR', "Dernière<br>visite");
 ___('compendium_list_stats_chars_en', 'EN', "Length<br>EN");
 ___('compendium_list_stats_chars_en', 'FR', "Longueur<br>EN");
 ___('compendium_list_stats_chars_fr', 'EN', "Length<br>FR");
