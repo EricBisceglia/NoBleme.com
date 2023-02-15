@@ -15,6 +15,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 // Header
 ___('quotes_add',           'EN', "Submit a quote proposal");
 ___('quotes_add',           'FR', "Proposer une citation");
+___('quotes_refresh',       'EN', "Recalculate all linked users");
+___('quotes_refresh',       'FR', "Recalculer tous les comptes liés");
+___('quotes_refresh_go',    'EN', "Confirm that you want to recalculate all linked users");
+___('quotes_refresh_go',    'FR', "Confirmer que vous désirez recalculer tous les comptes liés");
 ___('quotes_back',          'EN', "Back to normal list");
 ___('quotes_back',          'FR', "Retour à la liste normale");
 ___('quotes_waiting',       'EN', "Quotes awaiting approval");

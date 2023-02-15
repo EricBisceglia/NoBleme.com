@@ -22,6 +22,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  quotes_link_user                Links a user to an existing quote.                                               */
 /*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
+/*  quotes_update_linked_users      Updates the list of users linked to a quote.                                     */
+/*  quotes_update_all_linked_users  Updates the list of users linked to every single quote.                         */
 /*                                                                                                                   */
 /*  quotes_stats_list               Returns stats related to quotes.                                                 */
 /*  quotes_stats_get_oldest_year    Returns the year in which the oldest quote took place.                           */
@@ -248,7 +250,8 @@ function quotes_list( ?array  $search         = array() ,
                           quotes.is_nsfw                                                          AS 'q_nsfw'     ,
                           quotes.is_deleted                                                       AS 'q_deleted'  ,
                           quotes.admin_validation                                                 AS 'q_public'   ,
-                          quotes.body                                                             AS 'q_body'
+                          quotes.body                                                             AS 'q_body'     ,
+                          quotes.linked_users                                                     AS 'q_linked'
                 FROM      quotes
                 LEFT JOIN quotes_users                  ON  quotes.id               = quotes_users.fk_quotes
                 LEFT JOIN users         AS linked_users ON  quotes_users.fk_users   = linked_users.id
@@ -264,21 +267,53 @@ function quotes_list( ?array  $search         = array() ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($dquotes); $i++)
   {
-    $data[$i]['id']           = $row['q_id'];
-    $data[$i]['date']         = ($row['q_date'])
-                              ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
-                              : __('quotes_nodate');
-    $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
-    $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
-    $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
-    $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
-                              ? $linked_id_count
-                              : 0;
-    $data[$i]['nsfw']         = $row['q_nsfw'];
-    $data[$i]['deleted']      = $row['q_deleted'];
-    $data[$i]['validated']    = $row['q_public'];
-    $data[$i]['body']         = sanitize_output($row['q_body'], true);
-    $data[$i]['meta_desc']    = string_truncate($row['q_body'], 250, '...');
+    $data[$i]['id']             = $row['q_id'];
+    $data[$i]['date']           = ($row['q_date'])
+                                ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
+                                : __('quotes_nodate');
+    $data[$i]['nsfw']           = $row['q_nsfw'];
+    $data[$i]['deleted']        = $row['q_deleted'];
+    $data[$i]['validated']      = $row['q_public'];
+    $data[$i]['body']           = sanitize_output($row['q_body'], true);
+    $data[$i]['meta_desc']      = string_truncate($row['q_body'], 250, '...');
+
+    // Fetch linked users the regular way in most cases
+    if(!$search_user)
+    {
+      $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
+      $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
+      $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
+      $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
+                                ? $linked_id_count
+                                : 0;
+    }
+
+    // Fetch linked users from the data in `quotes` when filtering by user
+    else
+    {
+      // Decode the JSON containing the users
+      $linked_users       = json_decode($row['q_linked'], associative: true);
+      $linked_users_count = (isset($linked_users['rows'])) ? $linked_users['rows'] : 0;
+
+      // Reset the fields
+      $linked_ids   = array();
+      $linked_nicks = array();
+
+      // Assemble the user list from the json
+      if($linked_users_count)
+      {
+        for($j = 0; $j < $linked_users_count; $j++)
+        {
+          $linked_ids[$j]   = $linked_users[$j]['id'];
+          $linked_nicks[$j] = $linked_users[$j]['username'];
+        }
+      }
+
+      // Prepare the returned data
+      $data[$i]['linked_ids']   = $linked_ids;
+      $data[$i]['linked_nicks'] = $linked_nicks;
+      $data[$i]['linked_count'] = $linked_users_count;
+    }
   }
 
   // Add the language filters to the data
@@ -812,6 +847,7 @@ function quotes_link_user(  int     $quote_id ,
                       quotes_users.fk_users   = '$user_id'  ");
 
   // Recalculate the linked users' stats
+  quotes_update_linked_users($quote_id);
   quotes_stats_recalculate_user($user_id);
 
   // ALl went well
@@ -853,8 +889,68 @@ function quotes_unlink_user(  int     $quote_id ,
           WHERE       quotes_users.fk_quotes  = '$quote_id'
           AND         quotes_users.fk_users   = '$user_id' ");
 
-   // Recalculate the linked users' stats
-   quotes_stats_recalculate_user($user_id);
+  // Recalculate the linked users' stats
+  quotes_update_linked_users($quote_id);
+  quotes_stats_recalculate_user($user_id);
+}
+
+
+
+
+/**
+ * Updates the list of users linked to a quote.
+ *
+ * @param   int   $quote_id   The quote's id.
+ *
+ * @return void
+ */
+
+function quotes_update_linked_users( int $quote_id ) : void
+{
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id || !database_row_exists('quotes', $quote_id))
+    return;
+
+  // Fetch the users linked to the quote
+  $quote_users = quotes_get_linked_users($quote_id);
+
+  // Prepare the data
+  $linked_users = json_encode($quote_users);
+
+  // Update the linked users
+  query(" UPDATE  quotes
+          SET     quotes.linked_users = '$linked_users'
+          WHERE   quotes.id           = '$quote_id' ");
+}
+
+
+
+
+/**
+ * Updates the list of users linked to every single quote.
+ *
+ * @return void
+ */
+
+function quotes_update_all_linked_users() : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Fetch every quote
+  $qquotes = query("  SELECT    quotes.id AS 'q_id'
+                      FROM      quotes
+                      ORDER BY  quotes.id ASC");
+
+  // Loop through the quotes and update their linked users
+  while($dquotes = mysqli_fetch_array($qquotes))
+  {
+    $quote_id = sanitize($dquotes['q_id'], 'int', 0);
+    quotes_update_linked_users($quote_id);
+  }
 }
 
 
