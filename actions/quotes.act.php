@@ -22,6 +22,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  quotes_link_user                Links a user to an existing quote.                                               */
 /*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
+/*  quotes_update_linked_users      Updates the list of users linked to a quote.                                     */
 /*                                                                                                                   */
 /*  quotes_stats_list               Returns stats related to quotes.                                                 */
 /*  quotes_stats_get_oldest_year    Returns the year in which the oldest quote took place.                           */
@@ -812,6 +813,7 @@ function quotes_link_user(  int     $quote_id ,
                       quotes_users.fk_users   = '$user_id'  ");
 
   // Recalculate the linked users' stats
+  quotes_update_linked_users($quote_id);
   quotes_stats_recalculate_user($user_id);
 
   // ALl went well
@@ -853,8 +855,41 @@ function quotes_unlink_user(  int     $quote_id ,
           WHERE       quotes_users.fk_quotes  = '$quote_id'
           AND         quotes_users.fk_users   = '$user_id' ");
 
-   // Recalculate the linked users' stats
-   quotes_stats_recalculate_user($user_id);
+  // Recalculate the linked users' stats
+  quotes_update_linked_users($quote_id);
+  quotes_stats_recalculate_user($user_id);
+}
+
+
+
+
+/**
+ * Updates the list of users linked to a quote.
+ *
+ * @param   int   $quote_id   The quote's id.
+ *
+ * @return void
+ */
+
+function quotes_update_linked_users( int $quote_id ) : void
+{
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id || !database_row_exists('quotes', $quote_id))
+    return;
+
+  // Fetch the users linked to the quote
+  $quote_users = quotes_get_linked_users($quote_id);
+
+  // Prepare the data
+  $linked_users = json_encode($quote_users);
+
+  // Update the linked users
+  query(" UPDATE  quotes
+          SET     quotes.linked_users = '$linked_users'
+          WHERE   quotes.id           = '$quote_id' ");
 }
 
 
