@@ -700,3 +700,16 @@ if($last_query < 45)
 
   sql_update_query_id(45);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Quotes: Replicate linked users data
+
+if($last_query < 46)
+{
+  sql_create_field('quotes', 'linked_users', 'JSON', 'body');
+
+  sql_update_query_id(46);
+}

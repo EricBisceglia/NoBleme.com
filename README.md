@@ -22,7 +22,7 @@ Installing a pre-assembled LAMP/MAMP/WAMP stack (depending on your OS) will let 
 
 2. Have PHP 8.0 or above installed and working within Apache.
 
-3. Have MySQL 5.6 or above installed and running, create an empty database named `nobleme` with the `utf8mb4` charset.
+3. Have MySQL 8.0 or above installed and running, create an empty database named `nobleme` with the `utf8mb4` charset.
 
 4. Clone the source code of NoBleme (checkout the `trunk` branch for the current production release) and place it anywhere in your local `www` folder.
 

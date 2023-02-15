@@ -349,6 +349,7 @@ CREATE TABLE IF NOT EXISTS `quotes` (
   `is_nsfw` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `language` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `linked_users` json DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_submitter` (`fk_users_submitter`),
   KEY `index_deleted` (`is_deleted`)
