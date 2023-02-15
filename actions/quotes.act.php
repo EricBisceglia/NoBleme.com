@@ -23,6 +23,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  quotes_link_user                Links a user to an existing quote.                                               */
 /*  quotes_unlink_user              Unlinks a user from an existing quote.                                           */
 /*  quotes_update_linked_users      Updates the list of users linked to a quote.                                     */
+/*  quotes_update_all_linked_users  Updates the list of users linked to every single quote.                         */
 /*                                                                                                                   */
 /*  quotes_stats_list               Returns stats related to quotes.                                                 */
 /*  quotes_stats_get_oldest_year    Returns the year in which the oldest quote took place.                           */
@@ -890,6 +891,33 @@ function quotes_update_linked_users( int $quote_id ) : void
   query(" UPDATE  quotes
           SET     quotes.linked_users = '$linked_users'
           WHERE   quotes.id           = '$quote_id' ");
+}
+
+
+
+
+/**
+ * Updates the list of users linked to every single quote.
+ *
+ * @return void
+ */
+
+function quotes_update_all_linked_users() : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Fetch every quote
+  $qquotes = query("  SELECT    quotes.id AS 'q_id'
+                      FROM      quotes
+                      ORDER BY  quotes.id ASC");
+
+  // Loop through the quotes and update their linked users
+  while($dquotes = mysqli_fetch_array($qquotes))
+  {
+    $quote_id = sanitize($dquotes['q_id'], 'int', 0);
+    quotes_update_linked_users($quote_id);
+  }
 }
 
 

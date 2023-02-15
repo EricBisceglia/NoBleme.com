@@ -28,6 +28,18 @@ $js = array('quotes/list');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Recalculate all linked users
+
+if($is_admin && isset($_GET['recalculate_linked_users']))
+{
+  quotes_update_all_linked_users();
+  exit(header("Location: ./list"));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Update user quote settings
 
 if(user_is_logged_in() && isset($_POST['quotes_lang_en']) && isset($_POST['quotes_lang_fr']))
@@ -140,12 +152,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__icon('stats', alt: 's', title: string_change_case(__('statistics'), 'initials'), href: "pages/quotes/stats")?>
     <?=__icon('add', alt: '+', title: __('quotes_add'), href: "pages/quotes/submit")?>
     <?php if($is_admin) { ?>
+    <?=__icon('refresh', alt: 'R', title: __('quotes_refresh'), href: "pages/quotes/list?recalculate_linked_users", confirm: __('quotes_refresh_go'));?>
     <?php if($quotes_waitlist) { ?>
-    <?=__icon('refresh', alt: 'R', title: __('quotes_back'), href: "pages/quotes/list")?>
+    <?=__icon('user_delete', alt: 'N', title: __('quotes_back'), href: "pages/quotes/list")?>
     <?php } if(!$quotes_waitlist) { ?>
     <?=__icon('user_confirm', alt: 'O', title: __('quotes_waiting'), href: "pages/quotes/list?waiting")?>
     <?php } if($quotes_deleted) { ?>
-      <?=__icon('refresh', alt: 'R', title: __('quotes_back'), href: "pages/quotes/list")?>
+      <?=__icon('user_delete', alt: 'N', title: __('quotes_back'), href: "pages/quotes/list")?>
     <?php } if(!$quotes_deleted) { ?>
     <?=__icon('delete', alt: 'X', title: __('quotes_deleted'), href: "pages/quotes/list?deleted")?>
     <?php } ?>
