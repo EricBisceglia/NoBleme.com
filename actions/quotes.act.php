@@ -203,6 +203,10 @@ function quotes_list( ?array  $search         = array() ,
   $search_user = sanitize_array_element($search, 'user', 'int', min: 0, default: 0);
   $search_year = sanitize_array_element($search, 'year', 'int', min: -1, default: 0);
 
+  // In case of fitering on a non existent user, reset the search
+  if($search_user && !database_row_exists('users', $search_user))
+    $search_user = 0;
+
   // View a single quote
   if($quote_id && $is_admin)
     $query_search = " WHERE quotes.id               = '$quote_id' ";
@@ -304,15 +308,15 @@ function quotes_list( ?array  $search         = array() ,
       {
         for($j = 0; $j < $linked_users_count; $j++)
         {
-          $linked_ids[$j]   = $linked_users[$j]['id'];
-          $linked_nicks[$j] = $linked_users[$j]['username'];
+          $linked_ids[$j]   = sanitize_output($linked_users[$j]['id']);
+          $linked_nicks[$j] = sanitize_output($linked_users[$j]['username']);
         }
       }
 
       // Prepare the returned data
       $data[$i]['linked_ids']   = $linked_ids;
       $data[$i]['linked_nicks'] = $linked_nicks;
-      $data[$i]['linked_count'] = $linked_users_count;
+      $data[$i]['linked_count'] = sanitize_output($linked_users_count);
     }
   }
 
