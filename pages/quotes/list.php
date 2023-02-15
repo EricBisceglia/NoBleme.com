@@ -158,7 +158,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } if(!$quotes_waitlist) { ?>
     <?=__icon('user_confirm', alt: 'O', title: __('quotes_waiting'), href: "pages/quotes/list?waiting")?>
     <?php } if($quotes_deleted) { ?>
-      <?=__icon('user_delete', alt: 'N', title: __('quotes_back'), href: "pages/quotes/list")?>
+      <?=__icon('done', alt: 'N', title: __('quotes_back'), href: "pages/quotes/list")?>
     <?php } if(!$quotes_deleted) { ?>
     <?=__icon('delete', alt: 'X', title: __('quotes_deleted'), href: "pages/quotes/list?deleted")?>
     <?php } ?>

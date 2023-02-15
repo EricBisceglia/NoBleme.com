@@ -250,7 +250,8 @@ function quotes_list( ?array  $search         = array() ,
                           quotes.is_nsfw                                                          AS 'q_nsfw'     ,
                           quotes.is_deleted                                                       AS 'q_deleted'  ,
                           quotes.admin_validation                                                 AS 'q_public'   ,
-                          quotes.body                                                             AS 'q_body'
+                          quotes.body                                                             AS 'q_body'     ,
+                          quotes.linked_users                                                     AS 'q_linked'
                 FROM      quotes
                 LEFT JOIN quotes_users                  ON  quotes.id               = quotes_users.fk_quotes
                 LEFT JOIN users         AS linked_users ON  quotes_users.fk_users   = linked_users.id
@@ -266,21 +267,53 @@ function quotes_list( ?array  $search         = array() ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($dquotes); $i++)
   {
-    $data[$i]['id']           = $row['q_id'];
-    $data[$i]['date']         = ($row['q_date'])
-                              ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
-                              : __('quotes_nodate');
-    $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
-    $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
-    $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
-    $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
-                              ? $linked_id_count
-                              : 0;
-    $data[$i]['nsfw']         = $row['q_nsfw'];
-    $data[$i]['deleted']      = $row['q_deleted'];
-    $data[$i]['validated']    = $row['q_public'];
-    $data[$i]['body']         = sanitize_output($row['q_body'], true);
-    $data[$i]['meta_desc']    = string_truncate($row['q_body'], 250, '...');
+    $data[$i]['id']             = $row['q_id'];
+    $data[$i]['date']           = ($row['q_date'])
+                                ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
+                                : __('quotes_nodate');
+    $data[$i]['nsfw']           = $row['q_nsfw'];
+    $data[$i]['deleted']        = $row['q_deleted'];
+    $data[$i]['validated']      = $row['q_public'];
+    $data[$i]['body']           = sanitize_output($row['q_body'], true);
+    $data[$i]['meta_desc']      = string_truncate($row['q_body'], 250, '...');
+
+    // Fetch linked users the regular way in most cases
+    if(!$search_user)
+    {
+      $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
+      $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
+      $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
+      $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
+                                ? $linked_id_count
+                                : 0;
+    }
+
+    // Fetch linked users from the data in `quotes` when filtering by user
+    else
+    {
+      // Decode the JSON containing the users
+      $linked_users       = json_decode($row['q_linked'], associative: true);
+      $linked_users_count = (isset($linked_users['rows'])) ? $linked_users['rows'] : 0;
+
+      // Reset the fields
+      $linked_ids   = array();
+      $linked_nicks = array();
+
+      // Assemble the user list from the json
+      if($linked_users_count)
+      {
+        for($j = 0; $j < $linked_users_count; $j++)
+        {
+          $linked_ids[$j]   = $linked_users[$j]['id'];
+          $linked_nicks[$j] = $linked_users[$j]['username'];
+        }
+      }
+
+      // Prepare the returned data
+      $data[$i]['linked_ids']   = $linked_ids;
+      $data[$i]['linked_nicks'] = $linked_nicks;
+      $data[$i]['linked_count'] = $linked_users_count;
+    }
   }
 
   // Add the language filters to the data
