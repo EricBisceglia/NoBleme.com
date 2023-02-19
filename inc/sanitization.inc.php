@@ -432,5 +432,5 @@ function sanitize_json( string $data ) : string
 function sanitize_api_output( array $data ) : string
 {
   // Return the data as JSON
-  return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
+  return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 }

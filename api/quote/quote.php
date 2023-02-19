@@ -30,6 +30,10 @@ $quote = quotes_get(  quote_id:   $quote_id ,
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Output the quote as JSON
 
+// Throw a 404 if necessary
+if(!$quote)
+  exit(header("HTTP/1.0 404 Not Found"));
+
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 

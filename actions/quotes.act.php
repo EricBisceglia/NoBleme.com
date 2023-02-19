@@ -52,7 +52,7 @@ function quotes_get(  int   $quote_id           ,
 
   // Check if the quote exists
   if(!database_row_exists('quotes', $quote_id))
-    return ($is_for_api) ? array('quote' => NULL, 'users' => NULL) : NULL;
+    return NULL;
 
   // Fetch the data
   $dquote = mysqli_fetch_array(query("  SELECT    quotes.is_deleted       AS 'q_deleted'      ,
@@ -86,7 +86,7 @@ function quotes_get(  int   $quote_id           ,
   {
     // Return nothing if the quote is deleted or unvalidated
     if($dquote['q_deleted'] || !$dquote['q_validated'])
-      return array('quote' => NULL, 'users' => NULL);
+      return NULL;
 
     // Prepare the output for the API
     $api['quote']['id']       = (string)$quote_id;
@@ -122,7 +122,7 @@ function quotes_get(  int   $quote_id           ,
 
   // Return the prepared data
   if($is_for_api)
-    return (isset($api)) ? $api : array('quote' => NULL, 'users' => NULL);
+    return (isset($api)) ? $api : NULL;
   else
     return $data;
 }
@@ -364,9 +364,9 @@ function quotes_list( ?array  $search         = array() ,
       }
 
       // Prepare the returned data
-      $data[$i]['linked_ids']   = $linked_ids;
-      $data[$i]['linked_nicks'] = $linked_nicks;
-      $data[$i]['linked_count'] = sanitize_output($linked_users_count);
+      $data['linked_ids']   = $linked_ids;
+      $data['linked_nicks'] = $linked_nicks;
+      $data['linked_count'] = sanitize_output($linked_users_count);
     }
 
     // Prepare the JSON output for the API
@@ -382,8 +382,8 @@ function quotes_list( ?array  $search         = array() ,
       if($row['q_date'])
       {
         $quote_date = date_to_aware_datetime($row['q_date']);
-        $api['quote']['added_at']['datetime'] = $quote_date['datetime'];
-        $api['quote']['added_at']['timezone'] = $quote_date['timezone'];
+        $api[$i]['quote']['added_at']['datetime'] = $quote_date['datetime'];
+        $api[$i]['quote']['added_at']['timezone'] = $quote_date['timezone'];
       }
       else
         $api[$i]['quote']['added_at'] = NULL;
@@ -396,9 +396,9 @@ function quotes_list( ?array  $search         = array() ,
         $user_link_count        = count($linked_users_id);
         for($j = 0; $j < $user_link_count; $j++)
         {
-          $api[$i]['users'][$j]['id']       = $linked_users_id[$j];
-          $api[$i]['users'][$j]['username'] = $linked_users_usernames[$j];
-          $api[$i]['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$linked_users_id[$j];
+          $api[$i]['quote']['users'][$j]['id']        = $linked_users_id[$j];
+          $api[$i]['quote']['users'][$j]['username']  = $linked_users_usernames[$j];
+          $api[$i]['quote']['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$linked_users_id[$j];
         }
       }
 
@@ -407,15 +407,15 @@ function quotes_list( ?array  $search         = array() ,
       {
         for($j = 0; $j < $linked_users_count; $j++)
         {
-          $api[$i]['users'][$j]['id']       = $linked_ids[$j];
-          $api[$i]['users'][$j]['username'] = $linked_nicks[$j];
-          $api[$i]['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$linked_ids[$j];
+          $api[$i]['quote']['users'][$j]['id']        = $linked_ids[$j];
+          $api[$i]['quote']['users'][$j]['username']  = $linked_nicks[$j];
+          $api[$i]['quote']['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$linked_ids[$j];
         }
       }
 
       // Return null when there are no linked users
       else
-        $api[$i]['users'] = NULL;
+        $api[$i]['quote']['users'] = NULL;
     }
   }
 
