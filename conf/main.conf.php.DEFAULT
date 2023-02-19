@@ -15,6 +15,7 @@ $GLOBALS['mysql_host']      = '127.0.0.1';            // MySQL server address
 $GLOBALS['mysql_user']      = 'user';                 // MySQL user login
 $GLOBALS['mysql_pass']      = 'password';             // MySQL user password
 $GLOBALS['salt_key']        = '$6$somestring$';       // String used by crypt() to hash passwords
+$GLOBALS['timezone']        = 'Europe/Paris';         // Default timezone used by the website for datetime calculations
 $GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not at server root, this is the number
                                                       /  of folders between the root and NoBleme. example:
                                                       /  if NoBleme is at http://example.com/ leave this as 0

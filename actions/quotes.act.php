@@ -90,10 +90,20 @@ function quotes_get(  int   $quote_id           ,
 
     // Prepare the output for the API
     $api['quote']['id']       = (string)$quote_id;
-    $api['quote']['added_at'] = ($dquote['q_date']) ? date_to_aware_datetime($dquote['q_date']) : NULL;
     $api['quote']['is_nsfw']  = (bool)$dquote['q_nsfw'];
+    $api['quote']['language'] = $dquote['q_lang'];
     $api['quote']['link']     = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
     $api['quote']['body']     = sanitize_json($dquote['q_body']);
+
+    // Handle the datetime
+    if($dquote['q_date'])
+    {
+      $quote_date = date_to_aware_datetime($dquote['q_date']);
+      $api['quote']['added_at']['datetime'] = $quote_date['datetime'];
+      $api['quote']['added_at']['timezone'] = $quote_date['timezone'];
+    }
+    else
+      $api['quote']['added_at'] = NULL;
 
     // Add linked users to the returned data
     $quote_users = quotes_get_linked_users($quote_id, exclude_deleted: true);
@@ -293,6 +303,7 @@ function quotes_list( ?array  $search         = array() ,
                           quotes.is_nsfw                                                          AS 'q_nsfw'     ,
                           quotes.is_deleted                                                       AS 'q_deleted'  ,
                           quotes.admin_validation                                                 AS 'q_public'   ,
+                          quotes.language                                                         AS 'q_lang'     ,
                           quotes.body                                                             AS 'q_body'     ,
                           quotes.linked_users                                                     AS 'q_linked'
                 FROM      quotes
@@ -362,10 +373,20 @@ function quotes_list( ?array  $search         = array() ,
     if($is_for_api)
     {
       $api[$i]['quote']['id']       = $row['q_id'];
-      $api[$i]['quote']['added_at'] = ($row['q_date']) ? date_to_aware_datetime($row['q_date']) : NULL;
       $api[$i]['quote']['is_nsfw']  = (bool)$row['q_nsfw'];
+      $api[$i]['quote']['language'] = $row['q_lang'];
       $api[$i]['quote']['link']     = $GLOBALS['website_url'].'pages/quotes/'.$row['q_id'];
       $api[$i]['quote']['body']     = sanitize_json($row['q_body']);
+
+      // Handle the datetime
+      if($row['q_date'])
+      {
+        $quote_date = date_to_aware_datetime($row['q_date']);
+        $api['quote']['added_at']['datetime'] = $quote_date['datetime'];
+        $api['quote']['added_at']['timezone'] = $quote_date['timezone'];
+      }
+      else
+        $api[$i]['quote']['added_at'] = NULL;
 
       // Handle linked users
       if(!$search_user == $row['lu_id'] && $row['lu_nick'])

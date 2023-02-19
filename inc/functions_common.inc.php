@@ -722,14 +722,18 @@ function date_to_mysql( string  $date                   ,
  *
  * @param   int     $timestamp  The timestamp which will be converted.
  *
- * @param   string              An aware datetime.
+ * @param   array               An array containing enough information to be an aware datetime.
  */
 
 
-function date_to_aware_datetime( int $timestamp ) : string
+function date_to_aware_datetime( int $timestamp ) : array
 {
+  // Assemble an array with the datetime and its timezone
+  $datetime['datetime'] = date('c', $timestamp);
+  $datetime['timezone'] = $GLOBALS['timezone'];
+
   // Convert and return the timestamp
-  return date('c', $timestamp);
+  return $datetime;
 }
 
 

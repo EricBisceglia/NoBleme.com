@@ -33,6 +33,7 @@ $GLOBALS['domain_name']     = isset($GLOBALS['domain_name'])      ? $GLOBALS['do
 $GLOBALS['mysql_host']      = isset($GLOBALS['mysql_host'])       ? $GLOBALS['mysql_host']      : 'localhost';
 $GLOBALS['mysql_user']      = isset($GLOBALS['mysql_user'])       ? $GLOBALS['mysql_user']      : 'nobleme';
 $GLOBALS['salt_key']        = isset($GLOBALS['salt_key'])         ? $GLOBALS['salt_key']        : '$6$somestring$';
+$GLOBALS['timezone']        = isset($GLOBALS['timezone'])         ? $GLOBALS['timezone']        : 'Europe/Paris';
 $GLOBALS['extra_folders']   = isset($GLOBALS['extra_folders'])    ? $GLOBALS['extra_folders']   : 0;
 $GLOBALS['enable_scripts']  = isset($GLOBALS['enable_scripts'])   ? $GLOBALS['enable_scripts']  : 0;
 $GLOBALS['enable_irc_bot']  = isset($GLOBALS['enable_irc_bot'])   ? $GLOBALS['enable_irc_bot']  : 0;
@@ -40,7 +41,7 @@ $GLOBALS['enable_discord']  = isset($GLOBALS['enable_discord'])   ? $GLOBALS['en
 $GLOBALS['dev_mode']        = isset($GLOBALS['dev_mode'])         ? $GLOBALS['dev_mode']        : 0;
 
 // Enforce a global timezone on the server side
-date_default_timezone_set('Europe/Paris');
+date_default_timezone_set($GLOBALS['timezone']);
 
 // Use french as the locale for everything
 setlocale(LC_ALL, "fr_FR@euro", "fr_FR", "fra_fra");
