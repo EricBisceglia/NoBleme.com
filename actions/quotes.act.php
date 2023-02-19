@@ -186,33 +186,73 @@ function quotes_get_linked_users( int   $quote_id                 ,
 /**
  * Returns a random quote ID.
  *
- * @return  int   A random quote's ID, in the user's allowed languages.
+ * @param   array   $search       (OPTIONAL)  Specifies search parameters for the randomly returned quote.
+ * @param   bool    $is_for_api   (OPTIONAL)  Return data for the API instead of a regular page.
+ *
+ * @return  int                               A random quote's ID, in the user's allowed languages.
  */
 
-function quotes_get_random_id() : int
+function quotes_get_random_id(  array $search     = array() ,
+                                bool  $is_for_api = false   ) : int
 {
   // Fetch the user's quotes related language settings
   $settings = user_settings_quotes();
 
+  // Sanitize the search parameters
+  $search_lang  = sanitize_array_element($search, 'lang', 'string', default: NULL);
+  $search_nsfw  = sanitize_array_element($search, 'nsfw', 'int', 0, 1, default: -1);
+  $search_user  = sanitize_array_element($search, 'user', 'int', 0);
+  $search_year  = sanitize_array_element($search, 'year', 'int', 0);
+
   // Assemble the language settings into an extra query condition
-  if($settings['show_en'] && !$settings['show_fr'])
-    $limit_lang = " AND quotes.language LIKE 'EN' ";
-  else if($settings['show_fr'] && !$settings['show_en'])
-    $limit_lang = " AND quotes.language LIKE 'FR' ";
+  if(!$is_for_api && $settings['show_en'] && !$settings['show_fr'])
+    $search_lang = " AND quotes.language LIKE 'EN' ";
+  else if(!$is_for_api && $settings['show_fr'] && !$settings['show_en'])
+    $search_lang = " AND quotes.language LIKE 'FR' ";
+  else if($search_lang)
+    $search_lang = " AND quotes.language LIKE '%$search_lang%' ";
   else
-    $limit_lang = '';
+    $search_lang = '';
+
+  // Search for quotes including a specific user id
+  if($search_user)
+  {
+    // Return no quote if the user does not exist
+    if(!database_row_exists('users', $search_user))
+      return 0;
+
+    // Join quotes with matching user ids
+    $join_user    = " LEFT JOIN quotes_users
+                      ON        quotes_users.fk_quotes = quotes.id ";
+    $search_user  = " AND quotes_users.fk_users = '$search_user' ";
+  }
+  else
+  {
+    $join_user    = " ";
+    $search_user  = " ";
+  }
+
+  // Search for or exclude nsfw quotes on request
+  $search_nsfw = ($search_nsfw > -1) ? " AND quotes.is_nsfw = '$search_nsfw' " : " ";
+
+  // Filter by year
+  $search_year = ($search_year) ? " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year' " : " ";
 
   // Fetch a random quote
   $drand = mysqli_fetch_array(query(" SELECT    quotes.id AS 'q_id'
                                       FROM      quotes
+                                                $join_user
                                       WHERE     quotes.is_deleted       = 0
                                       AND       quotes.admin_validation = 1
-                                                $limit_lang
+                                                $search_lang
+                                                $search_user
+                                                $search_nsfw
+                                                $search_year
                                       ORDER BY  RAND()
                                       LIMIT     1 "));
 
   // Return the random quote's id
-  return $drand['q_id'];
+  return (isset($drand['q_id'])) ? $drand['q_id'] : 0;
 }
 
 

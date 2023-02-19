@@ -20,7 +20,7 @@ include_once './../lang/quotes.lang.php';   # Translations
 // Fetch the list of quotes
 
 // Get the search parameters
-$quotes_search_lang = form_fetch_element('lang', request_type: 'GET', default_value: 'ENFR');
+$quotes_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'ENFR');
 $quotes_search_en   = str_contains($quotes_search_lang, 'EN');
 $quotes_search_fr   = str_contains($quotes_search_lang, 'FR');
 $quotes_search_body = form_fetch_element('search', request_type: 'GET', default_value: NULL);
