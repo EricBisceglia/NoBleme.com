@@ -38,22 +38,21 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Returns data related to a quote.
  *
- * @param   int         $quote_id   The quote's id.
+ * @param   int         $quote_id                   The quote's id.
+ * @param   bool        $is_for_api     (OPTIONAL)  Return data for the API instead of a regular page.
  *
- * @return  array|null              An array containing related data, or null if it does not exist.
+ * @return  array|null                              An array containing related data, or null if it does not exist.
  */
 
-function quotes_get( int $quote_id ) : mixed
+function quotes_get(  int   $quote_id           ,
+                      bool  $is_for_api = false ) : mixed
 {
-  // Require administrator rights to run this action
-  user_restrict_to_administrators();
-
   // Sanitize the data
   $quote_id = sanitize($quote_id, 'int', 0);
 
   // Check if the quote exists
   if(!database_row_exists('quotes', $quote_id))
-    return NULL;
+    return ($is_for_api) ? array('quote' => NULL, 'users' => NULL) : NULL;
 
   // Fetch the data
   $dquote = mysqli_fetch_array(query("  SELECT    quotes.is_deleted       AS 'q_deleted'      ,
@@ -69,18 +68,53 @@ function quotes_get( int $quote_id ) : mixed
                                         WHERE     quotes.id = '$quote_id' "));
 
   // Assemble an array with the data
-  $data['deleted']      = sanitize_output($dquote['q_deleted']);
-  $data['validated']    = sanitize_output($dquote['q_validated']);
-  $data['submitter_id'] = sanitize_output($dquote['q_submitter_id']);
-  $data['submitter']    = sanitize_output($dquote['q_submitter']);
-  $data['body']         = sanitize_output($dquote['q_body']);
-  $data['body_full']    = sanitize_output($dquote['q_body'], true);
-  $data['date']         = ($dquote['q_date']) ? sanitize_output(date('Y-m-d', $dquote['q_date'])) : '';
-  $data['lang']         = $dquote['q_lang'];
-  $data['nsfw']         = $dquote['q_nsfw'];
+  if(!$is_for_api)
+  {
+    $data['deleted']      = sanitize_output($dquote['q_deleted']);
+    $data['validated']    = sanitize_output($dquote['q_validated']);
+    $data['submitter_id'] = sanitize_output($dquote['q_submitter_id']);
+    $data['submitter']    = sanitize_output($dquote['q_submitter']);
+    $data['body']         = sanitize_output($dquote['q_body']);
+    $data['body_full']    = sanitize_output($dquote['q_body'], true);
+    $data['date']         = ($dquote['q_date']) ? sanitize_output(date('Y-m-d', $dquote['q_date'])) : '';
+    $data['lang']         = $dquote['q_lang'];
+    $data['nsfw']         = $dquote['q_nsfw'];
+  }
 
-  // Return the data
-  return $data;
+  // Assemble a different array if the data is for usage in the API
+  if($is_for_api)
+  {
+    // Return nothing if the quote is deleted or unvalidated
+    if($dquote['q_deleted'] || !$dquote['q_validated'])
+      return array('quote' => NULL, 'users' => NULL);
+
+    // Prepare the output for the API
+    $api['quote']['id']       = (string)$quote_id;
+    $api['quote']['added_at'] = ($dquote['q_date']) ? date_to_aware_datetime($dquote['q_date']) : NULL;
+    $api['quote']['is_nsfw']  = (bool)$dquote['q_nsfw'];
+    $api['quote']['link']     = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
+    $api['quote']['body']     = sanitize_json($dquote['q_body']);
+
+    // Add linked users to the returned data
+    $quote_users = quotes_get_linked_users($quote_id, exclude_deleted: true);
+    if($quote_users['rows'])
+    {
+      for($i = 0; $i < $quote_users['rows']; $i++)
+      {
+        $api['users'][$i]['id']       = $quote_users[$i]['id'];
+        $api['users'][$i]['username'] = $quote_users[$i]['username'];
+        $api['users'][$i]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users[$i]['id'];
+      }
+    }
+    else
+      $api['users'] = NULL;
+  }
+
+  // Return the prepared data
+  if($is_for_api)
+    return (isset($api)) ? $api : array('quote' => NULL, 'users' => NULL);
+  else
+    return $data;
 }
 
 
@@ -89,22 +123,24 @@ function quotes_get( int $quote_id ) : mixed
 /**
  * Returns a list of users linked to a quote.
  *
- * @param   int         $quote_id   The quote's id.
+ * @param   int         $quote_id                     The quote's id.
+ * @param   bool        $exclude_deleted  (OPTIONAL)  Excludes deleted users from the returned data.
  *
- * @return  array|null              An array containing related data, or null if it does not exist.
+ * @return  array|null                                An array containing related data, or null if it does not exist.
 */
 
-function quotes_get_linked_users(int $quote_id) : mixed
+function quotes_get_linked_users( int   $quote_id                 ,
+                                  bool  $exclude_deleted = false  ) : mixed
 {
-  // Require administrator rights to run this action
-  user_restrict_to_administrators();
-
   // Sanitize the data
   $quote_id = sanitize($quote_id, 'int', 0);
 
   // Check if the quote exists
   if(!database_row_exists('quotes', $quote_id))
     return NULL;
+
+  // Exclude deleted users if requested
+  $search_deleted = ($exclude_deleted) ? " AND users.is_deleted = 0 " : " ";
 
   // Fetch the user list
   $qusers = query(" SELECT    users.id                AS 'u_id'       ,
@@ -114,6 +150,7 @@ function quotes_get_linked_users(int $quote_id) : mixed
                     FROM      quotes_users
                     LEFT JOIN users ON quotes_users.fk_users = users.id
                     WHERE     quotes_users.fk_quotes = '$quote_id'
+                              $search_deleted
                     ORDER BY  users.username ASC ");
 
   // Prepare the data
@@ -324,11 +361,11 @@ function quotes_list( ?array  $search         = array() ,
     // Prepare the JSON output for the API
     if($is_for_api)
     {
-      $json[$i]['id']       = $row['q_id'];
-      $json[$i]['added_at'] = ($row['q_date']) ? date_to_aware_datetime($row['q_date']) : NULL;
-      $json[$i]['is_nsfw']  = (bool)$row['q_nsfw'];
-      $json[$i]['link']     = $GLOBALS['website_url'].'pages/quotes/'.$row['q_id'];
-      $json[$i]['body']     = sanitize_json($row['q_body']);
+      $api[$i]['quote']['id']       = $row['q_id'];
+      $api[$i]['quote']['added_at'] = ($row['q_date']) ? date_to_aware_datetime($row['q_date']) : NULL;
+      $api[$i]['quote']['is_nsfw']  = (bool)$row['q_nsfw'];
+      $api[$i]['quote']['link']     = $GLOBALS['website_url'].'pages/quotes/'.$row['q_id'];
+      $api[$i]['quote']['body']     = sanitize_json($row['q_body']);
 
       // Handle linked users
       if(!$search_user == $row['lu_id'] && $row['lu_nick'])
@@ -338,9 +375,9 @@ function quotes_list( ?array  $search         = array() ,
         $user_link_count        = count($linked_users_id);
         for($j = 0; $j < $user_link_count; $j++)
         {
-          $json[$i]['users'][$j]['id']        = $linked_users_id[$j];
-          $json[$i]['users'][$j]['username']  = $linked_users_usernames[$j];
-          $json[$i]['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$linked_users_id[$j];
+          $api[$i]['users'][$j]['id']       = $linked_users_id[$j];
+          $api[$i]['users'][$j]['username'] = $linked_users_usernames[$j];
+          $api[$i]['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$linked_users_id[$j];
         }
       }
 
@@ -349,15 +386,15 @@ function quotes_list( ?array  $search         = array() ,
       {
         for($j = 0; $j < $linked_users_count; $j++)
         {
-          $json[$i]['users'][$j]['id']        = $linked_ids[$j];
-          $json[$i]['users'][$j]['username']  = $linked_nicks[$j];
-          $json[$i]['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$linked_ids[$j];
+          $api[$i]['users'][$j]['id']       = $linked_ids[$j];
+          $api[$i]['users'][$j]['username'] = $linked_nicks[$j];
+          $api[$i]['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$linked_ids[$j];
         }
       }
 
       // Return null when there are no linked users
       else
-        $json[$i]['users'] = NULL;
+        $api[$i]['users'] = NULL;
     }
   }
 
@@ -370,7 +407,7 @@ function quotes_list( ?array  $search         = array() ,
 
   // Return the prepared data
   if($is_for_api)
-    return (isset($json)) ? array('quotes' => $json) : array('quotes' => NULL);
+    return (isset($api)) ? array('quotes' => $api) : array('quotes' => NULL);
   else
     return $data;
 }

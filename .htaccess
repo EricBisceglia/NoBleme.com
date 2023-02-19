@@ -17,6 +17,9 @@ RewriteRule ^pages/quotes/random pages/quotes/list.php?random [NC]
 RewriteRule ^pages/tasks/([0-9]+)$ pages/tasks/task.php?id=$1 [NC]
 RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
 
+# Better looking API URLs (not strictly enforced)
+RewriteRule ^api/quote/([0-9]+)$ api/quote/quote.php?id=$1 [NC]
+
 # Better looking compendium URLs (not strictly enforced)
 RewriteCond %{THE_REQUEST} !/admin_ [NC]
 RewriteCond %{THE_REQUEST} !/category [NC]
