@@ -17,6 +17,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  sanitize_output_javascript    Sanitizes data for passing to inline javascript.                                   */
 /*  sanitize_meta_tags            Sanitizes the content of meta tags.                                                */
 /*                                                                                                                   */
+/*  sanitize_json                 Sanitizes data for usage in JSON.                                                  */
+/*  sanitize_api_output           Sanitizes data before outputting it in the API.                                    */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -396,4 +399,38 @@ function sanitize_meta_tags( string $data ) : string
 
   // Return the sanitized data
   return $data;
+}
+
+
+
+
+/**
+ * Sanitizes data for usage in JSON.
+ *
+ * @param   string  $data   A string which will be used in JSON.
+ *
+ * @return  string          The formatted JSON output.
+ */
+
+function sanitize_json( string $data ) : string
+{
+  // Change the format for line breaks
+  return str_replace("\r\n", "\n", $data);
+}
+
+
+
+
+/**
+ * Sanitizes data before outputting it in the API.
+ *
+ * @param   array   $data   An array of data which will be transformed into JSON.
+ *
+ * @return  string          The formatted JSON output.
+ */
+
+function sanitize_api_output( array $data ) : string
+{
+  // Return the data as JSON
+  return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
 }

@@ -178,6 +178,7 @@ function quotes_get_random_id() : int
  * @param   int     $quote_id       (OPTIONAL)  Return only a single quote instead of a list.
  * @param   bool    $show_waitlist  (OPTIONAL)  Only show quotes awaiting admin validation.
  * @param   bool    $show_deleted   (OPTIONAL)  Only show soft deleted quotes.
+ * @param   bool    $is_for_api     (OPTIONAL)  Return data for the API instead of a regular page.
  *
  * @return  array   An array containing quotes.
  */
@@ -185,7 +186,8 @@ function quotes_get_random_id() : int
 function quotes_list( ?array  $search         = array() ,
                       ?int    $quote_id       = 0       ,
                       bool    $show_waitlist  = false   ,
-                      bool    $show_deleted   = false   ) : array
+                      bool    $show_deleted   = false   ,
+                      bool    $is_for_api     = false   ) : array
 {
   // Check if the required files have been included
   require_included_file('quotes.lang.php');
@@ -195,8 +197,8 @@ function quotes_list( ?array  $search         = array() ,
   $is_admin = user_is_administrator();
 
   // Prepare the language filter
-  $lang_en    = (isset($search['lang_en']) && $search['lang_en']);
-  $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
+  $lang_en  = (isset($search['lang_en']) && $search['lang_en']);
+  $lang_fr  = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Prepare the search parameters
   $search_body = sanitize_array_element($search, 'body', 'string');
@@ -308,8 +310,8 @@ function quotes_list( ?array  $search         = array() ,
       {
         for($j = 0; $j < $linked_users_count; $j++)
         {
-          $linked_ids[$j]   = sanitize_output($linked_users[$j]['id']);
-          $linked_nicks[$j] = sanitize_output($linked_users[$j]['username']);
+          $linked_ids[$j]       = sanitize_output($linked_users[$j]['id']);
+          $linked_nicks[$j]     = sanitize_output($linked_users[$j]['username']);
         }
       }
 
@@ -317,6 +319,45 @@ function quotes_list( ?array  $search         = array() ,
       $data[$i]['linked_ids']   = $linked_ids;
       $data[$i]['linked_nicks'] = $linked_nicks;
       $data[$i]['linked_count'] = sanitize_output($linked_users_count);
+    }
+
+    // Prepare the JSON output for the API
+    if($is_for_api)
+    {
+      $json[$i]['id']       = $row['q_id'];
+      $json[$i]['added_at'] = ($row['q_date']) ? date_to_aware_datetime($row['q_date']) : NULL;
+      $json[$i]['is_nsfw']  = (bool)$row['q_nsfw'];
+      $json[$i]['link']     = $GLOBALS['website_url'].'pages/quotes/'.$row['q_id'];
+      $json[$i]['body']     = sanitize_json($row['q_body']);
+
+      // Handle linked users
+      if(!$search_user == $row['lu_id'] && $row['lu_nick'])
+      {
+        $linked_users_id        = explode(',', $row['lu_id']);
+        $linked_users_usernames = explode(',', $row['lu_nick']);
+        $user_link_count        = count($linked_users_id);
+        for($j = 0; $j < $user_link_count; $j++)
+        {
+          $json[$i]['users'][$j]['id']        = $linked_users_id[$j];
+          $json[$i]['users'][$j]['username']  = $linked_users_usernames[$j];
+          $json[$i]['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$linked_users_id[$j];
+        }
+      }
+
+      // Handle linked users when searching by user
+      else if($search_user && $linked_users_count)
+      {
+        for($j = 0; $j < $linked_users_count; $j++)
+        {
+          $json[$i]['users'][$j]['id']        = $linked_ids[$j];
+          $json[$i]['users'][$j]['username']  = $linked_nicks[$j];
+          $json[$i]['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$linked_ids[$j];
+        }
+      }
+
+      // Return null when there are no linked users
+      else
+        $json[$i]['users'] = NULL;
     }
   }
 
@@ -328,7 +369,10 @@ function quotes_list( ?array  $search         = array() ,
   $data['rows'] = $i;
 
   // Return the prepared data
-  return $data;
+  if($is_for_api)
+    return (isset($json)) ? array('quotes' => $json) : array('quotes' => NULL);
+  else
+    return $data;
 }
 
 
