@@ -23,15 +23,15 @@ $quote_search_user  = form_fetch_element('user_id', request_type: 'GET');
 $quote_search_year  = form_fetch_element('year', request_type: 'GET');
 
 // Get a random quote ID
-$quote_id = quotes_get_random_id( search:     array(  'lang'  => $quote_search_lang ,
-                                                      'nsfw'  => $quote_search_nsfw ,
-                                                      'user'  => $quote_search_user ,
-                                                      'year'  => $quote_search_year ) ,
-                                  is_for_api: true                                    );
+$quote_id = quotes_get_random_id( search:   array(  'lang'  => $quote_search_lang   ,
+                                                    'nsfw'  => $quote_search_nsfw   ,
+                                                    'user'  => $quote_search_user   ,
+                                                    'year'  => $quote_search_year ) ,
+                                  context:  'api'                                   );
 
 // Fetch the quote
-$quote = quotes_get(  quote_id:   $quote_id ,
-                      is_for_api: true      );
+$quote = quotes_get(  quote_id: $quote_id ,
+                      format:   'api'     );
 
 
 

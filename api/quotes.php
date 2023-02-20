@@ -21,8 +21,8 @@ include_once './../lang/quotes.lang.php';   # Translations
 
 // Get the search parameters
 $quotes_search_lang = form_fetch_element('language', request_type: 'GET', default_value: 'ENFR');
-$quotes_search_en   = str_contains($quotes_search_lang, 'EN');
-$quotes_search_fr   = str_contains($quotes_search_lang, 'FR');
+$quotes_search_en   = str_contains(string_change_case($quotes_search_lang, 'uppercase'), 'EN');
+$quotes_search_fr   = str_contains(string_change_case($quotes_search_lang, 'uppercase'), 'FR');
 $quotes_search_body = form_fetch_element('search', request_type: 'GET', default_value: NULL);
 $quotes_search_user = form_fetch_element('user_id', request_type: 'GET', default_value: 0);
 $quotes_search_year = form_fetch_element('year', request_type: 'GET', default_value: 0);
@@ -35,8 +35,8 @@ $quotes_list_search = array(  'lang_en' => $quotes_search_en    ,
                               'year'    => $quotes_search_year  );
 
 // Fetch the list of quotes
-$quotes_list = quotes_list( search:     $quotes_list_search,
-                            is_for_api: true);
+$quotes_list = quotes_list( search: $quotes_list_search ,
+                            format: 'api'               );
 
 
 

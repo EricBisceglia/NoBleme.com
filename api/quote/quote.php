@@ -22,8 +22,8 @@ include_once './../../actions/quotes.act.php'; # Actions
 $quote_id = (int)form_fetch_element('id', request_type: 'GET', default_value: 0);
 
 // Fetch the quote
-$quote = quotes_get(  quote_id:   $quote_id ,
-                      is_for_api: true      );
+$quote = quotes_get(  quote_id: $quote_id ,
+                      format:   'api'     );
 
 
 
