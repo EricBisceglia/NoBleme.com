@@ -103,7 +103,7 @@ function quotes_get(  int     $quote_id           ,
     // Quote data
     $data['quote']['id']        = (string)$quote_id;
     $data['quote']['is_nsfw']   = (bool)$quote_nsfw;
-    $data['quote']['language']  = $quote_lang;
+    $data['quote']['language']  = string_change_case($quote_lang, 'lowercase');
     $data['quote']['link']      = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
     $data['quote']['body']      = sanitize_json($quote_body);
 
@@ -123,7 +123,7 @@ function quotes_get(  int     $quote_id           ,
     {
       for($i = 0; $i < $quote_users['rows']; $i++)
       {
-        $data['users'][$i]['id']        = $quote_users[$i]['id'];
+        $data['users'][$i]['id']        = (string)$quote_users[$i]['id'];
         $data['users'][$i]['username']  = $quote_users[$i]['username'];
         $data['users'][$i]['link']      = $GLOBALS['website_url'].'pages/users/'.$quote_users[$i]['id'];
       }
@@ -432,7 +432,7 @@ function quotes_list( ?array  $search         = array() ,
       // Quote data
       $data[$i]['quote']['id']        = (string)$quote_id;
       $data[$i]['quote']['is_nsfw']   = (bool)$quote_nsfw;
-      $data[$i]['quote']['language']  = $quote_language;
+      $data[$i]['quote']['language']  = string_change_case($quote_language, 'lowercase');
       $data[$i]['quote']['link']      = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
       $data[$i]['quote']['body']      = sanitize_json($quote_body);
 
@@ -451,7 +451,7 @@ function quotes_list( ?array  $search         = array() ,
       {
         for($j = 0; $j < $quote_users_count; $j++)
         {
-          $data[$i]['quote']['users'][$j]['id']       = $quote_users_ids[$j];
+          $data[$i]['quote']['users'][$j]['id']       = (string)$quote_users_ids[$j];
           $data[$i]['quote']['users'][$j]['username'] = $quote_users_nicks[$j];
           $data[$i]['quote']['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users_ids[$j];
         }
@@ -470,8 +470,8 @@ function quotes_list( ?array  $search         = array() ,
   }
 
   // Give a default return value when no quotes are found
-  $default_value  = ($format === 'html') ? NULL : array('quotes' => NULL);
-  $data           = (isset($data)) ? $data : $default_value;
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('quotes' => $data) : $data;
 
   // Return the prepared data
   return $data;

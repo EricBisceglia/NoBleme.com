@@ -1,4 +1,6 @@
 /************************************************* API DOCUMENTATION *************************************************/
 
+hr.api_doc_parameters { background: var(--nobleme-dark7); height: 1px; margin-left: 0rem; margin-right: 0rem; }
+
 @media (min-width: 993px)               {
 .api_doc_menu { margin-top: -2.3rem;  } }

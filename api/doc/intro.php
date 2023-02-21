@@ -9,9 +9,9 @@ include_once './../../lang/api.lang.php';     # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "api/doc/intro";
-$page_title_en    = "Public API";
-$page_title_fr    = "API publique";
-$page_description = "NoBleme's public API allows you to interact with the website without using a browser.";
+$page_title_en    = "API";
+$page_title_fr    = "API";
+$page_description = "NoBleme's API allows you to interact with the website without using a browser.";
 
 // API doc menu selection
 $api_doc_menu['intro'] = true;
@@ -32,7 +32,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 <div class="width_50 padding_top">
 
   <h1>
-    <?=__('api_intro_header')?>
+    <?=__('api_title')?>
   </h1>
 
   <h5>
@@ -52,7 +52,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </h5>
 
   <p>
-    <?=__('api_intro_usage_body_1')?>
+    <?=__('api_intro_usage_body_1', preset_values: array($GLOBALS['website_url']))?>
   </p>
 
   <p>
@@ -65,6 +65,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <p>
     <?=__('api_intro_usage_body_4')?>
+  </p>
+
+  <p>
+    <?=__('api_intro_usage_body_5')?>
   </p>
 
 

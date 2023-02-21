@@ -317,11 +317,6 @@ ___(':', 'EN', ":");
 ___(':', 'FR', " :");
 
 
-// Emojis
-___('emoji_tada', 'EN', "🎉");
-___('emoji_tada', 'FR', "🎉");
-
-
 // Buttons and labels
 ___('add',        'EN', "add");
 ___('add',        'FR', "créer");
