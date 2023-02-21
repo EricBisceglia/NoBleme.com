@@ -296,6 +296,7 @@ function quotes_list( ?array  $search         = array() ,
   $search_body  = sanitize_array_element($search, 'body', 'string');
   $search_user  = sanitize_array_element($search, 'user', 'int', min: 0, default: 0);
   $search_year  = sanitize_array_element($search, 'year', 'int', min: -1, default: 0);
+  $search_nsfw  = sanitize_array_element($search, 'nsfw', 'int', min: -1, max: 1, default: -1);
 
   // View a single quote
   if($quote_id && $is_admin)
@@ -333,8 +334,9 @@ function quotes_list( ?array  $search         = array() ,
     $query_search .= " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year'  ";
 
   // Search through the data: Other searches
-  $query_search .= ($search_body) ? " AND quotes.body        LIKE '%$search_body%'  " : "";
-  $query_search .= ($search_user) ? " AND quotes_users.fk_users = '$search_user'    " : "";
+  $query_search .= ($search_body)       ? " AND quotes.body        LIKE '%$search_body%'  " : " ";
+  $query_search .= ($search_user)       ? " AND quotes_users.fk_users = '$search_user'    " : " ";
+  $query_search .= ($search_nsfw > -1)  ? " AND quotes.is_nsfw        = '$search_nsfw'    " : " ";
 
   // Fetch the quotes
   $qquotes = "  SELECT    quotes.id                                                               AS 'q_id'       ,

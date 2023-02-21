@@ -143,6 +143,8 @@ ___('api_quotes_list_search',   'EN', "Return quotes which contain the specified
 ___('api_quotes_list_search',   'FR', "Renvoie les citations contenant la chaîne de caractère spécifiée dans leur contenu.");
 ___('api_quotes_list_year',     'EN', "Return quotes added to the database in a specific year (ex. '2005').");
 ___('api_quotes_list_year',     'FR', "Renvoie les citations ajoutées sur le site une année spécifiée (ex. '2005').");
+___('api_quotes_list_nsfw',     'EN', "Return only SFW (0) or NSFW (1) quotes.");
+___('api_quotes_list_nsfw',     'FR', "Renvoie uniquement les citations SFW (0) ou NSFW (1).");
 
 
 // Get one quote
