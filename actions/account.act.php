@@ -8,9 +8,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  user_authenticate             Logs the user into their account (or refuses to).                                  */
+/*  users_authenticate            Logs the user into their account (or refuses to).                                  */
 /*                                                                                                                   */
-/*  user_create_account           Accept or reject a user's registration attempt.                                    */
+/*  users_create_account          Accept or reject a user's registration attempt.                                    */
 /*                                                                                                                   */
 /*  account_get_email             Returns the currently logged in account's e-mail address.                          */
 /*  account_update_email          Updates the currently logged in account's e-mail address.                          */
@@ -35,10 +35,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * @return  string                            Returns 'OK' if successfully logged in, or an error if it went wrong.
  */
 
-function user_authenticate( string  $ip                   ,
-                            string  $username             ,
-                            string  $password             ,
-                            bool    $remember_me = false  ) : string
+function users_authenticate(  string  $ip                   ,
+                              string  $username             ,
+                              string  $password             ,
+                              bool    $remember_me = false  ) : string
 {
   // Only logged out users may authenticate
   user_restrict_to_guests();
@@ -187,12 +187,12 @@ function user_authenticate( string  $ip                   ,
  * @return  string|int                                1 if successfully registered, or a string in case of error.
  */
 
-function user_create_account( string  $username               ,
-                              string  $password               ,
-                              string  $email                  ,
-                              string  $password_check   = ''  ,
-                              string  $captcha          = ''  ,
-                              string  $captcha_session  = ''  ) : mixed
+function users_create_account(  string  $username               ,
+                                string  $password               ,
+                                string  $email                  ,
+                                string  $password_check   = ''  ,
+                                string  $captcha          = ''  ,
+                                string  $captcha_session  = ''  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('account.lang.php');
@@ -252,11 +252,11 @@ function user_create_account( string  $username               ,
     return __('users_register_error_username_characters');
 
   // Error: Illegal string in username
-  if(user_check_username_illegality($username))
+  if(users_check_username_illegality($username))
     return __('users_register_error_username_illegal');
 
   // Error: username already taken
-  if(user_check_username($username))
+  if(users_check_username($username))
     return __('users_register_error_username_taken');
 
   // Create the account

@@ -908,7 +908,7 @@ function meetups_attendees_add( int   $meetup_id  ,
     return;
 
   // Remove the account's name if it does not exist
-  if(!user_check_username($account))
+  if(!users_check_username($account))
     $account = '';
 
   // Fetch the account's id
@@ -1081,7 +1081,7 @@ function meetups_attendees_edit(  int   $attendee_id  ,
     return;
 
   // Remove the account's name if it does not exist
-  if(!user_check_username($account))
+  if(!users_check_username($account))
     $account = '';
 
   // Fetch the account's id

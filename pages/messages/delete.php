@@ -25,7 +25,7 @@ user_restrict_to_users();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete the private message
 
-$delete_error = private_message_delete(form_fetch_element('private_message_delete', 0));
+$delete_error = private_messages_delete(form_fetch_element('private_message_delete', 0));
 
 
 

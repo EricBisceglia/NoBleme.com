@@ -76,7 +76,7 @@ if(isset($_POST['admin_ban_edit_submit']))
 
 // Get the user's username and some details regarding the ban
 $ban_username = user_get_username($user_id);
-$ban_details  = user_ban_details($user_id);
+$ban_details  = users_ban_details($user_id);
 
 // Hide the french ban justification in the english interface
 $admin_ban_hide_french = ($lang) ? ' hidden' : '';

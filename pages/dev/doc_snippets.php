@@ -271,8 +271,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
  * @return  string|null                               Description.
  */
 
-function user_authenticate( int     $variable_name          ,
-                            ?string $other_variable = null  ) : mixed
+function users_authenticate(  int     $variable_name          ,
+                              ?string $other_variable = null  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('includefile.inc.php');

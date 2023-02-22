@@ -55,7 +55,7 @@ if(isset($_POST['profile_delete_submit']))
                           'text_fr'     => form_fetch_element('profile_delete_text_fr', element_exists: true)     );
 
   // Trigger the deletion
-  user_delete_profile(  $user_id        ,
+  users_delete_profile( $user_id        ,
                         $delete_fields  );
 
   // Redirect to the user's profile
@@ -69,7 +69,7 @@ if(isset($_POST['profile_delete_submit']))
 // Fetch the user's public profile
 
 // Fetch the user's profile data
-$profile_data = user_get($user_id);
+$profile_data = users_get($user_id);
 
 // Stop there if the user wasn't found
 if(!$profile_data)

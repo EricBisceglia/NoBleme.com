@@ -8,18 +8,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  user_get                            Fetches data related to a user.                                              */
-/*  user_list                           Fetches a list of users.                                                     */
-/*  user_list_admins                    Fetches a list of administrative team members.                               */
-/*  user_edit_profile                   Modifies a user's own public profile.                                        */
-/*  user_delete_profile                 Deletes a user's public profile.                                             */
+/*  users_get                           Fetches data related to a user.                                              */
+/*  users_list                          Fetches a list of users.                                                     */
+/*  users_list_admins                   Fetches a list of administrative team members.                               */
+/*  users_edit_profile                  Modifies a user's own public profile.                                        */
+/*  users_delete_profile                Deletes a user's public profile.                                             */
 /*                                                                                                                   */
-/*  user_ban_details                    Fetches information related to a user's ban.                                 */
+/*  users_ban_details                   Fetches information related to a user's ban.                                 */
 /*                                                                                                                   */
-/*  user_check_username                 Checks if a username currently exists in the database.                       */
-/*  user_check_username_illegality      Checks if a username is illegal.                                             */
+/*  users_check_username                Checks if a username currently exists in the database.                       */
+/*  users_check_username_illegality     Checks if a username is illegal.                                             */
 /*                                                                                                                   */
-/*  user_autocomplete_username          Autocompletes a username.                                                    */
+/*  users_autocomplete_username         Autocompletes a username.                                                    */
 /*                                                                                                                   */
 /*  users_total_count                   Returns the number of users stored in the database.                          */
 /*  users_guests_count                  Returns the number of guests stored in the database.                         */
@@ -37,7 +37,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * @return  array|null            An array containing user related data, or NULL if it does not exist.
  */
 
-function user_get( ?int $user_id = NULL ) : mixed
+function users_get( ?int $user_id = NULL ) : mixed
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');
@@ -178,17 +178,17 @@ function user_get( ?int $user_id = NULL ) : mixed
  * @return  array                                 A list of users, prepared for displaying.
  */
 
-function user_list( string  $sort_by          = ''      ,
-                    array   $search           = array() ,
-                    int     $max_count        = 0       ,
-                    bool    $show_deleted     = false   ,
-                    int     $activity_cutoff  = 0       ,
-                    bool    $include_guests   = false   ,
-                    int     $max_guest_count  = 0       ,
-                    bool    $banned_only      = false   ,
-                    bool    $include_ip_bans  = false   ,
-                    bool    $is_admin         = false   ,
-                    bool    $is_activity      = false   ) : array
+function users_list(  string  $sort_by          = ''      ,
+                      array   $search           = array() ,
+                      int     $max_count        = 0       ,
+                      bool    $show_deleted     = false   ,
+                      int     $activity_cutoff  = 0       ,
+                      bool    $include_guests   = false   ,
+                      int     $max_guest_count  = 0       ,
+                      bool    $banned_only      = false   ,
+                      bool    $include_ip_bans  = false   ,
+                      bool    $is_admin         = false   ,
+                      bool    $is_activity      = false   ) : array
 {
   // Require special rights to run this action in special cases
   if($include_ip_bans)
@@ -442,7 +442,7 @@ function user_list( string  $sort_by          = ''      ,
  * @return  array                         A list of administrative team members.
  */
 
-function user_list_admins( string $sort_by = '' ) : array
+function users_list_admins( string $sort_by = '' ) : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -504,7 +504,7 @@ function user_list_admins( string $sort_by = '' ) : array
  * @return  void
  */
 
-function user_edit_profile( array $user_data ) : void
+function users_edit_profile( array $user_data ) : void
 {
   // Require the user to be logged in
   user_restrict_to_users();
@@ -621,8 +621,8 @@ function user_edit_profile( array $user_data ) : void
  * @return  void
  */
 
-function user_delete_profile( $user_id              ,
-                              $fields     = array() ) : void
+function users_delete_profile(  $user_id              ,
+                                $fields     = array() ) : void
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');
@@ -722,7 +722,7 @@ function user_delete_profile( $user_id              ,
  * @return  array                         An array of data regarding the ban.
  */
 
-function user_ban_details( ?int $user_id = NULL ) : array
+function users_ban_details( ?int $user_id = NULL ) : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -773,7 +773,7 @@ function user_ban_details( ?int $user_id = NULL ) : array
  * @return  bool                Whether the username exists.
  */
 
-function user_check_username( string $username ) : bool
+function users_check_username( string $username ) : bool
 {
   // Sanitize the data
   $username = sanitize($username, 'string');
@@ -798,7 +798,7 @@ function user_check_username( string $username ) : bool
  * @return  bool                Whether the username is illegal on the website.
  */
 
-function user_check_username_illegality( string $username ) : bool
+function users_check_username_illegality( string $username ) : bool
 {
   // Define a list of badwords
   $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'putain', 'salope', 'trann', 'whore');
@@ -825,7 +825,7 @@ function user_check_username_illegality( string $username ) : bool
  * @return  array|null                      An array containing the autocomplete data, or NULL if something went wrong.
  */
 
-function user_autocomplete_username(  string  $input        ,
+function users_autocomplete_username( string  $input        ,
                                       string  $type   = ''  ,
                                       int     $id     = 0   ) : mixed
 {

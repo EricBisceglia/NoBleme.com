@@ -30,7 +30,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  quotes_stats_recalculate_user   Recalculates quote database statistics for a specific user.                      */
 /*  quotes_stats_recalculate_all    Recalculates global quote database statistics.                                   */
 /*                                                                                                                   */
-/*  user_setting_quotes             Returns the quote related settings of the current user.                          */
+/*  user_settings_quotes            Returns the quote related settings of the current user.                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 

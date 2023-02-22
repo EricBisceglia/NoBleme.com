@@ -1004,6 +1004,8 @@ ___('submenu_nobleme_devblog',        'EN', "Development blog");
 ___('submenu_nobleme_devblog',        'FR', "Blog de développement");
 ___('submenu_nobleme_todolist',       'EN', "To-do list");
 ___('submenu_nobleme_todolist',       'FR', "Liste des tâches");
+___('submenu_nobleme_api',            'EN', "NoBleme API");
+___('submenu_nobleme_api',            'FR', "API NoBleme");
 ___('submenu_nobleme_roadmap',        'EN', "Website roadmap");
 ___('submenu_nobleme_roadmap',        'FR', "Plan de route");
 ___('submenu_nobleme_report_bug',     'EN', "Report a bug");

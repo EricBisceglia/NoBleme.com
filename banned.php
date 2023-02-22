@@ -30,7 +30,7 @@ $page_description = "Bad news: you have been banned from NoBleme.";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch data related to the ban
 
-$ban_details = user_ban_details();
+$ban_details = users_ban_details();
 
 
 

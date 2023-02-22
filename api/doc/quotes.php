@@ -230,7 +230,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <hr class="api_doc_parameters">
 
   <p class="tinypadding_top tinypadding_bot">
-    <span class="bold underlined">user_id</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+    <span class="bold underlined">user_id</span> - int - <span class="italics"><?=__('api_optional')?></span><br>
   </p>
 
   <p class="nopadding_top tinypadding_bot">

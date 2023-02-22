@@ -577,6 +577,9 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/dev/blog_list', __('submenu_nobleme_devblog'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
+            <?=__link('api/doc/intro', __('submenu_nobleme_api'), 'header_submenu_link', 1, $path);?>
+          </div>
+          <div class="header_submenu_item">
             <?=__link('pages/tasks/list', __('submenu_nobleme_todolist'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">

@@ -8,13 +8,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  private_message_get           Fetches information about a private message.                                       */
-/*  private_message_list          Lists a user's private messages and system notifications.                          */
-/*  private_message_write         Sends a new private message.                                                       */
-/*  private_message_reply         Replies to an existing private message.                                            */
-/*  private_message_delete        Deletes a private message.                                                         */
+/*  private_messages_get          Fetches information about a private message.                                       */
+/*  private_messages_list         Lists a user's private messages and system notifications.                          */
+/*  private_messages_write        Sends a new private message.                                                       */
+/*  private_messages_reply        Replies to an existing private message.                                            */
+/*  private_messages_delete       Deletes a private message.                                                         */
 /*                                                                                                                   */
-/*  private_message_years_list    Fetches all years during which the current user got or sent private messages.      */
+/*  private_messages_years_list   Fetches all years during which the current user got or sent private messages.      */
 /*                                                                                                                   */
 /*  private_message_admins        Sends a private message to the administrative team.                                */
 /*                                                                                                                   */
@@ -35,7 +35,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * @return  array                 An array of data regarding the message.
  */
 
-function private_message_get( int $message_id ) : array
+function private_messages_get( int $message_id ) : array
 {
   // Require the user the be logged in
   user_restrict_to_users();
@@ -196,7 +196,7 @@ function private_message_get( int $message_id ) : array
  * @return  array                               The private messages, ready for displaying.
  */
 
-function private_message_list(  string  $sort_by        = ''      ,
+function private_messages_list( string  $sort_by        = ''      ,
                                 array   $search         = array() ,
                                 ?bool   $mark_as_read   = false   ,
                                 bool    $sent_messages  = false   ) : array
@@ -344,9 +344,9 @@ function private_message_list(  string  $sort_by        = ''      ,
  * @return  string|null             An error string, or NULL if all went well.
 */
 
-function private_message_write( string  $recipient  ,
-                                string  $title      ,
-                                string  $body       ) : mixed
+function private_messages_write(  string  $recipient  ,
+                                  string  $title      ,
+                                  string  $body       ) : mixed
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();
@@ -406,8 +406,8 @@ function private_message_write( string  $recipient  ,
  * @return  string|null               An error string, or NULL if all went well.
  */
 
-function private_message_reply( int     $message_id ,
-                                string  $body       ) : mixed
+function private_messages_reply(  int     $message_id ,
+                                  string  $body       ) : mixed
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();
@@ -473,8 +473,8 @@ function private_message_reply( int     $message_id ,
   {
     $sender   = user_get_username($user_id);
     $channel  = ($admin_only) ? 'admin' : 'mod';
-    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
-    discord_send_message("Private message sent to the administrative team by $sender: $title".PHP_EOL."<".$GLOBALS['website_url']."pages/admin/inbox>", "admin");
+    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", $channel);
+    discord_send_message("Private message sent to the administrative team by $sender: $title".PHP_EOL."<".$GLOBALS['website_url']."pages/admin/inbox>", $channel);
   }
 
   // Everything went well
@@ -492,7 +492,7 @@ function private_message_reply( int     $message_id ,
  * @return  string|null               An error string, or NULL if all went well.
  */
 
-function private_message_delete( int $message_id ) : mixed
+function private_messages_delete( int $message_id ) : mixed
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();
@@ -556,7 +556,7 @@ function private_message_delete( int $message_id ) : mixed
  * @return  array                               The data, ready for use.
  */
 
-function private_message_years_list( bool $sent_messages = false ) : array
+function private_messages_years_list( bool $sent_messages = false ) : array
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();

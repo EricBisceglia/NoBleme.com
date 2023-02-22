@@ -45,9 +45,9 @@ $private_message_preview    = bbcodes(sanitize_output(form_fetch_element('privat
 // Send the message
 if(isset($_POST['private_message_send']))
 {
-  $private_message_error = private_message_write( $private_message_recipient  ,
-                                                  $private_message_title      ,
-                                                  $private_message_body       );
+  $private_message_error = private_messages_write(  $private_message_recipient  ,
+                                                    $private_message_title      ,
+                                                    $private_message_body       );
 
   // Redirect to the outbox if the message was successfully sent
   if(!$private_message_error)

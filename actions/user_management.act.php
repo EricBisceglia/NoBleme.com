@@ -199,14 +199,14 @@ function admin_account_check_availability( string $username ) : array
   }
 
   // Error: Illegal word
-  if(user_check_username_illegality($username))
+  if(users_check_username_illegality($username))
   {
     $return['error'] = __('admin_rename_error_illegal');
     return $return;
   }
 
   // Error: Already taken
-  if(user_check_username($username))
+  if(users_check_username($username))
   {
     $return['error'] = __('admin_rename_error_taken');
     return $return;

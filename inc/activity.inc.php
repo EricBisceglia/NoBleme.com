@@ -8,7 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  log_activity_parse      Transforms an entry of the `logs_activity` table into human readable content.            */
+/*  logs_activity_parse     Transforms an entry of the `logs_activity` table into human readable content.            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -33,7 +33,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  *                                              return['FR']    is the activity in french (if empty, english only).
  */
 
-function log_activity_parse(  bool    $admins_only        ,
+function logs_activity_parse( bool    $admins_only        ,
                               string  $type               ,
                               int     $id           = 0   ,
                               string  $title_en     = ''  ,
