@@ -21,12 +21,12 @@ include_once './../../lang/users.lang.php';         # Translations
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the user
 
-// Sanitize the requested ID
-$user_id = (int)form_fetch_element('id', request_type: 'GET', default_value: 0);
+// Get a random user ID
+$random_user_id = users_get_random_id();
 
 // Fetch the user
-$user_get = users_get(  user_id:  $user_id  ,
-                        format:   'api'     );
+$user_get = users_get(  user_id:  $random_user_id ,
+                        format:   'api'           );
 
 
 
@@ -41,5 +41,5 @@ if(!$user_get)
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 
-// Output the user data
+// Output the user dat
 echo sanitize_api_output($user_get);

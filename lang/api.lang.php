@@ -211,3 +211,14 @@ EOD
 );
 ___('api_users_get_id',     'EN', "The desired user's ID.");
 ___('api_users_get_id',     'FR', "L'ID du compte désiré.");
+
+
+// Random user
+___('api_users_random_summary', 'EN', <<<EOD
+Retrieves a random user.
+EOD
+);
+___('api_users_random_summary', 'FR', <<<EOD
+Récupère un compte au hasard.
+EOD
+);

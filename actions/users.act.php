@@ -9,6 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  users_get                           Fetches data related to a user.                                              */
+/*  users_get_random_id                 Fetches a randomly selected user ID.                                         */
 /*  users_list                          Fetches a list of users.                                                     */
 /*  users_list_admins                   Fetches a list of administrative team members.                               */
 /*  users_edit_profile                  Modifies a user's own public profile.                                        */
@@ -260,7 +261,29 @@ function users_get( ?int    $user_id  = NULL    ,
 
 
 
- /**
+/**
+ * Fetches a randomly selected user ID.
+ *
+ * @return  int   A randomly selected user ID.
+ */
+
+function users_get_random_id() : int
+{
+  // Fetch a random user ID
+  $drandom = mysqli_fetch_array(query(" SELECT    users.id AS 'u_id'
+                                        FROM      users
+                                        WHERE     users.is_deleted = 0
+                                        ORDER BY  RAND()
+                                        LIMIT     1 "));
+
+  // Return the randomly selected ID
+  return $drandom['u_id'];
+}
+
+
+
+
+/**
  * Fetches a list of users.
  *
  * @param   string  $sort_by          (OPTIONAL)  The way the user list should be sorted.
