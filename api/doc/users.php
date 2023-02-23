@@ -100,7 +100,6 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "custom_text_fr": string
     },
     "last_activity": {
-      "time_since": string,
       "datetime": string,
       "timezone": string,
       "page_link": string,
@@ -114,7 +113,6 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "tasks_submitted": int
     },
     "ban": {
-      "unban_deadline": string,
       "unban_datetime": string,
       "unban_timezone": string
     }

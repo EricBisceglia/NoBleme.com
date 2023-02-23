@@ -106,16 +106,7 @@ function quotes_get(  int     $quote_id           ,
     $data['quote']['language']  = string_change_case($quote_lang, 'lowercase');
     $data['quote']['link']      = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
     $data['quote']['body']      = sanitize_json($quote_body);
-
-    // Quote datetime data
-    if($quote_timestamp)
-    {
-      $quote_aware_datetime = date_to_aware_datetime($quote_timestamp);
-      $data['quote']['added_at']['datetime'] = $quote_aware_datetime['datetime'];
-      $data['quote']['added_at']['timezone'] = $quote_aware_datetime['timezone'];
-    }
-    else
-      $data['quote']['added_at'] = NULL;
+    $data['quote']['added_on']  = ($quote_timestamp) ? date('Y-m-d', $quote_timestamp) : NULL;
 
     // Linked users data
     $quote_users = quotes_get_linked_users($quote_id, exclude_deleted: true);
@@ -437,16 +428,7 @@ function quotes_list( ?array  $search         = array() ,
       $data[$i]['quote']['language']  = string_change_case($quote_language, 'lowercase');
       $data[$i]['quote']['link']      = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
       $data[$i]['quote']['body']      = sanitize_json($quote_body);
-
-      // Datetime data
-      if($quote_date)
-      {
-        $quote_aware_datetime = date_to_aware_datetime($quote_date);
-        $data[$i]['quote']['added_at']['datetime'] = $quote_aware_datetime['datetime'];
-        $data[$i]['quote']['added_at']['timezone'] = $quote_aware_datetime['timezone'];
-      }
-      else
-        $data[$i]['quote']['added_at'] = NULL;
+      $data[$i]['quote']['added_on']  = ($quote_date) ? date('Y-m-d', $quote_date) : NULL;
 
       // Linked user data
       if($quote_users_count)

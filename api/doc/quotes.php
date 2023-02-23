@@ -130,10 +130,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "language": string,
         "link": string,
         "body": string,
-        "added_at": {
-          "datetime": string,
-          "timezone": string
-        },
+        "added_on": string,
         "users": [
           {
             "id": string,
@@ -185,10 +182,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "language": string,
     "link": string,
     "body": string,
-    "added_at": {
-      "datetime": string,
-      "timezone": string
-    }
+    "added_on": string
   },
   "users": [
     {
@@ -268,10 +262,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "language": string,
     "link": string,
     "body": string,
-    "added_at": {
-      "datetime": string,
-      "timezone": string
-    }
+    "added_on": string
   },
   "users": [
     {

@@ -222,7 +222,6 @@ function users_get( ?int    $user_id  = NULL    ,
     if($user_activity && !$user_hide_activity && !$user_deleted)
     {
       $user_activity_aware_datetime = date_to_aware_datetime($user_activity);
-      $data['user']['last_activity']['time_since']    = time_since($user_activity);
       $data['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
       $data['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
       $data['user']['last_activity']['page_link']     = ($user_last_page_url)
@@ -247,7 +246,6 @@ function users_get( ?int    $user_id  = NULL    ,
     if($user_banned && !$user_deleted)
     {
       $ban_aware_datetime = date_to_aware_datetime($user_banned);
-      $data['user']['ban']['unban_deadline']  = time_until($user_banned);
       $data['user']['ban']['unban_datetime']  = $ban_aware_datetime['datetime'];
       $data['user']['ban']['unban_timezone']  = $ban_aware_datetime['timezone'];
     }
