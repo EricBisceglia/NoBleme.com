@@ -32,12 +32,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Fetches data related to a user.
  *
- * @param   int|null    $user_id  The user's id, will default to current user if unset.
+ * @param   int|null    $user_id  (OPTIONAL)  The user's id, will default to current user if unset.
+ * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null            An array containing user related data, or NULL if it does not exist.
+ * @return  array|null                        An array containing user related data, or NULL if it does not exist.
  */
 
-function users_get( ?int $user_id = NULL ) : mixed
+function users_get( ?int    $user_id  = NULL    ,
+                    string  $format   = 'html'  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');
@@ -97,61 +99,161 @@ function users_get( ?int $user_id = NULL ) : mixed
   // Get the current user's language
   $lang = user_get_language();
 
-  // Assemble an array with the data
-  $data['id']         = sanitize_output($user_id);
-  $data['deleted']    = sanitize_output($duser['u_deleted']);
-  $data['banned']     = ($duser['u_banned']);
-  $data['unbanned']   = sanitize_output(string_change_case(time_until($duser['u_banned']), 'lowercase'));
-  $data['username']   = sanitize_output($duser['u_nick']);
-  $user_title         = $duser['u_mod'] ? __('moderator') : '';
-  $user_title         = $duser['u_admin'] ? __('administrator') : $user_title;
-  $data['title']      = sanitize_output(string_change_case($user_title, 'initials'));
-  $user_css           = $duser['u_mod'] ? ' text_orange noglow' : '';
-  $data['title_css']  = $duser['u_admin'] ? ' text_red glow_dark' : $user_css;
-  $data['lang_en']    = str_contains($duser['u_lang'], 'EN');
-  $data['lang_fr']    = str_contains($duser['u_lang'], 'FR');
-  $data['text']       = ($lang === 'FR' && $duser['u_text_fr'])
-                      ? bbcodes(sanitize_output($duser['u_text_fr'], preserve_line_breaks: true))
-                      : bbcodes(sanitize_output($duser['u_text_en'], preserve_line_breaks: true));
-  $data['text_fr']    = sanitize_output($duser['u_text_fr']);
-  $data['text_en']    = sanitize_output($duser['u_text_en']);
-  $data['ftext_fr']   = bbcodes(sanitize_output($duser['u_text_fr'], true));
-  $data['ftext_en']   = bbcodes(sanitize_output($duser['u_text_en'], true));
-  $data['pronouns']   = ($lang === 'FR' && $duser['u_pronouns_fr'])
-                      ? sanitize_output($duser['u_pronouns_fr'])
-                      : sanitize_output($duser['u_pronouns_en']);
-  $data['pronoun_en'] = sanitize_output($duser['u_pronouns_en']);
-  $data['pronoun_fr'] = sanitize_output($duser['u_pronouns_fr']);
-  $data['country']    = sanitize_output($duser['u_country']);
-  $data['created']    = sanitize_output(date_to_text($duser['u_created'], strip_day: 1));
-  $data['screated']   = sanitize_output(time_since($duser['u_created']));
-  $data['activity']   = ($duser['u_activity'])
-                      ? sanitize_output(time_since($duser['u_activity']))
-                      : sanitize_output(time_since($duser['u_created']));
-  $data['birthday']   = ($duser['u_birth_d'] && $duser['u_birth_m'])
-                      ? sanitize_output(date_to_text($duser['u_birthday'], strip_day: true, strip_year: true))
-                      : 0;
-  $data['age']        = ($duser['u_birth_y']) ? sanitize_output($duser['u_age']) : 0;
-  $data['birth_d']    = ($duser['u_birth_d']) ? sanitize_output($duser['u_birth_d']) : '';
-  $data['birth_m']    = ($duser['u_birth_m']) ? sanitize_output($duser['u_birth_m']) : '';
-  $data['birth_y']    = ($duser['u_birth_y']) ? sanitize_output($duser['u_birth_y']) : '';
-  $data['hideact']    = ($duser['u_hideact']);
-  $data['ip']         = ($duser['u_ip'] === '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($duser['u_ip']);
-  $data['lastpage']   = ($lang === 'FR' && $duser['u_active_fr'])
-                      ? sanitize_output($duser['u_active_fr'])
-                      : sanitize_output($duser['u_active_en']);
-  $data['lasturl']    = sanitize_output($duser['u_active_url']);
-  $data['lastaction'] = ($duser['u_lastaction'])
-                      ? sanitize_output(time_since($duser['u_lastaction']))
-                      : sanitize_output(string_change_case(__('none_f'), 'initials'));
-  $data['email']      = ($duser['u_mail'])
-                      ? sanitize_output($duser['u_mail'])
-                      : string_change_case(__('none_f'), 'initials');
-  $data['quotes']     = sanitize_output($duser['us_quotes']);
-  $data['quotes_app'] = sanitize_output($duser['us_quotes_app']);
-  $data['meetups']    = sanitize_output($duser['us_meetups']);
-  $data['tasks']      = sanitize_output($duser['us_tasks_sub']);
-  $data['contribs']   = $duser['us_quotes'] + $duser['us_quotes_app'] + $duser['us_meetups'] + $duser['us_tasks_sub'];
+  // Format the data
+  $user_deleted           = $duser['u_deleted'];
+  $user_banned            = $duser['u_banned'];
+  $user_username          = $duser['u_nick'];
+  $user_moderator         = $duser['u_mod'];
+  $user_admin             = $duser['u_admin'];
+  $user_languages         = $duser['u_lang'];
+  $user_text_fr           = $duser['u_text_fr'];
+  $user_text_en           = $duser['u_text_en'];
+  $user_pronouns_fr       = $duser['u_pronouns_fr'];
+  $user_pronouns_en       = $duser['u_pronouns_en'];
+  $user_country           = $duser['u_country'];
+  $user_created           = $duser['u_created'];
+  $user_activity          = $duser['u_activity'];
+  $user_birthday          = $duser['u_birthday'];
+  $user_birth_y           = ($duser['u_birth_y']) ? $duser['u_birth_y'] : '';
+  $user_birth_m           = ($duser['u_birth_m']) ? $duser['u_birth_m'] : '';
+  $user_birth_d           = ($duser['u_birth_d']) ? $duser['u_birth_d'] : '';
+  $user_age               = ($user_birth_y) ? $duser['u_age'] : 0;
+  $user_hide_activity     = $duser['u_hideact'];
+  $user_last_page_en      = $duser['u_active_en'];
+  $user_last_page_fr      = $duser['u_active_fr'];
+  $user_last_page_url     = (substr($duser['u_active_url'], 0, 1) != '.') ? $duser['u_active_url'] : '';
+  $user_last_action       = $duser['u_lastaction'];
+  $user_ip                = $duser['u_ip'];
+  $user_email             = $duser['u_mail'];
+  $user_stats_quotes      = $duser['us_quotes'];
+  $user_stats_quotes_sub  = $duser['us_quotes_app'];
+  $user_stats_meetups     = $duser['us_meetups'];
+  $user_stats_tasks_sub   = $duser['us_tasks_sub'];
+  $user_stats_contribs    = $user_stats_quotes + $user_stats_quotes_sub + $user_stats_meetups + $user_stats_tasks_sub;
+
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['id']         = sanitize_output($user_id);
+    $data['deleted']    = sanitize_output($user_deleted);
+    $data['banned']     = ($user_banned);
+    $data['unbanned']   = sanitize_output(string_change_case(time_until($user_banned), 'lowercase'));
+    $data['username']   = sanitize_output($user_username);
+    $user_title         = ($user_moderator) ? __('moderator') : '';
+    $user_title         = ($user_admin) ? __('administrator') : $user_title;
+    $data['title']      = sanitize_output(string_change_case($user_title, 'initials'));
+    $user_css           = ($user_moderator) ? ' text_orange noglow' : '';
+    $data['title_css']  = ($user_admin) ? ' text_red glow_dark' : $user_css;
+    $data['lang_en']    = str_contains($user_languages, 'EN');
+    $data['lang_fr']    = str_contains($user_languages, 'FR');
+    $data['text']       = ($lang === 'FR' && $user_text_fr)
+                        ? bbcodes(sanitize_output($user_text_fr, preserve_line_breaks: true))
+                        : bbcodes(sanitize_output($user_text_en, preserve_line_breaks: true));
+    $data['text_fr']    = sanitize_output($user_text_fr);
+    $data['text_en']    = sanitize_output($user_text_en);
+    $data['ftext_fr']   = bbcodes(sanitize_output($user_text_fr, true));
+    $data['ftext_en']   = bbcodes(sanitize_output($user_text_en, true));
+    $data['pronouns']   = ($lang === 'FR' && $user_pronouns_fr)
+                        ? sanitize_output($user_pronouns_fr)
+                        : sanitize_output($user_pronouns_en);
+    $data['pronoun_en'] = sanitize_output($user_pronouns_en);
+    $data['pronoun_fr'] = sanitize_output($user_pronouns_fr);
+    $data['country']    = sanitize_output($user_country);
+    $data['created']    = sanitize_output(date_to_text($user_created, strip_day: 1));
+    $data['screated']   = sanitize_output(time_since($user_created));
+    $data['activity']   = ($user_activity)
+                        ? sanitize_output(time_since($user_activity))
+                        : sanitize_output(time_since($user_activity));
+    $data['birthday']   = ($user_birth_d && $user_birth_m)
+                        ? sanitize_output(date_to_text($user_birthday, strip_day: true, strip_year: true))
+                        : 0;
+    $data['age']        = sanitize_output($user_age);
+    $data['birth_d']    = sanitize_output($user_birth_d);
+    $data['birth_m']    = sanitize_output($user_birth_m);
+    $data['birth_y']    = sanitize_output($user_birth_y);
+    $data['hideact']    = ($user_hide_activity);
+    $data['ip']         = ($user_ip === '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($user_ip);
+    $data['lastpage']   = ($lang === 'FR' && $user_last_page_fr)
+                        ? sanitize_output($user_last_page_fr)
+                        : sanitize_output($user_last_page_en);
+    $data['lasturl']    = sanitize_output($user_last_page_url);
+    $data['lastaction'] = ($user_last_action)
+                        ? sanitize_output(time_since($user_last_action))
+                        : sanitize_output(string_change_case(__('none_f'), 'initials'));
+    $data['email']      = ($user_email)
+                        ? sanitize_output($user_email)
+                        : string_change_case(__('none_f'), 'initials');
+    $data['quotes']     = sanitize_output($user_stats_quotes);
+    $data['quotes_app'] = sanitize_output($user_stats_quotes_sub);
+    $data['meetups']    = sanitize_output($user_stats_meetups);
+    $data['tasks']      = sanitize_output($user_stats_tasks_sub);
+    $data['contribs']   = sanitize_output($user_stats_contribs);
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // User data
+    $data['user']['id']               = (string)$user_id;
+    $data['user']['username']         = (!$user_deleted) ? $user_username : '[deleted]';
+    $data['user']['is_deleted']       = (bool)$user_deleted;
+    $data['user']['is_banned']        = (bool)($user_banned);
+    $data['user']['is_moderator']     = (bool)($user_moderator || $user_admin);
+    $data['user']['is_administrator'] = (bool)($user_admin);
+
+    // Profile data
+    if(!$user_deleted)
+    {
+      $data['user']['profile']['account_created_on']  = date('Y-m-d', $user_created);
+      $data['user']['profile']['speaks_english']      = (bool)str_contains($user_languages, 'EN');
+      $data['user']['profile']['speaks_french']       = (bool)str_contains($user_languages, 'FR');
+      $data['user']['profile']['birthday']            = ($user_birthday != '0000-00-00') ? $user_birthday : NULL;
+      $data['user']['profile']['age']                 = $user_age ?: NULL;
+      $data['user']['profile']['location']            = $user_country ?: NULL;
+      $data['user']['profile']['pronouns_en']         = $user_pronouns_en ?: NULL;
+      $data['user']['profile']['pronouns_fr']         = $user_pronouns_fr ?: NULL;
+      $data['user']['profile']['custom_text_en']      = sanitize_json(bbcodes_remove($user_text_en)) ?: NULL;
+      $data['user']['profile']['custom_text_fr']      = sanitize_json(bbcodes_remove($user_text_fr)) ?: NULL;
+    }
+    else
+      $data['user']['profile'] = NULL;
+
+    // Activity data
+    if($user_activity && !$user_hide_activity && !$user_deleted)
+    {
+      $user_activity_aware_datetime = date_to_aware_datetime($user_activity);
+      $data['user']['last_activity']['time_since']    = time_since($user_activity);
+      $data['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
+      $data['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
+      $data['user']['last_activity']['page_link']     = ($user_last_page_url)
+                                                      ? $GLOBALS['website_url'].$user_last_page_url
+                                                      : $GLOBALS['website_url'];
+      $data['user']['last_activity']['page_name_en']  = $user_last_page_en ?: NULL;
+      $data['user']['last_activity']['page_name_fr']  = $user_last_page_fr ?: NULL;
+    }
+    else
+      $data['user']['last_activity'] = NULL;
+
+    // Stats
+    if(!$user_deleted)
+    {
+      $data['user']['stats']['quotes_appeared_in']  = (int)$user_stats_quotes;
+      $data['user']['stats']['quotes_submitted']    = (int)$user_stats_quotes_sub;
+      $data['user']['stats']['meetups_attended']    = (int)$user_stats_meetups;
+      $data['user']['stats']['tasks_submitted']     = (int)$user_stats_tasks_sub;
+    }
+
+    // Ban data
+    if($user_banned && !$user_deleted)
+    {
+      $ban_aware_datetime = date_to_aware_datetime($user_banned);
+      $data['user']['ban']['unban_deadline']  = time_until($user_banned);
+      $data['user']['ban']['unban_datetime']  = $ban_aware_datetime['datetime'];
+      $data['user']['ban']['unban_timezone']  = $ban_aware_datetime['timezone'];
+    }
+    else
+      $data['user']['ban'] = NULL;
+  }
 
   // Return the array
   return $data;

@@ -14,6 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 $api_doc_menu['intro']  = isset($api_doc_menu['intro'])   ? ' selected' : '';
 $api_doc_menu['quotes'] = isset($api_doc_menu['quotes'])  ? ' selected' : '';
+$api_doc_menu['users']  = isset($api_doc_menu['users'])   ? ' selected' : '';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +30,9 @@ $api_doc_menu['quotes'] = isset($api_doc_menu['quotes'])  ? ' selected' : '';
         </option>
         <option value="quotes"<?=$api_doc_menu['quotes']?>>
           <?=__('api_quotes_menu')?>
+        </option>
+        <option value="users"<?=$api_doc_menu['users']?>>
+          <?=__('api_users_menu')?>
         </option>
       </select>
     </h5>

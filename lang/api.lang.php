@@ -156,8 +156,8 @@ ___('api_quotes_get_summary', 'FR', <<<EOD
 Récupère une citation, dont l'ID est spécifié.
 EOD
 );
-___('api_quotes_get_id',  'EN', "The desired quote's ID.");
-___('api_quotes_get_id',  'FR', "L'ID de la citation désirée.");
+___('api_quotes_get_id',      'EN', "The desired quote's ID.");
+___('api_quotes_get_id',      'FR', "L'ID de la citation désirée.");
 
 
 // Random quote
@@ -177,3 +177,37 @@ ___('api_quotes_random_nsfw',     'EN', "Choose solely from SFW (0) or NSFW (1) 
 ___('api_quotes_random_nsfw',     'FR', "Choisit uniquement parmi les citations SFW (0) ou NSFW (1).");
 ___('api_quotes_random_year',     'EN', "Choose from quotes added to the database in a specific year (ex. '2005').");
 ___('api_quotes_random_year',     'FR', "Choisit parmi les citations ajoutées sur le site une année spécifiée (ex. '2005').");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                *      USERS                                                      **/
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Menu entry & introduction
+___('api_users_menu',   'EN', "Users");
+___('api_users_menu',   'FR', "Comptes");
+___('api_users_intro',  'EN', <<<EOD
+This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with the website's {{link|pages/users/list|user accounts}}. Per our {{link|pages/doc/privacy|privacy policy}}, users have a "right to be forgotten": some accounts might have their username show as "[deleted]", and can not be interacted with.
+EOD
+);
+___('api_users_intro',  'FR', <<<EOD
+Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/users/list|les comptes}}. Dans notre {{link|pages/doc/privacy|politique de confidentialité}}, il est précisé que tout le monde dispose d'un « droit à l'oubli » : certains comptes auront pour pseudonyme « [deleted] », il n'est pas possible d'intéragir avec eux.
+EOD
+);
+
+
+// Get one user
+___('api_users_get_summary', 'EN', <<<EOD
+Retrieves a user with the specified ID.
+EOD
+);
+___('api_users_get_summary', 'FR', <<<EOD
+Récupère un compte, dont l'ID est spécifié.
+EOD
+);
+___('api_users_get_id',     'EN', "The desired user's ID.");
+___('api_users_get_id',     'FR', "L'ID du compte désiré.");
