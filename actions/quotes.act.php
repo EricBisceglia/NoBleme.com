@@ -114,13 +114,13 @@ function quotes_get(  int     $quote_id           ,
     {
       for($i = 0; $i < $quote_users['rows']; $i++)
       {
-        $data['users'][$i]['id']        = (string)$quote_users[$i]['id'];
-        $data['users'][$i]['username']  = $quote_users[$i]['username'];
-        $data['users'][$i]['link']      = $GLOBALS['website_url'].'pages/users/'.$quote_users[$i]['id'];
+        $data['quote']['users'][$i]['id']       = (string)$quote_users[$i]['id'];
+        $data['quote']['users'][$i]['username'] = $quote_users[$i]['username'];
+        $data['quote']['users'][$i]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users[$i]['id'];
       }
     }
     else
-      $data['users'] = NULL;
+      $data['quote']['users'] = NULL;
   }
 
   // Return the prepared data

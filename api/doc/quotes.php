@@ -182,15 +182,15 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "language": string,
     "link": string,
     "body": string,
-    "added_on": string
-  },
-  "users": [
-    {
-      "id": string,
-      "username": string,
-      "link": string
-    },
-  ]
+    "added_on": string,
+    "users": [
+      {
+        "id": string,
+        "username": string,
+        "link": string
+      },
+    ]
+  }
 }</pre>
 
 </div>
@@ -262,15 +262,15 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "language": string,
     "link": string,
     "body": string,
-    "added_on": string
-  },
-  "users": [
-    {
-      "id": string,
-      "username": string,
-      "link": string
-    },
-  ]
+    "added_on": string,
+    "users": [
+      {
+        "id": string,
+        "username": string,
+        "link": string
+      },
+    ]
+  }
 }</pre>
 
 </div>
