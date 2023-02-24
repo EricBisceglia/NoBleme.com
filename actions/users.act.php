@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  users_get                           Fetches data related to a user.                                              */
 /*  users_get_random_id                 Fetches a randomly selected user ID.                                         */
 /*  users_list                          Fetches a list of users.                                                     */
+/*  users_list_api                      Fetches a list of users for usage in the API.                                */
 /*  users_list_admins                   Fetches a list of administrative team members.                               */
 /*  users_edit_profile                  Modifies a user's own public profile.                                        */
 /*  users_delete_profile                Deletes a user's public profile.                                             */
@@ -549,6 +550,50 @@ function users_list(  string  $sort_by          = ''      ,
 
   // Add the number of rows to the data
   $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches a list of users for usage in the API.
+ *
+ * @return  array   A list of users, ready for usage in the API.
+ */
+
+function users_list_api() : array
+{
+  // Fetch the users
+  $qusers = " SELECT    users.id                  AS 'u_id'       ,
+                        users.username            AS 'u_nick'     ,
+                        users.is_deleted          AS 'u_deleted'  ,
+                        users.is_banned_until     AS 'u_banned'   ,
+                        users.is_moderator        AS 'u_mod'      ,
+                        users.is_administrator    AS 'u_admin'
+              FROM      users
+              ORDER BY  users.id ASC ";
+
+  // Run the query
+  $dusers = query($qusers);
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($dusers); $i++)
+  {
+    // User data
+    $data[$i]['user']['id']               = (string)$row['u_id'];
+    $data[$i]['user']['username']         = (!$row['u_deleted']) ? $row['u_nick'] : '[deleted]';
+    $data[$i]['user']['deleted']          = (bool)($row['u_deleted']);
+    $data[$i]['user']['banned']           = (bool)($row['u_banned']);
+    $data[$i]['user']['is_moderator']     = (bool)($row['u_mod'] || $row['u_admin']);
+    $data[$i]['user']['is_administrator'] = (bool)($row['u_admin']);
+  }
+
+  // Give a default return value when no users
+  $data = (isset($data)) ? $data : NULL;
+  $data = array('users' => $data);
 
   // Return the prepared data
   return $data;

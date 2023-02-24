@@ -200,6 +200,17 @@ EOD
 );
 
 
+// List users
+___('api_users_list_summary', 'EN', <<<EOD
+Retrieves a list of all users, in chronological order of account creation.
+EOD
+);
+___('api_users_list_summary', 'FR', <<<EOD
+Récupère une liste de tous les comptes, dans l'ordre chronologique de création.
+EOD
+);
+
+
 // Get one user
 ___('api_users_get_summary', 'EN', <<<EOD
 Retrieves a user with the specified ID.

@@ -44,9 +44,43 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <ul class="tinypadding_top">
+    <li><?=__link('#list', 'GET /api/users', is_internal: false)?></li>
     <li><?=__link('#get', 'GET /api/user/{id}', is_internal: false)?></li>
     <li><?=__link('#getrandom', 'GET /api/user/random', is_internal: false)?></li>
   </ul>
+
+</div>
+
+<hr id="list">
+
+<div class="width_50 padding_top padding_bot">
+
+  <h4>
+    GET /api/users
+  </h4>
+
+  <p>
+    <?=__('api_users_list_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "users": [
+    {
+      "user": {
+        "id": string,
+        "username": string,
+        "deleted": bool,
+        "banned": bool,
+        "is_moderator": bool,
+        "is_administrator": bool
+      }
+    },
+  ]
+}</pre>
 
 </div>
 
