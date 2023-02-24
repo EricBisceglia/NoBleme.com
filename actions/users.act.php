@@ -256,6 +256,8 @@ function users_get( ?int    $user_id  = NULL    ,
       $data['user']['stats']['meetups_attended']    = (int)$user_stats_meetups;
       $data['user']['stats']['tasks_submitted']     = (int)$user_stats_tasks_sub;
     }
+    else
+      $data['user']['stats'] = NULL;
 
     // Ban data
     if($user_banned && !$user_deleted)
@@ -574,20 +576,66 @@ function users_list(  string  $sort_by          = ''      ,
 /**
  * Fetches a list of users for usage in the API.
  *
- * @return  array   A list of users, ready for usage in the API.
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by  (OPTIONAL)  How the returned data should be sorted.
+ *
+ * @return  array                         A list of users, ready for usage in the API.
  */
 
-function users_list_api() : array
+function users_list_api(  array   $search   = array() ,
+                          string  $sort_by  = ''      ) : array
 {
+  // Prepare the search parameters
+  $search_admins  = sanitize_array_element($search, 'admins', 'int', min: 0, max: 1, default: 0);
+  $search_created = sanitize_array_element($search, 'created', 'int');
+
+  // Search through the data
+  $query_search   = ($search_admins)  ? " AND (users.is_moderator = 1 OR users.is_administrator = 1) "            : "";
+  $query_search  .= ($search_created) ? " AND YEAR(FROM_UNIXTIME(users_profile.created_at)) = '$search_created' " : "";
+
+  // Hide users with no activity when necessary
+  if($sort_by === 'last_activity')
+    $query_search .= " AND users.is_deleted = 0 AND users_settings.hide_from_activity = 0 ";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'username'          => "  ORDER BY  users.username                    ASC   ,
+                                        users_profile.created_at          ASC   ,
+                                        users.id                          ASC   " ,
+    'account_created'   => "  ORDER BY  users_profile.created_at          DESC  ,
+                                        users.id                          DESC  " ,
+    'last_activity'     => "  ORDER BY  users.last_visited_at             DESC  ,
+                                        users_profile.created_at          ASC   ,
+                                        users.id                          ASC   " ,
+    default             => "  ORDER BY  users_profile.created_at          ASC   ,
+                                        users.id                          ASC   "
+  };
+
   // Fetch the users
-  $qusers = " SELECT    users.id                  AS 'u_id'       ,
-                        users.username            AS 'u_nick'     ,
-                        users.is_deleted          AS 'u_deleted'  ,
-                        users.is_banned_until     AS 'u_banned'   ,
-                        users.is_moderator        AS 'u_mod'      ,
-                        users.is_administrator    AS 'u_admin'
+  $qusers = " SELECT    users.id                          AS 'u_id'           ,
+                        users.username                    AS 'u_nick'         ,
+                        users.is_deleted                  AS 'u_deleted'      ,
+                        users.is_banned_until             AS 'u_banned'       ,
+                        users.is_moderator                AS 'u_mod'          ,
+                        users.is_administrator            AS 'u_admin'        ,
+                        users.last_visited_at             AS 'u_activity'     ,
+                        users.last_visited_page_en        AS 'u_activity_en'  ,
+                        users.last_visited_page_fr        AS 'u_activity_fr'  ,
+                        users.last_visited_url            AS 'u_activity_url' ,
+                        users_profile.created_at          AS 'u_created'      ,
+                        users_stats.quotes                AS 'us_quotes'      ,
+                        users_stats.quotes_approved       AS 'us_quotes_app'  ,
+                        users_stats.meetups               AS 'us_meetups'     ,
+                        users_stats.tasks_submitted       AS 'us_tasks_sub'   ,
+                        users_settings.hide_from_activity AS 'u_hide_activity'
               FROM      users
-              ORDER BY  users.id ASC ";
+              LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
+              LEFT JOIN users_stats     ON users_stats.fk_users     = users.id
+              LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+              WHERE     1 = 1
+                        $query_search
+                        $query_sort ";
 
   // Run the query
   $dusers = query($qusers);
@@ -596,12 +644,39 @@ function users_list_api() : array
   for($i = 0; $row = mysqli_fetch_array($dusers); $i++)
   {
     // User data
-    $data[$i]['user']['id']               = (string)$row['u_id'];
-    $data[$i]['user']['username']         = (!$row['u_deleted']) ? $row['u_nick'] : '[deleted]';
-    $data[$i]['user']['deleted']          = (bool)($row['u_deleted']);
-    $data[$i]['user']['banned']           = (bool)($row['u_banned']);
-    $data[$i]['user']['is_moderator']     = (bool)($row['u_mod'] || $row['u_admin']);
-    $data[$i]['user']['is_administrator'] = (bool)($row['u_admin']);
+    $data[$i]['user']['id']                 = (string)$row['u_id'];
+    $data[$i]['user']['username']           = (!$row['u_deleted']) ? $row['u_nick'] : '[deleted]';
+    $data[$i]['user']['is_deleted']         = (bool)($row['u_deleted']);
+    $data[$i]['user']['is_banned']          = (bool)($row['u_banned']);
+    $data[$i]['user']['is_moderator']       = (bool)($row['u_mod'] || $row['u_admin']);
+    $data[$i]['user']['is_administrator']   = (bool)($row['u_admin']);
+    $data[$i]['user']['account_created_on'] = (!$row['u_deleted']) ? date('Y-m-d', $row['u_created']) : NULL;
+
+    // Activity data
+    if($row['u_activity'] && !$row['u_hide_activity'] && !$row['u_deleted'])
+    {
+      $user_activity_aware_datetime = date_to_aware_datetime($row['u_activity']);
+      $data[$i]['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
+      $data[$i]['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
+      $data[$i]['user']['last_activity']['page_link']     = ($row['u_activity_url'])
+                                                          ? $GLOBALS['website_url'].$row['u_activity_url']
+                                                          : $GLOBALS['website_url'];
+      $data[$i]['user']['last_activity']['page_name_en']  = $row['u_activity_en'] ?: NULL;
+      $data[$i]['user']['last_activity']['page_name_fr']  = $row['u_activity_fr'] ?: NULL;
+    }
+    else
+      $data[$i]['user']['last_activity'] = NULL;
+
+    // Stats
+    if(!$row['u_deleted'])
+    {
+      $data[$i]['user']['stats']['quotes_appeared_in']  = (int)$row['us_quotes'];
+      $data[$i]['user']['stats']['quotes_submitted']    = (int)$row['us_quotes_app'];
+      $data[$i]['user']['stats']['meetups_attended']    = (int)$row['us_meetups'];
+      $data[$i]['user']['stats']['tasks_submitted']     = (int)$row['us_tasks_sub'];
+    }
+    else
+      $data[$i]['user']['stats'] = NULL;
   }
 
   // Give a default return value when no users

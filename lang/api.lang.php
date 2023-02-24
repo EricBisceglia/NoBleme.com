@@ -201,14 +201,26 @@ EOD
 
 
 // List users
-___('api_users_list_summary', 'EN', <<<EOD
+___('api_users_list_summary',       'EN', <<<EOD
 Retrieves a list of all users, in chronological order of account creation.
 EOD
 );
-___('api_users_list_summary', 'FR', <<<EOD
+___('api_users_list_summary',       'FR', <<<EOD
 Récupère une liste de tous les comptes, dans l'ordre chronologique de création.
 EOD
 );
+___('api_users_list_sort',          'EN', "Sorts the results in the specified way. The following sorting orders are available:");
+___('api_users_list_sort',          'FR', "Trie les résultats dans l'ordre spécifié. Les options de tri suivantes sont possibles :");
+___('api_users_list_sort_username', 'EN', "Sort by username, alphabetically.");
+___('api_users_list_sort_username', 'FR', "Trie par pseudonyme, alphabétiquement.");
+___('api_users_list_sort_created',  'EN', "Sort by account creation date, in reverse chronological order.");
+___('api_users_list_sort_created',  'FR', "Trie par date de création du compte, antéchronologiquement.");
+___('api_users_list_sort_activity', 'EN', "Sort by last account activity date, in reverse chronological order. Deleted users and users who {{link|pages/account/settings_privacy|opted out of activity stats}} will not be shown in the results.");
+___('api_users_list_sort_activity', 'FR', "Trie par date de dernière activité du compte, antéchronologiquement. Les comptes supprimés et les comptes {{link|pages/account/settings_privacy|désirant être masqués dans l'activité}} n'apparaîtront pas dans le résultat.");
+___('api_users_list_created',       'EN', "Returns only accounts created on the specified year.");
+___('api_users_list_created',       'FR', "Ne renvoie que les comptes crées lors de l'année spécifiée");
+___('api_users_list_admins',        'EN', "If this parameter is set to `true`, returns only members of the {{link|pages/users/admins|administrative team}}.");
+___('api_users_list_admins',        'FR', "Si ce paramètre vaut `true`, ne renvoie que les membres de {{link|pages/users/admins|l'équipe administrative}}.");
 
 
 // Get one user by ID

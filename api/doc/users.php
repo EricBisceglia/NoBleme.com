@@ -64,6 +64,52 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <?=__('api_users_list_summary')?>
   </p>
 
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">sort</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_users_list_sort')?>
+  </p>
+
+  <ul class="tinypadding_bot">
+    <li>
+      <span class="bold">username</span> - <?=__('api_users_list_sort_username')?>
+    </li>
+    <li>
+      <span class="bold">account_created</span> - <?=__('api_users_list_sort_created')?>
+    </li>
+    <li>
+      <span class="bold">last_activity</span> - <?=__('api_users_list_sort_activity')?>
+    </li>
+  </ul>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">created</span> - inc - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_users_list_created')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">admins</span> - bool - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_users_list_admins')?>
+  </p>
+
   <h6 class="bigpadding_top smallpadding_bot">
     <?=__('api_response_schema')?>
   </h6>
@@ -74,10 +120,24 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "user": {
         "id": string,
         "username": string,
-        "deleted": bool,
-        "banned": bool,
+        "is_deleted": bool,
+        "is_banned": bool,
         "is_moderator": bool,
-        "is_administrator": bool
+        "is_administrator": bool,
+        "account_created_on": string,
+        "last_activity": {
+          "datetime": string,
+          "timezone": string,
+          "page_link": string,
+          "page_name_en": string,
+          "page_name_fr": string
+        },
+        "stats": {
+          "quotes_appeared_in": int,
+          "quotes_submitted": int,
+          "meetups_attended": int,
+          "tasks_submitted": int
+        }
       }
     },
   ]
