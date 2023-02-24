@@ -211,7 +211,7 @@ EOD
 );
 
 
-// Get one user
+// Get one user by ID
 ___('api_users_get_summary', 'EN', <<<EOD
 Retrieves a user with the specified ID.
 EOD
@@ -222,6 +222,19 @@ EOD
 );
 ___('api_users_get_id',     'EN', "The desired user's ID.");
 ___('api_users_get_id',     'FR', "L'ID du compte désiré.");
+
+
+// Get one user by username
+___('api_users_get_username_summary', 'EN', <<<EOD
+Retrieves a user with the specified username.
+EOD
+);
+___('api_users_get_username_summary', 'FR', <<<EOD
+Récupère un compte, dont le pseudonyme est spécifié.
+EOD
+);
+___('api_users_get_username',         'EN', "The desired user's username.");
+___('api_users_get_username',         'FR', "Le pseudonyme du compte désiré.");
 
 
 // Random user

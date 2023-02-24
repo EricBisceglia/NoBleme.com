@@ -34,13 +34,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Fetches data related to a user.
  *
- * @param   int|null    $user_id  (OPTIONAL)  The user's id, will default to current user if unset.
- * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ * @param   int|null    $user_id    (OPTIONAL)  The user's id, will default to current user if unset.
+ * @param   string      $username   (OPTIONAL)  Will search for the id of a user with this username if set.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null                        An array containing user related data, or NULL if it does not exist.
+ * @return  array|null                          An array containing user related data, or NULL if it does not exist.
  */
 
 function users_get( ?int    $user_id  = NULL    ,
+                    string  $username = NULL    ,
                     string  $format   = 'html'  ) : mixed
 {
   // Check if the required files have been included
@@ -48,9 +50,20 @@ function users_get( ?int    $user_id  = NULL    ,
   require_included_file('functions_time.inc.php');
   require_included_file('bbcodes.inc.php');
 
-  // User must be logged in if no id is provided
-  if(!$user_id && !user_is_logged_in())
+  // User must be logged in if no id or username is provided
+  if(!$user_id && !$username && !user_is_logged_in())
     return NULL;
+
+  // Fetch the requested username's ID if necessary
+  if($username)
+  {
+    // Look for the username's id
+    $user_id = database_entry_exists('users', 'username', $username, sanitize: true);
+
+    // Exit if does not exist
+    if(!$user_id)
+      return NULL;
+  }
 
   // Get current user id if needed
   $user_id = ($user_id) ? $user_id : user_get_id();
