@@ -109,6 +109,48 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                      MEETUPS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Menu entry & introduction
+___('api_meetups_menu',   'EN', "Meetups");
+___('api_meetups_menu',   'FR', "IRL");
+___('api_meetups_intro',  'EN', <<<EOD
+This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with {{link|pages/meetups/list|real life meetups}}.
+EOD
+);
+___('api_meetups_intro', 'FR', <<<EOD
+Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/meetups/list|les rencontres IRL}}.
+EOD
+);
+
+
+// List meetups
+___('api_meetups_list_summary',   'EN', <<<EOD
+Retrieves a list of all meetups, in reverse chronological order.
+EOD
+);
+___('api_meetups_list_summary',   'FR', <<<EOD
+Récupère une liste de toutes les rencontres IRL, dans l'ordre antéchronologique.
+EOD
+);
+___('api_meetups_list_user',      'EN', "Return meetups which were attended by the specified {{link|api/doc/users|user}}.");
+___('api_meetups_list_user',      'FR', "Renvoie les rencontres IRL auxquelles ont participé la personne possédant le {{link|api/doc/users|compte}} spécifié.");
+___('api_meetups_list_language',  'EN', "Return meetups in which the specified ISO 639-1 language was spoken (ex. 'en').");
+___('api_meetups_list_language',  'FR', "Renvoie les rencontres IRL où la langue spécifiée au format ISO 639-1 a été parlée (ex. 'fr').");
+___('api_meetups_list_year',      'EN', "Return meetups which took place in the specified year (ex. '2005').");
+___('api_meetups_list_year',      'FR', "Renvoie les rencontres IRL qui ont lieu l'année spécifiée (ex. '2005').");
+___('api_meetups_list_location',  'EN', "Return meetups which took place in the specified location.");
+___('api_meetups_list_location',  'FR', "Renvoie les rencontres IRL qui ont lieu à l'endroit spécifié.");
+___('api_meetups_list_attendees', 'EN', "Return meetups which had <span class=\"bold\">at least</span> the specified number of attendees.");
+___('api_meetups_list_attendees', 'FR', "Renvoie les rencontres IRL où sont venues <span class=\"bold\">au minimum</span> le nombre de personnes spécifié.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      QUOTES                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -183,7 +225,7 @@ ___('api_quotes_random_year',     'FR', "Choisit parmi les citations ajoutées s
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                *      USERS                                                      **/
+/*                                                       USERS                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 

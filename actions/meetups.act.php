@@ -105,22 +105,29 @@ function meetups_get( int $meetup_id ) : mixed
  *
  * @param   string  $sort_by  (OPTIONAL)  How the returned data should be sorted.
  * @param   array   $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                         An array containing meetups.
  */
 
 function meetups_list(  string  $sort_by  = 'date'  ,
-                        array   $search   = array() ) : array
+                        array   $search   = array() ,
+                        string  $format   = 'html'  ) : array
 {
+  // Check if the required files have been included
+  if($format === 'api')
+    require_included_file('bbcodes.inc.php');
+
   // Sanitize the search parameters
   $search_date      = sanitize_array_element($search, 'date', 'int', min: 0, default: 0);
   $search_lang      = sanitize_array_element($search, 'lang', 'string');
+  $search_lang_api  = sanitize_array_element($search, 'lang_api', 'string', case: 'uppercase');
   $search_location  = sanitize_array_element($search, 'location', 'string');
   $search_people    = sanitize_array_element($search, 'people', 'int', min: 0, default: 0);
   $search_user      = sanitize_array_element($search, 'attendee', 'int', min: 0, default: 0);
 
   // Hide deleted meetups to regular users
-  $query_search = (!user_is_moderator()) ? " AND meetups.is_deleted = 0 " : "";
+  $query_search = (!user_is_moderator() || $format === 'api') ? " AND meetups.is_deleted = 0 " : "";
 
   // Search the data: Languages
   if($search_lang === 'ENFR' || $search_lang === 'FREN')
@@ -128,6 +135,8 @@ function meetups_list(  string  $sort_by  = 'date'  ,
                         OR    meetups.languages LIKE 'FREN' ) ";
   else if($search_lang)
     $query_search .= "  AND   meetups.languages LIKE '$search_lang' ";
+  if($search_lang_api)
+    $query_search .= "  AND   meetups.languages LIKE '%$search_lang_api%' ";
 
   // Search the data: Other searches
   $query_search .= ($search_date)     ? " AND YEAR(meetups.event_date)  = '$search_date'        " : "";
@@ -138,10 +147,13 @@ function meetups_list(  string  $sort_by  = 'date'  ,
   $query_sort = match($sort_by)
   {
     'location'  => " ORDER BY meetups.location        ASC   ,
-                              meetups.event_date      DESC  " ,
+                              meetups.event_date      DESC  ,
+                              meetups.id              DESC  " ,
     'people'    => " ORDER BY meetups.attendee_count  DESC  ,
-                              meetups.event_date      DESC  " ,
-    default     => " ORDER BY meetups.event_date      DESC  " ,
+                              meetups.event_date      DESC  ,
+                              meetups.id              DESC  " ,
+    default     => " ORDER BY meetups.event_date      DESC  ,
+                              meetups.id              DESC  " ,
   };
 
   // Different query depending on whether the full meetup list or a single attendant's meetup list are being requested
@@ -173,18 +185,51 @@ function meetups_list(  string  $sort_by  = 'date'  ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmeetups); $i++)
   {
-    $data[$i]['id']         = $row['m_id'];
-    $meetup_css             = ($row['m_deleted']) ? 'text_red': 'green dark_hover text_white';
-    $data[$i]['css']        = ($row['m_deleted'] || (strtotime($row['m_date']) >= strtotime(date('Y-m-d'))))
-                            ? ' '.$meetup_css
-                            : '';
-    $data[$i]['css_link']   = ($row['m_deleted']) ? 'text_red text_white_hover' : '';
-    $data[$i]['deleted']    = $row['m_deleted'];
-    $data[$i]['date']       = sanitize_output(date_to_text($row['m_date']));
-    $data[$i]['lang_en']    = str_contains($row['m_lang'], 'EN');
-    $data[$i]['lang_fr']    = str_contains($row['m_lang'], 'FR');
-    $data[$i]['location']   = sanitize_output($row['m_location']);
-    $data[$i]['people']     = sanitize_output($row['m_people']);
+    // Format the data
+    $meetup_id          = $row['m_id'];
+    $meetup_deleted     = $row['m_deleted'];
+    $meetup_date        = $row['m_date'];
+    $meetup_languages   = $row['m_lang'];
+    $meetup_location    = $row['m_location'];
+    $meetup_attendees   = $row['m_people'];
+    $meetup_details_en  = $row['m_desc_en'];
+    $meetup_details_fr  = $row['m_desc_fr'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data[$i]['id']         = sanitize_output($meetup_id);
+      $meetup_css             = ($meetup_deleted) ? 'text_red': 'green dark_hover text_white';
+      $data[$i]['css']        = ($meetup_deleted || (strtotime($meetup_date) >= strtotime(date('Y-m-d'))))
+                              ? ' '.$meetup_css
+                              : '';
+      $data[$i]['css_link']   = ($meetup_deleted) ? 'text_red text_white_hover' : '';
+      $data[$i]['deleted']    = sanitize_output($meetup_deleted);
+      $data[$i]['date']       = sanitize_output(date_to_text($meetup_date));
+      $data[$i]['lang_en']    = str_contains($meetup_languages, 'EN');
+      $data[$i]['lang_fr']    = str_contains($meetup_languages, 'FR');
+      $data[$i]['location']   = sanitize_output($meetup_location);
+      $data[$i]['people']     = sanitize_output($meetup_attendees);
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      // Meetup data
+      $data[$i]['meetup']['id']             = (string)$meetup_id;
+      $data[$i]['meetup']['date']           = $meetup_date;
+      $data[$i]['meetup']['location']       = $meetup_location;
+      $data[$i]['meetup']['attendee_count'] = (int)$meetup_attendees;
+      $data[$i]['meetup']['details_en']     = (sanitize_json(bbcodes_remove($meetup_details_en))) ?: NULL;
+      $data[$i]['meetup']['details_fr']     = (sanitize_json(bbcodes_remove($meetup_details_fr))) ?: NULL;
+
+      // Language data
+      $data[$i]['meetup']['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');
+      $data[$i]['meetup']['languages_spoken']['french']   = (bool)str_contains($meetup_languages, 'FR');
+
+      // Details
+
+    }
 
     // Treat the case where a user search returns a row containing only NULL data
     if(!$i && $search_user && is_null($row['m_id']))
@@ -192,11 +237,16 @@ function meetups_list(  string  $sort_by  = 'date'  ,
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
 
   // Add to the data the username of the attendee being searched for
-  if($search_user)
+  if($search_user && $format === 'html')
     $data['attendee'] = user_get_username($search_user);
+
+  // Give a default return value when no meetups are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('meetups' => $data) : $data;
 
   // Return the prepared data
   return $data;

@@ -12,9 +12,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare the menu entries
 
-$api_doc_menu['intro']  = isset($api_doc_menu['intro'])   ? ' selected' : '';
-$api_doc_menu['quotes'] = isset($api_doc_menu['quotes'])  ? ' selected' : '';
-$api_doc_menu['users']  = isset($api_doc_menu['users'])   ? ' selected' : '';
+$api_doc_menu['intro']    = isset($api_doc_menu['intro'])   ? ' selected' : '';
+$api_doc_menu['meetups']  = isset($api_doc_menu['meetups']) ? ' selected' : '';
+$api_doc_menu['quotes']   = isset($api_doc_menu['quotes'])  ? ' selected' : '';
+$api_doc_menu['users']    = isset($api_doc_menu['users'])   ? ' selected' : '';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,6 +28,9 @@ $api_doc_menu['users']  = isset($api_doc_menu['users'])   ? ' selected' : '';
       <select class="inh" id="api_doc_menu" name="api_doc_menu" onchange="api_doc_menu();">
         <option value="intro"<?=$api_doc_menu['intro']?>>
           <?=__('api_intro_menu')?>
+        </option>
+        <option value="meetups"<?=$api_doc_menu['meetups']?>>
+          <?=__('api_meetups_menu')?>
         </option>
         <option value="quotes"<?=$api_doc_menu['quotes']?>>
           <?=__('api_quotes_menu')?>
