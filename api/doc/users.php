@@ -124,6 +124,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "is_banned": bool,
         "is_moderator": bool,
         "is_administrator": bool,
+        "link": string,
         "account_created_on": string,
         "last_activity": {
           "datetime": string,
@@ -183,6 +184,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "is_banned": bool,
     "is_moderator": bool,
     "is_administrator": bool,
+    "link": string,
     "profile": {
       "account_created_on": string,
       "speaks_english": bool,
@@ -255,6 +257,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "is_banned": bool,
     "is_moderator": bool,
     "is_administrator": bool,
+    "link": string,
     "profile": {
       "account_created_on": string,
       "speaks_english": bool,
@@ -327,6 +330,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "is_banned": bool,
     "is_moderator": bool,
     "is_administrator": bool,
+    "link": string,
     "profile": {
       "account_created_on": string,
       "speaks_english": bool,

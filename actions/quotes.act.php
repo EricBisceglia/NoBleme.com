@@ -115,7 +115,7 @@ function quotes_get(  int     $quote_id           ,
       for($i = 0; $i < $quote_users['rows']; $i++)
       {
         $data['quote']['users'][$i]['id']       = (string)$quote_users[$i]['id'];
-        $data['quote']['users'][$i]['username'] = $quote_users[$i]['username'];
+        $data['quote']['users'][$i]['username'] = sanitize_json($quote_users[$i]['username']);
         $data['quote']['users'][$i]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users[$i]['id'];
       }
     }
@@ -436,7 +436,7 @@ function quotes_list( ?array  $search         = array() ,
         for($j = 0; $j < $quote_users_count; $j++)
         {
           $data[$i]['quote']['users'][$j]['id']       = (string)$quote_users_ids[$j];
-          $data[$i]['quote']['users'][$j]['username'] = $quote_users_nicks[$j];
+          $data[$i]['quote']['users'][$j]['username'] = sanitize_json($quote_users_nicks[$j]);
           $data[$i]['quote']['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users_ids[$j];
         }
       }

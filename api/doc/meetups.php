@@ -128,6 +128,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "date": string,
         "location": string,
         "attendee_count": int,
+        "link": string,
         "details_en": string,
         "details_fr": string,
         "languages_spoken": {
@@ -177,6 +178,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     "date": string,
     "location": string,
     "attendee_count": int,
+    "link": string,
     "details_en": string,
     "details_fr": string,
     "languages_spoken": {

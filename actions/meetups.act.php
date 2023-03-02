@@ -120,10 +120,11 @@ function meetups_get( int     $meetup_id          ,
     // Meetup data
     $data['meetup']['id']             = (string)$meetup_id;
     $data['meetup']['date']           = $meetup_date;
-    $data['meetup']['location']       = $meetup_location;
+    $data['meetup']['location']       = sanitize_json($meetup_location);
     $data['meetup']['attendee_count'] = (int)$meetup_attendees;
-    $data['meetup']['details_en']     = (sanitize_json(bbcodes_remove($meetup_details_en))) ?: NULL;
-    $data['meetup']['details_fr']     = (sanitize_json(bbcodes_remove($meetup_details_fr))) ?: NULL;
+    $data['meetup']['link']           = $GLOBALS['website_url'].'pages/meetups/'.$meetup_id;
+    $data['meetup']['details_en']     = sanitize_json(bbcodes_remove($meetup_details_en)) ?: NULL;
+    $data['meetup']['details_fr']     = sanitize_json(bbcodes_remove($meetup_details_fr)) ?: NULL;
 
     // Language data
     $data['meetup']['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');
@@ -138,10 +139,12 @@ function meetups_get( int     $meetup_id          ,
         $data['meetup']['attendees'][$i]['user_id']               = ($meetup_attendees[$i]['user_id'])
                                                                   ? (string)$meetup_attendees[$i]['user_id']
                                                                   : NULL;
-        $data['meetup']['attendees'][$i]['username']              = $meetup_attendees[$i]['nick_raw'];
+        $data['meetup']['attendees'][$i]['username']              = sanitize_json($meetup_attendees[$i]['nick_raw']);
         $data['meetup']['attendees'][$i]['confirmed_attending']   = (bool)$meetup_attendees[$i]['lock'];
-        $data['meetup']['attendees'][$i]['extra_info_en']         = $meetup_attendees[$i]['extra_en'] ?: NULL;
-        $data['meetup']['attendees'][$i]['extra_info_fr']         = $meetup_attendees[$i]['extra_fr'] ?: NULL;
+        $data['meetup']['attendees'][$i]['extra_info_en']         = sanitize_json($meetup_attendees[$i]['extra_en'])
+                                                                  ?: NULL;
+        $data['meetup']['attendees'][$i]['extra_info_fr']         = sanitize_json($meetup_attendees[$i]['extra_fr'])
+                                                                  ?: NULL;
       }
     }
     else
@@ -273,10 +276,11 @@ function meetups_list(  string  $sort_by  = 'date'  ,
       // Meetup data
       $data[$i]['meetup']['id']             = (string)$meetup_id;
       $data[$i]['meetup']['date']           = $meetup_date;
-      $data[$i]['meetup']['location']       = $meetup_location;
+      $data[$i]['meetup']['location']       = sanitize_json($meetup_location);
       $data[$i]['meetup']['attendee_count'] = (int)$meetup_attendees;
-      $data[$i]['meetup']['details_en']     = (sanitize_json(bbcodes_remove($meetup_details_en))) ?: NULL;
-      $data[$i]['meetup']['details_fr']     = (sanitize_json(bbcodes_remove($meetup_details_fr))) ?: NULL;
+      $data[$i]['meetup']['link']           = $GLOBALS['website_url'].'pages/meetups/'.$meetup_id;
+      $data[$i]['meetup']['details_en']     = sanitize_json(bbcodes_remove($meetup_details_en)) ?: NULL;
+      $data[$i]['meetup']['details_fr']     = sanitize_json(bbcodes_remove($meetup_details_fr)) ?: NULL;
 
       // Language data
       $data[$i]['meetup']['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');

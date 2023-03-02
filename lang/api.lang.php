@@ -114,6 +114,38 @@ EOD
 /*********************************************************************************************************************/
 
 // Menu entry & introduction
+___('api_irc_menu',   'EN', "IRC chat");
+___('api_irc_menu',   'FR', "Chat IRC");
+___('api_irc_intro',  'EN', <<<EOD
+This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with {{link|pages/social/irc|NoBleme's IRC chat server}}.
+EOD
+);
+___('api_irc_intro', 'FR', <<<EOD
+Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/social/irc|le serveur de chat IRC de NoBleme}}.
+EOD
+);
+
+
+// List irc channels
+___('api_irc_channel_list_summary', 'EN', <<<EOD
+Retrieves a list of all {{link|pages/social/irc?channels|public IRC channels}}.
+EOD
+);
+___('api_irc_channel_list_summary', 'FR', <<<EOD
+Récupère une liste de tous les {{link|pages/social/irc?channels|canaux IRC publics}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      MEETUPS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Menu entry & introduction
 ___('api_meetups_menu',   'EN', "Meetups");
 ___('api_meetups_menu',   'FR', "IRL");
 ___('api_meetups_intro',  'EN', <<<EOD

@@ -210,11 +210,12 @@ function users_get( ?int    $user_id  = NULL    ,
   {
     // User data
     $data['user']['id']               = (string)$user_id;
-    $data['user']['username']         = (!$user_deleted) ? $user_username : '[deleted]';
+    $data['user']['username']         = (!$user_deleted) ? sanitize_json($user_username) : '[deleted]';
     $data['user']['is_deleted']       = (bool)$user_deleted;
     $data['user']['is_banned']        = (bool)($user_banned);
     $data['user']['is_moderator']     = (bool)($user_moderator || $user_admin);
     $data['user']['is_administrator'] = (bool)($user_admin);
+    $data['user']['link']             = $GLOBALS['website_url'].'pages/users/'.$user_id;
 
     // Profile data
     if(!$user_deleted)
@@ -224,9 +225,9 @@ function users_get( ?int    $user_id  = NULL    ,
       $data['user']['profile']['speaks_french']       = (bool)str_contains($user_languages, 'FR');
       $data['user']['profile']['birthday']            = ($user_birthday != '0000-00-00') ? $user_birthday : NULL;
       $data['user']['profile']['age']                 = $user_age ?: NULL;
-      $data['user']['profile']['location']            = $user_country ?: NULL;
-      $data['user']['profile']['pronouns_en']         = $user_pronouns_en ?: NULL;
-      $data['user']['profile']['pronouns_fr']         = $user_pronouns_fr ?: NULL;
+      $data['user']['profile']['location']            = sanitize_json($user_country) ?: NULL;
+      $data['user']['profile']['pronouns_en']         = sanitize_json($user_pronouns_en) ?: NULL;
+      $data['user']['profile']['pronouns_fr']         = sanitize_json($user_pronouns_fr) ?: NULL;
       $data['user']['profile']['custom_text_en']      = sanitize_json(bbcodes_remove($user_text_en)) ?: NULL;
       $data['user']['profile']['custom_text_fr']      = sanitize_json(bbcodes_remove($user_text_fr)) ?: NULL;
     }
@@ -240,10 +241,10 @@ function users_get( ?int    $user_id  = NULL    ,
       $data['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
       $data['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
       $data['user']['last_activity']['page_link']     = ($user_last_page_url)
-                                                      ? $GLOBALS['website_url'].$user_last_page_url
-                                                      : $GLOBALS['website_url'];
-      $data['user']['last_activity']['page_name_en']  = $user_last_page_en ?: NULL;
-      $data['user']['last_activity']['page_name_fr']  = $user_last_page_fr ?: NULL;
+                                                      ? sanitize_json($GLOBALS['website_url'].$user_last_page_url)
+                                                      : sanitize_json($GLOBALS['website_url']);
+      $data['user']['last_activity']['page_name_en']  = sanitize_json($user_last_page_en) ?: NULL;
+      $data['user']['last_activity']['page_name_fr']  = sanitize_json($user_last_page_fr) ?: NULL;
     }
     else
       $data['user']['last_activity'] = NULL;
@@ -645,11 +646,12 @@ function users_list_api(  array   $search   = array() ,
   {
     // User data
     $data[$i]['user']['id']                 = (string)$row['u_id'];
-    $data[$i]['user']['username']           = (!$row['u_deleted']) ? $row['u_nick'] : '[deleted]';
+    $data[$i]['user']['username']           = (!$row['u_deleted']) ? sanitize_json($row['u_nick']) : '[deleted]';
     $data[$i]['user']['is_deleted']         = (bool)($row['u_deleted']);
     $data[$i]['user']['is_banned']          = (bool)($row['u_banned']);
     $data[$i]['user']['is_moderator']       = (bool)($row['u_mod'] || $row['u_admin']);
     $data[$i]['user']['is_administrator']   = (bool)($row['u_admin']);
+    $data[$i]['user']['link']               = $GLOBALS['website_url'].'pages/users/'.$row['u_id'];
     $data[$i]['user']['account_created_on'] = (!$row['u_deleted']) ? date('Y-m-d', $row['u_created']) : NULL;
 
     // Activity data
@@ -659,10 +661,11 @@ function users_list_api(  array   $search   = array() ,
       $data[$i]['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
       $data[$i]['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
       $data[$i]['user']['last_activity']['page_link']     = ($row['u_activity_url'])
-                                                          ? $GLOBALS['website_url'].$row['u_activity_url']
-                                                          : $GLOBALS['website_url'];
-      $data[$i]['user']['last_activity']['page_name_en']  = $row['u_activity_en'] ?: NULL;
-      $data[$i]['user']['last_activity']['page_name_fr']  = $row['u_activity_fr'] ?: NULL;
+                                                          ? sanitize_json($GLOBALS['website_url']
+                                                                          .$row['u_activity_url'])
+                                                          : sanitize_json($GLOBALS['website_url']);
+      $data[$i]['user']['last_activity']['page_name_en']  = sanitize_json($row['u_activity_en']) ?: NULL;
+      $data[$i]['user']['last_activity']['page_name_fr']  = sanitize_json($row['u_activity_fr']) ?: NULL;
     }
     else
       $data[$i]['user']['last_activity'] = NULL;

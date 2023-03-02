@@ -79,10 +79,12 @@ function irc_channels_get( int $channel_id ) : mixed
 /**
  * Returns a list of IRC channels.
  *
- * @return  array   An array containing IRC channels.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing IRC channels.
  */
 
-function irc_channels_list() : array
+function irc_channels_list( string $format = 'html' ) : array
 {
   // Check if the required files have been included
   require_included_file('integrations.lang.php');
@@ -104,18 +106,49 @@ function irc_channels_list() : array
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qchannels); $i++)
   {
-    $data[$i]['id']       = $row['c_id'];
-    $data[$i]['name']     = sanitize_output($row['c_name']);
-    $channel_type         = irc_channels_type_get($row['c_type']);
-    $data[$i]['type']     = sanitize_output($channel_type['name']);
-    $data[$i]['type_css'] = sanitize_output($channel_type['css']);
-    $data[$i]['lang_en']  = str_contains($row['c_lang'], 'EN');
-    $data[$i]['lang_fr']  = str_contains($row['c_lang'], 'FR');
-    $data[$i]['desc']     = ($lang === 'EN') ? sanitize_output($row['c_desc_en']) : sanitize_output($row['c_desc_fr']);
+    // Format the data
+    $channel_id             = $row['c_id'];
+    $channel_name           = $row['c_name'];
+    $channel_type           = irc_channels_type_get($row['c_type']);
+    $channel_languages      = $row['c_lang'];
+    $channel_description    = ($lang === 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
+    $channel_description_en = $row['c_desc_en'];
+    $channel_description_fr = $row['c_desc_fr'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data[$i]['id']       = $channel_id;
+      $data[$i]['name']     = sanitize_output($channel_name);
+      $data[$i]['type']     = sanitize_output($channel_type['name']);
+      $data[$i]['type_css'] = sanitize_output($channel_type['css']);
+      $data[$i]['lang_en']  = str_contains($channel_languages, 'EN');
+      $data[$i]['lang_fr']  = str_contains($channel_languages, 'FR');
+      $data[$i]['desc']     = sanitize_output($channel_description);
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      // Meetup data
+      $data[$i]['channel']['name']            = sanitize_json($channel_name);
+      $data[$i]['channel']['type']            = sanitize_json($channel_type['name']);
+      $data[$i]['channel']['description_en']  = sanitize_json($channel_description_en);
+      $data[$i]['channel']['description_fr']  = sanitize_json($channel_description_fr);
+
+      // Language data
+      $data[$i]['channel']['languages_spoken']['english']  = (bool)str_contains($channel_languages, 'EN');
+      $data[$i]['channel']['languages_spoken']['french']   = (bool)str_contains($channel_languages, 'FR');
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Give a default return value when no channels are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('channels' => $data) : $data;
 
   // Return the prepared data
   return $data;
