@@ -36,12 +36,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Fetches data related to a meetup.
  *
- * @param   int         $meetup_id  The meetup's id.
+ * @param   int         $meetup_id              The meetup's id.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array|null              An array containing related data, or null if it does not exist.
  */
 
-function meetups_get( int $meetup_id ) : mixed
+function meetups_get( int     $meetup_id          ,
+                      string  $format     = 'html') : mixed
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -59,6 +61,7 @@ function meetups_get( int $meetup_id ) : mixed
                                                   meetups.event_date      AS 'm_date'       ,
                                                   meetups.location        AS 'm_location'   ,
                                                   meetups.languages       AS 'm_lang'       ,
+                                                  meetups.attendee_count  AS 'm_attendees'  ,
                                                   meetups.details_en      AS 'm_details_en' ,
                                                   meetups.details_fr      AS 'm_details_fr'
                                         FROM      meetups
@@ -71,27 +74,79 @@ function meetups_get( int $meetup_id ) : mixed
   // Fetch the user's language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
-  // Assemble an array with the data
-  $data['id']             = $meetup_id;
-  $data['is_deleted']     = sanitize_output($dmeetup['m_deleted']);
-  $data['is_finished']    = (strtotime(date('Y-m-d')) > strtotime($dmeetup['m_date']));
-  $data['is_today']       = (date('Y-m-d') === $dmeetup['m_date']);
-  $data['date']           = sanitize_output(date_to_text($dmeetup['m_date']));
-  $data['date_en']        = sanitize_output(date_to_text($dmeetup['m_date'], lang: 'EN'));
-  $data['date_short_en']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'EN');
-  $data['date_short_fr']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'FR');
-  $data['date_ddmmyy']    = sanitize_output(date('d/m/y', strtotime($dmeetup['m_date'])));
-  $data['location']       = sanitize_output($dmeetup['m_location']);
-  $data['location_raw']   = $dmeetup['m_location'];
-  $days_to_meetup         = time_days_elapsed(date('Y-m-d'), $dmeetup['m_date']);
-  $data['days_until']     = sanitize_output($days_to_meetup.__('day', amount: $days_to_meetup, spaces_before: 1));
-  $data['lang_en']        = str_contains($dmeetup['m_lang'], 'EN');
-  $data['lang_fr']        = str_contains($dmeetup['m_lang'], 'FR');
-  $data['wrong_lang_en']  = ($lang === 'en' && !str_contains($dmeetup['m_lang'], 'EN'));
-  $data['wrong_lang_fr']  = ($lang === 'fr' && !str_contains($dmeetup['m_lang'], 'FR'));
-  $data['details']        = bbcodes(sanitize_output($dmeetup['m_details_'.$lang], preserve_line_breaks: true));
-  $data['details_en']     = sanitize_output($dmeetup['m_details_en']);
-  $data['details_fr']     = sanitize_output($dmeetup['m_details_fr']);
+  // Format the data
+  $data               = NULL;
+  $meetup_deleted     = $dmeetup['m_deleted'];
+  $meetup_date        = $dmeetup['m_date'];
+  $meetup_location    = $dmeetup['m_location'];
+  $meetup_languages   = $dmeetup['m_lang'];
+  $meetup_attendees   = $dmeetup['m_attendees'];
+  $meetup_details     = $dmeetup['m_details_'.$lang];
+  $meetup_details_en  = $dmeetup['m_details_en'];
+  $meetup_details_fr  = $dmeetup['m_details_fr'];
+
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['id']             = $meetup_id;
+    $data['is_deleted']     = sanitize_output($meetup_deleted);
+    $data['is_finished']    = (strtotime(date('Y-m-d')) > strtotime($meetup_date));
+    $data['is_today']       = (date('Y-m-d') === $meetup_date);
+    $data['date']           = sanitize_output(date_to_text($meetup_date));
+    $data['date_en']        = sanitize_output(date_to_text($meetup_date, lang: 'EN'));
+    $data['date_short_en']  = date_to_text($meetup_date, strip_day: 1, lang: 'EN');
+    $data['date_short_fr']  = date_to_text($meetup_date, strip_day: 1, lang: 'FR');
+    $data['date_ddmmyy']    = sanitize_output(date('d/m/y', strtotime($meetup_date)));
+    $data['location']       = sanitize_output($meetup_location);
+    $data['location_raw']   = $meetup_location;
+    $days_to_meetup         = time_days_elapsed(date('Y-m-d'), $meetup_date);
+    $data['days_until']     = sanitize_output($days_to_meetup.__('day', amount: $days_to_meetup, spaces_before: 1));
+    $data['lang_en']        = str_contains($meetup_languages, 'EN');
+    $data['lang_fr']        = str_contains($meetup_languages, 'FR');
+    $data['wrong_lang_en']  = ($lang === 'en' && !str_contains($meetup_languages, 'EN'));
+    $data['wrong_lang_fr']  = ($lang === 'fr' && !str_contains($meetup_languages, 'FR'));
+    $data['details']        = bbcodes(sanitize_output($meetup_details, preserve_line_breaks: true));
+    $data['details_en']     = sanitize_output($meetup_details_en);
+    $data['details_fr']     = sanitize_output($meetup_details_fr);
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // Do not show deleted meetups in the API
+    if($meetup_deleted)
+      return NULL;
+
+    // Meetup data
+    $data['meetup']['id']             = (string)$meetup_id;
+    $data['meetup']['date']           = $meetup_date;
+    $data['meetup']['location']       = $meetup_location;
+    $data['meetup']['attendee_count'] = (int)$meetup_attendees;
+    $data['meetup']['details_en']     = (sanitize_json(bbcodes_remove($meetup_details_en))) ?: NULL;
+    $data['meetup']['details_fr']     = (sanitize_json(bbcodes_remove($meetup_details_fr))) ?: NULL;
+
+    // Language data
+    $data['meetup']['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');
+    $data['meetup']['languages_spoken']['french']   = (bool)str_contains($meetup_languages, 'FR');
+
+    // Attendee data
+    $meetup_attendees = meetups_attendees_list($meetup_id);
+    if($meetup_attendees['rows'])
+    {
+      for($i = 0; $i < $meetup_attendees['rows']; $i++)
+      {
+        $data['meetup']['attendees'][$i]['user_id']               = ($meetup_attendees[$i]['user_id'])
+                                                                  ? (string)$meetup_attendees[$i]['user_id']
+                                                                  : NULL;
+        $data['meetup']['attendees'][$i]['username']              = $meetup_attendees[$i]['nick_raw'];
+        $data['meetup']['attendees'][$i]['confirmed_attending']   = (bool)$meetup_attendees[$i]['lock'];
+        $data['meetup']['attendees'][$i]['extra_info_en']         = $meetup_attendees[$i]['extra_en'] ?: NULL;
+        $data['meetup']['attendees'][$i]['extra_info_fr']         = $meetup_attendees[$i]['extra_fr'] ?: NULL;
+      }
+    }
+    else
+      $data['meetup']['attendees'] = NULL;
+  }
 
   // Return the data
   return $data;
@@ -226,9 +281,6 @@ function meetups_list(  string  $sort_by  = 'date'  ,
       // Language data
       $data[$i]['meetup']['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');
       $data[$i]['meetup']['languages_spoken']['french']   = (bool)str_contains($meetup_languages, 'FR');
-
-      // Details
-
     }
 
     // Treat the case where a user search returns a row containing only NULL data
@@ -889,7 +941,9 @@ function meetups_attendees_list( int $meetup_id = 0 ) : array
                                   users.username                          AS 'u_nick'     ,
                                   meetups_people.username                 AS 'm_nick'     ,
                                   meetups_people.attendance_confirmed     AS 'm_lock'     ,
-                                  meetups_people.extra_information_$lang  AS 'm_extra'
+                                  meetups_people.extra_information_$lang  AS 'm_extra'    ,
+                                  meetups_people.extra_information_en     AS 'm_extra_en' ,
+                                  meetups_people.extra_information_fr     AS 'm_extra_fr'
                         FROM      meetups_people
                         LEFT JOIN users   ON meetups_people.fk_users    = users.id
                         LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
@@ -907,8 +961,11 @@ function meetups_attendees_list( int $meetup_id = 0 ) : array
     $data[$i]['attendee_id']  = sanitize_output($row['p_id']);
     $data[$i]['user_id']      = sanitize_output($row['u_id']);
     $data[$i]['nick']         = ($row['m_nick']) ? sanitize_output($row['m_nick']) : sanitize_output($row['u_nick']);
+    $data[$i]['nick_raw']     = ($row['m_nick']) ?: $row['u_nick'];
     $data[$i]['lock']         = $row['m_lock'];
     $data[$i]['extra']        = bbcodes(sanitize_output($row['m_extra']));
+    $data[$i]['extra_en']     = $row['m_extra_en'];
+    $data[$i]['extra_fr']     = $row['m_extra_fr'];
   }
 
   // Add the number of rows to the data

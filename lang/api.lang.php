@@ -128,11 +128,11 @@ EOD
 
 // List meetups
 ___('api_meetups_list_summary',   'EN', <<<EOD
-Retrieves a list of all meetups, in reverse chronological order.
+Retrieves a list of all past, present, and future real life meetups, in reverse chronological order.
 EOD
 );
 ___('api_meetups_list_summary',   'FR', <<<EOD
-Récupère une liste de toutes les rencontres IRL, dans l'ordre antéchronologique.
+Récupère une liste de toutes les rencontres IRL passées, présentes, et futures, dans l'ordre antéchronologique.
 EOD
 );
 ___('api_meetups_list_user',      'EN', "Return meetups which were attended by the specified {{link|api/doc/users|user}}.");
@@ -145,6 +145,23 @@ ___('api_meetups_list_location',  'EN', "Return meetups which took place in the 
 ___('api_meetups_list_location',  'FR', "Renvoie les rencontres IRL qui ont lieu à l'endroit spécifié.");
 ___('api_meetups_list_attendees', 'EN', "Return meetups which had <span class=\"bold\">at least</span> the specified number of attendees.");
 ___('api_meetups_list_attendees', 'FR', "Renvoie les rencontres IRL où sont venues <span class=\"bold\">au minimum</span> le nombre de personnes spécifié.");
+
+
+// Get one meetup
+___('api_meetups_get_summary',  'EN', <<<EOD
+Retrieves a real life meetup with the specified ID.<br>
+<br>
+Some attendees might not have accounts on NoBleme, in which case their `user_id` will show up as `null`.
+EOD
+);
+___('api_meetups_get_summary',  'FR', <<<EOD
+Récupère une rencontre IRL, dont l'ID est spécifié.<br>
+<br>
+Des personnes ayant participé à des rencontres IRL peuvent ne pas avoir de compte sur NoBleme, auquel cas leur `user_id` sera `null`.
+EOD
+);
+___('api_meetups_get_id',       'EN', "The desired real life meetup's ID.");
+___('api_meetups_get_id',       'FR', "L'ID de la rencontre IRL désirée.");
 
 
 

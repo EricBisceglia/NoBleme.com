@@ -3,9 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../inc/includes.inc.php';     # Core
-include_once './../inc/bbcodes.inc.php';      # BBCodes
-include_once './../actions/meetups.act.php';  # Actions
+include_once './../../inc/includes.inc.php';        # Core
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../actions/meetups.act.php';     # Actions
 
 
 
@@ -17,34 +18,26 @@ include_once './../actions/meetups.act.php';  # Actions
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch the list of meetups
+// Fetch the meetup
 
-// Get the search parameters
-$meetups_search_user      = form_fetch_element('user_id', request_type: 'GET');
-$meetups_search_lang      = form_fetch_element('language', request_type: 'GET');
-$meetups_search_year      = form_fetch_element('year', request_type: 'GET');
-$meetups_search_location  = form_fetch_element('location', request_type: 'GET');
-$meetups_search_attendees = form_fetch_element('attendees', request_type: 'GET');
+// Sanitize the requested ID
+$meetup_id = (int)form_fetch_element('id', request_type: 'GET', default_value: 0);
 
-// Filter which meetups should be shown
-$meetups_list_search = array( 'attendee'  => $meetups_search_user       ,
-                              'lang_api'  => $meetups_search_lang       ,
-                              'date'      => $meetups_search_year       ,
-                              'location'  => $meetups_search_location   ,
-                              'people'    => $meetups_search_attendees  );
-
-// Fetch the list of meetups
-$meetups_list = meetups_list( search: $meetups_list_search  ,
-                              format: 'api'                 );
-
+// Fetch the meetup
+$meetup = meetups_get(  meetup_id:  $meetup_id ,
+                        format:     'api'     );
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Output the meetups list as JSON
+// Output the meetup as JSON
+
+// Throw a 404 if necessary
+if(!$meetup)
+  exit(header("HTTP/1.0 404 Not Found"));
 
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 
-// Output the meetups
-echo sanitize_api_output($meetups_list);
+// Output the meetup
+echo sanitize_api_output($meetup);

@@ -46,5 +46,5 @@ if(!$quote)
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
 
-// Output the quotes
+// Output the quote
 echo sanitize_api_output($quote);
