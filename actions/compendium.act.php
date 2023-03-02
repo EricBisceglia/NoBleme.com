@@ -3633,18 +3633,22 @@ function compendium_categories_get( int $category_id ) : mixed
 /**
  * Fetches a list of compendium categories.
  *
- * @return  array   An array containing categories.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing categories.
  */
 
-function compendium_categories_list() : array
+function compendium_categories_list( string $format = 'html' ) : array
 {
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium categories
-  $qcategories = query("  SELECT    compendium_categories.id            AS 'cc_id'    ,
-                                    compendium_categories.display_order AS 'cc_order' ,
-                                    compendium_categories.name_$lang    AS 'cc_name'  ,
+  $qcategories = query("  SELECT    compendium_categories.id            AS 'cc_id'      ,
+                                    compendium_categories.display_order AS 'cc_order'   ,
+                                    compendium_categories.name_$lang    AS 'cc_name'    ,
+                                    compendium_categories.name_en       AS 'cc_name_en' ,
+                                    compendium_categories.name_fr       AS 'cc_name_fr' ,
                                     COUNT(compendium_pages.id)          AS 'cc_count'
                           FROM      compendium_categories
                           LEFT JOIN compendium_pages_categories
@@ -3661,14 +3665,42 @@ function compendium_categories_list() : array
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['cc_id']);
-    $data[$i]['order']  = sanitize_output($row['cc_order']);
-    $data[$i]['name']   = sanitize_output($row['cc_name']);
-    $data[$i]['count']  = ($row['cc_count']) ? sanitize_output($row['cc_count']) : '-';
+    // Format the data
+    $category_id      = $row['cc_id'];
+    $category_order   = $row['cc_order'];
+    $category_name    = $row['cc_name'];
+    $category_name_en = $row['cc_name_en'];
+    $category_name_fr = $row['cc_name_fr'];
+    $category_pages   = $row['cc_count'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($category_id);
+      $data[$i]['order']  = sanitize_output($category_order);
+      $data[$i]['name']   = sanitize_output($category_name);
+      $data[$i]['count']  = ($category_pages) ? sanitize_output($category_pages) : '-';
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      $data[$i]['category']['id']                 = (string)$category_id;
+      $data[$i]['category']['name_en']            = sanitize_json($category_name_en);
+      $data[$i]['category']['name_fr']            = sanitize_json($category_name_fr);
+      $data[$i]['category']['link']               = $GLOBALS['website_url'].'pages/compendium/category?id='
+                                                                           .$category_id;
+      $data[$i]['category']['pages_in_category']  = (int)$category_pages;
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Give a default return value when no channels are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('categories' => $data) : $data;
 
   // Return the prepared data
   return $data;

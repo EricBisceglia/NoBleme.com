@@ -114,13 +114,45 @@ EOD
 /*********************************************************************************************************************/
 
 // Menu entry & introduction
+___('api_compendium_menu',  'EN', "Compendium");
+___('api_compendium_menu',  'FR', "Compendium");
+___('api_compendium_intro', 'EN', <<<EOD
+This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with {{link|pages/compendium/index|NoBleme's 21st century Compendium}}.
+EOD
+);
+___('api_compendium_intro', 'FR', <<<EOD
+Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/compendium/index|le Compendium du 21ème siècle de NoBleme}}.
+EOD
+);
+
+
+// List categories
+___('api_compendium_categories_list_summary', 'EN', <<<EOD
+Retrieves a list of all {{link|pages/compendium/category_list|categories}}.
+EOD
+);
+___('api_compendium_categories_list_summary', 'FR', <<<EOD
+Récupère une liste de toutes les {{link|pages/compendium/category_list|catégories}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      MEETUPS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Menu entry & introduction
 ___('api_irc_menu',   'EN', "IRC chat");
 ___('api_irc_menu',   'FR', "Chat IRC");
 ___('api_irc_intro',  'EN', <<<EOD
 This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with {{link|pages/social/irc|NoBleme's IRC chat server}}.
 EOD
 );
-___('api_irc_intro', 'FR', <<<EOD
+___('api_irc_intro',  'FR', <<<EOD
 Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/social/irc|le serveur de chat IRC de NoBleme}}.
 EOD
 );
