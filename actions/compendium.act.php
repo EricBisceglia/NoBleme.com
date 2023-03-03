@@ -3335,19 +3335,23 @@ function compendium_types_get( int $type_id ) : mixed
 /**
  * Fetches a list of compendium page types.
  *
- * @return  array   An array containing page types.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing page types.
  */
 
-function compendium_types_list() : array
+function compendium_types_list( string $format = 'html' ) : array
 {
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium page types
-  $qtypes = query(" SELECT    compendium_types.id               AS 'ct_id'    ,
-                              compendium_types.display_order    AS 'ct_order' ,
-                              compendium_types.name_$lang       AS 'ct_name'  ,
-                              compendium_types.full_name_$lang  AS 'ct_full'  ,
+  $qtypes = query(" SELECT    compendium_types.id               AS 'ct_id'      ,
+                              compendium_types.display_order    AS 'ct_order'   ,
+                              compendium_types.name_$lang       AS 'ct_name'    ,
+                              compendium_types.full_name_$lang  AS 'ct_full'    ,
+                              compendium_types.full_name_en     AS 'ct_full_en' ,
+                              compendium_types.full_name_fr     AS 'ct_full_fr' ,
                               COUNT(compendium_pages.id)        AS 'ct_count'
                     FROM      compendium_types
                     LEFT JOIN compendium_pages ON compendium_types.id = compendium_pages.fk_compendium_types
@@ -3358,18 +3362,47 @@ function compendium_types_list() : array
                     GROUP BY  compendium_types.id
                     ORDER BY  compendium_types.display_order ASC ");
 
+
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['ct_id']);
-    $data[$i]['order']  = sanitize_output($row['ct_order']);
-    $data[$i]['name']   = sanitize_output($row['ct_name']);
-    $data[$i]['full']   = sanitize_output($row['ct_full']);
-    $data[$i]['count']  = ($row['ct_count']) ? sanitize_output($row['ct_count']) : '-';
+    // Format the data
+    $type_id            = $row['ct_id'];
+    $type_order         = $row['ct_order'];
+    $type_name          = $row['ct_name'];
+    $type_name_full     = $row['ct_full'];
+    $type_name_full_en  = $row['ct_full_en'];
+    $type_name_full_fr  = $row['ct_full_fr'];
+    $type_page_count    = $row['ct_count'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($type_id);
+      $data[$i]['order']  = sanitize_output($type_order);
+      $data[$i]['name']   = sanitize_output($type_name);
+      $data[$i]['full']   = sanitize_output($type_name_full);
+      $data[$i]['count']  = ($type_page_count) ? sanitize_output($type_page_count) : '-';
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      $data[$i]['page_type']['id']            = (string)$type_id;
+      $data[$i]['page_type']['name_en']       = sanitize_json($type_name_full_en);
+      $data[$i]['page_type']['name_fr']       = sanitize_json($type_name_full_fr);
+      $data[$i]['page_type']['link']          = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
+      $data[$i]['page_type']['pages_of_type'] = (int)$type_page_count;
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Give a default return value when no channels are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('page_types' => $data) : $data;
 
   // Return the prepared data
   return $data;

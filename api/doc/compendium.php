@@ -45,13 +45,14 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <ul class="tinypadding_top">
     <li><?=__link('#categories_list', 'GET /api/compendium/categories', is_internal: false)?></li>
+    <li><?=__link('#page_types_list', 'GET /api/compendium/page_types', is_internal: false)?></li>
   </ul>
 
 </div>
 
 <hr id="categories_list">
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top bigpadding_bot">
 
   <h4>
     GET /api/compendium/categories
@@ -74,6 +75,38 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "name_fr": string,
         "link": string,
         "pages_in_category": int
+      }
+    },
+  ]
+}</pre>
+
+</div>
+
+<hr id="page_types_list">
+
+<div class="width_50 padding_top">
+
+  <h4>
+    GET /api/compendium/page_types
+  </h4>
+
+  <p>
+    <?=__('api_compendium_page_types_list_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "page_types": [
+    {
+      "page_type": {
+        "id": string,
+        "name_en": string,
+        "name_fr": string,
+        "link": string,
+        "pages_of_type": int
       }
     },
   ]
