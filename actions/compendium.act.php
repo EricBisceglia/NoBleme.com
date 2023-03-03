@@ -4035,20 +4035,24 @@ function compendium_eras_get( int $era_id ) : mixed
 /**
  * Fetches a list of compendium eras.
  *
- * @return  array   An array containing eras.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
+ *
+ * @return  array                         An array containing eras.
  */
 
-function compendium_eras_list() : array
+function compendium_eras_list( string $format = 'html' ) : array
 {
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium eras
-  $qeras = query("  SELECT    compendium_eras.id                AS 'ce_id'    ,
-                              compendium_eras.name_$lang        AS 'ce_name'  ,
-                              compendium_eras.short_name_$lang  AS 'ce_short' ,
-                              compendium_eras.year_start        AS 'ce_start' ,
-                              compendium_eras.year_end          AS 'ce_end'   ,
+  $qeras = query("  SELECT    compendium_eras.id                AS 'ce_id'      ,
+                              compendium_eras.name_$lang        AS 'ce_name'    ,
+                              compendium_eras.name_en           AS 'ce_name_en' ,
+                              compendium_eras.name_fr           AS 'ce_name_fr' ,
+                              compendium_eras.short_name_$lang  AS 'ce_short'   ,
+                              compendium_eras.year_start        AS 'ce_start'   ,
+                              compendium_eras.year_end          AS 'ce_end'     ,
                               COUNT(compendium_pages.id)        AS 'ce_count'
                     FROM      compendium_eras
                     LEFT JOIN compendium_pages ON compendium_eras.id  = compendium_pages.fk_compendium_eras
@@ -4062,18 +4066,49 @@ function compendium_eras_list() : array
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['ce_id']);
-    $data[$i]['name']   = sanitize_output($row['ce_name']);
-    $data[$i]['short']  = sanitize_output($row['ce_short']);
-    $data[$i]['start']  = ($row['ce_start']) ? sanitize_output($row['ce_start']) : '-';
-    $data[$i]['startx'] = ($row['ce_start']) ? sanitize_output($row['ce_start']) : 'xxxx';
-    $data[$i]['end']    = ($row['ce_end']) ? sanitize_output($row['ce_end']) : '-';
-    $data[$i]['endx']   = ($row['ce_end']) ? sanitize_output($row['ce_end']) : 'xxxx';
-    $data[$i]['count']  = ($row['ce_count']) ? sanitize_output($row['ce_count']) : '-';
+    // Format the data
+    $era_id         = $row['ce_id'];
+    $era_name       = $row['ce_name'];
+    $era_name_en    = $row['ce_name_en'];
+    $era_name_fr    = $row['ce_name_fr'];
+    $era_short_name = $row['ce_short'];
+    $era_year_start = $row['ce_start'];
+    $era_year_end   = $row['ce_end'];
+    $era_page_count = $row['ce_count'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data[$i]['id']     = sanitize_output($era_id);
+      $data[$i]['name']   = sanitize_output($era_name);
+      $data[$i]['short']  = sanitize_output($era_short_name);
+      $data[$i]['start']  = ($era_year_start) ? sanitize_output($era_year_start) : '-';
+      $data[$i]['startx'] = ($era_year_start) ? sanitize_output($era_year_start) : 'xxxx';
+      $data[$i]['end']    = ($era_year_end) ? sanitize_output($era_year_end) : '-';
+      $data[$i]['endx']   = ($era_year_end) ? sanitize_output($era_year_end) : 'xxxx';
+      $data[$i]['count']  = ($era_page_count) ? sanitize_output($era_page_count) : '-';
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      $data[$i]['era']['id']            = (string)$era_id;
+      $data[$i]['era']['name_en']       = sanitize_json($era_name_en);
+      $data[$i]['era']['name_fr']       = sanitize_json($era_name_fr);
+      $data[$i]['era']['year_start']    = (int)$era_year_start ?: NULL;
+      $data[$i]['era']['year_end']      = (int)$era_year_end ?: NULL;
+      $data[$i]['era']['link']          = $GLOBALS['website_url'].'pages/compendium/cultural_era?era='.$era_id;
+      $data[$i]['era']['pages_in_era']  = (int)$era_page_count;
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Give a default return value when no channels are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('eras' => $data) : $data;
 
   // Return the prepared data
   return $data;

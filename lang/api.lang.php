@@ -137,6 +137,17 @@ EOD
 );
 
 
+// List cultural eras
+___('api_compendium_eras_list_summary', 'EN', <<<EOD
+Retrieves a list of all {{link|pages/compendium/cultural_era_list|eras}}.
+EOD
+);
+___('api_compendium_eras_list_summary', 'FR', <<<EOD
+Récupère une liste de toutes les {{link|pages/compendium/cultural_era_list|périodes}}.
+EOD
+);
+
+
 // List page types
 ___('api_compendium_page_types_list_summary', 'EN', <<<EOD
 Retrieves a list of all {{link|pages/compendium/page_type_list|page types}}.
