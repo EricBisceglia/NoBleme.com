@@ -75,7 +75,9 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "name_en": string,
         "name_fr": string,
         "link": string,
-        "pages_in_category": int
+        "pages_in_category": int,
+        "description_en": string,
+        "description_fr": string
       }
     },
   ]
@@ -109,7 +111,9 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "year_start": int,
         "year_end": int,
         "link": string,
-        "pages_in_era": int
+        "pages_in_era": int,
+        "description_en": string,
+        "description_fr": string
       }
     },
   ]
@@ -141,7 +145,9 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
         "name_en": string,
         "name_fr": string,
         "link": string,
-        "pages_of_type": int
+        "pages_of_type": int,
+        "description_en": string,
+        "description_fr": string
       }
     },
   ]

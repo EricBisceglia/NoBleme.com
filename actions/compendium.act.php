@@ -3342,6 +3342,10 @@ function compendium_types_get( int $type_id ) : mixed
 
 function compendium_types_list( string $format = 'html' ) : array
 {
+  // Check if the required files have been included
+  if($format === 'api')
+    require_included_file('bbcodes.inc.php');
+
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
@@ -3352,6 +3356,8 @@ function compendium_types_list( string $format = 'html' ) : array
                               compendium_types.full_name_$lang  AS 'ct_full'    ,
                               compendium_types.full_name_en     AS 'ct_full_en' ,
                               compendium_types.full_name_fr     AS 'ct_full_fr' ,
+                              compendium_types.description_en   AS 'ct_body_en' ,
+                              compendium_types.description_fr   AS 'ct_body_fr' ,
                               COUNT(compendium_pages.id)        AS 'ct_count'
                     FROM      compendium_types
                     LEFT JOIN compendium_pages ON compendium_types.id = compendium_pages.fk_compendium_types
@@ -3373,6 +3379,8 @@ function compendium_types_list( string $format = 'html' ) : array
     $type_name_full     = $row['ct_full'];
     $type_name_full_en  = $row['ct_full_en'];
     $type_name_full_fr  = $row['ct_full_fr'];
+    $type_body_en       = $row['ct_body_en'];
+    $type_body_fr       = $row['ct_body_fr'];
     $type_page_count    = $row['ct_count'];
 
     // Prepare the data for display
@@ -3388,11 +3396,13 @@ function compendium_types_list( string $format = 'html' ) : array
     // Prepare the data for the API
     else if($format === 'api')
     {
-      $data[$i]['page_type']['id']            = (string)$type_id;
-      $data[$i]['page_type']['name_en']       = sanitize_json($type_name_full_en);
-      $data[$i]['page_type']['name_fr']       = sanitize_json($type_name_full_fr);
-      $data[$i]['page_type']['link']          = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
-      $data[$i]['page_type']['pages_of_type'] = (int)$type_page_count;
+      $data[$i]['page_type']['id']              = (string)$type_id;
+      $data[$i]['page_type']['name_en']         = sanitize_json($type_name_full_en);
+      $data[$i]['page_type']['name_fr']         = sanitize_json($type_name_full_fr);
+      $data[$i]['page_type']['link']            = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
+      $data[$i]['page_type']['pages_of_type']   = (int)$type_page_count;
+      $data[$i]['page_type']['description_en']  = sanitize_json(nbcodes_remove($type_body_en)) ?: NULL;
+      $data[$i]['page_type']['description_fr']  = sanitize_json(nbcodes_remove($type_body_fr)) ?: NULL;
     }
   }
 
@@ -3673,16 +3683,22 @@ function compendium_categories_get( int $category_id ) : mixed
 
 function compendium_categories_list( string $format = 'html' ) : array
 {
+  // Check if the required files have been included
+  if($format === 'api')
+    require_included_file('bbcodes.inc.php');
+
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium categories
-  $qcategories = query("  SELECT    compendium_categories.id            AS 'cc_id'      ,
-                                    compendium_categories.display_order AS 'cc_order'   ,
-                                    compendium_categories.name_$lang    AS 'cc_name'    ,
-                                    compendium_categories.name_en       AS 'cc_name_en' ,
-                                    compendium_categories.name_fr       AS 'cc_name_fr' ,
-                                    COUNT(compendium_pages.id)          AS 'cc_count'
+  $qcategories = query("  SELECT    compendium_categories.id              AS 'cc_id'      ,
+                                    compendium_categories.display_order   AS 'cc_order'   ,
+                                    compendium_categories.name_$lang      AS 'cc_name'    ,
+                                    compendium_categories.name_en         AS 'cc_name_en' ,
+                                    compendium_categories.name_fr         AS 'cc_name_fr' ,
+                                    compendium_categories.description_en  AS 'cc_body_en' ,
+                                    compendium_categories.description_fr  AS 'cc_body_fr' ,
+                                    COUNT(compendium_pages.id)            AS 'cc_count'
                           FROM      compendium_categories
                           LEFT JOIN compendium_pages_categories
                           ON        compendium_categories.id = compendium_pages_categories.fk_compendium_categories
@@ -3704,6 +3720,8 @@ function compendium_categories_list( string $format = 'html' ) : array
     $category_name    = $row['cc_name'];
     $category_name_en = $row['cc_name_en'];
     $category_name_fr = $row['cc_name_fr'];
+    $category_body_en = $row['cc_body_en'];
+    $category_body_fr = $row['cc_body_fr'];
     $category_pages   = $row['cc_count'];
 
     // Prepare the data for display
@@ -3724,6 +3742,8 @@ function compendium_categories_list( string $format = 'html' ) : array
       $data[$i]['category']['link']               = $GLOBALS['website_url'].'pages/compendium/category?id='
                                                                            .$category_id;
       $data[$i]['category']['pages_in_category']  = (int)$category_pages;
+      $data[$i]['category']['description_en']     = sanitize_json(nbcodes_remove($category_body_en)) ?: NULL;
+      $data[$i]['category']['description_fr']     = sanitize_json(nbcodes_remove($category_body_fr)) ?: NULL;
     }
   }
 
@@ -4042,6 +4062,10 @@ function compendium_eras_get( int $era_id ) : mixed
 
 function compendium_eras_list( string $format = 'html' ) : array
 {
+  // Check if the required files have been included
+  if($format === 'api')
+    require_included_file('bbcodes.inc.php');
+
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
@@ -4053,6 +4077,8 @@ function compendium_eras_list( string $format = 'html' ) : array
                               compendium_eras.short_name_$lang  AS 'ce_short'   ,
                               compendium_eras.year_start        AS 'ce_start'   ,
                               compendium_eras.year_end          AS 'ce_end'     ,
+                              compendium_eras.description_en    AS 'ce_body_en' ,
+                              compendium_eras.description_fr    AS 'ce_body_fr' ,
                               COUNT(compendium_pages.id)        AS 'ce_count'
                     FROM      compendium_eras
                     LEFT JOIN compendium_pages ON compendium_eras.id  = compendium_pages.fk_compendium_eras
@@ -4074,6 +4100,8 @@ function compendium_eras_list( string $format = 'html' ) : array
     $era_short_name = $row['ce_short'];
     $era_year_start = $row['ce_start'];
     $era_year_end   = $row['ce_end'];
+    $era_body_en    = $row['ce_body_en'];
+    $era_body_fr    = $row['ce_body_fr'];
     $era_page_count = $row['ce_count'];
 
     // Prepare the data for display
@@ -4092,13 +4120,15 @@ function compendium_eras_list( string $format = 'html' ) : array
     // Prepare the data for the API
     else if($format === 'api')
     {
-      $data[$i]['era']['id']            = (string)$era_id;
-      $data[$i]['era']['name_en']       = sanitize_json($era_name_en);
-      $data[$i]['era']['name_fr']       = sanitize_json($era_name_fr);
-      $data[$i]['era']['year_start']    = (int)$era_year_start ?: NULL;
-      $data[$i]['era']['year_end']      = (int)$era_year_end ?: NULL;
-      $data[$i]['era']['link']          = $GLOBALS['website_url'].'pages/compendium/cultural_era?era='.$era_id;
-      $data[$i]['era']['pages_in_era']  = (int)$era_page_count;
+      $data[$i]['era']['id']              = (string)$era_id;
+      $data[$i]['era']['name_en']         = sanitize_json($era_name_en);
+      $data[$i]['era']['name_fr']         = sanitize_json($era_name_fr);
+      $data[$i]['era']['year_start']      = (int)$era_year_start ?: NULL;
+      $data[$i]['era']['year_end']        = (int)$era_year_end ?: NULL;
+      $data[$i]['era']['link']            = $GLOBALS['website_url'].'pages/compendium/cultural_era?era='.$era_id;
+      $data[$i]['era']['pages_in_era']    = (int)$era_page_count;
+      $data[$i]['era']['description_en']  = sanitize_json(nbcodes_remove($era_body_en)) ?: NULL;
+      $data[$i]['era']['description_fr']  = sanitize_json(nbcodes_remove($era_body_fr)) ?: NULL;
     }
   }
 

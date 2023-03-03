@@ -4,6 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';        # Core
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
 include_once './../../actions/compendium.act.php';  # Actions
 
 
