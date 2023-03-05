@@ -1,1 +1,1 @@
-<?php exit(header("Location: ./list")); ?>
+<?php exit(header("Location: ..")); ?>

@@ -88,16 +88,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Returns data related to a compendium page.
  *
- * @param   int         $page_id      (OPTIONAL)  The page's id. Only one of these two parameters should be set.
- * @param   string      $page_url     (OPTIONAL)  The page's url. Only one of these two parameters should be set.
- * @param   bool        $no_loops     (OPTIONAL)  If false, page data will be returned even if it is a redirect loop.
+ * @param   int         $page_id    (OPTIONAL)  The page's id. Only one of these two parameters should be set.
+ * @param   string      $page_url   (OPTIONAL)  The page's url. Only one of these two parameters should be set.
+ * @param   bool        $no_loops   (OPTIONAL)  If false, page data will be returned even if it is a redirect loop.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null                        An array containing page related data, or NULL if it does not exist.
+ * @return  array|null                          An array containing page related data, or NULL if it does not exist.
  */
 
-function compendium_pages_get(  int     $page_id  = 0     ,
-                                string  $page_url = ''    ,
-                                bool    $no_loops = true  ) : mixed
+function compendium_pages_get(  int     $page_id  = 0       ,
+                                string  $page_url = ''      ,
+                                bool    $no_loops = true    ,
+                                string  $format   = 'html'  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -166,10 +168,14 @@ function compendium_pages_get(  int     $page_id  = 0     ,
                                                 compendium_pages.admin_urls               AS 'p_admin_urls'   ,
                                                 compendium_eras.id                        AS 'pe_id'          ,
                                                 compendium_eras.name_$lang                AS 'pe_name'        ,
+                                                compendium_eras.name_en                   AS 'pe_name_en'     ,
+                                                compendium_eras.name_fr                   AS 'pe_name_fr'     ,
                                                 compendium_types.id                       AS 'pt_id'          ,
                                                 compendium_types.name_$lang               AS 'pt_name'        ,
                                                 compendium_types.name_en                  AS 'pt_name_en'     ,
-                                                compendium_types.full_name_$lang          AS 'pt_display'
+                                                compendium_types.full_name_$lang          AS 'pt_display'     ,
+                                                compendium_types.full_name_en             AS 'pt_full_en'     ,
+                                                compendium_types.full_name_fr             AS 'pt_full_fr'
                                       FROM      compendium_pages
                                       LEFT JOIN compendium_types
                                       ON        compendium_pages.fk_compendium_types  = compendium_types.id
@@ -177,112 +183,281 @@ function compendium_pages_get(  int     $page_id  = 0     ,
                                       ON        compendium_pages.fk_compendium_eras   = compendium_eras.id
                                       WHERE     $where "));
 
-  // Return null if the page should not be displayed
-  if(!$is_admin && $dpage['p_deleted'])
-    return NULL;
-  if(!$is_admin && $dpage['p_draft'])
-    return NULL;
+  // Format the data
+  $page_id                = $dpage['p_id'];
+  $page_id_sanitized      = sanitize($dpage['p_id'], 'int', 0);
+  $page_deleted           = $dpage['p_deleted'];
+  $page_draft             = $dpage['p_draft'];
+  $page_created_on        = $dpage['p_created'];
+  $page_url               = $dpage['p_url'];
+  $page_title             = $dpage['p_title'];
+  $page_title_en          = $dpage['p_title_en'];
+  $page_title_fr          = $dpage['p_title_fr'];
+  $page_redirect          = $dpage['p_redirect'];
+  $page_redirect_en       = $dpage['p_redirect_en'];
+  $page_redirect_fr       = $dpage['p_redirect_fr'];
+  $page_redirect_ext      = $dpage['p_redirect_ext'];
+  $page_appeared_year     = $dpage['p_new_year'];
+  $page_appeared_month    = $dpage['p_new_month'];
+  $page_peaked_year       = $dpage['p_peak_year'];
+  $page_peaked_month      = $dpage['p_peak_month'];
+  $page_content_warning   = ($dpage['p_nsfw'] || $dpage['p_offensive'] || $dpage['p_gross'] || $dpage['p_nsfw_title']);
+  $page_nsfw              = $dpage['p_nsfw'];
+  $page_offensive         = $dpage['p_offensive'];
+  $page_gross             = $dpage['p_gross'];
+  $page_nsfw_title        = $dpage['p_nsfw_title'];
+  $page_summary           = $dpage['p_summary'];
+  $page_summary_en        = $dpage['p_summary_en'];
+  $page_summary_fr        = $dpage['p_summary_fr'];
+  $page_body              = $dpage['p_body'];
+  $page_body_en           = $dpage['p_body_en'];
+  $page_body_fr           = $dpage['p_body_fr'];
+  $page_admin_notes       = $dpage['p_admin_notes'];
+  $page_admin_urls        = $dpage['p_admin_urls'];
+  $page_type_id           = $dpage['pt_id'];
+  $page_type_name         = $dpage['pt_name'];
+  $page_type_name_en      = $dpage['pt_name_en'];
+  $page_type_full_name    = $dpage['pt_display'];
+  $page_type_full_name_en = $dpage['pt_full_en'];
+  $page_type_full_name_fr = $dpage['pt_full_fr'];
+  $page_era_id            = $dpage['pe_id'];
+  $page_era_name          = $dpage['pe_name'];
+  $page_era_name_en       = $dpage['pe_name_en'];
+  $page_era_name_fr       = $dpage['pe_name_fr'];
 
-  // Assemble an array with the data
-  $page_id            = sanitize($dpage['p_id'], 'int', 0);
-  $data['id']         = sanitize_output($dpage['p_id']);
-  $data['deleted']    = $dpage['p_deleted'];
-  $data['draft']      = $dpage['p_draft'];
-  $data['url']        = sanitize_output($dpage['p_url']);
-  $data['url_raw']    = $dpage['p_url'];
-  $data['no_page']    = ($dpage['p_title']) ? 0 : 1;
-  $title_size         = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
-  $title_size         = (strlen($dpage['p_title']) > 30) ? 'h3' : $title_size;
-  $title_size         = (strlen($dpage['p_title']) > 40) ? 'h4' : $title_size;
-  $data['title_size'] = (strlen($dpage['p_title']) > 50) ? 'h5' : $title_size;
-  $data['title']      = sanitize_output($dpage['p_title']);
-  $data['title_en']   = sanitize_output($dpage['p_title_en']);
-  $data['title_fr']   = sanitize_output($dpage['p_title_fr']);
-  $data['titleenraw'] = $dpage['p_title_en'];
-  $data['titlefrraw'] = $dpage['p_title_fr'];
-  $data['redir_en']   = sanitize_output($dpage['p_redirect_en']);
-  $data['redir_fr']   = sanitize_output($dpage['p_redirect_fr']);
-  $data['redir_ext']  = sanitize_output($dpage['p_redirect_ext']);
-  $appeared_month     = ($dpage['p_new_month']) ? __('month_'.$dpage['p_new_month'], spaces_after: 1) : '';
-  $data['appeared']   = ($dpage['p_new_year']) ? $appeared_month.$dpage['p_new_year'] : '';
-  $data['app_year']   = sanitize_output($dpage['p_new_year']);
-  $data['app_month']  = sanitize_output($dpage['p_new_month']);
-  $peak_month         = ($dpage['p_peak_month']) ? __('month_'.$dpage['p_peak_month'], spaces_after: 1) : '';
-  $data['peak']       = ($dpage['p_peak_year']) ? $peak_month.$dpage['p_peak_year'] : '';
-  $data['peak_year']  = sanitize_output($dpage['p_peak_year']);
-  $data['peak_month'] = sanitize_output($dpage['p_peak_month']);
-  $data['nsfw']       = sanitize_output($dpage['p_nsfw']);
-  $data['offensive']  = sanitize_output($dpage['p_offensive']);
-  $data['gross']      = sanitize_output($dpage['p_gross']);
-  $data['nsfw_title'] = sanitize_output($dpage['p_nsfw_title']);
-  $data['blur_title'] = (($nsfw < 1) && $dpage['p_nsfw_title']) ? 1 : 0;
-  $data['meta_desc']  = string_truncate(nbcodes_remove($dpage['p_summary_en']), 250, '...');
-  $data['summary']    = sanitize_output($dpage['p_summary']);
-  $data['summary_en'] = sanitize_output($dpage['p_summary_en']);
-  $data['summary_fr'] = sanitize_output($dpage['p_summary_fr']);
-  $data['body']       = nbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true),
-                                page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
-  $data['body_en']    = sanitize_output($dpage['p_body_en']);
-  $data['body_fr']    = sanitize_output($dpage['p_body_fr']);
-  $data['bodyenraw']  = $dpage['p_body_en'];
-  $data['bodyfrraw']  = $dpage['p_body_fr'];
-  $data['admin_note'] = sanitize_output($dpage['p_admin_notes']);
-  $data['admin_urls'] = sanitize_output($dpage['p_admin_urls']);
-  $data['type_id']    = sanitize_output($dpage['pt_id']);
-  $data['type']       = sanitize_output($dpage['pt_name']);
-  $data['type_en']    = sanitize_output($dpage['pt_name_en']);
-  $data['type_full']  = sanitize_output(string_change_case($dpage['pt_display'], 'lowercase'));
-  $data['era_id']     = sanitize_output($dpage['pe_id']);
-  $data['era']        = sanitize_output($dpage['pe_name']);
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    // Return null if the page should not be displayed
+    if(!$is_admin && $page_deleted)
+      return NULL;
+    if(!$is_admin && $page_draft)
+      return NULL;
+
+    // Assemble an array with the data
+    $data['id']         = sanitize_output($page_id);
+    $data['deleted']    = $page_deleted;
+    $data['draft']      = $page_draft;
+    $data['url']        = sanitize_output($page_url);
+    $data['url_raw']    = $page_url;
+    $data['no_page']    = ($page_title) ? 0 : 1;
+    $title_size         = (strlen($page_title) > 25) ? 'h2' : 'h1';
+    $title_size         = (strlen($page_title) > 30) ? 'h3' : $title_size;
+    $title_size         = (strlen($page_title) > 40) ? 'h4' : $title_size;
+    $data['title_size'] = (strlen($page_title) > 50) ? 'h5' : $title_size;
+    $data['title']      = sanitize_output($page_title);
+    $data['title_en']   = sanitize_output($page_title_en);
+    $data['title_fr']   = sanitize_output($page_title_fr);
+    $data['titleenraw'] = $page_title_en;
+    $data['titlefrraw'] = $page_title_fr;
+    $data['redir_en']   = sanitize_output($page_redirect_en);
+    $data['redir_fr']   = sanitize_output($page_redirect_fr);
+    $data['redir_ext']  = sanitize_output($page_redirect_ext);
+    $appeared_month     = ($page_appeared_month) ? __('month_'.$page_appeared_month, spaces_after: 1) : '';
+    $data['appeared']   = ($page_appeared_year) ? $appeared_month.$page_appeared_year : '';
+    $data['app_year']   = sanitize_output($page_appeared_year);
+    $data['app_month']  = sanitize_output($page_appeared_month);
+    $peak_month         = ($page_peaked_month) ? __('month_'.$page_peaked_month, spaces_after: 1) : '';
+    $data['peak']       = ($page_peaked_year) ? $peak_month.$page_peaked_year : '';
+    $data['peak_year']  = sanitize_output($page_peaked_year);
+    $data['peak_month'] = sanitize_output($page_peaked_month);
+    $data['nsfw']       = sanitize_output($page_nsfw);
+    $data['offensive']  = sanitize_output($page_offensive);
+    $data['gross']      = sanitize_output($page_gross);
+    $data['nsfw_title'] = sanitize_output($page_nsfw_title);
+    $data['blur_title'] = (($nsfw < 1) && $page_nsfw_title) ? 1 : 0;
+    $data['meta_desc']  = string_truncate(nbcodes_remove($page_summary_en), 250, '...');
+    $data['summary']    = sanitize_output($page_summary);
+    $data['summary_en'] = sanitize_output($page_summary_en);
+    $data['summary_fr'] = sanitize_output($page_summary_fr);
+    $data['body']       = nbcodes(sanitize_output($page_body, preserve_line_breaks: true),
+                                  page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data['body_en']    = sanitize_output($page_body_en);
+    $data['body_fr']    = sanitize_output($page_body_fr);
+    $data['bodyenraw']  = $page_body_en;
+    $data['bodyfrraw']  = $page_body_fr;
+    $data['admin_note'] = sanitize_output($page_admin_notes);
+    $data['admin_urls'] = sanitize_output($page_admin_urls);
+    $data['type_id']    = sanitize_output($page_type_id);
+    $data['type']       = sanitize_output($page_type_name);
+    $data['type_en']    = sanitize_output($page_type_name_en);
+    $data['type_full']  = sanitize_output(string_change_case($page_type_full_name, 'lowercase'));
+    $data['era_id']     = sanitize_output($page_era_id);
+    $data['era']        = sanitize_output($page_era_name);
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // Do not show deleted or unpublished pages in the API
+    if($page_deleted || $page_draft)
+      return NULL;
+
+    // Core page data
+    $data['page']['id']   = (string)$page_id;
+    $data['page']['url']  = sanitize_json($page_url);
+    $data['page']['link'] = sanitize_json($GLOBALS['website_url'].'pages/compendium/'.$page_url);
+
+    // Redirection data
+    if($page_redirect_en || $page_redirect_fr || $page_redirect_ext)
+    {
+      $data['page']['redirects_to']['target_is_a_page_url'] = (bool)!$page_redirect_ext;
+      $data['page']['redirects_to']['url_en']               = sanitize_json($page_redirect_en) ?: NULL;
+      $data['page']['redirects_to']['url_fr']               = sanitize_json($page_redirect_fr) ?: NULL;
+    }
+    else
+      $data['page']['redirects_to'] = NULL;
+
+    // Page title
+    $data['page']['title_en'] = sanitize_json($page_title_en) ?: NULL;
+    $data['page']['title_fr'] = sanitize_json($page_title_fr) ?: NULL;
+
+    // Content warnings
+    if($page_content_warning)
+    {
+      $data['page']['content_warnings']['title_is_nsfw']      = (bool)($page_nsfw_title);
+      $data['page']['content_warnings']['not_safe_for_work']  = (bool)($page_nsfw);
+      $data['page']['content_warnings']['offensive']          = (bool)($page_offensive);
+      $data['page']['content_warnings']['gross']              = (bool)($page_gross);
+    }
+    else
+      $data['page']['content_warnings'] = NULL;
+
+    // Page data
+    $data['page']['first_appeared_year']    = (int)$page_appeared_year ?: NULL;
+    $data['page']['first_appeared_month']   = (int)$page_appeared_month ?: NULL;
+    $data['page']['peak_popularity_year']   = (int)$page_peaked_year ?: NULL;
+    $data['page']['peak_popularity_month']  = (int)$page_peaked_month ?: NULL;
+    $data['page']['summary_en']             = sanitize_json(nbcodes_remove($page_summary_en)) ?: NULL;
+    $data['page']['summary_fr']             = sanitize_json(nbcodes_remove($page_summary_fr)) ?: NULL;
+    $data['page']['contents_en']            = sanitize_json(nbcodes_remove($page_body_en)) ?: NULL;
+    $data['page']['contents_fr']            = sanitize_json(nbcodes_remove($page_body_fr)) ?: NULL;
+
+    // Page type data
+    if($page_type_id)
+    {
+      $data['page']['type']['id']       = (string)$page_type_id;
+      $data['page']['type']['name_en']  = sanitize_json($page_type_full_name_en);
+      $data['page']['type']['name_fr']  = sanitize_json($page_type_full_name_fr);
+    }
+    else
+      $data['page']['type'] = NULL;
+
+    // Era data
+    if($page_era_id)
+    {
+      $data['page']['era']['id']      = (string)$page_era_id;
+      $data['page']['era']['name_en'] = sanitize_json($page_era_name_en);
+      $data['page']['era']['name_fr'] = sanitize_json($page_era_name_fr);
+    }
+    else
+      $data['page']['era'] = NULL;
+  }
 
   // Fetch the latest update
   $dupdate = mysqli_fetch_array(query(" SELECT    compendium_pages_history.edited_at AS 'ph_time'
                                         FROM      compendium_pages_history
-                                        WHERE     compendium_pages_history.fk_compendium_pages = '$page_id'
+                                        WHERE     compendium_pages_history.fk_compendium_pages = '$page_id_sanitized'
                                         ORDER BY  compendium_pages_history.edited_at DESC
                                         LIMIT     1 "));
 
-  // Prepare the lastest update
-  $latest_update    = (isset($dupdate['ph_time']) && $dupdate['ph_time']) ? $dupdate['ph_time'] : $dpage['p_created'];
-  $data['updated']  = ($latest_update)
-                    ? sanitize_output(string_change_case(time_since($latest_update), 'lowercase'))
-                    : __('error');
+  // Format the update data
+  $last_updated_on = $dupdate['ph_time'] ?? NULL;
+
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $latest_update    = (isset($last_updated_on) && $last_updated_on) ? $last_updated_on : $page_created_on;
+    $data['updated']  = ($latest_update)
+                      ? sanitize_output(string_change_case(time_since($latest_update), 'lowercase'))
+                      : __('error');
+  }
 
   // Fetch any associated categories
-  $qcategories = query("  SELECT    compendium_pages_categories.id    AS 'cpc_id'   ,
-                                    compendium_categories.id          AS 'pc_id'    ,
-                                    compendium_categories.name_$lang  AS 'pc_name'
+  $qcategories = query("  SELECT    compendium_pages_categories.id    AS 'cpc_id'     ,
+                                    compendium_categories.id          AS 'pc_id'      ,
+                                    compendium_categories.name_$lang  AS 'pc_name'    ,
+                                    compendium_categories.name_en     AS 'pc_name_en' ,
+                                    compendium_categories.name_fr     AS 'pc_name_fr'
                           FROM      compendium_pages_categories
                           LEFT JOIN compendium_categories
                           ON        compendium_pages_categories.fk_compendium_categories  = compendium_categories.id
-                          WHERE     compendium_pages_categories.fk_compendium_pages       = '$page_id'
+                          WHERE     compendium_pages_categories.fk_compendium_pages       = '$page_id_sanitized'
                           ORDER BY  compendium_categories.display_order ASC ");
 
   // Prepare the category data
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
-    $data['category_id'][$i]    = sanitize_output($row['pc_id']);
-    $data['category_name'][$i]  = sanitize_output($row['pc_name']);
+    // Format the category data
+    $category_id      = $row['pc_id'];
+    $category_name    = $row['pc_name'];
+    $category_name_en = $row['pc_name_en'];
+    $category_name_fr = $row['pc_name_fr'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data['category_id'][$i]    = sanitize_output($category_id);
+      $data['category_name'][$i]  = sanitize_output($category_name);
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      $data['page']['categories'][$i]['id']       = (string)$category_id;
+      $data['page']['categories'][$i]['name_en']  = sanitize_json($category_name_en);
+      $data['page']['categories'][$i]['name_fr']  = sanitize_json($category_name_fr);
+    }
   }
 
+  // Show that there are no categories in the API if necessary
+  if(!$i)
+    $data['page']['categories'] = NULL;
+
   // Add the number of categories do the data
-  $data['categories'] = $i;
+  if($format === 'html')
+    $data['categories'] = $i;
+
+  // Add the creation and latest modification data to the API
+  if($format === 'api')
+  {
+    // Creation data
+    if($page_created_on)
+    {
+      $page_created_on_aware_datetime = date_to_aware_datetime($page_created_on);
+      $data['page']['created_at']['datetime'] = $page_created_on_aware_datetime['datetime'];
+      $data['page']['created_at']['timezone'] = $page_created_on_aware_datetime['timezone'];
+    }
+    else
+      $data['page']['created_at'] = NULL;
+
+    // Latest update data
+    if($last_updated_on)
+    {
+      $page_updated_on_aware_datetime = date_to_aware_datetime($last_updated_on);
+      $data['page']['last_updated_at']['datetime']  = $page_updated_on_aware_datetime['datetime'];
+      $data['page']['last_updated_at']['timezone']  = $page_updated_on_aware_datetime['timezone'];
+    }
+    else
+      $data['page']['last_updated_at'] = NULL;
+  }
 
   // If the page is a redirection to another compendium page, check whether it is a legal redirection
-  if($dpage['p_redirect'] && $no_loops)
+  if($page_redirect && $no_loops && $format === 'html')
   {
     // Sanitize the redirection
-    $redirect_page = sanitize($dpage['p_redirect'], 'string');
+    $redirect_page = sanitize($page_redirect, 'string');
 
     // If the redirection is to a page external to the compendium, skip the checks
-    if($dpage['p_redirect_ext'])
-      $data['redirect'] = $redirect_page;
+    if($page_redirect_ext)
+      $data['redirect'] = ($format === 'html') ? $redirect_page : NULL;
 
     // Check if the redirection is a valid page url
     else if(database_entry_exists('compendium_pages', 'page_url', $redirect_page))
     {
       // Check if the redirection is a redirection
-      $dredirect = mysqli_fetch_array(query(" SELECT  compendium_pages.redirection_$lang  AS 'p_redirect'
+      $dredirect = mysqli_fetch_array(query(" SELECT  compendium_pages.id                 AS 'p_redir_id' ,
+                                                      compendium_pages.redirection_$lang  AS 'p_redirect'
                                               FROM    compendium_pages
                                               WHERE   compendium_pages.page_url LIKE '$redirect_page' "));
 
@@ -290,8 +465,9 @@ function compendium_pages_get(  int     $page_id  = 0     ,
       if($dredirect['p_redirect'])
         return NULL;
 
-      // Otherwise add the redirection's url to the returned data
-      $data['redirect'] = $redirect_page;
+      // Otherwise add the redirection's ID and url to the returned data
+      $data['redirect']     = $redirect_page;
+      $data['redirect_id']  = $dredirect['p_redir_id'];
     }
 
     // If the redirection is not a page url, look up whether it is a valid page name
@@ -3396,13 +3572,13 @@ function compendium_types_list( string $format = 'html' ) : array
     // Prepare the data for the API
     else if($format === 'api')
     {
-      $data[$i]['page_type']['id']              = (string)$type_id;
-      $data[$i]['page_type']['name_en']         = sanitize_json($type_name_full_en);
-      $data[$i]['page_type']['name_fr']         = sanitize_json($type_name_full_fr);
-      $data[$i]['page_type']['link']            = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
-      $data[$i]['page_type']['pages_of_type']   = (int)$type_page_count;
-      $data[$i]['page_type']['description_en']  = sanitize_json(nbcodes_remove($type_body_en)) ?: NULL;
-      $data[$i]['page_type']['description_fr']  = sanitize_json(nbcodes_remove($type_body_fr)) ?: NULL;
+      $data[$i]['type']['id']             = (string)$type_id;
+      $data[$i]['type']['name_en']        = sanitize_json($type_name_full_en);
+      $data[$i]['type']['name_fr']        = sanitize_json($type_name_full_fr);
+      $data[$i]['type']['link']           = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
+      $data[$i]['type']['pages_of_type']  = (int)$type_page_count;
+      $data[$i]['type']['description_en'] = sanitize_json(nbcodes_remove($type_body_en)) ?: NULL;
+      $data[$i]['type']['description_fr'] = sanitize_json(nbcodes_remove($type_body_fr)) ?: NULL;
     }
   }
 
@@ -3412,7 +3588,7 @@ function compendium_types_list( string $format = 'html' ) : array
 
   // Give a default return value when no channels are found
   $data = (isset($data)) ? $data : NULL;
-  $data = ($format === 'api') ? array('page_types' => $data) : $data;
+  $data = ($format === 'api') ? array('types' => $data) : $data;
 
   // Return the prepared data
   return $data;

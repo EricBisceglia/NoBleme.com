@@ -109,7 +109,7 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                      MEETUPS                                                      */
+/*                                                    COMPENDIUM                                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -124,6 +124,19 @@ ___('api_compendium_intro', 'FR', <<<EOD
 Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/compendium/index|le Compendium du 21ème siècle de NoBleme}}.
 EOD
 );
+
+
+// Get one page
+___('api_compendium_pages_get_summary', 'EN', <<<EOD
+Retrieves a compendium page with the specified ID.
+EOD
+);
+___('api_compendium_pages_get_summary', 'FR', <<<EOD
+Récupère une page du compendium, dont l'ID est spécifié.
+EOD
+);
+___('api_compendium_pages_get_id',      'EN', "The desired compendium page's ID.");
+___('api_compendium_pages_get_id',      'FR', "L'ID de la page du compendium désirée.");
 
 
 // List categories
@@ -149,11 +162,11 @@ EOD
 
 
 // List page types
-___('api_compendium_page_types_list_summary', 'EN', <<<EOD
+___('api_compendium_types_list_summary', 'EN', <<<EOD
 Retrieves a list of all {{link|pages/compendium/page_type_list|page types}}.
 EOD
 );
-___('api_compendium_page_types_list_summary', 'FR', <<<EOD
+___('api_compendium_types_list_summary', 'FR', <<<EOD
 Récupère une liste de toutes les {{link|pages/compendium/page_type_list|thématiques}}.
 EOD
 );
