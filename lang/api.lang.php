@@ -126,17 +126,40 @@ EOD
 );
 
 
-// Get one page
-___('api_compendium_pages_get_summary', 'EN', <<<EOD
+// Get one page by ID
+___('api_compendium_pages_get_id_summary',  'EN', <<<EOD
 Retrieves a compendium page with the specified ID.
 EOD
 );
-___('api_compendium_pages_get_summary', 'FR', <<<EOD
+___('api_compendium_pages_get_id_summary',  'FR', <<<EOD
 Récupère une page du compendium, dont l'ID est spécifié.
 EOD
 );
-___('api_compendium_pages_get_id',      'EN', "The desired compendium page's ID.");
-___('api_compendium_pages_get_id',      'FR', "L'ID de la page du compendium désirée.");
+___('api_compendium_pages_get_id',          'EN', "The desired compendium page's ID.");
+___('api_compendium_pages_get_id',          'FR', "L'ID de la page du compendium désirée.");
+
+
+// Get one random page
+___('api_compendium_pages_get_random_summary',    'EN', <<<EOD
+Retrieves a random compendium page.<br>
+<br>
+Unless extra parameters are specified, the returned page will not be a redirection, and will not include any NSFW content.
+EOD
+);
+___('api_compendium_pages_get_random_summary',    'FR', <<<EOD
+Récupère une page du compendium au hasard.<br>
+<br>
+Si aucun paramètre supplémentaire n'est renseigné, la page renvoyée ne sera pas une redirection, et n'incluera pas de contenu NSFW.
+EOD
+);
+___('api_compendium_pages_get_random_type',       'EN', "Choose from compendium pages of the specified {{external|#types_list|type}}.");
+___('api_compendium_pages_get_random_type',       'FR', "Choisit parmi les pages du compendium du {{external|#types_list|type}} spécifié.");
+___('api_compendium_pages_get_random_language',   'EN', "Choose from compendium entries translated in the specified ISO 639-1 language (ex. 'en'). ");
+___('api_compendium_pages_get_random_language',   'FR', "Choisit parmi les pages du compendium traduites dans la langue ISO 639-1 spécifiée (ex. 'en'). ");
+___('api_compendium_pages_get_random_nsfw',       'EN', "If `true`, choose from all compendium pages, including those with a content warning (ex. nsfw).");
+___('api_compendium_pages_get_random_nsfw',       'FR', "Si `true`, choisit parmi toutes les pages du compendium, même celles contenant un avertissement de contenu (par ex. nsfw).");
+___('api_compendium_pages_get_random_redirects',  'EN', "If `true`, the randomly selected compendium page could be a redirection to another page.");
+___('api_compendium_pages_get_random_redirects',  'FR', "Si `true`, la page du compendium choisie au hasard pourrait être une redirection vers une autre page.");
 
 
 // List categories

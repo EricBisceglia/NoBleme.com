@@ -502,42 +502,66 @@ function compendium_pages_get(  int     $page_id  = 0       ,
 /**
  * Returns data related to a random compendium page.
  *
- * @param   int     $exclude_id   (OPTIONAL)  A page id to exclude from the pages being fetched.
- * @param   int     $type         (OPTIONAL)  Request a specific page type for the randomly returned page.
+ * @param   int     $exclude_id           (OPTIONAL)  A page id to exclude from the pages being fetched.
+ * @param   int     $type                 (OPTIONAL)  Request a specific page type for the randomly returned page.
+ * @param   bool    $include_nsfw         (OPTIONAL)  Include the possibility of returning pages with content warnings.
+ * @param   string  $language             (OPTIONAL)  Only return pages with a title in the selected language.
+ * @param   bool    $include_redirections (OPTIONAL)  Include the possibility of returning a redirection page.
  *
- * @return  string                            The url of a randomly chosen compendium page.
+ * @return  string                                    The url of a randomly chosen compendium page.
  */
 
-function compendium_pages_get_random( int $exclude_id = 0 ,
-                                      int $type       = 0 ) : string
+function compendium_pages_get_random( int     $exclude_id           = 0     ,
+                                      int     $type                 = 0     ,
+                                      mixed   $include_nsfw         = false ,
+                                      string  $language             = NULL  ,
+                                      mixed   $include_redirections = false ) : string
 {
-  // Sanitize the page type
-  $type = sanitize($type, 'string');
+  // Sanitize the search parameters
+  $exclude_id           = sanitize($exclude_id, 'int', 0);
+  $type                 = sanitize($type, 'string');
+  $include_nsfw         = sanitize($include_nsfw, 'bool');
+  $language             = sanitize($language, 'string');
+  $include_redirections = sanitize($include_redirections, 'bool');
 
-  // Prepare the page type condition
-  $query_type = ($type) ? " AND compendium_pages.fk_compendium_types = '$type' " : '';
-
-  // Sanitize the excluded id
-  $exclude_id = sanitize($exclude_id, 'int', 0);
+  // Get the user's current language and set the language search variable
+  $language = ($language === 'fr' || $language === 'en' || $language == 'all') ? $language : '';
+  $lang     = ($language) ?: sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Add the excluded id if necessary
-  $query_exclude = ($exclude_id) ? " AND compendium_pages.id != '$exclude_id' " : '';
+  $query_exclude = ($exclude_id) ? " AND compendium_pages.id != '$exclude_id' " : " ";
 
-  // Get the user's current language
-  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  // Prepare the page type condition
+  $query_type = ($type) ? " AND compendium_pages.fk_compendium_types = '$type' " : " ";
+
+  // Add NSFW pages if necessary
+  $query_nsfw = (!$include_nsfw) ?  " AND compendium_pages.is_nsfw      = 0
+                                      AND compendium_pages.is_gross     = 0
+                                      AND compendium_pages.is_offensive = 0
+                                      AND compendium_pages.is_offensive = 0 " : " ";
+
+  // Add a language filter if necessary
+  $query_language = ($language != 'all') ? " AND compendium_pages.title_$lang NOT LIKE '' " : " ";
+
+  // Exclude redirections if necessary
+  if(!$include_redirections && $language != 'all')
+    $query_redirect = " AND compendium_pages.redirection_$lang LIKE '' ";
+  else if(!$include_redirections)
+    $query_redirect = " AND compendium_pages.redirection_en LIKE ''
+                        AND compendium_pages.redirection_fr LIKE '' ";
+  else
+    $query_redirect = '';
 
   // Fetch a random page's url
   $dpage = mysqli_fetch_array(query(" SELECT    compendium_pages.page_url AS 'c_url'
                                       FROM      compendium_pages
                                       WHERE     compendium_pages.is_deleted         = 0
                                       AND       compendium_pages.is_draft           = 0
-                                      AND       compendium_pages.title_$lang        NOT LIKE ''
-                                      AND       compendium_pages.redirection_$lang  LIKE ''
-                                      AND       compendium_pages.is_nsfw            = 0
-                                      AND       compendium_pages.is_gross           = 0
-                                      AND       compendium_pages.is_offensive       = 0
-                                                $query_type
                                                 $query_exclude
+                                                $query_type
+                                                $query_nsfw
+                                                $query_language
+                                                $query_redirect
                                       ORDER BY  RAND()
                                       LIMIT     1 "));
 
