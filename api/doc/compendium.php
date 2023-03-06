@@ -44,6 +44,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   </p>
 
   <ul class="tinypadding_top">
+    <li><?=__link('#pages_list', 'GET /api/compendium/pages', is_internal: false)?></li>
     <li><?=__link('#pages_get_id', 'GET /api/compendium/page/id/{id}', is_internal: false)?></li>
     <li><?=__link('#pages_get_url', 'GET /api/compendium/page/url/{url}', is_internal: false)?></li>
     <li><?=__link('#pages_get_random', 'GET /api/compendium/page/random', is_internal: false)?></li>
@@ -51,6 +52,193 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <li><?=__link('#eras_list', 'GET /api/compendium/eras', is_internal: false)?></li>
     <li><?=__link('#types_list', 'GET /api/compendium/types', is_internal: false)?></li>
   </ul>
+
+</div>
+
+<hr id="pages_list">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/compendium/pages
+  </h4>
+
+  <p>
+    <?=__('api_compendium_pages_list_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">sort</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_sort')?>
+  </p>
+
+  <ul class="tinypadding_bot">
+  <li>
+      <span class="bold">url</span> - <?=__('api_compendium_pages_list_sort_url')?>
+    </li>
+    <li>
+      <span class="bold">appeared</span> - <?=__('api_compendium_pages_list_sort_app')?>
+    </li>
+    <li>
+      <span class="bold">appeared_reverse</span> - <?=__('api_compendium_pages_list_sort_app_r')?>
+    </li>
+    <li>
+      <span class="bold">peaked</span> - <?=__('api_compendium_pages_list_sort_peak')?>
+    </li>
+    <li>
+      <span class="bold">peaked_reverse</span> - <?=__('api_compendium_pages_list_sort_peak_r')?>
+    </li>
+  </ul>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">include_redirections</span> - bool - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_redirections')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">exclude_nsfw</span> - bool - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_no_nsfw')?>
+  </p>
+
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">url</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_url')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">title_en</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_title_en')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">title_fr</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_title_fr')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">contents_en</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_contents_en')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">contents_fr</span> - string - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_contents_fr')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">type</span> - int - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_type')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">era</span> - int - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_era')?>
+  </p>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">category</span> - int - <span class="italics"><?=__('api_optional')?></span><br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_list_category')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "pages": [
+    {
+      "page": {
+        "id": string,
+        "url": string,
+        "link": string,
+        "redirects_to": {
+          "target_is_a_page_url": bool,
+          "url_en": string,
+          "url_fr": string
+        },
+        "title_en": string,
+        "title_fr": string,
+        "content_warnings": {
+          "title_is_nsfw": bool,
+          "not_safe_for_work": bool,
+          "offensive": bool,
+          "gross": bool
+        },
+        "first_appeared_year": int,
+        "first_appeared_month": int,
+        "peak_popularity_year": int,
+        "peak_popularity_month": int,
+        "summary_en": string,
+        "summary_fr": string,
+        "type": {
+          "id": string,
+          "name_en": string,
+          "name_fr": string
+        }
+      }
+    },
+  ]
+}</pre>
 
 </div>
 

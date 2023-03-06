@@ -126,6 +126,49 @@ EOD
 );
 
 
+// List pages
+___('api_compendium_pages_list_summary',      'EN', <<<EOD
+Retrieves a list of all compendium pages, sorted in reverse chronological order by date of initial publication or last major modification (only complete page reworks count as major modifications).
+EOD
+);
+___('api_compendium_pages_list_summary',      'FR', <<<EOD
+Récupère une liste de toutes les pages du compendium, triées dans l'ordre antéchronologique de publication initiale ou de dernière modification majeure (une modification majeure correspond à une refonte d'une page dans son intégralité).
+EOD
+);
+___('api_compendium_pages_list_sort',         'EN', "Sorts the results in the specified way. The following sorting orders are available:");
+___('api_compendium_pages_list_sort',         'FR', "Trie les résultats dans l'ordre spécifié. Les options de tri suivantes sont possibles :");
+___('api_compendium_pages_list_sort_url',     'EN', "Sort by URL, alphabetically.");
+___('api_compendium_pages_list_sort_url',     'FR', "Trie par URL, alphabétiquement.");
+___('api_compendium_pages_list_sort_app',     'EN', "Sort by date of first appearance, in reverse chronological order.");
+___('api_compendium_pages_list_sort_app',     'FR', "Trie par date de première apparition, antéchronologiquement.");
+___('api_compendium_pages_list_sort_app_r',   'EN', "Sort by date of first appearance, in chronological order.");
+___('api_compendium_pages_list_sort_app_r',   'FR', "Trie par date de première apparition, chronologiquement.");
+___('api_compendium_pages_list_sort_peak',    'EN', "Sort by date of peak popularity, in reverse chronological order.");
+___('api_compendium_pages_list_sort_peak',    'FR', "Trie par date de pic de popularité, antéchronologiquement.");
+___('api_compendium_pages_list_sort_peak_r',  'EN', "Sort by date of peak popularity, in chronological order.");
+___('api_compendium_pages_list_sort_peak_r',  'FR', "Trie par date de pic de popularité, chronologiquement.");
+___('api_compendium_pages_list_redirections', 'EN', "If this parameter is set to `true`, pages which only serve as redirections will be also be returned.");
+___('api_compendium_pages_list_redirections', 'FR', "Si ce paramètre vaut `true`, les pages qui ne servent que de redirection seront également renvoyées.");
+___('api_compendium_pages_list_no_nsfw',      'EN', "If this parameter is set to `true`, pages with content warnings will not be returned.");
+___('api_compendium_pages_list_no_nsfw',      'FR', "Si ce paramètre vaut `true`, les pages qui contiennent des avertissements de contenus ne seront pas renvoyées.");
+___('api_compendium_pages_list_url',          'EN', "Return pages containing the specified string in their URL.");
+___('api_compendium_pages_list_url',          'FR', "Renvoie les pages contenant la chaîne de caractères spécifiée dans leur URL.");
+___('api_compendium_pages_list_title_en',     'EN', "Return pages containing the specified string in their english language title.");
+___('api_compendium_pages_list_title_en',     'FR', "Renvoie les pages contenant la chaîne de caractères spécifiée dans leur titre en anglais.");
+___('api_compendium_pages_list_title_fr',     'EN', "Return pages containing the specified string in their french language title.");
+___('api_compendium_pages_list_title_fr',     'FR', "Renvoie les pages contenant la chaîne de caractères spécifiée dans leur titre en français.");
+___('api_compendium_pages_list_contents_en',  'EN', "Return pages containing the specified string either in their english summary or their english body. The searched string must be at least 4 characters long.");
+___('api_compendium_pages_list_contents_en',  'FR', "Renvoie les pages contenant la chaîne de caractères spécifiée dans leur résumé en anglais ou dans leur contenu en anglais. La chaîne de caractères recherchée doit être longue d'au minimum 4 caractères.");
+___('api_compendium_pages_list_contents_fr',  'EN', "Return pages containing the specified string either in their french summary or their french body. The searched string must be at least 4 characters long.");
+___('api_compendium_pages_list_contents_fr',  'FR', "Renvoie les pages contenant la chaîne de caractères spécifiée dans leur résumé en français ou dans leur contenu en français. La chaîne de caractères recherchée doit être longue d'au minimum 4 caractères.");
+___('api_compendium_pages_list_type',         'EN', "Return pages of the specified {{external|#types_list|type}}.");
+___('api_compendium_pages_list_type',         'FR', "Renvoie les pages du {{external|#types_list|type}} spécifié.");
+___('api_compendium_pages_list_era',          'EN', "Return pages from the specified {{external|#eras_list|era}}.");
+___('api_compendium_pages_list_era',          'FR', "Renvoie les pages de l'{{external|#eras_list|ère}} spécifiée.");
+___('api_compendium_pages_list_category',     'EN', "Return pages from the specified {{external|#categories_list|category}}.");
+___('api_compendium_pages_list_category',     'FR', "Renvoie les pages de la {{external|#categories_list|catégorie}} spécifiée.");
+
+
 // Get one page by ID
 ___('api_compendium_pages_get_id_summary',  'EN', <<<EOD
 Retrieves a compendium page with the specified ID.

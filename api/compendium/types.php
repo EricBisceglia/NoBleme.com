@@ -25,7 +25,7 @@ $compendium_types_list = compendium_types_list( format: 'api' );
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Output the compendium page types list list as JSON
+// Output the compendium page types list as JSON
 
 // Send headers announcing a json output
 header("Content-Type: application/json; charset=UTF-8");
