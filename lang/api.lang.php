@@ -139,6 +139,31 @@ ___('api_compendium_pages_get_id',          'EN', "The desired compendium page's
 ___('api_compendium_pages_get_id',          'FR', "L'ID de la page du compendium désirée.");
 
 
+// Get one page by URL
+___('api_compendium_pages_get_url_summary', 'EN', <<<EOD
+Retrieves a compendium page with the specified URL.<br>
+<br>
+As compendium pages can have different display names in different languages, retrieving them by their display name is not always the best way to fetch a page.<br>
+<br>
+Each compendium page has a unique page name valid in all languages, which can be seen in their URL. This name is what "URL" refers to in this part of NoBleme's API, and can be used to retrieve specific compendium pages regardless of language.<br>
+<br>
+For example, the compendium page named "13:37 troll" in english and "Troll de 13:37" in french is referred to by the URL {{link|pages/compendium/troll_de_1337|troll_de_1337}} in both languages.
+EOD
+);
+___('api_compendium_pages_get_url_summary', 'FR', <<<EOD
+Récupère une page du compendium, dont l'URL est spécifiée.<br>
+<br>
+Comme les pages du compendium peuvent avoir plusieurs noms d'affichage différents dans des langues différentes, récupérer des pages par leur nom d'affichage n'est pas toujours la meilleure façon de le faire.<br>
+<br>
+Chaque page du compendium dispose d'un nom de page unique valide dans toutes les langues, qui est visible dans leur URL. Ce nom est ce que signifie "URL" dans cette partie de l'API NoBleme, et peut être utilisé pour récupérer des pages spécifiques du compendium peu importe leur langue.<br>
+<br>
+Par exemple, la page du compendium nommée « Troll de 13:37 » en français et « 13:37 troll » en anglais utilise l'URL {{link|pages/compendium/troll_de_1337|troll_de_1337}} dans les deux langues.
+EOD
+);
+___('api_compendium_pages_get_url',         'EN', "The desired compendium page's URL (ex. 'troll_de_1337').");
+___('api_compendium_pages_get_url',         'FR', "L'URL de la page du compendium désirée (ex. 'troll_de_1337').");
+
+
 // Get one random page
 ___('api_compendium_pages_get_random_summary',    'EN', <<<EOD
 Retrieves a random compendium page.<br>

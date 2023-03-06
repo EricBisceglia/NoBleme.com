@@ -45,6 +45,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <ul class="tinypadding_top">
     <li><?=__link('#pages_get_id', 'GET /api/compendium/page/id/{id}', is_internal: false)?></li>
+    <li><?=__link('#pages_get_url', 'GET /api/compendium/page/url/{url}', is_internal: false)?></li>
     <li><?=__link('#pages_get_random', 'GET /api/compendium/page/random', is_internal: false)?></li>
     <li><?=__link('#categories_list', 'GET /api/compendium/categories', is_internal: false)?></li>
     <li><?=__link('#eras_list', 'GET /api/compendium/eras', is_internal: false)?></li>
@@ -77,6 +78,92 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
   <p class="nopadding_top tinypadding_bot">
     <?=__('api_compendium_pages_get_id')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "page": {
+    "id": string,
+    "url": string,
+    "link": string,
+    "redirects_to": {
+      "target_is_a_page_url": bool,
+      "url_en": string,
+      "url_fr": string
+    },
+    "title_en": string,
+    "title_fr": string,
+    "content_warnings": {
+      "title_is_nsfw": bool,
+      "not_safe_for_work": bool,
+      "offensive": bool,
+      "gross": bool
+    },
+    "first_appeared_year": int,
+    "first_appeared_month": int,
+    "peak_popularity_year": int,
+    "peak_popularity_month": int,
+    "summary_en": string,
+    "summary_fr": string,
+    "contents_en": string,
+    "contents_fr": string,
+    "type": {
+      "id": string,
+      "name_en": string,
+      "name_fr": string
+    },
+    "era": {
+      "id": string,
+      "name_en": string,
+      "name_fr": string
+    },
+    "categories": [
+      {
+        "id": string,
+        "name_en": string,
+        "name_fr": string
+      },
+    ],
+    "created_at": {
+      "datetime": string,
+      "timezone": string
+    },
+    "last_updated_at": {
+      "datetime": string,
+      "timezone": string
+    }
+  }
+}</pre>
+
+</div>
+
+<hr id="pages_get_url">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/compendium/page/url/{url}
+  </h4>
+
+  <p>
+    <?=__('api_compendium_pages_get_url_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">url</span> - string<br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_pages_get_url')?>
   </p>
 
   <h6 class="bigpadding_top smallpadding_bot">
