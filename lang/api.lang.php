@@ -230,6 +230,23 @@ ___('api_compendium_pages_get_random_redirects',  'EN', "If `true`, the randomly
 ___('api_compendium_pages_get_random_redirects',  'FR', "Si `true`, la page du compendium choisie au hasard pourrait être une redirection vers une autre page.");
 
 
+// Get one image by name
+___('api_compendium_images_get_name_summary', 'EN', <<<EOD
+Retrieves a compendium image with the specified name.<br>
+<br>
+No list of all compendium images is made publicly available, neither on the website nor in the API.
+EOD
+);
+___('api_compendium_images_get_name_summary', 'FR', <<<EOD
+Récupère une image du compendium, dont le nom est spécifié.<br>
+<br>
+Aucune liste de toutes les images du compendium est disponible publiquement, que ce soit sur le site ou via l'API.
+EOD
+);
+___('api_compendium_images_get_name',         'EN', "The desired compendium image's name (ex. 'some_image.png').");
+___('api_compendium_images_get_name',         'FR', "Le nom de l'image du compendium désirée (ex. 'une_image.png').");
+
+
 // List categories
 ___('api_compendium_categories_list_summary', 'EN', <<<EOD
 Retrieves a list of all {{link|pages/compendium/category_list|categories}}.

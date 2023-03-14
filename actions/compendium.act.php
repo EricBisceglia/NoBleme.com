@@ -1952,13 +1952,15 @@ function compendium_pages_autocomplete( string  $input                      ,
  *
  * @param   int         $image_id   (OPTIONAL)  The image's id. Only one of these two parameters should be set.
  * @param   string      $file_name  (OPTIONAL)  The image file's name  Only one of these two parameters should be set.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  *
  * @return  array|null              An array containing page image data, or NULL if it does not exist.
  */
 
-function compendium_images_get( ?int    $image_id   = 0 ,
-                                string  $file_name  = '') : mixed
+function compendium_images_get( ?int    $image_id   = 0       ,
+                                string  $file_name  = ''      ,
+                                string  $format     = 'html'  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
@@ -2008,35 +2010,109 @@ function compendium_images_get( ?int    $image_id   = 0 ,
                                         FROM    compendium_images
                                         WHERE   compendium_images.id = '$image_id' "));
 
-  // Return null if the image should not be displayed
-  if(!$is_admin && $dimage['ci_deleted'])
-    return NULL;
+  // Format the data
+  $image_id               = $dimage['ci_id'];
+  $image_deleted          = $dimage['ci_deleted'];
+  $image_file_name        = $dimage['ci_filename'];
+  $image_tags             = $dimage['ci_tags'];
+  $image_nsfw             = $dimage['ci_nsfw'];
+  $image_gross            = $dimage['ci_gross'];
+  $image_offensive        = $dimage['ci_offensive'];
+  $image_content_warning  = ($dimage['ci_nsfw'] || $dimage['ci_gross'] || $dimage['ci_offensive']);
+  $image_body             = $dimage['ci_body'];
+  $image_usage            = $dimage['ci_used'];
+  $image_used_in_pages    = ($image_usage) ? compendium_images_assemble_links($dimage['ci_used']) : '';
+  $image_usage_en         = $dimage['ci_used_en'];
+  $image_usage_fr         = $dimage['ci_used_fr'];
+  $image_caption_en       = $dimage['ci_caption_en'];
+  $image_caption_fr       = $dimage['ci_caption_fr'];
 
-  // Assemble an array with the data
-  $data['id']         = sanitize_output($dimage['ci_id']);
-  $data['deleted']    = sanitize_output($dimage['ci_deleted']);
-  $data['name']       = sanitize_output($dimage['ci_filename']);
-  $data['name_raw']   = $dimage['ci_filename'];
-  $data['tags']       = sanitize_output($dimage['ci_tags']);
-  $data['nsfw']       = sanitize_output($dimage['ci_nsfw']);
-  $data['gross']      = sanitize_output($dimage['ci_gross']);
-  $data['offensive']  = sanitize_output($dimage['ci_offensive']);
-  $blur_image         = ($dimage['ci_nsfw'] || $dimage['ci_gross'] || $dimage['ci_offensive']) ? 1 : 0;
-  $data['blur']       = ($nsfw < 2 && $blur_image) ? ' class="compendium_image_blur"' : '';
-  $data['blurred']    = ($nsfw < 2 && $blur_image) ? 1 : 0;
-  $data['body_clean'] = sanitize_output($dimage['ci_body']);
-  $data['body']       = nbcodes(sanitize_output($dimage['ci_body'], preserve_line_breaks: true),
-                                page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
-  $page_links         = ($dimage['ci_used']) ? compendium_images_assemble_links($dimage['ci_used']) : '';
-  $data['used']       = ($dimage['ci_used']) ? $page_links['list'] : '';
-  $data['used_count'] = ($dimage['ci_used']) ? $page_links['count'] : 0;
-  $data['used_en']    = sanitize_output($dimage['ci_used_en']);
-  $data['used_fr']    = sanitize_output($dimage['ci_used_fr']);
-  $data['caption_en'] = sanitize_output($dimage['ci_caption_en']);
-  $data['caption_fr'] = sanitize_output($dimage['ci_caption_fr']);
-  $data['meta_desc']  = ($dimage['ci_caption_en'])
-                      ? string_truncate(nbcodes_remove($dimage['ci_caption_en']), 250, '...')
-                      : string_truncate(nbcodes_remove($dimage['ci_caption_fr']), 250, '...');
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    // Return null if the image should not be displayed
+    if(!$is_admin && $image_deleted)
+      return NULL;
+
+    // Assemble an array with the data
+    $data['id']         = sanitize_output($image_id);
+    $data['deleted']    = sanitize_output($image_deleted);
+    $data['name']       = sanitize_output($image_file_name);
+    $data['name_raw']   = $image_file_name;
+    $data['tags']       = sanitize_output($image_tags);
+    $data['nsfw']       = sanitize_output($image_nsfw);
+    $data['gross']      = sanitize_output($image_gross);
+    $data['offensive']  = sanitize_output($image_offensive);
+    $data['blur']       = ($nsfw < 2 && $image_content_warning) ? ' class="compendium_image_blur"' : '';
+    $data['blurred']    = ($nsfw < 2 && $image_content_warning) ? 1 : 0;
+    $data['body_clean'] = sanitize_output($image_body);
+    $data['body']       = nbcodes(sanitize_output($image_body, preserve_line_breaks: true),
+                                  page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data['used']       = ($image_usage) ? $image_used_in_pages['list'] : '';
+    $data['used_count'] = ($image_usage) ? $image_used_in_pages['count'] : 0;
+    $data['used_en']    = sanitize_output($image_usage_en);
+    $data['used_fr']    = sanitize_output($image_usage_fr);
+    $data['caption_en'] = sanitize_output($image_caption_en);
+    $data['caption_fr'] = sanitize_output($image_caption_fr);
+    $data['meta_desc']  = ($image_caption_en)
+                        ? string_truncate(nbcodes_remove($image_caption_en), 250, '...')
+                        : string_truncate(nbcodes_remove($image_caption_fr), 250, '...');
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // Do not show deleted images in the API
+    if($image_deleted)
+      return NULL;
+
+    // Core image data
+    $data['image']['name']        = sanitize_json($image_file_name);
+    $data['image']['link']        = sanitize_json(
+                                      $GLOBALS['website_url'].'pages/compendium/image?name='.$image_file_name);
+    $data['image']['caption_en']  = sanitize_json(nbcodes_remove($image_caption_en));
+    $data['image']['caption_fr']  = sanitize_json(nbcodes_remove($image_caption_fr));
+
+    // Content warnings
+    if($image_content_warning)
+    {
+      $data['image']['content_warnings']['not_safe_for_work'] = (bool)($image_nsfw);
+      $data['image']['content_warnings']['offensive']         = (bool)($image_gross);
+      $data['image']['content_warnings']['gross']             = (bool)($image_offensive);
+    }
+    else
+      $data['image']['content_warnings'] = NULL;
+
+    // Image usage in english compendium content data
+    $image_used_in_pages_en = compendium_images_assemble_links($image_usage_en, format: 'api');
+    if($image_used_in_pages_en['count'])
+    {
+      for($i = 0; $i < $image_used_in_pages_en['count']; $i++)
+      {
+        $data['image']['used_in_pages_en'][$i]['url']   = sanitize_json($image_used_in_pages_en[$i]['url']);
+        $data['image']['used_in_pages_en'][$i]['name']  = sanitize_json($image_used_in_pages_en[$i]['name']);
+        $data['image']['used_in_pages_en'][$i]['link']  = sanitize_json($GLOBALS['website_url'].'pages/compendium/'.
+                                                            $image_used_in_pages_en[$i]['url']);
+      }
+    }
+    else
+      $data['image']['used_in_pages_en'] = NULL;
+
+    // Image usage in french compendium content data
+    $image_used_in_pages_fr = compendium_images_assemble_links($image_usage_fr, format: 'api');
+    if($image_used_in_pages_fr['count'])
+    {
+      for($i = 0; $i < $image_used_in_pages_fr['count']; $i++)
+      {
+        $data['image']['used_in_pages_fr'][$i]['url']   = sanitize_json($image_used_in_pages_fr[$i]['url']);
+        $data['image']['used_in_pages_fr'][$i]['name']  = sanitize_json($image_used_in_pages_fr[$i]['name']);
+        $data['image']['used_in_pages_fr'][$i]['link']  = sanitize_json($GLOBALS['website_url'].'pages/compendium/'.
+                                                            $image_used_in_pages_fr[$i]['url']);
+      }
+    }
+    else
+      $data['image']['used_in_pages_fr'] = NULL;
+  }
 
   // Return the data
   return $data;
@@ -2725,30 +2801,51 @@ function compendium_images_recalculate_all_links()
  *
  * @param   string  $page_list              A list of compendium pages.
  * @param   bool    $shorten    (OPTIONAL)  Shorten long page names.
+ * @param   bool    $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array               The formatted list and the page count.
+ * @return  array                           The formatted list and the page count.
  */
 
-function compendium_images_assemble_links(  string  $page_list          ,
-                                            bool    $shorten    = false ) : array
+function compendium_images_assemble_links(  string  $page_list            ,
+                                            bool    $shorten    = false   ,
+                                            string  $format     = 'html'  ) : array
 {
   // Split the page list
   $page_list_array = explode("|||", $page_list);
 
-  // Format the page list
-  $formatted_page_list = '';
-  for($i = 0; $i < count($page_list_array); $i++)
+  // Format the page list for usage in regular pages
+  if($format === 'html')
   {
-    if(!($i % 2) && isset($page_list_array[$i + 1]))
+    $formatted_page_list = '';
+    for($i = 0; $i < count($page_list_array); $i++)
     {
-      $short_name = ($shorten) ? string_truncate($page_list_array[$i + 1], 18, '...') : $page_list_array[$i + 1];
-      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], sanitize_output($short_name)).'<br>';
+      if(!($i % 2) && isset($page_list_array[$i + 1]))
+      {
+        $short_name = ($shorten) ? string_truncate($page_list_array[$i + 1], 18, '...') : $page_list_array[$i + 1];
+        $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], sanitize_output($short_name)).'<br>';
+      }
     }
+
+    // Add the formatted page list and the page count to the returned data
+    $data['list']   = $formatted_page_list;
+    $data['count']  = ($i) ? floor($i / 2) : 0;
   }
 
-  // Add the formatted page list and the page count to the returned data
-  $data['list']   = $formatted_page_list;
-  $data['count']  = ($i) ? floor($i / 2) : 0;
+  // Format the page list for usage in the API
+  if($format === 'api')
+  {
+    $page_list_count = 0;
+    for($i = 0; $i < count($page_list_array); $i++)
+    {
+      if(!($i % 2) && isset($page_list_array[$i + 1]))
+      {
+        $data[$page_list_count]['name'] = $page_list_array[$i + 1];
+        $data[$page_list_count]['url']  = $page_list_array[$i];
+        $page_list_count++;
+      }
+    }
+    $data['count'] = $page_list_count;
+  }
 
   // Return the formatted page list
   return $data;

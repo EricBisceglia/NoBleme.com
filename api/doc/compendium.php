@@ -48,6 +48,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <li><?=__link('#pages_get_id', 'GET /api/compendium/page/id/{id}', is_internal: false)?></li>
     <li><?=__link('#pages_get_url', 'GET /api/compendium/page/url/{url}', is_internal: false)?></li>
     <li><?=__link('#pages_get_random', 'GET /api/compendium/page/random', is_internal: false)?></li>
+    <li><?=__link('#images_get_name', 'GET /api/compendium/image/{name}', is_internal: false)?></li>
     <li><?=__link('#categories_list', 'GET /api/compendium/categories', is_internal: false)?></li>
     <li><?=__link('#eras_list', 'GET /api/compendium/eras', is_internal: false)?></li>
     <li><?=__link('#types_list', 'GET /api/compendium/types', is_internal: false)?></li>
@@ -525,6 +526,66 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
       "datetime": string,
       "timezone": string
     }
+  }
+}</pre>
+
+</div>
+
+<hr id="images_get_name">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/compendium/image/{name}
+  </h4>
+
+  <p>
+    <?=__('api_compendium_images_get_name_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">name</span> - string<br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_compendium_images_get_name')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "image": {
+    "name": string,
+    "link": string,
+    "caption_en": string,
+    "caption_fr": string,
+    "content_warnings": {
+      "not_safe_for_work": bool,
+      "offensive": bool,
+      "gross": bool
+    },
+    "used_in_pages_en": [
+      {
+        "url": string,
+        "name": string,
+        "link": string
+      },
+    ],
+    "used_in_pages_fr": [
+      {
+        "url": string,
+        "name": string,
+        "link": string
+      },
+    ]
   }
 }</pre>
 

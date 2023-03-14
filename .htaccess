@@ -20,6 +20,7 @@ RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
 # Better looking API URLs (not strictly enforced)
 RewriteRule ^api/compendium/page/id/([0-9]+)$ api/compendium/page/id/page.php?id=$1 [NC]
 RewriteRule ^api/compendium/page/url/(.*)$ api/compendium/page/url/page.php?url=$1 [QSA,NC]
+RewriteRule ^api/compendium/image/(.*)$ api/compendium/image/image.php?name=$1 [QSA,NC]
 RewriteRule ^api/meetup/([0-9]+)$ api/meetup/meetup.php?id=$1 [NC]
 RewriteRule ^api/quote/([0-9]+)$ api/quote/quote.php?id=$1 [NC]
 RewriteRule ^api/user/([0-9]+)$ api/user/user.php?id=$1 [NC]
