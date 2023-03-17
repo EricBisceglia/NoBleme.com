@@ -355,12 +355,14 @@ function dev_versions_delete( int $version_id ) : mixed
 /**
  * Returns elements related to a devblog.
  *
- * @param   int           $blog_id The devblog's id.
+ * @param   int           $blog_id              The devblog's id.
+ * @param   string        $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null    An array containing elements related to the devblog, or NULL if it does not exist.
+ * @return  array|null                          An array containing the devblog's data, or NULL if it does not exist.
  */
 
-function dev_blogs_get( int $blog_id ) : mixed
+function dev_blogs_get( int     $blog_id          ,
+                        string  $format = 'html'  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -391,47 +393,77 @@ function dev_blogs_get( int $blog_id ) : mixed
   if(!isset($dblog['b_deleted']))
     return NULL;
 
-  // Assemble an array with the data
-  $data['deleted']    = $dblog['b_deleted'];
-  $data['title']      = ($dblog["b_title_$lang"]) ? sanitize_output($dblog["b_title_$lang"]) : __('dev_blog_no_title');
-  $data['title_en']   = $dblog['b_title_en'];
-  $data['title_fr']   = $dblog['b_title_fr'];
-  $data['date']       = sanitize_output(date_to_text($dblog['b_date']));
-  $data['date_since'] = sanitize_output(time_since($dblog['b_date']));
-  $data['body']       = ($dblog['b_body']) ? $dblog['b_body'] : __('dev_blog_no_body');
-  $data['body_en']    = sanitize_output($dblog['b_body_en']);
-  $data['body_fr']    = sanitize_output($dblog['b_body_fr']);
+  // Format the data
+  $blog_deleted   = $dblog['b_deleted'];
+  $blog_title     = $dblog['b_title_'.$lang];
+  $blog_title_en  = $dblog['b_title_en'];
+  $blog_title_fr  = $dblog['b_title_fr'];
+  $blog_posted_at = $dblog['b_date'];
+  $blog_body      = $dblog['b_body'];
+  $blog_body_en   = $dblog['b_body_en'];
+  $blog_body_fr   = $dblog['b_body_fr'];
 
-  // Sanitize the devblog's timestamp
-  $blog_timestamp = sanitize($dblog['b_date'], 'int', 0);
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    // Devblog data
+    $data['deleted']    = $blog_deleted;
+    $data['title']      = ($blog_title) ? sanitize_output($blog_title) : __('dev_blog_no_title');
+    $data['title_en']   = $blog_title_en;
+    $data['title_fr']   = $blog_title_fr;
+    $data['date']       = sanitize_output(date_to_text($blog_posted_at));
+    $data['date_since'] = sanitize_output(time_since($blog_posted_at));
+    $data['body']       = ($blog_body) ? $blog_body : __('dev_blog_no_body');
+    $data['body_en']    = sanitize_output($blog_body_en);
+    $data['body_fr']    = sanitize_output($blog_body_fr);
 
-  // Fetch the previous devblog
-  $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.id          AS 'b_id'  ,
-                                                dev_blogs.title_$lang AS 'b_title'
-                                      FROM      dev_blogs
-                                      WHERE     dev_blogs.posted_at     < '$blog_timestamp'
-                                      AND       dev_blogs.is_deleted    = 0
-                                      AND       dev_blogs.title_$lang  != ''
-                                      ORDER BY  dev_blogs.posted_at DESC
-                                      LIMIT     1 "));
+    // Sanitize the devblog's timestamp
+    $blog_timestamp = sanitize($blog_posted_at, 'int', 0);
 
-  // Add the previous devblog's info to the data array
-  $data['prev_id']    = isset($dblog['b_id']) ? sanitize_output($dblog['b_id']) : 0;
-  $data['prev_title'] = isset($dblog['b_title']) ? sanitize_output($dblog['b_title']) : '';
+    // Fetch the previous devblog
+    $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.id          AS 'b_id'  ,
+                                                  dev_blogs.title_$lang AS 'b_title'
+                                        FROM      dev_blogs
+                                        WHERE     dev_blogs.posted_at     < '$blog_timestamp'
+                                        AND       dev_blogs.is_deleted    = 0
+                                        AND       dev_blogs.title_$lang  != ''
+                                        ORDER BY  dev_blogs.posted_at DESC
+                                        LIMIT     1 "));
 
-  // Fetch the next devblog
-  $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.id          AS 'b_id'  ,
-                                                dev_blogs.title_$lang AS 'b_title'
-                                      FROM      dev_blogs
-                                      WHERE     dev_blogs.posted_at     > '$blog_timestamp'
-                                      AND       dev_blogs.is_deleted    = 0
-                                      AND       dev_blogs.title_$lang  != ''
-                                      ORDER BY  dev_blogs.posted_at ASC
-                                      LIMIT     1 "));
+    // Add the previous devblog's info to the data array
+    $data['prev_id']    = isset($dblog['b_id']) ? sanitize_output($dblog['b_id']) : 0;
+    $data['prev_title'] = isset($dblog['b_title']) ? sanitize_output($dblog['b_title']) : '';
 
-  // Add the next devblog's info to the data array
-  $data['next_id']    = isset($dblog['b_id']) ? sanitize_output($dblog['b_id']) : 0;
-  $data['next_title'] = isset($dblog['b_title']) ? sanitize_output($dblog['b_title']) : '';
+    // Fetch the next devblog
+    $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.id          AS 'b_id'  ,
+                                                  dev_blogs.title_$lang AS 'b_title'
+                                        FROM      dev_blogs
+                                        WHERE     dev_blogs.posted_at     > '$blog_timestamp'
+                                        AND       dev_blogs.is_deleted    = 0
+                                        AND       dev_blogs.title_$lang  != ''
+                                        ORDER BY  dev_blogs.posted_at ASC
+                                        LIMIT     1 "));
+
+    // Add the next devblog's info to the data array
+    $data['next_id']    = isset($dblog['b_id']) ? sanitize_output($dblog['b_id']) : 0;
+    $data['next_title'] = isset($dblog['b_title']) ? sanitize_output($dblog['b_title']) : '';
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // Do not show deleted devblogs in the API
+    if($blog_deleted)
+      return NULL;
+
+    // Devblog data
+    $data['blog']['id']           = (string)$blog_id;
+    $data['blog']['published_on'] = sanitize_json(date('Y-m-d', $blog_posted_at));
+    $data['blog']['title_en']     = sanitize_json($blog_title_en) ?: NULL;
+    $data['blog']['title_fr']     = sanitize_json($blog_title_fr) ?: NULL;
+    $data['blog']['contents_en']  = sanitize_json(strip_tags($blog_body_en)) ?: NULL;
+    $data['blog']['contents_fr']  = sanitize_json(strip_tags($blog_body_fr)) ?: NULL;
+  }
 
   // Return the array
   return $data;

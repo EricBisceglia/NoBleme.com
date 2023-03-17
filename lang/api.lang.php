@@ -303,13 +303,26 @@ EOD
 
 // List devblogs
 ___('api_dev_blogs_list_summary', 'EN', <<<EOD
-Retrieves a list of all {{link|pages/dev/blog_list|devblogs}}.
+Retrieves a list of all {{link|pages/dev/blog_list|devblogs}}, in reverse chronological order.
 EOD
 );
 ___('api_dev_blogs_list_summary', 'FR', <<<EOD
-Récupère une liste de tous les {{link|pages/dev/blog_list|devblogs}}.
+Récupère une liste de tous les {{link|pages/dev/blog_list|devblogs}}, par ordre antéchronologique.
 EOD
 );
+
+
+// Get one devblog
+___('api_dev_blogs_get_summary',  'EN', <<<EOD
+Retrieves a devblog with the specified ID.
+EOD
+);
+___('api_dev_blogs_get_summary',  'FR', <<<EOD
+Récupère un devblog, dont l'id est spécifiée.
+EOD
+);
+___('api_dev_blogs_get_id',       'EN', "The desired devblog's ID.");
+___('api_dev_blogs_get_id',       'FR', "L'ID du devblog désiré.");
 
 
 
