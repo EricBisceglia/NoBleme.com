@@ -47,6 +47,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     <li><?=__link('#blogs_list', 'GET /api/dev/blogs', is_internal: false)?></li>
     <li><?=__link('#blogs_get', 'GET /api/dev/blog/{id}', is_internal: false)?></li>
     <li><?=__link('#tasks_list', 'GET /api/dev/tasks', is_internal: false)?></li>
+    <li><?=__link('#tasks_get', 'GET /api/dev/task/{id}', is_internal: false)?></li>
   </ul>
 
 </div>
@@ -71,6 +72,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   "blogs": [
     {
       "id": string,
+      "link": string,
       "published_on": string,
       "title_en": string,
       "title_fr": string
@@ -113,6 +115,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "blog": {
     "id": string,
+    "link": string,
     "published_on": string,
     "title_en": string,
     "title_fr": string,
@@ -125,7 +128,7 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
 
 <hr id="tasks_list">
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top bigpadding_bot">
 
   <h4>
     GET /api/dev/tasks
@@ -187,16 +190,15 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   "tasks": [
     {
       "id": string,
+      "link": string,
       "status": string,
       "title_en": string,
       "title_fr": string,
       "category": {
-        "id": string,
         "name_en": string,
         "name_fr": string
       },
       "milestone": {
-        "id": string,
         "name_en": string,
         "name_fr": string
       },
@@ -215,6 +217,73 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
     },
   ]
 }</pre>
+
+</div>
+
+<hr id="tasks_get">
+
+<div class="width_50 padding_top bigpadding_bot">
+
+  <h4>
+    GET /api/dev/task/{id}
+  </h4>
+
+  <p>
+    <?=__('api_dev_tasks_get_summary')?>
+  </p>
+
+  <h6 class="bigpadding_top">
+    <?=__('api_parameters')?>
+  </h6>
+
+  <hr class="api_doc_parameters">
+
+  <p class="tinypadding_top tinypadding_bot">
+    <span class="bold underlined">id</span> - int<br>
+  </p>
+
+  <p class="nopadding_top tinypadding_bot">
+    <?=__('api_dev_tasks_get_id')?>
+  </p>
+
+  <h6 class="bigpadding_top smallpadding_bot">
+    <?=__('api_response_schema')?>
+  </h6>
+
+  <pre>{
+  "task": {
+    "id": string,
+    "link": string,
+    "status": string,
+    "title_en": string,
+    "title_fr": string,
+    "description_en": string,
+    "description_fr": string,
+    "source_code_link": string,
+    "category": {
+      "name_en": string,
+      "name_fr": string,
+    },
+    "milestone": {
+      "name_en": string,
+      "name_fr": string,
+    },
+    "created_at": {
+      "datetime": string,
+      "timezone": string,
+    },
+    "solved_at": {
+      "datetime": string,
+      "timezone": string,
+    },
+    "opened_by": {
+      "user_id": string,
+      "username": string,
+    }
+  }
+}</pre>
+
+</div>
 
 
 <?php /***************************************************************************************************************/

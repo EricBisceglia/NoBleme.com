@@ -458,6 +458,7 @@ function dev_blogs_get( int     $blog_id          ,
 
     // Devblog data
     $data['blog']['id']           = (string)$blog_id;
+    $data['blog']['link']         = sanitize_json($GLOBALS['website_url'].'pages/dev/blog?id='.$blog_id);
     $data['blog']['published_on'] = sanitize_json(date('Y-m-d', $blog_posted_at));
     $data['blog']['title_en']     = sanitize_json($blog_title_en) ?: NULL;
     $data['blog']['title_fr']     = sanitize_json($blog_title_fr) ?: NULL;
@@ -551,6 +552,7 @@ function dev_blogs_list(  string  $sort   = ''      ,
     {
       // Blog data
       $data[$i]['id']           = (string)$blog_id;
+      $data[$i]['link']         = sanitize_json($GLOBALS['website_url'].'pages/dev/blog?id='.$blog_id);
       $data[$i]['published_on'] = sanitize_json(date('Y-m-d', $blog_posted_at));
       $data[$i]['title_en']     = sanitize_json($blog_title_en) ?: NULL;
       $data[$i]['title_fr']     = sanitize_json($blog_title_fr) ?: NULL;

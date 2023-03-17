@@ -344,6 +344,19 @@ ___('api_dev_tasks_list_reporter',  'EN', "Return only tasks submitted by the us
 ___('api_dev_tasks_list_reporter',  'FR', "Ne renvoie que les tâches proposées par le compte avec {{link|api/doc/users|l'ID de compte}} spécifié.");
 
 
+// Get one task
+___('api_dev_tasks_get_summary',  'EN', <<<EOD
+Retrieves a task with the specified ID.
+EOD
+);
+___('api_dev_tasks_get_summary',  'FR', <<<EOD
+Récupère un tâche, dont l'id est spécifiée.
+EOD
+);
+___('api_dev_tasks_get_id',       'EN', "The desired task's ID.");
+___('api_dev_tasks_get_id',       'FR', "L'ID de la tâche désirée.");
+
+
 
 
 /*********************************************************************************************************************/
