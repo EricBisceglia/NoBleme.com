@@ -325,6 +325,25 @@ ___('api_dev_blogs_get_id',       'EN', "The desired devblog's ID.");
 ___('api_dev_blogs_get_id',       'FR', "L'ID du devblog désiré.");
 
 
+// List tasks
+___('api_dev_tasks_list_summary',   'EN', <<<EOD
+Retrieves a list of all {{link|pages/tasks/list|tasks}}, sorted by status (high priority open tasks first, then low priority open tasks, then solved tasks sorted by reverse chronological order of solving).
+EOD
+);
+___('api_dev_tasks_list_summary',   'FR', <<<EOD
+Récupère une liste de toutes les {{link|pages/tasks/list|tâches}}, triées par état (tâches ouvertes haute priorité, puis tâches ouvertes basse priorité, puis tâches résolues triées par ordre antéchronologique de résolution).
+EOD
+);
+___('api_dev_tasks_list_open',      'EN', "If this parameter is set to `true`, returns only tasks which are still unsolved.");
+___('api_dev_tasks_list_open',      'FR', "Si ce paramètre vaut `true`, ne renvoie que les tâches qui ne sont pas encore résolues.");
+___('api_dev_tasks_list_title_en',  'EN', "Return only tasks containing the specified string in their english title.");
+___('api_dev_tasks_list_title_en',  'FR', "Ne renvoie que les tâches contenant la chaîne de caractères spécifiée dans leur titre anglais.");
+___('api_dev_tasks_list_title_fr',  'EN', "Return only tasks containing the specified string in their french title.");
+___('api_dev_tasks_list_title_fr',  'FR', "Ne renvoie que les tâches contenant la chaîne de caractères spécifiée dans leur titre français.");
+___('api_dev_tasks_list_reporter',  'EN', "Return only tasks submitted by the user with the specified {{link|api/doc/users|user ID}}.");
+___('api_dev_tasks_list_reporter',  'FR', "Ne renvoie que les tâches proposées par le compte avec {{link|api/doc/users|l'ID de compte}} spécifié.");
+
+
 
 
 /*********************************************************************************************************************/

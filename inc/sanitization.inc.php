@@ -424,7 +424,7 @@ function sanitize_meta_tags( string $data ) : string
  * @return  string          The formatted JSON output.
  */
 
-function sanitize_json( string $data ) : string
+function sanitize_json( ?string $data ) : string
 {
   // Change the format for line breaks
   return str_replace("\r\n", "\n", $data);
