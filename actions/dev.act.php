@@ -443,14 +443,16 @@ function dev_blogs_get( int $blog_id ) : mixed
 /**
  * Returns a list of devblogs.
  *
- * @param   string  $sort   (OPTIONAL)  The value on which to sort the data.
- * @param   string  $year   (OPTIONAL)  Only show devblogs from a specific year.
+ * @param   string  $sort     (OPTIONAL)  The value on which to sort the data.
+ * @param   string  $year     (OPTIONAL)  Only show devblogs from a specific year.
+ * @param   string  $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array                       An array containing data about devblogs, sorted in reverse chronological order.
+ * @return  array                         An array containing data about devblogs.
  */
 
-function dev_blogs_list(  string  $sort = ''  ,
-                          int     $year = 0   ) : array
+function dev_blogs_list(  string  $sort   = ''      ,
+                          int     $year   = 0       ,
+                          string  $format = 'html'  ) : array
 {
   // Fetch the user's language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'));
@@ -458,15 +460,17 @@ function dev_blogs_list(  string  $sort = ''  ,
   // Restrict this action to administrators only
   $is_admin = user_is_administrator();
 
-  // Decide whether to show deleted content
-  $show_deleted = (!$is_admin) ? " AND dev_blogs.is_deleted = 0 "     : ' ';
-  $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang != '' "  : ' ';
+  // Decide whether to show deleted blogs
+  $show_deleted = (!$is_admin || $format === 'api') ? " AND dev_blogs.is_deleted = 0 " : ' ';
+
+  // Decide whether to show blogs with no translation
+  $show_lang = (!$is_admin && $format != 'api') ? " AND dev_blogs.title_$lang != '' " : ' ';
 
   // Filter by year if necessary
-  $year = sanitize($year, 'int', 0);
-  $filter_year = ($year) ? " AND YEAR(FROM_UNIXTIME(dev_blogs.posted_at)) = '$year' ": ' ';
+  $year         = sanitize($year, 'int', 0);
+  $filter_year  = ($year) ? " AND YEAR(FROM_UNIXTIME(dev_blogs.posted_at)) = '$year' ": ' ';
 
-  // Sort the content if necessary
+  // Sort the blogs if necessary
   $order_by = " dev_blogs.posted_at DESC ";
   $order_by = ($is_admin && $sort === 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
 
@@ -489,17 +493,45 @@ function dev_blogs_list(  string  $sort = ''  ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qblogs); $i++)
   {
-    $data[$i]['id']       = $row['b_id'];
-    $data[$i]['deleted']  = $row['b_deleted'];
-    $data[$i]['title']    = ($row["b_title_$lang"]) ? sanitize_output($row["b_title_$lang"]) : '----------';
-    $data[$i]['date']     = sanitize_output(date_to_text($row['b_date'], strip_day: 1));
-    $data[$i]['views']    = sanitize_output($row['p_views']);
-    $data[$i]['lang_en']  = ($row['b_title_en']);
-    $data[$i]['lang_fr']  = ($row['b_title_fr']);
+    // Format the data
+    $blog_id        = $row['b_id'];
+    $blog_deleted   = $row['b_deleted'];
+    $blog_title     = $row['b_title_'.$lang];
+    $blog_title_en  = $row['b_title_en'];
+    $blog_title_fr  = $row['b_title_fr'];
+    $blog_posted_at = $row['b_date'];
+    $blog_views     = $row['p_views'];
+
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      $data[$i]['id']       = $blog_id;
+      $data[$i]['deleted']  = $blog_deleted;
+      $data[$i]['title']    = ($blog_title) ? sanitize_output($blog_title) : '----------';
+      $data[$i]['date']     = sanitize_output(date_to_text($blog_posted_at, strip_day: 1));
+      $data[$i]['views']    = sanitize_output($blog_views);
+      $data[$i]['lang_en']  = ($blog_title_en);
+      $data[$i]['lang_fr']  = ($blog_title_fr);
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      // Blog data
+      $data[$i]['blog']['id']           = (string)$blog_id;
+      $data[$i]['blog']['published_on'] = sanitize_json(date('Y-m-d', $blog_posted_at));
+      $data[$i]['blog']['title_en']     = sanitize_json($blog_title_en) ?: NULL;
+      $data[$i]['blog']['title_fr']     = sanitize_json($blog_title_fr) ?: NULL;
+    }
   }
 
   // Add the number of rows to the data
-  $data['rows'] = $i;
+  if($format === 'html')
+    $data['rows'] = $i;
+
+  // Give a default return value when no devblogs are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('blogs' => $data) : $data;
 
   // Return the prepared data
   return $data;

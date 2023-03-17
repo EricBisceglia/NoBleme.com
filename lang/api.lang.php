@@ -284,7 +284,39 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                      MEETUPS                                                      */
+/*                                                        DEV                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Menu entry & introduction
+___('api_dev_menu',   'EN', "Development");
+___('api_dev_menu',   'FR', "Développement");
+___('api_dev_intro',  'EN', <<<EOD
+This part of {{link|api/doc/intro|NoBleme's API}} allows you to interact with {{link|pages/doc/dev|NoBleme's development tools}}.
+EOD
+);
+___('api_dev_intro',  'FR', <<<EOD
+Cette section de {{link|api/doc/intro|l'API NoBleme}} permet d'interagir avec {{link|pages/doc/dev|les outils de développement de NoBleme}}.
+EOD
+);
+
+
+// List devblogs
+___('api_dev_blogs_list_summary', 'EN', <<<EOD
+Retrieves a list of all {{link|pages/dev/blog_list|devblogs}}.
+EOD
+);
+___('api_dev_blogs_list_summary', 'FR', <<<EOD
+Récupère une liste de tous les {{link|pages/dev/blog_list|devblogs}}.
+EOD
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     IRC CHAT                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
