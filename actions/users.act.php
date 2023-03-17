@@ -645,41 +645,40 @@ function users_list_api(  array   $search   = array() ,
   for($i = 0; $row = mysqli_fetch_array($dusers); $i++)
   {
     // User data
-    $data[$i]['user']['id']                 = (string)$row['u_id'];
-    $data[$i]['user']['username']           = (!$row['u_deleted']) ? sanitize_json($row['u_nick']) : '[deleted]';
-    $data[$i]['user']['is_deleted']         = (bool)($row['u_deleted']);
-    $data[$i]['user']['is_banned']          = (bool)($row['u_banned']);
-    $data[$i]['user']['is_moderator']       = (bool)($row['u_mod'] || $row['u_admin']);
-    $data[$i]['user']['is_administrator']   = (bool)($row['u_admin']);
-    $data[$i]['user']['link']               = $GLOBALS['website_url'].'pages/users/'.$row['u_id'];
-    $data[$i]['user']['account_created_on'] = (!$row['u_deleted']) ? date('Y-m-d', $row['u_created']) : NULL;
+    $data[$i]['id']                 = (string)$row['u_id'];
+    $data[$i]['username']           = (!$row['u_deleted']) ? sanitize_json($row['u_nick']) : '[deleted]';
+    $data[$i]['is_deleted']         = (bool)($row['u_deleted']);
+    $data[$i]['is_banned']          = (bool)($row['u_banned']);
+    $data[$i]['is_moderator']       = (bool)($row['u_mod'] || $row['u_admin']);
+    $data[$i]['is_administrator']   = (bool)($row['u_admin']);
+    $data[$i]['link']               = $GLOBALS['website_url'].'pages/users/'.$row['u_id'];
+    $data[$i]['account_created_on'] = (!$row['u_deleted']) ? date('Y-m-d', $row['u_created']) : NULL;
 
     // Activity data
     if($row['u_activity'] && !$row['u_hide_activity'] && !$row['u_deleted'])
     {
       $user_activity_aware_datetime = date_to_aware_datetime($row['u_activity']);
-      $data[$i]['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
-      $data[$i]['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
-      $data[$i]['user']['last_activity']['page_link']     = ($row['u_activity_url'])
-                                                          ? sanitize_json($GLOBALS['website_url']
-                                                                          .$row['u_activity_url'])
-                                                          : sanitize_json($GLOBALS['website_url']);
-      $data[$i]['user']['last_activity']['page_name_en']  = sanitize_json($row['u_activity_en']) ?: NULL;
-      $data[$i]['user']['last_activity']['page_name_fr']  = sanitize_json($row['u_activity_fr']) ?: NULL;
+      $data[$i]['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
+      $data[$i]['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
+      $data[$i]['last_activity']['page_link']     = ($row['u_activity_url'])
+                                                  ? sanitize_json($GLOBALS['website_url'] .$row['u_activity_url'])
+                                                  : sanitize_json($GLOBALS['website_url']);
+      $data[$i]['last_activity']['page_name_en']  = sanitize_json($row['u_activity_en']) ?: NULL;
+      $data[$i]['last_activity']['page_name_fr']  = sanitize_json($row['u_activity_fr']) ?: NULL;
     }
     else
-      $data[$i]['user']['last_activity'] = NULL;
+      $data[$i]['last_activity'] = NULL;
 
     // Stats
     if(!$row['u_deleted'])
     {
-      $data[$i]['user']['stats']['quotes_appeared_in']  = (int)$row['us_quotes'];
-      $data[$i]['user']['stats']['quotes_submitted']    = (int)$row['us_quotes_app'];
-      $data[$i]['user']['stats']['meetups_attended']    = (int)$row['us_meetups'];
-      $data[$i]['user']['stats']['tasks_submitted']     = (int)$row['us_tasks_sub'];
+      $data[$i]['stats']['quotes_appeared_in']  = (int)$row['us_quotes'];
+      $data[$i]['stats']['quotes_submitted']    = (int)$row['us_quotes_app'];
+      $data[$i]['stats']['meetups_attended']    = (int)$row['us_meetups'];
+      $data[$i]['stats']['tasks_submitted']     = (int)$row['us_tasks_sub'];
     }
     else
-      $data[$i]['user']['stats'] = NULL;
+      $data[$i]['stats'] = NULL;
   }
 
   // Give a default return value when no users

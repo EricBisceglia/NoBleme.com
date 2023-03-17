@@ -423,25 +423,25 @@ function quotes_list( ?array  $search         = array() ,
     else if($format === 'api')
     {
       // Quote data
-      $data[$i]['quote']['id']        = (string)$quote_id;
-      $data[$i]['quote']['is_nsfw']   = (bool)$quote_nsfw;
-      $data[$i]['quote']['language']  = string_change_case($quote_language, 'lowercase');
-      $data[$i]['quote']['link']      = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
-      $data[$i]['quote']['body']      = sanitize_json($quote_body);
-      $data[$i]['quote']['added_on']  = ($quote_date) ? date('Y-m-d', $quote_date) : NULL;
+      $data[$i]['id']       = (string)$quote_id;
+      $data[$i]['is_nsfw']  = (bool)$quote_nsfw;
+      $data[$i]['language'] = string_change_case($quote_language, 'lowercase');
+      $data[$i]['link']     = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
+      $data[$i]['body']     = sanitize_json($quote_body);
+      $data[$i]['added_on'] = ($quote_date) ? date('Y-m-d', $quote_date) : NULL;
 
       // Linked user data
       if($quote_users_count)
       {
         for($j = 0; $j < $quote_users_count; $j++)
         {
-          $data[$i]['quote']['users'][$j]['id']       = (string)$quote_users_ids[$j];
-          $data[$i]['quote']['users'][$j]['username'] = sanitize_json($quote_users_nicks[$j]);
-          $data[$i]['quote']['users'][$j]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users_ids[$j];
+          $data[$i]['users'][$j]['id']        = (string)$quote_users_ids[$j];
+          $data[$i]['users'][$j]['username']  = sanitize_json($quote_users_nicks[$j]);
+          $data[$i]['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$quote_users_ids[$j];
         }
       }
       else
-        $data[$i]['quote']['users'] = NULL;
+        $data[$i]['users'] = NULL;
     }
   }
 

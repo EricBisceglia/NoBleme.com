@@ -550,10 +550,10 @@ function dev_blogs_list(  string  $sort   = ''      ,
     else if($format === 'api')
     {
       // Blog data
-      $data[$i]['blog']['id']           = (string)$blog_id;
-      $data[$i]['blog']['published_on'] = sanitize_json(date('Y-m-d', $blog_posted_at));
-      $data[$i]['blog']['title_en']     = sanitize_json($blog_title_en) ?: NULL;
-      $data[$i]['blog']['title_fr']     = sanitize_json($blog_title_fr) ?: NULL;
+      $data[$i]['id']           = (string)$blog_id;
+      $data[$i]['published_on'] = sanitize_json(date('Y-m-d', $blog_posted_at));
+      $data[$i]['title_en']     = sanitize_json($blog_title_en) ?: NULL;
+      $data[$i]['title_fr']     = sanitize_json($blog_title_fr) ?: NULL;
     }
   }
 

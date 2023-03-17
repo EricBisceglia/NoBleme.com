@@ -117,28 +117,26 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "users": [
     {
-      "user": {
-        "id": string,
-        "username": string,
-        "is_deleted": bool,
-        "is_banned": bool,
-        "is_moderator": bool,
-        "is_administrator": bool,
-        "link": string,
-        "account_created_on": string,
-        "last_activity": {
-          "datetime": string,
-          "timezone": string,
-          "page_link": string,
-          "page_name_en": string,
-          "page_name_fr": string
-        },
-        "stats": {
-          "quotes_appeared_in": int,
-          "quotes_submitted": int,
-          "meetups_attended": int,
-          "tasks_submitted": int
-        }
+      "id": string,
+      "username": string,
+      "is_deleted": bool,
+      "is_banned": bool,
+      "is_moderator": bool,
+      "is_administrator": bool,
+      "link": string,
+      "account_created_on": string,
+      "last_activity": {
+        "datetime": string,
+        "timezone": string,
+        "page_link": string,
+        "page_name_en": string,
+        "page_name_fr": string
+      },
+      "stats": {
+        "quotes_appeared_in": int,
+        "quotes_submitted": int,
+        "meetups_attended": int,
+        "tasks_submitted": int
       }
     },
   ]

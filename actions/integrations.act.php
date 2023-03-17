@@ -131,14 +131,14 @@ function irc_channels_list( string $format = 'html' ) : array
     else if($format === 'api')
     {
       // Meetup data
-      $data[$i]['channel']['name']            = sanitize_json($channel_name);
-      $data[$i]['channel']['type']            = sanitize_json($channel_type['name']);
-      $data[$i]['channel']['description_en']  = sanitize_json($channel_description_en);
-      $data[$i]['channel']['description_fr']  = sanitize_json($channel_description_fr);
+      $data[$i]['name']           = sanitize_json($channel_name);
+      $data[$i]['type']           = sanitize_json($channel_type['name']);
+      $data[$i]['description_en'] = sanitize_json($channel_description_en);
+      $data[$i]['description_fr'] = sanitize_json($channel_description_fr);
 
       // Language data
-      $data[$i]['channel']['languages_spoken']['english']  = (bool)str_contains($channel_languages, 'EN');
-      $data[$i]['channel']['languages_spoken']['french']   = (bool)str_contains($channel_languages, 'FR');
+      $data[$i]['languages_spoken']['english']  = (bool)str_contains($channel_languages, 'EN');
+      $data[$i]['languages_spoken']['french']   = (bool)str_contains($channel_languages, 'FR');
     }
   }
 

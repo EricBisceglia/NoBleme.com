@@ -123,18 +123,16 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "meetups": [
     {
-      "meetup": {
-        "id": string,
-        "date": string,
-        "location": string,
-        "attendee_count": int,
-        "link": string,
-        "details_en": string,
-        "details_fr": string,
-        "languages_spoken": {
-          "english": bool,
-          "french": bool
-        }
+      "id": string,
+      "date": string,
+      "location": string,
+      "attendee_count": int,
+      "link": string,
+      "details_en": string,
+      "details_fr": string,
+      "languages_spoken": {
+        "english": bool,
+        "french": bool
       }
     },
   ]

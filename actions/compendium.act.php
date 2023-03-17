@@ -1125,52 +1125,52 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     else if($format === 'api')
     {
       // Core page data
-      $data[$i]['page']['id']   = (string)$page_id;
-      $data[$i]['page']['url']  = sanitize_json($page_url);
-      $data[$i]['page']['link'] = sanitize_json($GLOBALS['website_url'].'pages/compendium/'.$page_url);
+      $data[$i]['id']   = (string)$page_id;
+      $data[$i]['url']  = sanitize_json($page_url);
+      $data[$i]['link'] = sanitize_json($GLOBALS['website_url'].'pages/compendium/'.$page_url);
 
       // Redirection data
       if($page_redirection_en || $page_redirection_fr || $page_redirection_ext)
       {
-        $data[$i]['page']['redirects_to']['target_is_a_page_url'] = (bool)!$page_redirection_ext;
-        $data[$i]['page']['redirects_to']['url_en']               = sanitize_json($page_redirection_en) ?: NULL;
-        $data[$i]['page']['redirects_to']['url_fr']               = sanitize_json($page_redirection_fr) ?: NULL;
+        $data[$i]['redirects_to']['target_is_a_page_url'] = (bool)!$page_redirection_ext;
+        $data[$i]['redirects_to']['url_en']               = sanitize_json($page_redirection_en) ?: NULL;
+        $data[$i]['redirects_to']['url_fr']               = sanitize_json($page_redirection_fr) ?: NULL;
       }
       else
-        $data[$i]['page']['redirects_to'] = NULL;
+        $data[$i]['redirects_to'] = NULL;
 
       // Page title
-      $data[$i]['page']['title_en'] = sanitize_json($page_title_en) ?: NULL;
-      $data[$i]['page']['title_fr'] = sanitize_json($page_title_fr) ?: NULL;
+      $data[$i]['title_en'] = sanitize_json($page_title_en) ?: NULL;
+      $data[$i]['title_fr'] = sanitize_json($page_title_fr) ?: NULL;
 
       // Content warnings
       if($page_content_warning)
       {
-        $data[$i]['page']['content_warnings']['title_is_nsfw']      = (bool)($page_nsfw_title);
-        $data[$i]['page']['content_warnings']['not_safe_for_work']  = (bool)($page_nsfw);
-        $data[$i]['page']['content_warnings']['offensive']          = (bool)($page_offensive);
-        $data[$i]['page']['content_warnings']['gross']              = (bool)($page_gross);
+        $data[$i]['content_warnings']['title_is_nsfw']      = (bool)($page_nsfw_title);
+        $data[$i]['content_warnings']['not_safe_for_work']  = (bool)($page_nsfw);
+        $data[$i]['content_warnings']['offensive']          = (bool)($page_offensive);
+        $data[$i]['content_warnings']['gross']              = (bool)($page_gross);
       }
       else
-        $data[$i]['page']['content_warnings'] = NULL;
+        $data[$i]['content_warnings'] = NULL;
 
       // Page data
-      $data[$i]['page']['first_appeared_year']    = (int)$page_appeared_year ?: NULL;
-      $data[$i]['page']['first_appeared_month']   = (int)$page_appeared_month ?: NULL;
-      $data[$i]['page']['peak_popularity_year']   = (int)$page_peaked_year ?: NULL;
-      $data[$i]['page']['peak_popularity_month']  = (int)$page_peaked_month ?: NULL;
-      $data[$i]['page']['summary_en']             = sanitize_json(nbcodes_remove($page_summary_en)) ?: NULL;
-      $data[$i]['page']['summary_fr']             = sanitize_json(nbcodes_remove($page_summary_fr)) ?: NULL;
+      $data[$i]['first_appeared_year']    = (int)$page_appeared_year ?: NULL;
+      $data[$i]['first_appeared_month']   = (int)$page_appeared_month ?: NULL;
+      $data[$i]['peak_popularity_year']   = (int)$page_peaked_year ?: NULL;
+      $data[$i]['peak_popularity_month']  = (int)$page_peaked_month ?: NULL;
+      $data[$i]['summary_en']             = sanitize_json(nbcodes_remove($page_summary_en)) ?: NULL;
+      $data[$i]['summary_fr']             = sanitize_json(nbcodes_remove($page_summary_fr)) ?: NULL;
 
       // Page type data
       if($page_type_id)
       {
-        $data[$i]['page']['type']['id']       = (string)$page_type_id;
-        $data[$i]['page']['type']['name_en']  = sanitize_json($page_type_full_name_en);
-        $data[$i]['page']['type']['name_fr']  = sanitize_json($page_type_full_name_fr);
+        $data[$i]['type']['id']       = (string)$page_type_id;
+        $data[$i]['type']['name_en']  = sanitize_json($page_type_full_name_en);
+        $data[$i]['type']['name_fr']  = sanitize_json($page_type_full_name_fr);
       }
       else
-        $data[$i]['page']['type'] = NULL;
+        $data[$i]['type'] = NULL;
     }
   }
 
@@ -3836,13 +3836,13 @@ function compendium_types_list( string $format = 'html' ) : array
     // Prepare the data for the API
     else if($format === 'api')
     {
-      $data[$i]['type']['id']             = (string)$type_id;
-      $data[$i]['type']['name_en']        = sanitize_json($type_name_full_en);
-      $data[$i]['type']['name_fr']        = sanitize_json($type_name_full_fr);
-      $data[$i]['type']['link']           = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
-      $data[$i]['type']['pages_of_type']  = (int)$type_page_count;
-      $data[$i]['type']['description_en'] = sanitize_json(nbcodes_remove($type_body_en)) ?: NULL;
-      $data[$i]['type']['description_fr'] = sanitize_json(nbcodes_remove($type_body_fr)) ?: NULL;
+      $data[$i]['id']             = (string)$type_id;
+      $data[$i]['name_en']        = sanitize_json($type_name_full_en);
+      $data[$i]['name_fr']        = sanitize_json($type_name_full_fr);
+      $data[$i]['link']           = $GLOBALS['website_url'].'pages/compendium/page_type?type='.$type_id;
+      $data[$i]['pages_of_type']  = (int)$type_page_count;
+      $data[$i]['description_en'] = sanitize_json(nbcodes_remove($type_body_en)) ?: NULL;
+      $data[$i]['description_fr'] = sanitize_json(nbcodes_remove($type_body_fr)) ?: NULL;
     }
   }
 
@@ -4176,14 +4176,13 @@ function compendium_categories_list( string $format = 'html' ) : array
     // Prepare the data for the API
     else if($format === 'api')
     {
-      $data[$i]['category']['id']                 = (string)$category_id;
-      $data[$i]['category']['name_en']            = sanitize_json($category_name_en);
-      $data[$i]['category']['name_fr']            = sanitize_json($category_name_fr);
-      $data[$i]['category']['link']               = $GLOBALS['website_url'].'pages/compendium/category?id='
-                                                                           .$category_id;
-      $data[$i]['category']['pages_in_category']  = (int)$category_pages;
-      $data[$i]['category']['description_en']     = sanitize_json(nbcodes_remove($category_body_en)) ?: NULL;
-      $data[$i]['category']['description_fr']     = sanitize_json(nbcodes_remove($category_body_fr)) ?: NULL;
+      $data[$i]['id']                 = (string)$category_id;
+      $data[$i]['name_en']            = sanitize_json($category_name_en);
+      $data[$i]['name_fr']            = sanitize_json($category_name_fr);
+      $data[$i]['link']               = $GLOBALS['website_url'].'pages/compendium/category?id='.$category_id;
+      $data[$i]['pages_in_category']  = (int)$category_pages;
+      $data[$i]['description_en']     = sanitize_json(nbcodes_remove($category_body_en)) ?: NULL;
+      $data[$i]['description_fr']     = sanitize_json(nbcodes_remove($category_body_fr)) ?: NULL;
     }
   }
 
@@ -4560,15 +4559,15 @@ function compendium_eras_list( string $format = 'html' ) : array
     // Prepare the data for the API
     else if($format === 'api')
     {
-      $data[$i]['era']['id']              = (string)$era_id;
-      $data[$i]['era']['name_en']         = sanitize_json($era_name_en);
-      $data[$i]['era']['name_fr']         = sanitize_json($era_name_fr);
-      $data[$i]['era']['year_start']      = (int)$era_year_start ?: NULL;
-      $data[$i]['era']['year_end']        = (int)$era_year_end ?: NULL;
-      $data[$i]['era']['link']            = $GLOBALS['website_url'].'pages/compendium/cultural_era?era='.$era_id;
-      $data[$i]['era']['pages_in_era']    = (int)$era_page_count;
-      $data[$i]['era']['description_en']  = sanitize_json(nbcodes_remove($era_body_en)) ?: NULL;
-      $data[$i]['era']['description_fr']  = sanitize_json(nbcodes_remove($era_body_fr)) ?: NULL;
+      $data[$i]['id']             = (string)$era_id;
+      $data[$i]['name_en']        = sanitize_json($era_name_en);
+      $data[$i]['name_fr']        = sanitize_json($era_name_fr);
+      $data[$i]['year_start']     = (int)$era_year_start ?: NULL;
+      $data[$i]['year_end']       = (int)$era_year_end ?: NULL;
+      $data[$i]['link']           = $GLOBALS['website_url'].'pages/compendium/cultural_era?era='.$era_id;
+      $data[$i]['pages_in_era']   = (int)$era_page_count;
+      $data[$i]['description_en'] = sanitize_json(nbcodes_remove($era_body_en)) ?: NULL;
+      $data[$i]['description_fr'] = sanitize_json(nbcodes_remove($era_body_fr)) ?: NULL;
     }
   }
 

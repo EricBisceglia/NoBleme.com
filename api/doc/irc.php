@@ -68,15 +68,13 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "channels": [
     {
-      "channel": {
-        "name": string,
-        "type": string,
-        "description_en": string,
-        "description_fr": string,
-        "languages_spoken": {
-          "english": bool,
-          "french": bool
-        }
+      "name": string,
+      "type": string,
+      "description_en": string,
+      "description_fr": string,
+      "languages_spoken": {
+        "english": bool,
+        "french": bool
       }
     },
   ]

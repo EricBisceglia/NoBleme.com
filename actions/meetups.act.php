@@ -274,17 +274,17 @@ function meetups_list(  string  $sort_by  = 'date'  ,
     else if($format === 'api')
     {
       // Meetup data
-      $data[$i]['meetup']['id']             = (string)$meetup_id;
-      $data[$i]['meetup']['date']           = $meetup_date;
-      $data[$i]['meetup']['location']       = sanitize_json($meetup_location);
-      $data[$i]['meetup']['attendee_count'] = (int)$meetup_attendees;
-      $data[$i]['meetup']['link']           = $GLOBALS['website_url'].'pages/meetups/'.$meetup_id;
-      $data[$i]['meetup']['details_en']     = sanitize_json(bbcodes_remove($meetup_details_en)) ?: NULL;
-      $data[$i]['meetup']['details_fr']     = sanitize_json(bbcodes_remove($meetup_details_fr)) ?: NULL;
+      $data[$i]['id']             = (string)$meetup_id;
+      $data[$i]['date']           = $meetup_date;
+      $data[$i]['location']       = sanitize_json($meetup_location);
+      $data[$i]['attendee_count'] = (int)$meetup_attendees;
+      $data[$i]['link']           = $GLOBALS['website_url'].'pages/meetups/'.$meetup_id;
+      $data[$i]['details_en']     = sanitize_json(bbcodes_remove($meetup_details_en)) ?: NULL;
+      $data[$i]['details_fr']     = sanitize_json(bbcodes_remove($meetup_details_fr)) ?: NULL;
 
       // Language data
-      $data[$i]['meetup']['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');
-      $data[$i]['meetup']['languages_spoken']['french']   = (bool)str_contains($meetup_languages, 'FR');
+      $data[$i]['languages_spoken']['english']  = (bool)str_contains($meetup_languages, 'EN');
+      $data[$i]['languages_spoken']['french']   = (bool)str_contains($meetup_languages, 'FR');
     }
 
     // Treat the case where a user search returns a row containing only NULL data

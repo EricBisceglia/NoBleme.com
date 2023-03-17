@@ -69,12 +69,10 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "blogs": [
     {
-      "blog": {
-        "id": string,
-        "published_on": string,
-        "title_en": string,
-        "title_fr": string
-      }
+      "id": string,
+      "published_on": string,
+      "title_en": string,
+      "title_fr": string
     },
   ]
 }</pre>

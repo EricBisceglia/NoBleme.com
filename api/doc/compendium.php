@@ -208,34 +208,32 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "pages": [
     {
-      "page": {
+      "id": string,
+      "url": string,
+      "link": string,
+      "redirects_to": {
+        "target_is_a_page_url": bool,
+        "url_en": string,
+        "url_fr": string
+      },
+      "title_en": string,
+      "title_fr": string,
+      "content_warnings": {
+        "title_is_nsfw": bool,
+        "not_safe_for_work": bool,
+        "offensive": bool,
+        "gross": bool
+      },
+      "first_appeared_year": int,
+      "first_appeared_month": int,
+      "peak_popularity_year": int,
+      "peak_popularity_month": int,
+      "summary_en": string,
+      "summary_fr": string,
+      "type": {
         "id": string,
-        "url": string,
-        "link": string,
-        "redirects_to": {
-          "target_is_a_page_url": bool,
-          "url_en": string,
-          "url_fr": string
-        },
-        "title_en": string,
-        "title_fr": string,
-        "content_warnings": {
-          "title_is_nsfw": bool,
-          "not_safe_for_work": bool,
-          "offensive": bool,
-          "gross": bool
-        },
-        "first_appeared_year": int,
-        "first_appeared_month": int,
-        "peak_popularity_year": int,
-        "peak_popularity_month": int,
-        "summary_en": string,
-        "summary_fr": string,
-        "type": {
-          "id": string,
-          "name_en": string,
-          "name_fr": string
-        }
+        "name_en": string,
+        "name_fr": string
       }
     },
   ]
@@ -610,15 +608,13 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "categories": [
     {
-      "category": {
-        "id": string,
-        "name_en": string,
-        "name_fr": string,
-        "link": string,
-        "pages_in_category": int,
-        "description_en": string,
-        "description_fr": string
-      }
+      "id": string,
+      "name_en": string,
+      "name_fr": string,
+      "link": string,
+      "pages_in_category": int,
+      "description_en": string,
+      "description_fr": string
     },
   ]
 }</pre>
@@ -644,17 +640,15 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "eras": [
     {
-      "era": {
-        "id": string,
-        "name_en": string,
-        "name_fr": string,
-        "year_start": int,
-        "year_end": int,
-        "link": string,
-        "pages_in_era": int,
-        "description_en": string,
-        "description_fr": string
-      }
+      "id": string,
+      "name_en": string,
+      "name_fr": string,
+      "year_start": int,
+      "year_end": int,
+      "link": string,
+      "pages_in_era": int,
+      "description_en": string,
+      "description_fr": string
     },
   ]
 }</pre>
@@ -680,15 +674,13 @@ if(!page_is_fetched_dynamically()) { /*******/ include './../../inc/header.inc.p
   <pre>{
   "types": [
     {
-      "type": {
-        "id": string,
-        "name_en": string,
-        "name_fr": string,
-        "link": string,
-        "pages_of_type": int,
-        "description_en": string,
-        "description_fr": string
-      }
+      "id": string,
+      "name_en": string,
+      "name_fr": string,
+      "link": string,
+      "pages_of_type": int,
+      "description_en": string,
+      "description_fr": string
     },
   ]
 }</pre>
