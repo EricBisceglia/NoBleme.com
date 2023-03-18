@@ -28,7 +28,7 @@ $api_doc_menu['users']      = isset($api_doc_menu['users'])       ? ' selected' 
 <div class="padding_bot align_center api_doc_menu">
   <fieldset>
     <h5>
-      <?=__('api_intro_title').__(':')?>
+      <?=__('submenu_nobleme_api').__(':')?>
       <select class="inh" id="api_doc_menu" name="api_doc_menu" onchange="api_doc_menu();">
         <option value="intro"<?=$api_doc_menu['intro']?>>
           <?=__('api_intro_menu')?>

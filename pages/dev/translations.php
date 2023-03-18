@@ -55,6 +55,12 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'admin_stats_users_profile_text'    , # Nuance in english only
                             'admin_stats_users_pronouns'        , # Acceptable redundancy
                             'administration'                    , # Nuance in english only
+                            'api_compendium_menu'               , # Acceptable redundancy
+                            'api_compendium_pages_list_sort'    , # Acceptable redundancy
+                            'api_dev_menu'                      , # Acceptable redundancy
+                            'api_intro_menu'                    , # Acceptable redundancy
+                            'api_meetups_menu'                  , # Acceptable redundancy
+                            'api_quotes_menu'                   , # Acceptable redundancy
                             'at_date'                           , # Nuance in english only
                             'compendium_admin_search_page'      , # Nuance in english only
                             'compendium_category_edit_submit'   , # Nuance in english only
@@ -76,6 +82,7 @@ $duplicate_ok_list = array( 'account_password_confirm'          , # Nuance in en
                             'irc_bot_message_send'              , # Acceptable redundancy
                             'irc_faq_select_guide'              , # Nuance in french only
                             'irc_faq_symbols_user'              , # Acceptable redundancy
+                            'irc_faq_title'                     , # Acceptable redundancy
                             'meetups_details_title'             , # Nuance in french only
                             'meetups_organize_title'            , # Nuance in english only
                             'meetups_stats_selector_people'     , # Nuance in english only

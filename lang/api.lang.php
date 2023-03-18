@@ -40,8 +40,6 @@ ___('api_intro_menu',   'FR', "Introduction");
 
 
 // Introduction
-___('api_intro_title',  'EN', "NoBleme API");
-___('api_intro_title',  'FR', "API NoBleme");
 ___('api_intro_body_1', 'EN', <<<EOD
 An API ({{external_popup|https://en.wikipedia.org/wiki/API|Application Programming Interface}}) is a tool which allows developers to create their own third party software that interacts with an application. In NoBleme's case, it means that you can use its API to build custom applications which interact with the website.
 EOD
