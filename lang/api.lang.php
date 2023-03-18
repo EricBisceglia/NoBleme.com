@@ -109,6 +109,43 @@ EOD
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                     CHANGELOG                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Menu entry & introduction
+___('api_changelog_menu',   'EN', "Changelog");
+___('api_changelog_menu',   'FR', "Changelog");
+___('api_changelog_intro',  'EN', <<<EOD
+Any past breaking change in NoBleme's API will be documented on this page.<br>
+<br>
+If a tool using NoBleme's API breaks, this page is the first place you should check.<br>
+<br>
+Only major or breaking changes are documented in this changelog, such as modifying or removing an existing field. Non breaking changes such as adding a new field or new routes are not documented.
+EOD
+);
+___('api_changelog_intro',  'FR', <<<EOD
+Tout changement majeur dans l'API de NoBleme sera documenté sur cette page.<br>
+<br>
+Si un outil utilisant l'API de NoBleme ne fonctionne plus, cette page est le premier endroit à vérifier.<br>
+<br>
+Seuls les changements ayant un impact sur l'utilisation à long terme de l'API sont documentés dans ce changelog, tels que la modification ou la suppression d'un champ existant. Les changements sans impact tels que l'ajout d'un nouveau champ ou d'une nouvelle route ne sont pas documentés.
+EOD
+);
+
+
+// History
+___('api_changelog_history_title',  'EN', "Change history");
+___('api_changelog_history_title',  'FR', "Historique des changements");
+___('api_changelog_history_none',   'EN', "There have been no breaking changes to NoBleme's API so far.");
+___('api_changelog_history_none',   'FR', "Il n'y a eu aucun changement majeur à l'API de NoBleme pour le moment.");
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                    COMPENDIUM                                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
