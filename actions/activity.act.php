@@ -145,7 +145,7 @@ function activity_list( bool    $show_mod_logs  = false ,
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
   {
     // Parse the activity log
-    $parsed_row = log_activity_parse($modlogs, $row['l_type'], $row['l_actid'], $row['l_summary_en'], $row['l_summary_fr'], $row['l_userid'], $row['l_user'], $row['l_mod_user'], $row['l_amount']);
+    $parsed_row = logs_activity_parse($modlogs, $row['l_type'], $row['l_actid'], $row['l_summary_en'], $row['l_summary_fr'], $row['l_userid'], $row['l_user'], $row['l_mod_user'], $row['l_amount']);
 
     // Prepare the data
     $data[$i]['id']       = $row['l_id'];

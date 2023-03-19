@@ -160,6 +160,10 @@ footer { color: var(--nobleme-footer); filter: none; }
 .admin_mail_left_panel  { box-shadow: 0 0 10px var(--nobleme-light);                                      }
 .admin_mail_right_panel { box-shadow: 0 0 10px var(--nobleme-light); border-color: var(--nobleme-light);  }
 
+/******************************************** API.CSS - API DOCUMENTATION ********************************************/
+
+hr.api_doc_parameters { background: var(--nobleme-light); }
+
 /********************************************** DEV.CSS - DOCUMENTATION **********************************************/
 
 div.dev_div_border  { border-color: var(--nobleme-dark);  }

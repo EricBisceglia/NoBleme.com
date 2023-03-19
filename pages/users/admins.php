@@ -27,7 +27,7 @@ $page_description = "NoBleme's administrative team - the staff that keeps the we
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the administrative team
 
-$admin_list = user_list_admins();
+$admin_list = users_list_admins();
 
 
 

@@ -769,7 +769,6 @@ function nbcodes( string  $text                                                ,
 }
 
 
-/*                                                           */
 
 
 /**
@@ -823,8 +822,8 @@ function nbcodes( string  $text                                                ,
     $text = preg_replace("/\[bullet\](.*?)\[\/bullet\]/is", "* $1", $text);
   $text = str_replace("[subbulletlist]", "", $text, $open);
   $text = str_replace("[/subbulletlist]", "", $text, $open);
-  while(preg_match('/\[subbullet\](.*?)\[\/bullet\]/is',$text))
-    $text = preg_replace("/\[subbullet\](.*?)\[\/bullet\]/is", "* $1", $text);
+  while(preg_match('/\[subbullet\](.*?)\[\/subbullet\]/is',$text))
+    $text = preg_replace("/\[subbullet\](.*?)\[\/subbullet\]/is", "  * $1", $text);
 
   // Remove images
   $text = preg_replace('/\[image:(.*?)\|(.*?)\|(.*?)\]/i', '$1 - $3'.PHP_EOL, $text);

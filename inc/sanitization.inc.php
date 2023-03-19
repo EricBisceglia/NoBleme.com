@@ -17,6 +17,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  sanitize_output_javascript    Sanitizes data for passing to inline javascript.                                   */
 /*  sanitize_meta_tags            Sanitizes the content of meta tags.                                                */
 /*                                                                                                                   */
+/*  sanitize_json                 Sanitizes data for usage in JSON.                                                  */
+/*  sanitize_api_output           Sanitizes data before outputting it in the API.                                    */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -29,7 +32,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * For strings, it allows you to ensure that the string's length is between a minimum and maximum size.
  *
  * @param   mixed       $data                 The data to be sanitized.
- * @param   string      $type     (OPTIONAL)  The expected data type: "string", "int", or "float"
+ * @param   string      $type     (OPTIONAL)  The expected data type: "string", "int", "float", or "bool".
  * @param   mixed|null  $min      (OPTIONAL)  Minimum expected value or length of the data (see description above).
  * @param   mixed|null  $max      (OPTIONAL)  Maximum expected value or length of the data (see description above).
  * @param   string      $padding  (OPTIONAL)  The character to add at the end of strings that are too short.
@@ -80,6 +83,16 @@ function sanitize(  mixed   $data                 ,
       $data = mb_substr($data, 0, $max);
   }
 
+  // For bools, ensure that it is a bool, else convert it to one
+  else if($type === 'bool')
+  {
+    // If the bool is a string or an int, turn it into a bool
+    if($data === 'true' || $data === 1)
+      $data = true;
+    else if($data === 'false' || $data === 0)
+      $data = false;
+  }
+
   // Sanitize the data by trimming any trailing whitespace and removing any characters that could break MySQL
   $data = trim(mysqli_real_escape_string($GLOBALS['db'], $data));
 
@@ -90,8 +103,10 @@ function sanitize(  mixed   $data                 ,
       return (float)$data;
     case "int":
       return (int)$data;
+    case "bool":
+      return (bool)$data;
     default:
-      return $data;
+      return (string)$data;
   }
 }
 
@@ -396,4 +411,38 @@ function sanitize_meta_tags( string $data ) : string
 
   // Return the sanitized data
   return $data;
+}
+
+
+
+
+/**
+ * Sanitizes data for usage in JSON.
+ *
+ * @param   string  $data   A string which will be used in JSON.
+ *
+ * @return  string          The formatted JSON output.
+ */
+
+function sanitize_json( ?string $data ) : string
+{
+  // Change the format for line breaks
+  return str_replace("\r\n", "\n", $data);
+}
+
+
+
+
+/**
+ * Sanitizes data before outputting it in the API.
+ *
+ * @param   array   $data   An array of data which will be transformed into JSON.
+ *
+ * @return  string          The formatted JSON output.
+ */
+
+function sanitize_api_output( array $data ) : string
+{
+  // Return the data as JSON
+  return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 }

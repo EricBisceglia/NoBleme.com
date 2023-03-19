@@ -40,12 +40,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Returns data related to a task.
  *
- * @param   int         $task_id  The task's id.
+ * @param   int         $task_id              The task's id.
+ * @param   string      $format   (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null            An array containing task related data, or NULL if it does not exist.
+ * @return  array|null                        An array containing task related data, or NULL if it does not exist.
  */
 
-function tasks_get( int $task_id ) : mixed
+function tasks_get( int     $task_id            ,
+                    string  $format   = 'html'  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -80,8 +82,12 @@ function tasks_get( int $task_id ) : mixed
                                                 users.username                    AS 'u_name'       ,
                                                 dev_tasks_categories.id           AS 'tc_id'        ,
                                                 dev_tasks_categories.title_$lang  AS 'tc_name'      ,
+                                                dev_tasks_categories.title_en     AS 'tc_name_en'   ,
+                                                dev_tasks_categories.title_fr     AS 'tc_name_fr'   ,
                                                 dev_tasks_milestones.id           AS 'tm_id'        ,
-                                                dev_tasks_milestones.title_$lang  AS 'tm_name'
+                                                dev_tasks_milestones.title_$lang  AS 'tm_name'      ,
+                                                dev_tasks_milestones.title_en     AS 'tm_name_en'   ,
+                                                dev_tasks_milestones.title_fr     AS 'tm_name_fr'
                                       FROM      dev_tasks
                                       LEFT JOIN users
                                       ON        dev_tasks.fk_users                = users.id
@@ -91,51 +97,147 @@ function tasks_get( int $task_id ) : mixed
                                       ON        dev_tasks.fk_dev_tasks_milestones = dev_tasks_milestones.id
                                       WHERE     dev_tasks.id                      = '$task_id' "));
 
-  // Return null if the task should not be displayed
-  if(!$is_admin && $dtask['t_deleted'])
-    return NULL;
-  if(!$is_admin && !$dtask['t_validated'])
-    return NULL;
-  if(!$is_admin && !$dtask['t_public'])
-    return NULL;
+  // Format the data
+  $task_deleted           = $dtask['t_deleted'];
+  $task_validated         = $dtask['t_validated'];
+  $task_public            = $dtask['t_public'];
+  $task_title             = $dtask['t_title'];
+  $task_title_en          = $dtask['t_title_en'];
+  $task_title_fr          = $dtask['t_title_fr'];
+  $task_created_at        = $dtask['t_created'];
+  $task_solved_at         = $dtask['t_solved'];
+  $task_body              = $dtask['t_body'];
+  $task_body_en           = $dtask['t_body_en'];
+  $task_body_fr           = $dtask['t_body_fr'];
+  $task_source_code       = $dtask['t_source'];
+  $task_priority          = $dtask['t_priority'];
+  $task_reporter_id       = $dtask['u_id'];
+  $task_reporter_name     = $dtask['u_name'];
+  $task_category_id       = $dtask['tc_id'];
+  $task_category_name     = $dtask['tc_name'];
+  $task_category_name_en  = $dtask['tc_name_en'];
+  $task_category_name_fr  = $dtask['tc_name_fr'];
+  $task_milestone_id      = $dtask['tm_id'];
+  $task_milestone_name    = $dtask['tm_name'];
+  $task_milestone_name_en = $dtask['tm_name_en'];
+  $task_milestone_name_fr = $dtask['tm_name_fr'];
 
-  // Assemble an array with the data
-  $data['deleted']        = $dtask['t_deleted'];
-  $data['validated']      = $dtask['t_validated'];
-  $data['public']         = $dtask['t_public'];
-  $data['title']          = sanitize_output($dtask['t_title']);
-  $data['title_flex']     = ($dtask['t_title_en'])
-                          ? sanitize_output($dtask['t_title_en'])
-                          : sanitize_output($dtask['t_title_fr']);
-  $data['title_en']       = sanitize_output($dtask['t_title_en']);
-  $data['title_fr']       = sanitize_output($dtask['t_title_fr']);
-  $data['title_en_raw']   = $dtask['t_title_en'];
-  $data['title_fr_raw']   = $dtask['t_title_fr'];
-  $data['created']        = sanitize_output(date_to_text($dtask['t_created'], strip_day: 1));
-  $data['created_full']   = sanitize_output(date_to_text($dtask['t_created'], include_time: 1));
-  $data['created_since']  = sanitize_output(time_since($dtask['t_created']));
-  $data['creator']        = sanitize_output($dtask['u_name']);
-  $data['creator_id']     = sanitize_output($dtask['u_id']);
-  $data['solved']         = ($dtask['t_solved'])
-                          ? sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1))
-                          : '';
-  $data['solved_full']    = sanitize_output(date_to_text($dtask['t_solved'], include_time: 1));
-  $data['solved_since']   = sanitize_output(time_since($dtask['t_solved']));
-  $data['priority']       = sanitize_output($dtask['t_priority']);
-  $data['category']       = sanitize_output($dtask['tc_name']);
-  $data['category_id']    = ($dtask['tc_id']) ? sanitize_output($dtask['tc_id']) : 0;
-  $data['milestone']      = sanitize_output($dtask['tm_name']);
-  $data['milestone_id']   = ($dtask['tm_id']) ? sanitize_output($dtask['tm_id']) : 0;
-  $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
-  $body_flex              = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
-  $data['body_flex']      = bbcodes(sanitize_output($body_flex, preserve_line_breaks: true));
-  $data['body_proposal']  = sanitize_output($body_flex);
-  $data['body_en']        = sanitize_output($dtask['t_body_en']);
-  $data['body_fr']        = sanitize_output($dtask['t_body_fr']);
-  $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
-  $data['meta_desc']      = ($dtask['t_title_en'])
-                          ? 'Task #'.$task_id.': '.$dtask['t_title_en']
-                          : 'Task #'.$task_id.': '.$dtask['t_title_fr'];
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    // Return null if the task should not be displayed
+    if(!$is_admin && $task_deleted)
+      return NULL;
+    if(!$is_admin && !$task_validated)
+      return NULL;
+    if(!$is_admin && !$task_public)
+      return NULL;
+
+    // Assemble an array with the data
+    $data['deleted']        = $task_deleted;
+    $data['validated']      = $task_validated;
+    $data['public']         = $task_public;
+    $data['title']          = sanitize_output($task_title);
+    $data['title_flex']     = ($task_title_en)
+                            ? sanitize_output($task_title_en)
+                            : sanitize_output($task_title_fr);
+    $data['title_en']       = sanitize_output($task_title_en);
+    $data['title_fr']       = sanitize_output($task_title_fr);
+    $data['title_en_raw']   = $task_title_en;
+    $data['title_fr_raw']   = $task_title_fr;
+    $data['created']        = sanitize_output(date_to_text($task_created_at, strip_day: 1));
+    $data['created_full']   = sanitize_output(date_to_text($task_created_at, include_time: 1));
+    $data['created_since']  = sanitize_output(time_since($task_created_at));
+    $data['creator']        = sanitize_output($task_reporter_name);
+    $data['creator_id']     = sanitize_output($task_reporter_id);
+    $data['solved']         = ($task_solved_at)
+                            ? sanitize_output(date_to_text($task_solved_at, strip_day: 1))
+                            : '';
+    $data['solved_full']    = sanitize_output(date_to_text($task_solved_at, include_time: 1));
+    $data['solved_since']   = sanitize_output(time_since($task_solved_at));
+    $data['priority']       = sanitize_output($task_priority);
+    $data['category']       = sanitize_output($task_category_name);
+    $data['category_id']    = ($task_category_id) ? sanitize_output($task_category_id) : 0;
+    $data['milestone']      = sanitize_output($task_milestone_name);
+    $data['milestone_id']   = ($task_milestone_id) ? sanitize_output($task_milestone_id) : 0;
+    $data['body']           = bbcodes(sanitize_output($task_body, preserve_line_breaks: true));
+    $body_flex              = ($task_body_en) ? $task_body_en : $task_body_fr;
+    $data['body_flex']      = bbcodes(sanitize_output($body_flex, preserve_line_breaks: true));
+    $data['body_proposal']  = sanitize_output($body_flex);
+    $data['body_en']        = sanitize_output($task_body_en);
+    $data['body_fr']        = sanitize_output($task_body_fr);
+    $data['source']         = ($task_source_code) ? sanitize_output($task_source_code) : '';
+    $data['meta_desc']      = ($task_title_en)
+                            ? 'Task #'.$task_id.': '.$task_title_en
+                            : 'Task #'.$task_id.': '.$task_title_fr;
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // Return null if the task should not be displayed in the public API
+    if($task_deleted || !$task_validated || !$task_public)
+      return NULL;
+
+    // Task data
+    $data['task']['id']               = (string)$task_id;
+    $data['task']['link']             = sanitize_json($GLOBALS['website_url'].'pages/tasks/'.$task_id);
+    $data['task']['status']           = ($task_solved_at)
+                                      ? sanitize_json(__('tasks_list_solved'))
+                                      : sanitize_json(__('tasks_list_state_'.$task_priority));
+    $data['task']['title_en']         = sanitize_json($task_title_en) ?: NULL;
+    $data['task']['title_fr']         = sanitize_json($task_title_fr) ?: NULL;
+    $data['task']['description_en']   = sanitize_json(bbcodes_remove($task_body_en)) ?: NULL;
+    $data['task']['description_fr']   = sanitize_json(bbcodes_remove($task_body_fr)) ?: NULL;
+    $data['task']['source_code_link'] = sanitize_json($task_source_code) ?: NULL;
+
+    // Category data
+    if($task_category_id)
+    {
+      $data['task']['category']['name_en']  = sanitize_json($task_category_name_en) ?: NULL;
+      $data['task']['category']['name_fr']  = sanitize_json($task_category_name_fr) ?: NULL;
+    }
+    else
+      $data['task']['category'] = NULL;
+
+    // Milestone data
+    if($task_milestone_id)
+    {
+      $data['task']['milestone']['name_en'] = sanitize_json($task_milestone_name_en) ?: NULL;
+      $data['task']['milestone']['name_fr'] = sanitize_json($task_milestone_name_fr) ?: NULL;
+    }
+    else
+      $data['task']['milestone'] = NULL;
+
+    // Creation data
+    if($task_created_at)
+    {
+      $created_at_aware_datetime = date_to_aware_datetime($task_created_at);
+      $data['task']['created_at']['datetime'] = $created_at_aware_datetime['datetime'];
+      $data['task']['created_at']['timezone'] = $created_at_aware_datetime['timezone'];
+    }
+    else
+      $data['task']['created_at'] = NULL;
+
+    // Completion data
+    if($task_solved_at)
+    {
+      $finished_at_aware_datetime = date_to_aware_datetime($task_solved_at);
+      $data['task']['solved_at']['datetime']  = $finished_at_aware_datetime['datetime'];
+      $data['task']['solved_at']['timezone']  = $finished_at_aware_datetime['timezone'];
+    }
+    else
+      $data['task']['solved_at'] = NULL;
+
+    // Reporter data
+    if($task_reporter_id)
+    {
+      $data['task']['opened_by']['user_id']   = (string)$task_reporter_id;
+      $data['task']['opened_by']['username']  = sanitize_json($task_reporter_name);
+    }
+    else
+      $data['task']['opened_by'] = NULL;
+  }
 
   // Return the array
   return $data;
@@ -150,13 +252,15 @@ function tasks_get( int $task_id ) : mixed
  * @param   string  $sort_by    (OPTIONAL)  How the returned data should be sorted.
  * @param   array   $search     (OPTIONAL)  Search for specific field values.
  * @param   bool    $user_view  (OPTIONAL)  Views the list as a regular user even if the account is an administrator.
+ * @param   string  $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array                           An array containing tasks.
  */
 
 function tasks_list(  string  $sort_by    = 'status'  ,
                       array   $search     = array()   ,
-                      bool    $user_view  = false     ) : array
+                      bool    $user_view  = false     ,
+                      string  $format     = 'html'    ) : array
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
@@ -166,18 +270,22 @@ function tasks_list(  string  $sort_by    = 'status'  ,
 
   // Get the user's current language and access rights
   $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-  $is_admin = ($user_view) ? 0 : user_is_administrator();
+  $is_admin = ($user_view || $format === 'api') ? 0 : user_is_administrator();
 
   // Sanitize the search parameters
-  $search_id        = sanitize_array_element($search, 'id', 'int', min: 0, default: 0);
-  $search_title     = sanitize_array_element($search, 'title', 'string');
-  $search_status    = sanitize_array_element($search, 'status', 'int', min: -2, default: 0);
-  $search_status_id = sanitize($search_status - 1, 'int', 0, 5);
-  $search_created   = sanitize_array_element($search, 'created', 'int', min: 0, default: 0);
-  $search_reporter  = sanitize_array_element($search, 'reporter', 'string');
-  $search_category  = sanitize_array_element($search, 'category', 'int', min: -1, default: 0);
-  $search_goal      = sanitize_array_element($search, 'goal', 'int', min: -1, default: 0);
-  $search_admin     = sanitize_array_element($search, 'admin', 'int', min: 0, max: 5, default: 0);
+  $search_id          = sanitize_array_element($search, 'id', 'int', min: 0, default: 0);
+  $search_title       = sanitize_array_element($search, 'title', 'string');
+  $search_title_en    = sanitize_array_element($search, 'title_en', 'string');
+  $search_title_fr    = sanitize_array_element($search, 'title_fr', 'string');
+  $search_status      = sanitize_array_element($search, 'status', 'int', min: -2, default: 0);
+  $search_status_id   = sanitize($search_status - 1, 'int', 0, 5);
+  $search_open        = sanitize_array_element($search, 'open', 'int', min: 0, max: 1, default: 0);
+  $search_created     = sanitize_array_element($search, 'created', 'int', min: 0, default: 0);
+  $search_reporter    = sanitize_array_element($search, 'reporter', 'string');
+  $search_reporter_id = sanitize_array_element($search, 'reporter_id', 'string');
+  $search_category    = sanitize_array_element($search, 'category', 'int', min: -1, default: 0);
+  $search_goal        = sanitize_array_element($search, 'goal', 'int', min: -1, default: 0);
+  $search_admin       = sanitize_array_element($search, 'admin', 'int', min: 0, max: 5, default: 0);
 
   // Do not show deleted, unvalidated, private, or wrong language tasks to regular users
   $query_search = (!$is_admin) ? "  WHERE dev_tasks.is_deleted        = 0
@@ -192,7 +300,7 @@ function tasks_list(  string  $sort_by    = 'status'  ,
                         AND dev_tasks.fk_dev_tasks_milestones > 0 ";
 
   // Search through the data: Task status
-  if($search_status === -2)
+  if($search_status === -2 || $search_open)
     $query_search .= "  AND dev_tasks.finished_at                       = 0                 ";
   else if($search_status === -1)
     $query_search .= "  AND dev_tasks.finished_at                       > 0                 ";
@@ -231,8 +339,11 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   // Search through the data: Other searches
   $query_search .= ($search_id)       ? " AND dev_tasks.id                              = '$search_id'          " : "";
   $query_search .= ($search_title)    ? " AND dev_tasks.title_$lang                  LIKE '%$search_title%'     " : "";
+  $query_search .= ($search_title_en) ? " AND dev_tasks.title_en                     LIKE '%$search_title_en%'  " : "";
+  $query_search .= ($search_title_fr) ? " AND dev_tasks.title_fr                     LIKE '%$search_title_fr%'  " : "";
   $query_search .= ($search_created)  ? " AND YEAR(FROM_UNIXTIME(dev_tasks.created_at)) = '$search_created'     " : "";
   $query_search .= ($search_reporter) ? " AND users.username                         LIKE '%$search_reporter%'  " : "";
+  $query_search .= ($search_reporter_id) ? " AND users.id                               = '$search_reporter_id' " : "";
 
   // Sort the data
   $query_sort = match($sort_by)
@@ -290,9 +401,14 @@ function tasks_list(  string  $sort_by    = 'status'  ,
                               dev_tasks.title_fr                  AS 't_title_fr'       ,
                               dev_tasks_categories.id             AS 't_category_id'    ,
                               dev_tasks_categories.title_$lang    AS 't_category'       ,
+                              dev_tasks_categories.title_en       AS 't_category_en'    ,
+                              dev_tasks_categories.title_fr       AS 't_category_fr'    ,
                               dev_tasks_milestones.id             AS 't_milestone_id'   ,
                               dev_tasks_milestones.title_$lang    AS 't_milestone'      ,
+                              dev_tasks_milestones.title_en       AS 't_milestone_en'   ,
+                              dev_tasks_milestones.title_fr       AS 't_milestone_fr'   ,
                               dev_tasks_milestones.summary_$lang  AS 't_milestone_body' ,
+                              users.id                            AS 't_author_id'      ,
                               users.username                      AS 't_author'
                     FROM      dev_tasks
                     LEFT JOIN dev_tasks_categories  ON dev_tasks.fk_dev_tasks_categories  = dev_tasks_categories.id
@@ -311,70 +427,164 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   // Loop through the results
   for($i = 0; $row = mysqli_fetch_array($qtasks); $i++)
   {
-    // Prepare the data
-    $data[$i]['id']         = sanitize_output($row['t_id']);
-    $task_css               = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
-    $data[$i]['css_row']    = ($row['t_deleted']) ? 'brown' : $task_css;
-    $task_css               = ($row['t_status'] < 2) ? ' italics' : '';
-    $task_css               = ($row['t_status'] > 3) ? ' bold' : $task_css;
-    $task_css               = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $task_css;
-    $data[$i]['css_status'] = ($task_css && !$row['t_finished']) ? $task_css : '';
-    $task_title             = ($lang === 'en') ? $row['t_title_en'] : $row['t_title_fr'];
-    $task_title             = ($lang === 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $task_title;
-    $task_title             = ($lang !== 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $task_title;
-    $task_title             = ($sort_by === 'roadmap' && !$row['t_public'])
-                            ? __('tasks_roadmap_private').$task_title
-                            : $task_title;
-    $data[$i]['title']      = sanitize_output(string_truncate($task_title, 42, '…'));
-    $data[$i]['road_title'] = sanitize_output(string_truncate($task_title, 50, '…'));
-    $data[$i]['fulltitle']  = (strlen($task_title) > 42) ? sanitize_output($task_title) : '';
-    $data[$i]['road_full']  = (strlen($task_title) > 50) ? sanitize_output($task_title) : '';
-    $data[$i]['shorttitle'] = sanitize_output(string_truncate($task_title, 38, '…'));
-    $data[$i]['status']     = ($row['t_finished'])
-                            ? sanitize_output(__('tasks_list_solved'))
-                            : sanitize_output(__('tasks_list_state_'.$row['t_status']));
-    $data[$i]['created']    = sanitize_output(time_since($row['t_created']));
-    $data[$i]['solved']     = ($row['t_finished']) ? sanitize_output(time_since($row['t_finished'])) : __('tasks_roadmap_unsolved');
-    $data[$i]['author']     = sanitize_output($row['t_author']);
-    $data[$i]['category']   = sanitize_output($row['t_category']);
-    $data[$i]['milestone']  = sanitize_output($row['t_milestone']);
-    $data[$i]['goal_id']    = sanitize_output($row['t_milestone_id']);
-    $data[$i]['goal_body']  = bbcodes(sanitize_output($row['t_milestone_body'], preserve_line_breaks: true));
-    $data[$i]['nolang_en']  = (!$row['t_title_en']);
-    $data[$i]['nolang_fr']  = (!$row['t_title_fr']);
-    $data[$i]['deleted']    = ($row['t_deleted']);
-    $data[$i]['private']    = (!$row['t_public']);
-    $data[$i]['new']        = (!$row['t_validated']);
+    // Format the data
+    $task_id              = $row['t_id'];
+    $task_deleted         = $row['t_deleted'];
+    $task_public          = $row['t_public'];
+    $task_validated       = $row['t_validated'];
+    $task_finished        = $row['t_finished'];
+    $task_status          = $row['t_status'];
+    $task_title_en        = $row['t_title_en'];
+    $task_title_fr        = $row['t_title_fr'];
+    $task_created_at      = $row['t_created'];
+    $task_author_id       = $row['t_author_id'];
+    $task_author          = $row['t_author'];
+    $task_category        = $row['t_category'];
+    $task_category_en     = $row['t_category_en'];
+    $task_category_fr     = $row['t_category_fr'];
+    $task_category_id     = $row['t_category_id'];
+    $task_milestone       = $row['t_milestone'];
+    $task_milestone_en    = $row['t_milestone_en'];
+    $task_milestone_fr    = $row['t_milestone_fr'];
+    $task_milestone_id    = $row['t_milestone_id'];
+    $task_milestone_body  = $row['t_milestone_body'];
 
-    // Count the finished tasks
-    $total_tasks_finished += ($row['t_finished']) ? 1 : 0;
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      // Task data
+      $data[$i]['id']         = sanitize_output($task_id);
+      $task_css               = ($task_finished) ? 'task_solved' : 'task_status_'.sanitize_output($task_status);
+      $data[$i]['css_row']    = ($task_deleted) ? 'brown' : $task_css;
+      $task_css               = ($task_status < 2) ? ' italics' : '';
+      $task_css               = ($task_status > 3) ? ' bold' : $task_css;
+      $task_css               = ($task_status > 4) ? ' bold uppercase underlined' : $task_css;
+      $data[$i]['css_status'] = ($task_css && !$task_finished) ? $task_css : '';
+      $task_title             = ($lang === 'en') ? $task_title_en : $task_title_fr;
+      $task_title             = ($lang === 'en' && !$task_title_en) ? $task_title_fr : $task_title;
+      $task_title             = ($lang !== 'en' && !$task_title_en) ? $task_title_en : $task_title;
+      $task_title             = ($sort_by === 'roadmap' && !$task_public)
+                              ? __('tasks_roadmap_private').$task_title
+                              : $task_title;
+      $data[$i]['title']      = sanitize_output(string_truncate($task_title, 42, '…'));
+      $data[$i]['road_title'] = sanitize_output(string_truncate($task_title, 50, '…'));
+      $data[$i]['fulltitle']  = (strlen($task_title) > 42) ? sanitize_output($task_title) : '';
+      $data[$i]['road_full']  = (strlen($task_title) > 50) ? sanitize_output($task_title) : '';
+      $data[$i]['shorttitle'] = sanitize_output(string_truncate($task_title, 38, '…'));
+      $data[$i]['status']     = ($task_finished)
+                              ? sanitize_output(__('tasks_list_solved'))
+                              : sanitize_output(__('tasks_list_state_'.$task_status));
+      $data[$i]['created']    = sanitize_output(time_since($task_created_at));
+      $data[$i]['solved']     = ($task_finished) ? sanitize_output(time_since($task_finished)) : __('tasks_roadmap_unsolved');
+      $data[$i]['author']     = sanitize_output($task_author);
+      $data[$i]['category']   = sanitize_output($task_category);
+      $data[$i]['milestone']  = sanitize_output($task_milestone);
+      $data[$i]['goal_id']    = sanitize_output($task_milestone_id);
+      $data[$i]['goal_body']  = bbcodes(sanitize_output($task_milestone_body, preserve_line_breaks: true));
+      $data[$i]['nolang_en']  = (!$task_title_en);
+      $data[$i]['nolang_fr']  = (!$task_title_fr);
+      $data[$i]['deleted']    = ($task_deleted);
+      $data[$i]['private']    = (!$task_public);
+      $data[$i]['new']        = (!$task_validated);
 
-    // Fill up the years arrays
-    if(!in_array(date('Y', $row['t_created']), $tasks_created_years))
-      array_push($tasks_created_years, sanitize_output(date('Y', $row['t_created'])));
-    if($row['t_finished'] && !in_array(date('Y', $row['t_finished']), $tasks_solved_years))
-      array_push($tasks_solved_years, sanitize_output(date('Y', $row['t_finished'])));
+      // Count the finished tasks
+      $total_tasks_finished += ($task_finished) ? 1 : 0;
+
+      // Fill up the years arrays
+      if(!in_array(date('Y', $task_created_at), $tasks_created_years))
+        array_push($tasks_created_years, sanitize_output(date('Y', $task_created_at)));
+      if($task_finished && !in_array(date('Y', $task_finished), $tasks_solved_years))
+        array_push($tasks_solved_years, sanitize_output(date('Y', $task_finished)));
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      // Task data
+      $data[$i]['id']           = (string)$task_id;
+      $data[$i]['link']         = sanitize_json($GLOBALS['website_url'].'pages/tasks/'.$task_id);
+      $data[$i]['status']       = ($task_finished)
+                                ? sanitize_json(__('tasks_list_solved'))
+                                : sanitize_json(__('tasks_list_state_'.$task_status));
+      $data[$i]['title_en']     = sanitize_json($task_title_en) ?: NULL;
+      $data[$i]['title_fr']     = sanitize_json($task_title_fr) ?: NULL;
+
+      // Category data
+      if($task_category_id)
+      {
+        $data[$i]['category']['name_en']  = sanitize_json($task_category_en) ?: NULL;
+        $data[$i]['category']['name_fr']  = sanitize_json($task_category_fr) ?: NULL;
+      }
+      else
+        $data[$i]['category'] = NULL;
+
+      // Milestone data
+      if($task_milestone_id)
+      {
+        $data[$i]['milestone']['name_en'] = sanitize_json($task_milestone_en) ?: NULL;
+        $data[$i]['milestone']['name_fr'] = sanitize_json($task_milestone_fr) ?: NULL;
+      }
+      else
+        $data[$i]['milestone'] = NULL;
+
+      // Creation data
+      if($task_created_at)
+      {
+        $created_at_aware_datetime = date_to_aware_datetime($task_created_at);
+        $data[$i]['created_at']['datetime'] = $created_at_aware_datetime['datetime'];
+        $data[$i]['created_at']['timezone'] = $created_at_aware_datetime['timezone'];
+      }
+      else
+        $data[$i]['created_at'] = NULL;
+
+      // Completion data
+      if($task_finished)
+      {
+        $finished_at_aware_datetime = date_to_aware_datetime($task_finished);
+        $data[$i]['solved_at']['datetime']  = $finished_at_aware_datetime['datetime'];
+        $data[$i]['solved_at']['timezone']  = $finished_at_aware_datetime['timezone'];
+      }
+      else
+        $data[$i]['solved_at'] = NULL;
+
+      // Reporter data
+      if($task_author_id)
+      {
+        $data[$i]['opened_by']['user_id']   = (string)$task_author_id;
+        $data[$i]['opened_by']['username']  = sanitize_json($task_author);
+      }
+      else
+        $data[$i]['opened_by'] = NULL;
+    }
   }
 
-  // Add the number of rows to the data
-  $data['rows'] = $i;
+  // Task stats
+  if($format === 'html')
+  {
+    // Add the number of rows to the data
+    $data['rows'] = $i;
 
-  // Calculate the remaining totals
-  $total_tasks_todo       = $data['rows'] - $total_tasks_finished;
-  $total_tasks_percentage = maths_percentage_of($total_tasks_finished, $data['rows']);
+    // Calculate the remaining totals
+    $total_tasks_todo       = $data['rows'] - $total_tasks_finished;
+    $total_tasks_percentage = maths_percentage_of($total_tasks_finished, $data['rows']);
 
-  // Add the totals to the data
-  $data['finished'] = sanitize_output($total_tasks_finished);
-  $data['todo']     = sanitize_output($total_tasks_todo);
-  $data['percent']  = sanitize_output(number_display_format($total_tasks_percentage, 'percentage', 0));
+    // Add the totals to the data
+    $data['finished'] = sanitize_output($total_tasks_finished);
+    $data['todo']     = sanitize_output($total_tasks_todo);
+    $data['percent']  = sanitize_output(number_display_format($total_tasks_percentage, 'percentage', 0));
 
-  // Sort the years arrays
-  rsort($tasks_created_years);
-  rsort($tasks_solved_years);
+    // Sort the years arrays
+    rsort($tasks_created_years);
+    rsort($tasks_solved_years);
 
-  // Add the years to the data
-  $data['years_created']  = $tasks_created_years;
-  $data['years_solved']   = $tasks_solved_years;
+    // Add the years to the data
+    $data['years_created']  = $tasks_created_years;
+    $data['years_solved']   = $tasks_solved_years;
+  }
+
+  // Give a default return value when no tasks are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('tasks' => $data) : $data;
 
   // Return the prepared data
   return $data;

@@ -34,7 +34,7 @@ $admin_view     = (!isset($_POST['online_admin_view']) && $is_admin) ? 1 : $admi
 $admin_view     = ($admin_view && $is_admin);
 
 // Fetch the user list
-$userlist = user_list(  'activity'                        ,
+$userlist = users_list( 'activity'                        ,
                         activity_cutoff:  2629746         ,
                         include_guests:   $include_guests ,
                         max_guest_count:  1000            ,

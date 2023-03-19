@@ -25,7 +25,7 @@ user_restrict_to_users();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Send the private message reply
 
-$reply_error =  private_message_reply(  form_fetch_element('private_message_id', 0) ,
+$reply_error =  private_messages_reply( form_fetch_element('private_message_id', 0) ,
                                         form_fetch_element('private_message_body')  );
 
 

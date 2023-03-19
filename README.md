@@ -75,7 +75,7 @@ Hopefully, the source code will be commented well enough that you should have no
 
 * `actions` makes sense if you think of it as kind of a pre-MVC controller concept, all actions (get, list, create, edit, delete, etc.) are placed in this folder and called when necessary by the other pages.
 
-* `api` contains the routes of the website's REST API (they use the logic from `actions`).
+* `api` contains the routes of the website's REST API and their documentation (they use the logic from `actions`).
 
 * `conf` contains the configuration files, which must be set up properly before running the project.
 

@@ -53,7 +53,7 @@ $search['id']       = form_fetch_element('admin_reactivate_id', NULL);
 $search['del_user'] = form_fetch_element('admin_reactivate_username', NULL);
 
 // Fetch the list of deleted users
-$deleted_users      = user_list($deleted_users_sort, $search, 0, 1);
+$deleted_users      = users_list($deleted_users_sort, $search, 0, 1);
 
 
 

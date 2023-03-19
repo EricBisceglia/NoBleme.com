@@ -27,8 +27,9 @@ $page_description = "A random page from NoBleme's 21st century compendium";
 // Redirect to a random page
 
 // Fetch a random page
-$random_compendium_page = compendium_pages_get_random(  (int)form_fetch_element('id', request_type: 'GET')    ,
-                                                        (int)form_fetch_element('type', request_type: 'GET')  );
+$random_compendium_page = compendium_pages_get_random(
+  exclude_id:  (int)form_fetch_element('id', request_type: 'GET')    ,
+  type:        (int)form_fetch_element('type', request_type: 'GET')  );
 
 // Redirect to the random page
 exit(header("Location: ".$path."pages/compendium/".$random_compendium_page));

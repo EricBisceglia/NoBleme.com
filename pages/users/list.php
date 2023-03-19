@@ -38,8 +38,8 @@ $user_list_search = array(  'username'    => form_fetch_element('users_list_sear
                             'id'          => form_fetch_element('users_list_search_id')         );
 
 // Fetch the user list
-$user_list = user_list( form_fetch_element('users_list_sort', 'registered') ,
-                        $user_list_search                                   );
+$user_list = users_list(  form_fetch_element('users_list_sort', 'registered') ,
+                          $user_list_search                                   );
 
 // Fetch the oldest account creation date
 $user_oldest_account = user_get_oldest();

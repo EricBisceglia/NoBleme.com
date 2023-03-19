@@ -35,6 +35,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  date_to_text                        Transforms a MySQL date or a timestamp into a plaintext date.                */
 /*  date_to_ddmmyy                      Converts a mysql date to the DD/MM/YY format.                                */
 /*  date_to_mysql                       Converts a date to the mysql date format.                                    */
+/*  date_to_aware_datetime              Converts a timestamp to an aware datetime.                                   */
 /*                                                                                                                   */
 /*  diff_raw_string_arrays              Returns a raw diff between two string arrays.                                */
 /*  diff_strings                        Returns a human readable list of differences between two strings.            */
@@ -711,6 +712,28 @@ function date_to_mysql( string  $date                   ,
 
   // Return the converted date
   return $date;
+}
+
+
+
+
+/**
+ * Converts a timestamp to an aware datetime.
+ *
+ * @param   int     $timestamp  The timestamp which will be converted.
+ *
+ * @param   array               An array containing enough information to be an aware datetime.
+ */
+
+
+function date_to_aware_datetime( int $timestamp ) : array
+{
+  // Assemble an array with the datetime and its timezone
+  $datetime['datetime'] = date('c', $timestamp);
+  $datetime['timezone'] = $GLOBALS['timezone'];
+
+  // Convert and return the timestamp
+  return $datetime;
 }
 
 

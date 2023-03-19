@@ -30,7 +30,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  quotes_stats_recalculate_user   Recalculates quote database statistics for a specific user.                      */
 /*  quotes_stats_recalculate_all    Recalculates global quote database statistics.                                   */
 /*                                                                                                                   */
-/*  user_setting_quotes             Returns the quote related settings of the current user.                          */
+/*  user_settings_quotes            Returns the quote related settings of the current user.                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -38,16 +38,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Returns data related to a quote.
  *
- * @param   int         $quote_id   The quote's id.
+ * @param   int         $quote_id               The quote's id.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null              An array containing related data, or null if it does not exist.
+ * @return  array|null                          An array containing related data, or null if it does not exist.
  */
 
-function quotes_get( int $quote_id ) : mixed
+function quotes_get(  int     $quote_id           ,
+                      string  $format   = 'html'  ) : mixed
 {
-  // Require administrator rights to run this action
-  user_restrict_to_administrators();
-
   // Sanitize the data
   $quote_id = sanitize($quote_id, 'int', 0);
 
@@ -68,18 +67,63 @@ function quotes_get( int $quote_id ) : mixed
                                         LEFT JOIN users AS submitter ON quotes.fk_users_submitter = submitter.id
                                         WHERE     quotes.id = '$quote_id' "));
 
-  // Assemble an array with the data
-  $data['deleted']      = sanitize_output($dquote['q_deleted']);
-  $data['validated']    = sanitize_output($dquote['q_validated']);
-  $data['submitter_id'] = sanitize_output($dquote['q_submitter_id']);
-  $data['submitter']    = sanitize_output($dquote['q_submitter']);
-  $data['body']         = sanitize_output($dquote['q_body']);
-  $data['body_full']    = sanitize_output($dquote['q_body'], true);
-  $data['date']         = ($dquote['q_date']) ? sanitize_output(date('Y-m-d', $dquote['q_date'])) : '';
-  $data['lang']         = $dquote['q_lang'];
-  $data['nsfw']         = $dquote['q_nsfw'];
+  // Format the data
+  $data               = NULL;
+  $quote_deleted      = $dquote['q_deleted'];
+  $quote_validated    = $dquote['q_validated'];
+  $quote_submitter_id = $dquote['q_submitter_id'];
+  $quote_submitter    = $dquote['q_submitter'];
+  $quote_body         = $dquote['q_body'];
+  $quote_timestamp    = $dquote['q_date'];
+  $quote_date         = ($dquote['q_date']) ? date('Y-m-d', $dquote['q_date']) : '';
+  $quote_lang         = $dquote['q_lang'];
+  $quote_nsfw         = $dquote['q_nsfw'];
 
-  // Return the data
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['deleted']      = sanitize_output($quote_deleted);
+    $data['validated']    = sanitize_output($quote_validated);
+    $data['submitter_id'] = sanitize_output($quote_submitter_id);
+    $data['submitter']    = sanitize_output($quote_submitter);
+    $data['body']         = sanitize_output($quote_body);
+    $data['body_full']    = sanitize_output($quote_body, true);
+    $data['date']         = sanitize_output($quote_date);
+    $data['lang']         = sanitize_output($quote_lang);
+    $data['nsfw']         = sanitize_output($quote_nsfw);
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // Do not show deleted or unvalidated quotes in the API
+    if($quote_deleted || !$quote_validated)
+      return NULL;
+
+    // Quote data
+    $data['quote']['id']        = (string)$quote_id;
+    $data['quote']['is_nsfw']   = (bool)$quote_nsfw;
+    $data['quote']['language']  = string_change_case($quote_lang, 'lowercase');
+    $data['quote']['link']      = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
+    $data['quote']['body']      = sanitize_json($quote_body);
+    $data['quote']['added_on']  = ($quote_timestamp) ? date('Y-m-d', $quote_timestamp) : NULL;
+
+    // Linked users data
+    $quote_users = quotes_get_linked_users($quote_id, exclude_deleted: true);
+    if($quote_users['rows'])
+    {
+      for($i = 0; $i < $quote_users['rows']; $i++)
+      {
+        $data['quote']['users'][$i]['id']       = (string)$quote_users[$i]['id'];
+        $data['quote']['users'][$i]['username'] = sanitize_json($quote_users[$i]['username']);
+        $data['quote']['users'][$i]['link']     = $GLOBALS['website_url'].'pages/users/'.$quote_users[$i]['id'];
+      }
+    }
+    else
+      $data['quote']['users'] = NULL;
+  }
+
+  // Return the prepared data
   return $data;
 }
 
@@ -89,22 +133,24 @@ function quotes_get( int $quote_id ) : mixed
 /**
  * Returns a list of users linked to a quote.
  *
- * @param   int         $quote_id   The quote's id.
+ * @param   int         $quote_id                     The quote's id.
+ * @param   bool        $exclude_deleted  (OPTIONAL)  Excludes deleted users from the returned data.
  *
- * @return  array|null              An array containing related data, or null if it does not exist.
+ * @return  array|null                                An array containing related data, or null if it does not exist.
 */
 
-function quotes_get_linked_users(int $quote_id) : mixed
+function quotes_get_linked_users( int   $quote_id                 ,
+                                  bool  $exclude_deleted = false  ) : mixed
 {
-  // Require administrator rights to run this action
-  user_restrict_to_administrators();
-
   // Sanitize the data
   $quote_id = sanitize($quote_id, 'int', 0);
 
   // Check if the quote exists
   if(!database_row_exists('quotes', $quote_id))
     return NULL;
+
+  // Exclude deleted users if requested
+  $search_deleted = ($exclude_deleted) ? " AND users.is_deleted = 0 " : " ";
 
   // Fetch the user list
   $qusers = query(" SELECT    users.id                AS 'u_id'       ,
@@ -114,6 +160,7 @@ function quotes_get_linked_users(int $quote_id) : mixed
                     FROM      quotes_users
                     LEFT JOIN users ON quotes_users.fk_users = users.id
                     WHERE     quotes_users.fk_quotes = '$quote_id'
+                              $search_deleted
                     ORDER BY  users.username ASC ");
 
   // Prepare the data
@@ -139,33 +186,69 @@ function quotes_get_linked_users(int $quote_id) : mixed
 /**
  * Returns a random quote ID.
  *
- * @return  int   A random quote's ID, in the user's allowed languages.
+ * @param   array   $search   (OPTIONAL)  Specifies search parameters for the randomly returned quote.
+ * @param   string  $context  (OPTIONAL)  In which context will the random ID be used ('page', 'api').
+ *
+ * @return  int                           A random quote's ID, in the user's allowed languages.
  */
 
-function quotes_get_random_id() : int
+function quotes_get_random_id(  array   $search   = array() ,
+                                string  $context  = 'html'  ) : int
 {
-  // Fetch the user's quotes related language settings
-  $settings = user_settings_quotes();
+  // Sanitize the search parameters
+  $search_lang  = sanitize_array_element($search, 'lang', 'string', default: NULL);
+  $search_nsfw  = sanitize_array_element($search, 'nsfw', 'int', 0, 1, default: -1);
+  $search_user  = sanitize_array_element($search, 'user', 'int', 0);
+  $search_year  = sanitize_array_element($search, 'year', 'int', 0);
 
-  // Assemble the language settings into an extra query condition
-  if($settings['show_en'] && !$settings['show_fr'])
-    $limit_lang = " AND quotes.language LIKE 'EN' ";
-  else if($settings['show_fr'] && !$settings['show_en'])
-    $limit_lang = " AND quotes.language LIKE 'FR' ";
-  else
-    $limit_lang = '';
+  // Initialize extra parameters for the query
+  $search_where = '';
+  $join_user    = '';
+
+  // Search for quotes in specific languages
+  if($context === 'html')
+  {
+    // Fetch the user's language settings for quotes
+    $language_settings = user_settings_quotes();
+
+    // Filter by only one language if necessary
+    if($language_settings['show_en'] && !$language_settings['show_fr'])
+      $search_where .= " AND quotes.language LIKE 'EN' ";
+    else if($language_settings['show_fr'] && !$language_settings['show_en'])
+      $search_where .= " AND quotes.language LIKE 'FR' ";
+  }
+  else if($context === 'api' && $search_lang)
+    $search_where .= " AND quotes.language LIKE '%$search_lang%' ";
+
+  // Search for quotes including a specific user ID
+  if($context === 'api' && $search_user)
+  {
+    // Return no quote if the user does not exist
+    if(!database_row_exists('users', $search_user))
+      return 0;
+
+    // Join quotes with matching user ids
+    $join_user    .= "  LEFT JOIN quotes_users
+                        ON        quotes_users.fk_quotes  = quotes.id       ";
+    $search_where .= "  AND       quotes_users.fk_users   = '$search_user'  ";
+  }
+
+  // Search for other parameters
+  $search_where .= ($search_nsfw > -1)  ? " AND quotes.is_nsfw = '$search_nsfw' "                           : " ";
+  $search_where .= ($search_year)       ? " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year' " : " ";
 
   // Fetch a random quote
   $drand = mysqli_fetch_array(query(" SELECT    quotes.id AS 'q_id'
                                       FROM      quotes
+                                                $join_user
                                       WHERE     quotes.is_deleted       = 0
                                       AND       quotes.admin_validation = 1
-                                                $limit_lang
+                                                $search_where
                                       ORDER BY  RAND()
                                       LIMIT     1 "));
 
   // Return the random quote's id
-  return $drand['q_id'];
+  return (isset($drand['q_id'])) ? $drand['q_id'] : 0;
 }
 
 
@@ -178,6 +261,7 @@ function quotes_get_random_id() : int
  * @param   int     $quote_id       (OPTIONAL)  Return only a single quote instead of a list.
  * @param   bool    $show_waitlist  (OPTIONAL)  Only show quotes awaiting admin validation.
  * @param   bool    $show_deleted   (OPTIONAL)  Only show soft deleted quotes.
+ * @param   string  $format         (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
  * @return  array   An array containing quotes.
  */
@@ -185,7 +269,8 @@ function quotes_get_random_id() : int
 function quotes_list( ?array  $search         = array() ,
                       ?int    $quote_id       = 0       ,
                       bool    $show_waitlist  = false   ,
-                      bool    $show_deleted   = false   ) : array
+                      bool    $show_deleted   = false   ,
+                      string  $format         = 'html'  ) : array
 {
   // Check if the required files have been included
   require_included_file('quotes.lang.php');
@@ -195,17 +280,14 @@ function quotes_list( ?array  $search         = array() ,
   $is_admin = user_is_administrator();
 
   // Prepare the language filter
-  $lang_en    = (isset($search['lang_en']) && $search['lang_en']);
-  $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
+  $lang_en  = (isset($search['lang_en']) && $search['lang_en']);
+  $lang_fr  = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Prepare the search parameters
-  $search_body = sanitize_array_element($search, 'body', 'string');
-  $search_user = sanitize_array_element($search, 'user', 'int', min: 0, default: 0);
-  $search_year = sanitize_array_element($search, 'year', 'int', min: -1, default: 0);
-
-  // In case of fitering on a non existent user, reset the search
-  if($search_user && !database_row_exists('users', $search_user))
-    $search_user = 0;
+  $search_body  = sanitize_array_element($search, 'body', 'string');
+  $search_user  = sanitize_array_element($search, 'user', 'int', min: 0, default: 0);
+  $search_year  = sanitize_array_element($search, 'year', 'int', min: -1, default: 0);
+  $search_nsfw  = sanitize_array_element($search, 'nsfw', 'int', min: -1, max: 1, default: -1);
 
   // View a single quote
   if($quote_id && $is_admin)
@@ -243,8 +325,9 @@ function quotes_list( ?array  $search         = array() ,
     $query_search .= " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year'  ";
 
   // Search through the data: Other searches
-  $query_search .= ($search_body) ? " AND quotes.body        LIKE '%$search_body%'  " : "";
-  $query_search .= ($search_user) ? " AND quotes_users.fk_users = '$search_user'    " : "";
+  $query_search .= ($search_body)       ? " AND quotes.body        LIKE '%$search_body%'  " : " ";
+  $query_search .= ($search_user)       ? " AND quotes_users.fk_users = '$search_user'    " : " ";
+  $query_search .= ($search_nsfw > -1)  ? " AND quotes.is_nsfw        = '$search_nsfw'    " : " ";
 
   // Fetch the quotes
   $qquotes = "  SELECT    quotes.id                                                               AS 'q_id'       ,
@@ -254,6 +337,7 @@ function quotes_list( ?array  $search         = array() ,
                           quotes.is_nsfw                                                          AS 'q_nsfw'     ,
                           quotes.is_deleted                                                       AS 'q_deleted'  ,
                           quotes.admin_validation                                                 AS 'q_public'   ,
+                          quotes.language                                                         AS 'q_lang'     ,
                           quotes.body                                                             AS 'q_body'     ,
                           quotes.linked_users                                                     AS 'q_linked'
                 FROM      quotes
@@ -271,61 +355,107 @@ function quotes_list( ?array  $search         = array() ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($dquotes); $i++)
   {
-    $data[$i]['id']             = $row['q_id'];
-    $data[$i]['date']           = ($row['q_date'])
-                                ? sanitize_output(date_to_text($row['q_date'], strip_day: 1))
-                                : __('quotes_nodate');
-    $data[$i]['nsfw']           = $row['q_nsfw'];
-    $data[$i]['deleted']        = $row['q_deleted'];
-    $data[$i]['validated']      = $row['q_public'];
-    $data[$i]['body']           = sanitize_output($row['q_body'], true);
-    $data[$i]['meta_desc']      = string_truncate($row['q_body'], 250, '...');
+    // Format the data
+    $quote_id         = $row['q_id'];
+    $quote_date       = $row['q_date'];
+    $quote_date_text  = ($row['q_date']) ? date_to_text($row['q_date'], strip_day:1) : __('quotes_nodate');
+    $quote_nsfw       = $row['q_nsfw'];
+    $quote_deleted    = $row['q_deleted'];
+    $quote_validated  = $row['q_public'];
+    $quote_language   = $row['q_lang'];
+    $quote_body       = $row['q_body'];
 
-    // Fetch linked users the regular way in most cases
+    // Fetch linked users the standard way, from the `quotes_users` table
     if(!$search_user)
     {
-      $data[$i]['linked_ids']   = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
-      $data[$i]['linked_nicks'] = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
-      $linked_id_count          = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
-      $data[$i]['linked_count'] = ($linked_id_count && $linked_id_count === count($data[$i]['linked_nicks']))
-                                ? $linked_id_count
-                                : 0;
+      $quote_users_ids    = ($row['lu_id']) ? explode(',', $row['lu_id']) : '';
+      $quote_users_nicks  = ($row['lu_nick']) ? explode(',', $row['lu_nick']) : '';
+      $quote_users_count  = (is_array($quote_users_ids)) ? count($quote_users_ids) : 0;
+      $quote_users_count  = ($quote_users_count && $quote_users_count === count($quote_users_nicks))
+                          ? $quote_users_count
+                          : 0;
     }
 
-    // Fetch linked users from the data in `quotes` when filtering by user
+    // When filtering quotes by user, fetch linked users from the `quotes` table instead
     else
     {
       // Decode the JSON containing the users
-      $linked_users       = json_decode($row['q_linked'], associative: true);
-      $linked_users_count = (isset($linked_users['rows'])) ? $linked_users['rows'] : 0;
-
-      // Reset the fields
-      $linked_ids   = array();
-      $linked_nicks = array();
+      $quote_users        = json_decode($row['q_linked'], associative: true);
+      $quote_users_count  = (isset($quote_users['rows'])) ? $quote_users['rows'] : 0;
 
       // Assemble the user list from the json
-      if($linked_users_count)
+      if($quote_users_count)
       {
-        for($j = 0; $j < $linked_users_count; $j++)
+        for($j = 0; $j < $quote_users_count; $j++)
         {
-          $linked_ids[$j]   = sanitize_output($linked_users[$j]['id']);
-          $linked_nicks[$j] = sanitize_output($linked_users[$j]['username']);
+          $quote_users_ids[$j]    = $quote_users[$j]['id'];
+          $quote_users_nicks[$j]  = $quote_users[$j]['username'];
         }
       }
+    }
 
-      // Prepare the returned data
-      $data[$i]['linked_ids']   = $linked_ids;
-      $data[$i]['linked_nicks'] = $linked_nicks;
-      $data[$i]['linked_count'] = sanitize_output($linked_users_count);
+    // Prepare the data for display
+    if($format === 'html')
+    {
+      // Quote data
+      $data[$i]['id']         = sanitize_output($quote_id);
+      $data[$i]['date']       = sanitize_output($quote_date_text);
+      $data[$i]['nsfw']       = sanitize_output($quote_nsfw);
+      $data[$i]['deleted']    = sanitize_output($quote_deleted);
+      $data[$i]['validated']  = sanitize_output($quote_validated);
+      $data[$i]['body']       = sanitize_output($quote_body, true);
+      $data[$i]['meta_desc']  = string_truncate($quote_body, 250, '...');
+
+      // Linked user data
+      if($quote_users_count)
+      {
+        for($j = 0; $j < count($quote_users_nicks); $j++)
+          $quote_users_nicks[$j] = sanitize_output($quote_users_nicks[$j]);
+        for($j = 0; $j < count($quote_users_ids); $j++)
+          $quote_users_ids[$j] = sanitize_output($quote_users_ids[$j]);
+      }
+      $data[$i]['linked_count'] = sanitize_output($quote_users_count);
+      $data[$i]['linked_ids']   = $quote_users_ids;
+      $data[$i]['linked_nicks'] = $quote_users_nicks;
+    }
+
+    // Prepare the data for the API
+    else if($format === 'api')
+    {
+      // Quote data
+      $data[$i]['id']       = (string)$quote_id;
+      $data[$i]['is_nsfw']  = (bool)$quote_nsfw;
+      $data[$i]['language'] = string_change_case($quote_language, 'lowercase');
+      $data[$i]['link']     = $GLOBALS['website_url'].'pages/quotes/'.$quote_id;
+      $data[$i]['body']     = sanitize_json($quote_body);
+      $data[$i]['added_on'] = ($quote_date) ? date('Y-m-d', $quote_date) : NULL;
+
+      // Linked user data
+      if($quote_users_count)
+      {
+        for($j = 0; $j < $quote_users_count; $j++)
+        {
+          $data[$i]['users'][$j]['id']        = (string)$quote_users_ids[$j];
+          $data[$i]['users'][$j]['username']  = sanitize_json($quote_users_nicks[$j]);
+          $data[$i]['users'][$j]['link']      = $GLOBALS['website_url'].'pages/users/'.$quote_users_ids[$j];
+        }
+      }
+      else
+        $data[$i]['users'] = NULL;
     }
   }
 
-  // Add the language filters to the data
-  $data['lang_en']  = $lang_en;
-  $data['lang_fr']  = $lang_fr;
+  // Add the language filters and the number of rows to the data
+  if($format === 'html')
+  {
+    $data['lang_en']  = $lang_en;
+    $data['lang_fr']  = $lang_fr;
+    $data['rows']     = $i;
+  }
 
-  // Add the number of rows to the data
-  $data['rows'] = $i;
+  // Give a default return value when no quotes are found
+  $data = (isset($data)) ? $data : NULL;
+  $data = ($format === 'api') ? array('quotes' => $data) : $data;
 
   // Return the prepared data
   return $data;

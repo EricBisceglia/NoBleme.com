@@ -8,18 +8,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  user_get                            Fetches data related to a user.                                              */
-/*  user_list                           Fetches a list of users.                                                     */
-/*  user_list_admins                    Fetches a list of administrative team members.                               */
-/*  user_edit_profile                   Modifies a user's own public profile.                                        */
-/*  user_delete_profile                 Deletes a user's public profile.                                             */
+/*  users_get                           Fetches data related to a user.                                              */
+/*  users_get_random_id                 Fetches a randomly selected user ID.                                         */
+/*  users_list                          Fetches a list of users.                                                     */
+/*  users_list_api                      Fetches a list of users for usage in the API.                                */
+/*  users_list_admins                   Fetches a list of administrative team members.                               */
+/*  users_edit_profile                  Modifies a user's own public profile.                                        */
+/*  users_delete_profile                Deletes a user's public profile.                                             */
 /*                                                                                                                   */
-/*  user_ban_details                    Fetches information related to a user's ban.                                 */
+/*  users_ban_details                   Fetches information related to a user's ban.                                 */
 /*                                                                                                                   */
-/*  user_check_username                 Checks if a username currently exists in the database.                       */
-/*  user_check_username_illegality      Checks if a username is illegal.                                             */
+/*  users_check_username                Checks if a username currently exists in the database.                       */
+/*  users_check_username_illegality     Checks if a username is illegal.                                             */
 /*                                                                                                                   */
-/*  user_autocomplete_username          Autocompletes a username.                                                    */
+/*  users_autocomplete_username         Autocompletes a username.                                                    */
 /*                                                                                                                   */
 /*  users_total_count                   Returns the number of users stored in the database.                          */
 /*  users_guests_count                  Returns the number of guests stored in the database.                         */
@@ -32,21 +34,36 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /**
  * Fetches data related to a user.
  *
- * @param   int|null    $user_id  The user's id, will default to current user if unset.
+ * @param   int|null    $user_id    (OPTIONAL)  The user's id, will default to current user if unset.
+ * @param   string      $username   (OPTIONAL)  Will search for the id of a user with this username if set.
+ * @param   string      $format     (OPTIONAL)  Formatting to use for the returned data ('html', 'api').
  *
- * @return  array|null            An array containing user related data, or NULL if it does not exist.
+ * @return  array|null                          An array containing user related data, or NULL if it does not exist.
  */
 
-function user_get( ?int $user_id = NULL ) : mixed
+function users_get( ?int    $user_id  = NULL    ,
+                    string  $username = NULL    ,
+                    string  $format   = 'html'  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');
   require_included_file('functions_time.inc.php');
   require_included_file('bbcodes.inc.php');
 
-  // User must be logged in if no id is provided
-  if(!$user_id && !user_is_logged_in())
+  // User must be logged in if no id or username is provided
+  if(!$user_id && !$username && !user_is_logged_in())
     return NULL;
+
+  // Fetch the requested username's ID if necessary
+  if($username)
+  {
+    // Look for the username's id
+    $user_id = database_entry_exists('users', 'username', $username, sanitize: true);
+
+    // Exit if does not exist
+    if(!$user_id)
+      return NULL;
+  }
 
   // Get current user id if needed
   $user_id = ($user_id) ? $user_id : user_get_id();
@@ -97,61 +114,162 @@ function user_get( ?int $user_id = NULL ) : mixed
   // Get the current user's language
   $lang = user_get_language();
 
-  // Assemble an array with the data
-  $data['id']         = sanitize_output($user_id);
-  $data['deleted']    = sanitize_output($duser['u_deleted']);
-  $data['banned']     = ($duser['u_banned']);
-  $data['unbanned']   = sanitize_output(string_change_case(time_until($duser['u_banned']), 'lowercase'));
-  $data['username']   = sanitize_output($duser['u_nick']);
-  $user_title         = $duser['u_mod'] ? __('moderator') : '';
-  $user_title         = $duser['u_admin'] ? __('administrator') : $user_title;
-  $data['title']      = sanitize_output(string_change_case($user_title, 'initials'));
-  $user_css           = $duser['u_mod'] ? ' text_orange noglow' : '';
-  $data['title_css']  = $duser['u_admin'] ? ' text_red glow_dark' : $user_css;
-  $data['lang_en']    = str_contains($duser['u_lang'], 'EN');
-  $data['lang_fr']    = str_contains($duser['u_lang'], 'FR');
-  $data['text']       = ($lang === 'FR' && $duser['u_text_fr'])
-                      ? bbcodes(sanitize_output($duser['u_text_fr'], preserve_line_breaks: true))
-                      : bbcodes(sanitize_output($duser['u_text_en'], preserve_line_breaks: true));
-  $data['text_fr']    = sanitize_output($duser['u_text_fr']);
-  $data['text_en']    = sanitize_output($duser['u_text_en']);
-  $data['ftext_fr']   = bbcodes(sanitize_output($duser['u_text_fr'], true));
-  $data['ftext_en']   = bbcodes(sanitize_output($duser['u_text_en'], true));
-  $data['pronouns']   = ($lang === 'FR' && $duser['u_pronouns_fr'])
-                      ? sanitize_output($duser['u_pronouns_fr'])
-                      : sanitize_output($duser['u_pronouns_en']);
-  $data['pronoun_en'] = sanitize_output($duser['u_pronouns_en']);
-  $data['pronoun_fr'] = sanitize_output($duser['u_pronouns_fr']);
-  $data['country']    = sanitize_output($duser['u_country']);
-  $data['created']    = sanitize_output(date_to_text($duser['u_created'], strip_day: 1));
-  $data['screated']   = sanitize_output(time_since($duser['u_created']));
-  $data['activity']   = ($duser['u_activity'])
-                      ? sanitize_output(time_since($duser['u_activity']))
-                      : sanitize_output(time_since($duser['u_created']));
-  $data['birthday']   = ($duser['u_birth_d'] && $duser['u_birth_m'])
-                      ? sanitize_output(date_to_text($duser['u_birthday'], strip_day: true, strip_year: true))
-                      : 0;
-  $data['age']        = ($duser['u_birth_y']) ? sanitize_output($duser['u_age']) : 0;
-  $data['birth_d']    = ($duser['u_birth_d']) ? sanitize_output($duser['u_birth_d']) : '';
-  $data['birth_m']    = ($duser['u_birth_m']) ? sanitize_output($duser['u_birth_m']) : '';
-  $data['birth_y']    = ($duser['u_birth_y']) ? sanitize_output($duser['u_birth_y']) : '';
-  $data['hideact']    = ($duser['u_hideact']);
-  $data['ip']         = ($duser['u_ip'] === '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($duser['u_ip']);
-  $data['lastpage']   = ($lang === 'FR' && $duser['u_active_fr'])
-                      ? sanitize_output($duser['u_active_fr'])
-                      : sanitize_output($duser['u_active_en']);
-  $data['lasturl']    = sanitize_output($duser['u_active_url']);
-  $data['lastaction'] = ($duser['u_lastaction'])
-                      ? sanitize_output(time_since($duser['u_lastaction']))
-                      : sanitize_output(string_change_case(__('none_f'), 'initials'));
-  $data['email']      = ($duser['u_mail'])
-                      ? sanitize_output($duser['u_mail'])
-                      : string_change_case(__('none_f'), 'initials');
-  $data['quotes']     = sanitize_output($duser['us_quotes']);
-  $data['quotes_app'] = sanitize_output($duser['us_quotes_app']);
-  $data['meetups']    = sanitize_output($duser['us_meetups']);
-  $data['tasks']      = sanitize_output($duser['us_tasks_sub']);
-  $data['contribs']   = $duser['us_quotes'] + $duser['us_quotes_app'] + $duser['us_meetups'] + $duser['us_tasks_sub'];
+  // Format the data
+  $user_deleted           = $duser['u_deleted'];
+  $user_banned            = $duser['u_banned'];
+  $user_username          = $duser['u_nick'];
+  $user_moderator         = $duser['u_mod'];
+  $user_admin             = $duser['u_admin'];
+  $user_languages         = $duser['u_lang'];
+  $user_text_fr           = $duser['u_text_fr'];
+  $user_text_en           = $duser['u_text_en'];
+  $user_pronouns_fr       = $duser['u_pronouns_fr'];
+  $user_pronouns_en       = $duser['u_pronouns_en'];
+  $user_country           = $duser['u_country'];
+  $user_created           = $duser['u_created'];
+  $user_activity          = $duser['u_activity'];
+  $user_birthday          = $duser['u_birthday'];
+  $user_birth_y           = ($duser['u_birth_y']) ? $duser['u_birth_y'] : '';
+  $user_birth_m           = ($duser['u_birth_m']) ? $duser['u_birth_m'] : '';
+  $user_birth_d           = ($duser['u_birth_d']) ? $duser['u_birth_d'] : '';
+  $user_age               = ($user_birth_y) ? $duser['u_age'] : 0;
+  $user_hide_activity     = $duser['u_hideact'];
+  $user_last_page_en      = $duser['u_active_en'];
+  $user_last_page_fr      = $duser['u_active_fr'];
+  $user_last_page_url     = (substr($duser['u_active_url'], 0, 1) != '.') ? $duser['u_active_url'] : '';
+  $user_last_action       = $duser['u_lastaction'];
+  $user_ip                = $duser['u_ip'];
+  $user_email             = $duser['u_mail'];
+  $user_stats_quotes      = $duser['us_quotes'];
+  $user_stats_quotes_sub  = $duser['us_quotes_app'];
+  $user_stats_meetups     = $duser['us_meetups'];
+  $user_stats_tasks_sub   = $duser['us_tasks_sub'];
+  $user_stats_contribs    = $user_stats_quotes + $user_stats_quotes_sub + $user_stats_meetups + $user_stats_tasks_sub;
+
+  // Prepare the data for display
+  if($format === 'html')
+  {
+    $data['id']         = sanitize_output($user_id);
+    $data['deleted']    = sanitize_output($user_deleted);
+    $data['banned']     = ($user_banned);
+    $data['unbanned']   = sanitize_output(string_change_case(time_until($user_banned), 'lowercase'));
+    $data['username']   = sanitize_output($user_username);
+    $user_title         = ($user_moderator) ? __('moderator') : '';
+    $user_title         = ($user_admin) ? __('administrator') : $user_title;
+    $data['title']      = sanitize_output(string_change_case($user_title, 'initials'));
+    $user_css           = ($user_moderator) ? ' text_orange noglow' : '';
+    $data['title_css']  = ($user_admin) ? ' text_red glow_dark' : $user_css;
+    $data['lang_en']    = str_contains($user_languages, 'EN');
+    $data['lang_fr']    = str_contains($user_languages, 'FR');
+    $data['text']       = ($lang === 'FR' && $user_text_fr)
+                        ? bbcodes(sanitize_output($user_text_fr, preserve_line_breaks: true))
+                        : bbcodes(sanitize_output($user_text_en, preserve_line_breaks: true));
+    $data['text_fr']    = sanitize_output($user_text_fr);
+    $data['text_en']    = sanitize_output($user_text_en);
+    $data['ftext_fr']   = bbcodes(sanitize_output($user_text_fr, true));
+    $data['ftext_en']   = bbcodes(sanitize_output($user_text_en, true));
+    $data['pronouns']   = ($lang === 'FR' && $user_pronouns_fr)
+                        ? sanitize_output($user_pronouns_fr)
+                        : sanitize_output($user_pronouns_en);
+    $data['pronoun_en'] = sanitize_output($user_pronouns_en);
+    $data['pronoun_fr'] = sanitize_output($user_pronouns_fr);
+    $data['country']    = sanitize_output($user_country);
+    $data['created']    = sanitize_output(date_to_text($user_created, strip_day: 1));
+    $data['screated']   = sanitize_output(time_since($user_created));
+    $data['activity']   = ($user_activity)
+                        ? sanitize_output(time_since($user_activity))
+                        : sanitize_output(time_since($user_activity));
+    $data['birthday']   = ($user_birth_d && $user_birth_m)
+                        ? sanitize_output(date_to_text($user_birthday, strip_day: true, strip_year: true))
+                        : 0;
+    $data['age']        = sanitize_output($user_age);
+    $data['birth_d']    = sanitize_output($user_birth_d);
+    $data['birth_m']    = sanitize_output($user_birth_m);
+    $data['birth_y']    = sanitize_output($user_birth_y);
+    $data['hideact']    = ($user_hide_activity);
+    $data['ip']         = ($user_ip === '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($user_ip);
+    $data['lastpage']   = ($lang === 'FR' && $user_last_page_fr)
+                        ? sanitize_output($user_last_page_fr)
+                        : sanitize_output($user_last_page_en);
+    $data['lasturl']    = sanitize_output($user_last_page_url);
+    $data['lastaction'] = ($user_last_action)
+                        ? sanitize_output(time_since($user_last_action))
+                        : sanitize_output(string_change_case(__('none_f'), 'initials'));
+    $data['email']      = ($user_email)
+                        ? sanitize_output($user_email)
+                        : string_change_case(__('none_f'), 'initials');
+    $data['quotes']     = sanitize_output($user_stats_quotes);
+    $data['quotes_app'] = sanitize_output($user_stats_quotes_sub);
+    $data['meetups']    = sanitize_output($user_stats_meetups);
+    $data['tasks']      = sanitize_output($user_stats_tasks_sub);
+    $data['contribs']   = sanitize_output($user_stats_contribs);
+  }
+
+  // Prepare the data for the API
+  else if($format === 'api')
+  {
+    // User data
+    $data['user']['id']               = (string)$user_id;
+    $data['user']['username']         = (!$user_deleted) ? sanitize_json($user_username) : '[deleted]';
+    $data['user']['is_deleted']       = (bool)$user_deleted;
+    $data['user']['is_banned']        = (bool)($user_banned);
+    $data['user']['is_moderator']     = (bool)($user_moderator || $user_admin);
+    $data['user']['is_administrator'] = (bool)($user_admin);
+    $data['user']['link']             = $GLOBALS['website_url'].'pages/users/'.$user_id;
+
+    // Profile data
+    if(!$user_deleted)
+    {
+      $data['user']['profile']['account_created_on']  = date('Y-m-d', $user_created);
+      $data['user']['profile']['speaks_english']      = (bool)str_contains($user_languages, 'EN');
+      $data['user']['profile']['speaks_french']       = (bool)str_contains($user_languages, 'FR');
+      $data['user']['profile']['birthday']            = ($user_birthday != '0000-00-00') ? $user_birthday : NULL;
+      $data['user']['profile']['age']                 = $user_age ?: NULL;
+      $data['user']['profile']['location']            = sanitize_json($user_country) ?: NULL;
+      $data['user']['profile']['pronouns_en']         = sanitize_json($user_pronouns_en) ?: NULL;
+      $data['user']['profile']['pronouns_fr']         = sanitize_json($user_pronouns_fr) ?: NULL;
+      $data['user']['profile']['custom_text_en']      = sanitize_json(bbcodes_remove($user_text_en)) ?: NULL;
+      $data['user']['profile']['custom_text_fr']      = sanitize_json(bbcodes_remove($user_text_fr)) ?: NULL;
+    }
+    else
+      $data['user']['profile'] = NULL;
+
+    // Activity data
+    if($user_activity && !$user_hide_activity && !$user_deleted)
+    {
+      $user_activity_aware_datetime = date_to_aware_datetime($user_activity);
+      $data['user']['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
+      $data['user']['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
+      $data['user']['last_activity']['page_link']     = ($user_last_page_url)
+                                                      ? sanitize_json($GLOBALS['website_url'].$user_last_page_url)
+                                                      : sanitize_json($GLOBALS['website_url']);
+      $data['user']['last_activity']['page_name_en']  = sanitize_json($user_last_page_en) ?: NULL;
+      $data['user']['last_activity']['page_name_fr']  = sanitize_json($user_last_page_fr) ?: NULL;
+    }
+    else
+      $data['user']['last_activity'] = NULL;
+
+    // Stats
+    if(!$user_deleted)
+    {
+      $data['user']['stats']['quotes_appeared_in']  = (int)$user_stats_quotes;
+      $data['user']['stats']['quotes_submitted']    = (int)$user_stats_quotes_sub;
+      $data['user']['stats']['meetups_attended']    = (int)$user_stats_meetups;
+      $data['user']['stats']['tasks_submitted']     = (int)$user_stats_tasks_sub;
+    }
+    else
+      $data['user']['stats'] = NULL;
+
+    // Ban data
+    if($user_banned && !$user_deleted)
+    {
+      $ban_aware_datetime = date_to_aware_datetime($user_banned);
+      $data['user']['ban']['unban_datetime']  = $ban_aware_datetime['datetime'];
+      $data['user']['ban']['unban_timezone']  = $ban_aware_datetime['timezone'];
+    }
+    else
+      $data['user']['ban'] = NULL;
+  }
 
   // Return the array
   return $data;
@@ -160,7 +278,29 @@ function user_get( ?int $user_id = NULL ) : mixed
 
 
 
- /**
+/**
+ * Fetches a randomly selected user ID.
+ *
+ * @return  int   A randomly selected user ID.
+ */
+
+function users_get_random_id() : int
+{
+  // Fetch a random user ID
+  $drandom = mysqli_fetch_array(query(" SELECT    users.id AS 'u_id'
+                                        FROM      users
+                                        WHERE     users.is_deleted = 0
+                                        ORDER BY  RAND()
+                                        LIMIT     1 "));
+
+  // Return the randomly selected ID
+  return $drandom['u_id'];
+}
+
+
+
+
+/**
  * Fetches a list of users.
  *
  * @param   string  $sort_by          (OPTIONAL)  The way the user list should be sorted.
@@ -178,17 +318,17 @@ function user_get( ?int $user_id = NULL ) : mixed
  * @return  array                                 A list of users, prepared for displaying.
  */
 
-function user_list( string  $sort_by          = ''      ,
-                    array   $search           = array() ,
-                    int     $max_count        = 0       ,
-                    bool    $show_deleted     = false   ,
-                    int     $activity_cutoff  = 0       ,
-                    bool    $include_guests   = false   ,
-                    int     $max_guest_count  = 0       ,
-                    bool    $banned_only      = false   ,
-                    bool    $include_ip_bans  = false   ,
-                    bool    $is_admin         = false   ,
-                    bool    $is_activity      = false   ) : array
+function users_list(  string  $sort_by          = ''      ,
+                      array   $search           = array() ,
+                      int     $max_count        = 0       ,
+                      bool    $show_deleted     = false   ,
+                      int     $activity_cutoff  = 0       ,
+                      bool    $include_guests   = false   ,
+                      int     $max_guest_count  = 0       ,
+                      bool    $banned_only      = false   ,
+                      bool    $include_ip_bans  = false   ,
+                      bool    $is_admin         = false   ,
+                      bool    $is_activity      = false   ) : array
 {
   // Require special rights to run this action in special cases
   if($include_ip_bans)
@@ -435,6 +575,124 @@ function user_list( string  $sort_by          = ''      ,
 
 
 /**
+ * Fetches a list of users for usage in the API.
+ *
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by  (OPTIONAL)  How the returned data should be sorted.
+ *
+ * @return  array                         A list of users, ready for usage in the API.
+ */
+
+function users_list_api(  array   $search   = array() ,
+                          string  $sort_by  = ''      ) : array
+{
+  // Prepare the search parameters
+  $search_admins  = sanitize_array_element($search, 'admins', 'int', min: 0, max: 1, default: 0);
+  $search_created = sanitize_array_element($search, 'created', 'int');
+
+  // Search through the data
+  $query_search   = ($search_admins)  ? " AND (users.is_moderator = 1 OR users.is_administrator = 1) "            : "";
+  $query_search  .= ($search_created) ? " AND YEAR(FROM_UNIXTIME(users_profile.created_at)) = '$search_created' " : "";
+
+  // Hide users with no activity when necessary
+  if($sort_by === 'last_activity')
+    $query_search .= " AND users.is_deleted = 0 AND users_settings.hide_from_activity = 0 ";
+
+  // Sort the data
+  $query_sort = match($sort_by)
+  {
+    'username'          => "  ORDER BY  users.username                    ASC   ,
+                                        users_profile.created_at          ASC   ,
+                                        users.id                          ASC   " ,
+    'account_created'   => "  ORDER BY  users_profile.created_at          DESC  ,
+                                        users.id                          DESC  " ,
+    'last_activity'     => "  ORDER BY  users.last_visited_at             DESC  ,
+                                        users_profile.created_at          ASC   ,
+                                        users.id                          ASC   " ,
+    default             => "  ORDER BY  users_profile.created_at          ASC   ,
+                                        users.id                          ASC   "
+  };
+
+  // Fetch the users
+  $qusers = " SELECT    users.id                          AS 'u_id'           ,
+                        users.username                    AS 'u_nick'         ,
+                        users.is_deleted                  AS 'u_deleted'      ,
+                        users.is_banned_until             AS 'u_banned'       ,
+                        users.is_moderator                AS 'u_mod'          ,
+                        users.is_administrator            AS 'u_admin'        ,
+                        users.last_visited_at             AS 'u_activity'     ,
+                        users.last_visited_page_en        AS 'u_activity_en'  ,
+                        users.last_visited_page_fr        AS 'u_activity_fr'  ,
+                        users.last_visited_url            AS 'u_activity_url' ,
+                        users_profile.created_at          AS 'u_created'      ,
+                        users_stats.quotes                AS 'us_quotes'      ,
+                        users_stats.quotes_approved       AS 'us_quotes_app'  ,
+                        users_stats.meetups               AS 'us_meetups'     ,
+                        users_stats.tasks_submitted       AS 'us_tasks_sub'   ,
+                        users_settings.hide_from_activity AS 'u_hide_activity'
+              FROM      users
+              LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
+              LEFT JOIN users_stats     ON users_stats.fk_users     = users.id
+              LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+              WHERE     1 = 1
+                        $query_search
+                        $query_sort ";
+
+  // Run the query
+  $dusers = query($qusers);
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($dusers); $i++)
+  {
+    // User data
+    $data[$i]['id']                 = (string)$row['u_id'];
+    $data[$i]['username']           = (!$row['u_deleted']) ? sanitize_json($row['u_nick']) : '[deleted]';
+    $data[$i]['is_deleted']         = (bool)($row['u_deleted']);
+    $data[$i]['is_banned']          = (bool)($row['u_banned']);
+    $data[$i]['is_moderator']       = (bool)($row['u_mod'] || $row['u_admin']);
+    $data[$i]['is_administrator']   = (bool)($row['u_admin']);
+    $data[$i]['link']               = $GLOBALS['website_url'].'pages/users/'.$row['u_id'];
+    $data[$i]['account_created_on'] = (!$row['u_deleted']) ? date('Y-m-d', $row['u_created']) : NULL;
+
+    // Activity data
+    if($row['u_activity'] && !$row['u_hide_activity'] && !$row['u_deleted'])
+    {
+      $user_activity_aware_datetime = date_to_aware_datetime($row['u_activity']);
+      $data[$i]['last_activity']['datetime']      = $user_activity_aware_datetime['datetime'];
+      $data[$i]['last_activity']['timezone']      = $user_activity_aware_datetime['timezone'];
+      $data[$i]['last_activity']['page_link']     = ($row['u_activity_url'])
+                                                  ? sanitize_json($GLOBALS['website_url'] .$row['u_activity_url'])
+                                                  : sanitize_json($GLOBALS['website_url']);
+      $data[$i]['last_activity']['page_name_en']  = sanitize_json($row['u_activity_en']) ?: NULL;
+      $data[$i]['last_activity']['page_name_fr']  = sanitize_json($row['u_activity_fr']) ?: NULL;
+    }
+    else
+      $data[$i]['last_activity'] = NULL;
+
+    // Stats
+    if(!$row['u_deleted'])
+    {
+      $data[$i]['stats']['quotes_appeared_in']  = (int)$row['us_quotes'];
+      $data[$i]['stats']['quotes_submitted']    = (int)$row['us_quotes_app'];
+      $data[$i]['stats']['meetups_attended']    = (int)$row['us_meetups'];
+      $data[$i]['stats']['tasks_submitted']     = (int)$row['us_tasks_sub'];
+    }
+    else
+      $data[$i]['stats'] = NULL;
+  }
+
+  // Give a default return value when no users
+  $data = (isset($data)) ? $data : NULL;
+  $data = array('users' => $data);
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
  * Fetches a list of administrative team members.
  *
  * @param   string  $sort_by  (OPTIONAL)  The way the list should be sorted.
@@ -442,7 +700,7 @@ function user_list( string  $sort_by          = ''      ,
  * @return  array                         A list of administrative team members.
  */
 
-function user_list_admins( string $sort_by = '' ) : array
+function users_list_admins( string $sort_by = '' ) : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -504,7 +762,7 @@ function user_list_admins( string $sort_by = '' ) : array
  * @return  void
  */
 
-function user_edit_profile( array $user_data ) : void
+function users_edit_profile( array $user_data ) : void
 {
   // Require the user to be logged in
   user_restrict_to_users();
@@ -621,8 +879,8 @@ function user_edit_profile( array $user_data ) : void
  * @return  void
  */
 
-function user_delete_profile( $user_id              ,
-                              $fields     = array() ) : void
+function users_delete_profile(  $user_id              ,
+                                $fields     = array() ) : void
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');
@@ -722,7 +980,7 @@ function user_delete_profile( $user_id              ,
  * @return  array                         An array of data regarding the ban.
  */
 
-function user_ban_details( ?int $user_id = NULL ) : array
+function users_ban_details( ?int $user_id = NULL ) : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -773,7 +1031,7 @@ function user_ban_details( ?int $user_id = NULL ) : array
  * @return  bool                Whether the username exists.
  */
 
-function user_check_username( string $username ) : bool
+function users_check_username( string $username ) : bool
 {
   // Sanitize the data
   $username = sanitize($username, 'string');
@@ -798,7 +1056,7 @@ function user_check_username( string $username ) : bool
  * @return  bool                Whether the username is illegal on the website.
  */
 
-function user_check_username_illegality( string $username ) : bool
+function users_check_username_illegality( string $username ) : bool
 {
   // Define a list of badwords
   $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'putain', 'salope', 'trann', 'whore');
@@ -825,7 +1083,7 @@ function user_check_username_illegality( string $username ) : bool
  * @return  array|null                      An array containing the autocomplete data, or NULL if something went wrong.
  */
 
-function user_autocomplete_username(  string  $input        ,
+function users_autocomplete_username( string  $input        ,
                                       string  $type   = ''  ,
                                       int     $id     = 0   ) : mixed
 {

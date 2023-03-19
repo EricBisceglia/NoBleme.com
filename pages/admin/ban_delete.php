@@ -74,7 +74,7 @@ if(isset($_POST['admin_ban_delete_submit']))
 
 // Get the user's username and some details regarding the ban
 $ban_username = user_get_username($user_id);
-$ban_details  = user_ban_details($user_id);
+$ban_details  = users_ban_details($user_id);
 
 // Hide the french unban justification in the english interface
 $admin_ban_hide_french = ($lang === 'EN') ? ' hidden' : '';

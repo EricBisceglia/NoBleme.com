@@ -34,7 +34,7 @@ $js = array('common/editor', 'common/preview', 'messages/messages');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the years at which the user got private messages
 
-$messages_years = private_message_years_list();
+$messages_years = private_messages_years_list();
 
 
 
@@ -49,7 +49,7 @@ $inbox_search = array(  'title'   => form_fetch_element('inbox_search_title')   
                         'read'    => form_fetch_element('inbox_search_read')    );
 
 // Fetch the messages
-$messages_list = private_message_list(  form_fetch_element('inbox_sort_order', 'sent')  ,
+$messages_list = private_messages_list( form_fetch_element('inbox_sort_order', 'sent')  ,
                                         $inbox_search                                   ,
                                         form_fetch_element('inbox_mark_as_read')        );
 

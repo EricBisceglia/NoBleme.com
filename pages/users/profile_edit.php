@@ -50,7 +50,7 @@ if(isset($_POST['profile_edit_submit']))
                           'text_fr'     => form_fetch_element('users_profile_edit_text_fr')                       );
 
   // Update the profile
-  user_edit_profile(user_data: $profile_edit);
+  users_edit_profile(user_data: $profile_edit);
 
   // Redirect the user to their public profile
   exit(header("Location: ".$path."pages/users/profile"));
@@ -63,7 +63,7 @@ if(isset($_POST['profile_edit_submit']))
 // Current user profile data
 
 // Fetch the profile data
-$profile_data = user_get();
+$profile_data = users_get();
 
 // Stop there if the profile can't be found
 if(!$profile_data)

@@ -27,7 +27,7 @@ user_restrict_to_users();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the requested private message
 
-$private_message_data = private_message_get(form_fetch_element('private_message_id'));
+$private_message_data = private_messages_get(form_fetch_element('private_message_id'));
 
 
 

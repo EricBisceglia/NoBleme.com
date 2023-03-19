@@ -36,7 +36,7 @@ $profile_id = form_fetch_element('id', request_type: 'GET');
 $user_id    = user_get_id();
 
 // Fetch the data
-$profile_data = user_get($profile_id);
+$profile_data = users_get($profile_id);
 
 // Stop there if the profile can't be found
 if(!$profile_data)

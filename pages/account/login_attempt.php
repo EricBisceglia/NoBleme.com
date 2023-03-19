@@ -30,7 +30,7 @@ if(isset($_POST['login_form_username']) && isset($_POST['login_form_password']))
   $login_form_remember_me = (form_fetch_element('login_form_remember') === 'true') ? 1 : 0;
 
   // Attempt to login
-  $login_form_attempt = user_authenticate(  $_SERVER["REMOTE_ADDR"]                   ,
+  $login_form_attempt = users_authenticate( $_SERVER["REMOTE_ADDR"]                   ,
                                             form_fetch_element('login_form_username') ,
                                             form_fetch_element('login_form_password') ,
                                             $login_form_remember_me                   );
