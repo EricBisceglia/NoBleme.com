@@ -554,7 +554,7 @@ sudo chown apache /var/www/html/ircbot.txt</pre>
     Install certbot and let it do its thing.
   </p>
 
-  <pre>sudo dnf -y install certbot-apache
+  <pre>sudo dnf -y install certbot
 sudo certbot --apache
 sudo certbot renew --dry-run
 sudo systemctl restart httpd.service</pre>
