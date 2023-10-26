@@ -1006,8 +1006,7 @@ function meetups_attendees_add( int   $meetup_id  ,
   $nickname   = sanitize_array_element($contents, 'nickname', 'string', max: 20);
   $extra_en   = sanitize_array_element($contents, 'extra_en', 'string');
   $extra_fr   = sanitize_array_element($contents, 'extra_fr', 'string');
-  $lock       = (isset($contents['lock'])) ? sanitize($contents['lock'], 'bool') : 'false';
-  $lock       = ($lock === 'true') ? 1 : 0;
+  $lock       = (int)sanitize_array_element($contents, 'lock', 'bool');
   $username   = ($nickname) ? string_truncate($contents['nickname'], 20) : $contents['account'];
 
   // Error: No account or nickname provided
@@ -1146,13 +1145,12 @@ function meetups_attendees_edit(  int   $attendee_id  ,
 
   // Sanitize and prepare the data
   $attendee_id  = sanitize($attendee_id, 'int', 0);
-  $account    = sanitize_array_element($contents, 'account', 'string');
-  $nickname   = sanitize_array_element($contents, 'nickname', 'string', max: 20);
-  $extra_en   = sanitize_array_element($contents, 'extra_en', 'string');
-  $extra_fr   = sanitize_array_element($contents, 'extra_fr', 'string');
-  $lock       = (isset($contents['lock'])) ? sanitize($contents['lock'], 'bool') : 'false';
-  $lock       = ($lock === 'true') ? 1 : 0;
-  $username   = ($nickname) ? string_truncate($contents['nickname'], 20) : $contents['account'];
+  $account      = sanitize_array_element($contents, 'account', 'string');
+  $nickname     = sanitize_array_element($contents, 'nickname', 'string', max: 20);
+  $extra_en     = sanitize_array_element($contents, 'extra_en', 'string');
+  $extra_fr     = sanitize_array_element($contents, 'extra_fr', 'string');
+  $lock         = (int)sanitize_array_element($contents, 'lock', 'bool');
+  $username     = ($nickname) ? string_truncate($contents['nickname'], 20) : $contents['account'];
 
   // Error: No account or nickname provided
   if(!$account && !$nickname)
