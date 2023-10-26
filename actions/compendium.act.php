@@ -5009,10 +5009,11 @@ function compendium_page_history_list( int $page_id ) : mixed
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qhistory); $i++)
   {
-    $data[$i]['id']   = sanitize_output($row['ph_id']);
-    $data[$i]['date'] = sanitize_output(time_since($row['ph_date']));
-    $data[$i]['css']  = ($row['ph_major']) ? ' class="bold"' : '';
-    $data[$i]['body'] = sanitize_output($row['ph_body']);
+    $data[$i]['id']       = sanitize_output($row['ph_id']);
+    $data[$i]['date']     = sanitize_output(time_since($row['ph_date']));
+    $data[$i]['fulldate'] = sanitize_output(date_to_text($row['ph_date'], include_time: 2));
+    $data[$i]['css']      = ($row['ph_major']) ? ' class="bold"' : '';
+    $data[$i]['body']     = sanitize_output($row['ph_body']);
   }
 
   // Fetch the page's creation date
@@ -5021,10 +5022,11 @@ function compendium_page_history_list( int $page_id ) : mixed
                                       WHERE   compendium_pages.id = '$page_id' "));
 
   // Add the page creation info to the data
-  $data[$i]['id']   = 0;
-  $data[$i]['date'] = sanitize_output(time_since($dpage['p_created']));
-  $data[$i]['css']  = ' class="bold"';
-  $data[$i]['body'] = '';
+  $data[$i]['id']       = 0;
+  $data[$i]['date']     = sanitize_output(time_since($dpage['p_created']));
+  $data[$i]['fulldate'] = sanitize_output(date_to_text($dpage['p_created'], include_time: 2));
+  $data[$i]['css']      = ' class="bold"';
+  $data[$i]['body']     = '';
 
   // Add the number of rows to the data
   $data['rows'] = $i + 1;
