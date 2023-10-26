@@ -116,8 +116,11 @@ if(!$compendium_page_history)
 
     <tr<?=$compendium_page_history[$i]['css']?>>
 
-      <td class="spaced nowrap">
+      <td class="spaced nowrap tooltip_container">
         <?=$compendium_page_history[$i]['date']?>
+        <div class="tooltip">
+          <?=$compendium_page_history[$i]['fulldate']?>
+        </div>
       </td>
 
       <td class="spaced">
