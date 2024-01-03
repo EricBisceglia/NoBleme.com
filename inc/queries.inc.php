@@ -649,7 +649,8 @@ $last_query = sql_check_query_id();
 if($last_query < 47)
 {
   sql_create_field('users', 'unread_private_message_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'visited_page_count');
-  sql_create_field('system_variables', 'unread_admin_mail_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_pageview_check');
+  sql_create_field('system_variables', 'unread_mod_mail_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_pageview_check');
+  sql_create_field('system_variables', 'unread_admin_mail_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'unread_mod_mail_count');
 
   sql_update_query_id(47);
 }

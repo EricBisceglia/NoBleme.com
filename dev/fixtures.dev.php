@@ -322,6 +322,11 @@ for($i = 0; $i < $random; $i++)
                       logs_activity.activity_summary_fr = '$activity'   ");
 }
 
+// Add the latest version number to system variables
+query(" UPDATE  system_variables
+        SET     system_variables.current_version_number_en  = '$activity' ,
+                system_variables.current_version_number_fr  = '$activity' ");
+
 // Output progress
 echo "<tr><td>Generated&nbsp;</td><td style=\"text-align:right\">$random</td><td>website versions</td></tr>";
 ob_flush();
@@ -1129,6 +1134,31 @@ while($dusers = mysqli_fetch_array($qusers))
   }
 }
 
+// Look for users once again
+$qusers = query(" SELECT    users.id AS 'u_id'
+                  FROM      users
+                  ORDER BY  users.id ASC ");
+
+// Loop through users once again
+while($dusers = mysqli_fetch_array($qusers))
+{
+  // Count unread private messages
+  $user_id = $dusers['u_id'];
+  $qmessages = query("  SELECT  COUNT(users_private_messages.id) AS 'm_count'
+                        FROM    users_private_messages
+                        WHERE   users_private_messages.fk_users_recipient     = '$user_id'
+                        AND     users_private_messages.deleted_by_recipient   = 0
+                        AND     users_private_messages.is_admin_only_message  = 0
+                        AND     users_private_messages.read_at                = 0 ");
+
+  // Update private message count
+  $dmessages      = mysqli_fetch_array($qmessages);
+  $message_count  = $dmessages['m_count'];
+  query(" UPDATE  users
+          SET     users.unread_private_message_count = '$message_count'
+          WHERE   users.id = '$user_id' ");
+}
+
 // Output progress
 echo "<tr><td>Generated</td><td style=\"text-align:right\">$private_messages</td><td>private messages</td></tr>";
 ob_flush();
@@ -1652,12 +1682,22 @@ $snippets     = fixtures_generate_data('text', 1, 1);
 $template_en  = fixtures_generate_data('text', 1, 1);
 $template_fr  = fixtures_generate_data('text', 1, 1);
 
+// Generate random links
+$links = '';
+$random = mt_rand(5,10);
+for($i = 0; $i < 10; $i++)
+{
+  $random_url = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $links     .= ($i === 0) ? $random_url : '|||'.$random_url;
+}
+
 // Generate admin notes
 query(" INSERT INTO compendium_admin_tools
         SET         compendium_admin_tools.global_notes = '$global_notes' ,
                     compendium_admin_tools.snippets     = '$snippets'     ,
                     compendium_admin_tools.template_en  = '$template_en'  ,
-                    compendium_admin_tools.template_fr  = '$template_fr'  ");
+                    compendium_admin_tools.template_fr  = '$template_fr'  ,
+                    compendium_admin_tools.links        = '$links'        ");
 
 // Output progress
 echo "<tr><td>Generated</td><td style=\"text-align:right\">1</td><td>compendium admin note</td></tr>";
