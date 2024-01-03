@@ -231,16 +231,7 @@ else
 // Check only if the user is logged in
 if($activity_user)
 {
-  // Fetch unread private message count
-  $dpms = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'pm_nb'
-                                      FROM    users_private_messages
-                                      WHERE   users_private_messages.read_at              = 0
-                                      AND     users_private_messages.deleted_by_recipient = 0
-                                      AND     users_private_messages.fk_users_recipient   = '$activity_user' " ,
-                                      description: "Check for unread private messages"));
-
-  // Fetch the result for display
-  $private_message_count      = $dpms['pm_nb'];
+  $private_message_count      = $unread_pms;
   $private_message_count_css  = ($private_message_count && basename($_SERVER['PHP_SELF']) !== 'inbox.php') ? ' header_submenu_blink' : '';
 }
 
@@ -253,20 +244,9 @@ if($activity_user)
 // Check only if the user is moderator or above
 if($is_moderator)
 {
-  // Prevent moderators from being warned for admin only mail
-  $admin_condition = ($is_admin) ? '' : ' AND users_private_messages.is_admin_only_message = 0 ';
-  // Fetch unread private message count
-  $dpms = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'pm_nb'
-                                      FROM    users_private_messages
-                                      WHERE   users_private_messages.read_at                = 0
-                                      AND     users_private_messages.hide_from_admin_mail   = 0
-                                      AND     users_private_messages.deleted_by_recipient   = 0
-                                      AND     users_private_messages.fk_users_recipient     = 0
-                                              $admin_condition " ,
-                                      description: "Check for unread admin mail"));
-
   // Fetch the result for display
-  $admin_mail_count     = $dpms['pm_nb'];
+  $admin_mail_count       = $system_variables['unread_mod_mail_count'];
+  $admin_mail_count      += ($is_admin) ? $system_variables['unread_admin_mail_count'] : 0;
   $admin_mail_count_css = ($admin_mail_count && basename($_SERVER['PHP_SELF']) !== 'inbox.php') ? ' header_submenu_blink' : '';
 }
 

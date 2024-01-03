@@ -124,12 +124,13 @@ if($is_logged_in)
   $user_id = sanitize($is_logged_in, 'int', 0);
 
   // Fetch some data
-  $duser = mysqli_fetch_array(query("   SELECT    users.is_deleted                  AS 'u_deleted'  ,
-                                                  users.username                    AS 'u_nick'     ,
-                                                  users.is_administrator            AS 'u_admin'    ,
-                                                  users.is_moderator                AS 'u_mod'      ,
-                                                  users.is_banned_until             AS 'u_ban_end'  ,
-                                                  users_settings.show_nsfw_content  AS 'us_nsfw'
+  $duser = mysqli_fetch_array(query("   SELECT    users.is_deleted                    AS 'u_deleted'  ,
+                                                  users.username                      AS 'u_nick'     ,
+                                                  users.is_administrator              AS 'u_admin'    ,
+                                                  users.is_moderator                  AS 'u_mod'      ,
+                                                  users.unread_private_message_count  AS 'u_pm'       ,
+                                                  users.is_banned_until               AS 'u_ban_end'  ,
+                                                  users_settings.show_nsfw_content    AS 'us_nsfw'
                                         FROM      users
                                         LEFT JOIN users_settings on users_settings.fk_users = users.id
                                         WHERE     users.id = '$user_id' " ,
@@ -148,6 +149,7 @@ if($is_logged_in)
   $is_moderator   = ($is_admin || $duser['u_mod']);
   $is_guest       = 0;
   $is_banned      = $duser['u_ban_end'];
+  $unread_pms     = $duser['u_pm'];
   $settings_nsfw  = $duser['us_nsfw'];
 }
 
@@ -160,6 +162,7 @@ if(!$is_logged_in || !$user_id)
   $is_moderator   = 0;
   $is_guest       = 1;
   $is_banned      = 0;
+  $unread_pms     = 0;
   $settings_nsfw  = 0;
 }
 
@@ -169,6 +172,7 @@ $_SESSION['is_admin']       = $is_admin;
 $_SESSION['is_moderator']   = $is_moderator;
 $_SESSION['is_guest']       = $is_guest;
 $_SESSION['is_banned']      = $is_banned;
+$_SESSION['unread_pms']     = 0;
 $_SESSION['settings_nsfw']  = $settings_nsfw;
 
 
