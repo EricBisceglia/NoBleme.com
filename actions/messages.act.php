@@ -14,6 +14,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  private_messages_reply        Replies to an existing private message.                                            */
 /*  private_messages_delete       Deletes a private message.                                                         */
 /*                                                                                                                   */
+/*  private_messages_recalculate  Recalculates the number of unread private messages in a user's inbox.              */
+/*                                                                                                                   */
 /*  private_messages_years_list   Fetches all years during which the current user got or sent private messages.      */
 /*                                                                                                                   */
 /*  private_message_admins        Sends a private message to the administrative team.                                */
@@ -106,6 +108,9 @@ function private_messages_get( int $message_id ) : array
             SET     users_private_messages.read_at  = '$timestamp'
             WHERE   users_private_messages.id       = '$message_id' ");
   }
+
+  // Recalculate the user's unread private message count
+  private_messages_recalculate($user_id);
 
   // Get parent message chain
   if($dmessage['pm_parent'] && (int)$dmessage['pm_parent'] !== $message_id)
@@ -327,6 +332,9 @@ function private_messages_list( string  $sort_by        = ''      ,
   $data['rows']   = $i;
   $data['unread'] = ($mark_as_read) ? 0 : $count_unread;
 
+  // Recalculate the user's unread private message count
+  private_messages_recalculate($user_id);
+
   // Return the prepared data
   return $data;
 }
@@ -389,6 +397,9 @@ function private_messages_write(  string  $recipient  ,
                         recipient: $recipient_id    ,
                         sender: $sender_id          ,
                         do_not_sanitize: true       );
+
+  // Recalculate the recipient's unread private message count
+  private_messages_recalculate($recipient_id);
 
   // All went well
   return NULL;
@@ -468,6 +479,10 @@ function private_messages_reply(  int     $message_id ,
                         is_admin_only: $admin_only  ,
                         do_not_sanitize: true       );
 
+  // Recalculate the recipient's unread private message count
+  if($recipient)
+    private_messages_recalculate($recipient);
+
   // Notify IRC and Discord in case of admin message
   if(!$recipient)
   {
@@ -541,8 +556,58 @@ function private_messages_delete( int $message_id ) : mixed
                     users_private_messages.read_at              = '$timestamp'
             WHERE   users_private_messages.id                   = '$message_id' ");
 
+  // Recalculate the users's unread private message count
+  private_messages_recalculate();
+
   // All went well, return NULL
   return NULL;
+}
+
+
+
+
+/**
+ * Recalculates the number of unread private messages in a user's inbox.
+ *
+ * @param   int   $user_id  (OPTIONAL)  The ID of the user to recalculate, else defaults to current user.
+ *
+ * @return  int                         The number of unread private messages for that user.
+ */
+
+function private_messages_recalculate( int $user_id = 0 ) : ?int
+{
+  // User must be logged in if no id is provided
+  if(!$user_id && !user_is_logged_in())
+    return NULL;
+
+  // Get current user id if needed
+  $user_id = ($user_id) ? $user_id : user_get_id();
+
+  // Sanitize the user's ID
+  $user_id = sanitize($user_id, 'int', 1);
+
+  // Error: User does not exist
+  if(!database_row_exists('users', $user_id))
+    return NULL;
+
+  // Look for the number of unread private messages
+  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.deleted_by_recipient   = 0
+                                          AND     users_private_messages.fk_users_recipient     = '$user_id'
+                                          AND     users_private_messages.is_admin_only_message  = 0
+                                          AND     users_private_messages.read_at                = 0 "));
+
+  // Sanitize the unread message count
+  $message_count = sanitize($qmessages['pm_count'], 'int', 0);
+
+  // Update the unread message count for that user
+  query(" UPDATE  users
+          SET     users.unread_private_message_count  = '$message_count'
+          WHERE   users.id                            = '$user_id' ");
+
+  // Return the unread message count
+  return $message_count;
 }
 
 

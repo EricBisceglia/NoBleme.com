@@ -61,7 +61,8 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
                                         FROM    users_tokens
                                         WHERE   users_tokens.token_type LIKE 'session'
                                         AND     users_tokens.token      LIKE '$login_cookie'
-                                        AND     users_tokens.delete_at     > '$timestamp' "));
+                                        AND     users_tokens.delete_at     > '$timestamp' ",
+                                        description: "Identify the user using their token"));
 
   // If there's a match, the process can continue
   if(isset($dusers['t_uid']))
