@@ -1013,7 +1013,7 @@ function private_message_send(  string  $title                    ,
   $read_at      = ($is_silent) ? sanitize(time(), 'int', 0) : 0;
   $true_sender  = sanitize($true_sender, 'int', 0);
   $admin_only   = sanitize($is_admin_only, 'int', 0, 1);
-  $admin_mail   = sanitize($hide_admin_mail, 'int', 0, 1);
+  $admin_hide   = sanitize($hide_admin_mail, 'int', 0, 1);
 
   // If the recipient does not exist, do not send the message
   if($recipient && !database_row_exists('users', $recipient))
@@ -1030,11 +1030,30 @@ function private_message_send(  string  $title                    ,
                         users_private_messages.fk_users_true_sender   = '$true_sender'  ,
                         users_private_messages.fk_parent_message      = '$parent'       ,
                         users_private_messages.is_admin_only_message  = '$admin_only'   ,
-                        users_private_messages.hide_from_admin_mail   = '$admin_mail'   ,
+                        users_private_messages.hide_from_admin_mail   = '$admin_hide'   ,
                         users_private_messages.sent_at                = '$sent_at'      ,
                         users_private_messages.read_at                = '$read_at'      ,
                         users_private_messages.title                  = '$title'        ,
                         users_private_messages.body                   = '$body'         ");
+
+  // Recalculate the unread private message count
+  if($recipient && !$is_silent)
+    query(" UPDATE  users
+            SET     users.unread_private_message_count  = (users.unread_private_message_count + 1)
+            WHERE   users.id                            = '$recipient' ");
+
+  // Recalculate the admin and mod mail count
+  else if(!$admin_hide && !$is_silent)
+  {
+    // Admin mail
+    query(" UPDATE  system_variables
+            SET     system_variables.unread_admin_mail_count = (system_variables.unread_admin_mail_count + 1) ");
+
+    // Mod mail
+    if(!$admin_only)
+      query(" UPDATE  system_variables
+              SET     system_variables.unread_mod_mail_count = (system_variables.unread_mod_mail_count + 1) ");
+  }
 
   // Return 1 to show the message was sent
   return 1;
