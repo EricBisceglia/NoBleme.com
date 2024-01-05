@@ -42,6 +42,8 @@ if(!isset($GLOBALS['sql_skip_system_variables']))
                                                           system_variables.latest_query_id            ,
                                                           system_variables.last_scheduler_execution   ,
                                                           system_variables.last_pageview_check        ,
+                                                          system_variables.unread_mod_mail_count      ,
+                                                          system_variables.unread_admin_mail_count    ,
                                                           system_variables.current_version_number_en  ,
                                                           system_variables.current_version_number_fr  ,
                                                           system_variables.irc_bot_is_silenced

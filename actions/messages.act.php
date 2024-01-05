@@ -14,6 +14,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  private_messages_reply        Replies to an existing private message.                                            */
 /*  private_messages_delete       Deletes a private message.                                                         */
 /*                                                                                                                   */
+/*  private_messages_recalculate  Recalculates the number of unread private messages in a user's inbox.              */
+/*                                                                                                                   */
 /*  private_messages_years_list   Fetches all years during which the current user got or sent private messages.      */
 /*                                                                                                                   */
 /*  private_message_admins        Sends a private message to the administrative team.                                */
@@ -23,6 +25,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  admin_mail_reply              Replies to an existing private message sent to the administrative team.            */
 /*  admin_mail_delete             Deletes a private message sent to or by the administrative team.                   */
 /*  admin_mail_read_all           Marks all unread admin mails as read.                                              */
+/*                                                                                                                   */
+/*  admin_mail_recalculate        Recalculates the number of unread admin mails.                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -106,6 +110,9 @@ function private_messages_get( int $message_id ) : array
             SET     users_private_messages.read_at  = '$timestamp'
             WHERE   users_private_messages.id       = '$message_id' ");
   }
+
+  // Recalculate the user's unread private message count
+  private_messages_recalculate($user_id);
 
   // Get parent message chain
   if($dmessage['pm_parent'] && (int)$dmessage['pm_parent'] !== $message_id)
@@ -327,6 +334,9 @@ function private_messages_list( string  $sort_by        = ''      ,
   $data['rows']   = $i;
   $data['unread'] = ($mark_as_read) ? 0 : $count_unread;
 
+  // Recalculate the user's unread private message count
+  private_messages_recalculate($user_id);
+
   // Return the prepared data
   return $data;
 }
@@ -389,6 +399,9 @@ function private_messages_write(  string  $recipient  ,
                         recipient: $recipient_id    ,
                         sender: $sender_id          ,
                         do_not_sanitize: true       );
+
+  // Recalculate the recipient's unread private message count
+  private_messages_recalculate($recipient_id);
 
   // All went well
   return NULL;
@@ -468,6 +481,10 @@ function private_messages_reply(  int     $message_id ,
                         is_admin_only: $admin_only  ,
                         do_not_sanitize: true       );
 
+  // Recalculate the recipient's unread private message count
+  if($recipient)
+    private_messages_recalculate($recipient);
+
   // Notify IRC and Discord in case of admin message
   if(!$recipient)
   {
@@ -541,8 +558,58 @@ function private_messages_delete( int $message_id ) : mixed
                     users_private_messages.read_at              = '$timestamp'
             WHERE   users_private_messages.id                   = '$message_id' ");
 
+  // Recalculate the users's unread private message count
+  private_messages_recalculate();
+
   // All went well, return NULL
   return NULL;
+}
+
+
+
+
+/**
+ * Recalculates the number of unread private messages in a user's inbox.
+ *
+ * @param   int   $user_id  (OPTIONAL)  The ID of the user to recalculate, else defaults to current user.
+ *
+ * @return  int                         The number of unread private messages for that user.
+ */
+
+function private_messages_recalculate( int $user_id = 0 ) : ?int
+{
+  // User must be logged in if no id is provided
+  if(!$user_id && !user_is_logged_in())
+    return NULL;
+
+  // Get current user id if needed
+  $user_id = ($user_id) ? $user_id : user_get_id();
+
+  // Sanitize the user's ID
+  $user_id = sanitize($user_id, 'int', 1);
+
+  // Error: User does not exist
+  if(!database_row_exists('users', $user_id))
+    return NULL;
+
+  // Look for the number of unread private messages
+  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.deleted_by_recipient   = 0
+                                          AND     users_private_messages.fk_users_recipient     = '$user_id'
+                                          AND     users_private_messages.is_admin_only_message  = 0
+                                          AND     users_private_messages.read_at                = 0 "));
+
+  // Sanitize the unread message count
+  $message_count = sanitize($qmessages['pm_count'], 'int', 0);
+
+  // Update the unread message count for that user
+  query(" UPDATE  users
+          SET     users.unread_private_message_count  = '$message_count'
+          WHERE   users.id                            = '$user_id' ");
+
+  // Return the unread message count
+  return $message_count;
 }
 
 
@@ -677,6 +744,9 @@ function private_message_admins(  string  $body               ,
                         sender: $sender_id    ,
                         do_not_sanitize: true );
 
+  // Recalculate the unread admin mail count
+  admin_mail_recalculate();
+
   // Notify the moderation team through IRC and Discord that a message has been sent
   irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", 'mod');
   discord_send_message("Private message sent to the administrative team by $sender: $title".PHP_EOL."<".$GLOBALS['website_url']."pages/admin/inbox>", 'mod');
@@ -770,6 +840,9 @@ function admin_mail_list( string $search = '' ) : array
     $data[$i]['top_level']  = !in_array($data[$i]['id'], $parent_ids);
     $data['unread']        += ($data[$i]['display'] && $data[$i]['top_level'] && !$data[$i]['read']);
   }
+
+  // Recalculate the unread admin mail count
+  admin_mail_recalculate();
 
   // Return the prepared data
   return $data;
@@ -964,6 +1037,9 @@ function admin_mail_get( int $message_id ) : array
     $data['parents'] = $i;
   }
 
+  // Recalculate the unread admin mail count
+  admin_mail_recalculate();
+
   // Return the data
   return $data;
 }
@@ -1044,6 +1120,9 @@ function admin_mail_reply(  int     $message_id ,
                         is_admin_only: $admin_only  ,
                         do_not_sanitize: true       );
 
+  // Recalculate the unread admin mail count
+  admin_mail_recalculate();
+
   // Everything went well
   return NULL;
 }
@@ -1090,6 +1169,9 @@ function admin_mail_delete( int $message_id ) : mixed
   query(" DELETE FROM users_private_messages
           WHERE       users_private_messages.id = '$message_id' ");
 
+  // Recalculate the unread admin mail count
+  admin_mail_recalculate();
+
   // All went well, return NULL
   return NULL;
 }
@@ -1105,8 +1187,8 @@ function admin_mail_delete( int $message_id ) : mixed
 
 function admin_mail_read_all()
 {
-  // Only administrators can read admin mail
-  user_restrict_to_administrators();
+  // Only moderators can read admin mail
+  user_restrict_to_moderators();
 
   // Get current timestamp
   $timestamp = sanitize(time(), 'int', 0);
@@ -1116,4 +1198,58 @@ function admin_mail_read_all()
           SET     users_private_messages.read_at              = '$timestamp'
           WHERE   users_private_messages.hide_from_admin_mail = 0
           AND     users_private_messages.fk_users_recipient   = 0 ");
+
+  // Recalculate the unread admin mail count
+  admin_mail_recalculate();
 }
+
+
+
+
+/**
+ * Recalculates the number of unread admin mails.
+ *
+ * @return  int   The number of unread admin mail which the user is allowed to access.
+ */
+
+ function admin_mail_recalculate() : ?int
+ {
+  // Look for the number of unread mod mails
+  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.deleted_by_recipient   = 0
+                                          AND     users_private_messages.fk_users_recipient     = 0
+                                          AND     users_private_messages.is_admin_only_message  = 0
+                                          AND     users_private_messages.read_at                = 0
+                                          AND     users_private_messages.hide_from_admin_mail   = 0 "));
+
+  // Sanitize the unread message count
+  $mod_mail_count = sanitize($qmessages['pm_count'], 'int', 0);
+
+  // Update the unread modmail count
+  query(" UPDATE  system_variables
+          SET     system_variables.unread_mod_mail_count = '$mod_mail_count' ");
+
+  // Look for the number of unread admin mails
+  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.deleted_by_recipient   = 0
+                                          AND     users_private_messages.fk_users_recipient     = 0
+                                          AND     users_private_messages.read_at                = 0
+                                          AND     users_private_messages.hide_from_admin_mail   = 0 "));
+
+  // Sanitize the unread message count
+  $admin_mail_count = sanitize($qmessages['pm_count'], 'int', 0);
+
+  // Update the unread admin mail count
+  query(" UPDATE  system_variables
+          SET     system_variables.unread_admin_mail_count = '$admin_mail_count' ");
+
+  // Return the number of unread admin mails depending on the user's access rights
+  if(user_is_administrator())
+    return $admin_mail_count;
+  else if(user_is_moderator())
+    return $mod_mail_count;
+  else
+    return 0;
+ }

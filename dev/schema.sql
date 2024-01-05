@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `compendium_admin_tools` (
   `snippets` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `template_en` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `template_fr` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `links` longtext COLLATE utf8mb4_unicode_ci
+  `links` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `compendium_categories`;
@@ -411,8 +411,10 @@ CREATE TABLE IF NOT EXISTS `system_variables` (
   `latest_query_id` smallint UNSIGNED NOT NULL DEFAULT '0',
   `last_scheduler_execution` int UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int UNSIGNED NOT NULL DEFAULT '0',
-  `current_version_number_en` text COLLATE utf8mb4_unicode_ci,
-  `current_version_number_fr` text COLLATE utf8mb4_unicode_ci,
+  `unread_mod_mail_count` int UNSIGNED NOT NULL DEFAULT '0',
+  `unread_admin_mail_count` int UNSIGNED NOT NULL DEFAULT '0',
+  `current_version_number_en` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `current_version_number_fr` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `registrations_are_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `irc_bot_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `discord_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
@@ -449,6 +451,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_visited_page_fr` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_url` varchar(510) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `visited_page_count` int UNSIGNED NOT NULL DEFAULT '0',
+  `unread_private_message_count` int UNSIGNED NOT NULL DEFAULT '0',
   `current_ip_address` varchar(135) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `is_banned_since` int UNSIGNED NOT NULL DEFAULT '0',
   `is_banned_until` int UNSIGNED NOT NULL DEFAULT '0',

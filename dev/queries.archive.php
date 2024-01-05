@@ -159,3 +159,83 @@ if($last_query < 41)
 
   sql_update_query_id(41);
 }
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       4.4.x                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Store page length
+
+if($last_query < 42)
+{
+  sql_create_field('compendium_pages', 'character_count_en', 'INT UNSIGNED NOT NULL DEFAULT 0', 'definition_fr');
+  sql_create_field('compendium_pages', 'character_count_fr', 'INT UNSIGNED NOT NULL DEFAULT 0', 'character_count_en');
+
+  sql_update_query_id(42);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// System variables: Store current version number
+
+if($last_query < 43)
+{
+  sql_create_field('system_variables', 'current_version_number_en', 'TEXT', 'last_pageview_check');
+  sql_create_field('system_variables', 'current_version_number_fr', 'TEXT', 'current_version_number_en');
+
+  sql_update_query_id(43);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Global admin links
+
+if($last_query < 44)
+{
+  sql_create_field('compendium_admin_tools', 'links', 'LONGTEXT', 'template_fr');
+
+  sql_update_query_id(44);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Compendium: Store last visit on pages and images + add some missing indexes
+
+if($last_query < 45)
+{
+  sql_create_field('compendium_pages', 'last_seen_on', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count');
+  sql_create_field('compendium_images', 'last_seen_on', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count');
+  sql_create_index('compendium_pages', 'index_seen', 'last_seen_on');
+  sql_create_index('compendium_images', 'index_seen', 'last_seen_on');
+
+  sql_create_index('compendium_pages', 'index_views', 'view_count');
+  sql_create_index('compendium_images', 'index_views', 'view_count');
+  sql_create_index('compendium_images', 'index_uploaded', 'uploaded_at');
+
+  sql_update_query_id(45);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Quotes: Replicate linked users data
+
+if($last_query < 46)
+{
+  sql_create_field('quotes', 'linked_users', 'JSON', 'body');
+
+  sql_update_query_id(46);
+}
