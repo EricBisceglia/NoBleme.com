@@ -463,6 +463,7 @@ function users_list(  string  $sort_by          = ''      ,
                                 0                                       AS 'u_total_ip_ban'
                       FROM      users_guests
                       WHERE     users_guests.last_visited_at >= '$minimum_activity'
+                      ORDER BY  users_guests.last_visited_at DESC
                       LIMIT     $max_guest_count )
                     UNION
                       ( ".$qusers." )
