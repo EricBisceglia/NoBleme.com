@@ -40,8 +40,36 @@ $js   = array('nobleme/activity');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare an url for dynamic calls, depending on whether we're on recent activity or moderation logs
 
-$activity_modlogs = form_fetch_element('mod', 0, 1, 'GET');
+$activity_modlogs = form_fetch_element('mod', default_value: 0, element_exists: 1, request_type: 'GET');
 $logs_url         = (!$activity_modlogs) ? "activity" : "activity?mod";
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Check for a preset activity type
+
+// Assemble a list of all allowed activity types
+$activity_types = array('all', 'users', 'meetups', 'quotes', 'compendium', 'irc', 'dev');
+
+// Check if one of the allowed activity types has been preselected
+foreach($activity_types as $activity_type_entry)
+{
+  if(!isset($activity_type) && form_fetch_element($activity_type_entry, element_exists: true, request_type: 'GET'))
+    $activity_type = $activity_type_entry;
+}
+
+// Set the activity type to a default value if none was preselected
+$activity_type = (isset($activity_type)) ? $activity_type : 'all';
+
+// Overwrite the activity type with the one in the search form if it is in use
+$activity_type  = form_fetch_element('activity_type', request_type: 'POST')
+                ? form_fetch_element('activity_type', 'all', request_type: 'POST')
+                : $activity_type;
+
+// Prepare the activity type dropdown menu selection
+foreach($activity_types as $activity_type_entry)
+  $activity_type_selected[$activity_type_entry] = ($activity_type === $activity_type_entry) ? ' selected' : '';
 
 
 
@@ -52,7 +80,7 @@ $logs_url         = (!$activity_modlogs) ? "activity" : "activity?mod";
 $activity_deleted = form_fetch_element('activity_deleted', 0);
 $activity_logs    = activity_list(  $activity_modlogs                           ,
                                     form_fetch_element('activity_amount', 100)  ,
-                                    form_fetch_element('activity_type', 'all')  ,
+                                    $activity_type                              ,
                                     $activity_deleted                           ,
                                     $is_admin                                   );
 
@@ -134,17 +162,17 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('activity_latest_actions')?>
 
     <select class="inh small activity_type" id="activity_type" onchange="activity_submit_menus('<?=$logs_url?>');">
-      <option value="all"><?=__('activity_type_all')?></option>
-      <option value="users"><?=string_change_case(__('user_acc+'), 'initials')?></option>
-      <option value="meetups"><?=__('activity_type_meetups')?></option>
+      <option value="all"<?=$activity_type_selected['all']?>><?=__('activity_type_all')?></option>
+      <option value="users"<?=$activity_type_selected['users']?>><?=string_change_case(__('user_acc+'), 'initials')?></option>
+      <option value="meetups"<?=$activity_type_selected['meetups']?>><?=__('activity_type_meetups')?></option>
       <?php if(!$activity_modlogs) { ?>
-      <option value="quotes"><?=__('submenu_social_quotes')?></option>
-      <option value="compendium"><?=__('submenu_pages_compendium')?></option>
+      <option value="quotes"<?=$activity_type_selected['quotes']?>><?=__('submenu_social_quotes')?></option>
+      <option value="compendium"<?=$activity_type_selected['compendium']?>><?=__('submenu_pages_compendium')?></option>
       <?php } else { ?>
-      <option value="irc"><?=__('activity_type_irc')?></option>
+      <option value="irc"<?=$activity_type_selected['irc']?>><?=__('activity_type_irc')?></option>
       <?php } ?>
       <?php if(!$activity_modlogs) { ?>
-      <option value="dev"><?=__('activity_type_dev')?></option>
+      <option value="dev"<?=$activity_type_selected['dev']?>><?=__('activity_type_dev')?></option>
       <?php } ?>
     </select>
 
