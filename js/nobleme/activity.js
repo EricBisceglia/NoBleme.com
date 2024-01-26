@@ -34,6 +34,17 @@ function activity_submit_menus( fetch_url               ,
   postdata += '&activity_type='     + fetch_sanitize_id('activity_type');
   postdata += '&activity_deleted='  + fetch_sanitize_id('activity_deleted');
 
+  // Prepare the custom query string
+  query_string      = window.location.search;
+  base_query        = (query_string.startsWith('?mod') || fetch_sanitize_id('activity_type') != 'all') ? '?' : '';
+  mod_query         = (query_string.startsWith('?mod')) ? 'mod' : '';
+  mid_query         = (query_string.startsWith('?mod') && fetch_sanitize_id('activity_type') != 'all') ? '&' : '';
+  activity_query    = (fetch_sanitize_id('activity_type') != 'all') ? fetch_sanitize_id('activity_type') : '';
+  new_query_string  = base_query + mod_query + mid_query + activity_query;
+
+  // Rewrite the URL with the custom query string
+  window.history.pushState({}, document.title, window.location.pathname + new_query_string);
+
   // Fetch the data
   fetch_page(fetch_url, 'activity_body', postdata);
 }
