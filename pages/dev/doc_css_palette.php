@@ -242,14 +242,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <p>
       [gallery]<br>
-      [gallery:ah_original.jpg|Description]<br>
+      [gallery:ah_original.jpg|[caption=Author]Description[/caption]]<br>
       [gallery-nsfw:ah_original.jpg]<br>
       [gallery-youtube:XE6YaLtctcI]<br>
       [gallery-youtube-nsfw:XE6YaLtctcI|Description]<br>
       [/gallery]<br>
       <br>
       <?=nbcodes('[gallery]
-      [gallery:ah_original.jpg|Description]
+      [gallery:ah_original.jpg|[caption=Author]Description[/caption]]
       [gallery-nsfw:ah_original.jpg]
       [gallery-youtube:XE6YaLtctcI]
       [gallery-youtube-nsfw:XE6YaLtctcI|Description]

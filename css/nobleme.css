@@ -571,6 +571,8 @@ div.debug_query           { max-height: 20.0rem; overflow-x: scroll; border: 1px
                             margin-bottom: 0.5rem; margin-left: -0.5rem; margin-right: -0.5rem;             }
 .nbcode_gallery_container { height: 16.0rem; display: flex; align-items: center; justify-content: center;   }
 .nbcode_gallery_contents  { max-height: 16.0rem;                                                            }
+.nbcode_caption           { padding-top: 0.1rem; padding-bottom: 0.1rem                                     ;
+                            text-align: left; text-align-last: left;                                        }
 .nbcode_copypasta         { padding-left: 1.0rem; padding-right: 0.8rem;                                    }
 .nbcode_source            { font-size: 70%; vertical-align: top; padding-left: 0.1rem;                      }
 .nbcode_menu_bull         { font-size: 130%; padding-right: 0.2rem;                                         }

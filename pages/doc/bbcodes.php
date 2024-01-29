@@ -457,6 +457,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
         <td class="nowrap monospace">
           [gallery]<br>
+          [caption=Who]What[/caption]<br>
           [gallery:img.png]<br>
           [gallery-nsfw:img.png]<br>
           [gallery-youtube:id]<br>
