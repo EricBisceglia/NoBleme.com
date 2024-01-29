@@ -187,8 +187,8 @@ ___('nbcodes_bullet_example',   'FR', "[bulletlist]<br>[bullet]Élément de list
 
 ___('nbcodes_gallery_name',      'EN', "Gallery<br>Gallery elements");
 ___('nbcodes_gallery_name',      'FR', "Galerie<br>Éléments de galerie");
-___('nbcodes_gallery_example',   'EN', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
-___('nbcodes_gallery_example',   'FR', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
+___('nbcodes_gallery_example',   'EN', "[gallery]<br>[caption=Who]What[/caption]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
+___('nbcodes_gallery_example',   'FR', "[gallery]<br>[caption=Who]What[/caption]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
 
 ___('nbcodes_source_name',       'EN', "Source link<br>Source reference");
 ___('nbcodes_source_name',       'FR', "Lien source<br>Référence source");

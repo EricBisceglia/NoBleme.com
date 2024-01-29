@@ -610,6 +610,22 @@ function nbcodes( string  $text                                                ,
 
 
   /*******************************************************************************************************************/
+  // [caption]Gallery image caption[/caption=author]
+
+  // Solved with a regex in a while loop
+  while(preg_match('/\[caption\](.*?)\[\/caption\]/is',$text))
+    $text = preg_replace('/\[caption\](.*?)\[\/caption\]/is',"<div class=\"nbcode_caption\">$1</div>", $text);
+
+
+  /*******************************************************************************************************************/
+  // [caption=author]Gallery image caption with author[/caption=author]
+
+  // Same thing but with a parameter specifying the author
+  while(preg_match('/\[caption=(.*?)\](.*?)\[\/caption\]/is',$text))
+    $text = preg_replace('/\[caption=(.*?)\](.*?)\[\/caption\]/is',"<div class=\"nbcode_caption\"><span class=\"bold\">$1</span>".__(':')." $2</div>", $text);
+
+
+  /*******************************************************************************************************************/
   // [gallery][/gallery]
 
   // Handle this with a regex
@@ -840,6 +856,12 @@ function nbcodes( string  $text                                                ,
   $text = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]/i', 'YouTube: $1 - $3'.PHP_EOL, $text);
   $text = preg_replace('/\[youtube-nsfw:(.*?)\|(.*?)\]/i', 'YouTube: $1'.PHP_EOL , $text);
   $text = preg_replace('/\[youtube-nsfw:(.*?)\]/i', 'YouTube: $1' , $text);
+
+  // Remove captions
+  while(preg_match('/\[caption\](.*?)\[\/caption\]/is',$text))
+    $text = preg_replace('/\[caption\](.*?)\[\/caption\]/is',"$1", $text);
+  while(preg_match('/\[caption=(.*?)\](.*?)\[\/caption\]/is',$text))
+    $text = preg_replace('/\[caption=(.*?)\](.*?)\[\/caption\]/is',"$1: $2", $text);
 
   // Remove galleries
   $text = preg_replace('/\[gallery\](.*?)\[\/gallery\]/is', '$1', $text);
