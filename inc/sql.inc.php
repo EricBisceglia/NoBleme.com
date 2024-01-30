@@ -65,16 +65,20 @@ else
  * As it is basically a global wrapper for MySQL usage, you should always use this function when executing a query.
  * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
  *
- * @param   string  $query                      The query that you want to run.
- * @param   bool    $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
- * @param   string  $description    (OPTIONAL)  Describe the query, will only be used in SQL debug mode.
+ * @param   string      $query                      The query that you want to run.
+ * @param   bool        $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
+ * @param   bool        $fetch_row      (OPTIONAL)  Fetch the first row and return it instead of the query object.
+ * @param   string      $row_format     (OPTIONAL)  Format the fetched row uses ('both', 'num'), defaults to 'assoc'.
+ * @param   string      $description    (OPTIONAL)  Describe the query, will only be used in SQL debug mode.
  *
- * @return  object|bool                             A mysqli_object or a boolean, depending on the type of query.
+ * @return  object|bool|array|null                  A mysqli_object, a bool, an array, null: depends on the parameters.
  */
 
-function query( string  $query                  ,
-                bool    $ignore_errors  = false ,
-                string  $description    = NULL  ) : mixed
+function query( string  $query                    ,
+                bool    $ignore_errors  = false   ,
+                bool    $fetch_row      = false   ,
+                string  $row_format     = 'assoc' ,
+                string  $description    = NULL    ) : mixed
 {
   // First off let's increment the global query counter for this session
   $GLOBALS['query']++;
@@ -139,8 +143,49 @@ function query( string  $query                  ,
     echo '</div>';
   }
 
+  // Fetch and return the first row of the query if requested
+  if($fetch_row === true)
+    return query_row($query_result, $row_format);
+
   // Return the result of the query
   return $query_result;
+}
+
+
+
+
+/**
+ * Fetch the next row of a query
+ *
+ * @param   object        $query_object               The query object obtained by using the query() function.
+ * @param   string        $return_format  (OPTIONAL)  Format of the returned array ('num', 'both') defaults to 'assoc'.
+ *
+ * @return  array|null                                A mysqli_object or a boolean, depending on the type of query.
+ */
+
+function query_row( object  $query_object             ,
+                    string  $return_format  = 'assoc' ) : ?array
+{
+  // Return null if the variable is not a query object
+  if(!is_a($query_object, 'mysqli_result'))
+    return NULL;
+
+  // Set the returned format constant to a value allowed by MySQL
+  $return_format = match($return_format)
+  {
+    'assoc' => MYSQLI_ASSOC ,
+    'num'   => MYSQLI_NUM   ,
+    default => MYSQLI_BOTH
+  };
+
+  // Fetch the next row of the query
+  $return = mysqli_fetch_array($query_object, $return_format);
+
+  // If the result is not an array, set it to null
+  $return = is_array($return) ? $return : NULL;
+
+  // Return the row
+  return $return;
 }
 
 
