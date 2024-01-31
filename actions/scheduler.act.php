@@ -40,12 +40,13 @@ function dev_scheduler_get( int $task_id ) : mixed
     return NULL;
 
   // Fetch the data
-  $dtask = mysqli_fetch_array(query(" SELECT  system_scheduler.planned_at       AS 't_date' ,
-                                              system_scheduler.task_id          AS 't_id'   ,
-                                              system_scheduler.task_type        AS 't_type' ,
-                                              system_scheduler.task_description AS 't_description'
-                                      FROM    system_scheduler
-                                      WHERE   system_scheduler.id = '$task_id' "));
+  $dtask = query("  SELECT  system_scheduler.planned_at       AS 't_date' ,
+                            system_scheduler.task_id          AS 't_id'   ,
+                            system_scheduler.task_type        AS 't_type' ,
+                            system_scheduler.task_description AS 't_description'
+                    FROM    system_scheduler
+                    WHERE   system_scheduler.id = '$task_id' ",
+                    fetch_row: true);
 
   // Assemble an array with the data
   $data['date_days']  = sanitize_output(date('d/m/y', $dtask['t_date']));
@@ -146,7 +147,7 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
   $data['rows_future']  = 0;
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qscheduler); $i++)
+  for($i = 0; $row = query_row($qscheduler); $i++)
   {
     $data['rows_past']       += ($row['s_exec'] === 'past') ? 1 : 0;
     $data['rows_future']     += ($row['s_exec'] === 'future') ? 1 : 0;
@@ -306,7 +307,7 @@ function dev_scheduler_types_list() : array
                     ORDER BY  s_type ASC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+  for($i = 0; $row = query_row($qtypes); $i++)
     $data[$i]['type'] = sanitize_output($row['s_type']);
 
   // Add the number of rows to the data

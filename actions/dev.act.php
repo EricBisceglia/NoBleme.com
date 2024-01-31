@@ -51,13 +51,14 @@ function dev_versions_get( int $version_id ) : mixed
     return NULL;
 
   // Fetch the data
-  $dversions = mysqli_fetch_array(query(" SELECT    system_versions.major         AS 'v_major'      ,
-                                                    system_versions.minor         AS 'v_minor'      ,
-                                                    system_versions.patch         AS 'v_patch'      ,
-                                                    system_versions.extension     AS 'v_extension'  ,
-                                                    system_versions.release_date  AS 'v_date'
-                                          FROM      system_versions
-                                          WHERE     system_versions.id = '$version_id' "));
+  $dversions = query("  SELECT    system_versions.major         AS 'v_major'      ,
+                                  system_versions.minor         AS 'v_minor'      ,
+                                  system_versions.patch         AS 'v_patch'      ,
+                                  system_versions.extension     AS 'v_extension'  ,
+                                  system_versions.release_date  AS 'v_date'
+                        FROM      system_versions
+                        WHERE     system_versions.id = '$version_id' ",
+                        fetch_row: true);
 
   // Assemble an array with the data
   $data['major']        = sanitize_output($dversions['v_major']);
@@ -96,7 +97,7 @@ function dev_versions_list() : array
                                   system_versions.id            DESC  ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qversions); $i++)
+  for($i = 0; $row = query_row($qversions); $i++)
   {
     $data[$i]['id']         = $row['v_id'];
     $data[$i]['version']    = sanitize_output(system_assemble_version_number($row['v_major'], $row['v_minor'], $row['v_patch'], $row['v_extension']));
@@ -265,12 +266,13 @@ function dev_versions_edit( int     $id           ,
     return __('dev_versions_edit_error_id');
 
   // Check if the version number already exists
-  $dversion = mysqli_fetch_array(query("  SELECT  system_versions.id AS 'v_id'
-                                          FROM    system_versions
-                                          WHERE   system_versions.major     =     '$major'
-                                          AND     system_versions.minor     =     '$minor'
-                                          AND     system_versions.patch     =     '$patch'
-                                          AND     system_versions.extension LIKE  '$extension' "));
+  $dversion = query(" SELECT  system_versions.id AS 'v_id'
+                      FROM    system_versions
+                      WHERE   system_versions.major     =     '$major'
+                      AND     system_versions.minor     =     '$minor'
+                      AND     system_versions.patch     =     '$patch'
+                      AND     system_versions.extension LIKE  '$extension' ",
+                      fetch_row: true);
 
   // If it already exists (and isn't the current version), stop the process
   if(isset($dversion['v_id']) && ($dversion['v_id'] !== $id))
@@ -320,12 +322,13 @@ function dev_versions_delete( int $version_id ) : mixed
     return NULL;
 
   // Fetch the version number
-  $dversion = mysqli_fetch_array(query("  SELECT    system_versions.major     AS 'v_major'      ,
-                                                    system_versions.minor     AS 'v_minor'      ,
-                                                    system_versions.patch     AS 'v_patch'      ,
-                                                    system_versions.extension AS 'v_extension'
-                                          FROM      system_versions
-                                          WHERE     system_versions.id = '$version_id' "));
+  $dversion = query(" SELECT    system_versions.major     AS 'v_major'      ,
+                                system_versions.minor     AS 'v_minor'      ,
+                                system_versions.patch     AS 'v_patch'      ,
+                                system_versions.extension AS 'v_extension'
+                      FROM      system_versions
+                      WHERE     system_versions.id = '$version_id' ",
+                      fetch_row: true);
 
   // Assemble the version number
   $version_number = system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']);
@@ -379,15 +382,16 @@ function dev_blogs_get( int     $blog_id          ,
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the data
-  $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.is_deleted  AS 'b_deleted'  ,
-                                                dev_blogs.title_en    AS 'b_title_en' ,
-                                                dev_blogs.title_fr    AS 'b_title_fr' ,
-                                                dev_blogs.posted_at   AS 'b_date'     ,
-                                                dev_blogs.body_$lang  AS 'b_body'     ,
-                                                dev_blogs.body_en     AS 'b_body_en'  ,
-                                                dev_blogs.body_fr     AS 'b_body_fr'
-                                      FROM      dev_blogs
-                                      WHERE     dev_blogs.id = '$blog_id' "));
+  $dblog = query("  SELECT    dev_blogs.is_deleted  AS 'b_deleted'  ,
+                              dev_blogs.title_en    AS 'b_title_en' ,
+                              dev_blogs.title_fr    AS 'b_title_fr' ,
+                              dev_blogs.posted_at   AS 'b_date'     ,
+                              dev_blogs.body_$lang  AS 'b_body'     ,
+                              dev_blogs.body_en     AS 'b_body_en'  ,
+                              dev_blogs.body_fr     AS 'b_body_fr'
+                    FROM      dev_blogs
+                    WHERE     dev_blogs.id = '$blog_id' ",
+                    fetch_row: true);
 
   // Error: Devblog does not exist
   if(!isset($dblog['b_deleted']))
@@ -421,28 +425,30 @@ function dev_blogs_get( int     $blog_id          ,
     $blog_timestamp = sanitize($blog_posted_at, 'int', 0);
 
     // Fetch the previous devblog
-    $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.id          AS 'b_id'  ,
-                                                  dev_blogs.title_$lang AS 'b_title'
-                                        FROM      dev_blogs
-                                        WHERE     dev_blogs.posted_at     < '$blog_timestamp'
-                                        AND       dev_blogs.is_deleted    = 0
-                                        AND       dev_blogs.title_$lang  != ''
-                                        ORDER BY  dev_blogs.posted_at DESC
-                                        LIMIT     1 "));
+    $dblog = query("  SELECT    dev_blogs.id          AS 'b_id'  ,
+                                dev_blogs.title_$lang AS 'b_title'
+                      FROM      dev_blogs
+                      WHERE     dev_blogs.posted_at     < '$blog_timestamp'
+                      AND       dev_blogs.is_deleted    = 0
+                      AND       dev_blogs.title_$lang  != ''
+                      ORDER BY  dev_blogs.posted_at DESC
+                      LIMIT     1 ",
+                      fetch_row: true);
 
     // Add the previous devblog's info to the data array
     $data['prev_id']    = isset($dblog['b_id']) ? sanitize_output($dblog['b_id']) : 0;
     $data['prev_title'] = isset($dblog['b_title']) ? sanitize_output($dblog['b_title']) : '';
 
     // Fetch the next devblog
-    $dblog = mysqli_fetch_array(query(" SELECT    dev_blogs.id          AS 'b_id'  ,
-                                                  dev_blogs.title_$lang AS 'b_title'
-                                        FROM      dev_blogs
-                                        WHERE     dev_blogs.posted_at     > '$blog_timestamp'
-                                        AND       dev_blogs.is_deleted    = 0
-                                        AND       dev_blogs.title_$lang  != ''
-                                        ORDER BY  dev_blogs.posted_at ASC
-                                        LIMIT     1 "));
+    $dblog = query("  SELECT    dev_blogs.id          AS 'b_id'  ,
+                                dev_blogs.title_$lang AS 'b_title'
+                      FROM      dev_blogs
+                      WHERE     dev_blogs.posted_at     > '$blog_timestamp'
+                      AND       dev_blogs.is_deleted    = 0
+                      AND       dev_blogs.title_$lang  != ''
+                      ORDER BY  dev_blogs.posted_at ASC
+                      LIMIT     1 ",
+                      fetch_row: true);
 
     // Add the next devblog's info to the data array
     $data['next_id']    = isset($dblog['b_id']) ? sanitize_output($dblog['b_id']) : 0;
@@ -524,7 +530,7 @@ function dev_blogs_list(  string  $sort   = ''      ,
                     ORDER BY  $order_by ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qblogs); $i++)
+  for($i = 0; $row = query_row($qblogs); $i++)
   {
     // Format the data
     $blog_id        = $row['b_id'];
@@ -831,7 +837,7 @@ function dev_blogs_stats_list() : array
   $oldest_year = date('Y');
 
   // Add devblog data over time to the return data
-  while($ddevblogs = mysqli_fetch_array($qdevblogs))
+  while($ddevblogs = query_row($qdevblogs))
   {
     $year                 = $ddevblogs['d_year'];
     $oldest_year          = ($year < $oldest_year) ? $year : $oldest_year;
