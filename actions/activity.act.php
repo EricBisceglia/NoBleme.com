@@ -39,9 +39,10 @@ function activity_get( int $log_id ) : array
   $data['diff'] = '';
 
   // Fetch the justification reason
-  $dlog = mysqli_fetch_array(query("  SELECT  logs_activity.moderation_reason AS 'l_reason'
-                                      FROM    logs_activity
-                                      WHERE   logs_activity.id = '$log_id' "));
+  $dlog = query(" SELECT  logs_activity.moderation_reason AS 'l_reason'
+                  FROM    logs_activity
+                  WHERE   logs_activity.id = '$log_id' ",
+                  fetch_row: true);
   $data['reason'] = sanitize_output($dlog['l_reason']);
 
   // Fetch any diffs linked to the log
@@ -53,7 +54,7 @@ function activity_get( int $log_id ) : array
                     ORDER BY  logs_activity_details.id ASC ");
 
   // Go through the diffs (if any)
-  while($ddiff = mysqli_fetch_array($qdiff))
+  while($ddiff = query_row($qdiff))
   {
     if(!$ddiff['d_desc'])
       $data['diff'] .= bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
@@ -142,7 +143,7 @@ function activity_list( bool    $show_mod_logs  = false ,
   $data = array();
 
   // Go through the rows of the query
-  for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
+  for($i = 0; $row = query_row($qlogs); $i++)
   {
     // Parse the activity log
     $parsed_row = logs_activity_parse($modlogs, $row['l_type'], $row['l_actid'], $row['l_summary_en'], $row['l_summary_fr'], $row['l_userid'], $row['l_user'], $row['l_mod_user'], $row['l_amount']);

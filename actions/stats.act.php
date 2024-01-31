@@ -74,7 +74,7 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
                                 $query_sort ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qmetrics); $i++)
+  for($i = 0; $row = query_row($qmetrics); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['s_id']);
     $data[$i]['url']      = sanitize_output(string_truncate($row['s_url'], 30, '...'));
@@ -109,7 +109,7 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   $total_load     = 0;
 
   // Loop through the results to get the global metrics
-  for($pagestats = 0; $dmetrics = mysqli_fetch_array($qmetrics); $pagestats++)
+  for($pagestats = 0; $dmetrics = query_row($qmetrics); $pagestats++)
   {
     $min_queries     = (!$pagestats || $dmetrics['s_queries'] < $min_queries) ? $dmetrics['s_queries'] : $min_queries;
     $max_queries     = ($dmetrics['s_queries'] > $max_queries) ? $dmetrics['s_queries'] : $max_queries;
@@ -283,7 +283,7 @@ function stats_views_list(  string  $sort_by  = NULL    ,
                               $query_sort ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qviews); $i++)
+  for($i = 0; $row = query_row($qviews); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
     $page_name            = ($lang === 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
@@ -593,7 +593,7 @@ function stats_users_list(  string  $sort_by  = 'activity'  ,
   $sum_profile  = 0;
 
   // Loop through the data
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     // Prepare the data
     $data[$i]['id']       = sanitize_output($row['u_id']);
@@ -773,7 +773,7 @@ function stats_guests_list( string  $sort_by  = 'activity'  ,
   $sum_light    = 0;
 
   // Loop through the data
-  for($i = 0; $row = mysqli_fetch_array($qguests); $i++)
+  for($i = 0; $row = query_row($qguests); $i++)
   {
     // Prepare the data
     $data[$i]['user_id']  = sanitize_output($row['u_id']);
@@ -855,7 +855,7 @@ function stats_doppelgangers_list() : array
   $data['includes_bans'] = 0;
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qdoppel); $i++)
+  for($i = 0; $row = query_row($qdoppel); $i++)
   {
     $data[$i]['id']         = sanitize_output($row['u_id']);
     $data[$i]['ip']         = sanitize_output($row['u_ip']);
