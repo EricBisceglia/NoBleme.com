@@ -148,9 +148,10 @@ $timestamp = time();
 query(" START TRANSACTION ", description: "Initialize the scheduler's transaction");
 
 // Fetch the timestamp of the most recent scheduler execution
-$dcheck_scheduler = mysqli_fetch_array(query("  SELECT  system_variables.last_scheduler_execution AS 'scheduler_last'
-                                                FROM    system_variables " ,
-                                                description: "Check whether the scheduler needs to run"));
+$dcheck_scheduler = query(" SELECT  system_variables.last_scheduler_execution AS 'scheduler_last'
+                            FROM    system_variables " ,
+                            fetch_row: true,
+                            description: "Check whether the scheduler needs to run");
 
 // If the timestamp is less than 15 seconds old, end the transaction
 if($dcheck_scheduler['scheduler_last'] >= ($timestamp - 15))
@@ -178,7 +179,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                         description: "Check for scheduled tasks awaiting execution" );
 
   // Parse the list of potential tasks awaiting execution
-  while($dscheduler = mysqli_fetch_array($qscheduler))
+  while($dscheduler = query_row($qscheduler))
   {
     // Prepare data related to the task about to be ran
     $scheduler_id         = sanitize($dscheduler['t_id'], 'int', 0);
@@ -199,10 +200,11 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     if($scheduler_type === 'users_unban')
     {
       // Fetch data on the user
-      $duser = mysqli_fetch_array(query(" SELECT  users.username        AS 'u_nick'   ,
-                                                  users.is_banned_until AS 'u_banned'
-                                          FROM    users
-                                          WHERE   users.id = '$scheduler_action_id' "));
+      $duser = query("  SELECT  users.username        AS 'u_nick'   ,
+                                users.is_banned_until AS 'u_banned'
+                        FROM    users
+                        WHERE   users.id = '$scheduler_action_id' ",
+                        fetch_row: true);
 
       // Only proceed if the user actually exists and is banned
       if($duser['u_banned'])
@@ -288,7 +290,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                             AND     meetups_people.fk_users   > 0 ");
 
         // Update the meetup stats of each user
-        while($dmeetup = mysqli_fetch_array($qmeetups))
+        while($dmeetup = query_row($qmeetups))
           meetups_stats_recalculate_user($dmeetup['mp_uid']);
       }
     }
