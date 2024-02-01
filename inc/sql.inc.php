@@ -54,7 +54,9 @@ if(!isset($GLOBALS['sql_skip_system_variables']))
 
 // If necessary, mock system variables that need to be there even in special circumstances
 else
-  $system_variables = array('website_is_closed' => 0);
+  $system_variables = array(  'website_is_closed'       => 0  ,
+                              'unread_mod_mail_count'   => 0  ,
+                              'unread_admin_mail_count' => 0  );
 
 
 
