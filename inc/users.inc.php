@@ -55,14 +55,15 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 
   // Check if the token exists in the database
   $timestamp = sanitize(time(), 'int', 0);
-  $dusers = mysqli_fetch_array(query("  SELECT  users_tokens.id             AS 't_id'   ,
-                                                users_tokens.fk_users       AS 't_uid'  ,
-                                                users_tokens.regenerate_at  AS 't_regen'
-                                        FROM    users_tokens
-                                        WHERE   users_tokens.token_type LIKE 'session'
-                                        AND     users_tokens.token      LIKE '$login_cookie'
-                                        AND     users_tokens.delete_at     > '$timestamp' ",
-                                        description: "Identify the user using their token"));
+  $dusers = query(" SELECT  users_tokens.id             AS 't_id'   ,
+                            users_tokens.fk_users       AS 't_uid'  ,
+                            users_tokens.regenerate_at  AS 't_regen'
+                    FROM    users_tokens
+                    WHERE   users_tokens.token_type LIKE 'session'
+                    AND     users_tokens.token      LIKE '$login_cookie'
+                    AND     users_tokens.delete_at     > '$timestamp' ",
+                    fetch_row: true,
+                    description: "Identify the user using their token");
 
   // If there's a match, the process can continue
   if(isset($dusers['t_uid']))
@@ -125,17 +126,18 @@ if($is_logged_in)
   $user_id = sanitize($is_logged_in, 'int', 0);
 
   // Fetch some data
-  $duser = mysqli_fetch_array(query("   SELECT    users.is_deleted                    AS 'u_deleted'  ,
-                                                  users.username                      AS 'u_nick'     ,
-                                                  users.is_administrator              AS 'u_admin'    ,
-                                                  users.is_moderator                  AS 'u_mod'      ,
-                                                  users.unread_private_message_count  AS 'u_pm'       ,
-                                                  users.is_banned_until               AS 'u_ban_end'  ,
-                                                  users_settings.show_nsfw_content    AS 'us_nsfw'
-                                        FROM      users
-                                        LEFT JOIN users_settings on users_settings.fk_users = users.id
-                                        WHERE     users.id = '$user_id' " ,
-                                        description: "Fetch data related to the currently logged in user"));
+  $duser = query("  SELECT    users.is_deleted                    AS 'u_deleted'  ,
+                              users.username                      AS 'u_nick'     ,
+                              users.is_administrator              AS 'u_admin'    ,
+                              users.is_moderator                  AS 'u_mod'      ,
+                              users.unread_private_message_count  AS 'u_pm'       ,
+                              users.is_banned_until               AS 'u_ban_end'  ,
+                              users_settings.show_nsfw_content    AS 'us_nsfw'
+                    FROM      users
+                    LEFT JOIN users_settings on users_settings.fk_users = users.id
+                    WHERE     users.id = '$user_id' " ,
+                    fetch_row: true,
+                    description: "Fetch data related to the currently logged in user");
 
   // If the user's account doesn't exist or is deleted, log them out and set their user id to 0
   if(!isset($duser['u_deleted']) || $duser['u_deleted'])
@@ -606,9 +608,10 @@ function user_fetch_id( string $username ) : int
   $username = sanitize($username, 'string');
 
   // Fetch the username
-  $duser = mysqli_fetch_array(query(" SELECT  users.id AS 'u_id'
-                                      FROM    users
-                                      WHERE   users.username LIKE '$username' "));
+  $duser = query("  SELECT  users.id AS 'u_id'
+                    FROM    users
+                    WHERE   users.username LIKE '$username' ",
+                    fetch_row: true);
 
   // Return the user's id, or 0 if it wasn't found
   return isset($duser['u_id']) ? $duser['u_id'] : 0;
@@ -646,9 +649,10 @@ function user_get_username( ?int $user_id = NULL ) : ?string
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch the user's username
-  $dusername = mysqli_fetch_array(query(" SELECT  users.username AS 'username'
-                                          FROM    users
-                                          WHERE   users.id = '$user_id' "));
+  $dusername = query("  SELECT  users.username AS 'username'
+                        FROM    users
+                        WHERE   users.id = '$user_id' ",
+                        fetch_row: true);
 
   // Return 0 if the user does not exist
   if(!isset($dusername['username']))
@@ -679,9 +683,10 @@ function user_get_language( ?int $user_id = NULL ) : string
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch the user's language
-  $dlanguage = mysqli_fetch_array(query(" SELECT  users.current_language AS 'language'
-                                          FROM    users
-                                          WHERE   users.id = '$user_id' "));
+  $dlanguage = query("  SELECT  users.current_language AS 'language'
+                        FROM    users
+                        WHERE   users.id = '$user_id' ",
+                        fetch_row: true);
 
   // Return the user's language, or english if nothing was found
   return $dlanguage['language'] ?? 'EN';
@@ -736,9 +741,10 @@ function user_is_administrator( ?int $user_id = NULL ) : bool
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch user rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator AS 'u_admin'
-                                        FROM    users
-                                        WHERE   users.id = '$user_id' "));
+  $drights = query("  SELECT  users.is_administrator AS 'u_admin'
+                      FROM    users
+                      WHERE   users.id = '$user_id' ",
+                      fetch_row: true);
 
   // Return 0 if the user does not exist
   if(!isset($drights['u_admin']))
@@ -782,10 +788,11 @@ function user_is_moderator( ?int $user_id = NULL ) : bool
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch user rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_moderator      AS 'u_mod' ,
-                                                users.is_administrator  AS 'u_admin'
-                                        FROM    users
-                                        WHERE   users.id = '$user_id' "));
+  $drights = query("  SELECT  users.is_moderator      AS 'u_mod' ,
+                              users.is_administrator  AS 'u_admin'
+                      FROM    users
+                      WHERE   users.id = '$user_id' ",
+                      fetch_row: true);
 
   // Return 0 if the user does not exist
   if(!isset($drights['u_mod']))
@@ -833,9 +840,10 @@ function user_is_banned( ?int $user_id = NULL ) : bool
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch banned status
-  $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'u_ban_end'
-                                        FROM    users
-                                        WHERE   users.id = '$user_id' "));
+  $dbanned = query("  SELECT  users.is_banned_until AS 'u_ban_end'
+                      FROM    users
+                      WHERE   users.id = '$user_id' ",
+                      fetch_row: true);
 
   // Return 0 if the user does not exist
   if(!isset($dbanned['u_ban_end']))
@@ -869,13 +877,14 @@ function user_is_ip_banned() : int
   $user_ip = sanitize($_SERVER['REMOTE_ADDR'], 'string');
 
   // Check if it is banned
-  $dbanned = mysqli_fetch_array(query(" SELECT  system_ip_bans.id             AS 'b_id'     ,
-                                                system_ip_bans.ip_address     AS 'b_ip'     ,
-                                                system_ip_bans.is_a_total_ban AS 'b_total'  ,
-                                                system_ip_bans.banned_until   AS 'b_end'
-                                        FROM    system_ip_bans
-                                        WHERE   LOCATE(REPLACE(system_ip_bans.ip_address, '*', ''), '$user_ip') > 0 " ,
-                                        description: "Check whether a user is IP banned" ));
+  $dbanned = query("  SELECT  system_ip_bans.id             AS 'b_id'     ,
+                              system_ip_bans.ip_address     AS 'b_ip'     ,
+                              system_ip_bans.is_a_total_ban AS 'b_total'  ,
+                              system_ip_bans.banned_until   AS 'b_end'
+                      FROM    system_ip_bans
+                      WHERE   LOCATE(REPLACE(system_ip_bans.ip_address, '*', ''), '$user_ip') > 0 " ,
+                      fetch_row: true,
+                      description: "Check whether a user is IP banned" );
 
   // If the user isn't IP banned, return 0
   if(!isset($dbanned['b_id']))
@@ -947,9 +956,10 @@ function user_is_deleted( ?int $user_id = NULL) : bool
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch account status
-  $ddeleted = mysqli_fetch_array(query("  SELECT  users.is_deleted AS 'u_deleted'
-                                          FROM    users
-                                          WHERE   users.id = '$user_id' "));
+  $ddeleted = query(" SELECT  users.is_deleted AS 'u_deleted'
+                      FROM    users
+                      WHERE   users.id = '$user_id' ",
+                      fetch_row: true);
 
   // Return 1 if the user is an deleted, 0 if they aren't
   return $ddeleted['u_deleted'];
@@ -1169,9 +1179,10 @@ function user_settings_nsfw() : int
     return $_SESSION['settings_nsfw'];
 
   // Fetch the current nsfw level of the user
-  $dnsfw = mysqli_fetch_array(query(" SELECT  users_settings.show_nsfw_content AS 'user_nsfw'
-                                      FROM    users_settings
-                                      WHERE   users_settings.fk_users = '$user_id' "));
+  $dnsfw = query("  SELECT  users_settings.show_nsfw_content AS 'user_nsfw'
+                    FROM    users_settings
+                    WHERE   users_settings.fk_users = '$user_id' ",
+                    fetch_row: true);
 
   // Save the user's nsfw settings in the session
   $_SESSION['settings_nsfw'] = $dnsfw['user_nsfw'];
@@ -1221,13 +1232,14 @@ function user_settings_privacy() : array
     // Otherwise, fetch the settings
     else
     {
-      $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_youtube       AS 'user_youtube' ,
-                                                      users_settings.hide_google_trends AS 'user_trends'  ,
-                                                      users_settings.hide_discord       AS 'user_discord' ,
-                                                      users_settings.hide_kiwiirc       AS 'user_kiwiirc' ,
-                                                      users_settings.hide_from_activity AS 'user_online'
-                                              FROM    users_settings
-                                              WHERE   users_settings.fk_users = '$user_id' "));
+      $dprivacy = query(" SELECT  users_settings.hide_youtube       AS 'user_youtube' ,
+                                  users_settings.hide_google_trends AS 'user_trends'  ,
+                                  users_settings.hide_discord       AS 'user_discord' ,
+                                  users_settings.hide_kiwiirc       AS 'user_kiwiirc' ,
+                                  users_settings.hide_from_activity AS 'user_online'
+                          FROM    users_settings
+                          WHERE   users_settings.fk_users = '$user_id' ",
+                          fetch_row: true);
 
       // Set them in the session
       $_SESSION['settings_privacy'] = array(  'youtube' => $dprivacy['user_youtube']  ,
@@ -1265,8 +1277,9 @@ function user_settings_privacy() : array
 function user_get_oldest() : int
 {
   // Fetch the oldest user's registration date
-  $qoldest = mysqli_fetch_array(query(" SELECT  MIN(users_profile.created_at) AS 'u_min'
-                                        FROM    users_profile "));
+  $qoldest = query("  SELECT  MIN(users_profile.created_at) AS 'u_min'
+                      FROM    users_profile ",
+                      fetch_row: true);
 
   // Return the registration year
   return isset($qoldest['u_min']) ? date('Y', $qoldest['u_min']) : date('Y');
@@ -1290,7 +1303,7 @@ function user_get_birth_years() : array
                       ORDER BY  YEAR(users_profile.birthday) DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qbirths); $i++)
+  for($i = 0; $row = query_row($qbirths); $i++)
     $data[$i]['year'] = sanitize_output($row['u_year']);
 
   // Add the number of rows to the data

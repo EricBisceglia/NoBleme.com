@@ -38,18 +38,19 @@ query(' SET NAMES utf8mb4 ', description: "Specify the charset for the session")
 
 // Fetch the variables in the database
 if(!isset($GLOBALS['sql_skip_system_variables']))
-  $system_variables = mysqli_fetch_array(query("  SELECT  system_variables.website_is_closed          ,
-                                                          system_variables.latest_query_id            ,
-                                                          system_variables.last_scheduler_execution   ,
-                                                          system_variables.last_pageview_check        ,
-                                                          system_variables.unread_mod_mail_count      ,
-                                                          system_variables.unread_admin_mail_count    ,
-                                                          system_variables.current_version_number_en  ,
-                                                          system_variables.current_version_number_fr  ,
-                                                          system_variables.irc_bot_is_silenced
-                                                  FROM    system_variables
-                                                  LIMIT   1 " ,
-                                                  description: "Fetch globally required system variables" ));
+  $system_variables = query(" SELECT  system_variables.website_is_closed          ,
+                                      system_variables.latest_query_id            ,
+                                      system_variables.last_scheduler_execution   ,
+                                      system_variables.last_pageview_check        ,
+                                      system_variables.unread_mod_mail_count      ,
+                                      system_variables.unread_admin_mail_count    ,
+                                      system_variables.current_version_number_en  ,
+                                      system_variables.current_version_number_fr  ,
+                                      system_variables.irc_bot_is_silenced
+                              FROM    system_variables
+                              LIMIT   1 " ,
+                              fetch_row: true,
+                              description: "Fetch globally required system variables" );
 
 // If necessary, mock system variables that need to be there even in special circumstances
 else
@@ -110,7 +111,7 @@ function query( string  $query                    ,
       $full_query_results = array();
 
       // Fetch the query results
-      for($i = 0 ; $dquery = mysqli_fetch_array($query_result); $i++)
+      for($i = 0 ; $dquery = query_row($query_result); $i++)
       {
         foreach($dquery as $j => $result)
         {

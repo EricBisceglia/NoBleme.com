@@ -118,9 +118,10 @@ function database_row_exists( string  $table  ,
   $id     = sanitize($id, 'int', 0);
 
   // Check whether the row exists
-  $dcheck = mysqli_fetch_array(query("  SELECT  $table.id AS 'r_id'
-                                        FROM    $table
-                                        WHERE   $table.id = '$id' "));
+  $dcheck = query(" SELECT  $table.id AS 'r_id'
+                    FROM    $table
+                    WHERE   $table.id = '$id' ",
+                    fetch_row: true);
 
   // Return the result
   return (isset($dcheck['r_id']));
@@ -151,9 +152,10 @@ function database_entry_exists( string  $table            ,
   $value  = ($sanitize) ? sanitize($value, 'string') : $value;
 
   // Check whether the entry exists
-  $dcheck = mysqli_fetch_array(query("  SELECT  $table.id AS 'r_id'
-                                        FROM    $table
-                                        WHERE   $table.$field = '$value' "));
+  $dcheck = query(" SELECT  $table.id AS 'r_id'
+                    FROM    $table
+                    WHERE   $table.$field = '$value' ",
+                    fetch_row: true);
 
   // Return the result
   return (isset($dcheck['r_id'])) ? $dcheck['r_id'] : 0;
@@ -179,13 +181,14 @@ function system_variable_fetch( string $var_name ) : mixed
   $qdescribe = query(" DESCRIBE system_variables");
 
   // Run through the list of global variables
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     // If the variable exists, fetch its value and return it
     if($ddescribe['Field'] === $var_name)
     {
-      $dvar = mysqli_fetch_array(query("  SELECT  system_variables.".$var_name." AS 'v_value'
-                                          FROM    system_variables "));
+      $dvar = query(" SELECT  system_variables.".$var_name." AS 'v_value'
+                      FROM    system_variables ",
+                      fetch_row: true);
       return ($dvar['v_value']);
     }
   }
@@ -224,7 +227,7 @@ function system_variable_update(  string  $var_name ,
   $qdescribe = query(" DESCRIBE system_variables");
 
   // Run through the list of global variables
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     // If the variable exists, update its value and return 1
     if($ddescribe['Field'] === $var_name)
@@ -287,16 +290,17 @@ function system_get_current_version_number( string  $format = 'semver'  ,
   $lang = ($lang) ? $lang : user_get_language();
 
   // Fetch the latest version
-  $dversion = mysqli_fetch_array(query("  SELECT    system_versions.major         AS 'v_major'      ,
-                                                    system_versions.minor         AS 'v_minor'      ,
-                                                    system_versions.patch         AS 'v_patch'      ,
-                                                    system_versions.extension     AS 'v_extension'  ,
-                                                    system_versions.release_date  AS 'v_date'
-                                          FROM      system_versions
-                                          ORDER BY  system_versions.release_date  DESC ,
-                                                    system_versions.id            DESC
-                                          LIMIT     1 " ,
-                                          description: "Fetch the website's current version number"));
+  $dversion = query(" SELECT    system_versions.major         AS 'v_major'      ,
+                                system_versions.minor         AS 'v_minor'      ,
+                                system_versions.patch         AS 'v_patch'      ,
+                                system_versions.extension     AS 'v_extension'  ,
+                                system_versions.release_date  AS 'v_date'
+                      FROM      system_versions
+                      ORDER BY  system_versions.release_date  DESC ,
+                                system_versions.id            DESC
+                      LIMIT     1 " ,
+                      fetch_row: true,
+                      description: "Fetch the website's current version number");
 
   // Full format: version + date
   if($format === 'full')
@@ -1091,9 +1095,10 @@ function flood_check( bool  $error_page = true  ,
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch the user's recent activity
-  $dactivity = mysqli_fetch_array(query(" SELECT  users.last_action_at AS 'u_last'
-                                          FROM    users
-                                          WHERE   users.id = '$user_id' "));
+  $dactivity = query("  SELECT  users.last_action_at AS 'u_last'
+                        FROM    users
+                        WHERE   users.id = '$user_id' ",
+                        fetch_row: true);
 
   // If the last activity for the user happened less than 10 seconds ago, throw an error or return false
   $timestamp = time();
@@ -1250,7 +1255,7 @@ function log_activity_purge_orphan_diffs() : void
                       WHERE     logs_activity.id IS NULL ");
 
   // Stealthily choke them to death
-  while($dorphans = mysqli_fetch_array($qorphans))
+  while($dorphans = query_row($qorphans))
   {
     $orphan_id = sanitize($dorphans['d_id'], 'int', 0);
     query(" DELETE FROM logs_activity_details

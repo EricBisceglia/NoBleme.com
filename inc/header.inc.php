@@ -136,7 +136,7 @@ if(isset($page_url) && !isset($error_mode))
                         description: "Fetch the current pageview count");
 
   // Define the current view count (used in the footer for metrics)
-  $dpageviews       = mysqli_fetch_array($qpageviews);
+  $dpageviews       = query_row($qpageviews);
   $pageviews        = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
   $pageviews        = ($is_admin && !$GLOBALS['dev_mode']) ? ($pageviews - 1) : $pageviews;
   $pageviews        = ($pageviews < 1) ? 1 : $pageviews;
