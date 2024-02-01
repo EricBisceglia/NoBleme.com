@@ -76,7 +76,7 @@ function private_messages_get( int $message_id ) : array
                 WHERE     users_private_messages.id = '$message_id' ";
 
   // Fetch data regarding the message
-  $dmessage = mysqli_fetch_array(query($qmessage));
+  $dmessage = query_row(query($qmessage));
 
   // Error: Deleted messages
   if(($dmessage['pm_deleted_r'] && (int)$dmessage['pm_recipient'] === $user_id) || ($dmessage['pm_deleted_s'] && (int)$dmessage['pm_sender_id'] === $user_id))
@@ -141,7 +141,7 @@ function private_messages_get( int $message_id ) : array
                     WHERE     users_private_messages.id = '$message_id' ";
 
       // Fetch data regarding the message
-      $dmessage = mysqli_fetch_array(query($qmessage));
+      $dmessage = query_row(query($qmessage));
 
       // Error: Message does not exist
       if(!isset($dmessage['pm_title']))
@@ -297,7 +297,7 @@ function private_messages_list( string  $sort_by        = ''      ,
   $count_unread = 0;
 
   // Loop through the messages
-  for($i = 0; $row = mysqli_fetch_array($qmessages); $i++)
+  for($i = 0; $row = query_row($qmessages); $i++)
   {
     // Prepare the data
     $data[$i]['id']           = sanitize_output($row['pm_id']);
@@ -442,13 +442,14 @@ function private_messages_reply(  int     $message_id ,
     return __('users_message_reply_no_body');
 
   // Fetch some data regarding the message being replied to
-  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient   AS 'pm_deleted'   ,
-                                                  users_private_messages.fk_users_recipient     AS 'pm_recipient' ,
-                                                  users_private_messages.fk_users_sender        AS 'pm_sender'    ,
-                                                  users_private_messages.is_admin_only_message  AS 'pm_admin'     ,
-                                                  users_private_messages.title                  AS 'pm_title'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.id = '$message_id' "));
+  $dmessage = query(" SELECT  users_private_messages.deleted_by_recipient   AS 'pm_deleted'   ,
+                              users_private_messages.fk_users_recipient     AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender        AS 'pm_sender'    ,
+                              users_private_messages.is_admin_only_message  AS 'pm_admin'     ,
+                              users_private_messages.title                  AS 'pm_title'
+                      FROM    users_private_messages
+                      WHERE   users_private_messages.id = '$message_id' ",
+                      fetch_row: true);
 
   // Error: Message has been deleted
   if($dmessage['pm_deleted'])
@@ -524,12 +525,13 @@ function private_messages_delete( int $message_id ) : mixed
     return __('users_message_not_found');
 
   // Fetch some data regarding the message
-  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
-                                                  users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
-                                                  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                                                  users_private_messages.fk_users_sender      AS 'pm_sender'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.id = '$message_id' "));
+  $dmessage = query(" SELECT  users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                              users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                              users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender      AS 'pm_sender'
+                      FROM    users_private_messages
+                      WHERE   users_private_messages.id = '$message_id' ",
+                      fetch_row: true);
 
   // Determine whether user is sender or recipient
   $user_is_sender = ((int)$dmessage['pm_sender'] === $user_id);
@@ -593,12 +595,13 @@ function private_messages_recalculate( int $user_id = 0 ) : ?int
     return NULL;
 
   // Look for the number of unread private messages
-  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.deleted_by_recipient   = 0
-                                          AND     users_private_messages.fk_users_recipient     = '$user_id'
-                                          AND     users_private_messages.is_admin_only_message  = 0
-                                          AND     users_private_messages.read_at                = 0 "));
+  $qmessages = query("  SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                        FROM    users_private_messages
+                        WHERE   users_private_messages.deleted_by_recipient   = 0
+                        AND     users_private_messages.fk_users_recipient     = '$user_id'
+                        AND     users_private_messages.is_admin_only_message  = 0
+                        AND     users_private_messages.read_at                = 0 ",
+                        fetch_row: true);
 
   // Sanitize the unread message count
   $message_count = sanitize($qmessages['pm_count'], 'int', 0);
@@ -648,7 +651,7 @@ function private_messages_years_list( bool $sent_messages = false ) : array
                       ORDER BY  YEAR(FROM_UNIXTIME(users_private_messages.sent_at)) DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+  for($i = 0; $row = query_row($qyears); $i++)
     $data[$i]['year'] = sanitize_output($row['pm_year']);
 
   // Add the number of rows to the data
@@ -814,7 +817,7 @@ function admin_mail_list( string $search = '' ) : array
   $qmessages = query($qmessages);
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qmessages); $i++)
+  for($i = 0; $row = query_row($qmessages); $i++)
   {
     $data[$i]['id']         = sanitize_output($row['pm_id']);
     $data[$i]['display']    = (!$row['pm_recipient']);
@@ -879,33 +882,31 @@ function admin_mail_get( int $message_id ) : array
     return $data;
   }
 
-  // Prepare the query to fetch the message's data
-  $qmessage = " SELECT    users_private_messages.deleted_by_recipient   AS 'pm_deleted_r'     ,
-                          users_private_messages.deleted_by_sender      AS 'pm_deleted_s'     ,
-                          users_private_messages.fk_users_recipient     AS 'pm_recipient_id'  ,
-                          users_recipient.username                      AS 'pm_recipient'     ,
-                          users_private_messages.fk_users_sender        AS 'pm_sender_id'     ,
-                          users_sender.username                         AS 'pm_sender'        ,
-                          users_private_messages.fk_users_true_sender   AS 'pm_true'          ,
-                          users_true_sender.username                    AS 'ts_username'      ,
-                          users_private_messages.fk_parent_message      AS 'pm_parent'        ,
-                          users_private_messages.is_admin_only_message  AS 'pm_admin'         ,
-                          users_private_messages.hide_from_admin_mail   AS 'pm_hidden'        ,
-                          users_private_messages.sent_at                AS 'pm_sent'          ,
-                          users_private_messages.read_at                AS 'pm_read'          ,
-                          users_private_messages.title                  AS 'pm_title'         ,
-                          users_private_messages.body                   AS 'pm_body'
-                FROM      users_private_messages
-                LEFT JOIN users AS users_sender
-                ON        users_private_messages.fk_users_sender      = users_sender.id
-                LEFT JOIN users AS users_recipient
-                ON        users_private_messages.fk_users_recipient   = users_recipient.id
-                LEFT JOIN users AS users_true_sender
-                ON        users_private_messages.fk_users_true_sender = users_true_sender.id
-                WHERE     users_private_messages.id                   = '$message_id' ";
-
-  // Fetch data regarding the message
-  $dmessage = mysqli_fetch_array(query($qmessage));
+  // Fetch the message's data
+  $dmessage = query(" SELECT    users_private_messages.deleted_by_recipient   AS 'pm_deleted_r'     ,
+                                users_private_messages.deleted_by_sender      AS 'pm_deleted_s'     ,
+                                users_private_messages.fk_users_recipient     AS 'pm_recipient_id'  ,
+                                users_recipient.username                      AS 'pm_recipient'     ,
+                                users_private_messages.fk_users_sender        AS 'pm_sender_id'     ,
+                                users_sender.username                         AS 'pm_sender'        ,
+                                users_private_messages.fk_users_true_sender   AS 'pm_true'          ,
+                                users_true_sender.username                    AS 'ts_username'      ,
+                                users_private_messages.fk_parent_message      AS 'pm_parent'        ,
+                                users_private_messages.is_admin_only_message  AS 'pm_admin'         ,
+                                users_private_messages.hide_from_admin_mail   AS 'pm_hidden'        ,
+                                users_private_messages.sent_at                AS 'pm_sent'          ,
+                                users_private_messages.read_at                AS 'pm_read'          ,
+                                users_private_messages.title                  AS 'pm_title'         ,
+                                users_private_messages.body                   AS 'pm_body'
+                      FROM      users_private_messages
+                      LEFT JOIN users AS users_sender
+                      ON        users_private_messages.fk_users_sender      = users_sender.id
+                      LEFT JOIN users AS users_recipient
+                      ON        users_private_messages.fk_users_recipient   = users_recipient.id
+                      LEFT JOIN users AS users_true_sender
+                      ON        users_private_messages.fk_users_true_sender = users_true_sender.id
+                      WHERE     users_private_messages.id                   = '$message_id' ",
+                      fetch_row: true);
 
   // Error: Message is a private message belonging to a user
   if($dmessage['pm_recipient'] && $dmessage['pm_sender'])
@@ -963,25 +964,25 @@ function admin_mail_get( int $message_id ) : array
       // Fetch the parent ID
       $message_id = sanitize($dmessage['pm_parent']);
 
-      // Prepare the query to fetch the message's data
-      $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
-                              users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
-                              users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                              users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
-                              users_private_messages.fk_parent_message    AS 'pm_parent'    ,
-                              users_sender.username                       AS 'pm_sender'    ,
-                              users_true.username                         AS 'pm_true'      ,
-                              users_private_messages.sent_at              AS 'pm_sent'      ,
-                              users_private_messages.read_at              AS 'pm_read'      ,
-                              users_private_messages.title                AS 'pm_title'     ,
-                              users_private_messages.body                 AS 'pm_body'
-                    FROM      users_private_messages
-                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender       = users_sender.id
-                    LEFT JOIN users AS users_true   ON users_private_messages.fk_users_true_sender  = users_true.id
-                    WHERE     users_private_messages.id = '$message_id' ";
-
-      // Fetch data regarding the message
-      $dmessage = mysqli_fetch_array(query($qmessage));
+      // Fetch the message's data
+      $dmessage = query(" SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                                    users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                                    users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                                    users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                                    users_private_messages.fk_parent_message    AS 'pm_parent'    ,
+                                    users_sender.username                       AS 'pm_sender'    ,
+                                    users_true.username                         AS 'pm_true'      ,
+                                    users_private_messages.sent_at              AS 'pm_sent'      ,
+                                    users_private_messages.read_at              AS 'pm_read'      ,
+                                    users_private_messages.title                AS 'pm_title'     ,
+                                    users_private_messages.body                 AS 'pm_body'
+                          FROM      users_private_messages
+                          LEFT JOIN users AS users_sender
+                          ON        users_private_messages.fk_users_sender      = users_sender.id
+                          LEFT JOIN users AS users_true
+                          ON        users_private_messages.fk_users_true_sender = users_true.id
+                          WHERE     users_private_messages.id = '$message_id' ",
+                          fetch_row: true);
 
       // Error: Message does not exist
       if(!isset($dmessage['pm_title']))
@@ -1079,14 +1080,15 @@ function admin_mail_reply(  int     $message_id ,
     return __('users_message_reply_no_body');
 
   // Fetch some data regarding the message being replied to
-  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient   AS 'pm_deleted'   ,
-                                                  users_private_messages.fk_users_recipient     AS 'pm_recipient' ,
-                                                  users_private_messages.fk_users_sender        AS 'pm_sender'    ,
-                                                  users_private_messages.is_admin_only_message  AS 'pm_admin'     ,
-                                                  users_private_messages.hide_from_admin_mail   AS 'pm_hide'      ,
-                                                  users_private_messages.title                  AS 'pm_title'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.id = '$message_id' "));
+  $dmessage = query(" SELECT  users_private_messages.deleted_by_recipient   AS 'pm_deleted'   ,
+                              users_private_messages.fk_users_recipient     AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender        AS 'pm_sender'    ,
+                              users_private_messages.is_admin_only_message  AS 'pm_admin'     ,
+                              users_private_messages.hide_from_admin_mail   AS 'pm_hide'      ,
+                              users_private_messages.title                  AS 'pm_title'
+                      FROM    users_private_messages
+                      WHERE   users_private_messages.id = '$message_id' ",
+                      fetch_row: true);
 
   // Error: Can not reply to self
   if($user_id === (int)$dmessage['pm_sender'])
@@ -1151,11 +1153,12 @@ function admin_mail_delete( int $message_id ) : mixed
     return __('users_message_not_found');
 
   // Fetch some data regarding the message
-  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                                                  users_private_messages.fk_users_sender      AS 'pm_sender'    ,
-                                                  users_private_messages.hide_from_admin_mail AS 'pm_hide'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.id = '$message_id'"));
+  $dmessage = query(" SELECT  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender      AS 'pm_sender'    ,
+                              users_private_messages.hide_from_admin_mail AS 'pm_hide'
+                      FROM    users_private_messages
+                      WHERE   users_private_messages.id = '$message_id' ",
+                      fetch_row: true);
 
   // Error: Can not delete messages hidden from the admin inbox
   if($dmessage['pm_hide'])
@@ -1215,13 +1218,14 @@ function admin_mail_read_all()
  function admin_mail_recalculate() : ?int
  {
   // Look for the number of unread mod mails
-  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.deleted_by_recipient   = 0
-                                          AND     users_private_messages.fk_users_recipient     = 0
-                                          AND     users_private_messages.is_admin_only_message  = 0
-                                          AND     users_private_messages.read_at                = 0
-                                          AND     users_private_messages.hide_from_admin_mail   = 0 "));
+  $qmessages = query("  SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                        FROM    users_private_messages
+                        WHERE   users_private_messages.deleted_by_recipient   = 0
+                        AND     users_private_messages.fk_users_recipient     = 0
+                        AND     users_private_messages.is_admin_only_message  = 0
+                        AND     users_private_messages.read_at                = 0
+                        AND     users_private_messages.hide_from_admin_mail   = 0 ",
+                        fetch_row: true);
 
   // Sanitize the unread message count
   $mod_mail_count = sanitize($qmessages['pm_count'], 'int', 0);
@@ -1231,12 +1235,13 @@ function admin_mail_read_all()
           SET     system_variables.unread_mod_mail_count = '$mod_mail_count' ");
 
   // Look for the number of unread admin mails
-  $qmessages = mysqli_fetch_array(query(" SELECT  COUNT(users_private_messages.id) AS 'pm_count'
-                                          FROM    users_private_messages
-                                          WHERE   users_private_messages.deleted_by_recipient   = 0
-                                          AND     users_private_messages.fk_users_recipient     = 0
-                                          AND     users_private_messages.read_at                = 0
-                                          AND     users_private_messages.hide_from_admin_mail   = 0 "));
+  $qmessages = query("  SELECT  COUNT(users_private_messages.id) AS 'pm_count'
+                        FROM    users_private_messages
+                        WHERE   users_private_messages.deleted_by_recipient   = 0
+                        AND     users_private_messages.fk_users_recipient     = 0
+                        AND     users_private_messages.read_at                = 0
+                        AND     users_private_messages.hide_from_admin_mail   = 0 ",
+                        fetch_row: true);
 
   // Sanitize the unread message count
   $admin_mail_count = sanitize($qmessages['pm_count'], 'int', 0);

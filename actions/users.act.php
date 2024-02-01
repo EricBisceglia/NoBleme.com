@@ -76,40 +76,41 @@ function users_get( ?int    $user_id  = NULL    ,
     return NULL;
 
   // Fetch the data
-  $duser = mysqli_fetch_array(query(" SELECT    users.is_deleted                  AS 'u_deleted'      ,
-                                                users.is_banned_until             AS 'u_banned'       ,
-                                                users.username                    AS 'u_nick'         ,
-                                                users.is_administrator            AS 'u_admin'        ,
-                                                users.is_moderator                AS 'u_mod'          ,
-                                                users.last_visited_at             AS 'u_activity'     ,
-                                                users.last_visited_page_en        AS 'u_active_en'    ,
-                                                users.last_visited_page_fr        AS 'u_active_fr'    ,
-                                                users.last_visited_url            AS 'u_active_url'   ,
-                                                users.last_action_at              AS 'u_lastaction'   ,
-                                                users.current_ip_address          AS 'u_ip'           ,
-                                                users_profile.created_at          AS 'u_created'      ,
-                                                users_profile.spoken_languages    AS 'u_lang'         ,
-                                                users_profile.pronouns_en         AS 'u_pronouns_en'  ,
-                                                users_profile.pronouns_fr         AS 'u_pronouns_fr'  ,
-                                                users_profile.lives_at            AS 'u_country'      ,
-                                                users_profile.birthday            AS 'u_birthday'     ,
-                            TIMESTAMPDIFF(YEAR, users_profile.birthday, NOW())    AS 'u_age'          ,
-                                                DAY(users_profile.birthday)       AS 'u_birth_d'      ,
-                                                MONTH(users_profile.birthday)     AS 'u_birth_m'      ,
-                                                YEAR(users_profile.birthday)      AS 'u_birth_y'      ,
-                                                users_profile.profile_text_en     AS 'u_text_en'      ,
-                                                users_profile.profile_text_fr     AS 'u_text_fr'      ,
-                                                users_profile.email_address       AS 'u_mail'         ,
-                                                users_settings.hide_from_activity AS 'u_hideact'      ,
-                                                users_stats.quotes                AS 'us_quotes'      ,
-                                                users_stats.quotes_approved       AS 'us_quotes_app'  ,
-                                                users_stats.meetups               AS 'us_meetups'     ,
-                                                users_stats.tasks_submitted       AS 'us_tasks_sub'
-                                      FROM      users
-                                      LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
-                                      LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
-                                      LEFT JOIN users_stats     ON users_stats.fk_users     = users.id
-                                      WHERE     users.id = '$user_id' "));
+  $duser = query(" SELECT   users.is_deleted                                    AS 'u_deleted'      ,
+                            users.is_banned_until                               AS 'u_banned'       ,
+                            users.username                                      AS 'u_nick'         ,
+                            users.is_administrator                              AS 'u_admin'        ,
+                            users.is_moderator                                  AS 'u_mod'          ,
+                            users.last_visited_at                               AS 'u_activity'     ,
+                            users.last_visited_page_en                          AS 'u_active_en'    ,
+                            users.last_visited_page_fr                          AS 'u_active_fr'    ,
+                            users.last_visited_url                              AS 'u_active_url'   ,
+                            users.last_action_at                                AS 'u_lastaction'   ,
+                            users.current_ip_address                            AS 'u_ip'           ,
+                            users_profile.created_at                            AS 'u_created'      ,
+                            users_profile.spoken_languages                      AS 'u_lang'         ,
+                            users_profile.pronouns_en                           AS 'u_pronouns_en'  ,
+                            users_profile.pronouns_fr                           AS 'u_pronouns_fr'  ,
+                            users_profile.lives_at                              AS 'u_country'      ,
+                            users_profile.birthday                              AS 'u_birthday'     ,
+                            TIMESTAMPDIFF(YEAR, users_profile.birthday, NOW())  AS 'u_age'          ,
+                            DAY(users_profile.birthday)                         AS 'u_birth_d'      ,
+                            MONTH(users_profile.birthday)                       AS 'u_birth_m'      ,
+                            YEAR(users_profile.birthday)                        AS 'u_birth_y'      ,
+                            users_profile.profile_text_en                       AS 'u_text_en'      ,
+                            users_profile.profile_text_fr                       AS 'u_text_fr'      ,
+                            users_profile.email_address                         AS 'u_mail'         ,
+                            users_settings.hide_from_activity                   AS 'u_hideact'      ,
+                            users_stats.quotes                                  AS 'us_quotes'      ,
+                            users_stats.quotes_approved                         AS 'us_quotes_app'  ,
+                            users_stats.meetups                                 AS 'us_meetups'     ,
+                            users_stats.tasks_submitted                         AS 'us_tasks_sub'
+                  FROM      users
+                  LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
+                  LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+                  LEFT JOIN users_stats     ON users_stats.fk_users     = users.id
+                  WHERE     users.id = '$user_id' ",
+                  fetch_row: true);
 
   // Get the current user's language
   $lang = user_get_language();
@@ -287,11 +288,12 @@ function users_get( ?int    $user_id  = NULL    ,
 function users_get_random_id() : int
 {
   // Fetch a random user ID
-  $drandom = mysqli_fetch_array(query(" SELECT    users.id AS 'u_id'
-                                        FROM      users
-                                        WHERE     users.is_deleted = 0
-                                        ORDER BY  RAND()
-                                        LIMIT     1 "));
+  $drandom = query("  SELECT    users.id AS 'u_id'
+                      FROM      users
+                      WHERE     users.is_deleted = 0
+                      ORDER BY  RAND()
+                      LIMIT     1 ",
+                      fetch_row: true);
 
   // Return the randomly selected ID
   return $drandom['u_id'];
@@ -509,7 +511,7 @@ function users_list(  string  $sort_by          = ''      ,
   $mode = user_get_mode();
 
   // Go through the rows returned by query
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     // Prepare the data
     $data[$i]['type']       = sanitize_output($row['data_type']);
@@ -643,7 +645,7 @@ function users_list_api(  array   $search   = array() ,
   $dusers = query($qusers);
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($dusers); $i++)
+  for($i = 0; $row = query_row($dusers); $i++)
   {
     // User data
     $data[$i]['id']                 = (string)$row['u_id'];
@@ -730,7 +732,7 @@ function users_list_admins( string $sort_by = '' ) : array
                                 $query_sort ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qadmins); $i++)
+  for($i = 0; $row = query_row($qadmins); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['u_id']);
     $data[$i]['username'] = sanitize_output($row['u_nick']);
@@ -794,15 +796,16 @@ function users_edit_profile( array $user_data ) : void
   $text_fr          = sanitize($user_data['text_fr'], 'string');
 
   // Fetch the current (soon to be previous) values before updating
-  $old_user_data = mysqli_fetch_array(query(" SELECT  users_profile.spoken_languages AS 'u_lang'        ,
-                                                      users_profile.birthday         AS 'u_birthday'    ,
-                                                      users_profile.lives_at         AS 'u_residence'   ,
-                                                      users_profile.pronouns_en      AS 'u_pronouns_en' ,
-                                                      users_profile.pronouns_fr      AS 'u_pronouns_fr' ,
-                                                      users_profile.profile_text_en  AS 'u_text_en'     ,
-                                                      users_profile.profile_text_fr  AS 'u_text_fr'
-                                              FROM    users_profile
-                                              WHERE   users_profile.fk_users = '$user_id' "));
+  $old_user_data = query("  SELECT  users_profile.spoken_languages AS 'u_lang'        ,
+                                    users_profile.birthday         AS 'u_birthday'    ,
+                                    users_profile.lives_at         AS 'u_residence'   ,
+                                    users_profile.pronouns_en      AS 'u_pronouns_en' ,
+                                    users_profile.pronouns_fr      AS 'u_pronouns_fr' ,
+                                    users_profile.profile_text_en  AS 'u_text_en'     ,
+                                    users_profile.profile_text_fr  AS 'u_text_fr'
+                            FROM    users_profile
+                            WHERE   users_profile.fk_users = '$user_id' ",
+                            fetch_row: true);
 
   // Update the user's profile
   query(" UPDATE  users_profile
@@ -914,13 +917,14 @@ function users_delete_profile(  $user_id              ,
   $mod_username = user_get_username($mod_id);
 
   // Grab the values of the public profile fields before deleting them
-  $profile_data = mysqli_fetch_array(query("  SELECT  users_profile.lives_at         AS 'u_country'     ,
-                                                      users_profile.pronouns_en      AS 'u_pronouns_en' ,
-                                                      users_profile.pronouns_fr      AS 'u_pronouns_fr' ,
-                                                      users_profile.profile_text_en  AS 'u_text_en'     ,
-                                                      users_profile.profile_text_fr  AS 'u_text_fr'
-                                              FROM    users_profile
-                                              WHERE   users_profile.fk_users = '$user_id' "));
+  $profile_data = query(" SELECT  users_profile.lives_at         AS 'u_country'     ,
+                                  users_profile.pronouns_en      AS 'u_pronouns_en' ,
+                                  users_profile.pronouns_fr      AS 'u_pronouns_fr' ,
+                                  users_profile.profile_text_en  AS 'u_text_en'     ,
+                                  users_profile.profile_text_fr  AS 'u_text_fr'
+                          FROM    users_profile
+                          WHERE   users_profile.fk_users = '$user_id' ",
+                          fetch_row: true);
 
   // Assemble the deletion query
   $delete_fields  = ($fields['country'])      ? " users_profile.lives_at        = '' ," : '';
@@ -998,12 +1002,13 @@ function users_ban_details( ?int $user_id = NULL ) : array
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch data regarding the ban
-  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_since       AS 'u_ban_start'  ,
-                                              users.is_banned_until       AS 'u_ban_end'    ,
-                                              users.is_banned_because_en  AS 'u_ban_en'     ,
-                                              users.is_banned_because_fr  AS 'u_ban_fr'
-                                      FROM    users
-                                      WHERE   users.id = '$user_id' "));
+  $dban = query(" SELECT  users.is_banned_since       AS 'u_ban_start'  ,
+                          users.is_banned_until       AS 'u_ban_end'    ,
+                          users.is_banned_because_en  AS 'u_ban_en'     ,
+                          users.is_banned_because_fr  AS 'u_ban_fr'
+                  FROM    users
+                  WHERE   users.id = '$user_id' ",
+                  fetch_row: true);
 
   // Prepare the data
   $lang               = user_get_language();
@@ -1038,9 +1043,10 @@ function users_check_username( string $username ) : bool
   $username = sanitize($username, 'string');
 
   // Look for the username
-  $dusername = mysqli_fetch_array(query(" SELECT  users.id  AS 'u_id'
-                                          FROM    users
-                                          WHERE   users.username LIKE '$username' "));
+  $dusername = query("  SELECT  users.id  AS 'u_id'
+                        FROM    users
+                        WHERE   users.username LIKE '$username' ",
+                        fetch_row: true);
 
   // Return the result
   return isset($dusername['u_id']);
@@ -1122,7 +1128,7 @@ function users_autocomplete_username( string  $input        ,
                         LIMIT     10 ");
 
   // Prepare the returned data
-  for($i = 0; $dusernames = mysqli_fetch_array($qusernames); $i++)
+  for($i = 0; $dusernames = query_row($qusernames); $i++)
     $data[$i]['nick'] = sanitize_output($dusernames['u_nick']);
 
   // Add the number of rows to the data
@@ -1144,8 +1150,9 @@ function users_autocomplete_username( string  $input        ,
 function users_total_count() : int
 {
   // Fetch the user count
-  $duser = mysqli_fetch_array(query(" SELECT  COUNT(*) AS 'u_count'
-                                      FROM    users "));
+  $duser = query("  SELECT  COUNT(*) AS 'u_count'
+                    FROM    users ",
+                    fetch_row: true);
 
   // Return the user count
   return $duser['u_count'];
@@ -1163,8 +1170,9 @@ function users_total_count() : int
 function users_guests_count() : int
 {
   // Fetch the guest count
-  $dguest = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'g_count'
-                                        FROM    users_guests "));
+  $dguest = query(" SELECT  COUNT(*) AS 'g_count'
+                    FROM    users_guests ",
+                    fetch_row: true);
 
   // Return the guest count
   return $dguest['g_count'];
@@ -1182,11 +1190,12 @@ function users_guests_count() : int
 function users_guests_storage_length() : int
 {
   // Fetch the oldest guest
-  $dguest = mysqli_fetch_array(query("  SELECT    users_guests.last_visited_at AS 'g_date'
-                                        FROM      users_guests
-                                        WHERE     users_guests.last_visited_at > 0
-                                        ORDER BY  users_guests.last_visited_at ASC
-                                        LIMIT     1 "));
+  $dguest = query(" SELECT    users_guests.last_visited_at AS 'g_date'
+                    FROM      users_guests
+                    WHERE     users_guests.last_visited_at > 0
+                    ORDER BY  users_guests.last_visited_at ASC
+                    LIMIT     1 ",
+                    fetch_row: true);
 
   // Calculate the days since the guest's last visit
   $delay = (!isset($dguest['g_date'])) ? 0 : time_days_elapsed($dguest['g_date'], time(), use_timestamps: true);
@@ -1214,13 +1223,14 @@ function users_stats_list() : array
   $data = array();
 
   // Fetch the total number of users
-  $dusers = mysqli_fetch_array(query("  SELECT  COUNT(*)                    AS 'u_total'    ,
-                                                SUM(users.is_deleted)       AS 'u_deleted'  ,
-                                                SUM(users.is_administrator) AS 'u_admin'    ,
-                                                SUM(users.is_moderator)     AS 'u_mod'      ,
-                                                SUM(CASE  WHEN  users.is_banned_until > 0 THEN  1
-                                                          ELSE  0 END)      AS 'u_banned'
-                                        FROM    users "));
+  $dusers = query(" SELECT  COUNT(*)                    AS 'u_total'    ,
+                            SUM(users.is_deleted)       AS 'u_deleted'  ,
+                            SUM(users.is_administrator) AS 'u_admin'    ,
+                            SUM(users.is_moderator)     AS 'u_mod'      ,
+                            SUM(CASE  WHEN  users.is_banned_until > 0 THEN  1
+                                      ELSE  0 END)      AS 'u_banned'
+                    FROM    users ",
+                    fetch_row: true);
 
   // Add some stats to the return array
   $data['total']    = sanitize_output($dusers['u_total']);
@@ -1241,7 +1251,7 @@ function users_stats_list() : array
   $oldest_year = date('Y');
 
   // Add account creation data over time to the return data
-  while($dusers = mysqli_fetch_array($qusers))
+  while($dusers = query_row($qusers))
   {
     $year                   = $dusers['up_created'];
     $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
@@ -1272,7 +1282,7 @@ function users_stats_list() : array
                               users.username  ASC   ");
 
   // Loop through contributions and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     $data['contrib_id_'.$i]       = sanitize_output($row['u_id']);
     $data['contrib_nick_'.$i]     = sanitize_output($row['u_nick']);
@@ -1301,7 +1311,7 @@ function users_stats_list() : array
                     LIMIT     100 ");
 
   // Loop through anniversaries and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     $data['anniv_id_'.$i]       = sanitize_output($row['u_id']);
     $data['anniv_nick_'.$i]     = sanitize_output($row['u_nick']);
@@ -1336,7 +1346,7 @@ function users_stats_list() : array
                     LIMIT     10 ");
 
   // Loop through birthdays and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     $data['birth_id_'.$i]       = sanitize_output($row['u_id']);
     $data['birth_nick_'.$i]     = sanitize_output($row['u_nick']);

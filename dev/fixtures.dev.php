@@ -163,10 +163,11 @@ function fixtures_generate_data(  string  $type               ,
 function fixtures_fetch_random_id( string $table ) : int
 {
   // Fetch an ID in the database
-  $drand = mysqli_fetch_array(query(" SELECT    $table.id AS 'u_id'
-                                      FROM      $table
-                                      ORDER BY  RAND()
-                                      LIMIT     1 "));
+  $drand = query("  SELECT    $table.id AS 'u_id'
+                    FROM      $table
+                    ORDER BY  RAND()
+                    LIMIT     1 ",
+                    fetch_row: true);
 
    // Return the ID
    return $drand['u_id'];
@@ -188,10 +189,11 @@ function fixtures_fetch_random_value( string  $table  ,
                                       string  $field  ) : mixed
 {
   // Fetch an entry in the database
-  $drand = mysqli_fetch_array(query(" SELECT    $table.$field AS 'u_value'
-                                      FROM      $table
-                                      ORDER BY  RAND()
-                                      LIMIT     1 "));
+  $drand = query("  SELECT    $table.$field AS 'u_value'
+                    FROM      $table
+                    ORDER BY  RAND()
+                    LIMIT     1 ",
+                    fetch_row: true);
 
    // Return the ID
    return $drand['u_value'];
@@ -220,7 +222,7 @@ function fixtures_check_entry(  string  $table  ,
                     WHERE     $table.$field LIKE '$value' ");
 
    // Return whether the entry already exists
-   return mysqli_num_rows($qrand);
+   return query_row_count($qrand);
 }
 
 
@@ -753,9 +755,10 @@ for($i = 0; $i < $random; $i++)
   $text_fr      = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('text', 1, 10));
 
   // Check if the username was already generated
-  $dcheck = mysqli_fetch_array(query("  SELECT  users.id
-                                        FROM    users
-                                        WHERE   users.username LIKE '$username' "));
+  $dcheck = query(" SELECT  users.id
+                    FROM    users
+                    WHERE   users.username LIKE '$username' ",
+                    fetch_row: true);
 
   // Ensure usernames don't get generated twice
   if(!isset($dcheck['id']))
@@ -1068,7 +1071,7 @@ $qusers = query(" SELECT    users.id AS 'u_id'
                   ORDER BY  users.id ASC ");
 
 // Loop through users
-while($dusers = mysqli_fetch_array($qusers))
+while($dusers = query_row($qusers))
 {
   // Determine the number of individual messages to generate
   $random = mt_rand(3, 5);
@@ -1140,7 +1143,7 @@ $qusers = query(" SELECT    users.id AS 'u_id'
                   ORDER BY  users.id ASC ");
 
 // Loop through users once again
-while($dusers = mysqli_fetch_array($qusers))
+while($dusers = query_row($qusers))
 {
   // Count unread private messages
   $user_id = $dusers['u_id'];
@@ -1152,7 +1155,7 @@ while($dusers = mysqli_fetch_array($qusers))
                         AND     users_private_messages.read_at                = 0 ");
 
   // Update private message count
-  $dmessages      = mysqli_fetch_array($qmessages);
+  $dmessages      = query_row($qmessages);
   $message_count  = $dmessages['m_count'];
   query(" UPDATE  users
           SET     users.unread_private_message_count = '$message_count'
@@ -1309,9 +1312,10 @@ for($i = 0; $i < $random; $i++)
   // Activity logs
   $deleted_log  = (mt_rand(0,40) < 40) ? 0 : 1;
   $task_id      = fixtures_query_id();
-  $dusername    = mysqli_fetch_array(query("  SELECT  users.username AS 'u_nick'
-                                              FROM    users
-                                              WHERE   users.id = '$fk_users' "));
+  $dusername    = query(" SELECT  users.username AS 'u_nick'
+                          FROM    users
+                          WHERE   users.id = '$fk_users' ",
+                          fetch_row: true);
   $username   = $dusername['u_nick'];
   query(" INSERT INTO logs_activity
           SET         logs_activity.is_deleted          = '$deleted_log'  ,
@@ -2013,18 +2017,19 @@ $qpages = query(" SELECT    compendium_pages.id AS 'p_id'
                   FROM      compendium_pages
                   ORDER BY  RAND()
                   LIMIT     $random ");
-while($dpages = mysqli_fetch_array($qpages))
+while($dpages = query_row($qpages))
 {
   // Fetch a random other page to redirect to
   $page     = $dpages['p_id'];
-  $randpage = mysqli_fetch_array(query("  SELECT    compendium_pages.title_en AS 'p_title_en' ,
-                                                    compendium_pages.title_fr AS 'p_title_fr'
-                                          FROM      compendium_pages
-                                          WHERE     compendium_pages.id            != '$page'
-                                          AND       compendium_pages.is_deleted     = 0
-                                          AND       compendium_pages.redirection_en = ''
-                                          ORDER BY  RAND()
-                                          LIMIT     1 "));
+  $randpage = query(" SELECT    compendium_pages.title_en AS 'p_title_en' ,
+                                compendium_pages.title_fr AS 'p_title_fr'
+                      FROM      compendium_pages
+                      WHERE     compendium_pages.id            != '$page'
+                      AND       compendium_pages.is_deleted     = 0
+                      AND       compendium_pages.redirection_en = ''
+                      ORDER BY  RAND()
+                      LIMIT     1 ",
+                      fetch_row: true);
 
   // Redirect to this other definition
   $redirect_en  = $randpage['p_title_en'];

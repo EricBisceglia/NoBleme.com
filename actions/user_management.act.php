@@ -120,9 +120,10 @@ function admin_account_reactivate( string $user_id ) : mixed
     return __('admin_reactivate_no_user');
 
   // Fetch the user's old username
-  $duser = mysqli_fetch_array(query(" SELECT  users.deleted_username AS 'u_nick'
-                                      FROM    users
-                                      WHERE   users.id = '$user_id' "));
+  $duser = query("  SELECT  users.deleted_username AS 'u_nick'
+                    FROM    users
+                    WHERE   users.id = '$user_id' ",
+                    fetch_row: true);
   $username_raw = $duser['u_nick'];
   $username     = sanitize($duser['u_nick'], 'string');
 

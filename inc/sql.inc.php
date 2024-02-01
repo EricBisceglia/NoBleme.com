@@ -8,8 +8,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  query           Execute a MySQL query.                                                                           */
-/*  query_id        Returns the ID of the latest inserted row.                                                       */
+/*  query               Execute a MySQL query.                                                                       */
+/*  query_row           Fetch the next row of a query.                                                               */
+/*  query_row_count     Count the number of rows returned by a query.                                                */
+/*  query_id            Returns the ID of the latest inserted row.                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -38,22 +40,25 @@ query(' SET NAMES utf8mb4 ', description: "Specify the charset for the session")
 
 // Fetch the variables in the database
 if(!isset($GLOBALS['sql_skip_system_variables']))
-  $system_variables = mysqli_fetch_array(query("  SELECT  system_variables.website_is_closed          ,
-                                                          system_variables.latest_query_id            ,
-                                                          system_variables.last_scheduler_execution   ,
-                                                          system_variables.last_pageview_check        ,
-                                                          system_variables.unread_mod_mail_count      ,
-                                                          system_variables.unread_admin_mail_count    ,
-                                                          system_variables.current_version_number_en  ,
-                                                          system_variables.current_version_number_fr  ,
-                                                          system_variables.irc_bot_is_silenced
-                                                  FROM    system_variables
-                                                  LIMIT   1 " ,
-                                                  description: "Fetch globally required system variables" ));
+  $system_variables = query(" SELECT  system_variables.website_is_closed          ,
+                                      system_variables.latest_query_id            ,
+                                      system_variables.last_scheduler_execution   ,
+                                      system_variables.last_pageview_check        ,
+                                      system_variables.unread_mod_mail_count      ,
+                                      system_variables.unread_admin_mail_count    ,
+                                      system_variables.current_version_number_en  ,
+                                      system_variables.current_version_number_fr  ,
+                                      system_variables.irc_bot_is_silenced
+                              FROM    system_variables
+                              LIMIT   1 " ,
+                              fetch_row: true,
+                              description: "Fetch globally required system variables" );
 
 // If necessary, mock system variables that need to be there even in special circumstances
 else
-  $system_variables = array('website_is_closed' => 0);
+  $system_variables = array(  'website_is_closed'       => 0  ,
+                              'unread_mod_mail_count'   => 0  ,
+                              'unread_admin_mail_count' => 0  );
 
 
 
@@ -65,16 +70,20 @@ else
  * As it is basically a global wrapper for MySQL usage, you should always use this function when executing a query.
  * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
  *
- * @param   string  $query                      The query that you want to run.
- * @param   bool    $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
- * @param   string  $description    (OPTIONAL)  Describe the query, will only be used in SQL debug mode.
+ * @param   string      $query                      The query that you want to run.
+ * @param   bool        $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
+ * @param   bool        $fetch_row      (OPTIONAL)  Fetch the first row and return it instead of the query object.
+ * @param   string      $row_format     (OPTIONAL)  Format the fetched row uses ('both', 'num'), defaults to 'assoc'.
+ * @param   string      $description    (OPTIONAL)  Describe the query, will only be used in SQL debug mode.
  *
- * @return  object|bool                             A mysqli_object or a boolean, depending on the type of query.
+ * @return  object|bool|array|null                  A mysqli_object, a bool, an array, null: depends on the parameters.
  */
 
-function query( string  $query                  ,
-                bool    $ignore_errors  = false ,
-                string  $description    = NULL  ) : mixed
+function query( string  $query                    ,
+                bool    $ignore_errors  = false   ,
+                bool    $fetch_row      = false   ,
+                string  $row_format     = 'assoc' ,
+                string  $description    = NULL    ) : mixed
 {
   // First off let's increment the global query counter for this session
   $GLOBALS['query']++;
@@ -100,13 +109,13 @@ function query( string  $query                  ,
     echo '<div class="debug_query"><pre>'.$query.'</pre></div>';
 
     // Check if the query returns any result
-    if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && mysqli_num_rows($query_result))
+    if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && query_row_count($query_result))
     {
       // Prepare an array for the query results
       $full_query_results = array();
 
       // Fetch the query results
-      for($i = 0 ; $dquery = mysqli_fetch_array($query_result); $i++)
+      for($i = 0 ; $dquery = query_row($query_result); $i++)
       {
         foreach($dquery as $j => $result)
         {
@@ -139,8 +148,73 @@ function query( string  $query                  ,
     echo '</div>';
   }
 
+  // Fetch and return the first row of the query if requested
+  if($fetch_row === true)
+    return query_row($query_result, $row_format);
+
   // Return the result of the query
   return $query_result;
+}
+
+
+
+
+/**
+ * Fetch the next row of a query.
+ *
+ * @param   object        $query_object               The query object obtained by using the query() function.
+ * @param   string        $return_format  (OPTIONAL)  Format of the returned array ('num', 'both') defaults to 'assoc'.
+ *
+ * @return  array|null                                A mysqli_object or a boolean, depending on the type of query.
+ */
+
+function query_row( object  $query_object             ,
+                    string  $return_format  = 'assoc' ) : ?array
+{
+  // Return null if the variable is not a query object
+  if(!is_a($query_object, 'mysqli_result'))
+    return NULL;
+
+  // Set the returned format constant to a value allowed by MySQL
+  $return_format = match($return_format)
+  {
+    'assoc' => MYSQLI_ASSOC ,
+    'num'   => MYSQLI_NUM   ,
+    default => MYSQLI_BOTH
+  };
+
+  // Fetch the next row of the query
+  $return = mysqli_fetch_array($query_object, $return_format);
+
+  // If the result is not an array, set it to null
+  $return = is_array($return) ? $return : NULL;
+
+  // Return the row
+  return $return;
+}
+
+
+
+
+/**
+ * Count the number of rows returned by a query.
+ *
+ * @param   object    $query_object   The query object obtained by using the query() function.
+ *
+ * @return  int                       The number of rows in the query (zero if it is an invalid query).
+ */
+
+function query_row_count( object $query_object ) : int
+{
+  // Return zero if the variable is not a query object
+  if(!is_a($query_object, 'mysqli_result'))
+    return 0;
+
+  // Get the number of rows in the query
+  $num_rows = mysqli_num_rows($query_object);
+
+  // Return the number of rows in the query, or zero if the result is not an int
+  return (is_int($num_rows)) ? $num_rows : 0;
 }
 
 

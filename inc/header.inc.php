@@ -136,7 +136,7 @@ if(isset($page_url) && !isset($error_mode))
                         description: "Fetch the current pageview count");
 
   // Define the current view count (used in the footer for metrics)
-  $dpageviews       = mysqli_fetch_array($qpageviews);
+  $dpageviews       = query_row($qpageviews);
   $pageviews        = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
   $pageviews        = ($is_admin && !$GLOBALS['dev_mode']) ? ($pageviews - 1) : $pageviews;
   $pageviews        = ($pageviews < 1) ? 1 : $pageviews;
@@ -189,7 +189,7 @@ else
                       description: "Update guest activity");
 
   // Create the guest if it does not exist
-  if(!mysqli_num_rows($qguest))
+  if(!query_row_count($qguest))
   {
     // Generate a random username
     $guest_name_en = sanitize(user_generate_random_username('EN'), 'string');

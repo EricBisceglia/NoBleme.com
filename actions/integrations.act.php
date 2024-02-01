@@ -53,13 +53,14 @@ function irc_channels_get( int $channel_id ) : mixed
     return NULL;
 
   // Fetch the data
-  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
-                                                  irc_channels.channel_type   AS 'c_type'     ,
-                                                  irc_channels.languages      AS 'c_lang'     ,
-                                                  irc_channels.description_en AS 'c_desc_en'  ,
-                                                  irc_channels.description_fr AS 'c_desc_fr'
-                                          FROM    irc_channels
-                                          WHERE   irc_channels.id = '$channel_id' "));
+  $dchannel = query(" SELECT  irc_channels.name           AS 'c_name'     ,
+                              irc_channels.channel_type   AS 'c_type'     ,
+                              irc_channels.languages      AS 'c_lang'     ,
+                              irc_channels.description_en AS 'c_desc_en'  ,
+                              irc_channels.description_fr AS 'c_desc_fr'
+                      FROM    irc_channels
+                      WHERE   irc_channels.id = '$channel_id' ",
+                      fetch_row: true);
 
   // Assemble an array with the data
   $data['name']     = sanitize_output($dchannel['c_name']);
@@ -104,7 +105,7 @@ function irc_channels_list( string $format = 'html' ) : array
                                   irc_channels.name         ASC   ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qchannels); $i++)
+  for($i = 0; $row = query_row($qchannels); $i++)
   {
     // Format the data
     $channel_id             = $row['c_id'];
@@ -289,13 +290,14 @@ function irc_channels_edit( int   $channel_id ,
     return __('irc_channels_add_error_lang');
 
   // Fetch the channel's data before updating it
-  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
-                                                  irc_channels.channel_type   AS 'c_type'     ,
-                                                  irc_channels.languages      AS 'c_lang'     ,
-                                                  irc_channels.description_en AS 'c_desc_en'  ,
-                                                  irc_channels.description_fr AS 'c_desc_fr'
-                                          FROM    irc_channels
-                                          WHERE   irc_channels.id = '$channel_id' "));
+  $dchannel = query(" SELECT  irc_channels.name           AS 'c_name'     ,
+                              irc_channels.channel_type   AS 'c_type'     ,
+                              irc_channels.languages      AS 'c_lang'     ,
+                              irc_channels.description_en AS 'c_desc_en'  ,
+                              irc_channels.description_fr AS 'c_desc_fr'
+                      FROM    irc_channels
+                      WHERE   irc_channels.id = '$channel_id' ",
+                      fetch_row: true);
 
   // Update the channel
   query(" UPDATE  irc_channels
@@ -362,13 +364,14 @@ function irc_channels_delete( int $channel_id ) : string
     return __('irc_channels_delete_error');
 
   // Fetch the channel's data before deleting it
-  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
-                                                  irc_channels.channel_type   AS 'c_type'     ,
-                                                  irc_channels.languages      AS 'c_lang'     ,
-                                                  irc_channels.description_en AS 'c_desc_en'  ,
-                                                  irc_channels.description_fr AS 'c_desc_fr'
-                                          FROM    irc_channels
-                                          WHERE   irc_channels.id = '$channel_id' "));
+  $dchannel = query(" SELECT  irc_channels.name           AS 'c_name'     ,
+                              irc_channels.channel_type   AS 'c_type'     ,
+                              irc_channels.languages      AS 'c_lang'     ,
+                              irc_channels.description_en AS 'c_desc_en'  ,
+                              irc_channels.description_fr AS 'c_desc_fr'
+                      FROM    irc_channels
+                      WHERE   irc_channels.id = '$channel_id' ",
+                      fetch_row: true);
 
   // Hard delete the channel
   query(" DELETE FROM irc_channels
@@ -754,7 +757,7 @@ function irc_bot_message_history_list( array $search = array() ) : array
                                 logs_irc_bot.id       DESC  ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qhistory); $i++)
+  for($i = 0; $row = query_row($qhistory); $i++)
   {
     $data[$i]['id']         = $row['li_id'];
     $data[$i]['date']       = sanitize_output(time_since($row['li_date']));
@@ -795,10 +798,11 @@ function irc_bot_message_history_replay( int $log_id ) : void
   $log_id = sanitize($log_id, 'int', 0);
 
   // Fetch the data we need to replay the log
-  $dlog = mysqli_fetch_array(query("  SELECT  logs_irc_bot.channel  AS 'il_channel' ,
-                                              logs_irc_bot.body     AS 'il_body'
-                                      FROM    logs_irc_bot
-                                      WHERE   logs_irc_bot.id = '$log_id' "));
+  $dlog = query(" SELECT  logs_irc_bot.channel  AS 'il_channel' ,
+                          logs_irc_bot.body     AS 'il_body'
+                  FROM    logs_irc_bot
+                  WHERE   logs_irc_bot.id = '$log_id' ",
+                  fetch_row: true);
 
   // Strip the hash from the start of the  channel name
   $channel = $dlog['il_channel'];

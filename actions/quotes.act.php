@@ -55,17 +55,18 @@ function quotes_get(  int     $quote_id           ,
     return NULL;
 
   // Fetch the data
-  $dquote = mysqli_fetch_array(query("  SELECT    quotes.is_deleted       AS 'q_deleted'      ,
-                                                  quotes.admin_validation AS 'q_validated'    ,
-                                                  submitter.id            AS 'q_submitter_id' ,
-                                                  submitter.username      AS 'q_submitter'    ,
-                                                  quotes.body             AS 'q_body'         ,
-                                                  quotes.submitted_at     AS 'q_date'         ,
-                                                  quotes.language         AS 'q_lang'         ,
-                                                  quotes.is_nsfw          AS 'q_nsfw'
-                                        FROM      quotes
-                                        LEFT JOIN users AS submitter ON quotes.fk_users_submitter = submitter.id
-                                        WHERE     quotes.id = '$quote_id' "));
+  $dquote = query(" SELECT    quotes.is_deleted       AS 'q_deleted'      ,
+                              quotes.admin_validation AS 'q_validated'    ,
+                              submitter.id            AS 'q_submitter_id' ,
+                              submitter.username      AS 'q_submitter'    ,
+                              quotes.body             AS 'q_body'         ,
+                              quotes.submitted_at     AS 'q_date'         ,
+                              quotes.language         AS 'q_lang'         ,
+                              quotes.is_nsfw          AS 'q_nsfw'
+                    FROM      quotes
+                    LEFT JOIN users AS submitter ON quotes.fk_users_submitter = submitter.id
+                    WHERE     quotes.id = '$quote_id' ",
+                    fetch_row: true);
 
   // Format the data
   $data               = NULL;
@@ -164,7 +165,7 @@ function quotes_get_linked_users( int   $quote_id                 ,
                     ORDER BY  users.username ASC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     $data[$i]['id']       = $row['u_id'];
     $data[$i]['deleted']  = $row['u_deleted'];
@@ -238,14 +239,15 @@ function quotes_get_random_id(  array   $search   = array() ,
   $search_where .= ($search_year)       ? " AND YEAR(FROM_UNIXTIME(quotes.submitted_at)) = '$search_year' " : " ";
 
   // Fetch a random quote
-  $drand = mysqli_fetch_array(query(" SELECT    quotes.id AS 'q_id'
-                                      FROM      quotes
-                                                $join_user
-                                      WHERE     quotes.is_deleted       = 0
-                                      AND       quotes.admin_validation = 1
-                                                $search_where
-                                      ORDER BY  RAND()
-                                      LIMIT     1 "));
+  $drand = query("  SELECT    quotes.id AS 'q_id'
+                    FROM      quotes
+                              $join_user
+                    WHERE     quotes.is_deleted       = 0
+                    AND       quotes.admin_validation = 1
+                              $search_where
+                    ORDER BY  RAND()
+                    LIMIT     1 "   ,
+                    fetch_row: true );
 
   // Return the random quote's id
   return (isset($drand['q_id'])) ? $drand['q_id'] : 0;
@@ -353,7 +355,7 @@ function quotes_list( ?array  $search         = array() ,
   $dquotes = query($qquotes);
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($dquotes); $i++)
+  for($i = 0; $row = query_row($dquotes); $i++)
   {
     // Format the data
     $quote_id         = $row['q_id'];
@@ -726,12 +728,13 @@ function quotes_approve(int $quote_id) : mixed
     return __('quotes_restore_error');
 
   // Fetch information about the quote
-  $dquote = mysqli_fetch_array(query("  SELECT  quotes.fk_users_submitter AS 'q_submitter'  ,
-                                                quotes.is_deleted         AS 'q_deleted'    ,
-                                                quotes.admin_validation   AS 'q_validated'  ,
-                                                quotes.language           AS 'q_lang'
-                                        FROM    quotes
-                                        WHERE   quotes.id = '$quote_id' "));
+  $dquote = query(" SELECT  quotes.fk_users_submitter AS 'q_submitter'  ,
+                            quotes.is_deleted         AS 'q_deleted'    ,
+                            quotes.admin_validation   AS 'q_validated'  ,
+                            quotes.language           AS 'q_lang'
+                    FROM    quotes
+                    WHERE   quotes.id = '$quote_id' ",
+                    fetch_row: true);
 
   // Error: Quote has been deleted
   if($dquote['q_deleted'])
@@ -842,13 +845,14 @@ function quotes_reject( int     $quote_id     ,
     return __('quotes_restore_error');
 
   // Fetch information about the quote
-  $dquote = mysqli_fetch_array(query("  SELECT  quotes.fk_users_submitter AS 'q_submitter'  ,
-                                                quotes.is_deleted         AS 'q_deleted'    ,
-                                                quotes.admin_validation   AS 'q_validated'  ,
-                                                quotes.language           AS 'q_lang'       ,
-                                                quotes.body               AS 'q_body'
-                                        FROM    quotes
-                                        WHERE   quotes.id = '$quote_id' "));
+  $dquote = query(" SELECT  quotes.fk_users_submitter AS 'q_submitter'  ,
+                            quotes.is_deleted         AS 'q_deleted'    ,
+                            quotes.admin_validation   AS 'q_validated'  ,
+                            quotes.language           AS 'q_lang'       ,
+                            quotes.body               AS 'q_body'
+                    FROM    quotes
+                    WHERE   quotes.id = '$quote_id' ",
+                    fetch_row: true);
 
   // Error: Quote has been deleted
   if($dquote['q_deleted'])
@@ -966,7 +970,7 @@ function quotes_link_user(  int     $quote_id ,
     return __('quotes_users_error');
 
   // Check if the link already exists
-  $dlink = mysqli_num_rows(query("  SELECT  quotes_users.id
+  $dlink = query_row_count(query("  SELECT  quotes_users.id
                                     FROM    quotes_users
                                     WHERE   quotes_users.fk_quotes  = '$quote_id'
                                     AND     quotes_users.fk_users   = '$user_id' "));
@@ -1080,7 +1084,7 @@ function quotes_update_all_linked_users() : void
                       ORDER BY  quotes.id ASC");
 
   // Loop through the quotes and update their linked users
-  while($dquotes = mysqli_fetch_array($qquotes))
+  while($dquotes = query_row($qquotes))
   {
     $quote_id = sanitize($dquotes['q_id'], 'int', 0);
     quotes_update_linked_users($quote_id);
@@ -1109,15 +1113,16 @@ function quotes_stats_list() : array
   $data['oldest_year'] = quotes_stats_get_oldest_year();
 
   // Fetch the total number of quotes
-  $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)              AS 'q_total'    ,
-                                                SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
-                                                          ELSE 0 END) AS 'q_total_en' ,
-                                                SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
-                                                          ELSE 0 END) AS 'q_total_fr' ,
-                                                SUM(quotes.is_nsfw)   AS 'q_total_nsfw'
-                                        FROM    quotes
-                                        WHERE   quotes.is_deleted       = 0
-                                        AND     quotes.admin_validation = 1 "));
+  $dquotes = query("  SELECT  COUNT(*)              AS 'q_total'    ,
+                              SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
+                                        ELSE 0 END) AS 'q_total_en' ,
+                              SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
+                                        ELSE 0 END) AS 'q_total_fr' ,
+                              SUM(quotes.is_nsfw)   AS 'q_total_nsfw'
+                      FROM    quotes
+                      WHERE   quotes.is_deleted       = 0
+                      AND     quotes.admin_validation = 1 ",
+                      fetch_row: true);
 
   // Add some stats to the return array
   $data['total']        = $dquotes['q_total'];
@@ -1132,11 +1137,12 @@ function quotes_stats_list() : array
                                                 'percentage');
 
   // Fetch all quotes, included unvalidated and deleted
-  $dquotes = mysqli_fetch_array(query(" SELECT  COUNT(*)                AS 'q_total'          ,
-                                                SUM(quotes.is_deleted)  AS 'q_total_deleted'  ,
-                                                SUM(CASE  WHEN quotes.admin_validation = 0 THEN 1
-                                                          ELSE 0 END)   AS 'q_total_unvalidated'
-                                        FROM    quotes "));
+  $dquotes = query("  SELECT  COUNT(*)                AS 'q_total'          ,
+                              SUM(quotes.is_deleted)  AS 'q_total_deleted'  ,
+                              SUM(CASE  WHEN quotes.admin_validation = 0 THEN 1
+                                        ELSE 0 END)   AS 'q_total_unvalidated'
+                      FROM    quotes ",
+                      fetch_row: true );
 
   // Add some stats to the return array
   $data['deleted']      = $dquotes['q_total_deleted'];
@@ -1162,7 +1168,7 @@ function quotes_stats_list() : array
                                 users.username      ASC   ");
 
   // Loop through user stats and add its data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qquotes); $i++)
+  for($i = 0; $row = query_row($qquotes); $i++)
   {
     $data['users_id_'.$i]           = sanitize_output($row['u_id']);
     $data['users_nick_'.$i]         = sanitize_output($row['u_nick']);
@@ -1203,7 +1209,7 @@ function quotes_stats_list() : array
                       ORDER BY  q_year ");
 
   // Add quote data over time to the return data
-  while($dquotes = mysqli_fetch_array($qquotes))
+  while($dquotes = query_row($qquotes))
   {
     $year                           = ($dquotes['q_year'] >= $data['oldest_year']) ? $dquotes['q_year'] : 0;
     $data['years_count_'.$year]     = ($dquotes['q_count']) ? sanitize_output($dquotes['q_count']) : '';
@@ -1232,7 +1238,7 @@ function quotes_stats_list() : array
                                 users.username                ASC   ");
 
   // Loop through user stats and add its data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qquotes); $i++)
+  for($i = 0; $row = query_row($qquotes); $i++)
   {
     $data['contrib_id_'.$i]         = sanitize_output($row['u_id']);
     $data['contrib_nick_'.$i]       = sanitize_output($row['u_nick']);
@@ -1262,11 +1268,12 @@ function quotes_stats_list() : array
 function quotes_stats_get_oldest_year() : int
 {
   // Look up the oldest quote
-  $dquotes = mysqli_fetch_array(query(" SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
-                                        FROM    quotes
-                                        WHERE   quotes.is_deleted       = 0
-                                        AND     quotes.admin_validation = 1
-                                        AND     quotes.submitted_at     > 0 "));
+  $dquotes = query("  SELECT  MIN(quotes.submitted_at) AS 'q_oldest'
+                      FROM    quotes
+                      WHERE   quotes.is_deleted       = 0
+                      AND     quotes.admin_validation = 1
+                      AND     quotes.submitted_at     > 0 ",
+                      fetch_row: true);
 
   // Return its year
   return date('Y', $dquotes['q_oldest']);
@@ -1293,18 +1300,19 @@ function quotes_stats_recalculate_user( int $user_id )
     return;
 
   // Count the quotes in which the user is involved
-  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*)              AS 'q_count'    ,
-                                                  SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
-                                                            ELSE 0 END) AS 'q_count_en' ,
-                                                  SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
-                                                            ELSE 0 END) AS 'q_count_fr' ,
-                                                  SUM(quotes.is_nsfw)   AS 'q_count_nsfw'
-                                        FROM      quotes_users
-                                        LEFT JOIN quotes
-                                        ON        quotes_users.fk_quotes  = quotes.id
-                                        WHERE     quotes_users.fk_users   = '$user_id'
-                                        AND       quotes.is_deleted       = 0
-                                        AND       quotes.admin_validation = 1 "));
+  $dquotes = query("  SELECT    COUNT(*)              AS 'q_count'    ,
+                                SUM(CASE  WHEN quotes.language LIKE 'EN' THEN 1
+                                          ELSE 0 END) AS 'q_count_en' ,
+                                SUM(CASE  WHEN quotes.language LIKE 'FR' THEN 1
+                                          ELSE 0 END) AS 'q_count_fr' ,
+                                SUM(quotes.is_nsfw)   AS 'q_count_nsfw'
+                      FROM      quotes_users
+                      LEFT JOIN quotes
+                      ON        quotes_users.fk_quotes  = quotes.id
+                      WHERE     quotes_users.fk_users   = '$user_id'
+                      AND       quotes.is_deleted       = 0
+                      AND       quotes.admin_validation = 1 ",
+                      fetch_row: true);
 
   // Sanitize the quote involvement stats
   $quotes_count       = sanitize($dquotes['q_count'], 'int', 0);
@@ -1313,53 +1321,57 @@ function quotes_stats_recalculate_user( int $user_id )
   $quotes_count_nsfw  = sanitize($dquotes['q_count_nsfw'], 'int', 0);
 
   // Find the user's oldest quote
-  $dquotes = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id' ,
-                                                  quotes.submitted_at AS 'q_date'
-                                        FROM      quotes_users
-                                        LEFT JOIN quotes
-                                        ON        quotes_users.fk_quotes  = quotes.id
-                                        WHERE     quotes_users.fk_users   = '$user_id'
-                                        AND       quotes.is_deleted       = 0
-                                        AND       quotes.admin_validation = 1
-                                        ORDER BY  quotes.submitted_at     ASC ,
-                                                  quotes.id               ASC
-                                        LIMIT     1 "));
+  $dquotes = query("  SELECT    quotes.id           AS 'q_id' ,
+                                quotes.submitted_at AS 'q_date'
+                      FROM      quotes_users
+                      LEFT JOIN quotes
+                      ON        quotes_users.fk_quotes  = quotes.id
+                      WHERE     quotes_users.fk_users   = '$user_id'
+                      AND       quotes.is_deleted       = 0
+                      AND       quotes.admin_validation = 1
+                      ORDER BY  quotes.submitted_at     ASC ,
+                                quotes.id               ASC
+                      LIMIT     1 ",
+                      fetch_row: true);
 
   // Sanitize the oldest quote stats
   $oldest_id    = isset($dquotes['q_id']) ? sanitize($dquotes['q_id'], 'int', 0) : 0;
   $oldest_date  = isset($dquotes['q_id']) ? sanitize($dquotes['q_date'], 'int', 0) : 0;
 
   // Find the user's newest quote
-  $dquotes = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id' ,
-                                                  quotes.submitted_at AS 'q_date'
-                                        FROM      quotes_users
-                                        LEFT JOIN quotes
-                                        ON        quotes_users.fk_quotes  = quotes.id
-                                        WHERE     quotes_users.fk_users   = '$user_id'
-                                        AND       quotes.is_deleted       = 0
-                                        AND       quotes.admin_validation = 1
-                                        ORDER BY  quotes.submitted_at     DESC ,
-                                                  quotes.id               DESC
-                                        LIMIT     1 "));
+  $dquotes = query("  SELECT    quotes.id           AS 'q_id' ,
+                                quotes.submitted_at AS 'q_date'
+                      FROM      quotes_users
+                      LEFT JOIN quotes
+                      ON        quotes_users.fk_quotes  = quotes.id
+                      WHERE     quotes_users.fk_users   = '$user_id'
+                      AND       quotes.is_deleted       = 0
+                      AND       quotes.admin_validation = 1
+                      ORDER BY  quotes.submitted_at     DESC ,
+                                quotes.id               DESC
+                      LIMIT     1 ",
+                      fetch_row: true);
 
   // Sanitize the newest quote stats
   $newest_id    = isset($dquotes['q_id']) ? sanitize($dquotes['q_id'], 'int', 0) : 0;
   $newest_date  = isset($dquotes['q_id']) ? sanitize($dquotes['q_date'], 'int', 0) : 0;
 
   // Count the quotes submitted by the user
-  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
-                                        FROM      quotes
-                                        WHERE     quotes.fk_users_submitter = '$user_id' "));
+  $dquotes = query("  SELECT    COUNT(*) AS 'q_count'
+                      FROM      quotes
+                      WHERE     quotes.fk_users_submitter = '$user_id' ",
+                      fetch_row: true);
 
   // Sanitize the quote submission stats
   $submitted_count = sanitize($dquotes['q_count'], 'int', 0);
 
   // Count the quotes submitted and approved by the user
-  $dquotes = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'q_count'
-                                        FROM      quotes
-                                        WHERE     quotes.fk_users_submitter = '$user_id'
-                                        AND       quotes.is_deleted         = 0
-                                        AND       quotes.admin_validation   = 1 "));
+  $dquotes = query("  SELECT    COUNT(*) AS 'q_count'
+                      FROM      quotes
+                      WHERE     quotes.fk_users_submitter = '$user_id'
+                      AND       quotes.is_deleted         = 0
+                      AND       quotes.admin_validation   = 1 ",
+                      fetch_row: true);
 
   // Sanitize the quote submission stats
   $approved_count = sanitize($dquotes['q_count'], 'int', 0);
@@ -1396,7 +1408,7 @@ function quotes_stats_recalculate_all()
                     ORDER BY  users.id ASC ");
 
   // Loop through the users and recalculate their individual quote database statistics
-  while($dusers = mysqli_fetch_array($qusers))
+  while($dusers = query_row($qusers))
   {
     $user_id = sanitize($dusers['u_id'], 'int', 0);
     quotes_stats_recalculate_user($user_id);
@@ -1425,9 +1437,10 @@ function user_settings_quotes() : array
     $user_id = sanitize($_SESSION['user_id'], 'int', 0);
 
     // Fetch the settings
-    $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.quotes_languages AS 'sq_lang'
-                                            FROM    users_settings
-                                            WHERE   users_settings.fk_users = '$user_id' "));
+    $dprivacy = query(" SELECT  users_settings.quotes_languages AS 'sq_lang'
+                        FROM    users_settings
+                        WHERE   users_settings.fk_users = '$user_id' ",
+                        fetch_row: true);
 
     // Set the values to the current user settings
     $lang_en = (str_contains($dprivacy['sq_lang'], 'EN'));

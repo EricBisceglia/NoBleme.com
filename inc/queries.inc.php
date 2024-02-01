@@ -27,7 +27,7 @@ include_once 'sanitization.inc.php'; # Data sanitization
 // If the database still uses the old data structure, then skip the other includes
 $old_structure = 0;
 $qtablelist = query(" SHOW TABLES ");
-while($dtablelist = mysqli_fetch_array($qtablelist))
+while($dtablelist = query_row($qtablelist, return_format: 'both'))
   $old_structure = ($dtablelist[0] === 'vars_globales') ? 1 : $old_structure;
 
 // If the database uses the current data structure, proceed with the checks
@@ -89,7 +89,7 @@ function sql_check_query_id() : mixed
 
   // Proceed only if the table exists
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist, return_format: 'both'))
   {
     $query_ok     = ($dtablelist[0] === 'system_variables')  ? 1 : $query_ok;
     $query_ok_old = ($dtablelist[0] === 'vars_globales')     ? 1 : $query_ok_old;
@@ -105,7 +105,7 @@ function sql_check_query_id() : mixed
 
   // Proceed only if the field exists
   $field_exists = 0;
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     if($query_ok)
       $field_exists = ($ddescribe['Field'] !== "latest_query_id") ? 1 : $field_exists;
@@ -119,15 +119,17 @@ function sql_check_query_id() : mixed
 
   // Fetch the id of the last query that was ran
   if($query_ok)
-    $last_query = mysqli_fetch_array(query("  SELECT    system_variables.latest_query_id AS 'latest_query_id'
-                                              FROM      system_variables
-                                              ORDER BY  system_variables.latest_query_id DESC
-                                              LIMIT     1 "));
+    $last_query = query(" SELECT    system_variables.latest_query_id AS 'latest_query_id'
+                          FROM      system_variables
+                          ORDER BY  system_variables.latest_query_id DESC
+                          LIMIT     1 ",
+                          fetch_row: true);
   else
-    $last_query = mysqli_fetch_array(query("  SELECT    vars_globales.derniere_requete_sql AS 'latest_query_id'
-                                              FROM      vars_globales
-                                              ORDER BY  vars_globales.derniere_requete_sql DESC
-                                              LIMIT     1 "));
+    $last_query = query(" SELECT    vars_globales.derniere_requete_sql AS 'latest_query_id'
+                          FROM      vars_globales
+                          ORDER BY  vars_globales.derniere_requete_sql DESC
+                          LIMIT     1 ",
+                          fetch_row: true);
 
   // Return that id
   return $last_query['latest_query_id'];
@@ -152,7 +154,7 @@ function sql_update_query_id( int $id ) : void
 
   // Proceed only if the table exists
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
   {
     $query_ok     = ($dtablelist[0] === 'system_variables')  ? 1 : $query_ok;
     $query_ok_old = ($dtablelist[0] === 'vars_globales')     ? 1 : $query_ok_old;
@@ -168,7 +170,7 @@ function sql_update_query_id( int $id ) : void
 
   // Proceed only if the field exists
   $field_exists = 0;
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     if($query_ok)
       $field_exists = ($ddescribe['Field'] !== "latest_query_id") ? 1 : $field_exists;
@@ -230,7 +232,7 @@ function sql_rename_table(  string  $table_name ,
   $query_old_ok = 0;
   $query_new_ok = 1;
   $qtablelist   = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
   {
     $query_old_ok = ($dtablelist[0] === $table_name) ? 1 : $query_old_ok;
     $query_new_ok = ($dtablelist[0] === $new_name)   ? 0 : $query_new_ok;
@@ -258,7 +260,7 @@ function sql_empty_table( string $table_name ) : void
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -306,7 +308,7 @@ function sql_create_field(  string  $table_name       ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -316,7 +318,7 @@ function sql_create_field(  string  $table_name       ,
 
   // Proceed only if the preceeding field exists
   $query_ok = 0;
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
     $query_ok = ($ddescribe['Field'] === $after_field_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -326,7 +328,7 @@ function sql_create_field(  string  $table_name       ,
 
   // Proceed only if the field doesn't already exist
   $query_ko = 0;
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
     $query_ko = ($ddescribe['Field'] === $field_name) ? 1 : $query_ko;
   if($query_ko)
     return;
@@ -357,7 +359,7 @@ function sql_rename_field(  string  $table_name     ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -366,7 +368,7 @@ function sql_rename_field(  string  $table_name     ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // Continue only if the new field name doesn't exist
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     if ($ddescribe['Field'] === $new_field_name)
       return;
@@ -376,7 +378,7 @@ function sql_rename_field(  string  $table_name     ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // If the field exists in the table, rename it
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     if($ddescribe['Field'] === $old_field_name)
       query(" ALTER TABLE ".$table_name." CHANGE ".$old_field_name." ".$new_field_name." ".$field_type);
@@ -403,7 +405,7 @@ function sql_change_field_type( string  $table_name ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -412,7 +414,7 @@ function sql_change_field_type( string  $table_name ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // If the field exists in the table, rename it
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     if($ddescribe['Field'] === $field_name)
       query(" ALTER TABLE ".$table_name." MODIFY ".$field_name." ".$field_type);
@@ -441,7 +443,7 @@ function sql_move_field(  string  $table_name       ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -452,7 +454,7 @@ function sql_move_field(  string  $table_name       ,
   // Continue only if both of the field names actually exist
   $field_ok       = 0;
   $field_after_ok = 0;
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     $field_ok       = ($ddescribe['Field'] === $field_name)        ? 1 : $field_ok;
     $field_after_ok = ($ddescribe['Field'] === $after_field_name)  ? 1 : $field_after_ok;
@@ -482,7 +484,7 @@ function sql_delete_field(  string  $table_name ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -491,7 +493,7 @@ function sql_delete_field(  string  $table_name ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // If the field exists in the table, delete it
-  while($ddescribe = mysqli_fetch_array($qdescribe))
+  while($ddescribe = query_row($qdescribe))
   {
     if($ddescribe['Field'] === $field_name)
       query(" ALTER TABLE ".$table_name." DROP ".$field_name);
@@ -520,7 +522,7 @@ function sql_create_index(  string  $table_name           ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -529,7 +531,7 @@ function sql_create_index(  string  $table_name           ,
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
   // If it does not exist yet, then can create it and run a check to populate the table's indexes
-  if(!mysqli_num_rows($qindex))
+  if(!query_row_count($qindex))
   {
     $query_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
     query(" ALTER TABLE ".$table_name."
@@ -556,7 +558,7 @@ function sql_delete_index(  string  $table_name ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = mysqli_fetch_array($qtablelist))
+  while($dtablelist = query_row($qtablelist))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -565,7 +567,7 @@ function sql_delete_index(  string  $table_name ,
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
   // If it exists, delete it and run a check to depopulate the index
-  if(mysqli_num_rows($qindex))
+  if(query_row_count($qindex))
   {
     query(" ALTER TABLE ".$table_name."
             DROP INDEX ".$index_name );
@@ -593,7 +595,7 @@ function sql_insert_value(  string  $condition  ,
                             string  $query      ) : void
 {
   // If the condition is met, run the query
-  if(!mysqli_num_rows(query($condition)))
+  if(!query_row_count(query($condition)))
     query($query);
 }
 

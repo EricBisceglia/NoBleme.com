@@ -66,21 +66,23 @@ function users_authenticate(  string  $ip                   ,
           WHERE       users_login_attempts.attempted_at < $bruteforce_check_limit ");
 
   // Check for a bruteforce attempt by the current IP address
-  $dbruteforce_check = mysqli_fetch_array(query(" SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
-                                                  FROM    users_login_attempts
-                                                  WHERE   users_login_attempts.ip_address LIKE '$ip' "));
+  $dbruteforce_check = query("  SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
+                                FROM    users_login_attempts
+                                WHERE   users_login_attempts.ip_address LIKE '$ip' ",
+                                fetch_row: true);
 
   // If a bruteforce attempt is going on, throw the user away
   if($dbruteforce_check['nb_attempts'] > 15)
     return __('login_form_error_bruteforce');
 
   // Fetch the ID of the requested user
-  $dfetch_user = mysqli_fetch_array(query(" SELECT  users.id          AS 'u_id'       ,
-                                                    users.is_deleted  AS 'u_deleted'  ,
-                                                    users.username    AS 'u_nick'     ,
-                                                    users.password    AS 'u_pass'
-                                            FROM    users
-                                            WHERE   users.username LIKE '$username' "));
+  $dfetch_user = query("  SELECT  users.id          AS 'u_id'       ,
+                                  users.is_deleted  AS 'u_deleted'  ,
+                                  users.username    AS 'u_nick'     ,
+                                  users.password    AS 'u_pass'
+                          FROM    users
+                          WHERE   users.username LIKE '$username' ",
+                          fetch_row: true);
 
   // If the user does not exist, log the bruteforce attempt and end the process here
   if(!isset($dfetch_user['u_id']))
@@ -98,17 +100,19 @@ function users_authenticate(  string  $ip                   ,
 
   // Check if the specific user is under bruteforce attempt
   $user_id            = sanitize($dfetch_user['u_id'], 'int', 0);
-  $dbruteforce_check  = mysqli_fetch_array(query("  SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
-                                                    FROM    users_login_attempts
-                                                    WHERE   users_login_attempts.fk_users = '$user_id' "));
+  $dbruteforce_check  = query(" SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
+                                FROM    users_login_attempts
+                                WHERE   users_login_attempts.fk_users = '$user_id' ",
+                                fetch_row: true);
 
   // If the specific user is under bruteforce attempt, lock it to one attempt per IP
   if($dbruteforce_check['nb_attempts'] > 9)
   {
-    $dbruteforce_check  = mysqli_fetch_array(query("  SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
-                                                      FROM    users_login_attempts
-                                                      WHERE   users_login_attempts.fk_users   =     '$user_id'
-                                                      AND     users_login_attempts.ip_address LIKE  '$ip' "));
+    $dbruteforce_check  = query(" SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
+                                  FROM    users_login_attempts
+                                  WHERE   users_login_attempts.fk_users   =     '$user_id'
+                                  AND     users_login_attempts.ip_address LIKE  '$ip' ",
+                                  fetch_row: true);
     if($dbruteforce_check['nb_attempts'] > 0)
       return __('login_form_error_bruteforce');
   }
@@ -311,9 +315,10 @@ function account_get_email() : string
   $user_id = sanitize(user_get_id(), 'int', 0);
 
   // Fetch the user's e-mail address
-  $duser = mysqli_fetch_array(query(" SELECT  users_profile.email_address AS 'u_mail'
-                                      FROM    users_profile
-                                      WHERE   users_profile.fk_users = '$user_id' "));
+  $duser = query("  SELECT  users_profile.email_address AS 'u_mail'
+                    FROM    users_profile
+                    WHERE   users_profile.fk_users = '$user_id' ",
+                    fetch_row: true);
 
   // Prepare the data
   $email = sanitize_output($duser['u_mail']);
@@ -406,9 +411,10 @@ function account_update_password( string  $current_password     ,
   $new_password     = sanitize(encrypt_data($new_password), 'string');
 
   // Fetch the current password
-  $dpass = mysqli_fetch_array(query(" SELECT  users.password AS 'u_pass'
-                                      FROM    users
-                                      WHERE   users.id = '$user_id' "));
+  $dpass = query("  SELECT  users.password AS 'u_pass'
+                    FROM    users
+                    WHERE   users.id = '$user_id' ",
+                    fetch_row: true);
 
   // Error: Incorrect password
   if($current_password && $current_password !== $dpass['u_pass'])

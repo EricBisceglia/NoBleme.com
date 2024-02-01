@@ -138,50 +138,51 @@ function compendium_pages_get(  int     $page_id  = 0       ,
     $where = " compendium_pages.page_url LIKE '$page_url' ";
 
   // Fetch the data
-  $dpage = mysqli_fetch_array(query(" SELECT    compendium_pages.id                       AS 'p_id'           ,
-                                                compendium_pages.is_deleted               AS 'p_deleted'      ,
-                                                compendium_pages.is_draft                 AS 'p_draft'        ,
-                                                compendium_pages.created_at               AS 'p_created'      ,
-                                                compendium_pages.page_url                 AS 'p_url'          ,
-                                                compendium_pages.title_$lang              AS 'p_title'        ,
-                                                compendium_pages.title_en                 AS 'p_title_en'     ,
-                                                compendium_pages.title_fr                 AS 'p_title_fr'     ,
-                                                compendium_pages.redirection_$lang        AS 'p_redirect'     ,
-                                                compendium_pages.redirection_en           AS 'p_redirect_en'  ,
-                                                compendium_pages.redirection_fr           AS 'p_redirect_fr'  ,
-                                                compendium_pages.is_external_redirection  AS 'p_redirect_ext' ,
-                                                compendium_pages.year_appeared            AS 'p_new_year'     ,
-                                                compendium_pages.month_appeared           AS 'p_new_month'    ,
-                                                compendium_pages.year_peak                AS 'p_peak_year'    ,
-                                                compendium_pages.month_peak               AS 'p_peak_month'   ,
-                                                compendium_pages.is_nsfw                  AS 'p_nsfw'         ,
-                                                compendium_pages.is_gross                 AS 'p_gross'        ,
-                                                compendium_pages.is_offensive             AS 'p_offensive'    ,
-                                                compendium_pages.title_is_nsfw            AS 'p_nsfw_title'   ,
-                                                compendium_pages.summary_$lang            AS 'p_summary'      ,
-                                                compendium_pages.summary_en               AS 'p_summary_en'   ,
-                                                compendium_pages.summary_fr               AS 'p_summary_fr'   ,
-                                                compendium_pages.definition_$lang         AS 'p_body'         ,
-                                                compendium_pages.definition_en            AS 'p_body_en'      ,
-                                                compendium_pages.definition_fr            AS 'p_body_fr'      ,
-                                                compendium_pages.admin_notes              AS 'p_admin_notes'  ,
-                                                compendium_pages.admin_urls               AS 'p_admin_urls'   ,
-                                                compendium_eras.id                        AS 'pe_id'          ,
-                                                compendium_eras.name_$lang                AS 'pe_name'        ,
-                                                compendium_eras.name_en                   AS 'pe_name_en'     ,
-                                                compendium_eras.name_fr                   AS 'pe_name_fr'     ,
-                                                compendium_types.id                       AS 'pt_id'          ,
-                                                compendium_types.name_$lang               AS 'pt_name'        ,
-                                                compendium_types.name_en                  AS 'pt_name_en'     ,
-                                                compendium_types.full_name_$lang          AS 'pt_display'     ,
-                                                compendium_types.full_name_en             AS 'pt_full_en'     ,
-                                                compendium_types.full_name_fr             AS 'pt_full_fr'
-                                      FROM      compendium_pages
-                                      LEFT JOIN compendium_types
-                                      ON        compendium_pages.fk_compendium_types  = compendium_types.id
-                                      LEFT JOIN compendium_eras
-                                      ON        compendium_pages.fk_compendium_eras   = compendium_eras.id
-                                      WHERE     $where "));
+  $dpage = query("  SELECT    compendium_pages.id                       AS 'p_id'           ,
+                              compendium_pages.is_deleted               AS 'p_deleted'      ,
+                              compendium_pages.is_draft                 AS 'p_draft'        ,
+                              compendium_pages.created_at               AS 'p_created'      ,
+                              compendium_pages.page_url                 AS 'p_url'          ,
+                              compendium_pages.title_$lang              AS 'p_title'        ,
+                              compendium_pages.title_en                 AS 'p_title_en'     ,
+                              compendium_pages.title_fr                 AS 'p_title_fr'     ,
+                              compendium_pages.redirection_$lang        AS 'p_redirect'     ,
+                              compendium_pages.redirection_en           AS 'p_redirect_en'  ,
+                              compendium_pages.redirection_fr           AS 'p_redirect_fr'  ,
+                              compendium_pages.is_external_redirection  AS 'p_redirect_ext' ,
+                              compendium_pages.year_appeared            AS 'p_new_year'     ,
+                              compendium_pages.month_appeared           AS 'p_new_month'    ,
+                              compendium_pages.year_peak                AS 'p_peak_year'    ,
+                              compendium_pages.month_peak               AS 'p_peak_month'   ,
+                              compendium_pages.is_nsfw                  AS 'p_nsfw'         ,
+                              compendium_pages.is_gross                 AS 'p_gross'        ,
+                              compendium_pages.is_offensive             AS 'p_offensive'    ,
+                              compendium_pages.title_is_nsfw            AS 'p_nsfw_title'   ,
+                              compendium_pages.summary_$lang            AS 'p_summary'      ,
+                              compendium_pages.summary_en               AS 'p_summary_en'   ,
+                              compendium_pages.summary_fr               AS 'p_summary_fr'   ,
+                              compendium_pages.definition_$lang         AS 'p_body'         ,
+                              compendium_pages.definition_en            AS 'p_body_en'      ,
+                              compendium_pages.definition_fr            AS 'p_body_fr'      ,
+                              compendium_pages.admin_notes              AS 'p_admin_notes'  ,
+                              compendium_pages.admin_urls               AS 'p_admin_urls'   ,
+                              compendium_eras.id                        AS 'pe_id'          ,
+                              compendium_eras.name_$lang                AS 'pe_name'        ,
+                              compendium_eras.name_en                   AS 'pe_name_en'     ,
+                              compendium_eras.name_fr                   AS 'pe_name_fr'     ,
+                              compendium_types.id                       AS 'pt_id'          ,
+                              compendium_types.name_$lang               AS 'pt_name'        ,
+                              compendium_types.name_en                  AS 'pt_name_en'     ,
+                              compendium_types.full_name_$lang          AS 'pt_display'     ,
+                              compendium_types.full_name_en             AS 'pt_full_en'     ,
+                              compendium_types.full_name_fr             AS 'pt_full_fr'
+                    FROM      compendium_pages
+                    LEFT JOIN compendium_types
+                    ON        compendium_pages.fk_compendium_types  = compendium_types.id
+                    LEFT JOIN compendium_eras
+                    ON        compendium_pages.fk_compendium_eras   = compendium_eras.id
+                    WHERE     $where ",
+                    fetch_row: true);
 
   // Format the data
   $page_id                = $dpage['p_id'];
@@ -355,11 +356,12 @@ function compendium_pages_get(  int     $page_id  = 0       ,
   }
 
   // Fetch the latest update
-  $dupdate = mysqli_fetch_array(query(" SELECT    compendium_pages_history.edited_at AS 'ph_time'
-                                        FROM      compendium_pages_history
-                                        WHERE     compendium_pages_history.fk_compendium_pages = '$page_id_sanitized'
-                                        ORDER BY  compendium_pages_history.edited_at DESC
-                                        LIMIT     1 "));
+  $dupdate = query("  SELECT    compendium_pages_history.edited_at AS 'ph_time'
+                      FROM      compendium_pages_history
+                      WHERE     compendium_pages_history.fk_compendium_pages = '$page_id_sanitized'
+                      ORDER BY  compendium_pages_history.edited_at DESC
+                      LIMIT     1 ",
+                      fetch_row: true);
 
   // Format the update data
   $last_updated_on = $dupdate['ph_time'] ?? NULL;
@@ -386,7 +388,7 @@ function compendium_pages_get(  int     $page_id  = 0       ,
                           ORDER BY  compendium_categories.display_order ASC ");
 
   // Prepare the category data
-  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  for($i = 0; $row = query_row($qcategories); $i++)
   {
     // Format the category data
     $category_id      = $row['pc_id'];
@@ -456,10 +458,11 @@ function compendium_pages_get(  int     $page_id  = 0       ,
     else if(database_entry_exists('compendium_pages', 'page_url', $redirect_page))
     {
       // Check if the redirection is a redirection
-      $dredirect = mysqli_fetch_array(query(" SELECT  compendium_pages.id                 AS 'p_redir_id' ,
-                                                      compendium_pages.redirection_$lang  AS 'p_redirect'
-                                              FROM    compendium_pages
-                                              WHERE   compendium_pages.page_url LIKE '$redirect_page' "));
+      $dredirect = query("  SELECT  compendium_pages.id                 AS 'p_redir_id' ,
+                                    compendium_pages.redirection_$lang  AS 'p_redirect'
+                            FROM    compendium_pages
+                            WHERE   compendium_pages.page_url LIKE '$redirect_page' ",
+                            fetch_row: true);
 
       // Return null if the redirection is a redirection
       if($dredirect['p_redirect'])
@@ -478,10 +481,11 @@ function compendium_pages_get(  int     $page_id  = 0       ,
         return NULL;
 
       // Check if the redirection is a redirection
-      $dredirect = mysqli_fetch_array(query(" SELECT  compendium_pages.page_url           AS 'p_url' ,
-                                                      compendium_pages.redirection_$lang  AS 'p_redirect'
-                                              FROM    compendium_pages
-                                              WHERE   compendium_pages.title_$lang LIKE '$redirect_page' "));
+      $dredirect = query("  SELECT  compendium_pages.page_url           AS 'p_url' ,
+                                    compendium_pages.redirection_$lang  AS 'p_redirect'
+                            FROM    compendium_pages
+                            WHERE   compendium_pages.title_$lang LIKE '$redirect_page' ",
+                            fetch_row: true);
 
       // Return null if the redirection is a redirection
       if($dredirect['p_redirect'])
@@ -553,17 +557,18 @@ function compendium_pages_get_random( int     $exclude_id           = 0     ,
     $query_redirect = '';
 
   // Fetch a random page's url
-  $dpage = mysqli_fetch_array(query(" SELECT    compendium_pages.page_url AS 'c_url'
-                                      FROM      compendium_pages
-                                      WHERE     compendium_pages.is_deleted         = 0
-                                      AND       compendium_pages.is_draft           = 0
-                                                $query_exclude
-                                                $query_type
-                                                $query_nsfw
-                                                $query_language
-                                                $query_redirect
-                                      ORDER BY  RAND()
-                                      LIMIT     1 "));
+  $dpage = query("  SELECT    compendium_pages.page_url AS 'c_url'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.is_deleted         = 0
+                    AND       compendium_pages.is_draft           = 0
+                              $query_exclude
+                              $query_type
+                              $query_nsfw
+                              $query_language
+                              $query_redirect
+                    ORDER BY  RAND()
+                    LIMIT     1 ",
+                    fetch_row: true);
 
   // If no page has been found, return an empty string
   if(!isset($dpage['c_url']))
@@ -973,7 +978,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                               $query_limit ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qpages); $i++)
+  for($i = 0; $row = query_row($qpages); $i++)
   {
     // Format the data
     $page_id                    = $row['p_id'];
@@ -1211,7 +1216,7 @@ function compendium_pages_list_urls() : array
 
   // Prepare an array with the page urls
   $data = array();
-  while($dpages = mysqli_fetch_array($qpages))
+  while($dpages = query_row($qpages))
     array_push($data, $dpages['p_url']);
 
   // Return the array containing the page urls
@@ -1868,9 +1873,10 @@ function compendium_pages_update_pageviews( int     $page_id  ,
     return;
 
   // Fetch the pageview count
-  $dviews = mysqli_fetch_array(query("  SELECT  stats_pages.view_count AS 'sp_count'
-                                        FROM    stats_pages
-                                        WHERE   stats_pages.page_url LIKE '$page_url' "));
+  $dviews = query(" SELECT  stats_pages.view_count AS 'sp_count'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE '$page_url' ",
+                    fetch_row: true);
 
   // Sanitize the pageview count and the current timestamp
   $view_count = (isset($dviews['sp_count'])) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
@@ -1919,7 +1925,7 @@ function compendium_pages_autocomplete( string  $input                      ,
                     LIMIT     10 ");
 
   // Prepare the returned data
-  for($i = 0; $dpages = mysqli_fetch_array($qpages); $i++)
+  for($i = 0; $dpages = query_row($qpages); $i++)
     $data[$i]['url'] = sanitize_output($dpages['c_url']);
 
   // Add missing pages if requested
@@ -1933,7 +1939,7 @@ function compendium_pages_autocomplete( string  $input                      ,
                         LIMIT     10 ");
 
     // Prepare the returned data
-    for($i = $i; $dmissing = mysqli_fetch_array($qmissing); $i++)
+    for($i = $i; $dmissing = query_row($qmissing); $i++)
       $data[$i]['url'] = sanitize_output($dmissing['cm_url']);
   }
 
@@ -1994,21 +2000,22 @@ function compendium_images_get( ?int    $image_id   = 0       ,
     return NULL;
 
   // Fetch the data
-  $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id                  AS 'ci_id'          ,
-                                                compendium_images.is_deleted          AS 'ci_deleted'     ,
-                                                compendium_images.file_name           AS 'ci_filename'    ,
-                                                compendium_images.tags                AS 'ci_tags'        ,
-                                                compendium_images.is_nsfw             AS 'ci_nsfw'        ,
-                                                compendium_images.is_gross            AS 'ci_gross'       ,
-                                                compendium_images.is_offensive        AS 'ci_offensive'   ,
-                                                compendium_images.used_in_pages_$lang AS 'ci_used'        ,
-                                                compendium_images.used_in_pages_en    AS 'ci_used_en'     ,
-                                                compendium_images.used_in_pages_fr    AS 'ci_used_fr'     ,
-                                                compendium_images.caption_$lang       AS 'ci_body'        ,
-                                                compendium_images.caption_en          AS 'ci_caption_en'  ,
-                                                compendium_images.caption_fr          AS 'ci_caption_fr'
-                                        FROM    compendium_images
-                                        WHERE   compendium_images.id = '$image_id' "));
+  $dimage = query(" SELECT  compendium_images.id                  AS 'ci_id'          ,
+                            compendium_images.is_deleted          AS 'ci_deleted'     ,
+                            compendium_images.file_name           AS 'ci_filename'    ,
+                            compendium_images.tags                AS 'ci_tags'        ,
+                            compendium_images.is_nsfw             AS 'ci_nsfw'        ,
+                            compendium_images.is_gross            AS 'ci_gross'       ,
+                            compendium_images.is_offensive        AS 'ci_offensive'   ,
+                            compendium_images.used_in_pages_$lang AS 'ci_used'        ,
+                            compendium_images.used_in_pages_en    AS 'ci_used_en'     ,
+                            compendium_images.used_in_pages_fr    AS 'ci_used_fr'     ,
+                            compendium_images.caption_$lang       AS 'ci_body'        ,
+                            compendium_images.caption_en          AS 'ci_caption_en'  ,
+                            compendium_images.caption_fr          AS 'ci_caption_fr'
+                    FROM    compendium_images
+                    WHERE   compendium_images.id = '$image_id' ",
+                    fetch_row: true);
 
   // Format the data
   $image_id               = $dimage['ci_id'];
@@ -2141,16 +2148,17 @@ function compendium_images_get_random( int $exclude_id = 0 ) : string
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch a random page's url
-  $dimage = mysqli_fetch_array(query("  SELECT    compendium_images.file_name AS 'c_name'
-                                        FROM      compendium_images
-                                        WHERE     compendium_images.is_deleted          = 0
-                                        AND       compendium_images.used_in_pages_$lang NOT LIKE ''
-                                        AND       compendium_images.is_nsfw             = 0
-                                        AND       compendium_images.is_gross            = 0
-                                        AND       compendium_images.is_offensive        = 0
-                                                  $query_exclude
-                                        ORDER BY  RAND()
-                                        LIMIT     1 "));
+  $dimage = query(" SELECT    compendium_images.file_name AS 'c_name'
+                    FROM      compendium_images
+                    WHERE     compendium_images.is_deleted          = 0
+                    AND       compendium_images.used_in_pages_$lang NOT LIKE ''
+                    AND       compendium_images.is_nsfw             = 0
+                    AND       compendium_images.is_gross            = 0
+                    AND       compendium_images.is_offensive        = 0
+                              $query_exclude
+                    ORDER BY  RAND()
+                    LIMIT     1 ",
+                    fetch_row: true);
 
   // If no page has been found, return an empty string
   if(!isset($dimage['c_name']))
@@ -2296,7 +2304,7 @@ function compendium_images_list(  string  $sort_by  = 'date'  ,
                               $query_sort ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qimages); $i++)
+  for($i = 0; $row = query_row($qimages); $i++)
   {
     $data[$i]['id']         = sanitize_output($row['ci_id']);
     $data[$i]['deleted']    = ($row['ci_del']) ? 1 : 0;
@@ -2603,9 +2611,10 @@ function compendium_images_recalculate_links( int|string $image ) : void
       return;
 
     // Fetch the image's id
-    $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id  AS 'ci_id'
-                                          FROM    compendium_images
-                                          WHERE   compendium_images.file_name LIKE '$image_name' "));
+    $dimage = query(" SELECT  compendium_images.id  AS 'ci_id'
+                      FROM    compendium_images
+                      WHERE   compendium_images.file_name LIKE '$image_name' ",
+                      fetch_row: true);
 
     // Sanitize the image's id
     $image_id = sanitize($dimage['ci_id'], 'int', 0);
@@ -2622,9 +2631,10 @@ function compendium_images_recalculate_links( int|string $image ) : void
       return;
 
     // Fetch the image's name
-    $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.file_name AS 'ci_name'
-                                          FROM    compendium_images
-                                          WHERE   compendium_images.id = '$image_id' "));
+    $dimage = query(" SELECT  compendium_images.file_name AS 'ci_name'
+                      FROM    compendium_images
+                      WHERE   compendium_images.id = '$image_id' ",
+                      fetch_row: true);
 
     // Sanitize the image's name
     $image_name = sanitize($dimage['ci_name'], 'string');
@@ -2646,7 +2656,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_types.full_name_en ASC ");
 
   // Add any english page types to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_en .= ($usage_list_en) ? '|||' : '';
     $usage_list_en .= 'page_type?type='.$dusage['ct_id'].'|||Type: '.$dusage['ct_name'];
@@ -2660,7 +2670,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_types.full_name_fr ASC ");
 
   // Add any french page types to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
     $usage_list_fr .= 'page_type?type='.$dusage['ct_id'].'|||Thématique: '.$dusage['ct_name'];
@@ -2674,7 +2684,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_categories.name_en ASC ");
 
   // Add any english categories to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_en .= ($usage_list_en) ? '|||' : '';
     $usage_list_en .= 'category?id='.$dusage['cc_id'].'|||Category: '.$dusage['cc_name'];
@@ -2688,7 +2698,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_categories.name_fr ASC ");
 
   // Add any french categories to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
     $usage_list_fr .= 'category?id='.$dusage['cc_id'].'|||Category: '.$dusage['cc_name'];
@@ -2702,7 +2712,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_eras.name_en ASC ");
 
   // Add any english eras to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_en .= ($usage_list_en) ? '|||' : '';
     $usage_list_en .= 'cultural_era?era='.$dusage['ce_id'].'|||Era: '.$dusage['ce_name'];
@@ -2716,7 +2726,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_eras.name_fr ASC ");
 
   // Add any french eras to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
     $usage_list_fr .= 'cultural_era?era='.$dusage['ce_id'].'|||Période: '.$dusage['ce_name'];
@@ -2734,7 +2744,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_pages.title_en       ASC ");
 
   // Add any english page names to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_en .= ($usage_list_en) ? '|||' : '';
     $usage_list_en .= $dusage['c_url'].'|||'.$dusage['c_title'];
@@ -2752,7 +2762,7 @@ function compendium_images_recalculate_links( int|string $image ) : void
                     ORDER BY  compendium_pages.title_fr       ASC ");
 
   // Add any french page names to the string
-  while($dusage = mysqli_fetch_array($qusage))
+  while($dusage = query_row($qusage))
   {
     $usage_list_fr .= ($usage_list_fr) ? '|||' : '';
     $usage_list_fr .= $dusage['c_url'].'|||'.$dusage['c_title'];
@@ -2789,7 +2799,7 @@ function compendium_images_recalculate_all_links()
                       ORDER BY  compendium_images.uploaded_at DESC ");
 
   // Loop through the images and recalculate the links
-  while($dimages = mysqli_fetch_array($qimages))
+  while($dimages = query_row($qimages))
     compendium_images_recalculate_links($dimages['ci_id']);
 }
 
@@ -2907,9 +2917,10 @@ function compendium_images_update_pageviews(  int     $image_id ,
     return;
 
   // Fetch the pageview count
-  $dviews = mysqli_fetch_array(query("  SELECT  stats_pages.view_count AS 'sp_count'
-                                        FROM    stats_pages
-                                        WHERE   stats_pages.page_url LIKE '$page_url' "));
+  $dviews = query(" SELECT  stats_pages.view_count AS 'sp_count'
+                    FROM    stats_pages
+                    WHERE   stats_pages.page_url LIKE '$page_url' ",
+                    fetch_row: true);
 
   // Sanitize the pageview count and the current timestamp
   $view_count = (isset($dviews['sp_count']) && $dviews['sp_count']) ? sanitize($dviews['sp_count'], 'int', 0) : 0;
@@ -2950,7 +2961,7 @@ function compendium_images_autocomplete( string $input ) : mixed
                       LIMIT     10 ");
 
   // Prepare the returned data
-  for($i = 0; $dimages = mysqli_fetch_array($qimages); $i++)
+  for($i = 0; $dimages = query_row($qimages); $i++)
     $data[$i]['url'] = sanitize_output($dimages['ci_name']);
 
   // Add the number of rows to the data
@@ -3013,14 +3024,15 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
     $where = ($missing_id) ? " compendium_missing.id = '$missing_id' " : " compendium_missing.page_url LIKE '$missing_url' ";
 
     // Fetch the data
-    $dmissing = mysqli_fetch_array(query("  SELECT  compendium_missing.id                   AS 'cm_id'        ,
-                                                    compendium_missing.fk_compendium_types  AS 'cm_type'      ,
-                                                    compendium_missing.page_url             AS 'cm_url'       ,
-                                                    compendium_missing.title                AS 'cm_title'     ,
-                                                    compendium_missing.is_a_priority        AS 'cm_priority'  ,
-                                                    compendium_missing.notes                AS 'cm_notes'
-                                            FROM    compendium_missing
-                                            WHERE   $where "));
+    $dmissing = query(" SELECT  compendium_missing.id                   AS 'cm_id'        ,
+                                compendium_missing.fk_compendium_types  AS 'cm_type'      ,
+                                compendium_missing.page_url             AS 'cm_url'       ,
+                                compendium_missing.title                AS 'cm_title'     ,
+                                compendium_missing.is_a_priority        AS 'cm_priority'  ,
+                                compendium_missing.notes                AS 'cm_notes'
+                        FROM    compendium_missing
+                        WHERE   $where ",
+                        fetch_row: true);
 
     // Assemble an array with the missing data
     $missing_url_raw  = $dmissing['cm_url'];
@@ -3064,7 +3076,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
                     ORDER BY  compendium_pages.page_url ASC ");
 
   // Add any missing page to the returned data
-  for($count_pages = 0; $dpages = mysqli_fetch_array($qpages); $count_pages++)
+  for($count_pages = 0; $dpages = query_row($qpages); $count_pages++)
   {
     $data[$count_pages]['page_url']   = sanitize_output($dpages['c_url']);
     $data[$count_pages]['page_title'] = sanitize_output($dpages['c_title']);
@@ -3078,7 +3090,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
                       ORDER BY  compendium_images.file_name ASC ");
 
   // Add any missing image to the returned data
-  for($count_images = 0; $dimages = mysqli_fetch_array($qimages); $count_images++)
+  for($count_images = 0; $dimages = query_row($qimages); $count_images++)
     $data[$count_images]['image_name'] = sanitize_output($dimages['ci_name']);
 
   // Look for calls to this missing page in compendium categories
@@ -3090,7 +3102,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
                           ORDER BY  compendium_categories.name_$lang ASC ");
 
   // Add any missing categories to the returned data
-  for($count_categories = 0; $dcategories = mysqli_fetch_array($qcategories); $count_categories++)
+  for($count_categories = 0; $dcategories = query_row($qcategories); $count_categories++)
   {
     $data[$count_categories]['category_id']   = sanitize_output($dcategories['cc_id']);
     $data[$count_categories]['category_name'] = sanitize_output($dcategories['cc_name']);
@@ -3105,7 +3117,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
                     ORDER BY  compendium_eras.name_$lang ASC ");
 
   // Add any missing eras to the returned data
-  for($count_eras = 0; $deras = mysqli_fetch_array($qeras); $count_eras++)
+  for($count_eras = 0; $deras = query_row($qeras); $count_eras++)
   {
     $data[$count_eras]['era_id']    = sanitize_output($deras['ce_id']);
     $data[$count_eras]['era_name']  = sanitize_output($deras['ce_name']);
@@ -3120,7 +3132,7 @@ function compendium_missing_get(  int     $missing_id   = 0   ,
                     ORDER BY  compendium_types.full_name_$lang ASC ");
 
   // Add any missing page types to the returned data
-  for($count_types = 0; $dtypes = mysqli_fetch_array($qtypes); $count_types++)
+  for($count_types = 0; $dtypes = query_row($qtypes); $count_types++)
   {
     $data[$count_types]['type_id']    = sanitize_output($dtypes['ct_id']);
     $data[$count_types]['type_name']  = sanitize_output($dtypes['ct_name']);
@@ -3161,11 +3173,12 @@ function compendium_missing_get_random( int $exclude_id = 0 ) : string
   $query_exclude = ($exclude_id) ? " WHERE compendium_missing.id != '$exclude_id' " : '';
 
   // Fetch a random missing page's id
-  $dpage = mysqli_fetch_array(query(" SELECT    compendium_missing.id AS 'cm_id'
-                                      FROM      compendium_missing
-                                                $query_exclude
-                                      ORDER BY  RAND()
-                                      LIMIT     1 "));
+  $dpage = query("  SELECT    compendium_missing.id AS 'cm_id'
+                    FROM      compendium_missing
+                              $query_exclude
+                    ORDER BY  RAND()
+                    LIMIT     1 ",
+                    fetch_row: true);
 
   // If no page has been found, return an empty string
   if(!isset($dpage['cm_id']))
@@ -3223,7 +3236,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                     ORDER BY  compendium_pages.id ASC ");
 
   // Turn the url list into an array
-  while($durls = mysqli_fetch_array($qurls))
+  while($durls = query_row($qurls))
     array_push($urls, $durls['c_url']);
 
   // Fetch a list of all pages
@@ -3236,7 +3249,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                     ORDER BY  compendium_pages.id ASC ");
 
   // Loop through the pages
-  while($dpages = mysqli_fetch_array($qpages))
+  while($dpages = query_row($qpages))
   {
     // Reset the list of already called pages
     $called = array();
@@ -3306,7 +3319,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                       ORDER BY  compendium_images.id ASC ");
 
   // Loop through the images
-  while($dimages = mysqli_fetch_array($qimages))
+  while($dimages = query_row($qimages))
   {
     // Reset the list of already called pages
     $called = array();
@@ -3347,7 +3360,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                           ORDER BY  compendium_categories.id ASC ");
 
   // Loop through the categories
-  while($dcategories = mysqli_fetch_array($qcategories))
+  while($dcategories = query_row($qcategories))
   {
     // Reset the list of already called pages
     $called = array();
@@ -3388,7 +3401,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                     ORDER BY  compendium_eras.id ASC ");
 
   // Loop through the eras
-  while($deras = mysqli_fetch_array($qeras))
+  while($deras = query_row($qeras))
   {
     // Reset the list of already called pages
     $called = array();
@@ -3429,7 +3442,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                     ORDER BY  compendium_types.id ASC ");
 
   // Loop through the page types
-  while($dtypes = mysqli_fetch_array($qtypes))
+  while($dtypes = query_row($qtypes))
   {
     // Reset the list of already called pages
     $called = array();
@@ -3519,7 +3532,7 @@ function compendium_missing_list( string  $sort_by  = 'url'   ,
                                 $query_sort ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qmissing); $i++)
+  for($i = 0; $row = query_row($qmissing); $i++)
   {
     // Format the data
     $data[$i]['id']         = sanitize_output($row['cm_id']);
@@ -3737,17 +3750,18 @@ function compendium_types_get( int $type_id ) : mixed
   $pages    = compendium_pages_list_urls();
 
   // Fetch the data
-  $dtype = mysqli_fetch_array(query(" SELECT  compendium_types.display_order      AS 'ct_order'   ,
-                                              compendium_types.name_en            AS 'ct_name_en' ,
-                                              compendium_types.name_fr            AS 'ct_name_fr' ,
-                                              compendium_types.full_name_$lang    AS 'ct_full'    ,
-                                              compendium_types.full_name_en       AS 'ct_full_en' ,
-                                              compendium_types.full_name_fr       AS 'ct_full_fr' ,
-                                              compendium_types.description_$lang  AS 'ct_body'    ,
-                                              compendium_types.description_en     AS 'ct_body_en' ,
-                                              compendium_types.description_fr     AS 'ct_body_fr'
-                                      FROM    compendium_types
-                                      WHERE   compendium_types.id = '$type_id' "));
+  $dtype = query("  SELECT  compendium_types.display_order      AS 'ct_order'   ,
+                            compendium_types.name_en            AS 'ct_name_en' ,
+                            compendium_types.name_fr            AS 'ct_name_fr' ,
+                            compendium_types.full_name_$lang    AS 'ct_full'    ,
+                            compendium_types.full_name_en       AS 'ct_full_en' ,
+                            compendium_types.full_name_fr       AS 'ct_full_fr' ,
+                            compendium_types.description_$lang  AS 'ct_body'    ,
+                            compendium_types.description_en     AS 'ct_body_en' ,
+                            compendium_types.description_fr     AS 'ct_body_fr'
+                    FROM    compendium_types
+                    WHERE   compendium_types.id = '$type_id' ",
+                    fetch_row: true);
 
   // Assemble an array with the data
   $data['order']        = sanitize_output($dtype['ct_order']);
@@ -3810,7 +3824,7 @@ function compendium_types_list( string $format = 'html' ) : array
 
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+  for($i = 0; $row = query_row($qtypes); $i++)
   {
     // Format the data
     $type_id            = $row['ct_id'];
@@ -4023,9 +4037,10 @@ function compendium_types_delete( int $type_id ) : mixed
     return __('compendium_type_edit_error');
 
   // Check if there are any pages tied to the page type
-  $dtype = mysqli_fetch_array(query(" SELECT    COUNT(*)  AS 'count'
-                                      FROM      compendium_pages
-                                      WHERE     compendium_pages.fk_compendium_types = '$type_id' "));
+  $dtype = query("  SELECT    COUNT(*)  AS 'count'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.fk_compendium_types = '$type_id' ",
+                    fetch_row: true);
 
   // Error: Page type has pages linked to it
   if($dtype['count'])
@@ -4082,15 +4097,16 @@ function compendium_categories_get( int $category_id ) : mixed
   $pages    = compendium_pages_list_urls();
 
   // Fetch the data
-  $dcategory = mysqli_fetch_array(query(" SELECT  compendium_categories.display_order     AS 'cc_order'   ,
-                                                  compendium_categories.name_$lang        AS 'cc_name'    ,
-                                                  compendium_categories.name_en           AS 'cc_name_en' ,
-                                                  compendium_categories.name_fr           AS 'cc_name_fr' ,
-                                                  compendium_categories.description_$lang AS 'cc_body'    ,
-                                                  compendium_categories.description_en    AS 'cc_body_en' ,
-                                                  compendium_categories.description_fr    AS 'cc_body_fr'
-                                          FROM    compendium_categories
-                                          WHERE   compendium_categories.id = '$category_id' "));
+  $dcategory = query("  SELECT  compendium_categories.display_order     AS 'cc_order'   ,
+                                compendium_categories.name_$lang        AS 'cc_name'    ,
+                                compendium_categories.name_en           AS 'cc_name_en' ,
+                                compendium_categories.name_fr           AS 'cc_name_fr' ,
+                                compendium_categories.description_$lang AS 'cc_body'    ,
+                                compendium_categories.description_en    AS 'cc_body_en' ,
+                                compendium_categories.description_fr    AS 'cc_body_fr'
+                        FROM    compendium_categories
+                        WHERE   compendium_categories.id = '$category_id' ",
+                        fetch_row: true);
 
   // Assemble an array with the data
   $data['order']        = sanitize_output($dcategory['cc_order']);
@@ -4152,7 +4168,7 @@ function compendium_categories_list( string $format = 'html' ) : array
                           ORDER BY  compendium_categories.display_order ASC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  for($i = 0; $row = query_row($qcategories); $i++)
   {
     // Format the data
     $category_id      = $row['cc_id'];
@@ -4355,13 +4371,13 @@ function compendium_categories_delete( int $category_id ) : mixed
     return __('compendium_category_edit_error');
 
   // Check if there are any pages tied to the category
-  $dcategory = mysqli_fetch_array(query("
-    SELECT    COUNT(*)  AS 'count'
-    FROM      compendium_pages_categories
-    LEFT JOIN compendium_pages
-    ON        compendium_pages_categories.fk_compendium_pages       = compendium_pages.id
-    WHERE     compendium_pages_categories.fk_compendium_categories  = '$category_id'
-    AND       compendium_pages.id IS NOT NULL "));
+  $dcategory = query("  SELECT    COUNT(*)  AS 'count'
+                        FROM      compendium_pages_categories
+                        LEFT JOIN compendium_pages
+                        ON        compendium_pages_categories.fk_compendium_pages       = compendium_pages.id
+                        WHERE     compendium_pages_categories.fk_compendium_categories  = '$category_id'
+                        AND       compendium_pages.id IS NOT NULL ",
+                        fetch_row: true);
 
   // Error: Category has pages linked to it
   if($dcategory['count'])
@@ -4422,18 +4438,19 @@ function compendium_eras_get( int $era_id ) : mixed
   $pages    = compendium_pages_list_urls();
 
   // Fetch the data
-  $dera = mysqli_fetch_array(query("  SELECT  compendium_eras.year_start        AS 'ce_start'     ,
-                                              compendium_eras.year_end          AS 'ce_end'       ,
-                                              compendium_eras.name_$lang        AS 'ce_name'      ,
-                                              compendium_eras.name_en           AS 'ce_name_en'   ,
-                                              compendium_eras.name_fr           AS 'ce_name_fr'   ,
-                                              compendium_eras.short_name_en     AS 'ce_short_en'  ,
-                                              compendium_eras.short_name_fr     AS 'ce_short_fr'  ,
-                                              compendium_eras.description_$lang AS 'ce_body'      ,
-                                              compendium_eras.description_en    AS 'ce_body_en'   ,
-                                              compendium_eras.description_fr    AS 'ce_body_fr'
-                                      FROM    compendium_eras
-                                      WHERE   compendium_eras.id = '$era_id' "));
+  $dera = query(" SELECT  compendium_eras.year_start        AS 'ce_start'     ,
+                          compendium_eras.year_end          AS 'ce_end'       ,
+                          compendium_eras.name_$lang        AS 'ce_name'      ,
+                          compendium_eras.name_en           AS 'ce_name_en'   ,
+                          compendium_eras.name_fr           AS 'ce_name_fr'   ,
+                          compendium_eras.short_name_en     AS 'ce_short_en'  ,
+                          compendium_eras.short_name_fr     AS 'ce_short_fr'  ,
+                          compendium_eras.description_$lang AS 'ce_body'      ,
+                          compendium_eras.description_en    AS 'ce_body_en'   ,
+                          compendium_eras.description_fr    AS 'ce_body_fr'
+                  FROM    compendium_eras
+                  WHERE   compendium_eras.id = '$era_id' ",
+                  fetch_row: true);
 
   // Assemble an array with the data
   $data['start']        = sanitize_output($dera['ce_start']);
@@ -4457,28 +4474,30 @@ function compendium_eras_get( int $era_id ) : mixed
   $era_end    = sanitize($dera['ce_end'], 'int', 0);
 
   // Fetch the previous era
-  $dera = mysqli_fetch_array(query("  SELECT    compendium_eras.id          AS 'ce_prev_id' ,
-                                                compendium_eras.name_$lang  AS 'ce_prev_name'
-                                      FROM      compendium_eras
-                                      WHERE     compendium_eras.year_end    <= '$era_start'
-                                      AND       compendium_eras.id          != '$era_id'
-                                      AND       compendium_eras.name_$lang  != ''
-                                      ORDER BY  compendium_eras.year_end DESC
-                                      LIMIT     1 "));
+  $dera = query(" SELECT    compendium_eras.id          AS 'ce_prev_id' ,
+                            compendium_eras.name_$lang  AS 'ce_prev_name'
+                  FROM      compendium_eras
+                  WHERE     compendium_eras.year_end    <= '$era_start'
+                  AND       compendium_eras.id          != '$era_id'
+                  AND       compendium_eras.name_$lang  != ''
+                  ORDER BY  compendium_eras.year_end DESC
+                  LIMIT     1 ",
+                  fetch_row: true);
 
   // Add the previous era's info to the data array
   $data['prev_id']    = ($era_start && isset($dera['ce_prev_id']))    ? sanitize_output($dera['ce_prev_id'])    : 0;
   $data['prev_name']  = ($era_start && isset($dera['ce_prev_name']))  ? sanitize_output($dera['ce_prev_name'])  : '';
 
   // Fetch the next era
-  $dera = mysqli_fetch_array(query("  SELECT    compendium_eras.id          AS 'ce_next_id' ,
-                                                compendium_eras.name_$lang  AS 'ce_next_name'
-                                      FROM      compendium_eras
-                                      WHERE     compendium_eras.year_start  >= '$era_end'
-                                      AND       compendium_eras.id          != '$era_id'
-                                      AND       compendium_eras.name_$lang  != ''
-                                      ORDER BY  compendium_eras.year_start ASC
-                                      LIMIT     1 "));
+  $dera = query(" SELECT    compendium_eras.id          AS 'ce_next_id' ,
+                            compendium_eras.name_$lang  AS 'ce_next_name'
+                  FROM      compendium_eras
+                  WHERE     compendium_eras.year_start  >= '$era_end'
+                  AND       compendium_eras.id          != '$era_id'
+                  AND       compendium_eras.name_$lang  != ''
+                  ORDER BY  compendium_eras.year_start ASC
+                  LIMIT     1 ",
+                  fetch_row: true);
 
   // Add the previous era's info to the data array
   $data['next_id']    = ($era_end && isset($dera['ce_next_id']))    ? sanitize_output($dera['ce_next_id'])    : 0;
@@ -4529,7 +4548,7 @@ function compendium_eras_list( string $format = 'html' ) : array
                     ORDER BY  compendium_eras.year_start ASC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
+  for($i = 0; $row = query_row($qeras); $i++)
   {
     // Format the data
     $era_id         = $row['ce_id'];
@@ -4752,9 +4771,10 @@ function compendium_eras_delete( int $era_id ) : mixed
     return __('compendium_era_edit_error');
 
   // Check if there are any pages tied to the era
-  $dera = mysqli_fetch_array(query("  SELECT    COUNT(*)  AS 'count'
-                                      FROM      compendium_pages
-                                      WHERE     compendium_pages.fk_compendium_eras = '$era_id' "));
+  $dera = query(" SELECT    COUNT(*)  AS 'count'
+                  FROM      compendium_pages
+                  WHERE     compendium_pages.fk_compendium_eras = '$era_id' ",
+                  fetch_row: true);
 
   // Error: Era has pages linked to it
   if($dera['count'])
@@ -4885,7 +4905,7 @@ function compendium_search( string $search_query ) : mixed
                         ORDER BY  compendium_images.file_name ASC ) ");
 
   // Prepare and add the search results to the return array
-  for($i = 0; $row = mysqli_fetch_array($qsearch); $i++)
+  for($i = 0; $row = query_row($qsearch); $i++)
   {
     // Content type name
     $search_results[$i]['type'] = match($row['c_type'])
@@ -4954,12 +4974,13 @@ function compendium_page_history_get( int $history_id ) : mixed
     return NULL;
 
   // Fetch the data
-  $dhistory = mysqli_fetch_array(query("  SELECT  compendium_pages_history.fk_compendium_pages  AS 'ph_page'    ,
-                                                  compendium_pages_history.is_major_edit        AS 'ph_major'   ,
-                                                  compendium_pages_history.summary_en           AS 'ph_body_en' ,
-                                                  compendium_pages_history.summary_fr           AS 'ph_body_fr'
-                                          FROM    compendium_pages_history
-                                          WHERE   compendium_pages_history.id = '$history_id' "));
+  $dhistory = query(" SELECT  compendium_pages_history.fk_compendium_pages  AS 'ph_page'    ,
+                              compendium_pages_history.is_major_edit        AS 'ph_major'   ,
+                              compendium_pages_history.summary_en           AS 'ph_body_en' ,
+                              compendium_pages_history.summary_fr           AS 'ph_body_fr'
+                      FROM    compendium_pages_history
+                      WHERE   compendium_pages_history.id = '$history_id' ",
+                      fetch_row: true);
 
   // Assemble an array with the data
   $data['page_id']  = sanitize_output($dhistory['ph_page']);
@@ -5007,7 +5028,7 @@ function compendium_page_history_list( int $page_id ) : mixed
                       ORDER BY  compendium_pages_history.edited_at DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qhistory); $i++)
+  for($i = 0; $row = query_row($qhistory); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['ph_id']);
     $data[$i]['date']     = sanitize_output(time_since($row['ph_date']));
@@ -5017,9 +5038,10 @@ function compendium_page_history_list( int $page_id ) : mixed
   }
 
   // Fetch the page's creation date
-  $dpage = mysqli_fetch_array(query(" SELECT  compendium_pages.created_at AS 'p_created'
-                                      FROM    compendium_pages
-                                      WHERE   compendium_pages.id = '$page_id' "));
+  $dpage = query("  SELECT  compendium_pages.created_at AS 'p_created'
+                    FROM    compendium_pages
+                    WHERE   compendium_pages.id = '$page_id' ",
+                    fetch_row: true);
 
   // Add the page creation info to the data
   $data[$i]['id']       = 0;
@@ -5117,13 +5139,14 @@ function compendium_admin_notes_get() : array
   user_restrict_to_administrators();
 
   // Fetch the data
-  $dnotes = mysqli_fetch_array(query("  SELECT  compendium_admin_tools.global_notes AS 'cn_global'      ,
-                                                compendium_admin_tools.snippets     AS 'cn_snippets'    ,
-                                                compendium_admin_tools.template_en  AS 'cn_template_en' ,
-                                                compendium_admin_tools.template_fr  AS 'cn_template_fr' ,
-                                                compendium_admin_tools.links        AS 'cn_links'
-                                        FROM    compendium_admin_tools
-                                        LIMIT   1 "));
+  $dnotes = query(" SELECT  compendium_admin_tools.global_notes AS 'cn_global'      ,
+                            compendium_admin_tools.snippets     AS 'cn_snippets'    ,
+                            compendium_admin_tools.template_en  AS 'cn_template_en' ,
+                            compendium_admin_tools.template_fr  AS 'cn_template_fr' ,
+                            compendium_admin_tools.links        AS 'cn_links'
+                    FROM    compendium_admin_tools
+                    LIMIT   1 ",
+                    fetch_row: true);
 
   // Assemble an array with the data
   $data['global']           = sanitize_output($dnotes['cn_global']);
@@ -5230,7 +5253,7 @@ function compendium_pages_list_years(bool $admin_view = false) : array
                       ORDER BY  YEAR(FROM_UNIXTIME(compendium_pages.created_at)) DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+  for($i = 0; $row = query_row($qyears); $i++)
     $data[$i]['year'] = sanitize_output($row['c_year']);
 
   // Add the number of rows to the data
@@ -5259,7 +5282,7 @@ function compendium_images_list_years() : array
                     ORDER BY  YEAR(FROM_UNIXTIME(compendium_images.uploaded_at)) DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+  for($i = 0; $row = query_row($qyears); $i++)
     $data[$i]['year'] = sanitize_output($row['ci_year']);
 
   // Add the number of rows to the data
@@ -5301,7 +5324,7 @@ function compendium_appearance_list_years(bool $admin_view = false) : array
                       ORDER BY  compendium_pages.year_appeared DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+  for($i = 0; $row = query_row($qyears); $i++)
     $data[$i]['year'] = sanitize_output($row['a_year']);
 
   // Add the number of rows to the data
@@ -5343,7 +5366,7 @@ function compendium_peak_list_years(bool $admin_view = false) : array
                       ORDER BY  compendium_pages.year_peak DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+  for($i = 0; $row = query_row($qyears); $i++)
     $data[$i]['year'] = sanitize_output($row['p_year']);
 
   // Add the number of rows to the data
@@ -5375,15 +5398,16 @@ function compendium_stats_list() : array
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the total number of pages
-  $dpages = mysqli_fetch_array(query("  SELECT  COUNT(*)                            AS 'cp_total'     ,
-                                                SUM(compendium_pages.is_nsfw)       AS 'cp_nsfw'      ,
-                                                SUM(compendium_pages.is_gross)      AS 'cp_gross'     ,
-                                                SUM(compendium_pages.is_offensive)  AS 'cp_offensive'
-                                        FROM    compendium_pages
-                                        WHERE   compendium_pages.is_deleted         = 0
-                                        AND     compendium_pages.is_draft           = 0
-                                        AND     compendium_pages.redirection_$lang  = ''
-                                        AND     compendium_pages.title_$lang       != '' "));
+  $dpages = query(" SELECT  COUNT(*)                            AS 'cp_total'     ,
+                            SUM(compendium_pages.is_nsfw)       AS 'cp_nsfw'      ,
+                            SUM(compendium_pages.is_gross)      AS 'cp_gross'     ,
+                            SUM(compendium_pages.is_offensive)  AS 'cp_offensive'
+                    FROM    compendium_pages
+                    WHERE   compendium_pages.is_deleted         = 0
+                    AND     compendium_pages.is_draft           = 0
+                    AND     compendium_pages.redirection_$lang  = ''
+                    AND     compendium_pages.title_$lang       != '' ",
+                    fetch_row: true);
 
   // Add some stats to the return array
   $data['pages']      = sanitize_output($dpages['cp_total']);
@@ -5398,12 +5422,13 @@ function compendium_stats_list() : array
                                               'percentage');
 
   // Fetch the total number of images
-  $dimages = mysqli_fetch_array(query(" SELECT  COUNT(*)                            AS 'ci_total' ,
-                                                SUM(compendium_images.is_nsfw)      AS 'ci_nsfw'      ,
-                                                SUM(compendium_images.is_gross)     AS 'ci_gross'     ,
-                                                SUM(compendium_images.is_offensive) AS 'ci_offensive'
-                                        FROM    compendium_images
-                                        WHERE   compendium_images.is_deleted = 0 "));
+  $dimages = query("  SELECT  COUNT(*)                            AS 'ci_total' ,
+                              SUM(compendium_images.is_nsfw)      AS 'ci_nsfw'      ,
+                              SUM(compendium_images.is_gross)     AS 'ci_gross'     ,
+                              SUM(compendium_images.is_offensive) AS 'ci_offensive'
+                      FROM    compendium_images
+                      WHERE   compendium_images.is_deleted = 0 ",
+                      fetch_row: true);
 
   // Add some stats to the return array
   $data['images']       = sanitize_output($dimages['ci_total']);
@@ -5418,15 +5443,17 @@ function compendium_stats_list() : array
                                                 'percentage');
 
   // Fetch total page views
-  $dpages = mysqli_fetch_array(query("  SELECT  SUM(compendium_pages.view_count) AS 'cp_views'
-                                        FROM    compendium_pages "));
+  $dpages = query(" SELECT  SUM(compendium_pages.view_count) AS 'cp_views'
+                    FROM    compendium_pages ",
+                    fetch_row: true);
 
   // Add total page views to the return array
   $data['pageviews'] = sanitize_output(number_display_format($dpages['cp_views'], 'number'));
 
   // Fetch total image views
-  $dimages = mysqli_fetch_array(query(" SELECT  SUM(compendium_images.view_count) AS 'ci_views'
-                                        FROM    compendium_images "));
+  $dimages = query("  SELECT  SUM(compendium_images.view_count) AS 'ci_views'
+                      FROM    compendium_images ",
+                      fetch_row: true);
 
   // Add total image views to the return array
   $data['imageviews'] = sanitize_output(number_display_format($dimages['ci_views'], 'number'));
@@ -5449,7 +5476,7 @@ function compendium_stats_list() : array
                     GROUP BY  compendium_pages.fk_compendium_types ");
 
   // Loop through page type stats and add their data to the temporary array
-  while($row = mysqli_fetch_array($dpages))
+  while($row = query_row($dpages))
   {
     $type_stats['pages_'.$row['cp_type_id']]  = sanitize_output($row['cp_count']);
     $type_stats['nsfw_'.$row['cp_type_id']]   = sanitize_output($row['cp_nsfw']);
@@ -5464,7 +5491,7 @@ function compendium_stats_list() : array
                     ORDER BY  compendium_types.display_order ASC ");
 
   // Loop through page types and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+  for($i = 0; $row = query_row($qtypes); $i++)
   {
     $data['types_id_'.$i]     = sanitize_output($row['ct_id']);
     $data['types_name_'.$i]   = sanitize_output($row['ct_name']);
@@ -5519,7 +5546,7 @@ function compendium_stats_list() : array
                     GROUP BY  compendium_pages_categories.fk_compendium_categories ");
 
   // Loop through category stats and add their data to the temporary array
-  while($row = mysqli_fetch_array($dpages))
+  while($row = query_row($dpages))
   {
     $category_stats['pages_'.$row['cp_cat_id']] = sanitize_output($row['cp_count']);
     $category_stats['nsfw_'.$row['cp_cat_id']]  = sanitize_output($row['cp_nsfw']);
@@ -5534,7 +5561,7 @@ function compendium_stats_list() : array
                           ORDER BY  compendium_categories.display_order ASC ");
 
   // Loop through categories and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  for($i = 0; $row = query_row($qcategories); $i++)
   {
     $data['cat_id_'.$i]     = sanitize_output($row['cc_id']);
     $data['cat_name_'.$i]   = sanitize_output($row['cc_name']);
@@ -5584,7 +5611,7 @@ function compendium_stats_list() : array
                     GROUP BY  compendium_pages.fk_compendium_eras ");
 
   // Loop through cultural era stats and add their data to the temporary array
-  while($row = mysqli_fetch_array($dpages))
+  while($row = query_row($dpages))
   {
     $era_stats['pages_'.$row['cp_era_id']]  = sanitize_output($row['cp_count']);
     $era_stats['nsfw_'.$row['cp_era_id']]   = sanitize_output($row['cp_nsfw']);
@@ -5602,7 +5629,7 @@ function compendium_stats_list() : array
                               compendium_eras.year_end    ASC ");
 
   // Loop through cultural eras and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
+  for($i = 0; $row = query_row($qeras); $i++)
   {
     $data['eras_id_'.$i]      = sanitize_output($row['ce_id']);
     $data['eras_name_'.$i]    = sanitize_output($row['ce_name']);
@@ -5649,7 +5676,7 @@ function compendium_stats_list() : array
                       LIMIT     10 ");
 
   // Loop through the longest pages and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qlongest); $i++)
+  for($i = 0; $row = query_row($qlongest); $i++)
   {
     $data['longest_url_'.$i]    = sanitize_output($row['cp_url']);
     $data['longest_title_'.$i]  = sanitize_output(string_truncate($row['cp_title'], 40, '...'));
@@ -5671,7 +5698,7 @@ function compendium_stats_list() : array
                         LIMIT     10 ");
 
   // Loop through the longest pages and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qshortest); $i++)
+  for($i = 0; $row = query_row($qshortest); $i++)
   {
     $data['shortest_url_'.$i]   = sanitize_output($row['cp_url']);
     $data['shortest_title_'.$i] = sanitize_output(string_truncate($row['cp_title'], 40, '...'));
@@ -5697,7 +5724,7 @@ function compendium_stats_list() : array
                     ORDER BY  cp_year ");
 
   // Add page data over time to the return data
-  while($dpages = mysqli_fetch_array($qpages))
+  while($dpages = query_row($qpages))
   {
     $year                       = ($dpages['cp_year']);
     $oldest_year                = ($year < $oldest_year) ? $year : $oldest_year;
@@ -5718,7 +5745,7 @@ function compendium_stats_list() : array
   $data['years_images_'.$oldest_year] = 0;
 
   // Add image data over time to the return data
-  while($dimages = mysqli_fetch_array($qimages))
+  while($dimages = query_row($qimages))
   {
     $year                         = $dimages['ci_year'];
     $data['years_images_'.$year]  = ($dimages['ci_count']) ? sanitize_output($dimages['ci_count']) : '';
@@ -5766,7 +5793,7 @@ function compendium_stats_recalculate_all()
                     FROM    compendium_pages ");
 
   // Loop through the pages
-  while($dpages = mysqli_fetch_array($qpages))
+  while($dpages = query_row($qpages))
   {
     // Recalculate character count
     $page_id        = sanitize($dpages['cp_id'], 'int', 0);

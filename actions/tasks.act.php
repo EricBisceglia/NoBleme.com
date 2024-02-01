@@ -65,37 +65,38 @@ function tasks_get( int     $task_id            ,
     return NULL;
 
   // Fetch the data
-  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.is_deleted              AS 't_deleted'    ,
-                                                dev_tasks.admin_validation        AS 't_validated'  ,
-                                                dev_tasks.is_public               AS 't_public'     ,
-                                                dev_tasks.priority_level          AS 't_priority'   ,
-                                                dev_tasks.created_at              AS 't_created'    ,
-                                                dev_tasks.finished_at             AS 't_solved'     ,
-                                                dev_tasks.title_$lang             AS 't_title'      ,
-                                                dev_tasks.title_en                AS 't_title_en'   ,
-                                                dev_tasks.title_fr                AS 't_title_fr'   ,
-                                                dev_tasks.body_$lang              AS 't_body'       ,
-                                                dev_tasks.body_en                 AS 't_body_en'    ,
-                                                dev_tasks.body_fr                 AS 't_body_fr'    ,
-                                                dev_tasks.source_code_link        AS 't_source'     ,
-                                                users.id                          AS 'u_id'         ,
-                                                users.username                    AS 'u_name'       ,
-                                                dev_tasks_categories.id           AS 'tc_id'        ,
-                                                dev_tasks_categories.title_$lang  AS 'tc_name'      ,
-                                                dev_tasks_categories.title_en     AS 'tc_name_en'   ,
-                                                dev_tasks_categories.title_fr     AS 'tc_name_fr'   ,
-                                                dev_tasks_milestones.id           AS 'tm_id'        ,
-                                                dev_tasks_milestones.title_$lang  AS 'tm_name'      ,
-                                                dev_tasks_milestones.title_en     AS 'tm_name_en'   ,
-                                                dev_tasks_milestones.title_fr     AS 'tm_name_fr'
-                                      FROM      dev_tasks
-                                      LEFT JOIN users
-                                      ON        dev_tasks.fk_users                = users.id
-                                      LEFT JOIN dev_tasks_categories
-                                      ON        dev_tasks.fk_dev_tasks_categories = dev_tasks_categories.id
-                                      LEFT JOIN dev_tasks_milestones
-                                      ON        dev_tasks.fk_dev_tasks_milestones = dev_tasks_milestones.id
-                                      WHERE     dev_tasks.id                      = '$task_id' "));
+  $dtask = query("  SELECT    dev_tasks.is_deleted              AS 't_deleted'    ,
+                              dev_tasks.admin_validation        AS 't_validated'  ,
+                              dev_tasks.is_public               AS 't_public'     ,
+                              dev_tasks.priority_level          AS 't_priority'   ,
+                              dev_tasks.created_at              AS 't_created'    ,
+                              dev_tasks.finished_at             AS 't_solved'     ,
+                              dev_tasks.title_$lang             AS 't_title'      ,
+                              dev_tasks.title_en                AS 't_title_en'   ,
+                              dev_tasks.title_fr                AS 't_title_fr'   ,
+                              dev_tasks.body_$lang              AS 't_body'       ,
+                              dev_tasks.body_en                 AS 't_body_en'    ,
+                              dev_tasks.body_fr                 AS 't_body_fr'    ,
+                              dev_tasks.source_code_link        AS 't_source'     ,
+                              users.id                          AS 'u_id'         ,
+                              users.username                    AS 'u_name'       ,
+                              dev_tasks_categories.id           AS 'tc_id'        ,
+                              dev_tasks_categories.title_$lang  AS 'tc_name'      ,
+                              dev_tasks_categories.title_en     AS 'tc_name_en'   ,
+                              dev_tasks_categories.title_fr     AS 'tc_name_fr'   ,
+                              dev_tasks_milestones.id           AS 'tm_id'        ,
+                              dev_tasks_milestones.title_$lang  AS 'tm_name'      ,
+                              dev_tasks_milestones.title_en     AS 'tm_name_en'   ,
+                              dev_tasks_milestones.title_fr     AS 'tm_name_fr'
+                    FROM      dev_tasks
+                    LEFT JOIN users
+                    ON        dev_tasks.fk_users                = users.id
+                    LEFT JOIN dev_tasks_categories
+                    ON        dev_tasks.fk_dev_tasks_categories = dev_tasks_categories.id
+                    LEFT JOIN dev_tasks_milestones
+                    ON        dev_tasks.fk_dev_tasks_milestones = dev_tasks_milestones.id
+                    WHERE     dev_tasks.id                      = '$task_id' ",
+                    fetch_row: true);
 
   // Format the data
   $task_deleted           = $dtask['t_deleted'];
@@ -425,7 +426,7 @@ function tasks_list(  string  $sort_by    = 'status'  ,
   $tasks_solved_years   = array();
 
   // Loop through the results
-  for($i = 0; $row = mysqli_fetch_array($qtasks); $i++)
+  for($i = 0; $row = query_row($qtasks); $i++)
   {
     // Format the data
     $task_id              = $row['t_id'];
@@ -791,12 +792,13 @@ function tasks_approve( int   $task_id  ,
           WHERE       dev_tasks.id                        = '$task_id'        ");
 
   // Fetch the task's author
-  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.id    AS 't_id'   ,
-                                                users.id        AS 'tu_id'  ,
-                                                users.username  AS 'tu_nick'
-                                      FROM      dev_tasks
-                                      LEFT JOIN users ON dev_tasks.fk_users = users.id
-                                      WHERE     dev_tasks.id = '$task_id' "));
+  $dtask = query("  SELECT    dev_tasks.id    AS 't_id'   ,
+                              users.id        AS 'tu_id'  ,
+                              users.username  AS 'tu_nick'
+                    FROM      dev_tasks
+                    LEFT JOIN users ON dev_tasks.fk_users = users.id
+                    WHERE     dev_tasks.id = '$task_id' ",
+                    fetch_row: true);
   $username = $dtask['tu_nick'];
   $user_id  = $dtask['tu_id'];
 
@@ -912,11 +914,12 @@ function tasks_reject(  int     $task_id            ,
     return __('tasks_details_error');
 
   // Fetch the task's author
-  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.id    AS 't_id' ,
-                                                users.id        AS 'tu_id'
-                                      FROM      dev_tasks
-                                      LEFT JOIN users ON dev_tasks.fk_users = users.id
-                                      WHERE     dev_tasks.id = '$task_id' "));
+  $dtask = query("  SELECT    dev_tasks.id    AS 't_id' ,
+                              users.id        AS 'tu_id'
+                    FROM      dev_tasks
+                    LEFT JOIN users ON dev_tasks.fk_users = users.id
+                    WHERE     dev_tasks.id = '$task_id' ",
+                    fetch_row: true);
   $user_id  = $dtask['tu_id'];
 
   // Delete the task
@@ -1335,7 +1338,7 @@ function tasks_categories_list( bool  $exclude_archived = false ,
                                   $query_sort ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  for($i = 0; $row = query_row($qcategories); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['c_id']);
     $data[$i]['archived'] = sanitize_output($row['c_archived']);
@@ -1441,15 +1444,17 @@ function tasks_categories_delete( int $category_id = 0 ) : void
   $category_id = sanitize($category_id, 'int', 0);
 
   // Fetch the category name
-  $dcategory = mysqli_fetch_array(query(" SELECT  dev_tasks_categories.title_en  AS 'tc_name'
-                                          FROM    dev_tasks_categories
-                                          WHERE   dev_tasks_categories.id = '$category_id' "));
+  $dcategory = query("  SELECT  dev_tasks_categories.title_en  AS 'tc_name'
+                        FROM    dev_tasks_categories
+                        WHERE   dev_tasks_categories.id = '$category_id' ",
+                        fetch_row: true);
   $category_name = $dcategory['tc_name'];
 
   // Fetch the number of tasks linked to the category
-  $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 't_count'
-                                        FROM    dev_tasks
-                                        WHERE   dev_tasks.fk_dev_tasks_categories = '$category_id' "));
+  $dtasks = query(" SELECT  COUNT(*) AS 't_count'
+                    FROM    dev_tasks
+                    WHERE   dev_tasks.fk_dev_tasks_categories = '$category_id' ",
+                    fetch_row: true);
   $task_count = $dtasks['t_count'];
 
   // Unlink all tasks currently linked to this category
@@ -1501,7 +1506,7 @@ function tasks_milestones_list( bool $exclude_archived = false ) : array
                           ORDER BY  dev_tasks_milestones.sorting_order DESC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
+  for($i = 0; $row = query_row($qmilestones); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['m_id']);
     $data[$i]['archived'] = sanitize_output($row['m_archived']);
@@ -1618,15 +1623,17 @@ function tasks_milestones_delete( int $milestone_id = 0 ) : void
   $milestone_id = sanitize($milestone_id, 'int', 0);
 
   // Fetch the milestone name
-  $dmilestone = mysqli_fetch_array(query("  SELECT  dev_tasks_milestones.title_en AS 'tm_name'
-                                            FROM    dev_tasks_milestones
-                                            WHERE   dev_tasks_milestones.id = '$milestone_id' "));
+  $dmilestone = query(" SELECT  dev_tasks_milestones.title_en AS 'tm_name'
+                        FROM    dev_tasks_milestones
+                        WHERE   dev_tasks_milestones.id = '$milestone_id' ",
+                        fetch_row: true);
   $milestone_name = $dmilestone['tm_name'];
 
   // Fetch the number of tasks linked to the milestone
-  $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 't_count'
-                                        FROM    dev_tasks
-                                        WHERE   dev_tasks.fk_dev_tasks_milestones = '$milestone_id' "));
+  $dtasks = query(" SELECT  COUNT(*) AS 't_count'
+                    FROM    dev_tasks
+                    WHERE   dev_tasks.fk_dev_tasks_milestones = '$milestone_id' ",
+                    fetch_row: true);
   $task_count = $dtasks['t_count'];
 
   // Unlink all tasks currently linked to this milestone
@@ -1668,16 +1675,17 @@ function tasks_stats_list() : array
   $lang = string_change_case(user_get_language(), 'lowercase');
 
   // Fetch the total number of tasks
-  $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*)                AS 't_total'  ,
-                                        SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
-                                                  ELSE 0 END)           AS 't_solved' ,
-                                        SUM(CASE  WHEN dev_tasks.source_code_link = '' THEN 0
-                                                  ELSE 1 END)           AS 't_source'
-                                        FROM    dev_tasks
-                                        WHERE   dev_tasks.is_deleted        = 0
-                                        AND     dev_tasks.admin_validation  = 1
-                                        AND     dev_tasks.is_public         = 1
-                                        AND     dev_tasks.title_$lang      != '' "));
+  $dtasks = query(" SELECT  COUNT(*)                AS 't_total'  ,
+                    SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
+                              ELSE 0 END)           AS 't_solved' ,
+                    SUM(CASE  WHEN dev_tasks.source_code_link = '' THEN 0
+                              ELSE 1 END)           AS 't_source'
+                    FROM    dev_tasks
+                    WHERE   dev_tasks.is_deleted        = 0
+                    AND     dev_tasks.admin_validation  = 1
+                    AND     dev_tasks.is_public         = 1
+                    AND     dev_tasks.title_$lang      != '' ",
+                    fetch_row: true);
 
   // Add some stats to the return array
   $data['total']            = sanitize_output($dtasks['t_total']);
@@ -1707,7 +1715,7 @@ function tasks_stats_list() : array
   $oldest_year = date('Y');
 
   // Add created task data over time to the return data
-  while($dtasks = mysqli_fetch_array($qtasks))
+  while($dtasks = query_row($qtasks))
   {
     $year                   = $dtasks['t_year'];
     $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
@@ -1727,7 +1735,7 @@ function tasks_stats_list() : array
                     ORDER BY  t_year ASC ");
 
   // Add solved task data over time to the return data
-  while($dtasks = mysqli_fetch_array($qtasks))
+  while($dtasks = query_row($qtasks))
   {
     $year                   = $dtasks['t_year'];
     $oldest_year            = ($year < $oldest_year) ? $year : $oldest_year;
@@ -1763,7 +1771,7 @@ function tasks_stats_list() : array
                                     tc_title  ASC   ");
 
   // Loop through categories and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  for($i = 0; $row = query_row($qcategories); $i++)
   {
     $data['category_id_'.$i]        = sanitize_output($row['tc_id']);
     $data['category_name_'.$i]      = sanitize_output($row['tc_title']);
@@ -1802,7 +1810,7 @@ function tasks_stats_list() : array
                           ORDER BY  dev_tasks_milestones.sorting_order DESC ");
 
   // Loop through milestones and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
+  for($i = 0; $row = query_row($qmilestones); $i++)
   {
     $data['milestone_id_'.$i]       = sanitize_output($row['tm_id']);
     $data['milestone_title_'.$i]    = sanitize_output($row['tm_title']);
@@ -1831,7 +1839,7 @@ function tasks_stats_list() : array
                     ORDER BY  dev_tasks.priority_level  DESC");
 
   // Loop through priority levels and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qtasks); $i++)
+  for($i = 0; $row = query_row($qtasks); $i++)
   {
     $data['priority_level_'.$i]   = sanitize_output($row['t_priority']);
     $data['priority_count_'.$i]   = sanitize_output($row['t_count']);
@@ -1856,7 +1864,7 @@ function tasks_stats_list() : array
                               users.username              ASC   ");
 
   // Loop through contributors and add their data to the return array
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     $data['contrib_id_'.$i]     = sanitize_output($row['u_id']);
     $data['contrib_nick_'.$i]   = sanitize_output($row['u_nick']);
@@ -1897,14 +1905,15 @@ function tasks_stats_recalculate_user( int $user_id )
     return;
 
   // Count the tasks submitted by the user
-  $dtasks = mysqli_fetch_array(query("  SELECT    COUNT(*)              AS 't_count'    ,
-                                                  SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
-                                                            ELSE 0 END) AS 't_count_solved'
-                                        FROM      dev_tasks
-                                        WHERE     dev_tasks.fk_users          = '$user_id'
-                                        AND       dev_tasks.is_deleted        = 0
-                                        AND       dev_tasks.admin_validation  = 1
-                                        AND       dev_tasks.is_public         = 1 "));
+  $dtasks = query(" SELECT    COUNT(*)              AS 't_count'    ,
+                              SUM(CASE  WHEN dev_tasks.finished_at > 0 THEN 1
+                                        ELSE 0 END) AS 't_count_solved'
+                    FROM      dev_tasks
+                    WHERE     dev_tasks.fk_users          = '$user_id'
+                    AND       dev_tasks.is_deleted        = 0
+                    AND       dev_tasks.admin_validation  = 1
+                    AND       dev_tasks.is_public         = 1 ",
+                    fetch_row: true);
 
   // Sanitize the contributions stats
   $tasks_count    = sanitize($dtasks['t_count'], 'int', 0);
@@ -1934,7 +1943,7 @@ function tasks_stats_recalculate_all()
                     ORDER BY  users.id ASC ");
 
   // Loop through the users and recalculate their individual tasks statistics
-  while($dusers = mysqli_fetch_array($qusers))
+  while($dusers = query_row($qusers))
   {
     $user_id = sanitize($dusers['u_id'], 'int', 0);
     tasks_stats_recalculate_user($user_id);

@@ -95,9 +95,10 @@ function admin_ban_create(  int     $banner_id            ,
     return __('admin_ban_add_error_length');
 
   // Error: User is already banned
-  $duser = mysqli_fetch_array(query("   SELECT  users.is_banned_until AS 'u_ban'
-                                        FROM    users
-                                        WHERE   users.id = '$banned_user_id' "));
+  $duser = query("  SELECT  users.is_banned_until AS 'u_ban'
+                    FROM    users
+                    WHERE   users.id = '$banned_user_id' ",
+                    fetch_row: true);
   if($duser['u_ban'])
     return __('admin_ban_add_error_already');
 
@@ -225,11 +226,12 @@ function admin_ban_edit(  int     $banner_id            ,
     return;
 
   // Fetch the previous ban details
-  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_until       AS 'b_end'        ,
-                                              users.is_banned_because_en  AS 'b_reason_en'  ,
-                                              users.is_banned_because_fr  AS 'b_reason_fr'
-                                      FROM    users
-                                      WHERE   users.id = '$banned_id' "));
+  $dban = query(" SELECT  users.is_banned_until       AS 'b_end'        ,
+                          users.is_banned_because_en  AS 'b_reason_en'  ,
+                          users.is_banned_because_fr  AS 'b_reason_fr'
+                  FROM    users
+                  WHERE   users.id = '$banned_id' ",
+                  fetch_row: true);
 
   // Determine when the ban ends
   if($ban_length === 1)
@@ -369,12 +371,13 @@ function admin_ban_delete(  string  $unbanned_id            ,
     return;
 
   // Fetch the ban details
-  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_since       AS 'b_start'      ,
-                                              users.is_banned_until       AS 'b_end'        ,
-                                              users.is_banned_because_en  AS 'b_reason_en'  ,
-                                              users.is_banned_because_fr  AS 'b_reason_fr'
-                                      FROM    users
-                                      WHERE   users.id = '$unbanned_id' "));
+  $dban = query(" SELECT  users.is_banned_since       AS 'b_start'      ,
+                          users.is_banned_until       AS 'b_end'        ,
+                          users.is_banned_because_en  AS 'b_reason_en'  ,
+                          users.is_banned_because_fr  AS 'b_reason_fr'
+                  FROM    users
+                  WHERE   users.id = '$unbanned_id' ",
+                  fetch_row: true);
 
   // Unban the user and generate a recent activity entry
   user_unban($unbanned_id, $unbanner_id, 1);
@@ -445,12 +448,13 @@ function admin_ip_ban_get( int $ip_ban_id ) : array
   $ip_ban_id = sanitize($ip_ban_id, 'int', 0);
 
   // Fetch data regarding the ban
-  $dban = mysqli_fetch_array(query("  SELECT  system_ip_bans.ip_address     AS 'b_ip'         ,
-                                              system_ip_bans.banned_until   AS 'b_end'        ,
-                                              system_ip_bans.ban_reason_en  AS 'b_reason_en'  ,
-                                              system_ip_bans.ban_reason_fr  AS 'b_reason_fr'
-                                      FROM    system_ip_bans
-                                      WHERE   system_ip_bans.id = '$ip_ban_id' "));
+  $dban = query(" SELECT  system_ip_bans.ip_address     AS 'b_ip'         ,
+                          system_ip_bans.banned_until   AS 'b_end'        ,
+                          system_ip_bans.ban_reason_en  AS 'b_reason_en'  ,
+                          system_ip_bans.ban_reason_fr  AS 'b_reason_fr'
+                  FROM    system_ip_bans
+                  WHERE   system_ip_bans.id = '$ip_ban_id' ",
+                  fetch_row: true);
 
   // Prepare the data
   $data['ip_address'] = sanitize_output($dban['b_ip']);
@@ -490,7 +494,7 @@ function admin_ip_ban_list_users( string $banned_ip ) : array
                     ORDER BY  users.username ASC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  for($i = 0; $row = query_row($qusers); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['u_id']);
     $data[$i]['username'] = sanitize_output($row['u_nick']);
@@ -602,9 +606,10 @@ function admin_ip_ban_create( int     $banner_id              ,
       return __('admin_ban_add_error_moderator');
 
     // Fetch the user's latest IP address
-    $dip = mysqli_fetch_array(query(" SELECT  users.current_ip_address AS 'u_ip'
-                                      FROM    users
-                                      WHERE   users.id = '$banned_user_id' "));
+    $dip = query("  SELECT  users.current_ip_address AS 'u_ip'
+                    FROM    users
+                    WHERE   users.id = '$banned_user_id' ",
+                    fetch_row: true);
     $ip_address_raw = $dip['u_ip'];
     $ip_address     = sanitize($dip['u_ip']);
 
@@ -623,7 +628,7 @@ function admin_ip_ban_create( int     $banner_id              ,
                   FROM    system_ip_bans ");
 
   // Error: IP address is already banned
-  while($dip = mysqli_fetch_array($qip))
+  while($dip = query_row($qip))
   {
     $check_ip = str_replace('*', '', $dip['i_ip']);
     if(strpos($check_ip, $ip_address) !== FALSE || strpos($ip_address, $check_ip) !== FALSE)
@@ -637,7 +642,7 @@ function admin_ip_ban_create( int     $banner_id              ,
                   AND     users.current_ip_address != '' ");
 
   // Error: Cannot IP ban administrators
-  while($dip = mysqli_fetch_array($qip))
+  while($dip = query_row($qip))
   {
     $check_ip = str_replace('*', '', $dip['u_ip']);
     $ip_no_wildcard = str_replace('*', '', $ip_address);
@@ -735,11 +740,12 @@ function admin_ip_ban_delete( int     $ban_id                 ,
   if(!database_row_exists('system_ip_bans', $ban_id));
 
   // Fetch the IP address that was banned
-  $dban = mysqli_fetch_array(query("  SELECT  system_ip_bans.ip_address     AS 'b_ip'     ,
-                                              system_ip_bans.banned_since   AS 'b_start'  ,
-                                              system_ip_bans.banned_until   AS 'b_end'
-                                      FROM    system_ip_bans
-                                      WHERE   system_ip_bans.id = '$ban_id' "));
+  $dban = query(" SELECT  system_ip_bans.ip_address     AS 'b_ip'     ,
+                          system_ip_bans.banned_since   AS 'b_start'  ,
+                          system_ip_bans.banned_until   AS 'b_end'
+                  FROM    system_ip_bans
+                  WHERE   system_ip_bans.id = '$ban_id' ",
+                  fetch_row: true);
 
   // Prepare data regarding the ban
   $banned_ip_raw  = $dban['b_ip'];
@@ -832,12 +838,13 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   // If a user_id has been provided, fetch the log_id
   if($user_id)
   {
-    $dban = mysqli_fetch_array(query("  SELECT    logs_bans.id AS 'l_id'
-                                        FROM      logs_bans
-                                        WHERE     logs_bans.fk_banned_user  = '$user_id'
-                                        AND       logs_bans.unbanned_at     = 0
-                                        ORDER BY  logs_bans.banned_at       DESC
-                                        LIMIT     1 "));
+    $dban = query(" SELECT    logs_bans.id AS 'l_id'
+                    FROM      logs_bans
+                    WHERE     logs_bans.fk_banned_user  = '$user_id'
+                    AND       logs_bans.unbanned_at     = 0
+                    ORDER BY  logs_bans.banned_at       DESC
+                    LIMIT     1 ",
+                    fetch_row: true);
     $log_id = sanitize($dban['l_id'], 'int', 0);
   }
 
@@ -845,18 +852,20 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   if($ip_ban_id)
   {
     // Fetch the banned IP address
-    $dip = mysqli_fetch_array(query(" SELECT  system_ip_bans.ip_address AS 'ib_ip'
-                                      FROM    system_ip_bans
-                                      WHERE   system_ip_bans.id = '$ip_ban_id' "));
+    $dip = query("  SELECT  system_ip_bans.ip_address AS 'ib_ip'
+                    FROM    system_ip_bans
+                    WHERE   system_ip_bans.id = '$ip_ban_id' ",
+                    fetch_row: true);
     $banned_ip = sanitize($dip['ib_ip'], 'string');
 
     // Fetch the log id matching the fetched IP address
-    $dban = mysqli_fetch_array(query("  SELECT    logs_bans.id AS 'l_id'
-                                        FROM      logs_bans
-                                        WHERE     logs_bans.banned_ip_address LIKE  '$banned_ip'
-                                        AND       logs_bans.unbanned_at       =     0
-                                        ORDER BY  logs_bans.banned_at         DESC
-                                        LIMIT     1 "));
+    $dban = query(" SELECT    logs_bans.id AS 'l_id'
+                    FROM      logs_bans
+                    WHERE     logs_bans.banned_ip_address LIKE  '$banned_ip'
+                    AND       logs_bans.unbanned_at       =     0
+                    ORDER BY  logs_bans.banned_at         DESC
+                    LIMIT     1 ",
+                    fetch_row: true);
     $log_id = isset($dban['l_id']) ? sanitize($dban['l_id'], 'int', 0) : 0;
   }
 
@@ -865,7 +874,7 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
     return 0;
 
   // Fetch data regarding the ban
-  $qlog = query(" SELECT    logs_bans.banned_ip_address AS 'l_ip'           ,
+  $dlog = query(" SELECT    logs_bans.banned_ip_address AS 'l_ip'           ,
                             logs_bans.is_a_total_ip_ban AS 'l_total_ip_ban' ,
                             logs_bans.banned_at         AS 'l_start'        ,
                             logs_bans.banned_until      AS 'l_end'          ,
@@ -885,10 +894,8 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
                   LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
                   LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
                   WHERE     logs_bans.id = '$log_id'
-                  ORDER BY  banned_at DESC ");
-
-  // Grab the data from the query
-  $dlog = mysqli_fetch_array($qlog);
+                  ORDER BY  banned_at DESC ",
+                  fetch_row: true);
 
   // Prepare the data
   $data['is_banned']        = ($dlog['l_unban']) ? 0 : 1;
@@ -1009,7 +1016,7 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
   $lang = user_get_language();
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
+  for($i = 0; $row = query_row($qlogs); $i++)
   {
     $data[$i]['id']                 = $row['l_id'];
     $data[$i]['ban_type']           = ($row['banned_nick']) ? 'user' : 'ip_ban';
