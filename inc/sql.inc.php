@@ -8,8 +8,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  query           Execute a MySQL query.                                                                           */
-/*  query_id        Returns the ID of the latest inserted row.                                                       */
+/*  query               Execute a MySQL query.                                                                       */
+/*  query_row           Fetch the next row of a query.                                                               */
+/*  query_row_count     Count the number of rows returned by a query.                                                */
+/*  query_id            Returns the ID of the latest inserted row.                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -107,7 +109,7 @@ function query( string  $query                    ,
     echo '<div class="debug_query"><pre>'.$query.'</pre></div>';
 
     // Check if the query returns any result
-    if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && mysqli_num_rows($query_result))
+    if(substr(str_replace(' ', '', $query), 0, 6) === 'SELECT' && query_row_count($query_result))
     {
       // Prepare an array for the query results
       $full_query_results = array();
@@ -158,7 +160,7 @@ function query( string  $query                    ,
 
 
 /**
- * Fetch the next row of a query
+ * Fetch the next row of a query.
  *
  * @param   object        $query_object               The query object obtained by using the query() function.
  * @param   string        $return_format  (OPTIONAL)  Format of the returned array ('num', 'both') defaults to 'assoc'.
@@ -189,6 +191,30 @@ function query_row( object  $query_object             ,
 
   // Return the row
   return $return;
+}
+
+
+
+
+/**
+ * Count the number of rows returned by a query.
+ *
+ * @param   object    $query_object   The query object obtained by using the query() function.
+ *
+ * @return  int                       The number of rows in the query (zero if it is an invalid query).
+ */
+
+function query_row_count( object $query_object ) : int
+{
+  // Return zero if the variable is not a query object
+  if(!is_a($query_object, 'mysqli_result'))
+    return 0;
+
+  // Get the number of rows in the query
+  $num_rows = mysqli_num_rows($query_object);
+
+  // Return the number of rows in the query, or zero if the result is not an int
+  return (is_int($num_rows)) ? $num_rows : 0;
 }
 
 

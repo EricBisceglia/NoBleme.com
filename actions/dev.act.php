@@ -185,7 +185,7 @@ function dev_versions_create( int     $major                    ,
                       AND     system_versions.extension LIKE  '$extension' ");
 
   // If it already exists, stop the process
-  if(mysqli_num_rows($qversion))
+  if(query_row_count($qversion))
     return __('dev_versions_edit_error_duplicate');
 
   // Create the new version

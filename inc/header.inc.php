@@ -189,7 +189,7 @@ else
                       description: "Update guest activity");
 
   // Create the guest if it does not exist
-  if(!mysqli_num_rows($qguest))
+  if(!query_row_count($qguest))
   {
     // Generate a random username
     $guest_name_en = sanitize(user_generate_random_username('EN'), 'string');

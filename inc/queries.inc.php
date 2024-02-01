@@ -531,7 +531,7 @@ function sql_create_index(  string  $table_name           ,
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
   // If it does not exist yet, then can create it and run a check to populate the table's indexes
-  if(!mysqli_num_rows($qindex))
+  if(!query_row_count($qindex))
   {
     $query_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
     query(" ALTER TABLE ".$table_name."
@@ -567,7 +567,7 @@ function sql_delete_index(  string  $table_name ,
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
   // If it exists, delete it and run a check to depopulate the index
-  if(mysqli_num_rows($qindex))
+  if(query_row_count($qindex))
   {
     query(" ALTER TABLE ".$table_name."
             DROP INDEX ".$index_name );
@@ -595,7 +595,7 @@ function sql_insert_value(  string  $condition  ,
                             string  $query      ) : void
 {
   // If the condition is met, run the query
-  if(!mysqli_num_rows(query($condition)))
+  if(!query_row_count(query($condition)))
     query($query);
 }
 

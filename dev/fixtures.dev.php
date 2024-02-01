@@ -222,7 +222,7 @@ function fixtures_check_entry(  string  $table  ,
                     WHERE     $table.$field LIKE '$value' ");
 
    // Return whether the entry already exists
-   return mysqli_num_rows($qrand);
+   return query_row_count($qrand);
 }
 
 

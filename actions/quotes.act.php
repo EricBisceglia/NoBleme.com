@@ -970,7 +970,7 @@ function quotes_link_user(  int     $quote_id ,
     return __('quotes_users_error');
 
   // Check if the link already exists
-  $dlink = mysqli_num_rows(query("  SELECT  quotes_users.id
+  $dlink = query_row_count(query("  SELECT  quotes_users.id
                                     FROM    quotes_users
                                     WHERE   quotes_users.fk_quotes  = '$quote_id'
                                     AND     quotes_users.fk_users   = '$user_id' "));
