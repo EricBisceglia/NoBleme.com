@@ -98,9 +98,16 @@ $query_string = isset($_SERVER['REDIRECT_QUERY_STRING']) ? $_SERVER['REDIRECT_QU
 $color_theme = ($mode === "dark") ? "light" : "dark";
 
 // Assemble the redirections
-$url_mode   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&'.$color_theme.'_mode=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$color_theme.'_mode=1';
-$url_logout = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_lang   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
+$current_url  = $_SERVER['REQUEST_URI'];
+$url_mode     = ($query_string)
+              ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&'.$color_theme.'_mode=1'
+              : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$color_theme.'_mode=1';
+$url_logout   = ($query_string)
+              ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&logout'
+              : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_lang     = ($query_string)
+              ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&changelang=1'
+              : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 
 
 
@@ -108,7 +115,7 @@ $url_lang   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Logout
 
-if(isset($_GET['logout']))
+if(isset($_POST['account_logout_go']))
   user_log_out();
 
 
@@ -781,7 +788,10 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=sanitize_output(user_get_username())?>
           </div>
           <div class="header_submenu_item">
-            <a class="header_submenu_link" href="<?=$url_logout?>"><?=__('submenu_user_logout_logout')?></a>
+            <form id="account_logout" method="post" action="<?=$current_url?>">
+              <input type="hidden" name="account_logout_go" value="logout">
+              <a class="header_submenu_link" href="#" onclick="user_logout();"><?=__('submenu_user_logout_logout')?></a>
+            </form>
           </div>
         </div>
 
