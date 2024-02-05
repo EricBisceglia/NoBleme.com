@@ -102,12 +102,6 @@ $current_url  = $_SERVER['REQUEST_URI'];
 $url_mode     = ($query_string)
               ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&'.$color_theme.'_mode=1'
               : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$color_theme.'_mode=1';
-$url_logout   = ($query_string)
-              ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&logout'
-              : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_lang     = ($query_string)
-              ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&changelang=1'
-              : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 
 
 
@@ -491,13 +485,14 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?php } ?>
           </a>
 
-          <a href="<?=$url_lang?>">
+          <form id="account_language" method="post" action="<?=$current_url?>">
+            <input type="hidden" name="account_change_language" value="logout">
             <?php if($lang === 'FR') { ?>
-            <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="<?=string_change_case(__('english'), 'initials')?>">
+            <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="<?=string_change_case(__('english'), 'initials')?>" onclick="user_change_language();">
             <?php } else { ?>
-            <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR" title="<?=string_change_case(__('french'), 'initials')?>">
+            <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR" title="<?=string_change_case(__('french'), 'initials')?>" onclick="user_change_language();">
             <?php } ?>
-          </a>
+          </form>
 
         </div>
       </div>

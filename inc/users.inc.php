@@ -215,7 +215,7 @@ if(!isset($_SESSION['lang']))
 }
 
 // If the user clicks on the language flag, change the language accordingly
-if(isset($_GET['changelang']))
+if(isset($_POST['account_change_language']))
 {
   // Get the language that the user is currently not using
   $changelang = ($_SESSION['lang'] === 'EN') ? 'FR' : 'EN';
@@ -231,57 +231,6 @@ if(isset($_GET['changelang']))
                 'path'      => '/'        ,
                 'samesite'  => 'None'     ,
                 'secure'    => true       ]);
-}
-
-// If the URL contains a request to change to a specific language, then fullfill that request
-if(isset($_GET['english']) || isset($_GET['anglais']))
-{
-  // Change the cookie and session language to english on request
-  $_SESSION['lang'] = "EN";
-  if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_language", "EN", 2147483647, "/");
-  else
-    setcookie(  "nobleme_language"        ,
-                "EN"                      ,
-              [ 'expires'   => 2147483647 ,
-                'path'      => '/'        ,
-                'samesite'  => 'None'     ,
-                'secure'    => true       ]);
-}
-
-// In case more than one language change request is being done, then english will be the final language
-else if(isset($_GET['francais']) || isset($_GET['french']))
-{
-  // Change the cookie and session language to french on request
-  $_SESSION['lang'] = "FR";
-  if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_language", "FR", 2147483647, "/");
-  else
-    setcookie(  "nobleme_language"        ,
-                "FR"                      ,
-              [ 'expires'   => 2147483647 ,
-                'path'      => '/'        ,
-                'samesite'  => 'None'     ,
-                'secure'    => true       ]);
-}
-
-// If a language change just happened, clean up the URL and reload the page
-if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
-{
-  // Get rid of all the language related query parameters
-  unset($_GET['english']);
-  unset($_GET['anglais']);
-  unset($_GET['francais']);
-  unset($_GET['french']);
-  unset($_GET['changelang']);
-
-  // Re-build the URL, with all its other query parameters intact
-  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_rebuild  = urldecode(http_build_query($_GET));
-  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
-
-  // Reload the page by giving it the cleaned up URL (there better not be an infinite loop case I didn't test here)
-  exit(header("Location: ".$url_rebuild));
 }
 
 // Use the $lang variable to store the language for the duration of the session (the header and other pages need it)
