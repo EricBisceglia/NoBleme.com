@@ -48,7 +48,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 secure_session_start();
 
 // If the user has an ID cookie set, attempt to identify them
-if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
+if(isset($_COOKIE['nobleme_memory']))
 {
   // Sanitize the cookie's value
   $login_cookie = sanitize($_COOKIE['nobleme_memory'], 'string');
@@ -433,17 +433,11 @@ function user_log_out() : void
   // Destroy the session itself
   session_destroy();
 
-  // Determine the path to the current page without the logout parameter
-  unset($_GET['logout']);
-  $url_self   = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_logout = urldecode(http_build_query($_GET));
-  $url_logout = ($url_logout) ? $url_self.'?'.$url_logout : $url_self;
-
   // Reset the user id in the session
   $_SESSION['user_id'] = 0;
 
   // Reload the page
-  exit(header("location: ".$url_logout));
+  exit(header("location: ".$_SERVER['REQUEST_URI']));
 }
 
 
