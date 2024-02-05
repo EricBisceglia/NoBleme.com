@@ -267,50 +267,22 @@ if(!isset($_SESSION['mode']))
 }
 
 // If the URL contains a request to change to a specific display mode, then fullfill that request
-if(isset($_GET['light_mode']))
+if(isset($_POST['account_change_mode']))
 {
-  $_SESSION['mode'] = "light";
+  // Get the language that the user is currently not using
+  $changemode = ($_SESSION['mode'] === 'dark') ? 'light' : 'dark';
+
+  // Change the cookie and session mode to the new one
+  $_SESSION['mode'] = $changemode;
   if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_mode", "light", 2147483647, "/");
+    setcookie("nobleme_mode", $changemode, 2147483647, "/");
   else
     setcookie(  "nobleme_mode"            ,
-                "light"                   ,
+                $changemode               ,
               [ 'expires'   => 2147483647 ,
                 'path'      => '/'        ,
                 'samesite'  => 'None'     ,
                 'secure'    => true       ]);
-}
-
-// In case more than one mode change request is being done, then dark will be the final mode
-else if(isset($_GET['dark_mode']))
-{
-  // Change the cookie and session language to french on request
-  $_SESSION['mode'] = "dark";
-  if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_mode", "dark", 2147483647, "/");
-  else
-    setcookie(  "nobleme_mode"            ,
-                "dark"                    ,
-              [ 'expires'   => 2147483647 ,
-                'path'      => '/'        ,
-                'samesite'  => 'None'     ,
-                'secure'    => true       ]);
-}
-
-// If a mode change just happened, clean up the URL and reload the page
-if(isset($_GET['light_mode']) || isset($_GET['dark_mode']))
-{
-  // Get rid of all the mode related query parameters
-  unset($_GET['light_mode']);
-  unset($_GET['dark_mode']);
-
-  // Re-build the URL, with all its other query parameters intact
-  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_rebuild  = urldecode(http_build_query($_GET));
-  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
-
-  // Reload the page by giving it the cleaned up URL (there better not be an infinite loop case I didn't test here)
-  exit(header("Location: ".$url_rebuild));
 }
 
 // Use the $mode variable to store the display mode for the duration of the session (header and other pages need it)

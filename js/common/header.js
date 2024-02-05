@@ -8,6 +8,7 @@
 /*  user_logout                     Logs out an user.                                                                */
 /*                                                                                                                   */
 /*  user_change_language            Changes the display language for an user.                                        */
+/*  user_change_mode                Changes the display mode for an user.                                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Close the lost account access popin if it is open upon loading the page
@@ -158,4 +159,19 @@ function user_change_language()
 {
   // Log the user out
   document.getElementById('account_language').submit();
+}
+
+
+
+
+/**
+ * Changes the display mode for an user.
+ *
+ * @returns {void}
+ */
+
+function user_change_mode()
+{
+  // Log the user out
+  document.getElementById('account_mode').submit();
 }
