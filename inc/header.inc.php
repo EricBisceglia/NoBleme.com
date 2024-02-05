@@ -89,13 +89,10 @@ if($website_closed  && !$is_admin)
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Creation of URLs to use for logging out, changing language, and changing mode
+// Account actions
 
 // Determine the current url
 $current_url = $_SERVER['REQUEST_URI'];
-
-// Determine which query string to use in case of redirection
-$query_string = isset($_SERVER['REDIRECT_QUERY_STRING']) ? $_SERVER['REDIRECT_QUERY_STRING'] : $_SERVER['QUERY_STRING'];
 
 // Determine the color theme to suggest
 $color_theme = ($mode === "dark") ? "light" : "dark";
@@ -473,7 +470,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="M" title="<?=string_change_case(__('administration'), 'initials');?>" onclick="toggle_header_menu('admin');">
           <?php } ?>
 
-          <form id="account_mode" method="post" action="<?=$current_url?>">
+          <form id="account_mode" method="post">
             <input type="hidden" name="account_change_mode" value="change_mode">
             <?php if($mode === "dark") { ?>
             <img class="header_topmenu_icon header_topmenu_mode" src="<?=$path?>img/icons/light_mode.svg" alt="L" title="<?=string_change_case(__('mode_light'), 'initials');?>" onclick="user_change_mode();">
@@ -482,7 +479,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?php } ?>
           </form>
 
-          <form id="account_language" method="post" action="<?=$current_url?>">
+          <form id="account_language" method="post">
             <input type="hidden" name="account_change_language" value="change_language">
             <?php if($lang === 'FR') { ?>
             <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="<?=string_change_case(__('english'), 'initials')?>" onclick="user_change_language();">
@@ -780,7 +777,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=sanitize_output(user_get_username())?>
           </div>
           <div class="header_submenu_item">
-            <form id="account_logout" method="post" action="<?=$current_url?>">
+            <form id="account_logout" method="post">
               <input type="hidden" name="account_logout_go" value="logout">
               <a class="header_submenu_link" href="#" onclick="user_logout();"><?=__('submenu_user_logout_logout')?></a>
             </form>
