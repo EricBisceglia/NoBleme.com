@@ -5,6 +5,11 @@
 /*  user_login_attempt              Attempts to log in a guest.                                                      */
 /*  user_login_attempt_process      Process a finished login attempt.                                                */
 /*                                                                                                                   */
+/*  user_logout                     Logs out an user.                                                                */
+/*                                                                                                                   */
+/*  user_change_language            Changes the display language for an user.                                        */
+/*  user_change_mode                Changes the display mode for an user.                                            */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 // Close the lost account access popin if it is open upon loading the page
 popin_close('popin_lost_access');
@@ -124,4 +129,49 @@ function user_login_attempt_process()
   // If there is an error, display it
   else
     document.getElementById('login_form_error').style.display = 'block';
+}
+
+
+
+
+/**
+ * Logs out an user.
+ *
+ * @returns {void}
+ */
+
+function user_logout()
+{
+  // Log the user out
+  document.getElementById('account_logout').submit();
+}
+
+
+
+
+/**
+ * Changes the display language for an user.
+ *
+ * @returns {void}
+ */
+
+function user_change_language()
+{
+  // Log the user out
+  document.getElementById('account_language').submit();
+}
+
+
+
+
+/**
+ * Changes the display mode for an user.
+ *
+ * @returns {void}
+ */
+
+function user_change_mode()
+{
+  // Log the user out
+  document.getElementById('account_mode').submit();
 }

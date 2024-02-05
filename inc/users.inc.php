@@ -48,7 +48,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 secure_session_start();
 
 // If the user has an ID cookie set, attempt to identify them
-if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
+if(isset($_COOKIE['nobleme_memory']))
 {
   // Sanitize the cookie's value
   $login_cookie = sanitize($_COOKIE['nobleme_memory'], 'string');
@@ -215,7 +215,7 @@ if(!isset($_SESSION['lang']))
 }
 
 // If the user clicks on the language flag, change the language accordingly
-if(isset($_GET['changelang']))
+if(isset($_POST['account_change_language']))
 {
   // Get the language that the user is currently not using
   $changelang = ($_SESSION['lang'] === 'EN') ? 'FR' : 'EN';
@@ -231,57 +231,6 @@ if(isset($_GET['changelang']))
                 'path'      => '/'        ,
                 'samesite'  => 'None'     ,
                 'secure'    => true       ]);
-}
-
-// If the URL contains a request to change to a specific language, then fullfill that request
-if(isset($_GET['english']) || isset($_GET['anglais']))
-{
-  // Change the cookie and session language to english on request
-  $_SESSION['lang'] = "EN";
-  if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_language", "EN", 2147483647, "/");
-  else
-    setcookie(  "nobleme_language"        ,
-                "EN"                      ,
-              [ 'expires'   => 2147483647 ,
-                'path'      => '/'        ,
-                'samesite'  => 'None'     ,
-                'secure'    => true       ]);
-}
-
-// In case more than one language change request is being done, then english will be the final language
-else if(isset($_GET['francais']) || isset($_GET['french']))
-{
-  // Change the cookie and session language to french on request
-  $_SESSION['lang'] = "FR";
-  if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_language", "FR", 2147483647, "/");
-  else
-    setcookie(  "nobleme_language"        ,
-                "FR"                      ,
-              [ 'expires'   => 2147483647 ,
-                'path'      => '/'        ,
-                'samesite'  => 'None'     ,
-                'secure'    => true       ]);
-}
-
-// If a language change just happened, clean up the URL and reload the page
-if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
-{
-  // Get rid of all the language related query parameters
-  unset($_GET['english']);
-  unset($_GET['anglais']);
-  unset($_GET['francais']);
-  unset($_GET['french']);
-  unset($_GET['changelang']);
-
-  // Re-build the URL, with all its other query parameters intact
-  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_rebuild  = urldecode(http_build_query($_GET));
-  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
-
-  // Reload the page by giving it the cleaned up URL (there better not be an infinite loop case I didn't test here)
-  exit(header("Location: ".$url_rebuild));
 }
 
 // Use the $lang variable to store the language for the duration of the session (the header and other pages need it)
@@ -318,50 +267,22 @@ if(!isset($_SESSION['mode']))
 }
 
 // If the URL contains a request to change to a specific display mode, then fullfill that request
-if(isset($_GET['light_mode']))
+if(isset($_POST['account_change_mode']))
 {
-  $_SESSION['mode'] = "light";
+  // Get the language that the user is currently not using
+  $changemode = ($_SESSION['mode'] === 'dark') ? 'light' : 'dark';
+
+  // Change the cookie and session mode to the new one
+  $_SESSION['mode'] = $changemode;
   if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_mode", "light", 2147483647, "/");
+    setcookie("nobleme_mode", $changemode, 2147483647, "/");
   else
     setcookie(  "nobleme_mode"            ,
-                "light"                   ,
+                $changemode               ,
               [ 'expires'   => 2147483647 ,
                 'path'      => '/'        ,
                 'samesite'  => 'None'     ,
                 'secure'    => true       ]);
-}
-
-// In case more than one mode change request is being done, then dark will be the final mode
-else if(isset($_GET['dark_mode']))
-{
-  // Change the cookie and session language to french on request
-  $_SESSION['mode'] = "dark";
-  if($GLOBALS['dev_http_only'])
-    setcookie("nobleme_mode", "dark", 2147483647, "/");
-  else
-    setcookie(  "nobleme_mode"            ,
-                "dark"                    ,
-              [ 'expires'   => 2147483647 ,
-                'path'      => '/'        ,
-                'samesite'  => 'None'     ,
-                'secure'    => true       ]);
-}
-
-// If a mode change just happened, clean up the URL and reload the page
-if(isset($_GET['light_mode']) || isset($_GET['dark_mode']))
-{
-  // Get rid of all the mode related query parameters
-  unset($_GET['light_mode']);
-  unset($_GET['dark_mode']);
-
-  // Re-build the URL, with all its other query parameters intact
-  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_rebuild  = urldecode(http_build_query($_GET));
-  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
-
-  // Reload the page by giving it the cleaned up URL (there better not be an infinite loop case I didn't test here)
-  exit(header("Location: ".$url_rebuild));
 }
 
 // Use the $mode variable to store the display mode for the duration of the session (header and other pages need it)
@@ -512,17 +433,11 @@ function user_log_out() : void
   // Destroy the session itself
   session_destroy();
 
-  // Determine the path to the current page without the logout parameter
-  unset($_GET['logout']);
-  $url_self   = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_logout = urldecode(http_build_query($_GET));
-  $url_logout = ($url_logout) ? $url_self.'?'.$url_logout : $url_self;
-
   // Reset the user id in the session
   $_SESSION['user_id'] = 0;
 
   // Reload the page
-  exit(header("location: ".$url_logout));
+  exit(header("location: ".$_SERVER['REQUEST_URI']));
 }
 
 
