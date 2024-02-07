@@ -41,6 +41,21 @@ $onload = "popin_close('dev_scheduler_popin')";
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Manually run the scheduler on demand
+
+if(isset($_POST['dev_scheduler_run']))
+{
+  // Set the correct root path
+  $scheduler_set_root_path = './../../';
+
+  // Manually run the scheduler
+  include_once './../../scripts/scheduler.php';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Edit an entry
 
 if(isset($_POST['dev_scheduler_edit']))
@@ -98,7 +113,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_60">
 
   <h1 class="align_center bigpadding_bot">
-    <?=__('submenu_admin_scheduler')?>
+    <form method="POST" id="dev_scheduler_run">
+      <?=__('submenu_admin_scheduler')?>
+      <input type="hidden" name="dev_scheduler_run" value="dev_scheduler_run">
+      <?=__icon('settings_gear', alt: 'S', title: __('dev_scheduler_manual_run'), title_case: 'initials', onclick: "if(confirm('".__('dev_scheduler_manual_confirm')."')){ document.getElementById('dev_scheduler_run').submit(); }")?>
+    </form>
   </h1>
 
   <form method="post">

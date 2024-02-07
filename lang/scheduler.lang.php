@@ -12,6 +12,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Header
+___('dev_scheduler_manual_run',     'EN', "Run the scheduler now");
+___('dev_scheduler_manual_run',     'FR', "Exécuter les tâches planifiées maintenant");
+___('dev_scheduler_manual_confirm', 'EN', "Confirm manual execution of the task scheduler");
+___('dev_scheduler_manual_confirm', 'FR', "Confirmer l\'exécution manuelle du planificateur de taches");
+
 // Task list
 ___('dev_scheduler_task_execution',         'EN', "Execution");
 ___('dev_scheduler_task_execution',         'FR', "Exécution");

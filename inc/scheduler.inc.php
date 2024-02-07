@@ -38,6 +38,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  *
  * @return  void
  */
+
 function schedule_task( string  $action_type                ,
                         int     $action_id                  ,
                         int     $action_planned_at          ,

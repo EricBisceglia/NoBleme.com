@@ -61,7 +61,8 @@ ini_set('xdebug.var_display_max_data', '-1');
 $uri_base_slashes = 2 + $GLOBALS['extra_folders'];
 
 // Check how far removed from the project root the current path is
-$uri_length = count(explode( '/', $_SERVER['REQUEST_URI']));
+$request_uri  = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : $root_path;
+$uri_length   = count(explode( '/', $request_uri));
 
 // If we are at the project root, then there is no $path
 if($uri_length <= $uri_base_slashes)
