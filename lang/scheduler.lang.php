@@ -31,6 +31,11 @@ ___('dev_scheduler_task_execution_past',    'EN', "Finished tasks");
 ___('dev_scheduler_task_execution_past',    'FR', "Tâches finies");
 
 
+// Maintenance tasks
+___('dev_scheduler_maintenance_task', 'EN', "The scheduler ran {{1}}");
+___('dev_scheduler_maintenance_task', 'FR', "Le planificateur s'est exécuté {{1}}");
+
+
 // Edit scheduler entries
 ___('dev_scheduler_edit_error_postdata',  'EN', "Error: No scheduled task id was provided.");
 ___('dev_scheduler_edit_error_postdata',  'FR', "Erreur : Aucun numéro de tâche planifiée n'a été envoyé.");

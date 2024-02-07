@@ -204,22 +204,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <?php for($i = 0; $i < $scheduler_tasks['rows'] ; $i++) { ?>
 
-            <?php if($i && $scheduler_tasks['sort'] === 'date' && $scheduler_tasks[$i]['type'] !== $scheduler_tasks[$i-1]['type']) { ?>
-
             <tr>
-              <td colspan="6" class="dark">
-                &nbsp;
-              </td>
-            </tr>
-            <tr class="hidden">
-              <td colspan="6" class="dark">
-                &nbsp;
-              </td>
-            </tr>
 
-            <?php } ?>
+              <?php if($scheduler_tasks[$i]['task_type'] == 'maintenance') { ?>
 
-            <tr>
+              <td colspan="6" class="dark text_light italics">
+                <?=__('dev_scheduler_maintenance_task', preset_values: array($scheduler_tasks[$i]['date_lower']))?>
+              </td>
+
+              <?php } else { ?>
 
               <td class="nowrap">
                 <?=$scheduler_tasks[$i]['task_type']?>
@@ -276,6 +269,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
                 <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_log('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_log')."');")?>
                 <?php } ?>
               </td>
+
+              <?php } ?>
 
             </tr>
 

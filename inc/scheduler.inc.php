@@ -8,142 +8,17 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
-//               The goal of this page is to simulate a crontab without having to actually set one up                //
-//  I just like the idea of having all the website logic in the source code and requiring no extra install process   //
+//         Tasks are stored in the `system_scheduler` table and created through the schedule_task() function         //
+//                 The execution of tasks is triggered by a cronjob, see README for how to set it up                 //
+//                          The scheduler can also be ran manually on /pages/dev/scheduler                           //
 //                                                                                                                   //
-//        The tasks are stored in the `system_scheduler` table and added through the schedule_task() function        //
-//  Tasks are triggered by guests or users visiting the website, so if you don't have traffic tasks will never run   //
-//                                                                                                                   //
-//                          Tasks are single use: one they finish running, they get deleted                          //
-//         Recurring tasks (cron style) can be set up by creating a new task whenever a specific task is ran         //
+//                     Scheduled tasks are single use: one they finish running, they get deleted                     //
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*                                                                                                                   */
-/*  schedule_task             Schedules a task to be ran at a later date.                                            */
-/*  schedule_task_update      Update an existing scheduled task.                                                     */
-/*  schedule_task_delete      Delete an existing scheduled task.                                                     */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
+// Process the tasks ready to be ran
 
-/**
- * Schedules a task to be ran at a later date.
- *
- * All this function does is creating an entry in the `system_scheduler` table.
- *
- * @param   string  $action_type                      A string identifying the task type, up to 40 characters long.
- * @param   int     $action_id                        The id of the element which will be affected by the task.
- * @param   int     $action_planned_at                A timestamp of the time at which the task must be run.
- * @param   string  $action_description   (OPTIONAL)  A description of the task.
- * @param   bool    $sanitize_data        (OPTIONAL)  If set, the data will be sanitized before insertion.
- *
- * @return  void
- */
-
-function schedule_task( string  $action_type                ,
-                        int     $action_id                  ,
-                        int     $action_planned_at          ,
-                        string  $action_description = ''    ,
-                        bool    $sanitize_data      = false ) : void
-{
-  // If sanitization is required, then do it
-  if($sanitize_data)
-  {
-    $action_type        = sanitize($action_type, 'string');
-    $action_id          = sanitize($action_id, 'int', 0);
-    $action_planned_at  = sanitize($action_planned_at, 'int', time());
-    $action_description = sanitize($action_description, 'string');
-  }
-
-  // If the task already exists, delete it
-  query(" DELETE FROM system_scheduler
-          WHERE       system_scheduler.task_id    =     '$action_id'
-          AND         system_scheduler.task_type  LIKE  '$action_type' ");
-
-  // Create the new task in the scheduler
-  query(" INSERT INTO system_scheduler
-          SET         system_scheduler.task_id          = '$action_id'          ,
-                      system_scheduler.task_type        = '$action_type'        ,
-                      system_scheduler.task_description = '$action_description' ,
-                      system_scheduler.planned_at       = '$action_planned_at'  ");
-}
-
-
-
-
-/**
- * Update an existing scheduled task.
- *
- * @param   string  $action_type                      A string identifying the task type, up to 40 characters long.
- * @param   int     $action_id                        The id of the element which will be affected by the task.
- * @param   int     $action_planned_at    (OPTIONAL)  If set, the new time at which the action will be run.
- * @param   string  $action_description   (OPTIONAL)  If set, the new task description.
- * @param   bool    $sanitize_data        (OPTIONAL)  If set, data will be sanitized before insertion.
- *
- * @return  void
- */
-function schedule_task_update(  string  $action_type                ,
-                                int     $action_id                  ,
-                                int     $action_planned_at  = 0     ,
-                                string  $action_description = ''    ,
-                                bool    $sanitize_data      = false ) : void
-{
-  // If sanitization is required, then do it
-  if($sanitize_data)
-  {
-    $action_type        = sanitize($action_type, 'string');
-    $action_id          = sanitize($action_id, 'int', 0);
-    $action_planned_at  = sanitize($action_planned_at, 'int', time());
-    $action_description = sanitize($action_description, 'string');
-  }
-
-  // Prepare the required updates
-  $query = "";
-  if($action_description)
-    $query .= " system_scheduler.task_description = '$action_description' ";
-  if($action_description && $action_planned_at)
-    $query .= " , ";
-  if($action_planned_at)
-    $query .= " system_scheduler.planned_at = '$action_planned_at' ";
-
-  // Update the existing task
-  query(" UPDATE  system_scheduler
-          SET     $query
-          WHERE   system_scheduler.task_id    =     '$action_id'
-          AND     system_scheduler.task_type  LIKE  '$action_type' ");
-}
-
-
-
-
-/**
- * Delete an existing scheduled task.
- *
- * @param   string  $action_type  A string identifying the task type, up to 40 characters long.
- * @param   int     $action_id    The id of the element which would have been affected if not deleted.
- *
- * @return  void
- */
-function schedule_task_delete(  string  $action_type  ,
-                                int     $action_id    ) : void
-{
-  // Sanitize the data
-  $action_type  = sanitize($action_type, 'string');
-  $action_id    = sanitize($action_id, 'int', 0);
-
-  // Delete the task
-  query(" DELETE FROM system_scheduler
-          WHERE       system_scheduler.task_id    =     '$action_id'
-          AND         system_scheduler.task_type  LIKE  '$action_type' ");
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Processing of all the tasks ready to be ran
-
-// Go check if any scheduled task is waiting to be ran
-$timestamp  = time();
+// Check if any scheduled task is awaiting execution
+$timestamp  = sanitize(time(), 'int', 0);
 $qscheduler = query(" SELECT  system_scheduler.id               AS 't_id'   ,
                               system_scheduler.task_id          AS 't_task' ,
                               system_scheduler.task_type        AS 't_type' ,
@@ -152,7 +27,7 @@ $qscheduler = query(" SELECT  system_scheduler.id               AS 't_id'   ,
                       WHERE   system_scheduler.planned_at       <= '$timestamp' " ,
                       description: "Check for scheduled tasks awaiting execution" );
 
-// Parse the list of potential tasks awaiting execution
+// Parse the list of tasks awaiting execution
 while($dscheduler = query_row($qscheduler))
 {
   // Prepare data related to the task about to be ran
@@ -166,9 +41,9 @@ while($dscheduler = query_row($qscheduler))
 
 
 
-  //***************************************************************************************************************//
-  //                                                     USERS                                                     //
-  //***************************************************************************************************************//
+  //*****************************************************************************************************************//
+  //                                                      USERS                                                      //
+  //*****************************************************************************************************************//
   // End a ban after it has expired
 
   if($scheduler_type === 'users_unban')
@@ -209,7 +84,7 @@ while($dscheduler = query_row($qscheduler))
 
 
 
-  //***************************************************************************************************************//
+  //*****************************************************************************************************************//
   // End an IP ban after it has expired
 
   else if($scheduler_type === 'users_unban_ip')
@@ -244,9 +119,9 @@ while($dscheduler = query_row($qscheduler))
 
 
 
-  //***************************************************************************************************************//
-  //                                                    MEETUPS                                                    //
-  //***************************************************************************************************************//
+  //*****************************************************************************************************************//
+  //                                                     MEETUPS                                                     //
+  //*****************************************************************************************************************//
   // Recalculate a meetup's stats once it's over
 
   else if($scheduler_type === 'meetups_end')
@@ -272,10 +147,10 @@ while($dscheduler = query_row($qscheduler))
 
 
 
-  //***************************************************************************************************************//
-  //                                      THE SCHEDULED TASK HAS BEEN TREATED                                      //
-  //***************************************************************************************************************//
-  // Archive the task
+  //*****************************************************************************************************************//
+  //                                                  EXECUTION LOG                                                  //
+  //*****************************************************************************************************************//
+  // Archive the task once it has been ran
 
   // Delete the entry from the scheduler
   query(" DELETE FROM   system_scheduler
@@ -293,10 +168,33 @@ while($dscheduler = query_row($qscheduler))
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//*******************************************************************************************************************//
+//                                                    MAINTENANCE                                                    //
+//*******************************************************************************************************************//
 // Confirm that the scheduler ran properly
 
 // Insert a maintenance scheduler log confirming proper execution
+$timestamp = sanitize(time(), 'int', 0);
 query(" INSERT INTO logs_scheduler
         SET         logs_scheduler.happened_at      = '$timestamp'  ,
                     logs_scheduler.task_type        = 'maintenance' ");
+
+
+// Find older scheduler maintenance logs
+$qmaintenance = query(" SELECT      logs_scheduler.id AS 'ls_id'
+                        FROM        logs_scheduler
+                        WHERE       logs_scheduler.task_type LIKE 'maintenance'
+                        ORDER BY    logs_scheduler.happened_at DESC ");
+
+// Delete unnecessary old maintenance logs
+for($i = 0; $dmaintenance = query_row($qmaintenance); $i++)
+{
+  // Keep the 5 most recent logs
+  if($i >= 5)
+  {
+    // Delete older logs
+    $dlog_id = sanitize($dmaintenance['ls_id'], 'int', 0);
+    query(" DELETE FROM logs_scheduler
+            WHERE       logs_scheduler.id = '$dlog_id' ");
+  }
+}

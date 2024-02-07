@@ -156,6 +156,7 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
     $data[$i]['date']         = ($row['s_exec'] === 'past')
                               ? sanitize_output(time_since($row['s_date']))
                               : sanitize_output(time_until($row['s_date']));
+    $data[$i]['date_lower']   = string_change_case($data[$i]['date'], 'lowercase');
     $data[$i]['fdate']        = date_to_text($row['s_date'], 0, 1, $lang);
     $data[$i]['task_id']      = $row['s_tid'];
     $data[$i]['task_type']    = sanitize_output($row['s_type']);
