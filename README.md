@@ -53,6 +53,34 @@ $GLOBALS['full_debug_mode']   = 0;
 
  
 
+Scheduled tasks (optional)
+===
+
+Some of the website's features require running scheduled tasks. If you want to use scheduled tasks, follow these steps:
+
+1. Edit the first line of code in `/scripts/scheduler.php`: change `$root_path` to the website's root path on your web server.
+
+2. Add a command regularly running the scheduler to your crontab. Running it every minute is suggested but any other interval will work just as well. On my server, the cron line looks like this: `* * * * * myusername php /var/www/html/scripts/scheduler.php`.
+
+3. Check whether the scheduler is properly running through the user interface, each execution will leave a log on `/pages/dev/scheduler`.
+
+ 
+
+Integrations (optional)
+===
+
+If you wish to make the third party integrations work, you will need to fiddle around a bit. These are the steps to follow:
+
+1. Rename `/conf/integrations.conf.php.DEFAULT` to `/conf/integrations.conf.php` and edit te file to match your integrations.
+
+2. Test the Discord integration through the user interface on `/pages/dev/discord`.
+
+3. Edit the first line of code in `/scripts/irc_bot.php`: change `$root_path` to the website's root path on your web server.
+
+4. Boot the IRC bot through the user interface on `/pages/dev/irc_bot`.
+
+ 
+
 Editor setup
 ===
 
