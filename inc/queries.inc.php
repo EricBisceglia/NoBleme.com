@@ -105,7 +105,7 @@ function sql_check_query_id() : mixed
 
   // Proceed only if the field exists
   $field_exists = 0;
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     if($query_ok)
       $field_exists = ($ddescribe['Field'] !== "latest_query_id") ? 1 : $field_exists;
@@ -154,7 +154,7 @@ function sql_update_query_id( int $id ) : void
 
   // Proceed only if the table exists
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
   {
     $query_ok     = ($dtablelist[0] === 'system_variables')  ? 1 : $query_ok;
     $query_ok_old = ($dtablelist[0] === 'vars_globales')     ? 1 : $query_ok_old;
@@ -170,7 +170,7 @@ function sql_update_query_id( int $id ) : void
 
   // Proceed only if the field exists
   $field_exists = 0;
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     if($query_ok)
       $field_exists = ($ddescribe['Field'] !== "latest_query_id") ? 1 : $field_exists;
@@ -232,7 +232,7 @@ function sql_rename_table(  string  $table_name ,
   $query_old_ok = 0;
   $query_new_ok = 1;
   $qtablelist   = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
   {
     $query_old_ok = ($dtablelist[0] === $table_name) ? 1 : $query_old_ok;
     $query_new_ok = ($dtablelist[0] === $new_name)   ? 0 : $query_new_ok;
@@ -260,7 +260,7 @@ function sql_empty_table( string $table_name ) : void
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -308,7 +308,7 @@ function sql_create_field(  string  $table_name       ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -318,7 +318,7 @@ function sql_create_field(  string  $table_name       ,
 
   // Proceed only if the preceeding field exists
   $query_ok = 0;
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
     $query_ok = ($ddescribe['Field'] === $after_field_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -328,7 +328,7 @@ function sql_create_field(  string  $table_name       ,
 
   // Proceed only if the field doesn't already exist
   $query_ko = 0;
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
     $query_ko = ($ddescribe['Field'] === $field_name) ? 1 : $query_ko;
   if($query_ko)
     return;
@@ -359,7 +359,7 @@ function sql_rename_field(  string  $table_name     ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -368,7 +368,7 @@ function sql_rename_field(  string  $table_name     ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // Continue only if the new field name doesn't exist
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     if ($ddescribe['Field'] === $new_field_name)
       return;
@@ -378,7 +378,7 @@ function sql_rename_field(  string  $table_name     ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // If the field exists in the table, rename it
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     if($ddescribe['Field'] === $old_field_name)
       query(" ALTER TABLE ".$table_name." CHANGE ".$old_field_name." ".$new_field_name." ".$field_type);
@@ -405,7 +405,7 @@ function sql_change_field_type( string  $table_name ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -414,7 +414,7 @@ function sql_change_field_type( string  $table_name ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // If the field exists in the table, rename it
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     if($ddescribe['Field'] === $field_name)
       query(" ALTER TABLE ".$table_name." MODIFY ".$field_name." ".$field_type);
@@ -443,7 +443,7 @@ function sql_move_field(  string  $table_name       ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -454,7 +454,7 @@ function sql_move_field(  string  $table_name       ,
   // Continue only if both of the field names actually exist
   $field_ok       = 0;
   $field_after_ok = 0;
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     $field_ok       = ($ddescribe['Field'] === $field_name)        ? 1 : $field_ok;
     $field_after_ok = ($ddescribe['Field'] === $after_field_name)  ? 1 : $field_after_ok;
@@ -484,7 +484,7 @@ function sql_delete_field(  string  $table_name ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -493,7 +493,7 @@ function sql_delete_field(  string  $table_name ,
   $qdescribe = query(" DESCRIBE ".$table_name);
 
   // If the field exists in the table, delete it
-  while($ddescribe = query_row($qdescribe))
+  while($ddescribe = query_row($qdescribe, 'both'))
   {
     if($ddescribe['Field'] === $field_name)
       query(" ALTER TABLE ".$table_name." DROP ".$field_name);
@@ -522,7 +522,7 @@ function sql_create_index(  string  $table_name           ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -558,7 +558,7 @@ function sql_delete_index(  string  $table_name ,
   // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
-  while($dtablelist = query_row($qtablelist))
+  while($dtablelist = query_row($qtablelist, 'both'))
     $query_ok = ($dtablelist[0] === $table_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
@@ -655,4 +655,17 @@ if($last_query < 47)
   sql_create_field('system_variables', 'unread_admin_mail_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'unread_mod_mail_count');
 
   sql_update_query_id(47);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Scheduler: Storing the last execution in system variables is not necessary anymore
+
+if($last_query < 48)
+{
+  sql_delete_field('system_variables', 'last_scheduler_execution');
+
+  sql_update_query_id(48);
 }

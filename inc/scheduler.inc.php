@@ -142,178 +142,161 @@ function schedule_task_delete(  string  $action_type  ,
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Processing of all the tasks ready to be ran
 
-// This shouldn't run more than once every 15 seconds, to avoid conflict
-$timestamp = time();
+// Go check if any scheduled task is waiting to be ran
+$timestamp  = time();
+$qscheduler = query(" SELECT  system_scheduler.id               AS 't_id'   ,
+                              system_scheduler.task_id          AS 't_task' ,
+                              system_scheduler.task_type        AS 't_type' ,
+                              system_scheduler.task_description AS 't_desc'
+                      FROM    system_scheduler
+                      WHERE   system_scheduler.planned_at       <= '$timestamp' " ,
+                      description: "Check for scheduled tasks awaiting execution" );
 
-// Start a transaction to avoid deadlocks
-query(" START TRANSACTION ", description: "Initialize the scheduler's transaction");
-
-// Fetch the timestamp of the most recent scheduler execution
-$dcheck_scheduler = query(" SELECT  system_variables.last_scheduler_execution AS 'scheduler_last'
-                            FROM    system_variables " ,
-                            fetch_row: true,
-                            description: "Check whether the scheduler needs to run");
-
-// If the timestamp is less than 15 seconds old, end the transaction
-if($dcheck_scheduler['scheduler_last'] >= ($timestamp - 15))
-  query(" COMMIT ", description: "End the scheduler's transaction");
-
-// Otherwise, run the scheduler
-if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
+// Parse the list of potential tasks awaiting execution
+while($dscheduler = query_row($qscheduler))
 {
-  // Update the timestamp of the latest scheduler execution
-  query(" UPDATE  system_variables
-          SET     system_variables.last_scheduler_execution = '$timestamp' " ,
-          description: "Update the scheduler's last execution time");
+  // Prepare data related to the task about to be ran
+  $scheduler_id         = sanitize($dscheduler['t_id'], 'int', 0);
+  $scheduler_action_id  = sanitize($dscheduler['t_task'], 'int', 0);
+  $scheduler_type       = sanitize($dscheduler['t_type'], 'string');
+  $scheduler_desc       = sanitize($dscheduler['t_desc'], 'string');
+  $scheduler_desc_raw   = $dscheduler['t_desc'];
+  $scheduler_log        = "";
 
-  // End the transaction
-  query(" COMMIT ", description: "End the scheduler's transaction");
 
-  // Go check if any scheduled task is waiting to be ran
-  $timestamp  = time();
-  $qscheduler = query(" SELECT  system_scheduler.id               AS 't_id'   ,
-                                system_scheduler.task_id          AS 't_task' ,
-                                system_scheduler.task_type        AS 't_type' ,
-                                system_scheduler.task_description AS 't_desc'
-                        FROM    system_scheduler
-                        WHERE   system_scheduler.planned_at       <= '$timestamp' " ,
-                        description: "Check for scheduled tasks awaiting execution" );
 
-  // Parse the list of potential tasks awaiting execution
-  while($dscheduler = query_row($qscheduler))
+
+  //***************************************************************************************************************//
+  //                                                     USERS                                                     //
+  //***************************************************************************************************************//
+  // End a ban after it has expired
+
+  if($scheduler_type === 'users_unban')
   {
-    // Prepare data related to the task about to be ran
-    $scheduler_id         = sanitize($dscheduler['t_id'], 'int', 0);
-    $scheduler_action_id  = sanitize($dscheduler['t_task'], 'int', 0);
-    $scheduler_type       = sanitize($dscheduler['t_type'], 'string');
-    $scheduler_desc       = sanitize($dscheduler['t_desc'], 'string');
-    $scheduler_desc_raw   = $dscheduler['t_desc'];
-    $scheduler_log        = "";
+    // Fetch data on the user
+    $duser = query("  SELECT  users.username        AS 'u_nick'   ,
+                              users.is_banned_until AS 'u_banned'
+                      FROM    users
+                      WHERE   users.id = '$scheduler_action_id' ",
+                      fetch_row: true);
 
-
-
-
-    //***************************************************************************************************************//
-    //                                                     USERS                                                     //
-    //***************************************************************************************************************//
-    // End a ban after it has expired
-
-    if($scheduler_type === 'users_unban')
+    // Only proceed if the user actually exists and is banned
+    if($duser['u_banned'])
     {
-      // Fetch data on the user
-      $duser = query("  SELECT  users.username        AS 'u_nick'   ,
-                                users.is_banned_until AS 'u_banned'
-                        FROM    users
-                        WHERE   users.id = '$scheduler_action_id' ",
-                        fetch_row: true);
+      // Unban the user
+      user_unban($scheduler_action_id);
 
-      // Only proceed if the user actually exists and is banned
-      if($duser['u_banned'])
-      {
-        // Unban the user
-        user_unban($scheduler_action_id);
+      // Activity logs
+      $banned_username = sanitize($duser['u_nick'], 'string');
+      log_activity( 'users_unbanned'                        ,
+                    fk_users:         $scheduler_action_id  ,
+                    username:         $banned_username      );
 
-        // Activity logs
-        $banned_username = sanitize($duser['u_nick'], 'string');
-        log_activity( 'users_unbanned'                        ,
-                      fk_users:         $scheduler_action_id  ,
-                      username:         $banned_username      );
+      // Ban logs
+      query(" UPDATE    logs_bans
+              SET       logs_bans.fk_unbanned_by_user = 0 ,
+                        logs_bans.unbanned_at         = '$timestamp'
+              WHERE     logs_bans.fk_banned_user      = '$scheduler_action_id'
+              AND       logs_bans.unbanned_at         = 0
+              ORDER BY  logs_bans.banned_until        DESC
+              LIMIT     1 ");
 
-        // Ban logs
-        query(" UPDATE    logs_bans
-                SET       logs_bans.fk_unbanned_by_user = 0 ,
-                          logs_bans.unbanned_at         = '$timestamp'
-                WHERE     logs_bans.fk_banned_user      = '$scheduler_action_id'
-                AND       logs_bans.unbanned_at         = 0
-                ORDER BY  logs_bans.banned_until        DESC
-                LIMIT     1 ");
-
-        // Scheduler log
-        $scheduler_log = "The user has been unbanned";
-      }
+      // Scheduler log
+      $scheduler_log = "The user has been unbanned";
     }
-
-
-
-
-    //***************************************************************************************************************//
-    // End an IP ban after it has expired
-
-    else if($scheduler_type === 'users_unban_ip')
-    {
-      // Only proceed if the IP ban actually exists
-      if(database_row_exists('system_ip_bans', $scheduler_action_id))
-      {
-        // Remove the IP ban
-        query(" DELETE FROM system_ip_bans
-                WHERE       system_ip_bans.id = '$scheduler_action_id' ");
-
-        // Activity logs
-        log_activity( 'users_unbanned_ip'                       ,
-                      is_moderators_only: 1                     ,
-                      activity_id:        $scheduler_action_id  ,
-                      username:           $scheduler_desc_raw   );
-
-        // Ban logs
-        query(" UPDATE    logs_bans
-                SET       logs_bans.fk_unbanned_by_user =     0 ,
-                          logs_bans.unbanned_at         =     '$timestamp'
-                WHERE     logs_bans.banned_ip_address   LIKE  '$scheduler_desc'
-                AND       logs_bans.unbanned_at         =     0
-                ORDER BY  logs_bans.banned_until        DESC
-                LIMIT     1 ");
-
-        // Scheduler log
-        $scheduler_log = "The IP address has been unbanned";
-      }
-    }
-
-
-
-
-    //***************************************************************************************************************//
-    //                                                    MEETUPS                                                    //
-    //***************************************************************************************************************//
-    // Recalculate a meetup's stats once it's over
-
-    else if($scheduler_type === 'meetups_end')
-    {
-      // Only proceed if the meetup actually exists
-      if(database_row_exists('meetups', $scheduler_action_id))
-      {
-        // Include meetup related actions
-        include_once $path.'./actions/meetups.act.php';
-
-        // Fetch all users that took part in the meetup
-        $qmeetups = query(" SELECT  meetups_people.fk_users AS 'mp_uid'
-                            FROM    meetups_people
-                            WHERE   meetups_people.fk_meetups = '$scheduler_action_id'
-                            AND     meetups_people.fk_users   > 0 ");
-
-        // Update the meetup stats of each user
-        while($dmeetup = query_row($qmeetups))
-          meetups_stats_recalculate_user($dmeetup['mp_uid']);
-      }
-    }
-
-
-
-
-    //***************************************************************************************************************//
-    //                                      THE SCHEDULED TASK HAS BEEN TREATED                                      //
-    //***************************************************************************************************************//
-    // Archive the task
-
-    // Delete the entry from the scheduler
-    query(" DELETE FROM   system_scheduler
-            WHERE         system_scheduler.id = '$scheduler_id' ");
-
-    // Create a scheduler execution log
-    query(" INSERT INTO logs_scheduler
-            SET         logs_scheduler.happened_at      = '$timestamp'            ,
-                        logs_scheduler.task_id          = '$scheduler_action_id'  ,
-                        logs_scheduler.task_type        = '$scheduler_type'       ,
-                        logs_scheduler.task_description = '$scheduler_desc'       ,
-                        logs_scheduler.execution_report = '$scheduler_log'        ");
   }
+
+
+
+
+  //***************************************************************************************************************//
+  // End an IP ban after it has expired
+
+  else if($scheduler_type === 'users_unban_ip')
+  {
+    // Only proceed if the IP ban actually exists
+    if(database_row_exists('system_ip_bans', $scheduler_action_id))
+    {
+      // Remove the IP ban
+      query(" DELETE FROM system_ip_bans
+              WHERE       system_ip_bans.id = '$scheduler_action_id' ");
+
+      // Activity logs
+      log_activity( 'users_unbanned_ip'                       ,
+                    is_moderators_only: 1                     ,
+                    activity_id:        $scheduler_action_id  ,
+                    username:           $scheduler_desc_raw   );
+
+      // Ban logs
+      query(" UPDATE    logs_bans
+              SET       logs_bans.fk_unbanned_by_user =     0 ,
+                        logs_bans.unbanned_at         =     '$timestamp'
+              WHERE     logs_bans.banned_ip_address   LIKE  '$scheduler_desc'
+              AND       logs_bans.unbanned_at         =     0
+              ORDER BY  logs_bans.banned_until        DESC
+              LIMIT     1 ");
+
+      // Scheduler log
+      $scheduler_log = "The IP address has been unbanned";
+    }
+  }
+
+
+
+
+  //***************************************************************************************************************//
+  //                                                    MEETUPS                                                    //
+  //***************************************************************************************************************//
+  // Recalculate a meetup's stats once it's over
+
+  else if($scheduler_type === 'meetups_end')
+  {
+    // Only proceed if the meetup actually exists
+    if(database_row_exists('meetups', $scheduler_action_id))
+    {
+      // Include meetup related actions
+      include_once $path.'./actions/meetups.act.php';
+
+      // Fetch all users that took part in the meetup
+      $qmeetups = query(" SELECT  meetups_people.fk_users AS 'mp_uid'
+                          FROM    meetups_people
+                          WHERE   meetups_people.fk_meetups = '$scheduler_action_id'
+                          AND     meetups_people.fk_users   > 0 ");
+
+      // Update the meetup stats of each user
+      while($dmeetup = query_row($qmeetups))
+        meetups_stats_recalculate_user($dmeetup['mp_uid']);
+    }
+  }
+
+
+
+
+  //***************************************************************************************************************//
+  //                                      THE SCHEDULED TASK HAS BEEN TREATED                                      //
+  //***************************************************************************************************************//
+  // Archive the task
+
+  // Delete the entry from the scheduler
+  query(" DELETE FROM   system_scheduler
+          WHERE         system_scheduler.id = '$scheduler_id' ");
+
+  // Create a scheduler execution log
+  query(" INSERT INTO logs_scheduler
+          SET         logs_scheduler.happened_at      = '$timestamp'            ,
+                      logs_scheduler.task_id          = '$scheduler_action_id'  ,
+                      logs_scheduler.task_type        = '$scheduler_type'       ,
+                      logs_scheduler.task_description = '$scheduler_desc'       ,
+                      logs_scheduler.execution_report = '$scheduler_log'        ");
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Confirm that the scheduler ran properly
+
+// Insert a maintenance scheduler log confirming proper execution
+query(" INSERT INTO logs_scheduler
+        SET         logs_scheduler.happened_at      = '$timestamp'  ,
+                    logs_scheduler.task_type        = 'maintenance' ");

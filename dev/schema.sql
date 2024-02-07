@@ -409,7 +409,6 @@ DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
   `website_is_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `latest_query_id` smallint UNSIGNED NOT NULL DEFAULT '0',
-  `last_scheduler_execution` int UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int UNSIGNED NOT NULL DEFAULT '0',
   `unread_mod_mail_count` int UNSIGNED NOT NULL DEFAULT '0',
   `unread_admin_mail_count` int UNSIGNED NOT NULL DEFAULT '0',
