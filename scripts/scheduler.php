@@ -27,4 +27,5 @@ set_time_limit(600);
 // Include required files
 $path = $root_path;
 include_once $root_path.'inc/includes.inc.php';
+include_once $root_path."actions/scheduler.act.php";
 include_once $root_path."inc/scheduler.inc.php";
