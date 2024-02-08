@@ -662,10 +662,12 @@ if($last_query < 47)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Scheduler: Storing the last execution in system variables is not necessary anymore
+// Scheduler: Add a switch to turn off the scheduler on demand
 
 if($last_query < 48)
 {
   sql_delete_field('system_variables', 'last_scheduler_execution');
+  sql_create_field('system_variables', 'scheduler_is_disabled', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'current_version_number_fr');
 
   sql_update_query_id(48);
 }
