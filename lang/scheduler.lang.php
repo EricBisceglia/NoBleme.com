@@ -12,11 +12,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Header
-___('dev_scheduler_manual_run',     'EN', "Run the scheduler now");
-___('dev_scheduler_manual_run',     'FR', "Exécuter les tâches planifiées maintenant");
-___('dev_scheduler_manual_confirm', 'EN', "Confirm manual execution of the task scheduler");
-___('dev_scheduler_manual_confirm', 'FR', "Confirmer l\'exécution manuelle du planificateur de taches");
+// Header actions
+___('dev_scheduler_manual_run',       'EN', "Run the scheduler now");
+___('dev_scheduler_manual_run',       'FR', "Exécuter les tâches planifiées maintenant");
+___('dev_scheduler_manual_confirm',   'EN', "Confirm manual execution of the task scheduler");
+___('dev_scheduler_manual_confirm',   'FR', "Confirmer l\'exécution manuelle du planificateur de taches");
+___('dev_scheduler_turn_off',         'EN', "Turn off the scheduler");
+___('dev_scheduler_turn_off',         'FR', "Désactiver les tâches planifiées");
+___('dev_scheduler_turn_off_confirm', 'EN', "Confirm your desire to turn off the scheduler");
+___('dev_scheduler_turn_off_confirm', 'FR', "Confirmer votre envie de désactiver l\'exécution les tâches planifiées");
+___('dev_scheduler_turn_on',          'EN', "Turn the scheduler back on");
+___('dev_scheduler_turn_on',          'FR', "Réaactiver les tâches planifiées");
+___('dev_scheduler_turn_on_confirm',  'EN', "Confirm your desire to turn the scheduler back on");
+___('dev_scheduler_turn_on_confirm',  'FR', "Confirmer votre envie de résactiver l\'exécution les tâches planifiées");
 
 // Task list
 ___('dev_scheduler_task_execution',         'EN', "Execution");
@@ -34,6 +42,8 @@ ___('dev_scheduler_task_execution_past',    'FR', "Tâches finies");
 // Maintenance tasks
 ___('dev_scheduler_maintenance_task', 'EN', "The scheduler ran {{1}}");
 ___('dev_scheduler_maintenance_task', 'FR', "Le planificateur s'est exécuté {{1}}");
+___('dev_scheduler_maintenance_off',  'EN', "The scheduler ran {{1}}, but it is turned off");
+___('dev_scheduler_maintenance_off',  'FR', "Le planificateur s'est exécuté {{1}}, mais il est désactivé");
 
 
 // Edit scheduler entries
