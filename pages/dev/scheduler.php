@@ -41,6 +41,32 @@ $onload = "popin_close('dev_scheduler_popin')";
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Turn the scheduler off or back on if requested
+
+if(isset($_POST['dev_scheduler_action']) && $_POST['dev_scheduler_action'] === 'dev_scheduler_turn_off')
+  dev_scheduler_turn_off();
+if(isset($_POST['dev_scheduler_action']) && $_POST['dev_scheduler_action'] === 'dev_scheduler_turn_on')
+  dev_scheduler_turn_on();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Manually run the scheduler on demand
+
+if(isset($_POST['dev_scheduler_action']) && $_POST['dev_scheduler_action'] === 'dev_scheduler_run')
+{
+  // Set the correct root path
+  $scheduler_set_root_path = './../../';
+
+  // Manually run the scheduler
+  include_once './../../scripts/scheduler.php';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Edit an entry
 
 if(isset($_POST['dev_scheduler_edit']))
@@ -61,6 +87,14 @@ if(isset($_POST['scheduler_task_delete']))
 // Delete a scheduler log
 if(isset($_POST['scheduler_log_delete']))
   dev_scheduler_delete_log(form_fetch_element('scheduler_log_delete', 0));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Get the scheduler's status
+
+$scheduler_is_enabled = dev_scheduler_status();
 
 
 
@@ -98,7 +132,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_60">
 
   <h1 class="align_center bigpadding_bot">
-    <?=__('submenu_admin_scheduler')?>
+    <form method="POST" id="dev_scheduler">
+      <?=__('submenu_admin_scheduler')?>
+      <input type="hidden" id="dev_scheduler_action" name="dev_scheduler_action" value="">
+      <?php if($scheduler_is_enabled === true) { ?>
+      <?=__icon('x', alt: 'X', title: __('dev_scheduler_turn_off'), title_case: 'initials', onclick: " dev_scheduler_turn_off('".__('dev_scheduler_turn_off_confirm')."');")?>
+      <?php } else { ?>
+      <?=__icon('refresh', alt: 'R', title: __('dev_scheduler_turn_on'), title_case: 'initials', onclick: " dev_scheduler_turn_on('".__('dev_scheduler_turn_on_confirm')."');")?>
+      <?php } ?>
+      <?=__icon('settings_gear', alt: 'S', title: __('dev_scheduler_manual_run'), title_case: 'initials', onclick: " dev_scheduler_run('".__('dev_scheduler_manual_confirm')."');")?>
+    </form>
   </h1>
 
   <form method="post">
@@ -185,22 +228,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <?php for($i = 0; $i < $scheduler_tasks['rows'] ; $i++) { ?>
 
-            <?php if($i && $scheduler_tasks['sort'] === 'date' && $scheduler_tasks[$i]['type'] !== $scheduler_tasks[$i-1]['type']) { ?>
-
             <tr>
-              <td colspan="6" class="dark">
-                &nbsp;
-              </td>
-            </tr>
-            <tr class="hidden">
-              <td colspan="6" class="dark">
-                &nbsp;
-              </td>
-            </tr>
 
-            <?php } ?>
+              <?php if($scheduler_tasks[$i]['task_type'] == 'maintenance') { ?>
 
-            <tr>
+              <td colspan="6" class="dark text_green italics">
+                <?=__('dev_scheduler_maintenance_task', preset_values: array($scheduler_tasks[$i]['date_lower']))?>
+              </td>
+
+              <?php } else if($scheduler_tasks[$i]['task_type'] == 'maintenance_off') { ?>
+
+              <td colspan="6" class="dark text_red italics">
+                <?=__('dev_scheduler_maintenance_off', preset_values: array($scheduler_tasks[$i]['date_lower']))?>
+              </td>
+
+              <?php } else { ?>
 
               <td class="nowrap">
                 <?=$scheduler_tasks[$i]['task_type']?>
@@ -257,6 +299,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
                 <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_log('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_log')."');")?>
                 <?php } ?>
               </td>
+
+              <?php } ?>
 
             </tr>
 

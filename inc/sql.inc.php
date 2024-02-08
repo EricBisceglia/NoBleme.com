@@ -42,7 +42,6 @@ query(' SET NAMES utf8mb4 ', description: "Specify the charset for the session")
 if(!isset($GLOBALS['sql_skip_system_variables']))
   $system_variables = query(" SELECT  system_variables.website_is_closed          ,
                                       system_variables.latest_query_id            ,
-                                      system_variables.last_scheduler_execution   ,
                                       system_variables.last_pageview_check        ,
                                       system_variables.unread_mod_mail_count      ,
                                       system_variables.unread_admin_mail_count    ,

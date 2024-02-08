@@ -789,7 +789,8 @@ function user_is_banned( ?int $user_id = NULL ) : bool
 function user_is_ip_banned() : int
 {
   // Get the current user's IP and sanitize it
-  $user_ip = sanitize($_SERVER['REMOTE_ADDR'], 'string');
+  $remote_addr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+  $user_ip     = sanitize($remote_addr, 'string');
 
   // Check if it is banned
   $dbanned = query("  SELECT  system_ip_bans.id             AS 'b_id'     ,

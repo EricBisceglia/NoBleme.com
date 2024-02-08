@@ -409,12 +409,12 @@ DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
   `website_is_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `latest_query_id` smallint UNSIGNED NOT NULL DEFAULT '0',
-  `last_scheduler_execution` int UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int UNSIGNED NOT NULL DEFAULT '0',
   `unread_mod_mail_count` int UNSIGNED NOT NULL DEFAULT '0',
   `unread_admin_mail_count` int UNSIGNED NOT NULL DEFAULT '0',
   `current_version_number_en` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `current_version_number_fr` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `scheduler_is_disabled` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `registrations_are_closed` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `irc_bot_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `discord_is_silenced` tinyint UNSIGNED NOT NULL DEFAULT '0',

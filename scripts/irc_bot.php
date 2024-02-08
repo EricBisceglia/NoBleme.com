@@ -7,10 +7,10 @@
 $root_path = '/var/www/html/';                                                                                        #
 #######################################################################################################################
 
-// Assemble configuration file paths
+// Assemble configuration file path
 $irc_config_file = $root_path.'conf/integrations.conf.php';
 
-// Check if the configuration files exist
+// Check if the configuration file exists
 if(!file_exists($irc_config_file))
   exit('Exiting NoBleme IRC Bot: Configuration file integrations.conf.php is missing');
 

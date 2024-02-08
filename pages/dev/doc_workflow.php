@@ -634,6 +634,14 @@ sudo systemctl start crond.service
 sudo systemctl status crond.service
 sudo systemctl enable crond.service</pre>
 
+  <p class="smallpadding_bot">
+    Make the scheduler run every minute through a cronjob.
+  </p>
+
+  <pre>sudo nano /etc/crontab
+
+* * * * * root php /var/www/html/scripts/scheduler.php</pre>
+
   <h5 class="bigpadding_top">
     Automated MySQL backups
   </h5>

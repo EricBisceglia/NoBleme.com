@@ -22,6 +22,7 @@ $GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not a
                                                       /  if NoBleme is at http://example.com/example/, set this to 1
                                                       /  at http://example.com/domains/example/, set this to 2, etc. */
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PHP CLI configuration, you don't need to enable this if you don't want to use CLI scripts
 

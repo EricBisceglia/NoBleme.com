@@ -17,4 +17,3 @@ include_once "error.inc.php";              # Allows the management of errors
 include_once "users.inc.php";              # Functions related to user sessions, logging in, access rights, etc.
 include_once $path."lang/common.lang.php"; # Translations of strings required for the other included pages
 include_once "functions_common.inc.php";   # Common functions required by most pages
-include_once "scheduler.inc.php";          # Check if any planned tasks need to be ran

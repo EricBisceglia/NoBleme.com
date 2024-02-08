@@ -16,6 +16,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*  dev_scheduler_types_list        Returns a list of all scheduler task types.                                      */
 /*                                                                                                                   */
+/*  dev_scheduler_status            Checks whether the scheduler is enabled or disabled.                             */
+/*  dev_scheduler_turn_off          Disables the scheduler.                                                          */
+/*  dev_schedurer_turn_on           Enables the scheduler.                                                           */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -156,6 +160,7 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
     $data[$i]['date']         = ($row['s_exec'] === 'past')
                               ? sanitize_output(time_since($row['s_date']))
                               : sanitize_output(time_until($row['s_date']));
+    $data[$i]['date_lower']   = string_change_case($data[$i]['date'], 'lowercase');
     $data[$i]['fdate']        = date_to_text($row['s_date'], 0, 1, $lang);
     $data[$i]['task_id']      = $row['s_tid'];
     $data[$i]['task_type']    = sanitize_output($row['s_type']);
@@ -315,4 +320,71 @@ function dev_scheduler_types_list() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+
+/**
+ * Checks whether the scheduler is enabled or disabled.
+ *
+ * @return  bool  Whether the scheduler is on (true) or off (false).
+ */
+
+function dev_scheduler_status() : bool
+{
+  // Fetch the scheduler's status
+  $scheduler_is_disabled = system_variable_fetch('scheduler_is_disabled');
+
+  // Return the scheduler's status
+  return ($scheduler_is_disabled) ? false : true;
+}
+
+
+
+
+/**
+ * Disables the scheduler.
+ *
+ * @return void
+ */
+
+function dev_scheduler_turn_off()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Disable the scheduler
+  system_variable_update('scheduler_is_disabled', 1, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("The website's scheduler has been turned off by ".$username ." - ".$GLOBALS['website_url']."pages/dev/scheduler", 'admin');
+}
+
+
+
+
+/**
+ * Enables the scheduler.
+ *
+ * @return void
+ */
+
+function dev_scheduler_turn_on()
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Enable the scheduler
+  system_variable_update('scheduler_is_disabled', 0, 'int');
+
+  // Fetch the admin's username
+  $username = user_get_username();
+
+  // Notify IRC
+  irc_bot_send_message("The website's scheduler has been turned back on by ".$username ." - ".$GLOBALS['website_url']."pages/dev/scheduler", 'admin');
 }

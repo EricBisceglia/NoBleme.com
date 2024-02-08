@@ -55,6 +55,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*  log_activity_purge_orphan_diffs     Deletes all orphan entries in the detailed activity logs.                    */
 /*  log_activity_delete                 Soft deletes an entry in the activity logs.                                  */
 /*                                                                                                                   */
+/*  schedule_task                       Schedules a task to be ran at a later date.                                  */
+/*  schedule_task_update                Update an existing scheduled task.                                           */
+/*  schedule_task_delete                Delete an existing scheduled task.                                           */
+/*                                                                                                                   */
 /*  irc_bot_send_message                Uses the IRC bot to broadcast a message.                                     */
 /*                                                                                                                   */
 /*  discord_send_message                Uses a Discord webhook to broadcast a message.                               */
@@ -1325,6 +1329,126 @@ function log_activity_delete( string  $activity_type              ,
 
   // Purge all orphaned detailed activity logs
   log_activity_purge_orphan_diffs();
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  TASK SCHEDULER                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Schedules a task to be ran at a later date.
+ *
+ * All this function does is creating an entry in the `system_scheduler` table.
+ *
+ * @param   string  $action_type                      A string identifying the task type, up to 40 characters long.
+ * @param   int     $action_id                        The id of the element which will be affected by the task.
+ * @param   int     $action_planned_at                A timestamp of the time at which the task must be run.
+ * @param   string  $action_description   (OPTIONAL)  A description of the task.
+ * @param   bool    $sanitize_data        (OPTIONAL)  If set, the data will be sanitized before insertion.
+ *
+ * @return  void
+ */
+
+function schedule_task( string  $action_type                ,
+                        int     $action_id                  ,
+                        int     $action_planned_at          ,
+                        string  $action_description = ''    ,
+                        bool    $sanitize_data      = false ) : void
+{
+  // If sanitization is required, then do it
+  if($sanitize_data)
+  {
+    $action_type        = sanitize($action_type, 'string');
+    $action_id          = sanitize($action_id, 'int', 0);
+    $action_planned_at  = sanitize($action_planned_at, 'int', time());
+    $action_description = sanitize($action_description, 'string');
+  }
+
+  // If the task already exists, delete it
+  query(" DELETE FROM system_scheduler
+          WHERE       system_scheduler.task_id    =     '$action_id'
+          AND         system_scheduler.task_type  LIKE  '$action_type' ");
+
+  // Create the new task in the scheduler
+  query(" INSERT INTO system_scheduler
+          SET         system_scheduler.task_id          = '$action_id'          ,
+                      system_scheduler.task_type        = '$action_type'        ,
+                      system_scheduler.task_description = '$action_description' ,
+                      system_scheduler.planned_at       = '$action_planned_at'  ");
+}
+
+
+
+
+/**
+ * Update an existing scheduled task.
+ *
+ * @param   string  $action_type                      A string identifying the task type, up to 40 characters long.
+ * @param   int     $action_id                        The id of the element which will be affected by the task.
+ * @param   int     $action_planned_at    (OPTIONAL)  If set, the new time at which the action will be run.
+ * @param   string  $action_description   (OPTIONAL)  If set, the new task description.
+ * @param   bool    $sanitize_data        (OPTIONAL)  If set, data will be sanitized before insertion.
+ *
+ * @return  void
+ */
+function schedule_task_update(  string  $action_type                ,
+                                int     $action_id                  ,
+                                int     $action_planned_at  = 0     ,
+                                string  $action_description = ''    ,
+                                bool    $sanitize_data      = false ) : void
+{
+  // If sanitization is required, then do it
+  if($sanitize_data)
+  {
+    $action_type        = sanitize($action_type, 'string');
+    $action_id          = sanitize($action_id, 'int', 0);
+    $action_planned_at  = sanitize($action_planned_at, 'int', time());
+    $action_description = sanitize($action_description, 'string');
+  }
+
+  // Prepare the required updates
+  $query = "";
+  if($action_description)
+    $query .= " system_scheduler.task_description = '$action_description' ";
+  if($action_description && $action_planned_at)
+    $query .= " , ";
+  if($action_planned_at)
+    $query .= " system_scheduler.planned_at = '$action_planned_at' ";
+
+  // Update the existing task
+  query(" UPDATE  system_scheduler
+          SET     $query
+          WHERE   system_scheduler.task_id    =     '$action_id'
+          AND     system_scheduler.task_type  LIKE  '$action_type' ");
+}
+
+
+
+
+/**
+ * Delete an existing scheduled task.
+ *
+ * @param   string  $action_type  A string identifying the task type, up to 40 characters long.
+ * @param   int     $action_id    The id of the element which would have been affected if not deleted.
+ *
+ * @return  void
+ */
+function schedule_task_delete(  string  $action_type  ,
+                                int     $action_id    ) : void
+{
+  // Sanitize the data
+  $action_type  = sanitize($action_type, 'string');
+  $action_id    = sanitize($action_id, 'int', 0);
+
+  // Delete the task
+  query(" DELETE FROM system_scheduler
+          WHERE       system_scheduler.task_id    =     '$action_id'
+          AND         system_scheduler.task_type  LIKE  '$action_type' ");
 }
 
 
