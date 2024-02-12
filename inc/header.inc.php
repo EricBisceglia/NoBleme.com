@@ -440,7 +440,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
 
       <div class="header_topmenu width_50">
 
-        <div id="header_titres" class="header_topmenu_zone">
+        <div id="header_titles" class="header_topmenu_zone">
 
           <div class="header_topmenu_title" id="header_menu_title_nobleme" onclick="toggle_header_menu('nobleme', 1);">
             <?=__('menu_top_nobleme')?>
@@ -979,6 +979,9 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/dev/translations', __('submenu_admin_doc_duplicates'), 'header_submenu_link', 1, $path);?>
           </div>
           <?php if($GLOBALS['dev_mode']) { ?>
+          <div class="header_submenu_item">
+            <?=__link('tests', __('submenu_admin_local_tests'), 'header_submenu_link', 1, $path);?>
+          </div>
           <div class="header_submenu_item">
             <?=__link('fixtures', __('submenu_admin_local_fixtures'), 'header_submenu_link', 1, $path);?>
           </div>

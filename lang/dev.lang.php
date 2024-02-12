@@ -349,3 +349,44 @@ ___('dev_translations_name',  'EN', "Translation");
 ___('dev_translations_name',  'FR', "Traduction");
 ___('dev_translations_none',  'EN', "There are no duplicate translations in the current language");
 ___('dev_translations_none',  'FR', "Il n'y a aucune traduction en double dans la langue actuelle");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    TEST SUITE                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('dev_tests_title',  'EN', "Test suite");
+___('dev_tests_title',  'FR', "Suite de tests");
+
+
+// Test suite selection
+___('dev_tests_select_body',    'EN', "Choose which website features should be tested:");
+___('dev_tests_select_body',    'FR', "Choisissez les fonctionnalités du site à tester :");
+___('dev_tests_select_all',     'EN', "Select all tests");
+___('dev_tests_select_all',     'FR', "Tout sélectionner");
+___('dev_tests_select_uncheck', 'EN', "Unselect all tests");
+___('dev_tests_select_uncheck', 'FR', "Tout déselectionner");
+___('dev_tests_select_core',    'EN', "Core functionalities");
+___('dev_tests_select_core',    'FR', "Fonctionnalités essentielles");
+___('dev_tests_select_common',  'EN', "Common functionalities");
+___('dev_tests_select_common',  'FR', "Fonctionnalités communes");
+___('dev_tests_select_submit',  'EN', "Run tests");
+___('dev_tests_select_submit',  'FR', "Exécuter les tests");
+
+
+// Test results
+___('dev_tests_results_passed',   'EN', "test passed");
+___('dev_tests_results_passed',   'FR', "test réussi");
+___('dev_tests_results_passed+',  'EN', "tests passed");
+___('dev_tests_results_passed+',  'FR', "tests réussis");
+___('dev_tests_results_failed',   'EN', "test failed");
+___('dev_tests_results_failed',   'FR', "test échoué");
+___('dev_tests_results_failed+',  'EN', "tests failed");
+___('dev_tests_results_failed+',  'FR', "tests échoués");
+___('dev_tests_results_title',    'EN', "Test suite results");
+___('dev_tests_results_title',    'FR', "Résultat de la suite de tests");

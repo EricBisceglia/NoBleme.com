@@ -1192,6 +1192,8 @@ ___('submenu_admin_doc_workflow',   'FR', "Workflow de développement");
 ___('submenu_admin_doc_duplicates', 'EN', "Duplicate translations");
 ___('submenu_admin_doc_duplicates', 'FR', "Traductions redondantes");
 
+___('submenu_admin_local_tests',    'EN', "Local dev: Tests");
+___('submenu_admin_local_tests',    'FR', "Dev local : Tests");
 ___('submenu_admin_local_fixtures', 'EN', "Local dev: Fixtures");
 ___('submenu_admin_local_fixtures', 'FR', "Dev local : Fixtures");
 

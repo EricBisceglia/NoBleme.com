@@ -104,6 +104,7 @@ hr   { height: 3px;                                                 } }
 
 .background               { background-color: var(--nobleme-dark)   !important; }
 .dark                     { background-color: var(--nobleme-dark)   !important; }
+.dark3                    { background-color: var(--nobleme-dark3)  !important; }
 .black                    { background-color: var(--nobleme-black)  !important; }
 .white                    { background-color: var(--nobleme-white)  !important; }
 .light                    { background-color: var(--nobleme-light)  !important; }
