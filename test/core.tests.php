@@ -37,10 +37,10 @@ include_once './inc/sql.inc.php';
 $test = query(" SELECT * FROM system_variables ");
 
 // Expect a mysqli object
-$test_results['query']  = is_a($test, 'mysqli_result');
-$test_returns['query']  = ($test_results['query'] === true)
-                        ? "Returned a mysqli_result"
-                        : "Did not return a mysqli_result";
+$test_results['query'] = test_assert( value:      $test                                   ,
+                                      assertion:  is_a($test, 'mysqli_result')            ,
+                                      success:    "Query returned a mysqli_result"        ,
+                                      failure:    "Query did not return a mysqli_result"  );
 
 
 
@@ -56,21 +56,11 @@ $test = query(" SELECT * FROM system_variables ",
                 description:    'Test'  );
 
 // Expect an array of values
-if(is_array($test) === true && count($test))
-{
-  $test_results['query_data'] = true;
-  $test_returns['query_data'] = "Returned an array of data";
-}
-else if(is_array($test) && !count($test))
-{
-  $test_results['query_data'] = false;
-  $test_returns['query_data'] = "Returned an array, but it is empty";
-}
-else
-{
-  $test_results['query_data'] = false;
-  $test_returns['query_data'] = "Did not return an array of data";
-}
+$test_results['query_data'] = test_assert(  value:      $test                                   ,
+                                            assertion:  is_array($test) && count($test) > 0     ,
+                                            success:    "Query returned an array of data"       ,
+                                            failure:    "Query did not return an array of data" ,
+                                            type:       'array'                                 );
 
 
 
@@ -82,10 +72,11 @@ else
 $test = query(" SELECT * FROM nowhere ", ignore_errors: true);
 
 // Expect the boolean false
-$test_results['query_err']  = ($test === false);
-$test_returns['query_err']  = ($test === false)
-                            ? "Errors were ignored"
-                            : "Errors were not ignored";
+$test_results['query_err'] = test_assert( value:        $test                     ,
+                                          expectation:  false                     ,
+                                          success:      "Errors were ignored"     ,
+                                          failure:      "Errors were not ignored" ,
+                                          type:         'bool'                    );
 
 
 
@@ -97,21 +88,11 @@ $test_returns['query_err']  = ($test === false)
 $test = query_row(query(" SELECT * FROM system_variables "));
 
 // Expect an array of values
-if(is_array($test) === true && count($test))
-{
-  $test_results['query_row']  = true;
-  $test_returns['query_row']  = "Returned an array of data";
-}
-else if(is_array($test) && !count($test))
-{
-  $test_results['query_row']  = false;
-  $test_returns['query_row']  = "Returned an array, but it is empty";
-}
-else
-{
-  $test_results['query_row']  = false;
-  $test_returns['query_row']  = "Did not return an array of data";
-}
+$test_results['query_row'] = test_assert( value:      $test                                   ,
+                                          assertion:  is_array($test) && count($test) > 0     ,
+                                          success:    "Returned an array of data"             ,
+                                          failure:    "Query did not return an array of data" ,
+                                          type:       'array'                                 );
 
 
 
@@ -125,22 +106,12 @@ $test_count = rand(2, 4);
 // Run a query, count its rows
 $test = query_row_count(query(" SELECT * FROM users LIMIT $test_count "));
 
-// Expect the input number
-if($test === $test_count)
-{
-  $test_results['query_count']  = true;
-  $test_returns['query_count']  = "Returned the number of rows";
-}
-else if(is_int($test))
-{
-  $test_results['query_count']  = false;
-  $test_returns['query_count']  = "Returned a wrong number of rows";
-}
-else
-{
-  $test_results['query_count']  = false;
-  $test_returns['query_count']  = "Did not return a number of rows";
-}
+// Expect an array of values
+$test_results['query_count'] = test_assert( value:        $test                             ,
+                                            expectation:  $test_count                       ,
+                                            success:      "Returned the number of rows"     ,
+                                            failure:      "Returned a wrong number of rows" ,
+                                            type:         'int'                             );
 
 
 
@@ -173,9 +144,9 @@ if($test_id === $test_version_id)
   query(" DELETE FROM system_versions
           WHERE       system_versions.id = '$test_id' ");
 
-
 // Expect the correct version number
-$test_results['query_id'] = ($test_id === $test_version_id);
-$test_returns['query_id'] = ($test_id === $test_version_id)
-                          ? "Last query ID was fetched"
-                          : "Last query ID was not fetched";
+$test_results['query_id'] = test_assert(  value:        $test_id                          ,
+                                          expectation:  $test_version_id                  ,
+                                          success:      "Last query ID was fetched"       ,
+                                          failure:      "Wrong last query ID was fetched" ,
+                                          type:         'int'                             );

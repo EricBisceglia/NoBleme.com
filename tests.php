@@ -9,6 +9,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './inc/includes.inc.php' ; # Core
+include_once './inc/tests.inc.php'    ; # Functions for tests
 include_once './lang/dev.lang.php'    ; # Translations
 
 // Limit page access rights
@@ -37,9 +38,8 @@ $js = array('tests/suite');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Run tests
 
-// Initialize an array for test results and return values
+// Initialize an array for test results
 $test_results = array();
-$test_returns = array();
 
 // Core functionalities
 if(form_fetch_element('dev_tests_core', element_exists: true))
@@ -59,15 +59,15 @@ $test_fails     = 0;
 foreach($test_results as $test_name => $test_result)
 {
   // Increment the number of successful tests if necessary
-  if($test_result === true)
+  if($test_result['result'] === true)
     $test_successes++;
 
   // Increment the number of failed tests if necessary
-  if($test_result === false)
+  if($test_result['result'] === false)
     $test_fails++;
 
   // Prepare a style for the cell displaying the test result
-  $test_style[$test_name] = ($test_result === true) ? 'green' : 'red';
+  $test_style[$test_name] = ($test_result['result'] === true) ? 'green' : 'red';
 }
 
 // Remember selected form entries
@@ -159,20 +159,20 @@ foreach($test_form_entries as $test_form_entry)
           <td class="nowrap" rowspan="3">
             query();
           </td>
-          <td class="<?=$test_style['query']?> text_white bold spaced align_center">
-            <?=$test_returns['query']?>
+          <td class="<?=$test_style['query']?> text_white bold spaced">
+            <?=$test_results['query']['explanation']?>
           </td>
         </tr>
 
         <tr>
-          <td class="<?=$test_style['query_data']?> text_white bold spaced align_center">
-            <?=$test_returns['query_data']?>
+          <td class="<?=$test_style['query_data']?> text_white bold spaced">
+            <?=$test_results['query_data']['explanation']?>
           </td>
         </tr>
 
         <tr>
-          <td class="<?=$test_style['query_err']?> text_white bold spaced align_center">
-            <?=$test_returns['query_err']?>
+          <td class="<?=$test_style['query_err']?> text_white bold spaced">
+            <?=$test_results['query_err']['explanation']?>
           </td>
         </tr>
 
@@ -180,8 +180,8 @@ foreach($test_form_entries as $test_form_entry)
           <td class="nowrap">
             query_row();
           </td>
-          <td class="<?=$test_style['query_row']?> text_white bold spaced align_center">
-            <?=$test_returns['query_row']?>
+          <td class="<?=$test_style['query_row']?> text_white bold spaced">
+            <?=$test_results['query_row']['explanation']?>
           </td>
         </tr>
 
@@ -189,8 +189,8 @@ foreach($test_form_entries as $test_form_entry)
           <td class="nowrap">
             query_row_count();
           </td>
-          <td class="<?=$test_style['query_count']?> text_white bold spaced align_center">
-            <?=$test_returns['query_count']?>
+          <td class="<?=$test_style['query_count']?> text_white bold spaced">
+            <?=$test_results['query_count']['explanation']?>
           </td>
         </tr>
 
@@ -198,8 +198,8 @@ foreach($test_form_entries as $test_form_entry)
           <td class="nowrap">
             query_id();
           </td>
-          <td class="<?=$test_style['query_id']?> text_white bold spaced align_center">
-            <?=$test_returns['query_id']?>
+          <td class="<?=$test_style['query_id']?> text_white bold spaced">
+            <?=$test_results['query_id']['explanation']?>
           </td>
         </tr>
 
