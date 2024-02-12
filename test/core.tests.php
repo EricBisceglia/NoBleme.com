@@ -5,6 +5,12 @@
 // Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                  These tests should only be ran through `tests.php` at the root of the project.                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // Limit page access rights
 user_restrict_to_administrators();
 

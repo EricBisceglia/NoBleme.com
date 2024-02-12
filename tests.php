@@ -70,6 +70,12 @@ foreach($test_results as $test_name => $test_result)
   $test_style[$test_name] = ($test_result === true) ? 'green' : 'red';
 }
 
+// Remember selected form entries
+$test_form_entries = array('core', 'common');
+foreach($test_form_entries as $test_form_entry)
+  $test_form_checked[$test_form_entry]  = (form_fetch_element('dev_tests_'.$test_form_entry, element_exists: true))
+                                        ? ' checked' : '';
+
 
 
 
@@ -104,10 +110,10 @@ foreach($test_results as $test_name => $test_result)
 
       <div class="tinypadding_top tinypadding_bot">
 
-        <input type="checkbox" id="dev_tests_core" name="dev_tests_core">
+        <input type="checkbox" id="dev_tests_core" name="dev_tests_core"<?=$test_form_checked['core']?>>
         <label class="label_inline" for="dev_tests_core"><?=__('dev_tests_select_core')?></label><br>
 
-        <input type="checkbox" id="dev_tests_common" name="dev_tests_common">
+        <input type="checkbox" id="dev_tests_common" name="dev_tests_common"<?=$test_form_checked['common']?>>
         <label class="label_inline" for="dev_tests_common"><?=__('dev_tests_select_common')?></label>
 
       </div>
