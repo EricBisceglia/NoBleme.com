@@ -30,6 +30,8 @@ Installing a pre-assembled LAMP/MAMP/WAMP stack (depending on your OS) will let 
 
 6. Run the file called `fixtures.php` in your browser, it is located at the root of the project and will initialize the database.
 
+7. Run the file called `tests.php` in your browser, it is located at the root of the project and will confirm everything is working as intended.
+
 This is it, you now have a working local copy of NoBleme. It's that simple! Everything's here, including randomly generated data for most features of the website. Try logging in as either one of the demo users, they're useful when testing features that rely on user permissions, they require no passwords (as long as `dev_mode` is enabled in `main.conf.php`) and their nicknames are: `Banned`, `User`, `Prude`, `Mod`, and `Admin`.
 
 In case the `main.conf.php` part is overwhelming, it might help you if I shared what my local configuration looks like in my own development environment:
@@ -122,6 +124,8 @@ Hopefully, the source code will be commented well enough that you should have no
 * `pages` contains all of the views, the HTML layouts which the users are browsing (they use the logic from `actions`).
 
 * `scripts` contains scripts which get executed by the PHP command line instead of the web server.
+
+* `test` contains testswhich are executed by the `tests.php` page at the root of the project.
 
 With this understanding of the folder structure, you should be able to follow how the components of each page are split. To summarize: the core is in `inc`, actions happen in `actions`, views are in `pages` + `css` + `js`, and translations are in `lang`.
 

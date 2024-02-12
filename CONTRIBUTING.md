@@ -61,4 +61,6 @@ There is currently no written style guide for this project's source code. Instea
 
 * QA test everything: in both languages, in both dark and light mode, with all user access rights (guest, user, mod, admin).
 
+* Any changes in `actions` or `inc` should come with a corresponding update to `test`, run the test suite locally (`tests.php` at the project's root).
+
 If you mess up the coding style, if you're not biligual and can't do translations, if you're afraid you'd do anything wrong: don't worry, it will be reworked by someone else before it is merged. We are aware that it's never easy and can even be quite uncomfortable to imitate someone else's coding style when no linter is provided. The simple act of contributing is appreciated on its own.
