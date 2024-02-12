@@ -104,7 +104,6 @@ hr   { height: 3px;                                                 } }
 
 .background               { background-color: var(--nobleme-dark)   !important; }
 .dark                     { background-color: var(--nobleme-dark)   !important; }
-.dark3                    { background-color: var(--nobleme-dark3)  !important; }
 .black                    { background-color: var(--nobleme-black)  !important; }
 .white                    { background-color: var(--nobleme-white)  !important; }
 .light                    { background-color: var(--nobleme-light)  !important; }
@@ -475,6 +474,7 @@ tbody.doublealtc2 tr:nth-child(4n-1), tbody.doublealtc2 tr:nth-child(4n-2)
 tbody.doublealtc2 tr:nth-child(4n-2):hover  { background-color: var(--nobleme-dark);              }
 tbody.doublealtc2 tr:nth-child(4n-3):hover  { background-color: var(--nobleme-dark3);             }
 tbody.doublealtc tr, tbody.doublealtc2 tr   { border-top: 0;                                      }
+td.cellaltc                                 { background-color: var(--nobleme-dark3);             }
 tr.row_separator_dark                       { border-bottom: 0.7rem solid var(--nobleme-dark);    }
 tr.row_separator_dark_thin                  { border-bottom: 0.4rem solid var(--nobleme-dark);    }
 @media (max-width: 992px)                                                                         {

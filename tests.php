@@ -153,10 +153,10 @@ foreach($test_form_entries as $test_form_entry)
   <?php } if(isset($test_results['query'])) { ?>
 
         <tr>
-          <td class="nowrap dark3" rowspan="2">
-            query.inc.php
+          <td class="nowrap cellaltc" rowspan="6">
+            sql.inc.php
           </td>
-          <td class="nowrap">
+          <td class="nowrap" rowspan="3">
             query();
           </td>
           <td class="<?=$test_style['query']?> text_white bold spaced align_center">
@@ -165,11 +165,41 @@ foreach($test_form_entries as $test_form_entry)
         </tr>
 
         <tr>
-          <td class="nowrap">
-            query(fetch_row: true);
+          <td class="<?=$test_style['query_data']?> text_white bold spaced align_center">
+            <?=$test_returns['query_data']?>
           </td>
-          <td class="<?=$test_style['query2']?> text_white bold spaced align_center">
-            <?=$test_returns['query2']?>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['query_err']?> text_white bold spaced align_center">
+            <?=$test_returns['query_err']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            query_row();
+          </td>
+          <td class="<?=$test_style['query_row']?> text_white bold spaced align_center">
+            <?=$test_returns['query_row']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            query_row_count();
+          </td>
+          <td class="<?=$test_style['query_count']?> text_white bold spaced align_center">
+            <?=$test_returns['query_count']?>
+          </td>
+        </tr>
+
+        <tr class="row_separator_dark">
+          <td class="nowrap">
+            query_id();
+          </td>
+          <td class="<?=$test_style['query_id']?> text_white bold spaced align_center">
+            <?=$test_returns['query_id']?>
           </td>
         </tr>
 
