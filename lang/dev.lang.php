@@ -380,6 +380,8 @@ ___('dev_tests_select_submit',  'FR', "Exécuter les tests");
 
 
 // Test results
+___('dev_tests_results_none',     'EN', "No tests were ran, select some features to test.");
+___('dev_tests_results_none',     'FR', "Aucun test n'a été exécuté, sélectionnez des fonctionnalités à tester.");
 ___('dev_tests_results_passed',   'EN', "test passed");
 ___('dev_tests_results_passed',   'FR', "test réussi");
 ___('dev_tests_results_passed+',  'EN', "tests passed");
