@@ -84,7 +84,8 @@ tbody.doublealtc tr:nth-child(4n):hover                                     { ba
 tbody.doublealtc2 tr:nth-child(4n-1), tbody.doublealtc2 tr:nth-child(4n-2)  { background-color: var(--nobleme-white2);}
 tbody.doublealtc2 tr:nth-child(4n-2):hover                                  { background-color: var(--nobleme-light); }
 tbody.doublealtc2 tr:nth-child(4n-3):hover                                  { background-color: var(--nobleme-light); }
-td.cellaltc                                                                 { background-color: var(--nobleme-light); }
+td.cellaltc                                                                 { background-color: var(--nobleme-white2);}
+td.cellnoaltc                                                               { background-color: var(--nobleme-light); }
 tr.row_separator_dark                                                       { border-color: var(--nobleme-light);     }
 tr.row_separator_dark_thin                                                  { border-color: var(--nobleme-light);     }
 @media (max-width: 992px)                                                                                             {

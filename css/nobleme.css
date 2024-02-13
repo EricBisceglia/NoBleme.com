@@ -475,6 +475,7 @@ tbody.doublealtc2 tr:nth-child(4n-2):hover  { background-color: var(--nobleme-da
 tbody.doublealtc2 tr:nth-child(4n-3):hover  { background-color: var(--nobleme-dark3);             }
 tbody.doublealtc tr, tbody.doublealtc2 tr   { border-top: 0;                                      }
 td.cellaltc                                 { background-color: var(--nobleme-dark3);             }
+td.cellnoaltc                               { background-color: var(--nobleme-dark4);             }
 tr.row_separator_dark                       { border-bottom: 0.7rem solid var(--nobleme-dark);    }
 tr.row_separator_dark_thin                  { border-bottom: 0.4rem solid var(--nobleme-dark);    }
 @media (max-width: 992px)                                                                         {

@@ -148,12 +148,12 @@ foreach($test_form_entries as $test_form_entry)
         </tr>
 
       </thead>
-      <tbody class="altc">
+      <tbody>
 
-  <?php } if(isset($test_results['query'])) { ?>
+        <?php } if(isset($test_results['query'])) { /**************************************************************/ ?>
 
         <tr>
-          <td class="nowrap cellaltc" rowspan="6">
+          <td class="nowrap cellnoaltc" rowspan="6">
             sql.inc.php
           </td>
           <td class="nowrap" rowspan="3">
@@ -203,7 +203,135 @@ foreach($test_form_entries as $test_form_entry)
           </td>
         </tr>
 
-  <?php } if(count($test_results)) { ?>
+        <?php } if(isset($test_results['sanitize_string'])) { /****************************************************/ ?>
+
+        <tr>
+          <td class="nowrap cellnoaltc" rowspan="16">
+            sanitization.inc.php
+          </td>
+          <td class="nowrap" rowspan="7">
+            sanitize();
+          </td>
+          <td class="<?=$test_style['sanitize_string']?> text_white bold spaced">
+            <?=$test_results['sanitize_string']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_int']?> text_white bold spaced">
+            <?=$test_results['sanitize_int']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_bool']?> text_white bold spaced">
+            <?=$test_results['sanitize_bool']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_float']?> text_white bold spaced">
+            <?=$test_results['sanitize_float']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_min']?> text_white bold spaced">
+            <?=$test_results['sanitize_min']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_max']?> text_white bold spaced">
+            <?=$test_results['sanitize_max']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_pad']?> text_white bold spaced">
+            <?=$test_results['sanitize_pad']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_input();
+          </td>
+          <td class="<?=$test_style['sanitize_post']?> text_white bold spaced">
+            <?=$test_results['sanitize_post']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_array_element();
+          </td>
+          <td class="<?=$test_style['sanitize_array']?> text_white bold spaced">
+            <?=$test_results['sanitize_array']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap" rowspan="2">
+            sanitize_output();
+          </td>
+          <td class="<?=$test_style['sanitize_html']?> text_white bold spaced">
+            <?=$test_results['sanitize_html']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['sanitize_output']?> text_white bold spaced">
+            <?=$test_results['sanitize_output']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_output_full();
+          </td>
+          <td class="<?=$test_style['sanitize_full']?> text_white bold spaced">
+            <?=$test_results['sanitize_full']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_output_javascript();
+          </td>
+          <td class="<?=$test_style['sanitize_js']?> text_white bold spaced">
+            <?=$test_results['sanitize_js']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_meta_tags();
+          </td>
+          <td class="<?=$test_style['sanitize_meta']?> text_white bold spaced">
+            <?=$test_results['sanitize_meta']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_json();
+          </td>
+          <td class="<?=$test_style['sanitize_json']?> text_white bold spaced">
+            <?=$test_results['sanitize_json']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            sanitize_api_output();
+          </td>
+          <td class="<?=$test_style['sanitize_api']?> text_white bold spaced">
+            <?=$test_results['sanitize_api']['explanation']?>
+          </td>
+        </tr>
+
+        <?php } if(count($test_results)) { /***********************************************************************/ ?>
 
       </tbody>
     </table>
