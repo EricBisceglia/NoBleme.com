@@ -17,37 +17,23 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
  * Checks whether a test result met expectations.
  *
  * @param   mixed   $value                  The value being tested.
+ * @param   string  $type         OPTIONAL  The expected type of the value (bool, int, float, string, array, etc.).
  * @param   mixed   $assertion    OPTIONAL  The test result being asserted (if empty, will compare to expectations).
  * @param   mixed   $expectation  OPTIONAL  The expected result (if empty, will check whether the assertion is true).
  * @param   string  $success      OPTIONAL  Message to return in case of test success.
  * @param   string  $failure      OPTIONAL  Message to return in case of test failure.
- * @param   string  $type         OPTIONAL  The expected type of the result (bool, int, float, string, array, etc.).
  *
  * @return  array                             An array of results related to the test.
  *
  */
 
 function test_assert( mixed   $value                    ,
+                      string  $type         = ''        ,
                       mixed   $assertion    = NULL      ,
                       mixed   $expectation  = true      ,
                       string  $success      = 'Success' ,
-                      string  $failure      = 'Failure' ,
-                      string  $type         = ''        ) : array
+                      string  $failure      = 'Failure' ) : array
 {
-  // If there are neither assertions nor expectations, the test fails
-  if(!$assertion && !$expectation)
-    $result = false;
-
-  // Check whether the result met expectations
-  if($assertion)
-    $result = (bool)($assertion === $expectation);
-  else
-    $result = (bool)($value === $expectation);
-
-  // Add the test's results and its explanation to the return array
-  $return['result']       = $result;
-  $return['explanation']  = ($result === true) ? $success : $failure;
-
   // Look for type mismatches
   if($type)
   {
@@ -86,6 +72,24 @@ function test_assert( mixed   $value                    ,
       $return['explanation']  = "Type mismatch: expected an array";
     }
   }
+
+  // Stop there if there is a type mismatch
+  if(isset($return['result']) && $return['result'] === false)
+    return $return;
+
+  // If there are neither assertions nor expectations, the test fails
+  if(!$assertion && !$expectation)
+    $result = false;
+
+  // Check whether the result met expectations
+  if($assertion)
+    $result = (bool)($assertion === $expectation);
+  else
+    $result = (bool)($value === $expectation);
+
+  // Add the test's results and its explanation to the return array
+  $return['result']       = $result;
+  $return['explanation']  = ($result === true) ? $success : $failure;
 
   // Return the array of test data
   return $return;

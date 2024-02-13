@@ -57,10 +57,10 @@ $test = query(" SELECT * FROM system_variables ",
 
 // Expect an array of values
 $test_results['query_data'] = test_assert(  value:      $test                                     ,
+                                            type:       'array'                                   ,
                                             assertion:  is_array($test) && count($test) > 0       ,
                                             success:    "Query returns an array of data"          ,
-                                            failure:    "Query does not return an array of data"  ,
-                                            type:       'array'                                   );
+                                            failure:    "Query does not return an array of data"  );
 
 
 
@@ -73,10 +73,10 @@ $test = query(" SELECT * FROM nowhere ", ignore_errors: true);
 
 // Expect the boolean false
 $test_results['query_err'] = test_assert( value:        $test                     ,
+                                          type:         'bool'                    ,
                                           expectation:  false                     ,
                                           success:      "Errors are ignored"      ,
-                                          failure:      "Errors are not ignored"  ,
-                                          type:         'bool'                    );
+                                          failure:      "Errors are not ignored"  );
 
 
 
@@ -89,10 +89,10 @@ $test = query_row(query(" SELECT * FROM system_variables "));
 
 // Expect an array of values
 $test_results['query_row'] = test_assert( value:      $test                                     ,
+                                          type:       'array'                                   ,
                                           assertion:  is_array($test) && count($test) > 0       ,
                                           success:    "Returns an array of data"                ,
-                                          failure:    "Query does not return an array of data"  ,
-                                          type:       'array'                                   );
+                                          failure:    "Query does not return an array of data"  );
 
 
 
@@ -101,17 +101,17 @@ $test_results['query_row'] = test_assert( value:      $test                     
 // Count a query's rows
 
 // Randomly limit row count to a low number
-$test_count = rand(2, 4);
+$test_count = fixtures_generate_data('int', 2, 4);
 
 // Run a query, count its rows
 $test = query_row_count(query(" SELECT * FROM users LIMIT $test_count "));
 
 // Expect an array of values
 $test_results['query_count'] = test_assert( value:        $test                             ,
+                                            type:         'int'                             ,
                                             expectation:  $test_count                       ,
                                             success:      "Returns the number of rows"      ,
-                                            failure:      "Returns a wrong number of rows"  ,
-                                            type:         'int'                             );
+                                            failure:      "Returns a wrong number of rows"  );
 
 
 
@@ -146,10 +146,10 @@ if($test_id === $test_version_id)
 
 // Expect the correct version number
 $test_results['query_id'] = test_assert(  value:        $test_id                          ,
+                                          type:         'int'                             ,
                                           expectation:  $test_version_id                  ,
                                           success:      "Last query ID is fetched"        ,
-                                          failure:      "Wrong last query ID is fetched"  ,
-                                          type:         'int'                             );
+                                          failure:      "Wrong last query ID is fetched"  );
 
 
 
@@ -168,10 +168,10 @@ $test = sanitize("Te'st", 'string');
 
 // Expect a sanitized string
 $test_results['sanitize_string'] = test_assert( value:        $test                     ,
+                                                type:         'string'                  ,
                                                 expectation:  "Te\'st"                  ,
                                                 success:      "String is sanitized"     ,
-                                                failure:      "String is not sanitized" ,
-                                                type:         'string'                  );
+                                                failure:      "String is not sanitized" );
 
 
 
@@ -184,10 +184,10 @@ $test = sanitize("15", 'int');
 
 // Expect an integer
 $test_results['sanitize_int'] = test_assert(  value:        $test                       ,
+                                              type:         'int'                       ,
                                               expectation:  15                          ,
                                               success:      "Integer is sanitized"      ,
-                                              failure:      "Integer is not sanitized"  ,
-                                              type:         'int'                       );
+                                              failure:      "Integer is not sanitized"  );
 
 
 
@@ -200,10 +200,10 @@ $test = sanitize("false", 'bool');
 
 // Expect a boolean
 $test_results['sanitize_bool'] = test_assert( value:        $test                       ,
+                                              type:         'bool'                      ,
                                               expectation:  false                       ,
                                               success:      "Boolean is sanitized"      ,
-                                              failure:      "Boolean is not sanitized"  ,
-                                              type:         'bool'                      );
+                                              failure:      "Boolean is not sanitized"  );
 
 
 
@@ -216,10 +216,10 @@ $test = sanitize(1, 'float');
 
 // Expect a float
 $test_results['sanitize_float'] = test_assert(  value:        $test                     ,
+                                                type:         'float'                   ,
                                                 expectation:  (float)1                  ,
                                                 success:      "Float is sanitized"      ,
-                                                failure:      "Float is not sanitized"  ,
-                                                type:         'float'                   );
+                                                failure:      "Float is not sanitized"  );
 
 
 
@@ -235,10 +235,10 @@ $test = sanitize(-10, 'int', $test_minimum);
 
 // Expect the minimum value
 $test_results['sanitize_min'] = test_assert(  value:        $test                                 ,
+                                              type:         'int'                                 ,
                                               expectation:  $test_minimum                         ,
                                               success:      "Integer has minimum value"           ,
-                                              failure:      "Integer does not have minimum value" ,
-                                              type:         'int'                                 );
+                                              failure:      "Integer does not have minimum value" );
 
 
 
@@ -254,10 +254,10 @@ $test = sanitize(10, 'int', -10, $test_maximum);
 
 // Expect the maximum value
 $test_results['sanitize_max'] = test_assert(  value:        $test                                 ,
+                                              type:         'int'                                 ,
                                               expectation:  $test_maximum                         ,
                                               success:      "Integer has maximum value"           ,
-                                              failure:      "Integer does not have maximum value" ,
-                                              type:         'int'                                 );
+                                              failure:      "Integer does not have maximum value" );
 
 
 
@@ -276,10 +276,10 @@ $test = sanitize($test, 'string', min: 10, padding: 'x');
 
 // Expect the maximum value
 $test_results['sanitize_pad'] = test_assert(  value:        $test                                 ,
+                                              type:         'string'                              ,
                                               expectation:  "Lo\'ngxxxxx"                         ,
                                               success:      "String is trimmed and padded"        ,
-                                              failure:      "String is wrongly trimmed or padded" ,
-                                              type:         'string'                              );
+                                              failure:      "String is wrongly trimmed or padded" );
 
 
 
@@ -293,10 +293,10 @@ $test = sanitize_input('POST', 'dev_tests_core', 'string');
 
 // Expect the default value of a checkbox
 $test_results['sanitize_post'] = test_assert( value:        $test                     ,
+                                              type:         'string'                  ,
                                               expectation:  "on"                      ,
                                               success:      "Postdata is fetched"     ,
-                                              failure:      "Postdata is not fetched" ,
-                                              type:         'string'                  );
+                                              failure:      "Postdata is not fetched" );
 
 
 
@@ -309,10 +309,10 @@ $test = sanitize_array_element($test_results['sanitize_post'], 'explanation', 's
 
 // Expect a string
 $test_results['sanitize_array'] = test_assert(  value:        $test                         ,
+                                                type:         'string'                      ,
                                                 assertion:    is_string($test)              ,
                                                 success:      "Array entry is fetched"      ,
-                                                failure:      "Array entry is not fetched"  ,
-                                                type:         'string'                      );
+                                                failure:      "Array entry is not fetched"  );
 
 
 
@@ -325,10 +325,10 @@ $test = sanitize_output("<te'st>");
 
 // Expect it to be HTML ready
 $test_results['sanitize_html'] = test_assert( value:        $test                             ,
+                                              type:         'string'                          ,
                                               expectation:  "&lt;te&#039;st&gt;"              ,
                                               success:      "String is ready for output"      ,
-                                              failure:      "String is not ready for output"  ,
-                                              type:         'string'                          );
+                                              failure:      "String is not ready for output"  );
 
 
 
@@ -348,10 +348,10 @@ st";
 
 // Expect the test to match expectations
 $test_results['sanitize_output'] = test_assert( value:        $test                                 ,
+                                                type:         'string'                              ,
                                                 expectation:  $expectations                         ,
                                                 success:      "String is formatted for output"      ,
-                                                failure:      "String is not formatted for output"  ,
-                                                type:         'string'                              );
+                                                failure:      "String is not formatted for output"  );
 
 
 
@@ -367,10 +367,10 @@ $expectations = "&amp;lt;img onclick&zwnj;=&amp;quot;script.&zwnj;svg&amp;quot;&
 
 // Expect it to be fully sanitized
 $test_results['sanitize_full'] = test_assert( value:        $test                           ,
+                                              type:         'string'                        ,
                                               expectation:  $expectations                   ,
                                               success:      "String is fully sanitized"     ,
-                                              failure:      "String is not fully sanitized" ,
-                                              type:         'string'                        );
+                                              failure:      "String is not fully sanitized" );
 
 
 
@@ -386,10 +386,10 @@ $expectations = "String&amp;amp;more";
 
 // Expect it to be properly sanitized
 $test_results['sanitize_js'] = test_assert( value:        $test                             ,
+                                            type:         'string'                          ,
                                             expectation:  $expectations                     ,
                                             success:      "String is sanitized for JS"      ,
-                                            failure:      "String is not sanitized for JS"  ,
-                                            type:         'string'                          );
+                                            failure:      "String is not sanitized for JS"  );
 
 
 
@@ -405,10 +405,10 @@ $expectations = "Meta b with tags";
 
 // Expect it to be properly sanitized
 $test_results['sanitize_meta'] = test_assert( value:        $test                               ,
+                                              type:         'string'                            ,
                                               expectation:  $expectations                       ,
                                               success:      "String is sanitized for meta"      ,
-                                              failure:      "String is not sanitized for meta"  ,
-                                              type:         'string'                            );
+                                              failure:      "String is not sanitized for meta"  );
 
 
 
@@ -425,10 +425,10 @@ $expectations = "Line\nbreak";
 
 // Expect it to be properly sanitized
 $test_results['sanitize_json'] = test_assert( value:        $test                               ,
+                                              type:         'string'                            ,
                                               expectation:  $expectations                       ,
                                               success:      "String is sanitized for JSON"      ,
-                                              failure:      "String is not sanitized for JSON"  ,
-                                              type:         'string'                            );
+                                              failure:      "String is not sanitized for JSON"  );
 
 
 
@@ -455,7 +455,245 @@ EOT
 
 // Expect it to be properly sanitized
 $test_results['sanitize_api'] = test_assert(  value:        $test                                 ,
+                                              type:         'string'                              ,
                                               expectation:  $expectations                         ,
                                               success:      "Array is sanitized for the API"      ,
-                                              failure:      "Array is not sanitized for the API"  ,
-                                              type:         'string'                              );
+                                              failure:      "Array is not sanitized for the API"  );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                inc/fixtures.inc.php                                               */
+/*                                                                                                                   */
+/*                                               RANDOM DATA GENERATION                                              */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+// Generate a random integer
+
+// Generate the integer
+$test = fixtures_generate_data('int', 10, 100);
+
+// Expect the integer to be within bounds
+$test_results['fixtures_int'] = test_assert(  value:      $test                           ,
+                                              type:       'int'                           ,
+                                              assertion:  ($test >= 10) && ($test <= 100) ,
+                                              success:    "Random integer generated"      ,
+                                              failure:    "Integer improperly generated"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Generate a random string
+
+// Generate the string
+$test = fixtures_generate_data('string', 5, 10);
+
+// Expect the integer to be within bounds
+$test_results['fixtures_string'] = test_assert( value:      $test                         ,
+                                                type:       'string'                      ,
+                                                assertion:  (strlen($test) > 0)           ,
+                                                success:    "Random string generated"     ,
+                                                failure:    "String improperly generated" );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch a random existing ID
+
+// Fetch an ID
+$test = sanitize(fixtures_fetch_random_id('users'), 'int', 0);
+
+// Expect the ID to exist
+$test_results['fixtures_id'] = test_assert( value:      $test                               ,
+                                            type:       'int'                               ,
+                                            assertion:  database_row_exists('users', $test) ,
+                                            success:    "Valid random ID fetched"           ,
+                                            failure:    "Invalid random ID fetched"         );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch a random existing entry
+
+// Fetch an entry
+$test = sanitize(fixtures_fetch_random_value('users', 'username'), 'string');
+
+// Check if the entry exists
+$test_entry = sanitize(database_entry_exists('users', 'username', $test), 'int', 0);
+
+// Expect the entry to have a valid ID
+$test_results['fixtures_entry'] = test_assert(  value:      $test                                     ,
+                                                type:       'string'                                  ,
+                                                assertion:  database_row_exists('users', $test_entry) ,
+                                                success:    "Valid random entry fetched"              ,
+                                                failure:    "Invalid random entry fetched"            );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Check for an existing entry
+
+// Fetch an entry
+$test = sanitize(fixtures_fetch_random_value('users', 'username'), 'string');
+
+// Check if the entry exists
+$test_entry = sanitize(fixtures_check_entry('users', 'username', $test), 'bool');
+
+// Expect the entry to exist
+$test_results['fixtures_exists'] = test_assert( value:      $test                       ,
+                                                type:       'string'                    ,
+                                                assertion:  $test_entry                 ,
+                                                success:    "Matching entry found"      ,
+                                                failure:    "Matching entry not found"  );
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                lang/common.lang.php                                               */
+/*                                                                                                                   */
+/*                                             TEMPLATES AND TRANSLATIONS                                            */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+// Translate a string
+
+// Ask for a translation with extra requirements
+$test = __('nobleme'      ,
+        spaces_before:  1 ,
+        spaces_after:   1 );
+
+// Expect the translated string
+$test_results['translation'] = test_assert( value:        $test                       ,
+                                            type:         'string'                    ,
+                                            expectation:  " NoBleme "                 ,
+                                            success:      "Translation successful"    ,
+                                            failure:      "Translation unsuccessful"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Add a new string to the translation array
+
+// Generate a random string
+$test = fixtures_generate_data('text', 2, 3);
+
+// Add a new translation to the current language
+___('test_dummy_translation', $lang, $test);
+
+// Expect the translation to be added to the global translations array
+$test_results['translation_add'] = test_assert( value:        $test                               ,
+                                                type:         'string'                            ,
+                                                expectation:  __('test_dummy_translation')        ,
+                                                success:      "New translation added"             ,
+                                                failure:      "New translation can not be added"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Assemble an internal link
+
+// Create a link
+$test = __link( href:         './test'    ,
+                text:         'Test'      ,
+                style:        "italics"   ,
+                is_internal:  true        ,
+                path:         $path       ,
+                onclick:      'action();' ,
+                onmouseover:  'thing();'  ,
+                id:           "test_id"   ,
+                popup:        true        ,
+                confirm:      "Confirm?"  );
+
+// Define what the link should look like
+$test_expectation = '<a  class="italics" href="./test" rel="noopener noreferrer" target="_blank" onclick="return confirm(\'Confirm?\'); action();" onmouseover="thing();" id="test_id">Test</a>';
+
+// Expect the link to look like its assembled version
+$test_results['translation_link'] = test_assert(  value:        $test                                 ,
+                                                  type:         'string'                              ,
+                                                  expectation:  $test_expectation                     ,
+                                                  success:      "Internal link assembled correctly"   ,
+                                                  failure:      "Internal link assembled incorrectly" );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Assemble an external link
+
+// Create an external link
+$test = __link( href:         'https://nobleme.com/'  ,
+                text:         'NoBleme'               ,
+                is_internal:  false                   );
+
+// Define what the link should look like
+$test_expectation = '<a  class="bold" href="https://nobleme.com/"    >NoBleme</a>';
+
+// Expect the link to look like its assembled version
+$test_results['translation_extlink'] = test_assert( value:        $test                                 ,
+                                                    type:         'string'                              ,
+                                                    expectation:  $test_expectation                     ,
+                                                    success:      "External link assembled correctly"   ,
+                                                    failure:      "External link assembled incorrectly" );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Assemble an icon
+
+// Create an icon
+$test = __icon( icon:         "test"      ,
+                is_small:     "true"      ,
+                href:         "./link"    ,
+                is_internal:  true        ,
+                class:        "pointer"   ,
+                alt:          "Alt"       ,
+                title:        "Title"     ,
+                title_case:   "uppercase" ,
+                use_dark:     true        ,
+                use_light:    false       ,
+                identifier:   "test_id"   ,
+                path:         $path       ,
+                onclick:      "action();" ,
+                popup:        true        ,
+                confirm:      "Confirm?"  );
+
+// Define what the icon should look like
+$test_expectation = '<a class="noglow" href="./link" rel="noopener noreferrer" target="_blank"><img  id="test_id" class="smallicon pointer" src="img/icons/test_small_dark.svg" alt="Alt" title="TITLE" onclick="return confirm(\'Confirm?\'); action();"></a>';
+
+// Expect the icon to look like its assembled version
+$test_results['translation_icon'] = test_assert(  value:        $test                         ,
+                                                  type:         'string'                      ,
+                                                  expectation:  $test_expectation             ,
+                                                  success:      "Icon assembled correctly"    ,
+                                                  failure:      "Icon assembled incorrectly"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Assemble a tooltip
+
+// Create a tooltip
+$test = __tooltip(  title:          "Tooltip"   ,
+                    tooltip_body:   "Body text" ,
+                    title_style:    "uppercase" ,
+                    tooltip_style:  "bold"      );
+
+// Define what the tooltip should look like
+$test_expectation = '<span class="tooltip_container uppercase">Tooltip<span class="tooltip bold">Body text</span></span>';
+
+// Expect the tooltip to look like its assembled version
+$test_results['translation_tooltip'] = test_assert( value:        $test                           ,
+                                                    type:         'string'                        ,
+                                                    expectation:  $test_expectation               ,
+                                                    success:      "Tooltip assembled correctly"   ,
+                                                    failure:      "Tooltip assembled incorrectly" );

@@ -278,7 +278,6 @@ function __icon(  string  $icon                                   ,
  * @param   string  $tooltip_body               The tooltip's body.
  * @param   string  $title_style    (OPTIONAL)  The CSS style(s) to apply to the tooltip's triggering element.
  * @param   string  $tooltip_style  (OPTIONAL)  CSS style(s) to apply to the tooltip's body.
- * @param   bool    $use_link       (OPTIONAL)  Style the triggering element as a link.
  *
  * @return  string                              The tooltip, ready for use.
  */
@@ -286,12 +285,8 @@ function __icon(  string  $icon                                   ,
 function __tooltip( string  $title                      ,
                     string  $tooltip_body               ,
                     string  $title_style    = "bold"    ,
-                    string  $tooltip_style  = "notbold" ,
-                    bool    $use_link       = false     ) : string
+                    string  $tooltip_style  = "notbold" ) : string
 {
-  // Decide whether to use a link or text for the triggering element
-  $title = ($use_link) ? "<a>".$title."</a>" : $title;
-
   // Return the assembled tooltip
   return "<span class=\"tooltip_container ".$title_style."\">".$title."<span class=\"tooltip ".$tooltip_style."\">".$tooltip_body."</span></span>";
 }

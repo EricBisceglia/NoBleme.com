@@ -9,6 +9,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './inc/includes.inc.php' ; # Core
+include_once './inc/fixtures.inc.php' ; # Dummy data generation
 include_once './inc/tests.inc.php'    ; # Functions for tests
 include_once './lang/dev.lang.php'    ; # Translations
 
@@ -157,7 +158,7 @@ foreach($test_form_entries as $test_form_entry)
             sql.inc.php
           </td>
           <td class="nowrap" rowspan="3">
-            query();
+            query
           </td>
           <td class="<?=$test_style['query']?> text_white bold spaced">
             <?=$test_results['query']['explanation']?>
@@ -178,7 +179,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            query_row();
+            query_row
           </td>
           <td class="<?=$test_style['query_row']?> text_white bold spaced">
             <?=$test_results['query_row']['explanation']?>
@@ -187,7 +188,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            query_row_count();
+            query_row_count
           </td>
           <td class="<?=$test_style['query_count']?> text_white bold spaced">
             <?=$test_results['query_count']['explanation']?>
@@ -196,7 +197,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr class="row_separator_dark">
           <td class="nowrap">
-            query_id();
+            query_id
           </td>
           <td class="<?=$test_style['query_id']?> text_white bold spaced">
             <?=$test_results['query_id']['explanation']?>
@@ -210,7 +211,7 @@ foreach($test_form_entries as $test_form_entry)
             sanitization.inc.php
           </td>
           <td class="nowrap" rowspan="7">
-            sanitize();
+            sanitize
           </td>
           <td class="<?=$test_style['sanitize_string']?> text_white bold spaced">
             <?=$test_results['sanitize_string']['explanation']?>
@@ -255,7 +256,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            sanitize_input();
+            sanitize_input
           </td>
           <td class="<?=$test_style['sanitize_post']?> text_white bold spaced">
             <?=$test_results['sanitize_post']['explanation']?>
@@ -264,7 +265,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            sanitize_array_element();
+            sanitize_array_element
           </td>
           <td class="<?=$test_style['sanitize_array']?> text_white bold spaced">
             <?=$test_results['sanitize_array']['explanation']?>
@@ -273,7 +274,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap" rowspan="2">
-            sanitize_output();
+            sanitize_output
           </td>
           <td class="<?=$test_style['sanitize_html']?> text_white bold spaced">
             <?=$test_results['sanitize_html']['explanation']?>
@@ -288,7 +289,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            sanitize_output_full();
+            sanitize_output_full
           </td>
           <td class="<?=$test_style['sanitize_full']?> text_white bold spaced">
             <?=$test_results['sanitize_full']['explanation']?>
@@ -297,7 +298,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            sanitize_output_javascript();
+            sanitize_output_javascript
           </td>
           <td class="<?=$test_style['sanitize_js']?> text_white bold spaced">
             <?=$test_results['sanitize_js']['explanation']?>
@@ -306,7 +307,7 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            sanitize_meta_tags();
+            sanitize_meta_tags
           </td>
           <td class="<?=$test_style['sanitize_meta']?> text_white bold spaced">
             <?=$test_results['sanitize_meta']['explanation']?>
@@ -315,19 +316,122 @@ foreach($test_form_entries as $test_form_entry)
 
         <tr>
           <td class="nowrap">
-            sanitize_json();
+            sanitize_json
           </td>
           <td class="<?=$test_style['sanitize_json']?> text_white bold spaced">
             <?=$test_results['sanitize_json']['explanation']?>
           </td>
         </tr>
 
-        <tr>
+        <tr class="row_separator_dark">
           <td class="nowrap">
-            sanitize_api_output();
+            sanitize_api_output
           </td>
           <td class="<?=$test_style['sanitize_api']?> text_white bold spaced">
             <?=$test_results['sanitize_api']['explanation']?>
+          </td>
+        </tr>
+
+        <?php } if(isset($test_results['fixtures_int'])) { /*******************************************************/ ?>
+
+        <tr>
+          <td class="nowrap cellnoaltc" rowspan="5">
+            fixtures.inc.php
+          </td>
+          <td class="nowrap" rowspan="2">
+            fixtures_generate_data
+          </td>
+          <td class="<?=$test_style['fixtures_int']?> text_white bold spaced">
+            <?=$test_results['fixtures_int']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['fixtures_string']?> text_white bold spaced">
+            <?=$test_results['fixtures_string']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            fixtures_fetch_random_id
+          </td>
+          <td class="<?=$test_style['fixtures_id']?> text_white bold spaced">
+            <?=$test_results['fixtures_id']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            fixtures_fetch_random_value
+          </td>
+          <td class="<?=$test_style['fixtures_entry']?> text_white bold spaced">
+            <?=$test_results['fixtures_entry']['explanation']?>
+          </td>
+        </tr>
+
+        <tr class="row_separator_dark">
+          <td class="nowrap">
+            fixtures_check_entry
+          </td>
+          <td class="<?=$test_style['fixtures_exists']?> text_white bold spaced">
+            <?=$test_results['fixtures_exists']['explanation']?>
+          </td>
+        </tr>
+
+        <?php } if(isset($test_results['translation'])) { /********************************************************/ ?>
+
+        <tr>
+          <td class="nowrap cellnoaltc" rowspan="6">
+            common.lang.php
+          </td>
+          <td class="nowrap">
+            __
+          </td>
+          <td class="<?=$test_style['translation']?> text_white bold spaced">
+            <?=$test_results['translation']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            ___
+          </td>
+          <td class="<?=$test_style['translation_add']?> text_white bold spaced">
+            <?=$test_results['translation_add']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap" rowspan="2">
+            __link
+          </td>
+          <td class="<?=$test_style['translation_link']?> text_white bold spaced">
+            <?=$test_results['translation_link']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['translation_extlink']?> text_white bold spaced">
+            <?=$test_results['translation_extlink']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            __icon
+          </td>
+          <td class="<?=$test_style['translation_icon']?> text_white bold spaced">
+            <?=$test_results['translation_icon']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            __tooltip
+          </td>
+          <td class="<?=$test_style['translation_tooltip']?> text_white bold spaced">
+            <?=$test_results['translation_tooltip']['explanation']?>
           </td>
         </tr>
 
