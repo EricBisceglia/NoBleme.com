@@ -46,6 +46,10 @@ $test_results = array();
 if(form_fetch_element('dev_tests_core', element_exists: true))
   include_once './test/core.tests.php';
 
+// Common functionalities
+if(form_fetch_element('dev_tests_common', element_exists: true))
+  include_once './test/common.tests.php';
+
 
 
 
@@ -150,6 +154,26 @@ foreach($test_form_entries as $test_form_entry)
 
       </thead>
       <tbody>
+
+        <?php } if(isset($test_results['test'])) { /***************************************************************/ ?>
+
+        <tr>
+          <td class="nowrap cellnoaltc" rowspan="2">
+            tests.inc.php
+          </td>
+          <td class="nowrap" rowspan="2">
+            test_assert
+          </td>
+          <td class="<?=$test_style['test']?> text_white bold spaced">
+            <?=$test_results['test']['explanation']?>
+          </td>
+        </tr>
+
+        <tr class="row_separator_dark">
+          <td class="<?=$test_style['test_fail']?> text_white bold spaced">
+            <?=$test_results['test_fail']['explanation']?>
+          </td>
+        </tr>
 
         <?php } if(isset($test_results['query'])) { /**************************************************************/ ?>
 
@@ -426,12 +450,53 @@ foreach($test_form_entries as $test_form_entry)
           </td>
         </tr>
 
-        <tr>
+        <tr class="row_separator_dark">
           <td class="nowrap">
             __tooltip
           </td>
           <td class="<?=$test_style['translation_tooltip']?> text_white bold spaced">
             <?=$test_results['translation_tooltip']['explanation']?>
+          </td>
+        </tr>
+
+        <?php } if(isset($test_results['bbcodes'])) { /************************************************************/ ?>
+
+        <tr>
+          <td class="nowrap cellnoaltc" rowspan="4">
+            bbcodes.inc.php
+          </td>
+          <td class="nowrap">
+            bbcodes
+          </td>
+          <td class="<?=$test_style['bbcodes']?> text_white bold spaced">
+            <?=$test_results['bbcodes']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            nbcodes
+          </td>
+          <td class="<?=$test_style['nbcodes']?> text_white bold spaced">
+            <?=$test_results['nbcodes']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            bbcodes_remove
+          </td>
+          <td class="<?=$test_style['unbbcodes']?> text_white bold spaced">
+            <?=$test_results['unbbcodes']['explanation']?>
+          </td>
+        </tr>
+
+        <tr class="row_separator_dark">
+          <td class="nowrap">
+            nbcodes_remove
+          </td>
+          <td class="<?=$test_style['unnbcodes']?> text_white bold spaced">
+            <?=$test_results['unnbcodes']['explanation']?>
           </td>
         </tr>
 

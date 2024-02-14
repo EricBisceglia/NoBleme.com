@@ -23,6 +23,49 @@ if(!$GLOBALS['dev_mode'])
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                 inc/tests.inc.php                                                 */
+/*                                                                                                                   */
+/*                                                       TESTS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+// Assert a test result
+
+// Run a successful test
+$test = test_assert(  value:        1     ,
+                      type:         'int' ,
+                      expectation:  1     ,
+                      success:      'Yes' );
+
+// Expect the test to be successful
+$test_results['test'] = test_assert(  value:      $test                                                       ,
+                                      type:       'array'                                                     ,
+                                      assertion:  $test['result'] === true && $test['explanation'] === 'Yes'  ,
+                                      success:    "Test successful"                                           ,
+                                      failure:    "Test failed"                                               );
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fail a test
+
+// Run a failed test
+$test = test_assert(  value:        '1'       ,
+                      type:         'string'  ,
+                      expectation:  1         ,
+                      failure:      'No'      );
+
+// Expect the test to be successful
+$test_results['test_fail'] = test_assert( value:      $test                                                       ,
+                                          type:       'array'                                                     ,
+                                          assertion:  $test['result'] === false && $test['explanation'] === 'No'  ,
+                                          success:    "Test successfully failed"                                  ,
+                                          failure:    "Test failed to fail"                                       );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                 inc/query.inc.php                                                 */
 /*                                                                                                                   */
 /*                                                    SQL QUERIES                                                    */

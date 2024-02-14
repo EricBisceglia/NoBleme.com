@@ -321,7 +321,7 @@ function bbcodes_remove( string  $text ) : string
  * @return  string                              The text, with NBCodes converted to HTML, ready for display.
  */
 
-function nbcodes( string  $text                                                ,
+function nbcodes( string  $text                                                   ,
                   array   $page_list      = array()                               ,
                   array   $privacy_level  = array('youtube' => 0, 'trends' => 0)  ,
                   int     $nsfw_settings  = 0                                     ,
