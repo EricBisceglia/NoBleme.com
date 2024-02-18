@@ -21,6 +21,8 @@ if(!$GLOBALS['dev_mode'])
   exit(header("Location: ."));
 
 // Page summary
+$page_lang      = array('FR', 'EN');
+$page_url       = "tests";
 $page_title_en  = "Tests";
 $page_title_fr  = "Tests";
 
@@ -506,7 +508,7 @@ foreach($test_form_entries as $test_form_entry)
         <?php } if(isset($test_results['root_path'])) { /**********************************************************/ ?>
 
         <tr>
-          <td class="nowrap cellnoaltc" rowspan="17">
+          <td class="nowrap cellnoaltc" rowspan="33">
             functions_common.inc.php
           </td>
           <td class="nowrap">
@@ -629,6 +631,141 @@ foreach($test_form_entries as $test_form_entry)
         <tr>
           <td class="<?=$test_style['form_fetch_get']?> text_white bold spaced">
             <?=$test_results['form_fetch_get']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            string_truncate
+          </td>
+          <td class="<?=$test_style['string_truncate']?> text_white bold spaced">
+            <?=$test_results['string_truncate']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap" rowspan="3">
+            string_change_case
+          </td>
+          <td class="<?=$test_style['string_lowercase']?> text_white bold spaced">
+            <?=$test_results['string_lowercase']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['string_uppercase']?> text_white bold spaced">
+            <?=$test_results['string_uppercase']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['string_initials']?> text_white bold spaced">
+            <?=$test_results['string_initials']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            string_remove_accents
+          </td>
+          <td class="<?=$test_style['string_no_accents']?> text_white bold spaced">
+            <?=$test_results['string_no_accents']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            string_increment
+          </td>
+          <td class="<?=$test_style['string_increment']?> text_white bold spaced">
+            <?=$test_results['string_increment']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap" rowspan="3">
+            date_to_text
+          </td>
+          <td class="<?=$test_style['date_to_text']?> text_white bold spaced">
+            <?=$test_results['date_to_text']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['date_to_text_2']?> text_white bold spaced">
+            <?=$test_results['date_to_text_2']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['date_to_text_3']?> text_white bold spaced">
+            <?=$test_results['date_to_text_3']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            date_to_ddmmyy
+          </td>
+          <td class="<?=$test_style['date_to_ddmmyy']?> text_white bold spaced">
+            <?=$test_results['date_to_ddmmyy']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap" rowspan="2">
+            date_to_mysql
+          </td>
+          <td class="<?=$test_style['date_to_mysql']?> text_white bold spaced">
+            <?=$test_results['date_to_mysql']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['date_to_mysql_err']?> text_white bold spaced">
+            <?=$test_results['date_to_mysql_err']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap" rowspan="2">
+            date_to_aware_datetime
+          </td>
+          <td class="<?=$test_style['date_aware_time']?> text_white bold spaced">
+            <?=$test_results['date_aware_time']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="<?=$test_style['date_aware_zone']?> text_white bold spaced">
+            <?=$test_results['date_aware_zone']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            diff_strings
+          </td>
+          <td class="<?=$test_style['string_diff']?> text_white bold spaced">
+            <?=$test_results['string_diff']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            search_string_context
+          </td>
+          <td class="<?=$test_style['string_context']?> text_white bold spaced">
+            <?=$test_results['string_context']['explanation']?>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="nowrap">
+            string_wrap_in_html_tags
+          </td>
+          <td class="<?=$test_style['string_wrap_tags']?> text_white bold spaced">
+            <?=$test_results['string_wrap_tags']['explanation']?>
           </td>
         </tr>
 

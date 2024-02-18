@@ -347,3 +347,256 @@ $test_results['form_fetch_get'] = test_assert(  value:        $test_get         
                                                 expectation:  NULL                            ,
                                                 success:      "Get element does not exist"    ,
                                                 failure:      "Get element should not exist"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Truncate string
+
+// Truncate a string and add a suffix
+$test = string_truncate('Simple string', 10, '...');
+
+// Expect the string to be truncated
+$test_results['string_truncate'] = test_assert( value:        $test                           ,
+                                                type:         'string'                        ,
+                                                expectation:  'Simple str...'                 ,
+                                                success:      "String truncated"              ,
+                                                failure:      "String incorrectly truncated"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Change string case
+
+// Define a test string
+$test_string = "tEsT StRiNg";
+
+// Change the case of the test string
+$test_lower     = string_change_case($test_string, 'lowercase');
+$test_upper     = string_change_case($test_string, 'uppercase');
+$test_initials  = string_change_case($test_string, 'initials');
+
+// Expect the string to be lowercase
+$test_results['string_lowercase'] = test_assert(  value:        $test_lower               ,
+                                                  type:         'string'                  ,
+                                                  expectation:  'test string'             ,
+                                                  success:      "String is lowercase"     ,
+                                                  failure:      "String is not lowercase" );
+
+// Expect the string to be uppercase
+$test_results['string_uppercase'] = test_assert(  value:        $test_upper               ,
+                                                  type:         'string'                  ,
+                                                  expectation:  'TEST STRING'             ,
+                                                  success:      "String is uppercase"     ,
+                                                  failure:      "String is not uppercase" );
+
+// Expect the string to have initials
+$test_results['string_initials'] = test_assert( value:        $test_initials                  ,
+                                                type:         'string'                        ,
+                                                expectation:  'TEsT StRiNg'                   ,
+                                                success:      "String has initials"           ,
+                                                failure:      "String does not have initials" );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Remove accents from string
+
+// Get rid of accents in a string
+$test = string_remove_accents("Accentuées çöa");
+
+// Expect accents to be gone
+$test_results['string_no_accents'] = test_assert( value:        $test                   ,
+                                                  type:         'string'                ,
+                                                  expectation:  'Accentuees coa'        ,
+                                                  success:      "Accents removed"       ,
+                                                  failure:      "Accents badly removed" );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Increment string
+
+// Increment a string
+$test = string_increment("abcd1234");
+
+// Expect the string to be incremented
+$test_results['string_increment'] = test_assert(  value:        $test                       ,
+                                                  type:         'string'                    ,
+                                                  expectation:  'abcd1235'                  ,
+                                                  success:      "String incremented"        ,
+                                                  failure:      "String badly incremented"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Convert date to text
+
+// Choose a test date
+$test_date = '2005-03-19 01:02:03';
+
+// Convert it to various formats
+$test_format  = date_to_text($test_date, lang: 'EN');
+$test_simple  = date_to_text($test_date, strip_day: 2, lang: 'EN', include_time: 1);
+
+// Get today's date and convert it to text
+$test        = date_to_text(lang: 'EN');
+$test_today  = date('l, F jS o');
+
+// Expect the date to be formatted
+$test_results['date_to_text'] = test_assert(  value:        $test_format                ,
+                                              type:         'string'                    ,
+                                              expectation:  'Saturday, March 19th 2005' ,
+                                              success:      "Date formatted"            ,
+                                              failure:      "Date badly formatted"      );
+
+// Expect the date to be formatted differently
+$test_results['date_to_text_2'] = test_assert(  value:        $test_simple                  ,
+                                                type:         'string'                      ,
+                                                expectation:  ' March 2005 at 01:02:03'     ,
+                                                success:      "Other date formatted"        ,
+                                                failure:      "Other date badly formatted"  );
+
+// Expect the current date to be formatted
+$test_results['date_to_text_3'] = test_assert(  value:        $test                           ,
+                                                type:         'string'                        ,
+                                                expectation:  $test_today                     ,
+                                                success:      "Current date formatted"        ,
+                                                failure:      "Current date badly formatted"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Convert date to DD/MM/YY
+
+// Convert a test date
+$test = date_to_ddmmyy('2005-03-19');
+
+// Expect the date to be converted to DD/MM/YY
+$test_results['date_to_ddmmyy'] = test_assert(  value:        $test                               ,
+                                                type:         'string'                            ,
+                                                expectation:  "19/03/05"                          ,
+                                                success:      "Date formatted to DD/MM/YY"        ,
+                                                failure:      "Date badly formatted to DD/MM/YY"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Convert date to MySQL format
+
+// Convert a test date
+$test = date_to_mysql('19/03/05');
+
+// Convert an incorrect date
+$test_wrong = date_to_mysql('91/30/50', '2005-03-19');
+
+// Expect the date to be converted to MySQL format
+$test_results['date_to_mysql'] = test_assert( value:        $test                             ,
+                                              type:         'string'                          ,
+                                              expectation:  "2005-03-19"                      ,
+                                              success:      "Date formatted for MySQL"        ,
+                                              failure:      "Date badly formatted for MySQL"  );
+
+// Expect the date to use the default value
+$test_results['date_to_mysql_err'] = test_assert( value:        $test_wrong                       ,
+                                                  type:         'string'                          ,
+                                                  expectation:  "2005-03-19"                      ,
+                                                  success:      "Date used default MySQL value"   ,
+                                                  failure:      "Date badly formatted for MySQL"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Convert timestamp to aware datetime
+
+// Convert a timestamp to an aware datetime
+$test = date_to_aware_datetime(strtotime('2005-03-19'));
+
+// Convert that timestamp to the expected values
+$test_datetime = date('c', strtotime('2005-03-19'));
+$test_timezone = date('e', strtotime('2005-03-19'));
+
+// Expect the datetime to be correct
+$test_results['date_aware_time'] = test_assert( value:        $test['datetime']   ,
+                                                type:         'string'            ,
+                                                expectation:  $test_datetime      ,
+                                                success:      "Correct datetime"  ,
+                                                failure:      "Wrong datetime"    );
+
+// Expect the timezone to be correct
+$test_results['date_aware_zone'] = test_assert( value:        $test['timezone']   ,
+                                                type:         'string'            ,
+                                                expectation:  $test_timezone      ,
+                                                success:      "Correct timezone"  ,
+                                                failure:      "Wrong timezone"    );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Generate a diff between strings
+
+// Create a diff
+$test = sanitize_output(diff_strings('String with some old content', 'String with some new content'));
+
+// Define the expected value for the diff
+$test_expectations = 'String with some &nbsp;&lt;del&gt;&nbsp;old&nbsp;&lt;/del&gt;&nbsp;&nbsp;&lt;ins&gt;&nbsp;new&nbsp;&lt;/ins&gt;&nbsp;content ';
+
+// Expect both strings to match
+$test_results['string_diff'] = test_assert( value:        $test                               ,
+                                            type:         'string'                            ,
+                                            expectation:  $test_expectations                  ,
+                                            success:      "Diff matches expectations"         ,
+                                            failure:      "Diff does not match expectations"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Search for context around a string
+
+// Define a test string
+$test_string = "Some phrase including the word nobleme and then some more text again";
+
+// Search the test string
+$test = search_string_context('nobleme', $test_string, nb_words_around: 2);
+
+// Define the expected result
+$test_expectations = '...the word nobleme and then...';
+
+// Expect both strings to match
+$test_results['string_context'] = test_assert(  value:        $test                                 ,
+                                                type:         'string'                              ,
+                                                expectation:  $test_expectations                    ,
+                                                success:      "Search matches expectations"         ,
+                                                failure:      "Search does not match expectations"  );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Wrap elements of a string in HTML tags
+
+// Define a test string
+$test_string = "A phrase in which the word phrase is repeated phrase a few times";
+
+// Wrap some words in tags
+$test = string_wrap_in_html_tags('phrase', $test_string, '<b>', '</b>');
+
+// Define the expected result
+$test_expectations = 'A <b>phrase</b> in which the word <b>phrase</b> is repeated <b>phrase</b> a few times';
+
+// Expect both strings to match
+$test_results['string_wrap_tags'] = test_assert(  value:        $test                           ,
+                                                  type:         'string'                        ,
+                                                  expectation:  $test_expectations              ,
+                                                  success:      "Tags inserted in string"       ,
+                                                  failure:      "Tags badly inserted in string" );
