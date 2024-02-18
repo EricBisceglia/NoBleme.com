@@ -71,6 +71,13 @@ function test_assert( mixed   $value                    ,
       $return['result']       = false;
       $return['explanation']  = "Type mismatch: expected an array";
     }
+
+    // Null type mismatch
+    if($type === 'null' && !is_null($value))
+    {
+      $return['result']       = false;
+      $return['explanation']  = "Type mismatch: Expected NULL";
+    }
   }
 
   // Stop there if there is a type mismatch
