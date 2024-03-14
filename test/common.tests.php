@@ -37,7 +37,7 @@ include_once './inc/bbcodes.inc.php';
 $test = bbcodes("[b][quote=test][url]https://nobleme.com[/url][/quote][/b]");
 
 // Define the expected result
-$expectations = '<span class="bold"><div class="tinypadding_top"><div class="bbcode_quote_body"><div class="bbcode_quote_title">Quote by test :</div><hr class="bbcode_quote_separator"><a class="bold" href="https://nobleme.com">https://nobleme.com</a></div></div></span>';
+$expectations = '<span class="bold"><div class="tinypadding_top"><div class="bbcode_quote_body"><div class="bbcode_quote_title">'.__('bbcodes_quote_by').' test'.__(':').'</div><hr class="bbcode_quote_separator"><a class="bold" href="https://nobleme.com">https://nobleme.com</a></div></div></span>';
 
 // Expect the test to be processed properly
 $test_results['bbcodes'] = test_assert( value:        $test                         ,
@@ -75,7 +75,7 @@ $test_results['nbcodes'] = test_assert( value:        $test                     
 $test = bbcodes_remove("[b][quote=test][url]https://nobleme.com[/url][/quote][/b]");
 
 // Define the expected result
-$expectations = "test: https://nobleme.com";
+$expectations = "test".__(':')." https://nobleme.com";
 
 // Expect the test to be processed properly
 $test_results['unbbcodes'] = test_assert( value:        $test                         ,

@@ -176,7 +176,7 @@ function bbcodes( string  $text ) : string
 
   // Same thing but with a parameter specifying the author
   while(preg_match('/\[quote=(.*?)\](.*?)\[\/quote\]/is',$text))
-    $text = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"<div class=\"tinypadding_top\"><div class=\"bbcode_quote_body\"><div class=\"bbcode_quote_title\">".__('bbcodes_quote_by')." $1 :</div><hr class=\"bbcode_quote_separator\">$2</div></div>", $text);
+    $text = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"<div class=\"tinypadding_top\"><div class=\"bbcode_quote_body\"><div class=\"bbcode_quote_title\">".__('bbcodes_quote_by')." $1".__(':')."</div><hr class=\"bbcode_quote_separator\">$2</div></div>", $text);
 
 
   /*******************************************************************************************************************/
@@ -184,11 +184,11 @@ function bbcodes( string  $text ) : string
 
   // Solved with a regex in a while loop - seems complicated, but it's just because we're applying a lot of js here
   while(preg_match('/\[spoiler\](.*?)\[\/spoiler\]/is',$text))
-    $text = preg_replace("/\[spoiler\](.*?)\[\/spoiler\]/is", "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".__('bbcodes_spoiler')." : <a class=\'bold\' href=\'#\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".__('bbcodes_spoiler')." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".__('bbcodes_spoiler')." : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">$1</div></div></div></div>", $text);
+    $text = preg_replace("/\[spoiler\](.*?)\[\/spoiler\]/is", "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".__('bbcodes_spoiler')." : <a class=\'bold\' href=\'#\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".__('bbcodes_spoiler').__(':')." <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".__('bbcodes_spoiler').__(':')." <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">$1</div></div></div></div>", $text);
 
   // Same thing but with a parameter describing the spoiler's contents
   while(preg_match('/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is',$text))
-    $text = preg_replace_callback("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", function ($matches) { $title = htmlentities($matches[1]); return "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".$title." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".$title." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".$matches[1]." : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">".$matches[2]."</div></div></div></div>"; },  $text);
+    $text = preg_replace_callback("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", function ($matches) { $title = htmlentities($matches[1]); return "<div class=\"tinypadding_top\"><div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title bold\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".$title.__(':')." <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".$title.__(':')." <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">".$matches[1].__(':')." <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\"><hr class=\"bbcode_spoiler_separator\">".$matches[2]."</div></div></div></div>"; },  $text);
 
 
   /*******************************************************************************************************************/
@@ -280,7 +280,7 @@ function bbcodes_remove( string  $text ) : string
   while(preg_match('/\[quote\](.*?)\[\/quote\]/is',$text))
     $text = preg_replace('/\[quote\](.*?)\[\/quote\]/is',"$1", $text);
   while(preg_match('/\[quote=(.*?)\](.*?)\[\/quote\]/is',$text))
-    $text = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"$1: $2", $text);
+    $text = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"$1".__(':')." $2", $text);
 
   // Remove spoilers
   while(preg_match('/\[spoiler\](.*?)\[\/spoiler\]/is',$text))
