@@ -125,7 +125,12 @@ if(isset($_POST['purge_line_number']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of queued messages
 
+// Fetch the messages
 $irc_bot_message_queue = irc_bot_message_queue_list();
+
+// If there is no file, there are no lines
+if(!is_array($irc_bot_message_queue))
+  $irc_bot_message_queue = array('line_count' => 0);
 
 
 
