@@ -215,7 +215,7 @@ function sanitize_output( ?string $data                         ,
                           bool    $preserve_backslashes = true  ) : string
 {
   // Prepare the data for use in HTML
-  $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
+  $data = ($preserve_backslashes) ? htmlentities((string)$data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
 
   // Return the prepared data
   return ($preserve_line_breaks) ? nl2br($data) : $data;

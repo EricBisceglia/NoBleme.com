@@ -70,7 +70,7 @@ for($i = 0; $i < $random; $i++)
   }
   else
   {
-    $time         = mt_rand($time, (((3 * $time) + time()) / 4));
+    $time         = mt_rand($time, (int)(((3 * $time) + time()) / 4));
     $date         = date('Y-m-d', $time);
     if(!$extension && mt_rand(0,10) > 9)
       $extension = 'hotfix';

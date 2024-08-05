@@ -599,10 +599,10 @@ function irc_bot_admin_send_message(  string  $body           ,
 /**
  * Fetches the queue of messages that have not been sent yet by the IRC bot.
  *
- * @return  array   An array containing the formatted backlog of queued messages.
+ * @return  mixed   An array containing the formatted backlog of queued messages.
  */
 
-function irc_bot_message_queue_list() : array
+function irc_bot_message_queue_list() : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -726,7 +726,7 @@ function irc_bot_message_history_list( array $search = array() ) : array
 
   // Prepare the search string
   $search = " WHERE 1=1 ";
-  if(strpos($search_channel, '-') !== false)
+  if(strpos((string)$search_channel, '-') !== false)
     $search .= "  AND logs_irc_bot.is_manual    =     1 ";
   else if($search_channel)
     $search .= "  AND logs_irc_bot.channel      LIKE  '%$search_channel%' ";

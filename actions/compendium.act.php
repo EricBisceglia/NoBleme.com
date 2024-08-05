@@ -5875,7 +5875,7 @@ function compendium_format_url( ?string $url                      ,
 function compendium_format_title( ?string $title ) : string
 {
   // Forbid three vertical bars in a row
-  $title = str_replace('|||', '///', $title);
+  $title = str_replace('|||', '///', (string)$title);
 
   // Return the formatted url
   return $title;

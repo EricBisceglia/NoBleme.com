@@ -492,15 +492,15 @@ function string_change_case(  ?string $string ,
 {
   // Changes the string to all uppercase
   if($case === 'uppercase')
-    return mb_convert_case($string, MB_CASE_UPPER, "UTF-8");
+    return mb_convert_case((string)$string, MB_CASE_UPPER, "UTF-8");
 
   // Changes the string to all lowercase
   else if($case === 'lowercase')
-    return mb_convert_case($string, MB_CASE_LOWER, "UTF-8");
+    return mb_convert_case((string)$string, MB_CASE_LOWER, "UTF-8");
 
   // Changes the first character of the string to uppercase, ignores the rest
   else if($case === 'initials')
-    return mb_substr(mb_convert_case($string, MB_CASE_UPPER, "UTF-8"), 0, 1, 'utf-8').mb_substr($string, 1, 65536, 'utf-8');
+    return mb_substr(mb_convert_case((string)$string, MB_CASE_UPPER, "UTF-8"), 0, 1, 'utf-8').mb_substr((string)$string, 1, 65536, 'utf-8');
 
   // Return nothing otherwise
   else

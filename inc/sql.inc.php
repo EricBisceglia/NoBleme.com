@@ -15,6 +15,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Open a connexion to the MySQL database - include it any time you need to run a query
+
+// Set MYSQLI report mode to strict
+mysqli_report(MYSQLI_REPORT_ERROR);
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Open a connexion to the MySQL database - include it any time you need to run a query
