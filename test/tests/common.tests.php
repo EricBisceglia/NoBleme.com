@@ -286,7 +286,7 @@ $test_results['version_assemble'] = test_assert(  value:        $test           
 // Get version numbers
 
 // Get the current version number
-$test = system_get_current_version_number('semver', 'en');
+$test = system_get_current_version_number('full', 'en');
 
 // Get the next version number
 $test_next = system_get_current_version_number('next', 'en');
