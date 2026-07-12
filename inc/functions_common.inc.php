@@ -634,9 +634,9 @@ function date_to_text(  mixed   $date         = ''    ,
   if($strip_day < 2 && $lang === 'en')
   {
     $ordinal = __('ordinal_0_en');
-    $ordinal = ($day === 1 || $day === 21 || $day === 31) ? __('ordinal_1_en') : $ordinal;
-    $ordinal = (($day % 10) === 2) ? __('ordinal_2_en') : $ordinal;
-    $ordinal = (($day % 10) === 3) ? __('ordinal_3_en') : $ordinal;
+    $ordinal = (($day % 10) === 1 && $day <> 11) ? __('ordinal_1_en') : $ordinal;
+    $ordinal = (($day % 10) === 2 && $day <> 12) ? __('ordinal_2_en') : $ordinal;
+    $ordinal = (($day % 10) === 3 && $day <> 13) ? __('ordinal_3_en') : $ordinal;
     $return .= $ordinal;
   }
   else if($strip_day < 2 && $lang === 'fr')
