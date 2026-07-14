@@ -208,6 +208,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('nobleme_history_political4')?>
   </p>
 
+  <h5 class="hugepadding_top">
+    <?=__('nobleme_history_dismantlingt')?>
+  </h5>
+
+  <p>
+    <?=__('nobleme_history_dismantling1')?>
+  </p>
+
+  <p>
+    <?=__('nobleme_history_dismantling2')?>
+  </p>
+
   <h1 class="hugepadding_top">
     <?=__('nobleme_existential_title')?>
   </h1>
@@ -220,36 +232,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('nobleme_existential_what1')?>
   </p>
 
-  <p>
-    <?=__('nobleme_existential_what2')?>
-  </p>
-
   <h5 class="bigpadding_top">
     <?=__('nobleme_existential_futuret')?>
   </h5>
 
   <p>
     <?=__('nobleme_existential_future1')?>
-  </p>
-
-  <p>
-    <?=__('nobleme_existential_future2')?>
-  </p>
-
-  <h5 class="bigpadding_top">
-    <?=__('nobleme_existential_whyt')?>
-  </h5>
-
-  <p>
-    <?=__('nobleme_existential_why1')?>
-  </p>
-
-  <p>
-    <?=__('nobleme_existential_why2')?>
-  </p>
-
-  <p>
-    <?=__('nobleme_existential_why3')?>
   </p>
 
 </div>

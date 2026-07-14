@@ -13,89 +13,34 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) === str_replace("/","\\",subs
 /*********************************************************************************************************************/
 
 // Header
-___('nobleme_home_welcome_title',     'EN', "Welcome to NoBleme");
-___('nobleme_home_welcome_title',     'FR', "Bienvenue sur NoBleme");
-___('nobleme_home_welcome_subtitle',  'EN', "Preserving the spirit of Internet communities");
-___('nobleme_home_welcome_subtitle',  'FR', "L'esprit perdu des communautés Internet");
+___('nobleme_home_welcome_title',     'EN', "NoBleme.com");
+___('nobleme_home_welcome_title',     'FR', "NoBleme.com");
+___('nobleme_home_welcome_subtitle',  'EN', "A community from the old Internet");
+___('nobleme_home_welcome_subtitle',  'FR', "Une communauté du vieil Internet");
 
 // Introduction
 ___('nobleme_home_intro_1', 'EN', <<<EOT
-A product of the Internet's landscape in 2005, before the era of massive social networks and centralization, NoBleme is a small independent website trying to preserve the spirit of Internet communities from the first decade of the 21st century.
+NoBleme is a website that has been around since 2005, now serving as the beacon of an old community.
 EOT
 );
 ___('nobleme_home_intro_1', 'FR', <<<EOT
-Produit de la culture Internet de 2005, avant l'ère des réseaux sociaux massifs et des plateformes de communication centralisées, NoBleme est un petit site Internet indépendant qui tente de préserver l'esprit des commaunautés Internet de la première décennie du 21ème siècle.
+NoBleme est un site qui existe depuis 2005, servant aujourd'hui de phare à une ancienne communauté.
 EOT
 );
 ___('nobleme_home_intro_2', 'EN', <<<EOT
-For those who did not experience these communities, they were small websites with no specific theme, usually centered around a forum and a chatroom. NoBleme used to be such a place, initially a french community which grew and evolved in various ways over the years. The website's history and purpose are covered in more detail on the {{link++|pages/doc/nobleme|what is NoBleme|bold|}} page.
+For those who did not experience the old internet, it was comprised of many small websites with no specific theme, usually centered around a forum and a chatroom. NoBleme used to be such a place, initially a french community which grew and evolved in various ways over the years. The website's history and purpose are covered in more detail on the {{link++|pages/doc/nobleme|what is NoBleme|bold|}} page.
 EOT
 );
 ___('nobleme_home_intro_2', 'FR', <<<EOT
-Si vous n'avez pas connu ces communautés, il s'agissait de petits sites Internet sans sujet ou thème spécifique, généralement composés d'un forum et d'un salon de discussion. NoBleme était une de ces communautés, puis a grandi et changé avec le temps. L'histoire et la raison d'être du site sont racontés de façon plus détaillée sur la page {{link++|pages/doc/nobleme|qu'est-ce que NoBleme ?|bold|}}
+Si vous n'avez pas connu le vieil Internet, il était composé de petits sites Internet sans sujets ou thèmes spécifiques, contenant généralement juste un forum et un salon de discussion. NoBleme était une de ces communautés, puis a grandi et changé avec le temps. L'histoire et la raison d'être du site sont racontés de façon plus détaillée sur la page {{link++|pages/doc/nobleme|qu'est-ce que NoBleme ?|bold|}}
 EOT
 );
 ___('nobleme_home_intro_3', 'EN', <<<EOT
-However, NoBleme is not meant to be an archeological museum or a tribute to the past. It is a living place, evolving with the times, maintaining an active community, always welcoming to those who would want to join.
+NoBleme was one such website. It is mostly empty nowadays, but its community lives on :)
 EOT
 );
 ___('nobleme_home_intro_3', 'FR', <<<EOT
-Toutefois, NoBleme n'est pas un musée archéologique ou un monument au passé. C'est un site Internet moderne, en évolution constante, dont la communauté est vivante et accueillante.
-EOT
-);
-
-
-// Mission statement
-___('nobleme_home_statement_title', 'EN', "Mission statement");
-___('nobleme_home_statement_title', 'FR', "Qu'est-ce que NoBleme ?");
-___('nobleme_home_statement_1',     'EN', <<<EOT
-NoBleme has has no central theme or topic, no goal other than being a nice place to hang out. The website is entirely free to use, does not need donations to live, does not have any advertisements or third party content, {{link++|pages/doc/privacy|respects your privacy|bold|}}, and does not collect {{link++|pages/doc/data|your personal data|bold|}}.
-EOT
-);
-___('nobleme_home_statement_1',     'FR', <<<EOT
-NoBleme n'a pas de thème ou de sujet spécifique, ni d'objectif autre que de servir de plateforme à sa communauté. Le site est gratuit à utiliser, n'a pas besoin de donations pour vivre, ne contient pas de publicités ni de contenus tiers, {{link++|pages/doc/privacy|respecte votre vie privée|bold|}}, et ne collecte pas {{link++|pages/doc/data|vos données personnelles|bold|}}.
-EOT
-);
-___('nobleme_home_statement_2',     'EN', <<<EOT
-Conservatives, reactionaries, or anyone else whose worldview involves belittling others are not welcome on NoBleme. If you happen to be one of those people, worry not, many other websites and communities on the Internet already cater to your needs. NoBleme is however not a safe space: discussing or debating any topic is fine, but we will show low tolerance towards lack of empathy and oppressive behavior.
-EOT
-);
-___('nobleme_home_statement_2',     'FR', <<<EOT
-Les conservateurs, traditionnalistes, nationalistes, et autres réactionnaires ne sont pas bienvenus. Si vous êtes une de ces personnes, ne vous inquiétez pas, il existe un grand nombre d'autres communautés et sites Internet pour vous, NoBleme n'en fait juste pas partie. Nous sommes une communauté inclusive mais pas pour autant excessivement protectrice : tous les sujets sont autorisés lors des conversations et des débats, sous condition de savoir faire preuve d'empathie et d'éviter les comportements oppressifs.
-EOT
-);
-___('nobleme_home_statement_3',     'EN', <<<EOT
-The navigation menu on top of each page allows you to explore NoBleme's contents. You can join the community by interacting with us on our {{link++|pages/social/irc|IRC chat|bold|}} or on {{link++|pages/social/discord|Discord|bold|}}.
-EOT
-);
-___('nobleme_home_statement_3',     'FR', <<<EOT
-Le menu de navigation situé en haut de chaque page vous permet d'explorer le contenu de NoBleme. Vous pouvez interagir avec la communauté via notre {{link++|pages/social/irc|chat IRC|bold|}} ou sur {{link++|pages/social/discord|Discord|bold|}}.
-EOT
-);
-
-// 21st century compendium
-___('nobleme_home_compendium_1',      'EN', <<<EOT
-NoBleme includes the {{link++|pages/compendium/index|21st century compendium|bold|}}: a small encyclopedia documenting some aspects of 21st century culture, including {{link++|pages/compendium/meme|memes|bold|}}, {{link++|pages/compendium/slang|slang|bold|}}, and {{link++|pages/compendium/sociocultural|sociocultural|bold|}} topics.
-EOT
-);
-___('nobleme_home_compendium_1',      'FR', <<<EOT
-NoBleme contient le {{link++|pages/compendium/index|compendium du 21ème siècle|bold|}}: une petite encyclopédie documentant des aspects de la culture du 21ème siècle, incluant des {{link++|pages/compendium/meme|memes|bold|}}, de {{link++|pages/compendium/slang|l'argot|bold|}}, et des contenus {{link++|pages/compendium/sociocultural|socioculturels|bold|}}.
-EOT
-);
-___('nobleme_home_compendium_2',      'EN', <<<EOT
-Answers to most questions related to this compendium (why does it exist? what are its goals? what is a compendium anyway?) can be found in the compendium's {{link++|pages/compendium/mission_statement|mission statement|bold|}}.
-EOT
-);
-___('nobleme_home_compendium_2',      'FR', <<<EOT
-Des réponses à la plupart des questions portant sur ce compendium (pourquoi existe-il ? quels sont ses buts ? qu'est-ce qu'un compendium ?) se trouvent dans sa {{link++|pages/compendium/mission_statement|foire aux questions|bold|}}.
-EOT
-);
-___('nobleme_home_compendium_3',      'EN', <<<EOT
-You can find a {{link++|pages/compendium/page_list|list of all pages|bold|}} in the compendium, which will hopefully lead you to learn new things and have a few good laughs. Or maybe you're the type of person that would rather get started with a {{link++|pages/compendium/random_page|random page|bold|}} or a {{link++|pages/compendium/random_image|random image|bold|}} and see where fate leads you…
-EOT
-);
-___('nobleme_home_compendium_3',      'FR', <<<EOT
-En partant de la {{link++|pages/compendium/page_list|liste des pages|bold|}} du compendium, vous pourriez apprendre de nouvelles choses ou vous marrer un bon coup. Ou peut-être etes-vous le type de personne qui préfère commencer par une {{link++|pages/compendium/random_page|page au hasard|bold|}} ou une {{link++|pages/compendium/random_image|image au hasard|bold|}} et voir où le destin vous amène…
+NoBleme était un de ces site. Il est aujourd'hui relativement vide, mais sa communauté vit toujours :)
 EOT
 );
 
@@ -486,8 +431,8 @@ EOT
 
 
 // History: Let's get political
-___('nobleme_history_politicalt',  'EN', "Act VI: Let's get political (2021-?)");
-___('nobleme_history_politicalt',  'FR', "Acte VI: Politisation (2021-?)");
+___('nobleme_history_politicalt',  'EN', "Act VI: Let's get political (2021-2024)");
+___('nobleme_history_politicalt',  'FR', "Acte VI: Politisation (2021-2024)");
 ___('nobleme_history_political1',  'EN', <<<EOT
 Anyone who has lived through the second decade of the 21st century will remember how heavily political the Internet became. Used as a propaganda machine, it gave rise to the {{external|https://en.wikipedia.org/wiki/Alt-right|alt-right}} and other {{external|https://en.wikipedia.org/wiki/Neo-fascism|neofascist}} movements which found great success all over the world.
 EOT
@@ -513,11 +458,32 @@ NoBleme, en tant que petite communauté isolée, ne cherchait pas à avoir la mo
 EOT
 );
 ___('nobleme_history_political4',  'EN', <<<EOT
-In late 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a {{link|pages/politics/contramanifesto|political manifesto}} made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|pages/compendium/index|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
+In late 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a political manifesto made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|pages/compendium/index|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
 EOT
 );
 ___('nobleme_history_political4',  'FR', <<<EOT
-Fin 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/contramanifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|pages/compendium/index|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
+Fin 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un manifeste politique ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|pages/compendium/index|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
+EOT
+);
+
+
+// History: Dismantling
+___('nobleme_history_dismantlingt',  'EN', "Act VII: Dismantling (2025-?)");
+___('nobleme_history_dismantlingt',  'FR', "Acte VII: Démantelement (2025-?)");
+___('nobleme_history_dismantling1',  'EN', <<<EOT
+With smaller websites losing the favor of search engines, and AIs feeding on other people's contents, there is no more place for NoBleme on the current Internet.
+EOT
+);
+___('nobleme_history_dismantling1',  'FR', <<<EOT
+Les petits sites perdant leur place sur les moteurs de recherche, et les IAs se nourrissant des contenus des autres, il n'existe plus de place pour les sites comme NoBleme sur l'Internet actuel.
+EOT
+);
+___('nobleme_history_dismantling2',  'EN', <<<EOT
+The website is slowly being dismantled, section by section, until it becomes a museum website, a shell of what the Internet used to be in its earlier days.
+EOT
+);
+___('nobleme_history_dismantling2',  'FR', <<<EOT
+Le site est en cours de démantèlement progressif, section par section, jusqu'à ce qu'il devienne un musée, un aperçu de ce qu'Internet était lors de ses jours meilleurs.
 EOT
 );
 
@@ -528,63 +494,21 @@ ___('nobleme_existential_title',    'FR', "Questions existentielles");
 ___('nobleme_existential_whatt',    'EN', "What is NoBleme's purpose?");
 ___('nobleme_existential_whatt',    'FR', "À quoi sert NoBleme ?");
 ___('nobleme_existential_what1',    'EN', <<<EOT
-As you might have gathered from the website's long history, NoBleme's core purpose will always remain being a nostalgic tribute to the early Internet era: a community of users who interact with each other far from the much bigger social networks that dominate the current Internet landscape. However, NoBleme isn't stuck in the past. It is an ever evolving website which stays in touch with the needs of its community.
+As you might have gathered from the website's long history, NoBleme's core purpose will always remain being a nostalgic tribute to the early Internet era: a community of users who interact with each other far from the much bigger social networks that dominate the current Internet landscape.
 EOT
 );
 ___('nobleme_existential_what1',    'FR', <<<EOT
-Vous l'aurez compris en lisant la longue histoire de NoBleme, sa vocation est nostalgique. C'est un hommage aux vieux jours d'Internet : une communauté loin de l'influence des réseaux sociaux géants qui dominent le paysage moderne d'Internet. Toutefois, NoBleme n'est pas coincé dans le passé. C'est un site en évolution constante, dont le contenu change selon les besoins de sa communauté.
-EOT
-);
-___('nobleme_existential_what2',    'EN', <<<EOT
-On top of that, NoBleme also aims to be a safe haven from the oppressive political discourse that you will find on most social networks. Anyone who joins NoBleme's community will be treated with the respect they deserve, as long as they themselves are willing to treat others in the same way. Basically, it is a place where the only rule is to be nice to each other, where one can find shelter from the exhausting aspects of bigger websites. It's in the name: NoBleme, no problem.
-EOT
-);
-___('nobleme_existential_what2',    'FR', <<<EOT
-NoBleme a également pour mission d'être une zone de confort pour sa communauté, la préservant des discours de désinformation et de la propagande politique qui prolifèrent sur les réseaux sociaux. Ainsi, toute personne rejoignant NoBleme sera traitée avec le respect qu'elle mérite, tant qu'elle est à son tour prête à traiter les autres avec le même respect. La seule règle importante est qu'il faut faire preuve de bienveillance envers les autres membres de la communauté. C'est dans le nom : NoBleme, no problème.
+Vous l'aurez compris en lisant la longue histoire de NoBleme, sa vocation est nostalgique. C'est un hommage aux vieux jours d'Internet : une communauté loin de l'influence des réseaux sociaux géants qui dominent le paysage moderne d'Internet.
 EOT
 );
 ___('nobleme_existential_futuret',  'EN', "What is NoBleme's future?");
 ___('nobleme_existential_futuret',  'FR', "Quel est le futur de NoBleme ?");
 ___('nobleme_existential_future1',  'EN', <<<EOT
-From NoBleme's many years of existence, several lessons have been learned about how to run the website - or rather about what to avoid doing when managing it. Possibly the most important lesson is that things happen organically in small communities. Instead of sticking to a roadmap and making grand plans, it makes more sense to simply maintain what already exists, and only add new content when it feels like it is truly necessary.
+The website NoBleme.com is currently being slowly dismantled, its future lies exclusively in its community, which you can join on {{link|pages/social/irc|IRC}} or {{link|pages/social/discord|Discord}}.
 EOT
 );
 ___('nobleme_existential_future1',  'FR', <<<EOT
-Durant les nombreuses années de l'existence de NoBleme, plusieurs lessons ont été apprises sur la façon dont il faut gérer le site - ou plutôt, sur ce qu'il faut éviter de faire dans la gestion de ce site. La plus importante de ces lessons est qu'il faut laisser les choses se faire naturellement. Plutôt que d'avoir un plan de route rempli de grands projets, il vaut mieux se concentrer sur maintenir l'existant, et n'ajouter de nouveaux contenus que lorsque c'est réellement nécessaire.
-EOT
-);
-___('nobleme_existential_future2',  'EN', <<<EOT
-Therefore, NoBleme's future is unpredictable. There is no set roadmap, no focus and no specific plans.
-EOT
-);
-___('nobleme_existential_future2',  'FR', <<<EOT
-De ce fait, le futur de NoBleme est imprévisible. Il n'y a rien de fixe au programme, sinon de continuer à exister tant que la communauté est là.
-EOT
-);
-___('nobleme_existential_whyt',     'EN', "Why would I want to be a part of NoBleme?");
-___('nobleme_existential_whyt',     'FR', "Pourquoi rejoindre NoBleme ?");
-___('nobleme_existential_why1',     'EN', <<<EOT
-Well, why would you? If you like what you see on NoBleme, then go ahead and join us!
-EOT
-);
-___('nobleme_existential_why1',     'FR', <<<EOT
-Pourquoi pas ? Si ce que vous voyez sur NoBleme vous plait, rejoignez la communauté !
-EOT
-);
-___('nobleme_existential_why2',     'EN', <<<EOT
-The community is mostly active on the {{link|pages/social/irc|IRC chat server}} and on {{link|pages/social/discord|Discord}}, so hop in there and have a chat with us. Who knows, maybe we'll like eachother. And maybe we won't. Isn't it worth a try? If you feel shy, you can also just come and watch what happens on IRC, and judge by yourself whether you like it or not.
-EOT
-);
-___('nobleme_existential_why2',     'FR', <<<EOT
-Nous intéragissons principalement sur le {{link|pages/social/irc|serveur de chat IRC}} et sur {{link|pages/social/discord|Discord}}, venez y discuter avec nous. Qui sait, peut-être que nous nous apprécierons. Ou peut-être pas. Il n'y a rien à perdre à essayer. Si vous êtes timide, vous pouvez également venir observer ce qui s'y passe, et décider ensuite de si vous vous y sentez à l'aise.
-EOT
-);
-___('nobleme_existential_why3',     'EN', <<<EOT
-In any case, NoBleme's community is very welcoming of new people. Whether you are young or old, marginalized or privileged, introverted or extroverted, talkative or shy, we are a very varied bunch of people who will always give you a fair chance at including you in our community.
-EOT
-);
-___('nobleme_existential_why3',     'FR', <<<EOT
-Dans tous les cas, la communauté de NoBleme est très accueillante envers les personnes inconnues. Peu importe votre âge, que vous soyez dans une situation marginalisée ou privilégiée, que vous ayez une personnalité introvertie ou extravertie, que vous soyez plutôt bavardage ou timidité, nous sommes un groupe de gens variés qui saura toujours vous donner une chance de vous inclure parmi nous.
+Le site internet NoBleme.com est en cours de démantèlement progressif, son futur est exclusivement dans sa communauté, que vous pouvez rejoindre sur {{link|pages/social/irc|IRC}} ou {{link|pages/social/discord|Discord}}.
 EOT
 );
 
