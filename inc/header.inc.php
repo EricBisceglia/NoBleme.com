@@ -510,9 +510,11 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <div class="header_submenu_item">
             <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'header_submenu_link', 1, $path);?>
           </div>
+          <!--
           <div class="header_submenu_item">
             <?=__link('pages/nobleme/follow', __('submenu_nobleme_follow'), 'header_submenu_link', 1, $path);?>
           </div>
+          -->
           <div class="header_submenu_item">
             <?=__link('pages/doc/nobleme', __('submenu_nobleme_what_is'), 'header_submenu_link', 1, $path);?>
           </div>
@@ -534,9 +536,11 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <div class="header_submenu_item">
             <?=__link('pages/doc/legal', __('submenu_nobleme_legal'), 'header_submenu_link', 1, $path);?>
           </div>
+          <!--
           <div class="header_submenu_item">
             <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
           </div>
+          -->
           <div class="header_submenu_item">
             <?=__link('pages/messages/admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
           </div>
@@ -610,6 +614,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           </div>
         </div>
 
+        <!--
         <div class="header_submenu_column">
           <div class="header_submenu_title">
             <?=__('submenu_pages_politics')?>
@@ -621,6 +626,7 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
             <?=__link('pages/politics/contrapolitics', __('submenu_pages_politics_faq'), 'header_submenu_link', 1, $path);?>
           </div>
         </div>
+        -->
 
       </div>
 
@@ -639,9 +645,11 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <div class="header_submenu_item">
             <?=__link('pages/users/list', __('submenu_nobleme_userlist'), 'header_submenu_link', 1, $path);?>
           </div>
+          <!--
           <div class="header_submenu_item">
             <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
           </div>
+          -->
         </div>
 
         <div class="header_submenu_column">
@@ -666,18 +674,22 @@ $favicon = ($GLOBALS['dev_mode']) ? 'favicon_dev.ico' : 'favicon.ico';
           <div class="header_submenu_item">
             <?=__link('pages/social/irc', __('submenu_social_platforms_irc'), 'header_submenu_link', 1, $path);?>
           </div>
+          <!--
           <div class="header_submenu_item">
             <?=__link('pages/social/irc?browser', __('submenu_social_platforms_irc_web'), 'header_submenu_link', 1, $path);?>
           </div>
           <div class="header_submenu_item">
             <?=__link('pages/social/irc?channels', __('submenu_social_platforms_irc_chans'), 'header_submenu_link', 1, $path);?>
           </div>
+          -->
           <div class="header_submenu_item">
             <?=__link('pages/social/discord', __('submenu_social_platforms_discord'), 'header_submenu_link', 1, $path);?>
           </div>
+          <!--
           <div class="header_submenu_item">
             <?=__link('pages/social/others', __('submenu_social_platforms_others'), 'header_submenu_link', 1, $path);?>
           </div>
+          -->
         </div>
 
         <div class="header_submenu_column">
